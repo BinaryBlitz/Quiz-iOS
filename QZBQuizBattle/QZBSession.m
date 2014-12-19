@@ -14,7 +14,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
 @interface QZBSession ()
 
-@property(nonatomic, strong) NSArray *qestions;
+@property(nonatomic, strong) NSArray *questions;
 @property(nonatomic, strong) QZBUserInSession *firstUser;
 @property(nonatomic, strong) QZBUserInSession *opponentUser;
 @property(nonatomic, assign) NSUInteger currentQestion;
@@ -32,7 +32,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
                     opponentUser:(QZBUser *)opponentUser {
   self = [super init];
   if (self) {
-    self.qestions = qestions;
+    self.questions = qestions;
     self.firstUser = [[QZBUserInSession alloc] initWithUser:firstUser];
     self.opponentUser = [[QZBUserInSession alloc] initWithUser:opponentUser];
     self.currentQestion = 0;
@@ -82,7 +82,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
   BOOL isRight = [self isAnswerRightForQestion:qestion answer:answer];
   BOOL isLast = NO;
   
-  if ([self.qestions indexOfObject:qestion] == ([self.qestions count] - 1)) {
+  if ([self.questions indexOfObject:qestion] == ([self.questions count] - 1)) {
     isLast = YES;
   }
 
@@ -91,8 +91,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
   user.currentScore += score;
   
-  QZBQestionWithUserAnswer *qAndA =
-      [[QZBQestionWithUserAnswer alloc] initWithQestion:qestion answer:answer];
+  QZBQuestionWithUserAnswer *qAndA =
+      [[QZBQuestionWithUserAnswer alloc] initWithQestion:qestion answer:answer];
 
   [user.userAnswers addObject:qAndA];
 }

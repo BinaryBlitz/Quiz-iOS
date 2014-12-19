@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import "QZBSession.h"
+#import "QZBOpponentBot.h"
 
 @interface QZBSessionManager : NSObject
 
@@ -23,10 +24,13 @@
 @property (assign, nonatomic, readonly) NSUInteger sessionTime;
 
 -(void)setSession:(QZBSession *)session;
+-(void)setBot:(QZBOpponentBot *)bot;
 
 + (instancetype)sessionManager;
 
 -(void)newQuestionStart;
 -(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum time:(NSUInteger)time;
 -(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum;
+
+-(void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 @end

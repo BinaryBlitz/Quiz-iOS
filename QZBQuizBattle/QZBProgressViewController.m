@@ -17,6 +17,7 @@
 @interface QZBProgressViewController ()
 
 @property(strong, nonatomic) QZBSession *session;
+@property(strong, nonatomic) QZBOpponentBot *bot;
 
 @end
 
@@ -26,6 +27,7 @@
   [super viewDidLoad];
 
   [self initSession];
+  [self initBot];
   // Do any additional setup after loading the view.
 }
 
@@ -59,7 +61,9 @@
     [self.myTimer invalidate];
     self.myTimer = nil;
     
+    
     [[QZBSessionManager sessionManager] setSession:self.session];
+    [[QZBSessionManager sessionManager] setBot:self.bot];
 
     [self performSegueWithIdentifier:@"showGame" sender:nil];
   }
@@ -67,17 +71,7 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little
-// preparation before navigation
-/*
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.identifier isEqualToString:@"showGame"]) {
-    
-    [[QZBSessionManager sessionManager] setSession:self.session];
-    
-   // controller.session = self.session;
-  }
-}*/
+
 
 #pragma mark - init session
 // тестовая инициализация сессии 
@@ -114,6 +108,17 @@
                                          opponentUser:opponentUser];
   
   
+}
+
+-(void)initBot{
+  
+  QZBAnswer *answer1 = [[QZBAnswer alloc] initWithAnswerNumber:3 answerTime:4];
+  QZBAnswer *answer2 = [[QZBAnswer alloc] initWithAnswerNumber:1 answerTime:7];
+  QZBAnswer *answer3 = [[QZBAnswer alloc] initWithAnswerNumber:3 answerTime:5];
+
+  NSArray *answers = @[answer1, answer2,answer3];
+
+  self.bot = [[QZBOpponentBot alloc] initWithAnswersAndTimes:answers];
 }
 
 @end

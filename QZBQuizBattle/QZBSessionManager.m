@@ -10,163 +10,259 @@
 
 #import "QZBSessionManager.h"
 
+#define OFFLINE YES
 
-@interface QZBSessionManager()
+@interface QZBSessionManager ()
 
-@property (strong, nonatomic) QZBSession *gameSession;
-@property (strong, nonatomic) QZBQuestion *currentQuestion;
-@property (assign, nonatomic) BOOL answered;
-@property (assign, nonatomic) BOOL isDoubled;
+@property(strong, nonatomic) QZBSession *gameSession;
+@property(strong, nonatomic) QZBQuestion *currentQuestion;
+@property(assign, nonatomic) BOOL answered;
+@property(assign, nonatomic) BOOL isDoubled;
 
-@property (strong, nonatomic) NSDate *startTime;
-@property (strong, nonatomic) NSTimer *questionTimer;
-@property (assign, nonatomic) NSUInteger currentTime;
+@property(strong, nonatomic) NSDate *startTime;
+@property(strong, nonatomic) NSTimer *questionTimer;
+@property(assign, nonatomic) NSUInteger currentTime;
 
-@property (assign, nonatomic) NSUInteger firstUserScore;
-@property (assign, nonatomic) NSUInteger secondUserScore;
+@property(assign, nonatomic) NSUInteger firstUserScore;
+@property(assign, nonatomic) NSUInteger secondUserScore;
+
+@property(assign, nonatomic) BOOL didFirstUserAnswered;
+@property(assign, nonatomic) BOOL didOpponentUserAnswered;
+
+@property(strong, nonatomic) QZBOpponentBot *bot;
+
+
 
 @end
 
 @implementation QZBSessionManager
 
-- (instancetype)init
-{
+- (instancetype)init {
   self = [super init];
   if (self) {
-    
     NSLog(@"init");
     _sessionTime = 10;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveTimeStartNotification:)
-                                                 name:@"QZBStartTimeCounting"
-                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(receiveTimeStartNotification:)
+               name:@"QZBStartTimeCounting"
+             object:nil];
   }
   return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   //[super dealloc];
 }
 
-+ (instancetype)sessionManager{
-  
++ (instancetype)sessionManager {
   static id sharedInstance = nil;
-  
+
   static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    sharedInstance = [[self alloc] init];
-  });
-  
-  
-  
+  dispatch_once(&onceToken, ^{ sharedInstance = [[self alloc] init]; });
+
   return sharedInstance;
 }
 
--(void)setSession:(QZBSession *)session{
+- (void)setSession:(QZBSession *)session {
   _gameSession = session;
-  self.currentQuestion = [session.qestions firstObject];
-}
-
-
--(void)timeCountingStart{
-  self.questionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                  target:self
-                                                selector:@selector(updateTime:)
-                                                userInfo:nil
-                                                 repeats:YES];
-}
-
--(void)updateTime:(NSTimer *)timer{
+  self.currentQuestion = [session.questions firstObject];
   
+  self.firstUserScore = 0;
+  self.secondUserScore = 0;
+  self.didFirstUserAnswered = NO;
+  self.didOpponentUserAnswered = NO;
+  self.questionTimer = nil;
+  
+}
+
+-(void)setBot:(QZBOpponentBot *)bot{
+  _bot = bot;
+  
+}
+
+- (void)timeCountingStart {
+  self.questionTimer =
+      [NSTimer scheduledTimerWithTimeInterval:1.0
+                                       target:self
+                                     selector:@selector(updateTime:)
+                                     userInfo:nil
+                                      repeats:YES];
+  
+  
+}
+
+- (void)updateTime:(NSTimer *)timer {
   self.currentTime++;
- 
-  
-  if(self.currentTime<10){
-    
-    
-    NSLog(@"%lu", (unsigned long)self.currentTime);
-    
-  }else{
-    
-    if (timer != nil)
-    {
+
+  if (self.currentTime < 10) {
+    //NSLog(@"%lu", (unsigned long)self.currentTime);
+
+  } else {
+    if (timer != nil) {
       [timer invalidate];
       timer = nil;
       [self postNotificationNeedUnshow];
     }
-   
+
     self.answered = YES;
   }
-  
-  
 }
 
-//TODO: count answerTime
-
--(void)newQuestionStart{
+// TODO: count answerTime
+//вызывается для запуска таймера игровой сессии
+- (void)newQuestionStart {
   self.answered = NO;
+  
+  self.didFirstUserAnswered = NO;
+  self.didOpponentUserAnswered = NO;
+  
   [self timeCountingStart];
+
+  NSLog(@"%@", self.bot);
+  if(self.bot){
+  NSLog(@"new questionStarted");
+  NSUInteger questNum =
+      [self.gameSession.questions indexOfObject:self.currentQuestion];
+  NSNumber *questionNumber = [NSNumber numberWithUnsignedInteger:questNum];
+
+    
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:@"QZBNewQuestionTimeCountingStart"
+                    object:questionNumber];
+  }
+}
+
+#pragma mark - users answes questions
+
+//главный метод для первого пользователя
+- (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum {
+  self.didFirstUserAnswered = YES;
+  [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum
+                                                 time:self.currentTime];
+
   
 }
 
--(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum time:(NSUInteger)time{
+//главный метод для второго пользователя
+-(void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum{
   
-  QZBAnswer *answer = [[QZBAnswer alloc] initWithAnswerNumber:answerNum
-                                                   answerTime:time];
+  self.didOpponentUserAnswered = YES;
   
+  [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
+                                                    time:self.currentTime];
+  
+}
+
+//метод для подсчета очков первого пользователя
+- (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
+                                                 time:(NSUInteger)time {
+  
+  
+  [self someAnswerCurrentQuestinUser:self.gameSession.firstUser
+                        AnswerNumber:answerNum
+                                time:time];
+  /*
+  QZBAnswer *answer =
+      [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
+
   [self.gameSession gaveAnswerByUser:self.gameSession.firstUser
                           forQestion:self.currentQuestion
                               answer:answer];
-  
-  NSLog(@"%ld",(unsigned long)self.gameSession.firstUser.currentScore);
+
+*/
   self.firstUserScore = self.gameSession.firstUser.currentScore;
-  
+
   /*
   if(self.questionTimer!=nil){
     [self.questionTimer invalidate];
      self.questionTimer = nil;
   }*/
   self.answered = YES;
+}
+
+// метод для подсчета очков второго пользователя
+-(void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
+                                                   time:(NSUInteger)time{
+  [self someAnswerCurrentQuestinUser:self.gameSession.opponentUser
+                        AnswerNumber:answerNum
+                                time:time];
+  self.secondUserScore = self.gameSession.opponentUser.currentScore;
+}
+
+
+
+
+//для подсчета очков в сессии для первого или второо
+-(void)someAnswerCurrentQuestinUser:(QZBUserInSession *)user
+                       AnswerNumber:(NSUInteger)answerNum
+                               time:(NSUInteger)time{
+  
+  QZBAnswer *answer =
+  [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
+  
+  [self.gameSession gaveAnswerByUser:user
+                          forQestion:self.currentQuestion
+                              answer:answer];
+  
+  
+  [self checkNeedUnshow];
   
   
 }
 
--(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum{
-  
-  [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime];
-  
-}
 
--(void)receiveTimeStartNotification:(NSNotification *) notification{
-  
-  if ([[notification name] isEqualToString:@"QZBStartTimeCounting"]){
+-(void)checkNeedUnshow{
+  NSLog(@"chacking first %d seconf %d", self.didFirstUserAnswered, self.didOpponentUserAnswered);
+  if(self.didFirstUserAnswered && self.didOpponentUserAnswered){
     
-    NSLog(@"notification");
-    [self timeCountingStart];
+    if (self.questionTimer != nil) {
+      [self.questionTimer invalidate];
+      self.questionTimer = nil;
+      
+    }
     
+    [self postNotificationNeedUnshow];
   }
   
+}
+
+- (void)receiveTimeStartNotification:(NSNotification *)notification {
+  if ([[notification name] isEqualToString:@"QZBStartTimeCounting"]) {
+    NSLog(@"notification");
+    [self timeCountingStart];
+  }
 }
 
 #pragma mark - post notifications
 
--(void)postNotificationNeedUnshow{
-  
-  NSUInteger index = [self.gameSession.qestions indexOfObject:self.currentQuestion];
-  
-  if(index < [self.gameSession.qestions count] - 1){
-  
+- (void)postNotificationNeedUnshow {
+  NSUInteger index =
+      [self.gameSession.questions indexOfObject:self.currentQuestion];
+
+  if (index < [self.gameSession.questions count] - 1) {
     self.currentTime = 0;
     index++;
-    self.currentQuestion = [self.gameSession.qestions objectAtIndex:index];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUnshowQuestion" object:self];
-  
-  } else{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedFinishSession" object:self];
+    self.currentQuestion = [self.gameSession.questions objectAtIndex:index];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:@"QZBNeedUnshowQuestion"
+                      object:self];
+
+  } else {
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:@"QZBNeedFinishSession"
+                      object:self];
+    
+    if (self.questionTimer != nil) {
+      [self.questionTimer invalidate];
+      self.questionTimer = nil;
+      
+    }
+    self.gameSession = nil;
+    self.bot = nil;
   }
 }
-
 
 @end

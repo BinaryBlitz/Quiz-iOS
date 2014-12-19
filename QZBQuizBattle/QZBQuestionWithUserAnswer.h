@@ -9,9 +9,9 @@
 #import "QZBQuestion.h"
 #import "QZBAnswer.h"
 
-@interface QZBQestionWithUserAnswer : NSObject
+@interface QZBQuestionWithUserAnswer : NSObject
 
-@property (strong, nonatomic, readonly) QZBQuestion *qestion;
+@property (strong, nonatomic, readonly) QZBQuestion *question;
 @property (strong, nonatomic, readonly) QZBAnswer *answer;
 
 

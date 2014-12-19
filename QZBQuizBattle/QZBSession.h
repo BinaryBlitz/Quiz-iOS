@@ -11,7 +11,7 @@
 #import "QZBUserInSession.h"
 #import "QZBQuestion.h"
 #import "QZBAnswer.h"
-#import "QZBQestionWithUserAnswer.h"
+#import "QZBQuestionWithUserAnswer.h"
 
 
 @class QZBUserInSession;
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, QZBWinnew) {
 
 @interface QZBSession : NSObject
 
-@property(nonatomic, strong, readonly) NSArray *qestions;//QZBQestion
+@property(nonatomic, strong, readonly) NSArray *questions;//QZBQestion
 @property(nonatomic, strong, readonly) QZBUserInSession *firstUser;
 @property(nonatomic, strong, readonly) QZBUserInSession *opponentUser;
 

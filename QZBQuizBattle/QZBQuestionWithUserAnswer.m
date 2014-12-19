@@ -6,24 +6,24 @@
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "QZBQestionWithUserAnswer.h"
+#import "QZBQuestionWithUserAnswer.h"
 
-@interface QZBQestionWithUserAnswer()
+@interface QZBQuestionWithUserAnswer()
 
-@property (strong, nonatomic) QZBQuestion *qestion;
+@property (strong, nonatomic) QZBQuestion *question;
 @property (strong, nonatomic) QZBAnswer *answer;
 
 
 
 @end
 
-@implementation QZBQestionWithUserAnswer
+@implementation QZBQuestionWithUserAnswer
 
 - (instancetype)initWithQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer
 {
   self = [super init];
   if (self) {
-    self.qestion = qestion;
+    self.question = qestion;
     self.answer = answer;
     
   }

@@ -10,10 +10,11 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 
+
+
 @interface QZBGameSessionViewController ()
 
-//@property (strong, nonatomic) QZBSession *session;
-//@property(strong, nonatomic) NSTimer *timer;
+
 @property(assign, nonatomic) int time;
 
 @end
@@ -32,6 +33,7 @@
                                        forKeyPath:@"currentTime"
                                           options:NSKeyValueObservingOptionNew
                                           context:nil];
+  
 
   [[NSNotificationCenter defaultCenter]
       addObserver:self
@@ -68,11 +70,9 @@
   // NSLog(@"%ld", (long)sender.tag);
   [[QZBSessionManager sessionManager]
       firstUserAnswerCurrentQuestinWithAnswerNumber:sender.tag];
-  self.firstUserScore.text = [NSString
-      stringWithFormat:@"%ld",
-                       (unsigned long)
-                           [[QZBSessionManager sessionManager] firstUserScore]];
-
+  
+  sender.backgroundColor = [UIColor lightGrayColor];
+  
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
   }
@@ -127,6 +127,7 @@
                    }];
 
   for (UIButton *button in weakSelf.answerButtons) {
+    button.backgroundColor = [UIColor whiteColor];
     button.enabled = NO;
     [UIView animateWithDuration:unShowTime
         animations:^{ button.alpha = .0; }
@@ -145,6 +146,8 @@
 
     self.timeLabel.text = [NSString stringWithFormat:@"%ld", num];
   }
+  
+  
 }
 
 #pragma mark - recievers
@@ -152,6 +155,9 @@
 //принимает нотификейшен о необходимости закрыть вопрос из QZBSessionManager
 - (void)unshowQuestionNotification:(NSNotification *)notification {
   if ([[notification name] isEqualToString:@"QZBNeedUnshowQuestion"]) {
+    
+    [self setScores];
+    
     __weak typeof(self) weakSelf = self;
     [self UNShowQuestinAndAnswers];
     [self prepareQuestion];
@@ -163,9 +169,24 @@
 
 //принимает нотификейшен о окончании сессии из QZBSessionManager
 - (void)endGameSession:(NSNotification *)notification {
+  
+ 
+  
+  
+  
   if ([[notification name] isEqualToString:@"QZBNeedFinishSession"]) {
+    [self setScores];
+    [self UNShowQuestinAndAnswers];
     NSLog(@"session ended");
+    [self performSegueWithIdentifier:@"gameEnded" sender:nil];
   }
+}
+
+-(void)setScores{
+  self.firstUserScore.text = [NSString stringWithFormat:@"%ld",
+                              [QZBSessionManager sessionManager].firstUserScore];
+  self.opponentScore.text = [NSString stringWithFormat:@"%ld",
+                             [QZBSessionManager sessionManager].secondUserScore];
 }
 
 @end
