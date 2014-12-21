@@ -37,5 +37,6 @@ typedef NS_ENUM(NSInteger, QZBWinnew) {
 -(void)gaveAnswerByUser:(QZBUserInSession*)user
              forQestion:(QZBQuestion *)qestion
                  answer:(QZBAnswer*)answer;
+- (QZBWinnew)getWinner;
 
 @end

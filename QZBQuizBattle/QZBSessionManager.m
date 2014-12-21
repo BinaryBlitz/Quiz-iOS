@@ -173,6 +173,7 @@
 
   self.firstUserScore = self.gameSession.firstUser.currentScore;
 
+  self.firstUserLastAnswer = [self.gameSession.firstUser.userAnswers lastObject];
 
   
   [self checkNeedUnshow];
@@ -186,7 +187,10 @@
                                 time:time];
   
   self.secondUserScore = self.gameSession.opponentUser.currentScore;
+  self.opponentUserLastAnswer = [self.gameSession.opponentUser.userAnswers lastObject];
   
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBOpponentUserMadeChoose"
+                                                      object:self];
   [self checkNeedUnshow];
 }
 
@@ -206,14 +210,11 @@
                           forQestion:self.currentQuestion
                               answer:answer];
   
-  
-
-  
-  
 }
 
 
 -(void)checkNeedUnshow{
+  
   NSLog(@"chacking first %d seconf %d", self.didFirstUserAnswered, self.didOpponentUserAnswered);
   if(self.didFirstUserAnswered && self.didOpponentUserAnswered){
     
@@ -263,14 +264,39 @@
     self.currentTime = 0;
     index++;
     self.currentQuestion = [self.gameSession.questions objectAtIndex:index];
+    
+    
     [[NSNotificationCenter defaultCenter]
         postNotificationName:@"QZBNeedUnshowQuestion"
                       object:self];
 
   } else {
+    
+    QZBWinnew winner = [self.gameSession getWinner];
+    
+    NSString *resultOfGame = @"";
+    
+    switch (winner) {
+      case QZBWinnerFirst:
+        resultOfGame = @"Победа";
+        break;
+      case QZBWinnerOpponent:
+        resultOfGame = @"Поражение";
+        break;
+        
+      case QZBWinnerNone:
+        resultOfGame = @"Ничья";
+        break;
+      default:
+      resultOfGame = @"Проблемы";//исправить
+        break;
+    }
+    
+    
+    
     [[NSNotificationCenter defaultCenter]
         postNotificationName:@"QZBNeedFinishSession"
-                      object:self];
+                      object:resultOfGame];
     
     if (self.questionTimer != nil) {
       

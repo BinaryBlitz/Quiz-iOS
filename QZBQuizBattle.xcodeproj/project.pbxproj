@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */; };
+		1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */; };
+		1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */; };
 		190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */; };
 		191559C71A39CDD400462C93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C61A39CDD400462C93 /* main.m */; };
 		191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C91A39CDD400462C93 /* AppDelegate.m */; };
@@ -41,6 +43,10 @@
 /* Begin PBXFileReference section */
 		1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndSessionControllerViewController.h; sourceTree = "<group>"; };
 		1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndSessionControllerViewController.m; sourceTree = "<group>"; };
+		1901B9AD1A4729A9002FC87C /* QZBAnswerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerButton.h; sourceTree = "<group>"; };
+		1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerButton.m; sourceTree = "<group>"; };
+		1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTriangle.h; sourceTree = "<group>"; };
+		1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTriangle.m; sourceTree = "<group>"; };
 		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSessionManager.h; sourceTree = "<group>"; };
 		190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSessionManager.m; sourceTree = "<group>"; };
 		191559C11A39CDD400462C93 /* QZBQuizBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QZBQuizBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +169,10 @@
 		198066A81A39DB6500B749BA /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				1901B9AD1A4729A9002FC87C /* QZBAnswerButton.h */,
+				1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */,
+				1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */,
+				1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */,
 			);
 			name = buttons;
 			sourceTree = "<group>";
@@ -388,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */,
+				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
@@ -399,6 +410,7 @@
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
+				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 			);

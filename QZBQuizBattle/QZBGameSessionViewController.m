@@ -9,6 +9,7 @@
 #import "QZBGameSessionViewController.h"
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
+#import "QZBAnswerButton.h"
 
 @interface QZBGameSessionViewController ()
 
@@ -42,6 +43,11 @@
                                                name:@"QZBNeedFinishSession"
                                              object:nil];
 
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(opponentMadeChoose:)
+             name:@"QZBOpponentUserMadeChoose"
+           object:nil];
   // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -69,7 +75,23 @@
   [[QZBSessionManager sessionManager]
       firstUserAnswerCurrentQuestinWithAnswerNumber:sender.tag];
 
-  sender.backgroundColor = [UIColor lightGrayColor];
+  [self setScores];
+
+  NSUInteger num =
+      [QZBSessionManager sessionManager].firstUserLastAnswer.answer.answerNum;
+  BOOL isTrue = [QZBSessionManager sessionManager].firstUserLastAnswer.isRight;
+
+  NSLog(@"Answer %ld %d", num, isTrue);
+
+  QZBAnswerButton *button = (QZBAnswerButton *)sender;
+
+  [button addTriangleLeft];
+
+  if (isTrue) {
+    sender.backgroundColor = [UIColor greenColor];
+  } else {
+    sender.backgroundColor = [UIColor redColor];
+  }
 
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
@@ -100,23 +122,20 @@
 
   [UIView animateWithDuration:0.1
       delay:0
-      options:UIViewAnimationOptionAutoreverse
+      options:UIViewAnimationOptionTransitionNone
       animations:^{ weakSelf.roundLabel.alpha = 1.0; }
       completion:^(BOOL finished) {
-                     [UIView animateWithDuration:0.2
-                                           delay:1.2
-                                         options:UIViewAnimationOptionTransitionNone
-                                      animations:^{
-      weakSelf.roundLabel.alpha = 0.0;
-                                      } completion:^(BOOL finished) {
-      [weakSelf showOnlyQuestionAndAnswers];
-                                                         
-                                                     
+          [UIView animateWithDuration:0.2
+              delay:1.2
+              options:UIViewAnimationOptionTransitionNone
+              animations:^{ weakSelf.roundLabel.alpha = 0.0; }
+              completion:^(BOOL finished) {
+                  [weakSelf showOnlyQuestionAndAnswers];
 
+              }];
       }];
-}];
 
-//[[QZBSessionManager sessionManager] newQuestionStart];
+  //[[QZBSessionManager sessionManager] newQuestionStart];
 }
 
 - (void)showOnlyQuestionAndAnswers {
@@ -149,17 +168,18 @@
   __weak typeof(self) weakSelf = self;
 
   [UIView animateWithDuration:unShowTime
-                   animations:^{
-                       weakSelf.qestionLabel.alpha = .0;
-
-                   }];
+                   animations:^{ weakSelf.qestionLabel.alpha = .0; }];
 
   for (UIButton *button in weakSelf.answerButtons) {
-    button.backgroundColor = [UIColor whiteColor];
+    // button.backgroundColor = [UIColor whiteColor];
     button.enabled = NO;
     [UIView animateWithDuration:unShowTime
         animations:^{ button.alpha = .0; }
-        completion:^(BOOL finished) { button.enabled = YES; }];
+        completion:^(BOOL finished) {
+            button.enabled = YES;
+            QZBAnswerButton *b = (QZBAnswerButton *)button;
+            [b unshowTriangles];
+        }];
   }
 }
 
@@ -183,21 +203,63 @@
   if ([[notification name] isEqualToString:@"QZBNeedUnshowQuestion"]) {
     [self setScores];
 
+    [self showResultOfQuestion];
+
     __weak typeof(self) weakSelf = self;
-    [self UNShowQuestinAndAnswers];
-    [self prepareQuestion];
-    dispatch_after(
-        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-        dispatch_get_main_queue(), ^{ [weakSelf showQuestinAndAnswers]; });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(3 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+
+        [self UNShowQuestinAndAnswers];
+        [self prepareQuestion];
+        dispatch_after(
+            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+            dispatch_get_main_queue(), ^{ [weakSelf showQuestinAndAnswers]; });
+    });
   }
 }
 
+- (void)showResultOfQuestion {
+  QZBQuestionWithUserAnswer *qanda =
+      [QZBSessionManager sessionManager].opponentUserLastAnswer;
+  if (qanda) {
+    
+    NSUInteger num = qanda.answer.answerNum;
+    NSInteger right = qanda.question.rightAnswer;
+
+    for (QZBAnswerButton *b in self.answerButtons) {
+      b.enabled = NO;
+      if (b.tag == num) {
+        [b addTriangleRight];
+      }
+      if (b.tag != right) {
+        [UIView animateWithDuration:0.2
+            animations:^{ b.alpha = 0; }
+            completion:^(BOOL finished){
+
+            }];
+      } else {
+        b.backgroundColor = [UIColor greenColor];
+        ;
+      }
+    }
+  }
+}
 //принимает нотификейшен о окончании сессии из QZBSessionManager
 - (void)endGameSession:(NSNotification *)notification {
   if ([[notification name] isEqualToString:@"QZBNeedFinishSession"]) {
     [self setScores];
+    [self showResultOfQuestion];
     [self UNShowQuestinAndAnswers];
     NSLog(@"session ended");
+
+    self.roundLabel.text = (NSString *)notification.object;
+
+    [UIView animateWithDuration:0.3
+        animations:^{ self.roundLabel.alpha = 1.0; }
+        completion:^(BOOL finished){
+
+        }];
 
     __weak typeof(self) weakSelf = self;
 
@@ -210,6 +272,14 @@
   }
 }
 
+- (void)opponentMadeChoose:(NSNotification *)notification {
+  if ([[notification name] isEqualToString:@"QZBOpponentUserMadeChoose"]) {
+    [self setScores];
+  }
+}
+
+#pragma mark -
+
 - (void)setScores {
   self.firstUserScore.text =
       [NSString stringWithFormat:@"%ld", [QZBSessionManager sessionManager]
@@ -217,6 +287,9 @@
   self.opponentScore.text =
       [NSString stringWithFormat:@"%ld", [QZBSessionManager sessionManager]
                                              .secondUserScore];
+}
+
+- (void)setPointersOfChoosedAnswers {
 }
 
 @end
