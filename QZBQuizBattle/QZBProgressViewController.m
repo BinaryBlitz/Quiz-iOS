@@ -18,6 +18,7 @@
 
 @property(strong, nonatomic) QZBSession *session;
 @property(strong, nonatomic) QZBOpponentBot *bot;
+@property(assign, nonatomic) NSUInteger time;
 
 @end
 
@@ -26,10 +27,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self initSession];
-  [self initBot];
   // Do any additional setup after loading the view.
 }
+
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -39,6 +40,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  
+  NSLog(@"showed");
+  
+  self.time = 0;
+  
+  [self initSession];
+  [self initBot];
+  
   self.myTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                                   target:self
                                                 selector:@selector(updateUI:)
@@ -48,13 +57,11 @@
 
 - (void)updateUI:(NSTimer *)timer {
   
-  static int count = 0;
-  count++;
+  self.time++;
 
-  NSLog(@"%d",count);
-  if (count <= 10) {
+  if (self.time <= 10) {
 
-    [self.progress setProgress:(float)count/10 animated:YES];
+    [self.progress setProgress:(float)self.time/10 animated:YES];
     
   } else {
     
@@ -113,7 +120,7 @@
 -(void)initBot{
   
   QZBAnswer *answer1 = [[QZBAnswer alloc] initWithAnswerNumber:3 answerTime:4];
-  QZBAnswer *answer2 = [[QZBAnswer alloc] initWithAnswerNumber:1 answerTime:7];
+  QZBAnswer *answer2 = [[QZBAnswer alloc] initWithAnswerNumber:2 answerTime:7];
   QZBAnswer *answer3 = [[QZBAnswer alloc] initWithAnswerNumber:3 answerTime:5];
 
   NSArray *answers = @[answer1, answer2,answer3];

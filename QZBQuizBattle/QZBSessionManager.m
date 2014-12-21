@@ -180,7 +180,9 @@
     [self.questionTimer invalidate];
      self.questionTimer = nil;
   }*/
-  self.answered = YES;
+  //self.answered = YES;
+  
+  [self checkNeedUnshow];
 }
 
 // метод для подсчета очков второго пользователя
@@ -189,7 +191,10 @@
   [self someAnswerCurrentQuestinUser:self.gameSession.opponentUser
                         AnswerNumber:answerNum
                                 time:time];
+  
   self.secondUserScore = self.gameSession.opponentUser.currentScore;
+  
+  [self checkNeedUnshow];
 }
 
 
@@ -201,14 +206,15 @@
                                time:(NSUInteger)time{
   
   QZBAnswer *answer =
-  [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
+  [[QZBAnswer alloc] initWithAnswerNumber:answerNum
+                               answerTime:time];
   
   [self.gameSession gaveAnswerByUser:user
                           forQestion:self.currentQuestion
                               answer:answer];
   
   
-  [self checkNeedUnshow];
+
   
   
 }
@@ -256,10 +262,12 @@
                       object:self];
     
     if (self.questionTimer != nil) {
+      
       [self.questionTimer invalidate];
       self.questionTimer = nil;
       
     }
+    self.currentTime = 0;
     self.gameSession = nil;
     self.bot = nil;
   }

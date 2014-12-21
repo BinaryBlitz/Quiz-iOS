@@ -15,7 +15,6 @@
 @property(strong, nonatomic) NSArray *answersWithTime;  // array of QZBAnswer
 @property(assign, nonatomic) NSUInteger questionNumber;
 
-
 @end
 
 @implementation QZBOpponentBot
@@ -40,27 +39,26 @@
 
 #pragma mark - auto answer
 - (void)questionDidStartWithNUmber:(NSNotification *)notification {
-  
-  NSLog(@"notified");
+  //NSLog(@"notified");
   if ([[notification name]
           isEqualToString:@"QZBNewQuestionTimeCountingStart"]) {
     if ([notification.object isKindOfClass:[NSNumber class]]) {
       NSLog(@"choosed");
-      
+
       NSNumber *num = (NSNumber *)notification.object;
 
       NSUInteger number = [num unsignedIntegerValue];
 
       QZBAnswer *answerAndTime = [self.answersWithTime objectAtIndex:number];
 
-      dispatch_after(
-          dispatch_time(DISPATCH_TIME_NOW,
-                        (int64_t)(answerAndTime.time * NSEC_PER_SEC)),
-          dispatch_get_main_queue(), ^{
+      dispatch_after(dispatch_time(
+                         DISPATCH_TIME_NOW,
+                         (int64_t)(answerAndTime.time * NSEC_PER_SEC)),
+                     dispatch_get_main_queue(), ^{
 
-            [[QZBSessionManager sessionManager] opponentUserAnswerCurrentQuestinWithAnswerNumber:answerAndTime.answerNum];
-            
-          });
+          [[QZBSessionManager sessionManager]
+              opponentUserAnswerCurrentQuestinWithAnswerNumber:answerAndTime.answerNum];
+      });
     }
   }
 }

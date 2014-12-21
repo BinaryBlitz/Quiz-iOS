@@ -51,7 +51,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     
   } else {
     
-    return false;
+    return NO;
     
   }
 }

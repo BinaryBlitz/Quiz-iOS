@@ -96,12 +96,15 @@
 - (void)showQuestinAndAnswers {
   __weak typeof(self) weakSelf = self;
 
+  //[self setScores];
+  
   [UIView animateWithDuration:0.1
                    animations:^{ weakSelf.qestionLabel.alpha = 1.0; }];
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
       for (UIButton *button in weakSelf.answerButtons) {
+        button.backgroundColor = [UIColor whiteColor];
         button.enabled = YES;
         [UIView animateWithDuration:0.3
             animations:^{ button.alpha = 1.0; }
@@ -116,6 +119,8 @@
 }
 
 - (void)UNShowQuestinAndAnswers {
+  //[self setScores];
+  
   static float unShowTime = 0.1;
 
   __weak typeof(self) weakSelf = self;
@@ -140,6 +145,7 @@
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
+  
   if ([keyPath isEqualToString:@"currentTime"]) {
     NSUInteger num = [[QZBSessionManager sessionManager] sessionTime] -
                      [[change objectForKey:@"new"] integerValue];
@@ -170,19 +176,24 @@
 //принимает нотификейшен о окончании сессии из QZBSessionManager
 - (void)endGameSession:(NSNotification *)notification {
   
- 
-  
-  
-  
   if ([[notification name] isEqualToString:@"QZBNeedFinishSession"]) {
     [self setScores];
     [self UNShowQuestinAndAnswers];
     NSLog(@"session ended");
-    [self performSegueWithIdentifier:@"gameEnded" sender:nil];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+
+    });
+    
+    
   }
 }
 
 -(void)setScores{
+
   self.firstUserScore.text = [NSString stringWithFormat:@"%ld",
                               [QZBSessionManager sessionManager].firstUserScore];
   self.opponentScore.text = [NSString stringWithFormat:@"%ld",
