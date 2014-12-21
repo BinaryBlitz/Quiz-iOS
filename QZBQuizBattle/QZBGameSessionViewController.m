@@ -10,10 +10,7 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 
-
-
 @interface QZBGameSessionViewController ()
-
 
 @property(assign, nonatomic) int time;
 
@@ -33,7 +30,6 @@
                                        forKeyPath:@"currentTime"
                                           options:NSKeyValueObservingOptionNew
                                           context:nil];
-  
 
   [[NSNotificationCenter defaultCenter]
       addObserver:self
@@ -55,13 +51,15 @@
   [self showQuestinAndAnswers];
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[QZBSessionManager sessionManager] removeObserver:self
+                                          forKeyPath:@"currentTime"];
+}
+
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - actions
@@ -70,9 +68,9 @@
   // NSLog(@"%ld", (long)sender.tag);
   [[QZBSessionManager sessionManager]
       firstUserAnswerCurrentQuestinWithAnswerNumber:sender.tag];
-  
+
   sender.backgroundColor = [UIColor lightGrayColor];
-  
+
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
   }
@@ -96,9 +94,35 @@
 - (void)showQuestinAndAnswers {
   __weak typeof(self) weakSelf = self;
 
-  //[self setScores];
-  
+  NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
+
+  self.roundLabel.text = [NSString stringWithFormat:@"Раунд %ld", roundNum];
+
   [UIView animateWithDuration:0.1
+      delay:0
+      options:UIViewAnimationOptionAutoreverse
+      animations:^{ weakSelf.roundLabel.alpha = 1.0; }
+      completion:^(BOOL finished) {
+                     [UIView animateWithDuration:0.2
+                                           delay:1.2
+                                         options:UIViewAnimationOptionTransitionNone
+                                      animations:^{
+      weakSelf.roundLabel.alpha = 0.0;
+                                      } completion:^(BOOL finished) {
+      [weakSelf showOnlyQuestionAndAnswers];
+                                                         
+                                                     
+
+      }];
+}];
+
+//[[QZBSessionManager sessionManager] newQuestionStart];
+}
+
+- (void)showOnlyQuestionAndAnswers {
+  __weak typeof(self) weakSelf = self;
+
+  [UIView animateWithDuration:0.2
                    animations:^{ weakSelf.qestionLabel.alpha = 1.0; }];
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
@@ -114,13 +138,12 @@
             }];
       }
       [[QZBSessionManager sessionManager] newQuestionStart];
-
   });
 }
 
 - (void)UNShowQuestinAndAnswers {
   //[self setScores];
-  
+
   static float unShowTime = 0.1;
 
   __weak typeof(self) weakSelf = self;
@@ -145,15 +168,12 @@
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-  
   if ([keyPath isEqualToString:@"currentTime"]) {
     NSUInteger num = [[QZBSessionManager sessionManager] sessionTime] -
                      [[change objectForKey:@"new"] integerValue];
 
     self.timeLabel.text = [NSString stringWithFormat:@"%ld", num];
   }
-  
-  
 }
 
 #pragma mark - recievers
@@ -161,9 +181,8 @@
 //принимает нотификейшен о необходимости закрыть вопрос из QZBSessionManager
 - (void)unshowQuestionNotification:(NSNotification *)notification {
   if ([[notification name] isEqualToString:@"QZBNeedUnshowQuestion"]) {
-    
     [self setScores];
-    
+
     __weak typeof(self) weakSelf = self;
     [self UNShowQuestinAndAnswers];
     [self prepareQuestion];
@@ -175,29 +194,29 @@
 
 //принимает нотификейшен о окончании сессии из QZBSessionManager
 - (void)endGameSession:(NSNotification *)notification {
-  
   if ([[notification name] isEqualToString:@"QZBNeedFinishSession"]) {
     [self setScores];
     [self UNShowQuestinAndAnswers];
     NSLog(@"session ended");
-    
-    __weak typeof(self) weakSelf = self;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
 
-    });
-    
-    
+    __weak typeof(self) weakSelf = self;
+
+    dispatch_after(
+        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)),
+        dispatch_get_main_queue(), ^{
+            [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+
+        });
   }
 }
 
--(void)setScores{
-
-  self.firstUserScore.text = [NSString stringWithFormat:@"%ld",
-                              [QZBSessionManager sessionManager].firstUserScore];
-  self.opponentScore.text = [NSString stringWithFormat:@"%ld",
-                             [QZBSessionManager sessionManager].secondUserScore];
+- (void)setScores {
+  self.firstUserScore.text =
+      [NSString stringWithFormat:@"%ld", [QZBSessionManager sessionManager]
+                                             .firstUserScore];
+  self.opponentScore.text =
+      [NSString stringWithFormat:@"%ld", [QZBSessionManager sessionManager]
+                                             .secondUserScore];
 }
 
 @end

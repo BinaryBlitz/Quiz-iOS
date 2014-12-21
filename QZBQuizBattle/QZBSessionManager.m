@@ -16,7 +16,7 @@
 
 @property(strong, nonatomic) QZBSession *gameSession;
 @property(strong, nonatomic) QZBQuestion *currentQuestion;
-@property(assign, nonatomic) BOOL answered;
+@property(assign, nonatomic) NSUInteger roundNumber;
 @property(assign, nonatomic) BOOL isDoubled;
 
 @property(strong, nonatomic) NSDate *startTime;
@@ -28,6 +28,9 @@
 
 @property(assign, nonatomic) BOOL didFirstUserAnswered;
 @property(assign, nonatomic) BOOL didOpponentUserAnswered;
+
+@property(assign, nonatomic) QZBQuestionWithUserAnswer *firstUserLastAnswer;
+@property(assign, nonatomic) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
 @property(strong, nonatomic) QZBOpponentBot *bot;
 
@@ -52,6 +55,8 @@
   return self;
 }
 
+
+
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   //[super dealloc];
@@ -75,6 +80,7 @@
   self.didFirstUserAnswered = NO;
   self.didOpponentUserAnswered = NO;
   self.questionTimer = nil;
+  self.roundNumber = 1;
   
 }
 
@@ -107,14 +113,14 @@
       [self postNotificationNeedUnshow];
     }
 
-    self.answered = YES;
+   // self.answered = YES;
   }
 }
 
 // TODO: count answerTime
 //вызывается для запуска таймера игровой сессии
 - (void)newQuestionStart {
-  self.answered = NO;
+ // self.answered = NO;
   
   self.didFirstUserAnswered = NO;
   self.didOpponentUserAnswered = NO;
@@ -164,23 +170,10 @@
   [self someAnswerCurrentQuestinUser:self.gameSession.firstUser
                         AnswerNumber:answerNum
                                 time:time];
-  /*
-  QZBAnswer *answer =
-      [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
 
-  [self.gameSession gaveAnswerByUser:self.gameSession.firstUser
-                          forQestion:self.currentQuestion
-                              answer:answer];
-
-*/
   self.firstUserScore = self.gameSession.firstUser.currentScore;
 
-  /*
-  if(self.questionTimer!=nil){
-    [self.questionTimer invalidate];
-     self.questionTimer = nil;
-  }*/
-  //self.answered = YES;
+
   
   [self checkNeedUnshow];
 }
@@ -247,7 +240,25 @@
 - (void)postNotificationNeedUnshow {
   NSUInteger index =
       [self.gameSession.questions indexOfObject:self.currentQuestion];
+  if(!self.didFirstUserAnswered){
+    [self.gameSession gaveAnswerByUser:self.gameSession.firstUser
+                            forQestion:self.currentQuestion
+                                answer:nil];
 
+
+  }
+  
+  if(!self.didOpponentUserAnswered){
+    [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
+                            forQestion:self.currentQuestion
+                                answer:nil];
+  }
+  
+  self.firstUserLastAnswer = [self.gameSession.firstUser.userAnswers lastObject];
+  self.opponentUserLastAnswer = [self.gameSession.opponentUser.userAnswers lastObject];
+
+  self.roundNumber = index+2;
+  
   if (index < [self.gameSession.questions count] - 1) {
     self.currentTime = 0;
     index++;

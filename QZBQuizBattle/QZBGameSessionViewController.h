@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *opponentScore;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *roundLabel;
+
 //@property (strong, nonatomic) QZBSession *session;
 
 

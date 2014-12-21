@@ -301,9 +301,33 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Round number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfv-MY-T2r">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="89" id="cS2-pF-EVt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="self.text" value=""/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="cS2-pF-EVt"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="cS2-pF-EVt"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882352941" green="0.22745098039215686" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="yfv-MY-T2r" secondAttribute="trailing" constant="1" id="3Jb-hE-zId"/>
+                            <constraint firstItem="yfv-MY-T2r" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-1" id="3gc-mB-07D"/>
                             <constraint firstItem="VeJ-SL-fql" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="3os-Ha-nos"/>
                             <constraint firstItem="DM1-Tm-SNS" firstAttribute="width" secondItem="rCn-WW-jAi" secondAttribute="height" multiplier="1:1" id="4RG-ZV-DB2"/>
                             <constraint firstItem="DM1-Tm-SNS" firstAttribute="width" secondItem="MRH-jw-acp" secondAttribute="width" id="6hV-L6-rSV"/>
@@ -345,6 +369,7 @@
                             <constraint firstItem="DM1-Tm-SNS" firstAttribute="width" secondItem="rCn-WW-jAi" secondAttribute="width" id="wWj-Cz-Crv"/>
                             <constraint firstItem="rCn-WW-jAi" firstAttribute="top" secondItem="MRH-jw-acp" secondAttribute="bottom" constant="53" id="wtM-4r-m1g"/>
                             <constraint firstItem="SQ2-9D-ofz" firstAttribute="top" secondItem="blP-1l-AaE" secondAttribute="bottom" constant="16" id="xaK-ZW-ans"/>
+                            <constraint firstItem="yfv-MY-T2r" firstAttribute="centerY" secondItem="SQ2-9D-ofz" secondAttribute="centerY" id="xnq-GT-CbU"/>
                             <constraint firstItem="MRH-jw-acp" firstAttribute="leading" secondItem="DM1-Tm-SNS" secondAttribute="trailing" constant="68" id="y2z-vi-XDg"/>
                         </constraints>
                         <variation key="default">
@@ -360,6 +385,7 @@
                                 <exclude reference="gJV-W3-d5A"/>
                                 <exclude reference="Uif-Wf-gcn"/>
                                 <exclude reference="llf-Ot-6hI"/>
+                                <exclude reference="yfv-MY-T2r"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Qsa-LI-Ldo"/>
@@ -373,6 +399,9 @@
                                 <exclude reference="PeU-Bz-zle"/>
                                 <exclude reference="blf-Bq-2OT"/>
                                 <exclude reference="cLs-mr-tNA"/>
+                                <exclude reference="3Jb-hE-zId"/>
+                                <exclude reference="3gc-mB-07D"/>
+                                <exclude reference="xnq-GT-CbU"/>
                                 <exclude reference="EyO-sm-VfX"/>
                                 <exclude reference="NeW-xx-fvL"/>
                                 <exclude reference="mGT-4A-sQ9"/>
@@ -419,6 +448,7 @@
                                 <include reference="gJV-W3-d5A"/>
                                 <include reference="Uif-Wf-gcn"/>
                                 <include reference="llf-Ot-6hI"/>
+                                <include reference="yfv-MY-T2r"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Qsa-LI-Ldo"/>
@@ -432,6 +462,9 @@
                                 <include reference="PeU-Bz-zle"/>
                                 <include reference="blf-Bq-2OT"/>
                                 <include reference="cLs-mr-tNA"/>
+                                <include reference="3Jb-hE-zId"/>
+                                <include reference="3gc-mB-07D"/>
+                                <include reference="xnq-GT-CbU"/>
                                 <include reference="EyO-sm-VfX"/>
                                 <include reference="NeW-xx-fvL"/>
                                 <include reference="mGT-4A-sQ9"/>
@@ -470,6 +503,7 @@
                         <outlet property="firstUserScore" destination="gJV-W3-d5A" id="G9d-D8-xop"/>
                         <outlet property="opponentScore" destination="Uif-Wf-gcn" id="1Dg-6K-eK3"/>
                         <outlet property="qestionLabel" destination="SQ2-9D-ofz" id="GRX-Kc-2Ce"/>
+                        <outlet property="roundLabel" destination="yfv-MY-T2r" id="7LY-MX-opC"/>
                         <outlet property="timeLabel" destination="llf-Ot-6hI" id="1EG-fr-xOo"/>
                         <outletCollection property="answerButtons" destination="DM1-Tm-SNS" id="xdR-Tf-F3t"/>
                         <outletCollection property="answerButtons" destination="MRH-jw-acp" id="mhr-pm-rND"/>

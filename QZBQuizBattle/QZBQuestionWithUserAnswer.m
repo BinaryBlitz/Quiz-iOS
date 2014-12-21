@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) QZBQuestion *question;
 @property (strong, nonatomic) QZBAnswer *answer;
+@property (assign, nonatomic) BOOL isRight;
 
 
 
@@ -25,6 +26,16 @@
   if (self) {
     self.question = qestion;
     self.answer = answer;
+    if (qestion.rightAnswer == answer.answerNum) {
+      
+      self.isRight = YES;
+      
+    } else {
+      
+      self.isRight = NO;
+      
+    }
+
     
   }
   return self;

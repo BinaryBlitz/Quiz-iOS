@@ -21,7 +21,11 @@
 @property (assign, nonatomic, readonly) NSUInteger firstUserScore;
 @property (assign, nonatomic, readonly) NSUInteger secondUserScore;
 
+@property(assign, nonatomic, readonly) NSUInteger roundNumber;
 @property (assign, nonatomic, readonly) NSUInteger sessionTime;
+
+@property(assign, nonatomic, readonly) QZBQuestionWithUserAnswer *firstUserLastAnswer;
+@property(assign, nonatomic, readonly) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
 -(void)setSession:(QZBSession *)session;
 -(void)setBot:(QZBOpponentBot *)bot;
