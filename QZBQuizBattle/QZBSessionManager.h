@@ -14,27 +14,29 @@
 
 @interface QZBSessionManager : NSObject
 
+@property(strong, nonatomic, readonly) QZBQuestion *currentQuestion;
+@property(assign, nonatomic, readonly) NSUInteger currentTime;
 
-@property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
-@property (assign, nonatomic, readonly) NSUInteger currentTime;
-
-@property (assign, nonatomic, readonly) NSUInteger firstUserScore;
-@property (assign, nonatomic, readonly) NSUInteger secondUserScore;
+@property(assign, nonatomic, readonly) NSUInteger firstUserScore;
+@property(assign, nonatomic, readonly) NSUInteger secondUserScore;
 
 @property(assign, nonatomic, readonly) NSUInteger roundNumber;
-@property (assign, nonatomic, readonly) NSUInteger sessionTime;
+@property(assign, nonatomic, readonly) BOOL isDoubled;
+@property(assign, nonatomic, readonly) NSUInteger sessionTime;
 
-@property(assign, nonatomic, readonly) QZBQuestionWithUserAnswer *firstUserLastAnswer;
-@property(assign, nonatomic, readonly) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
+@property(assign, nonatomic, readonly)
+    QZBQuestionWithUserAnswer *firstUserLastAnswer;
+@property(assign, nonatomic, readonly)
+    QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
--(void)setSession:(QZBSession *)session;
--(void)setBot:(QZBOpponentBot *)bot;
+- (void)setSession:(QZBSession *)session;
+- (void)setBot:(QZBOpponentBot *)bot;
 
 + (instancetype)sessionManager;
 
--(void)newQuestionStart;
--(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum time:(NSUInteger)time;
--(void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger) answerNum;
+- (void)newQuestionStart;
 
--(void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+- (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+
+- (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 @end

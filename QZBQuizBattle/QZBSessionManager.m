@@ -81,6 +81,7 @@
   self.didOpponentUserAnswered = NO;
   self.questionTimer = nil;
   self.roundNumber = 1;
+  self.isDoubled = NO;
   
 }
 
@@ -121,19 +122,21 @@
 //вызывается для запуска таймера игровой сессии
 - (void)newQuestionStart {
  // self.answered = NO;
-  
+  self.currentTime = 0;
   self.didFirstUserAnswered = NO;
   self.didOpponentUserAnswered = NO;
   
   [self timeCountingStart];
-
-  NSLog(@"%@", self.bot);
+  
+  
+  
   if(self.bot){
   NSLog(@"new questionStarted");
   NSUInteger questNum =
       [self.gameSession.questions indexOfObject:self.currentQuestion];
   NSNumber *questionNumber = [NSNumber numberWithUnsignedInteger:questNum];
 
+    
     
   [[NSNotificationCenter defaultCenter]
       postNotificationName:@"QZBNewQuestionTimeCountingStart"
@@ -261,7 +264,7 @@
   self.roundNumber = index+2;
   
   if (index < [self.gameSession.questions count] - 1) {
-    self.currentTime = 0;
+    //self.currentTime = 0;
     index++;
     self.currentQuestion = [self.gameSession.questions objectAtIndex:index];
     
