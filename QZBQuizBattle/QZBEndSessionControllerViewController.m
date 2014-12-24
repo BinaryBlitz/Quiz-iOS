@@ -7,8 +7,11 @@
 //
 
 #import "QZBEndSessionControllerViewController.h"
+#import "QZBGameTopic.h"
 
 @interface QZBEndSessionControllerViewController ()
+
+
 
 @end
 

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class QZBGameTopic;
 @interface QZBProgressViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (strong, nonatomic) NSTimer *myTimer;
+@property(strong, nonatomic) QZBGameTopic *topic;
 
 @end

@@ -301,16 +301,24 @@
         postNotificationName:@"QZBNeedFinishSession"
                       object:resultOfGame];
     
-    if (self.questionTimer != nil) {
-      
-      [self.questionTimer invalidate];
-      self.questionTimer = nil;
-      
-    }
-    
-    self.gameSession = nil;
-    self.bot = nil;
+    [self closeSession];
   }
+}
+
+
+-(void)closeSession{
+  
+  
+  if (self.questionTimer != nil) {
+    
+    [self.questionTimer invalidate];
+    self.questionTimer = nil;
+    
+  }
+  
+  self.gameSession = nil;
+  self.bot = nil;
+  
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
+#import "QZBGameTopic.h"
 
 @interface QZBProgressViewController ()
 
@@ -67,6 +68,20 @@
     [self performSegueWithIdentifier:@"showGame" sender:nil];
   }
 }
+
+#pragma mark - Actions
+
+- (IBAction)cancelFinding:(UIButton *)sender {
+  
+  [[QZBSessionManager sessionManager] closeSession];
+  
+  [self.myTimer invalidate];
+  self.myTimer = nil;
+  
+  [self.navigationController popToRootViewControllerAnimated:YES];
+  
+}
+
 
 #pragma mark - Navigation
 

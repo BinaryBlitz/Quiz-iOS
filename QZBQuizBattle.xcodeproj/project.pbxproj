@@ -18,6 +18,10 @@
 		191559D51A39CDD400462C93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 191559D41A39CDD400462C93 /* Images.xcassets */; };
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
+		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
+		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
+		1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB21A4B062D0016130B /* QZBGameTopic.m */; };
+		1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB61A4B12280016130B /* QZBServerManager.m */; };
 		199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 199820A91A447628003AECB9 /* QZBOpponentBot.m */; };
 		199820AD1A44A039003AECB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 199820AB1A44A039003AECB9 /* Main.storyboard */; };
 		19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50911A3C33B000A3CD74 /* QZBQuestion.m */; };
@@ -62,6 +66,14 @@
 		191559DD1A39CDD400462C93 /* QZBQuizBattleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QZBQuizBattleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559E21A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
+		1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicChooserControllerViewController.h; sourceTree = "<group>"; };
+		1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicChooserControllerViewController.m; sourceTree = "<group>"; };
+		1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicTableViewCell.h; sourceTree = "<group>"; };
+		1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicTableViewCell.m; sourceTree = "<group>"; };
+		1976FBB11A4B062D0016130B /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
+		1976FBB21A4B062D0016130B /* QZBGameTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBGameTopic.m; sourceTree = "<group>"; };
+		1976FBB51A4B12280016130B /* QZBServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBServerManager.h; sourceTree = "<group>"; };
+		1976FBB61A4B12280016130B /* QZBServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBServerManager.m; sourceTree = "<group>"; };
 		199820A81A447628003AECB9 /* QZBOpponentBot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBOpponentBot.h; sourceTree = "<group>"; };
 		199820A91A447628003AECB9 /* QZBOpponentBot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBOpponentBot.m; sourceTree = "<group>"; };
 		199820AC1A44A039003AECB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -166,6 +178,33 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1976FBAC1A4B04B50016130B /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */,
+				1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */,
+			);
+			name = cells;
+			sourceTree = "<group>";
+		};
+		1976FBB01A4B05FF0016130B /* topic */ = {
+			isa = PBXGroup;
+			children = (
+				1976FBB11A4B062D0016130B /* QZBGameTopic.h */,
+				1976FBB21A4B062D0016130B /* QZBGameTopic.m */,
+			);
+			name = topic;
+			sourceTree = "<group>";
+		};
+		1976FBB41A4B11DF0016130B /* serverAPI */ = {
+			isa = PBXGroup;
+			children = (
+				1976FBB51A4B12280016130B /* QZBServerManager.h */,
+				1976FBB61A4B12280016130B /* QZBServerManager.m */,
+			);
+			name = serverAPI;
+			sourceTree = "<group>";
+		};
 		198066A81A39DB6500B749BA /* buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +219,8 @@
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				1976FBB41A4B11DF0016130B /* serverAPI */,
+				1976FBB01A4B05FF0016130B /* topic */,
 				19CB509A1A3C388900A3CD74 /* User */,
 				19CB50931A3C33B900A3CD74 /* Session */,
 			);
@@ -189,6 +230,7 @@
 		19CB508E1A3C32F000A3CD74 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1976FBAC1A4B04B50016130B /* cells */,
 				198066A81A39DB6500B749BA /* buttons */,
 			);
 			name = View;
@@ -201,6 +243,8 @@
 				191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */,
 				19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */,
 				19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */,
+				1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */,
+				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
 				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
 				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
 			);
@@ -404,12 +448,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */,
+				1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
+				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
+				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
+				1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
@@ -541,10 +589,13 @@
 			baseConfigurationReference = 61CB57A856F89614168E9C5A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -554,10 +605,13 @@
 			baseConfigurationReference = B2892C94F45A4ABC9B49B297 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

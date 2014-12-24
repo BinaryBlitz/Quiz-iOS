@@ -39,4 +39,6 @@
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+
+- (void)closeSession;
 @end
