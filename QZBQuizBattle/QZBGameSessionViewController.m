@@ -11,11 +11,8 @@
 #import "QZBSessionManager.h"
 #import "QZBAnswerButton.h"
 
-typedef NS_ENUM(NSInteger, QZBTiming) {
-  QZB_TIME_OF_UNSHOW_BUTTONS,
-  QZB_TIME_OF_UNSHOW_QUESTIONS,
-  QZB_TIME_OF_SHOWUNG_BUTTONS
-};
+static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
+static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
 @interface QZBGameSessionViewController ()
 
@@ -31,8 +28,7 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
     b.alpha = 0.0;
-    
-      }
+  }
 
   [[QZBSessionManager sessionManager] addObserver:self
                                        forKeyPath:@"currentTime"
@@ -81,6 +77,7 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
       firstUserAnswerCurrentQuestinWithAnswerNumber:sender.tag];
 
   [self setScores];
+  [self colorFirstUserScoreLabel];
 
   NSUInteger num =
       [QZBSessionManager sessionManager].firstUserLastAnswer.answer.answerNum;
@@ -92,11 +89,22 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
 
   [button addTriangleLeft];
 
+  UIColor *color;
+  
   if (isTrue) {
-    sender.backgroundColor = [UIColor greenColor];
+    
+    
+   color= [UIColor greenColor];
   } else {
-    sender.backgroundColor = [UIColor redColor];
+    color = [UIColor redColor];
   }
+  
+  [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS animations:^{
+    sender.backgroundColor = color;
+  } completion:^(BOOL finished) {
+    
+  }];
+  
 
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
@@ -124,11 +132,11 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
 
   NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
 
- // NSString *textForLabel = [NSString stringWithFormat:@"Раунд %ld", roundNum];
-  
-  
-  self.roundLabel.text = [NSString stringWithFormat:@"Раунд %ld",
-(unsigned long)                          roundNum];
+  // NSString *textForLabel = [NSString stringWithFormat:@"Раунд %ld",
+  // roundNum];
+
+  self.roundLabel.text =
+      [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
 
   [UIView animateWithDuration:0.1
       delay:0
@@ -167,12 +175,10 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
 
             }];
       }
-                   [UIView animateWithDuration:0.3
-                                    animations:^{ weakSelf.timeLabel.alpha = 1.0; }
-                                    completion:^(BOOL finished) {}
-                                      ];
-                   
-                   
+      [UIView animateWithDuration:0.3
+          animations:^{ weakSelf.timeLabel.alpha = 1.0; }
+          completion:^(BOOL finished){}];
+
       [[QZBSessionManager sessionManager] newQuestionStart];
   });
 }
@@ -180,14 +186,17 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
 - (void)UNShowQuestinAndAnswers {
   [self setScores];
 
-  static float unShowTime = 0.1;
+  static float unShowTime = 0.5;
 
   __weak typeof(self) weakSelf = self;
 
   [UIView animateWithDuration:unShowTime
-                   animations:^{ weakSelf.qestionLabel.alpha = .0;
-                     weakSelf.timeLabel.alpha = .0;
-                   
+                   animations:^{
+                       weakSelf.qestionLabel.alpha = .0;
+                       weakSelf.opponentScore.textColor = [UIColor whiteColor];
+                       weakSelf.firstUserScore.textColor = [UIColor whiteColor];
+                       weakSelf.timeLabel.alpha = .0;
+
                    }];
 
   for (UIButton *button in weakSelf.answerButtons) {
@@ -231,13 +240,14 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
   [self showResultOfQuestion];
 
   __weak typeof(self) weakSelf = self;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                               (int64_t)(2.5 * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
 
       [self UNShowQuestinAndAnswers];
       //[self prepareQuestion];
       dispatch_after(
-          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
           dispatch_get_main_queue(), ^{ [weakSelf showQuestionAndAnswers]; });
   });
 }
@@ -254,12 +264,16 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
       if (b.tag == num) {
         [b addTriangleRight];
         if (b.tag != right) {
-          b.backgroundColor = [UIColor redColor];
+          [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
+              animations:^{ b.backgroundColor = [UIColor redColor]; }
+              completion:^(BOOL finished){
+
+              }];
         }
       }
       if (b.tag != right) {
-        [UIView animateWithDuration:0.5
-            delay:0.5
+        [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
+            delay:1.0
             options:UIViewAnimationOptionCurveEaseInOut |
                     UIViewAnimationOptionTransitionNone
             animations:^{ b.alpha = 0; }
@@ -268,8 +282,11 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
             }];
 
       } else {
-        b.backgroundColor = [UIColor greenColor];
-        ;
+        [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
+            animations:^{ b.backgroundColor = [UIColor greenColor]; }
+            completion:^(BOOL finished){
+
+            }];
       }
     }
   }
@@ -316,6 +333,7 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
 - (void)opponentMadeChoose:(NSNotification *)notification {
   if ([[notification name] isEqualToString:@"QZBOpponentUserMadeChoose"]) {
     [self setScores];
+    [self colorOpponentUserScoreLabel];
   }
 }
 
@@ -330,7 +348,52 @@ typedef NS_ENUM(NSInteger, QZBTiming) {
                                    .secondUserScore];
 }
 
-- (void)setPointersOfChoosedAnswers {
+#pragma mark - score labels colored
+
+- (void)colorOpponentUserScoreLabel {
+  __weak typeof(self) weakSelf = self;
+
+  BOOL isRight =
+      [QZBSessionManager sessionManager].opponentUserLastAnswer.isRight;
+
+  UIColor *color;
+
+  if (isRight) {
+    color = [UIColor greenColor];
+  } else {
+    color = [UIColor redColor];
+  }
+
+  [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
+      animations:^{ weakSelf.opponentScore.textColor = color; }
+      completion:^(BOOL finished){
+
+      }];
+}
+- (void)colorFirstUserScoreLabel {
+  __weak typeof(self) weakSelf = self;
+
+  BOOL isRight = [QZBSessionManager sessionManager].firstUserLastAnswer.isRight;
+
+  UIColor *color;
+
+  if (isRight) {
+    color = [UIColor greenColor];
+  } else {
+    color = [UIColor redColor];
+  }
+
+  [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
+      animations:^{ weakSelf.firstUserScore.textColor = color; }
+      completion:^(BOOL finished){
+
+      }];
+}
+
+#pragma mark - status bar
+
+- (BOOL)prefersStatusBarHidden {
+  return YES;
 }
 
 @end

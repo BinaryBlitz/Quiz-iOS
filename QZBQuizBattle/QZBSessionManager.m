@@ -307,7 +307,7 @@
       self.questionTimer = nil;
       
     }
-    self.currentTime = 0;
+    
     self.gameSession = nil;
     self.bot = nil;
   }
