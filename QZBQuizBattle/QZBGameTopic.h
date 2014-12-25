@@ -10,8 +10,9 @@
 
 @interface QZBGameTopic : NSObject
 
-@property(copy, nonatomic, readonly) NSString *name;
-
+@property(copy,   nonatomic, readonly) NSString *name;
+@property(assign, nonatomic, readonly) NSInteger topic_id;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
+
 @end

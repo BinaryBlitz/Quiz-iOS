@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString *question;
 @property (nonatomic, strong) NSArray *answers;
 @property (nonatomic, assign) NSUInteger rightAnswer;
+@property (assign, nonatomic) NSInteger questionId;
 
 @end
 

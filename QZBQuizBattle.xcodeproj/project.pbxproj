@@ -18,6 +18,7 @@
 		191559D51A39CDD400462C93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 191559D41A39CDD400462C93 /* Images.xcassets */; };
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
+		1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED01A4C4A3500E63D6B /* QZBCategory.m */; };
 		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB21A4B062D0016130B /* QZBGameTopic.m */; };
@@ -66,6 +67,8 @@
 		191559DD1A39CDD400462C93 /* QZBQuizBattleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QZBQuizBattleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559E21A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
+		1974BECF1A4C4A3500E63D6B /* QZBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategory.h; sourceTree = "<group>"; };
+		1974BED01A4C4A3500E63D6B /* QZBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategory.m; sourceTree = "<group>"; };
 		1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicChooserControllerViewController.h; sourceTree = "<group>"; };
 		1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicChooserControllerViewController.m; sourceTree = "<group>"; };
 		1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicTableViewCell.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 			children = (
 				1976FBB11A4B062D0016130B /* QZBGameTopic.h */,
 				1976FBB21A4B062D0016130B /* QZBGameTopic.m */,
+				1974BECF1A4C4A3500E63D6B /* QZBCategory.h */,
+				1974BED01A4C4A3500E63D6B /* QZBCategory.m */,
 			);
 			name = topic;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
+				1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,

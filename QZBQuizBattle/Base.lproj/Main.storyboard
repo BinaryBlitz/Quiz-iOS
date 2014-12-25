@@ -75,19 +75,19 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wG9-JP-ykf">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="wBl-dD-fGs"/>
+                                    <constraint firstAttribute="width" constant="111" id="41J-aP-CS3"/>
                                 </constraints>
                                 <state key="normal" title="Отменить">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="wBl-dD-fGs"/>
+                                        <exclude reference="41J-aP-CS3"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="wBl-dD-fGs"/>
+                                        <include reference="41J-aP-CS3"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -97,12 +97,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="wG9-JP-ykf" secondAttribute="trailing" constant="149" id="G3v-wL-0Q6"/>
+                            <constraint firstItem="wG9-JP-ykf" firstAttribute="centerX" secondItem="lgA-Qt-JnX" secondAttribute="centerX" id="5in-Wf-P3i"/>
+                            <constraint firstAttribute="bottom" secondItem="wG9-JP-ykf" secondAttribute="bottom" constant="20" symbolic="YES" id="SsB-hs-37b"/>
                             <constraint firstItem="lgA-Qt-JnX" firstAttribute="trailing" secondItem="QqH-tW-IVX" secondAttribute="trailingMargin" id="Vdr-bu-VlN"/>
                             <constraint firstItem="lgA-Qt-JnX" firstAttribute="centerY" secondItem="QqH-tW-IVX" secondAttribute="centerY" id="Zvx-W6-Vuk"/>
-                            <constraint firstItem="wG9-JP-ykf" firstAttribute="leading" secondItem="QqH-tW-IVX" secondAttribute="leadingMargin" constant="149" id="lB7-uY-m1r"/>
                             <constraint firstItem="lgA-Qt-JnX" firstAttribute="leading" secondItem="QqH-tW-IVX" secondAttribute="leadingMargin" id="lu7-79-L5b"/>
-                            <constraint firstItem="yhL-v2-lZf" firstAttribute="top" secondItem="wG9-JP-ykf" secondAttribute="bottom" constant="20" id="wOD-9A-8AX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -113,9 +112,8 @@
                                 <exclude reference="Vdr-bu-VlN"/>
                                 <exclude reference="Zvx-W6-Vuk"/>
                                 <exclude reference="lu7-79-L5b"/>
-                                <exclude reference="G3v-wL-0Q6"/>
-                                <exclude reference="lB7-uY-m1r"/>
-                                <exclude reference="wOD-9A-8AX"/>
+                                <exclude reference="5in-Wf-P3i"/>
+                                <exclude reference="SsB-hs-37b"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -127,9 +125,8 @@
                                 <include reference="Vdr-bu-VlN"/>
                                 <include reference="Zvx-W6-Vuk"/>
                                 <include reference="lu7-79-L5b"/>
-                                <include reference="G3v-wL-0Q6"/>
-                                <include reference="lB7-uY-m1r"/>
-                                <include reference="wOD-9A-8AX"/>
+                                <include reference="5in-Wf-P3i"/>
+                                <include reference="SsB-hs-37b"/>
                             </mask>
                         </variation>
                     </view>
@@ -597,6 +594,15 @@
                                     <action selector="rematchAction:" destination="cHr-bK-2eS" eventType="touchUpInside" id="Whx-Wr-XWs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hw-Vm-uxn">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Choose topic">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="162" y="467" width="92" height="30"/>
+                                </variation>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -606,6 +612,7 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="03s-hj-I3q"/>
+                                <exclude reference="6hw-Vm-uxn"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="jez-go-TEI"/>
@@ -615,6 +622,7 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="03s-hj-I3q"/>
+                                <include reference="6hw-Vm-uxn"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="jez-go-TEI"/>
@@ -654,13 +662,14 @@
                         <viewControllerLayoutGuide type="bottom" id="GcX-V9-ELg"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vy9-QZ-YSs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8cQ-8e-sXT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="topicCell" rowHeight="74" id="Sby-vg-eef" customClass="QZBTopicTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="topicCell" rowHeight="74" id="Sby-vg-eef" customClass="QZBTopicTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sby-vg-eef" id="RCd-HA-zBz">

@@ -12,6 +12,7 @@
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
 #import "QZBGameTopic.h"
+#import "QZBServerManager.h"
 
 @interface QZBProgressViewController ()
 
@@ -43,7 +44,7 @@
   self.time = 0;
 
   [self initSession];
-  [self initBot];
+  //[self initBot];
 
   self.myTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                                   target:self
@@ -59,13 +60,13 @@
     [self.progress setProgress:(float)self.time / 10 animated:YES];
 
   } else {
-    [self.myTimer invalidate];
-    self.myTimer = nil;
+   // [self.myTimer invalidate];
+  //  self.myTimer = nil;
 
-    [[QZBSessionManager sessionManager] setSession:self.session];
-    [[QZBSessionManager sessionManager] setBot:self.bot];
+   // [[QZBSessionManager sessionManager] setSession:self.session];
+    //[[QZBSessionManager sessionManager] setBot:self.bot];
 
-    [self performSegueWithIdentifier:@"showGame" sender:nil];
+   // [self performSegueWithIdentifier:@"showGame" sender:nil];
   }
 }
 
@@ -88,6 +89,28 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
+  
+  __weak typeof(self) weakSelf = self;
+  
+  [[QZBServerManager sharedManager] postSessionWithID:self.topic.topic_id
+                                            onSuccess:^(QZBSession *session) {
+                                              weakSelf.session = session;
+                                              [weakSelf.myTimer invalidate];
+                                              weakSelf.myTimer = nil;
+                                              
+                                              [[QZBSessionManager sessionManager] setSession:weakSelf.session];
+                                              //[[QZBSessionManager sessionManager] setBot:self.bot];
+                                              
+                                              [weakSelf performSegueWithIdentifier:@"showGame" sender:nil];
+                                              
+                                              
+    
+  } onFailure:^(NSError *error, NSInteger statusCode) {
+    
+  }];
+  [[QZBServerManager sharedManager] postSessionWithID:self.topic.topic_id onSuccess:nil onFailure:nil];
+  
+  
   NSArray *answers1 = @[ @"ни одной", @"1", @"2", @"3" ];
 
   QZBQuestion *
@@ -195,9 +218,9 @@
   QZBUser *firstUser = [[QZBUser alloc] init];
   QZBUser *opponentUser = [[QZBUser alloc] init];
 
-  self.session = [[QZBSession alloc] initWithQestions:qestions
+  /*self.session = [[QZBSession alloc] initWithQestions:qestions
                                                 first:firstUser
-                                         opponentUser:opponentUser];
+                                         opponentUser:opponentUser];*/
 }
 
 - (void)initBot {

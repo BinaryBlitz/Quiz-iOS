@@ -54,6 +54,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [self prepareQuestion];
   [self showQuestionAndAnswers];
 }
@@ -92,8 +93,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   UIColor *color;
   
   if (isTrue) {
-    
-    
    color= [UIColor greenColor];
   } else {
     color = [UIColor redColor];

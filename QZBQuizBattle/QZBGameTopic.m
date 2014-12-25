@@ -10,6 +10,7 @@
 
 @interface QZBGameTopic()
 @property(copy, nonatomic) NSString *name;
+@property(assign, nonatomic) NSInteger topic_id;
 
 @end
 
@@ -20,6 +21,7 @@
   self = [super init];
   if (self) {
     self.name = [dict objectForKey:@"name"];
+    self.topic_id = [[dict objectForKey:@"id"] integerValue];
   }
   return self;
 }

@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, QZBWinnew) {
                            first:(QZBUser *)firstUser
                     opponentUser:(QZBUser *)opponentUser;
 
+-(instancetype)initWIthDictionary:(NSDictionary *)dict;
+
 -(void)gaveAnswerByUser:(QZBUserInSession*)user
              forQestion:(QZBQuestion *)qestion
                  answer:(QZBAnswer*)answer;

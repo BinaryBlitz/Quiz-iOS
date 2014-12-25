@@ -32,6 +32,13 @@
   }
   return self;
 }
+/*
+- (instancetype)initWithDictionary:(NSDictionary *)dict{
+  
+  
+  
+}
+*/
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];

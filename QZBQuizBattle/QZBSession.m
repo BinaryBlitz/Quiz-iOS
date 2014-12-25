@@ -7,6 +7,7 @@
 //
 
 #import "QZBSession.h"
+#import "QZBUser.h"
 
 static const NSUInteger QZBTimeForAnswer = 10;
 static const NSUInteger QZBResultForRightAnswer = 10;
@@ -14,12 +15,13 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
 @interface QZBSession ()
 
-@property(nonatomic, strong) NSArray *questions;
-@property(nonatomic, strong) QZBUserInSession *firstUser;
-@property(nonatomic, strong) QZBUserInSession *opponentUser;
-@property(nonatomic, assign) NSUInteger currentQestion;
-@property(nonatomic, strong) NSArray *firstUserAnswers;
-@property(nonatomic, strong) NSArray *oponentUserAnswers;
+@property(strong,nonatomic) NSArray *questions;
+@property(strong,nonatomic) QZBUserInSession *firstUser;
+@property(strong,nonatomic) QZBUserInSession *opponentUser;
+@property(assign,nonatomic) NSUInteger currentQestion;
+@property(strong,nonatomic) NSArray *firstUserAnswers;
+@property(strong,nonatomic) NSArray *oponentUserAnswers;
+@property(assign, nonatomic) NSInteger session_id;
 
 
 @end
@@ -36,8 +38,60 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     self.firstUser = [[QZBUserInSession alloc] initWithUser:firstUser];
     self.opponentUser = [[QZBUserInSession alloc] initWithUser:opponentUser];
     self.currentQestion = 0;
+    
   }
   return self;
+}
+
+
+//redo users
+-(instancetype)initWIthDictionary:(NSDictionary *)dict{
+  
+  NSMutableArray *questions = [NSMutableArray array];
+  NSArray *arrayOfQuestionDicts = [dict objectForKey:@"session_questions"];
+  
+  NSNumber *topic_id = [dict objectForKey:@"id"];
+  
+  
+  
+  NSString *topic = [NSString stringWithFormat:@"%@", topic_id];
+  
+  for(NSDictionary *d in arrayOfQuestionDicts){
+    
+    NSDictionary *questDict = [d objectForKey:@"question"];
+    
+    NSString *questText = [questDict objectForKey:@"content"];
+    
+    NSInteger correctAnswer = -1;
+    
+    NSArray *answersDicts = [questDict objectForKey:@"answers"];
+    
+    NSMutableArray *answers = [NSMutableArray array];
+    
+    NSInteger i = 0;
+    for(NSDictionary *answDict in answersDicts){
+      
+      [answers addObject:[answDict objectForKey:@"content"]];
+      NSNumber *isRight = [answDict objectForKey:@"correct"];
+      if([isRight isEqual:@(1)]){
+        correctAnswer = i;
+      }
+      i++;
+    }
+    
+    
+    
+    QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:topic question:questText answers:answers rightAnswer:correctAnswer];
+    [questions addObject:question];
+  }
+  
+  NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
+  NSInteger opponentUserId = -1;
+  
+  QZBUser *user1 = [[QZBUser alloc] initWithId:firsUserId];
+  QZBUser *opponent = [[QZBUser alloc] initWithId:opponentUserId];
+  
+  return [self initWithQestions:questions first:user1 opponentUser:opponent];
 }
 
 #pragma mark - checking answers

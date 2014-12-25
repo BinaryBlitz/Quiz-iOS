@@ -19,53 +19,41 @@
 }
 */
 
--(void)addTriangleLeft{
-  
-  
-  CGRect rect = CGRectMake(0, 4*self.frame.size.height/12, self.frame.size.height/12, self.frame.size.height/3);
-  
+- (void)addTriangleLeft {
+  CGRect rect =
+      CGRectMake(0, 4 * self.frame.size.height / 12,
+                 self.frame.size.height / 12, self.frame.size.height / 3);
 
-  
   QZBAnswerTriangle *triangle = [[QZBAnswerTriangle alloc] initWithFrame:rect];
   //[triangle setNeedsDisplay];
   triangle.backgroundColor = [UIColor clearColor];
   triangle.tintColor = [UIColor redColor];
-  
-  [self addSubview:triangle];
 
+  [self addSubview:triangle];
 }
 
--(void)addTriangleRight{
-  
-  CGRect rect = CGRectMake(11*self.frame.size.width/12 ,
-                           4*self.frame.size.height/12,
-                           self.frame.size.height/12,
-                           self.frame.size.width/3);
+- (void)addTriangleRight {
+  CGRect rect = CGRectMake(
+      11 * self.frame.size.width / 12, 4 * self.frame.size.height / 12,
+      self.frame.size.height / 12, self.frame.size.width / 3);
 
-  
   QZBAnswerTriangle *triangle = [[QZBAnswerTriangle alloc] initWithFrame:rect];
-  triangle.transform =  CGAffineTransformMakeRotation(M_PI);
+  triangle.transform = CGAffineTransformMakeRotation(M_PI);
   //[triangle setNeedsDisplay];
   triangle.backgroundColor = [UIColor clearColor];
   triangle.tintColor = [UIColor redColor];
-  
+
   [self addSubview:triangle];
-  
 }
 
--(void)unshowTriangles{
-  
+- (void)unshowTriangles {
   NSArray *subviews = self.subviews;
-  
-  for(UIView *view in subviews){
-    
-    if([view isKindOfClass:[QZBAnswerTriangle class]]){
-    
+
+  for (UIView *view in subviews) {
+    if ([view isKindOfClass:[QZBAnswerTriangle class]]) {
       [view removeFromSuperview];
-      
     }
   }
-  
 }
 
 @end
