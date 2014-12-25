@@ -32,13 +32,24 @@
   }
   return self;
 }
-/*
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict{
   
+  NSArray *session_questions = [dict objectForKey:@"session_questions"];
   
+  NSMutableArray *answersWithTime = [NSMutableArray array];
   
+  for(NSDictionary *questDict in session_questions){
+    NSUInteger answerID = [[questDict objectForKey:@"opponent_answer_id"] unsignedIntegerValue];
+    NSUInteger time =     [[questDict objectForKey:@"opponent_time"] unsignedIntegerValue];
+    QZBAnswer *answerWithTime = [[QZBAnswer alloc] initWithAnswerNumber:answerID answerTime:time];
+    
+    [answersWithTime addObject:answerWithTime];
+  }
+  
+  return [self initWithAnswersAndTimes:answersWithTime];
 }
-*/
+
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];

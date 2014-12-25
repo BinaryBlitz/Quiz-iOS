@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 @class QZBSession;
+@class QZBOpponentBot;
 @interface QZBServerManager : NSObject
 
 + (QZBServerManager*) sharedManager ;
@@ -19,7 +20,7 @@
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) postSessionWithID:(NSInteger) topic_id
-                onSuccess:(void(^)(QZBSession *session)) success
+                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                 onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 @end

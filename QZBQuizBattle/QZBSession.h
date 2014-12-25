@@ -12,6 +12,7 @@
 #import "QZBQuestion.h"
 #import "QZBAnswer.h"
 #import "QZBQuestionWithUserAnswer.h"
+#import "QZBAnswerTextAndID.h"
 
 
 @class QZBUserInSession;

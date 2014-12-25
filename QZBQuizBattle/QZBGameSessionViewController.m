@@ -120,7 +120,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   self.qestionLabel.text = question.question;
   int i = 0;
   for (UIButton *b in self.answerButtons) {
-    [b setTitle:question.answers[i] forState:UIControlStateNormal];
+    QZBAnswerTextAndID *answerAndId = question.answers[i];
+    
+    [b setTitle:answerAndId.answerText forState:UIControlStateNormal];
+    b.tag = answerAndId.answerID;
     i++;
   }
 }

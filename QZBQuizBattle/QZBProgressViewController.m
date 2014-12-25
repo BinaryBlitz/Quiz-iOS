@@ -93,13 +93,14 @@
   __weak typeof(self) weakSelf = self;
   
   [[QZBServerManager sharedManager] postSessionWithID:self.topic.topic_id
-                                            onSuccess:^(QZBSession *session) {
+                                            onSuccess:^(QZBSession *session,QZBOpponentBot *bot) {
                                               weakSelf.session = session;
+                                              weakSelf.bot = bot;
                                               [weakSelf.myTimer invalidate];
                                               weakSelf.myTimer = nil;
                                               
                                               [[QZBSessionManager sessionManager] setSession:weakSelf.session];
-                                              //[[QZBSessionManager sessionManager] setBot:self.bot];
+                                              [[QZBSessionManager sessionManager] setBot:self.bot];
                                               
                                               [weakSelf performSegueWithIdentifier:@"showGame" sender:nil];
                                               
@@ -110,7 +111,7 @@
   }];
   [[QZBServerManager sharedManager] postSessionWithID:self.topic.topic_id onSuccess:nil onFailure:nil];
   
-  
+  /*
   NSArray *answers1 = @[ @"ни одной", @"1", @"2", @"3" ];
 
   QZBQuestion *
@@ -216,13 +217,13 @@
       @[ question1, question2, question3, question4, question5, question6, question9 ];
 
   QZBUser *firstUser = [[QZBUser alloc] init];
-  QZBUser *opponentUser = [[QZBUser alloc] init];
+  QZBUser *opponentUser = [[QZBUser alloc] init];*/
 
   /*self.session = [[QZBSession alloc] initWithQestions:qestions
                                                 first:firstUser
                                          opponentUser:opponentUser];*/
 }
-
+/*
 - (void)initBot {
   QZBAnswer *answer1 = [[QZBAnswer alloc] initWithAnswerNumber:0 answerTime:4];
   QZBAnswer *answer2 = [[QZBAnswer alloc] initWithAnswerNumber:1 answerTime:9];
@@ -235,6 +236,6 @@
   NSArray *answers = @[ answer1, answer2, answer3, answer4, answer5, answer6, answer7];
 
   self.bot = [[QZBOpponentBot alloc] initWithAnswersAndTimes:answers];
-}
+}*/
 
 @end

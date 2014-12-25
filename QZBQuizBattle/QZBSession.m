@@ -50,13 +50,15 @@ static const NSUInteger QZBResultForRightAnswer = 10;
   NSMutableArray *questions = [NSMutableArray array];
   NSArray *arrayOfQuestionDicts = [dict objectForKey:@"session_questions"];
   
-  NSNumber *topic_id = [dict objectForKey:@"id"];
+  NSInteger topic_id = [[dict objectForKey:@"id"] integerValue];
   
   
   
-  NSString *topic = [NSString stringWithFormat:@"%@", topic_id];
+  NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
   
   for(NSDictionary *d in arrayOfQuestionDicts){
+    
+  //  NSLog(@"%@", d);
     
     NSDictionary *questDict = [d objectForKey:@"question"];
     
@@ -71,10 +73,17 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     NSInteger i = 0;
     for(NSDictionary *answDict in answersDicts){
       
-      [answers addObject:[answDict objectForKey:@"content"]];
+     // NSLog(@"%@", answDict);
+      
+      NSString *textOfAnswer = [answDict objectForKey:@"content"];
+      NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];
+      QZBAnswerTextAndID *answerWithId = [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer
+                                                                         answerID:answerID];
+      
+      [answers addObject:answerWithId];
       NSNumber *isRight = [answDict objectForKey:@"correct"];
       if([isRight isEqual:@(1)]){
-        correctAnswer = i;
+        correctAnswer = answerID;//[[answDict objectForKey:@"id"] integerValue];
       }
       i++;
     }

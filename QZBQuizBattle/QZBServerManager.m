@@ -9,6 +9,7 @@
 #import "QZBServerManager.h"
 #import "QZBGameTopic.h"
 #import "QZBSession.h"
+#import "QZBOpponentBot.h"
 
 @interface QZBServerManager()
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
@@ -120,7 +121,7 @@
 
 
 - (void) postSessionWithID:(NSInteger) topic_id
-               onSuccess:(void(^)(QZBSession *session)) success
+               onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
   NSDictionary* params =@{@"session":@{@"host_id":@(1),@"topic_id":@(1)}};
@@ -131,9 +132,12 @@
     
     NSLog(@"JSON: %@", responseObject);
                                QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
+                               //NSNumber *isOffline = [responseObject objectForKey:@"offline"];
+                               QZBOpponentBot *bot = [[QZBOpponentBot alloc] initWithDictionary:responseObject];
+                               
                                
                                if(success){
-                                 success(session);
+                                 success(session,bot);
                                }
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
