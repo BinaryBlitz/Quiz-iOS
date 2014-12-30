@@ -50,7 +50,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   
   
-  if ([segue.identifier isEqualToString:@"AddPlayer"]) {
+  if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
     
     QZBProgressViewController *navigationController =
     segue.destinationViewController;
@@ -89,6 +89,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   self.choosedTopic = self.topics[indexPath.row];
+  NSLog(@"%ld", (long)self.choosedTopic.topic_id);
   [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
 }
 

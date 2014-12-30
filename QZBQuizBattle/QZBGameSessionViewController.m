@@ -18,6 +18,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
 @property(assign, nonatomic) int time;
 
+@property(nonatomic) UIBackgroundTaskIdentifier backgroundTask;
+@property(strong, nonatomic) NSTimer *globalTimer;//нужен для работы проги в бекграунде
+
+
 @end
 
 @implementation QZBGameSessionViewController
@@ -25,9 +29,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.backgroundTask = UIBackgroundTaskInvalid;
+
   for (UIButton *b in self.answerButtons) {
     b.enabled = NO;
     b.alpha = 0.0;
+    [b setExclusiveTouch:YES];
   }
 
   [[QZBSessionManager sessionManager] addObserver:self
@@ -57,12 +64,26 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   [super viewDidAppear:animated];
   [self prepareQuestion];
   [self showQuestionAndAnswers];
+  [self timeCountingStart];
+
+  self.backgroundTask = [[UIApplication
+          sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+      NSLog(
+          @"Background handler called. Not running background tasks anymore.");
+      [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+      self.backgroundTask = UIBackgroundTaskInvalid;
+  }];
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[QZBSessionManager sessionManager] removeObserver:self
-                                          forKeyPath:@"currentTime"];
+
+  @try {
+    [[QZBSessionManager sessionManager] removeObserver:self
+                                            forKeyPath:@"currentTime"];
+  }
+  @catch (NSException *__unused exception) {
+  }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,10 +91,50 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - test methods
+
+- (void)timeCountingStart {
+  self.time = 0;
+  self.globalTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                   target:self
+                                 selector:@selector(updateTime:)
+                                 userInfo:nil
+                                  repeats:YES];
+}
+
+- (void)updateTime:(NSTimer *)timer {
+  
+
+  self.time++;
+
+  NSLog(@"%d",self.time);
+  if (self.time < 1000) {
+  } else {
+    if (timer != nil) {
+      self.time = 0;
+      [timer invalidate];
+      timer = nil;
+      
+      if (self.backgroundTask != UIBackgroundTaskInvalid)
+      {
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+        self.backgroundTask = UIBackgroundTaskInvalid;
+      }
+      
+      
+    }
+  }
+}
+
 #pragma mark - actions
 
 - (IBAction)pressAnswerButton:(UIButton *)sender {
   // NSLog(@"%ld", (long)sender.tag);
+
+  for (UIButton *b in self.answerButtons) {
+    b.enabled = NO;
+  }
+
   [[QZBSessionManager sessionManager]
       firstUserAnswerCurrentQuestinWithAnswerNumber:sender.tag];
 
@@ -91,23 +152,18 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   [button addTriangleLeft];
 
   UIColor *color;
-  
+
   if (isTrue) {
-   color= [UIColor greenColor];
+    color = [UIColor greenColor];
   } else {
     color = [UIColor redColor];
   }
-  
-  [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS animations:^{
-    sender.backgroundColor = color;
-  } completion:^(BOOL finished) {
-    
-  }];
-  
 
-  for (UIButton *b in self.answerButtons) {
-    b.enabled = NO;
-  }
+  [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
+      animations:^{ sender.backgroundColor = color; }
+      completion:^(BOOL finished){
+
+      }];
 
   //[self UNShowQuestinAndAnswers];
 }
@@ -121,7 +177,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
   int i = 0;
   for (UIButton *b in self.answerButtons) {
     QZBAnswerTextAndID *answerAndId = question.answers[i];
-    
+
     [b setTitle:answerAndId.answerText forState:UIControlStateNormal];
     b.tag = answerAndId.answerID;
     i++;
@@ -317,6 +373,16 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
                         UIViewAnimationOptionTransitionNone
                 animations:^{ weakSelf.roundLabel.alpha = 1.0; }
                 completion:^(BOOL finished) {
+                  
+                  [self.globalTimer invalidate];
+                  self.globalTimer = nil;
+                  
+                  if (self.backgroundTask != UIBackgroundTaskInvalid)
+                  {
+                    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+                    self.backgroundTask = UIBackgroundTaskInvalid;
+                  }
+                  
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                                  (int64_t)(2 * NSEC_PER_SEC)),
                                    dispatch_get_main_queue(), ^{

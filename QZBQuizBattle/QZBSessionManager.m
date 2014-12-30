@@ -75,6 +75,9 @@
   _gameSession = session;
   self.currentQuestion = [session.questions firstObject];
   
+  self.firstUserLastAnswer = nil;
+  self.firstUserLastAnswer = nil;
+  
   self.firstUserScore = 0;
   self.secondUserScore = 0;
   self.didFirstUserAnswered = NO;
@@ -104,8 +107,8 @@
 - (void)updateTime:(NSTimer *)timer {
   self.currentTime++;
 
+ // NSLog(@"%lu",(unsigned long)self.currentTime);
   if (self.currentTime < 10) {
-    //NSLog(@"%lu", (unsigned long)self.currentTime);
 
   } else {
     if (timer != nil) {
@@ -113,8 +116,6 @@
       timer = nil;
       [self postNotificationNeedUnshow];
     }
-
-   // self.answered = YES;
   }
 }
 
@@ -148,6 +149,11 @@
 
 //главный метод для первого пользователя
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum {
+  
+  if(self.didFirstUserAnswered){
+    return;
+  }
+  
   self.didFirstUserAnswered = YES;
   [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                  time:self.currentTime];
@@ -157,6 +163,11 @@
 
 //главный метод для второго пользователя
 -(void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum{
+  
+  
+  if(self.didOpponentUserAnswered){
+    return;
+  }
   
   self.didOpponentUserAnswered = YES;
   

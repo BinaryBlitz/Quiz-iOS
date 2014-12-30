@@ -70,7 +70,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     
     NSMutableArray *answers = [NSMutableArray array];
     
-    NSInteger i = 0;
+    //NSInteger i = 0;
     for(NSDictionary *answDict in answersDicts){
       
      // NSLog(@"%@", answDict);
@@ -85,14 +85,26 @@ static const NSUInteger QZBResultForRightAnswer = 10;
       if([isRight isEqual:@(1)]){
         correctAnswer = answerID;//[[answDict objectForKey:@"id"] integerValue];
       }
-      i++;
+    //  i++;
     }
+    
+   //перемешивает ответы в массиве(json приходит так, что правильный всегда первый
+    NSUInteger count = [answers count];
+    for (NSUInteger i = 0; i < count; ++i) {
+      
+      NSUInteger nElements = count - i;
+      NSUInteger n = (arc4random() % nElements) + i;
+      [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+
     
     
     
     QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:topic question:questText answers:answers rightAnswer:correctAnswer];
     [questions addObject:question];
   }
+  
+  
   
   NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
   NSInteger opponentUserId = -1;

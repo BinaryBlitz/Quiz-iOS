@@ -8,10 +8,9 @@
 
 #import "QZBEndSessionControllerViewController.h"
 #import "QZBGameTopic.h"
+#import "QZBProgressViewController.h"
 
 @interface QZBEndSessionControllerViewController ()
-
-
 
 @end
 
@@ -38,9 +37,29 @@
 */
 - (IBAction)rematchAction:(UIButton *)sender {
   
+  NSLog(@"rematch");
+  NSArray *controllers = self.navigationController.viewControllers;
   
-  [self.navigationController popToRootViewControllerAnimated:NO];
+  UIViewController *destinationVC;
+  
+  for(UIViewController *controller in controllers){
+    
+    if([controller isKindOfClass:[QZBProgressViewController class]]){
+      NSLog(@"%@",[controller class]);
+      
+      destinationVC = controller;
+      break;
+      
+    }
+    
+  }
+  
+  [self.navigationController popToViewController:destinationVC animated:YES];
+  
   
 }
+- (IBAction)ChooseTopicAction:(UIButton *)sender {
+  [self.navigationController popToRootViewControllerAnimated:YES];
+ }
 
 @end

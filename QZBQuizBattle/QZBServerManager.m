@@ -95,7 +95,7 @@
      NSLog(@"JSON: %@", responseObject);
      
      //NSArray* dictsArray = [responseObject objectForKey:@"topics"];
-     NSLog(@"%@", [responseObject firstObject]);
+     //NSLog(@"%@", [responseObject firstObject]);
      
      NSMutableArray* objectsArray = [NSMutableArray array];
      
@@ -124,7 +124,7 @@
                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"session":@{@"host_id":@(1),@"topic_id":@(1)}};
+  NSDictionary* params =@{@"session":@{@"host_id":@(1),@"topic_id":@(topic_id)}};
   
   [self.requestOperationManager POST:@"sessions"
                           parameters:params
