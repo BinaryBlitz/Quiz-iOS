@@ -25,6 +25,7 @@
                      question:(NSString *)question
                       answers:(NSArray *) answers
                   rightAnswer:(NSUInteger) rightAnswer
+                   questionID:(NSInteger) questionID
 {
   self = [super init];
   if (self) {
@@ -32,7 +33,7 @@
     self.question    = question;
     self.answers     = answers;
     self.rightAnswer = rightAnswer;
-    
+    self.questionId = questionID;
   }
   return self;
 }

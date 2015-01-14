@@ -35,7 +35,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict{
   
-  NSArray *session_questions = [dict objectForKey:@"session_questions"];
+  NSArray *session_questions = [dict objectForKey:@"game_session_questions"];
   
   NSMutableArray *answersWithTime = [NSMutableArray array];
   

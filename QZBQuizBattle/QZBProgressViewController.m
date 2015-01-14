@@ -86,7 +86,7 @@
                                               [[QZBSessionManager sessionManager] setSession:weakSelf.session];
                                               [[QZBSessionManager sessionManager] setBot:self.bot];
                                               
-                                                [weakSelf performSegueWithIdentifier:@"showGame" sender:nil];};
+                                              [weakSelf performSegueWithIdentifier:@"showGame" sender:nil];};
                                               
                                               
     

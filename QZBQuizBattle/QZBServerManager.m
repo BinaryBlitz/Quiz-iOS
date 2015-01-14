@@ -45,9 +45,7 @@
 
 - (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-  
-  
-  
+
   [self.requestOperationManager
    GET:@"categories"
    parameters:nil
@@ -120,13 +118,15 @@
 }
 
 
+#pragma mark - session methods
+
 - (void) postSessionWithID:(NSInteger) topic_id
                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"session":@{@"host_id":@(1),@"topic_id":@(topic_id)}};
+  NSDictionary* params =@{@"game_session":@{@"host_id":@(1),@"topic_id":@(topic_id)}};
   
-  [self.requestOperationManager POST:@"sessions"
+  [self.requestOperationManager POST:@"game_sessions"
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
@@ -145,19 +145,38 @@
   }];
   
 }
-/*
--(void)postUserWithName:(NSString *)name
-                  email:(NSString *)email
-               password:(NSString *)password
-              onSuccess:(void(^)(QZB *)) success
-              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure
-
-*/
 
 
-
-
-
-
+-(void)PATCHSessionQuestionWithID:(NSInteger)sessionQuestionID
+                           answer:(NSInteger)answerID
+                             time:(NSInteger)answerTime
+                        onSuccess:(void(^)()) success
+                        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
+  
+  
+  //{"host_answer_id"=>"105", "host_time"=>"8", "id"=>"523"}
+  
+  //{game_session_question: { host_answer_id: 11, host_time: 5 }}
+  
+  NSDictionary *params = @{@"game_session_question": @{ @"host_answer_id":@(answerID) , @"host_time": @(answerTime)}};
+  
+  NSLog(@"answer %ld  time %ld   sessionID %ld", answerID, answerTime, sessionQuestionID);
+  
+  
+  
+  NSString *URLString = [NSString stringWithFormat:@"game_session_questions/%ld",sessionQuestionID ];
+  
+  [self.requestOperationManager PATCH:URLString
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                
+    NSLog(@"patched");
+                                
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"%@", error);
+    
+  }];
+}
 
 @end

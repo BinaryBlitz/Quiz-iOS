@@ -107,7 +107,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
   self.time++;
 
-  NSLog(@"%d",self.time);
+ // NSLog(@"%d",self.time);
   if (self.time < 1000) {
   } else {
     if (timer != nil) {

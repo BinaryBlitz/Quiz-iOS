@@ -12,15 +12,17 @@
 
 @interface QZBQuestion : NSObject
 
-@property (nonatomic, copy, readonly) NSString *topic;
-@property (nonatomic, copy, readonly) NSString *question;
-@property (nonatomic, strong, readonly) NSArray *answers;//QZBAnswerTextAndID
-@property (nonatomic, assign, readonly) NSUInteger rightAnswer;
+@property (nonatomic, copy,      readonly) NSString *topic;
+@property (nonatomic, copy,      readonly) NSString *question;
+@property (nonatomic, strong,    readonly) NSArray *answers;//QZBAnswerTextAndID
+@property (nonatomic, assign,    readonly) NSUInteger rightAnswer;
+@property (assign,    nonatomic, readonly) NSInteger questionId;
 
 
 - (instancetype)initWithTopic:(NSString *)topic
                      question:(NSString *)question
                       answers:(NSArray *) answers
-                  rightAnswer:(NSUInteger) rightAnswer;
+                  rightAnswer:(NSUInteger) rightAnswer
+                   questionID:(NSInteger) questionID;
 
 @end

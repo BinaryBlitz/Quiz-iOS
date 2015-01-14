@@ -75,6 +75,9 @@
   _gameSession = session;
   self.currentQuestion = [session.questions firstObject];
   
+  //TODO timer invalidate
+  
+  
   self.firstUserLastAnswer = nil;
   self.firstUserLastAnswer = nil;
   
@@ -179,6 +182,14 @@
 //метод для подсчета очков первого пользователя
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
                                                  time:(NSUInteger)time {
+  
+  
+  [[QZBServerManager sharedManager] PATCHSessionQuestionWithID:self.currentQuestion.questionId
+answer:answerNum time:time onSuccess:^{
+  
+} onFailure:^(NSError *error, NSInteger statusCode) {
+  
+}];
   
   
   [self someAnswerCurrentQuestinUser:self.gameSession.firstUser

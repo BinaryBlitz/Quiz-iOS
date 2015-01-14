@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "QZBSession.h"
 #import "QZBOpponentBot.h"
+#import "QZBServerManager.h"
 
 @interface QZBSessionManager : NSObject
 

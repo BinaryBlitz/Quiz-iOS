@@ -48,7 +48,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 -(instancetype)initWIthDictionary:(NSDictionary *)dict{
   
   NSMutableArray *questions = [NSMutableArray array];
-  NSArray *arrayOfQuestionDicts = [dict objectForKey:@"session_questions"];
+  NSArray *arrayOfQuestionDicts = [dict objectForKey:@"game_session_questions"];
   
   NSInteger topic_id = [[dict objectForKey:@"id"] integerValue];
   
@@ -58,11 +58,13 @@ static const NSUInteger QZBResultForRightAnswer = 10;
   
   for(NSDictionary *d in arrayOfQuestionDicts){
     
-  //  NSLog(@"%@", d);
     
     NSDictionary *questDict = [d objectForKey:@"question"];
     
     NSString *questText = [questDict objectForKey:@"content"];
+    
+  
+    NSInteger questionID = [[d objectForKey:@"id"] integerValue];
     
     NSInteger correctAnswer = -1;
     
@@ -96,11 +98,19 @@ static const NSUInteger QZBResultForRightAnswer = 10;
       NSUInteger n = (arc4random() % nElements) + i;
       [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
+    
 
     
     
+    QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:topic
+                                                      question:questText
+                                                       answers:answers
+                                                   rightAnswer:correctAnswer
+                                                    questionID:questionID];
     
-    QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:topic question:questText answers:answers rightAnswer:correctAnswer];
+    
+    
+    NSLog(@"%d", questionID);
     [questions addObject:question];
   }
   

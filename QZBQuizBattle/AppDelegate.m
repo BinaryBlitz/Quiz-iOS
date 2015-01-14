@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import <Pusher/Pusher.h>
 
-@interface AppDelegate ()
+@interface AppDelegate ()<PTPusherDelegate>
+
+@property(strong, nonatomic) PTPusher *client;
 
 @end
 
@@ -17,6 +20,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
+  
+  /*
+  [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
+                                                                       settingsForTypes:UIUserNotificationTypeAlert
+                                                                       categories:nil]];
+  
+  [[UIApplication sharedApplication] registerForRemoteNotifications];
+  */
+  
+  
+  _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
+  
+  [self.client connect];
+  
+  PTPusherChannel *channel = [_client subscribeToChannelNamed:@"my-channel"];
+  
+  [channel bindToEventNamed:@"my-event" handleWithBlock:^(PTPusherEvent *channelEvent) {
+   
+    NSLog(@"%@", channelEvent);
+  }];
+  
   return YES;
 }
 
@@ -124,4 +148,26 @@
     }
 }
 
+#pragma mark - notifications
+/*
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken  {
+  NSLog(@"My token is: %@", deviceToken);
+}
+
+
+- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  NSLog(@"Received notification: %@", userInfo);
+}
+
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  NSLog(@"Failed to get token, error: %@", error);
+}
+*/
+
+
+- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel{
+  NSLog(@"connected");
+}
 @end
