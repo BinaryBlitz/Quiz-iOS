@@ -38,6 +38,9 @@
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
 		197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */; };
 		1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */; };
+		1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976699E1A67EEAC006C2757 /* QZBCurrentUser.m */; };
+		197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */; };
+		197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669A41A67FE58006C2757 /* QZBCategoryTableViewCell.m */; };
 		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB21A4B062D0016130B /* QZBGameTopic.m */; };
@@ -129,6 +132,12 @@
 		197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterAndLoginBaseVC.m; sourceTree = "<group>"; };
 		1976699A1A67D7A1006C2757 /* QZBLoginWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLoginWithEmailVC.h; sourceTree = "<group>"; };
 		1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLoginWithEmailVC.m; sourceTree = "<group>"; };
+		1976699D1A67EEAC006C2757 /* QZBCurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCurrentUser.h; sourceTree = "<group>"; };
+		1976699E1A67EEAC006C2757 /* QZBCurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCurrentUser.m; sourceTree = "<group>"; };
+		197669A01A67FDE2006C2757 /* QZBCategoryChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategoryChooserVC.h; sourceTree = "<group>"; };
+		197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategoryChooserVC.m; sourceTree = "<group>"; };
+		197669A31A67FE58006C2757 /* QZBCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategoryTableViewCell.h; sourceTree = "<group>"; };
+		197669A41A67FE58006C2757 /* QZBCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategoryTableViewCell.m; sourceTree = "<group>"; };
 		1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicChooserControllerViewController.h; sourceTree = "<group>"; };
 		1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicChooserControllerViewController.m; sourceTree = "<group>"; };
 		1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicTableViewCell.h; sourceTree = "<group>"; };
@@ -300,6 +309,8 @@
 			children = (
 				1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */,
 				1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */,
+				197669A31A67FE58006C2757 /* QZBCategoryTableViewCell.h */,
+				197669A41A67FE58006C2757 /* QZBCategoryTableViewCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -367,6 +378,8 @@
 				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
 				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
 				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
+				197669A01A67FDE2006C2757 /* QZBCategoryChooserVC.h */,
+				197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -392,6 +405,8 @@
 				19CB50981A3C388000A3CD74 /* QZBUserInSession.m */,
 				19CB509E1A3C51CA00A3CD74 /* QZBUser.h */,
 				19CB509F1A3C51CA00A3CD74 /* QZBUser.m */,
+				1976699D1A67EEAC006C2757 /* QZBCurrentUser.h */,
+				1976699E1A67EEAC006C2757 /* QZBCurrentUser.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -587,6 +602,7 @@
 				197669791A67B3CE006C2757 /* JFNoCutPasteTextField.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
+				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
@@ -596,9 +612,11 @@
 				1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976698B1A67B3CE006C2757 /* JFRandom.m in Sources */,
+				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				197669771A67B3CE006C2757 /* JFLocaleMatchUtil.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
+				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				197669761A67B3CE006C2757 /* JFInterruptableActionPerformer.m in Sources */,

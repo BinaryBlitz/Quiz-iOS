@@ -195,7 +195,19 @@
   
   [self.requestOperationManager POST:@"players" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSLog(@"%@", responseObject);
+    
+    QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
+    
+    if (success) {
+      success(user);
+    }
+
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    
+    if(failure){
+      failure(error, operation.response.statusCode);
+    }
     NSLog(@"%@", error);
   }];
   
@@ -216,6 +228,9 @@
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                NSLog(@"%@", responseObject);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    
+    
     NSLog(@"%@",error);
   }];
   

@@ -7,7 +7,8 @@
 //
 
 #import "QZBRegisterWithEmailVC.h"
-
+#import "QZBCurrentUser.h"
+#import "TSMessage.h"
 
 @interface QZBRegisterWithEmailVC () <UITextFieldDelegate>
 
@@ -22,6 +23,10 @@
   self.emailTextField.delegate = self;
   self.passwordTextField.delegate = self;
   // Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+  [self.userNameTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,13 +78,31 @@ preparation before navigation
     
   }
 
+  __weak typeof(self) weakSelf = self;
+  
   [[QZBServerManager sharedManager] POSTRegistrationUser:username
       email:email
       password:password
-      onSuccess:^(QZBUser *user) { NSLog(@"gg"); }
+      onSuccess:^(QZBUser *user) {
+        NSLog(@"user %@", user.api_key);
+        [[QZBCurrentUser sharedInstance] setUser:user];
+        [weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
+        
+      }
       onFailure:^(NSError *error, NSInteger statusCode){
 
+        if(statusCode == 422){
+          [weakSelf userAlreadyExist];
+        }
+        
       }];
+}
+
+-(void)userAlreadyExist{
+  [TSMessage showNotificationWithTitle:@"user already exist" type:TSMessageNotificationTypeError];
+
+  NSLog(@"UserAlredyExist");
+  
 }
 
 #pragma mark - UITextFieldDelegate

@@ -11,6 +11,9 @@
 @interface QZBUser ()
 
 @property(assign, nonatomic) NSInteger user_id;
+@property(copy, nonatomic) NSString *name;
+@property(copy, nonatomic) NSString *email;
+@property(copy, nonatomic) NSString *api_key;
 
 @end
 
@@ -33,6 +36,18 @@
   
   return [self initWithUserId:user_id name:@"" userpicURL:url];
   
+}
+
+- (instancetype)initWithDict:(NSDictionary *)dict
+{
+  self = [super init];
+  if (self) {
+    self.api_key = [dict objectForKey:@"api_key"];
+    self.name = [dict objectForKey:@"name"];
+    self.email = [dict objectForKey:@"email"];
+    
+  }
+  return self;
 }
 
 @end
