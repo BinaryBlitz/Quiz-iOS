@@ -32,7 +32,7 @@
   
   _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
   
-  [self.client connect];
+  //[self.client connect];
   
   PTPusherChannel *channel = [_client subscribeToChannelNamed:@"my-channel"];
   

@@ -10,6 +10,8 @@
 #import "QZBGameTopic.h"
 #import "QZBSession.h"
 #import "QZBOpponentBot.h"
+#import "QZBUser.h"
+#import "JFBCrypt.h"
 
 @interface QZBServerManager()
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
@@ -160,7 +162,7 @@
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                 
-    //NSLog(@"patched");
+    NSLog(@"patched");
                                 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -172,22 +174,50 @@
 
 #pragma mark - user registration
 
+-(NSString *)hashPassword:(NSString *)password{
+  NSString *salt = [JFBCrypt generateSaltWithNumberOfRounds:10];
+  NSString *hashedPassword = [JFBCrypt hashPassword:password withSalt:salt];
+  
+  return hashedPassword;
+  
+}
+
 -(void)POSTRegistrationUser:(NSString *)userName
                       email:(NSString *)userEmail
                    password:(NSString *)password
-                        onSuccess:(void(^)(id response)) success
+                        onSuccess:(void(^)(QZBUser *user)) success
                   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
   
-  NSString *passwordHash = password;
   
-  NSDictionary *params = @{@"name":userName,@"email":userEmail, @"password_digest":passwordHash};
+  NSString *hashedPassword = [self hashPassword:password];
+  
+  NSDictionary *params = @{@"player":@{@"name":userName,@"email":userEmail, @"password_digest":hashedPassword}};
   
   [self.requestOperationManager POST:@"players" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSLog(@"%@", passwordHash);
+    NSLog(@"%@", responseObject);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"%@", error);
   }];
   
+}
+
+-(void)POSTLoginUserEmail:(NSString *)email
+                 password:(NSString *)password
+                onSuccess:(void(^)(QZBUser *user)) success
+                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
+  
+  NSString *hashedPassword = [self hashPassword:password];
+  
+  NSDictionary *params = @{@"player":@{@"email":email, @"password_digest":hashedPassword}};
+  
+  
+  [self.requestOperationManager POST:@"players"
+                          parameters:params
+                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                               NSLog(@"%@", responseObject);
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"%@",error);
+  }];
   
   
   

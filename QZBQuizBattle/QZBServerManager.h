@@ -12,6 +12,7 @@
 
 @class QZBSession;
 @class QZBOpponentBot;
+@class QZBUser;
 @interface QZBServerManager : NSObject
 
 + (QZBServerManager*) sharedManager ;
@@ -30,5 +31,18 @@
                              time:(NSInteger)answerTime
                         onSuccess:(void(^)()) success
                         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+
+-(void)POSTRegistrationUser:(NSString *)userName
+                      email:(NSString *)userEmail
+                   password:(NSString *)password
+                  onSuccess:(void(^)(QZBUser *user)) success
+                  onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+
+-(void)POSTLoginUserEmail:(NSString *)email
+                 password:(NSString *)password
+                onSuccess:(void(^)(QZBUser *user)) success
+                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 @end

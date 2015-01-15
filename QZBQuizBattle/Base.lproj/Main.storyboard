@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="q27-8o-r6B">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lF6-of-vYv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -760,12 +760,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JUL-8O-HXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-432" y="-963"/>
+            <point key="canvasLocation" x="744" y="-483"/>
         </scene>
         <!--SignUpEmail-->
         <scene sceneID="qwd-er-KFD">
             <objects>
-                <viewController title="SignUpEmail" id="y1Q-aG-wV7" sceneMemberID="viewController">
+                <viewController title="SignUpEmail" id="y1Q-aG-wV7" customClass="QZBRegisterWithEmailVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rv2-CI-Lds"/>
                         <viewControllerLayoutGuide type="bottom" id="Yqa-k8-7Mb"/>
@@ -777,7 +777,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Почта" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="My5-Tt-exj">
                                 <rect key="frame" x="154" y="286" width="292" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xIU-Dq-fcX">
                                 <rect key="frame" x="154" y="351" width="292" height="30"/>
@@ -807,18 +807,27 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Регистрация" id="8tU-gC-Tfg">
-                        <barButtonItem key="rightBarButtonItem" title="OK" id="EVz-K8-Ghq"/>
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="EVz-K8-Ghq">
+                            <connections>
+                                <action selector="registerAction:" destination="y1Q-aG-wV7" id="lUD-xH-qWI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="My5-Tt-exj" id="vgb-JO-rQB"/>
+                        <outlet property="passwordTextField" destination="xIU-Dq-fcX" id="4R6-EX-3EK"/>
+                        <outlet property="userNameTextField" destination="9jc-4s-5JZ" id="T8H-Kh-voM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fp5-O3-fLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="-1207"/>
+            <point key="canvasLocation" x="2079" y="-1255"/>
         </scene>
         <!--LoginEmail-->
         <scene sceneID="62m-zK-YDo">
             <objects>
-                <viewController title="LoginEmail" id="XcN-bh-MFD" sceneMemberID="viewController">
+                <viewController title="LoginEmail" id="XcN-bh-MFD" customClass="QZBLoginWithEmailVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u6b-Ge-Tup"/>
                         <viewControllerLayoutGuide type="bottom" id="lpm-s9-hBn"/>
@@ -833,7 +842,7 @@
                                     <constraint firstAttribute="width" constant="292" id="1LX-Fb-3y2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uqj-qm-8x0">
                                 <rect key="frame" x="154" y="315" width="292" height="30"/>
@@ -862,12 +871,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Вход" id="HXz-cq-kiV">
-                        <barButtonItem key="rightBarButtonItem" title="OK" id="ORM-7C-pYf"/>
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="ORM-7C-pYf">
+                            <connections>
+                                <action selector="loginAction:" destination="XcN-bh-MFD" id="lAo-Ml-fON"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="emailTextField" destination="Vgk-yP-QW9" id="ipP-Xn-mXv"/>
+                        <outlet property="passwordTextField" destination="Uqj-qm-8x0" id="UQv-Vh-Nun"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HmP-zb-D2n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="-439"/>
+            <point key="canvasLocation" x="2231" y="-511"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDz-om-qRr">
@@ -903,7 +920,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vu-8x-lPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1244" y="-963"/>
+            <point key="canvasLocation" x="-75" y="-467"/>
         </scene>
     </scenes>
 </document>

@@ -20,6 +20,24 @@
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
 		1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED01A4C4A3500E63D6B /* QZBCategory.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
+		1976696A1A67B3CE006C2757 /* JFAes256Codec.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669111A67B3CE006C2757 /* JFAes256Codec.m */; };
+		1976696B1A67B3CE006C2757 /* JFBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669131A67B3CE006C2757 /* JFBase64.m */; };
+		1976696C1A67B3CE006C2757 /* JFBCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669151A67B3CE006C2757 /* JFBCrypt.m */; };
+		1976696E1A67B3CE006C2757 /* JFBoxEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976691C1A67B3CE006C2757 /* JFBoxEncoder.m */; };
+		197669711A67B3CE006C2757 /* JFDeviceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669221A67B3CE006C2757 /* JFDeviceDetector.m */; };
+		197669721A67B3CE006C2757 /* JFGuidGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669251A67B3CE006C2757 /* JFGuidGenerator.m */; };
+		197669731A67B3CE006C2757 /* JFGuidUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669271A67B3CE006C2757 /* JFGuidUtil.m */; };
+		197669741A67B3CE006C2757 /* JFICloudUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669291A67B3CE006C2757 /* JFICloudUtil.m */; };
+		197669751A67B3CE006C2757 /* JFImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976692B1A67B3CE006C2757 /* JFImageUtil.m */; };
+		197669761A67B3CE006C2757 /* JFInterruptableActionPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976692D1A67B3CE006C2757 /* JFInterruptableActionPerformer.m */; };
+		197669771A67B3CE006C2757 /* JFLocaleMatchUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976692F1A67B3CE006C2757 /* JFLocaleMatchUtil.m */; };
+		197669781A67B3CE006C2757 /* JFNetworkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669311A67B3CE006C2757 /* JFNetworkUtil.m */; };
+		197669791A67B3CE006C2757 /* JFNoCutPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669331A67B3CE006C2757 /* JFNoCutPasteTextField.m */; };
+		1976698B1A67B3CE006C2757 /* JFRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976695B1A67B3CE006C2757 /* JFRandom.m */; };
+		197669921A67B3CE006C2757 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 197669691A67B3CE006C2757 /* README */; };
+		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
+		197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */; };
+		1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */; };
 		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB21A4B062D0016130B /* QZBGameTopic.m */; };
@@ -72,6 +90,45 @@
 		1974BED01A4C4A3500E63D6B /* QZBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategory.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
 		1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTextAndID.m; sourceTree = "<group>"; };
+		197669101A67B3CE006C2757 /* JFAes256Codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFAes256Codec.h; sourceTree = "<group>"; };
+		197669111A67B3CE006C2757 /* JFAes256Codec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFAes256Codec.m; sourceTree = "<group>"; };
+		197669121A67B3CE006C2757 /* JFBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBase64.h; sourceTree = "<group>"; };
+		197669131A67B3CE006C2757 /* JFBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFBase64.m; sourceTree = "<group>"; };
+		197669141A67B3CE006C2757 /* JFBCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBCrypt.h; sourceTree = "<group>"; };
+		197669151A67B3CE006C2757 /* JFBCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFBCrypt.m; sourceTree = "<group>"; };
+		197669161A67B3CE006C2757 /* JFBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBox.h; sourceTree = "<group>"; };
+		197669191A67B3CE006C2757 /* JFBoxDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBoxDefines.h; sourceTree = "<group>"; };
+		1976691A1A67B3CE006C2757 /* JFBoxEncodable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBoxEncodable.h; sourceTree = "<group>"; };
+		1976691B1A67B3CE006C2757 /* JFBoxEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBoxEncoder.h; sourceTree = "<group>"; };
+		1976691C1A67B3CE006C2757 /* JFBoxEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFBoxEncoder.m; sourceTree = "<group>"; };
+		197669211A67B3CE006C2757 /* JFDeviceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFDeviceDetector.h; sourceTree = "<group>"; };
+		197669221A67B3CE006C2757 /* JFDeviceDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFDeviceDetector.m; sourceTree = "<group>"; };
+		197669231A67B3CE006C2757 /* JFGC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFGC.h; sourceTree = "<group>"; };
+		197669241A67B3CE006C2757 /* JFGuidGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFGuidGenerator.h; sourceTree = "<group>"; };
+		197669251A67B3CE006C2757 /* JFGuidGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFGuidGenerator.m; sourceTree = "<group>"; };
+		197669261A67B3CE006C2757 /* JFGuidUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFGuidUtil.h; sourceTree = "<group>"; };
+		197669271A67B3CE006C2757 /* JFGuidUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFGuidUtil.m; sourceTree = "<group>"; };
+		197669281A67B3CE006C2757 /* JFICloudUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFICloudUtil.h; sourceTree = "<group>"; };
+		197669291A67B3CE006C2757 /* JFICloudUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFICloudUtil.m; sourceTree = "<group>"; };
+		1976692A1A67B3CE006C2757 /* JFImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFImageUtil.h; sourceTree = "<group>"; };
+		1976692B1A67B3CE006C2757 /* JFImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFImageUtil.m; sourceTree = "<group>"; };
+		1976692C1A67B3CE006C2757 /* JFInterruptableActionPerformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFInterruptableActionPerformer.h; sourceTree = "<group>"; };
+		1976692D1A67B3CE006C2757 /* JFInterruptableActionPerformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFInterruptableActionPerformer.m; sourceTree = "<group>"; };
+		1976692E1A67B3CE006C2757 /* JFLocaleMatchUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFLocaleMatchUtil.h; sourceTree = "<group>"; };
+		1976692F1A67B3CE006C2757 /* JFLocaleMatchUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFLocaleMatchUtil.m; sourceTree = "<group>"; };
+		197669301A67B3CE006C2757 /* JFNetworkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFNetworkUtil.h; sourceTree = "<group>"; };
+		197669311A67B3CE006C2757 /* JFNetworkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFNetworkUtil.m; sourceTree = "<group>"; };
+		197669321A67B3CE006C2757 /* JFNoCutPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFNoCutPasteTextField.h; sourceTree = "<group>"; };
+		197669331A67B3CE006C2757 /* JFNoCutPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFNoCutPasteTextField.m; sourceTree = "<group>"; };
+		1976695A1A67B3CE006C2757 /* JFRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFRandom.h; sourceTree = "<group>"; };
+		1976695B1A67B3CE006C2757 /* JFRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFRandom.m; sourceTree = "<group>"; };
+		197669691A67B3CE006C2757 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterWithEmailVC.h; sourceTree = "<group>"; };
+		197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterWithEmailVC.m; sourceTree = "<group>"; };
+		197669961A67D040006C2757 /* QZBRegisterAndLoginBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterAndLoginBaseVC.h; sourceTree = "<group>"; };
+		197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterAndLoginBaseVC.m; sourceTree = "<group>"; };
+		1976699A1A67D7A1006C2757 /* QZBLoginWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLoginWithEmailVC.h; sourceTree = "<group>"; };
+		1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLoginWithEmailVC.m; sourceTree = "<group>"; };
 		1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicChooserControllerViewController.h; sourceTree = "<group>"; };
 		1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicChooserControllerViewController.m; sourceTree = "<group>"; };
 		1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicTableViewCell.h; sourceTree = "<group>"; };
@@ -159,6 +216,7 @@
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1976690F1A67B3CE006C2757 /* JFCommon-master */,
 				191559C81A39CDD400462C93 /* AppDelegate.h */,
 				191559C91A39CDD400462C93 /* AppDelegate.m */,
 				191559C51A39CDD400462C93 /* Info.plist */,
@@ -182,6 +240,59 @@
 				191559E21A39CDD400462C93 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1976690F1A67B3CE006C2757 /* JFCommon-master */ = {
+			isa = PBXGroup;
+			children = (
+				197669101A67B3CE006C2757 /* JFAes256Codec.h */,
+				197669111A67B3CE006C2757 /* JFAes256Codec.m */,
+				197669121A67B3CE006C2757 /* JFBase64.h */,
+				197669131A67B3CE006C2757 /* JFBase64.m */,
+				197669141A67B3CE006C2757 /* JFBCrypt.h */,
+				197669151A67B3CE006C2757 /* JFBCrypt.m */,
+				197669161A67B3CE006C2757 /* JFBox.h */,
+				197669191A67B3CE006C2757 /* JFBoxDefines.h */,
+				1976691A1A67B3CE006C2757 /* JFBoxEncodable.h */,
+				1976691B1A67B3CE006C2757 /* JFBoxEncoder.h */,
+				1976691C1A67B3CE006C2757 /* JFBoxEncoder.m */,
+				197669211A67B3CE006C2757 /* JFDeviceDetector.h */,
+				197669221A67B3CE006C2757 /* JFDeviceDetector.m */,
+				197669231A67B3CE006C2757 /* JFGC.h */,
+				197669241A67B3CE006C2757 /* JFGuidGenerator.h */,
+				197669251A67B3CE006C2757 /* JFGuidGenerator.m */,
+				197669261A67B3CE006C2757 /* JFGuidUtil.h */,
+				197669271A67B3CE006C2757 /* JFGuidUtil.m */,
+				197669281A67B3CE006C2757 /* JFICloudUtil.h */,
+				197669291A67B3CE006C2757 /* JFICloudUtil.m */,
+				1976692A1A67B3CE006C2757 /* JFImageUtil.h */,
+				1976692B1A67B3CE006C2757 /* JFImageUtil.m */,
+				1976692C1A67B3CE006C2757 /* JFInterruptableActionPerformer.h */,
+				1976692D1A67B3CE006C2757 /* JFInterruptableActionPerformer.m */,
+				1976692E1A67B3CE006C2757 /* JFLocaleMatchUtil.h */,
+				1976692F1A67B3CE006C2757 /* JFLocaleMatchUtil.m */,
+				197669301A67B3CE006C2757 /* JFNetworkUtil.h */,
+				197669311A67B3CE006C2757 /* JFNetworkUtil.m */,
+				197669321A67B3CE006C2757 /* JFNoCutPasteTextField.h */,
+				197669331A67B3CE006C2757 /* JFNoCutPasteTextField.m */,
+				1976695A1A67B3CE006C2757 /* JFRandom.h */,
+				1976695B1A67B3CE006C2757 /* JFRandom.m */,
+				197669691A67B3CE006C2757 /* README */,
+			);
+			path = "JFCommon-master";
+			sourceTree = "<group>";
+		};
+		197669991A67D057006C2757 /* Registration and login */ = {
+			isa = PBXGroup;
+			children = (
+				197669961A67D040006C2757 /* QZBRegisterAndLoginBaseVC.h */,
+				197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */,
+				197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */,
+				197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */,
+				1976699A1A67D7A1006C2757 /* QZBLoginWithEmailVC.h */,
+				1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */,
+			);
+			name = "Registration and login";
 			sourceTree = "<group>";
 		};
 		1976FBAC1A4B04B50016130B /* cells */ = {
@@ -247,6 +358,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				197669991A67D057006C2757 /* Registration and login */,
 				191559CE1A39CDD400462C93 /* QZBGameSessionViewController.h */,
 				191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */,
 				19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */,
@@ -404,6 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				197669921A67B3CE006C2757 /* README in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,
@@ -457,27 +570,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */,
 				191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */,
 				1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */,
+				1976696B1A67B3CE006C2757 /* JFBase64.m in Sources */,
 				1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */,
+				197669711A67B3CE006C2757 /* JFDeviceDetector.m in Sources */,
+				1976696A1A67B3CE006C2757 /* JFAes256Codec.m in Sources */,
+				197669741A67B3CE006C2757 /* JFICloudUtil.m in Sources */,
+				197669751A67B3CE006C2757 /* JFImageUtil.m in Sources */,
+				1976696C1A67B3CE006C2757 /* JFBCrypt.m in Sources */,
+				197669721A67B3CE006C2757 /* JFGuidGenerator.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
+				197669781A67B3CE006C2757 /* JFNetworkUtil.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
+				197669791A67B3CE006C2757 /* JFNoCutPasteTextField.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
+				1976696E1A67B3CE006C2757 /* JFBoxEncoder.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
 				1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
+				1976698B1A67B3CE006C2757 /* JFRandom.m in Sources */,
+				197669771A67B3CE006C2757 /* JFLocaleMatchUtil.m in Sources */,
+				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
+				197669761A67B3CE006C2757 /* JFInterruptableActionPerformer.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,
+				197669731A67B3CE006C2757 /* JFGuidUtil.m in Sources */,
+				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
