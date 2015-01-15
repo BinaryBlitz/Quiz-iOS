@@ -51,13 +51,11 @@
       break;
       
     }
-    
   }
-  
   [self.navigationController popToViewController:destinationVC animated:YES];
-  
-  
 }
+
+
 - (IBAction)ChooseTopicAction:(UIButton *)sender {
   [self.navigationController popToRootViewControllerAnimated:YES];
  }

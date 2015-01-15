@@ -135,7 +135,6 @@
                                //NSNumber *isOffline = [responseObject objectForKey:@"offline"];
                                QZBOpponentBot *bot = [[QZBOpponentBot alloc] initWithDictionary:responseObject];
                                
-                               
                                if(success){
                                  success(session,bot);
                                }
@@ -146,23 +145,14 @@
   
 }
 
-
+//отправляет данные о ходе пользователя
 -(void)PATCHSessionQuestionWithID:(NSInteger)sessionQuestionID
                            answer:(NSInteger)answerID
                              time:(NSInteger)answerTime
                         onSuccess:(void(^)()) success
                         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
   
-  
-  //{"host_answer_id"=>"105", "host_time"=>"8", "id"=>"523"}
-  
-  //{game_session_question: { host_answer_id: 11, host_time: 5 }}
-  
   NSDictionary *params = @{@"game_session_question": @{ @"host_answer_id":@(answerID) , @"host_time": @(answerTime)}};
-  
-  NSLog(@"answer %ld  time %ld   sessionID %ld", answerID, answerTime, sessionQuestionID);
-  
-  
   
   NSString *URLString = [NSString stringWithFormat:@"game_session_questions/%ld",sessionQuestionID ];
   
@@ -170,7 +160,7 @@
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                 
-    NSLog(@"patched");
+    //NSLog(@"patched");
                                 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -178,5 +168,30 @@
     
   }];
 }
+
+
+#pragma mark - user registration
+
+-(void)POSTRegistrationUser:(NSString *)userName
+                      email:(NSString *)userEmail
+                   password:(NSString *)password
+                        onSuccess:(void(^)(id response)) success
+                  onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
+  
+  NSString *passwordHash = password;
+  
+  NSDictionary *params = @{@"name":userName,@"email":userEmail, @"password_digest":passwordHash};
+  
+  [self.requestOperationManager POST:@"players" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"%@", passwordHash);
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"%@", error);
+  }];
+  
+  
+  
+  
+}
+
 
 @end

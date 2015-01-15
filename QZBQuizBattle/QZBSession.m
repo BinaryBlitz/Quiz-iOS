@@ -110,7 +110,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     
     
     
-    NSLog(@"%d", questionID);
+    NSLog(@"%ld", (long)questionID);
     [questions addObject:question];
   }
   

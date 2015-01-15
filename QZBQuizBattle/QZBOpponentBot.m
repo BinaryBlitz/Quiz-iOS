@@ -8,7 +8,7 @@
 
 #import "QZBOpponentBot.h"
 #import "QZBSessionManager.h"
-//#import "QZBAnswer.h"
+
 
 @interface QZBOpponentBot ()
 
@@ -40,9 +40,13 @@
   NSMutableArray *answersWithTime = [NSMutableArray array];
   
   for(NSDictionary *questDict in session_questions){
-    NSUInteger answerID = [[questDict objectForKey:@"opponent_answer_id"] unsignedIntegerValue];
-    NSUInteger time =     [[questDict objectForKey:@"opponent_time"] unsignedIntegerValue];
-    QZBAnswer *answerWithTime = [[QZBAnswer alloc] initWithAnswerNumber:answerID answerTime:time];
+    
+    NSUInteger answerID       = [[questDict objectForKey:@"opponent_answer_id"]
+                                 unsignedIntegerValue];
+    NSUInteger time           = [[questDict objectForKey:@"opponent_time"]
+                                 unsignedIntegerValue];
+    QZBAnswer *answerWithTime = [[QZBAnswer alloc] initWithAnswerNumber:answerID
+                                                             answerTime:time];
     
     [answersWithTime addObject:answerWithTime];
   }
