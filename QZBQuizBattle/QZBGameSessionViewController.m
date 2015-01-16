@@ -29,6 +29,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  //[[self navigationController] setNavigationBarHidden:YES animated:NO];
   self.backgroundTask = UIBackgroundTaskInvalid;
 
   for (UIButton *b in self.answerButtons) {
@@ -58,6 +59,11 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
          selector:@selector(opponentMadeChoose:)
              name:@"QZBOpponentUserMadeChoose"
            object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

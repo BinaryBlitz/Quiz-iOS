@@ -9,6 +9,7 @@
 #import "QZBEndSessionControllerViewController.h"
 #import "QZBGameTopic.h"
 #import "QZBProgressViewController.h"
+#import "QZBTopicChooserControllerViewController.h"
 
 @interface QZBEndSessionControllerViewController ()
 
@@ -18,12 +19,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  //[[self navigationController] setNavigationBarHidden:YES animated:NO];
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  
+  
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+  
 }
 
 /*
@@ -57,6 +67,24 @@
 
 
 - (IBAction)ChooseTopicAction:(UIButton *)sender {
+  
+  NSLog(@"topicChooser");
+  NSArray *controllers = self.navigationController.viewControllers;
+  
+  UIViewController *destinationVC;
+  
+  for(UIViewController *controller in controllers){
+    
+    if([controller isKindOfClass:[QZBTopicChooserControllerViewController class]]){
+      NSLog(@"%@",[controller class]);
+      
+      destinationVC = controller;
+      break;
+      
+    }
+  }
+  [self.navigationController popToViewController:destinationVC animated:YES];
+  
   [self.navigationController popToRootViewControllerAnimated:YES];
  }
 

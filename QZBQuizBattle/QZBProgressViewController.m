@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+ // [[self navigationController] setNavigationBarHidden:YES animated:NO];
   // Do any additional setup after loading the view.
 }
 
@@ -52,6 +53,11 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  [[self navigationController] setNavigationBarHidden:YES animated:NO];
+}
+
 #pragma mark - Actions
 
 - (IBAction)cancelFinding:(UIButton *)sender {
@@ -61,7 +67,7 @@
   [[QZBSessionManager sessionManager] closeSession];
   
   
-  [self.navigationController popToRootViewControllerAnimated:YES];
+  [self.navigationController popViewControllerAnimated:YES];
   
 }
 

@@ -9,6 +9,7 @@
 #import "QZBServerManager.h"
 #import "QZBGameTopic.h"
 #import "QZBSession.h"
+#import "QZBCategory.h"
 #import "QZBOpponentBot.h"
 #import "QZBUser.h"
 #import "JFBCrypt.h"
@@ -54,15 +55,16 @@
    success:^(AFHTTPRequestOperation *operation, NSArray* responseObject) {
      NSLog(@"JSON: %@", responseObject);
      
-     //NSArray* dictsArray = [responseObject objectForKey:@"topics"];
-     NSLog(@"%@", [responseObject firstObject]);
+     
      
      NSMutableArray* objectsArray = [NSMutableArray array];
      
      for (NSDictionary* dict in responseObject) {
-       QZBGameTopic *topic = [[QZBGameTopic alloc] initWithDictionary:dict];
+
+       QZBCategory *category = [[QZBCategory alloc] initWithDict:dict];
        
-       [objectsArray addObject:topic];
+       [objectsArray addObject:category];
+      
      }
      
      if (success) {
@@ -220,17 +222,14 @@
   
   NSString *hashedPassword = [self hashPassword:password];
   
-  NSDictionary *params = @{@"player":@{@"email":email, @"password_digest":hashedPassword}};
+  NSDictionary *params = @{@"email":email, @"password_digest":hashedPassword};
   
   
-  [self.requestOperationManager POST:@"players"
+  [self.requestOperationManager POST:@"players/authenticate"
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                NSLog(@"%@", responseObject);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    
-    
     NSLog(@"%@",error);
   }];
   

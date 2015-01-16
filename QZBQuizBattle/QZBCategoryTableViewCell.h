@@ -10,6 +10,7 @@
 
 @interface QZBCategoryTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 
 
 @end

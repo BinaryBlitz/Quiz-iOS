@@ -374,10 +374,10 @@
 				191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */,
 				19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */,
 				19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */,
-				1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */,
-				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
 				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
 				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
+				1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */,
+				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
 				197669A01A67FDE2006C2757 /* QZBCategoryChooserVC.h */,
 				197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */,
 			);
@@ -781,7 +781,6 @@
 		191559EB1A39CDD500462C93 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -800,7 +799,6 @@
 		191559EC1A39CDD500462C93 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

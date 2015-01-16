@@ -13,10 +13,14 @@
 @class QZBSession;
 @class QZBOpponentBot;
 @class QZBUser;
+//@class QZBCategory;
+
 @interface QZBServerManager : NSObject
 
 + (QZBServerManager*) sharedManager ;
 
+
+- (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) success onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) getTopicsWithID:(NSInteger) ID
                onSuccess:(void(^)(NSArray* topics)) success

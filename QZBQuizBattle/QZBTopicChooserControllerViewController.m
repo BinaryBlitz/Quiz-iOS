@@ -11,6 +11,7 @@
 #import "QZBTopicTableViewCell.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
+//#import "QZBCategory.h"
 
 
 @interface QZBTopicChooserControllerViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -25,14 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-  //NSDictionary *dict = @{@"name":@"CS"};
-  //QZBGameTopic *topic = [[QZBGameTopic alloc] initWithDictionary:dict];
-  
-  [self initTopics];
-  
-  //self.topics = [NSArray arrayWithObject:topic];
-  
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +34,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+ 
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+  
+}
 
 
 #pragma mark - Navigation
@@ -95,9 +93,9 @@
 
 #pragma mark - topics init
 
--(void)initTopics{
+-(void)initTopicsWithCategoryId:(NSInteger) categoryID{
   
-  [[QZBServerManager sharedManager] getTopicsWithID:1 onSuccess:^(NSArray *topics) {
+  [[QZBServerManager sharedManager] getTopicsWithID:categoryID onSuccess:^(NSArray *topics) {
     self.topics = [NSArray arrayWithArray:topics];
     [self.topicTableView reloadData];
   } onFailure:^(NSError *error, NSInteger statusCode) {
