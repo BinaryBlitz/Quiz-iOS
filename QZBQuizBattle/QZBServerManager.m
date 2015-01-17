@@ -14,6 +14,7 @@
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
 #import "JFBCrypt.h"
+#import "NSString+MD5.h"
 
 @interface QZBServerManager()
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
@@ -148,6 +149,11 @@
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"%@, /n %@",operation, error);
+    
+    if (failure) {
+      failure(error, operation.response.statusCode);
+    }
+    
   }];
   
 }
@@ -180,10 +186,13 @@
 #pragma mark - user registration
 
 -(NSString *)hashPassword:(NSString *)password{
-  NSString *salt = [JFBCrypt generateSaltWithNumberOfRounds:(SInt32)10];
-  NSString *hashedPassword = [JFBCrypt hashPassword:password withSalt:salt];
   
-  return hashedPassword;
+  
+  
+ // NSString *salt = [JFBCrypt generateSaltWithNumberOfRounds:(SInt32)10];
+ // NSString *hashedPassword = [JFBCrypt hashPassword:password withSalt:salt];
+  
+  return [password MD5];
   
 }
 
@@ -237,7 +246,7 @@
 
  // email = @"foo@bar.com";
 
-  hashedPassword = @"$2a$10$qfOWhGZO92uXKTjYzzb/9efimcojZOHrTEe0NQPuXVKWljZ1N1mfy";
+ // hashedPassword = @"$2a$10$qfOWhGZO92uXKTjYzzb/9efimcojZOHrTEe0NQPuXVKWljZ1N1mfy";
 
   
   NSDictionary *params = @{@"email":email,
@@ -270,7 +279,6 @@
                                    success(user);
                                  }
                                }
-                               
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"%@",error);
   }];

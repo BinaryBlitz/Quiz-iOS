@@ -43,6 +43,7 @@
 		19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB509F1A3C51CA00A3CD74 /* QZBUser.m */; };
 		19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */; };
 		19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */; };
+		19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691141A6A91C7008B2AE1 /* NSString+MD5.m */; };
 		47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC7A8F9E1287DD166F770A8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +128,8 @@
 		19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuestionWithUserAnswer.m; sourceTree = "<group>"; };
 		19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBProgressViewController.h; sourceTree = "<group>"; };
 		19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressViewController.m; sourceTree = "<group>"; };
+		19D691131A6A91C7008B2AE1 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		19D691141A6A91C7008B2AE1 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		61CB57A856F89614168E9C5A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2892C94F45A4ABC9B49B297 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DBC7A8F9E1287DD166F770A8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +185,8 @@
 				191559D61A39CDD400462C93 /* LaunchScreen.xib */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
 				191559C41A39CDD400462C93 /* Supporting Files */,
+				19D691131A6A91C7008B2AE1 /* NSString+MD5.h */,
+				19D691141A6A91C7008B2AE1 /* NSString+MD5.m */,
 			);
 			path = QZBQuizBattle;
 			sourceTree = "<group>";
@@ -542,6 +547,7 @@
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				195A7E3C1A69822A003AC3BA /* JFBCrypt.m in Sources */,
+				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,

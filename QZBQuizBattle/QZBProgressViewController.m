@@ -13,6 +13,7 @@
 #import "QZBUser.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
+#import "TSMessage.h"
 
 @interface QZBProgressViewController ()
 
@@ -97,6 +98,10 @@
                                               
     
   } onFailure:^(NSError *error, NSInteger statusCode) {
+    
+    NSLog(@"failed");
+    [TSMessage showNotificationWithTitle:@"Somthing went wrong" type:TSMessageNotificationTypeError];
+    
     
   }];
   
