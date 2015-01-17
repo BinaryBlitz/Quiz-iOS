@@ -10,13 +10,13 @@
 
 @interface QZBUser : NSObject
 
-@property(assign, nonatomic, readonly) NSInteger user_id;
+//@property(assign, nonatomic, readonly) NSInteger user_id;
 
 @property(copy, nonatomic, readonly) NSString *name;
 @property(copy, nonatomic, readonly) NSString *email;
 @property(copy, nonatomic, readonly) NSString *api_key;
 
-- (instancetype)initWithUserId:(NSInteger)user_id name:(NSString *) name userpicURL:(NSURL *)url;
--(instancetype)initWithId:(NSInteger)user_id;
+//- (instancetype)initWithUserId:(NSInteger)user_id name:(NSString *) name userpicURL:(NSURL *)url;
+//-(instancetype)initWithId:(NSInteger)user_id;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end

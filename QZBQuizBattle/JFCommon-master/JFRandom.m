@@ -384,7 +384,7 @@
                                      toDate: date
                                     options: 0];
     
-    NSDateComponents *offsetDays = [[NSDateComponents alloc] init] ;
+    NSDateComponents *offsetDays = [[NSDateComponents alloc] init];
     offsetDays.day = arc4random() % range;
     
     date = [calendar dateByAddingComponents: offsetDays

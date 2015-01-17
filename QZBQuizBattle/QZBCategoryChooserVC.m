@@ -11,6 +11,9 @@
 #import "QZBCategory.h"
 #import "QZBCategoryTableViewCell.h"
 #import "QZBTopicChooserControllerViewController.h"
+#import "QZBCurrentUser.h"
+#import "QZBRegistrationChooserVC.h"
+
 
 @interface QZBCategoryChooserVC ()<UITableViewDataSource, UITableViewDelegate>
 @property(strong, nonatomic) NSArray *categories;
@@ -22,6 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+     //delete this line after added new controllers before this one
   
   self.mainTableView.delegate = self;
   self.mainTableView.dataSource = self;
@@ -35,6 +40,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+  self.navigationItem.hidesBackButton = YES;
   [super viewWillAppear:animated];
   [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
@@ -50,7 +56,7 @@
     
     QZBTopicChooserControllerViewController *destination =
     segue.destinationViewController;
-    [destination initTopicsWithCategoryId:self.choosedCategory.category_id];
+    [destination initTopicsWithCategory:self.choosedCategory];
     
   }
   
@@ -82,7 +88,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   self.choosedCategory = self.categories[indexPath.row];
- // NSLog(@"%ld", (long)self.choosedCategory.category_id);
+ //NSLog(@"%ld", (long)self.choosedCategory.category_id);
   [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
 
@@ -100,6 +106,29 @@
   
   
 }
+
+#pragma mark - actions
+- (IBAction)logOutAction:(id)sender {
+  
+  [[QZBCurrentUser sharedInstance] userLogOut];
+  
+  UIViewController *destinationVC;
+  
+  NSArray *controllers = self.navigationController.viewControllers;
+  
+  for(UIViewController *controller in controllers){
+    if([controller isKindOfClass:[QZBRegistrationChooserVC class]]){
+      destinationVC = controller;
+      break;
+    }
+    
+  }
+  
+  [self.navigationController popToViewController:destinationVC animated:YES];
+  
+}
+
+
 
 
 @end

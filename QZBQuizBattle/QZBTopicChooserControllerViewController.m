@@ -11,7 +11,7 @@
 #import "QZBTopicTableViewCell.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
-//#import "QZBCategory.h"
+#import "QZBCategory.h"
 
 
 @interface QZBTopicChooserControllerViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -37,6 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
  
+  self.navigationItem.hidesBackButton = NO;
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
   
 }
@@ -93,9 +94,13 @@
 
 #pragma mark - topics init
 
--(void)initTopicsWithCategoryId:(NSInteger) categoryID{
+-(void)initTopicsWithCategory:(QZBCategory *)category{
   
-  [[QZBServerManager sharedManager] getTopicsWithID:categoryID onSuccess:^(NSArray *topics) {
+  NSLog(@"category name:  %@", category.name);
+  
+  self.title = category.name;
+  
+  [[QZBServerManager sharedManager] getTopicsWithID:category.category_id onSuccess:^(NSArray *topics) {
     self.topics = [NSArray arrayWithArray:topics];
     [self.topicTableView reloadData];
   } onFailure:^(NSError *error, NSInteger statusCode) {

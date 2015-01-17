@@ -40,11 +40,34 @@
 -(void)setUser:(QZBUser *)user{
   if(user){
     _user = user;
+    
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
+                          
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
+    
   }
 }
 
 -(void)userLogOut{
-  self.user = nil;
+    self.user = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentUser"];
+}
+
+-(BOOL)checkUser{
+  
+  if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"]){
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    
+    self.user = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    return YES;
+    
+  } else{
+    return NO;
+  }
+  
 }
 
 @end

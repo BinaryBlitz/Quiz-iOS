@@ -49,4 +49,6 @@
                 onSuccess:(void(^)(QZBUser *user)) success
                 onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
+-(NSString *)hashPassword:(NSString *)password;
+
 @end

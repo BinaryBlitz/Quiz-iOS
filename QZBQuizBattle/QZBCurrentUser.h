@@ -12,6 +12,12 @@
 @interface QZBCurrentUser : NSObject
 
 + (instancetype)sharedInstance;
+@property (strong, nonatomic, readonly) QZBUser *user;
+
 -(void)setUser:(QZBUser *)user;
+
+-(BOOL)checkUser;
+
+-(void)userLogOut;
 
 @end

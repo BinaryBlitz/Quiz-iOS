@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class QZBCategory;
 @interface QZBTopicChooserControllerViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
 //@property (strong, nonatomic) QZBCategory *category;
 
--(void)initTopicsWithCategoryId:(NSInteger)categoryID;
+-(void)initTopicsWithCategory:(QZBCategory *)category;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "QZBLoginWithEmailVC.h"
+#import "QZBCurrentUser.h"
+#import "QZBUser.h"
 
 @interface QZBLoginWithEmailVC ()<UITextFieldDelegate>
 
@@ -64,8 +66,14 @@
     
   }
   
+  
+  __weak typeof(self) weakSelf = self;
 
   [[QZBServerManager sharedManager] POSTLoginUserEmail:email password:password onSuccess:^(QZBUser *user) {
+    
+    [[QZBCurrentUser sharedInstance] setUser:user];
+    
+    [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
     
   } onFailure:^(NSError *error, NSInteger statusCode) {
     
@@ -100,6 +108,11 @@ if ([textField isEqual:self.emailTextField]){
     [self shake:self.passwordTextField direction:1 shakes:0];
     return NO;
   }else{
+    
+    NSString *hashed = [[QZBServerManager sharedManager] hashPassword:password];
+    
+    NSLog(@"%@", hashed);
+    
     [self loginAction:nil];
     return YES;
   }

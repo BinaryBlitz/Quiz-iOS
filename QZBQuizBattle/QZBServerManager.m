@@ -12,6 +12,7 @@
 #import "QZBCategory.h"
 #import "QZBOpponentBot.h"
 #import "QZBUser.h"
+#import "QZBCurrentUser.h"
 #import "JFBCrypt.h"
 
 @interface QZBServerManager()
@@ -49,9 +50,11 @@
 - (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
 
+                 NSDictionary *params = @{@"token":[QZBCurrentUser sharedInstance].user.api_key};
+                 
   [self.requestOperationManager
    GET:@"categories"
-   parameters:nil
+   parameters:params
    success:^(AFHTTPRequestOperation *operation, NSArray* responseObject) {
      NSLog(@"JSON: %@", responseObject);
      
@@ -87,7 +90,7 @@
                onSuccess:(void(^)(NSArray* topics)) success
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"ID":@(ID)};
+  NSDictionary* params =@{@"ID":@(ID),@"token":[QZBCurrentUser sharedInstance].user.api_key};
   
   
   [self.requestOperationManager
@@ -128,7 +131,7 @@
                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"game_session":@{@"host_id":@(1),@"topic_id":@(topic_id)}};
+  NSDictionary* params =@{@"game_session":@{@"host_id":@(1),@"topic_id":@(topic_id)},@"token":[QZBCurrentUser sharedInstance].user.api_key};
   
   [self.requestOperationManager POST:@"game_sessions"
                           parameters:params
@@ -156,7 +159,7 @@
                         onSuccess:(void(^)()) success
                         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure{
   
-  NSDictionary *params = @{@"game_session_question": @{ @"host_answer_id":@(answerID) , @"host_time": @(answerTime)}};
+  NSDictionary *params = @{@"game_session_question": @{ @"host_answer_id":@(answerID) , @"host_time": @(answerTime)},@"token":[QZBCurrentUser sharedInstance].user.api_key};
   
   NSString *URLString = [NSString stringWithFormat:@"game_session_questions/%ld",sessionQuestionID ];
   
@@ -177,7 +180,7 @@
 #pragma mark - user registration
 
 -(NSString *)hashPassword:(NSString *)password{
-  NSString *salt = [JFBCrypt generateSaltWithNumberOfRounds:10];
+  NSString *salt = [JFBCrypt generateSaltWithNumberOfRounds:(SInt32)10];
   NSString *hashedPassword = [JFBCrypt hashPassword:password withSalt:salt];
   
   return hashedPassword;
@@ -193,9 +196,15 @@
   
   NSString *hashedPassword = [self hashPassword:password];
   
-  NSDictionary *params = @{@"player":@{@"name":userName,@"email":userEmail, @"password_digest":hashedPassword}};
+  NSLog(@"hashed %@", hashedPassword);
   
-  [self.requestOperationManager POST:@"players" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  NSDictionary *params = @{@"player":@{@"name":userName,
+                                       @"email":userEmail,
+                                       @"password_digest":hashedPassword}};
+  
+  [self.requestOperationManager POST:@"players"
+                          parameters:params
+                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSLog(@"%@", responseObject);
     
     QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
@@ -222,20 +231,49 @@
   
   NSString *hashedPassword = [self hashPassword:password];
   
-  NSDictionary *params = @{@"email":email, @"password_digest":hashedPassword};
+  
+  
+  NSLog(@"email %@ password %@", email, hashedPassword);
+
+ // email = @"foo@bar.com";
+
+  hashedPassword = @"$2a$10$qfOWhGZO92uXKTjYzzb/9efimcojZOHrTEe0NQPuXVKWljZ1N1mfy";
+
+  
+  NSDictionary *params = @{@"email":email,
+                           @"password_digest":hashedPassword};
+  
   
   
   [self.requestOperationManager POST:@"players/authenticate"
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                               NSLog(@"%@", responseObject);
+                               
+                               NSLog(@"resp %@", responseObject);
+                               
+                               NSString *token = [responseObject objectForKey:@"token"];
+                               
+                               /*
+                                self.api_key = [dict objectForKey:@"api_key"];
+                                self.name = [dict objectForKey:@"name"];
+                                self.email = [dict objectForKey:@"email"];
+                                
+                                */
+                               
+                               if(![responseObject objectForKey:@"error"]){
+                               
+                               NSDictionary *dict = @{@"api_key":token, @"name":@"aa",@"email":email };//redo name
+                               
+                                 QZBUser *user = [[QZBUser alloc] initWithDict:dict];
+                                 
+                                 if(success){
+                                   success(user);
+                                 }
+                               }
+                               
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"%@",error);
   }];
-  
-  
-  
 }
-
 
 @end

@@ -80,6 +80,8 @@ preparation before navigation
 
   __weak typeof(self) weakSelf = self;
   
+  if([self validateEmail:email] && [self validatePassword:password] && [self validateUsername:username]){
+  
   [[QZBServerManager sharedManager] POSTRegistrationUser:username
       email:email
       password:password
@@ -96,6 +98,7 @@ preparation before navigation
         }
         
       }];
+  }
 }
 
 -(void)userAlreadyExist{

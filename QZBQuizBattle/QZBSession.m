@@ -8,6 +8,7 @@
 
 #import "QZBSession.h"
 #import "QZBUser.h"
+#import "QZBCurrentUser.h"
 
 static const NSUInteger QZBTimeForAnswer = 10;
 static const NSUInteger QZBResultForRightAnswer = 10;
@@ -22,7 +23,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property(strong,nonatomic) NSArray *firstUserAnswers;
 @property(strong,nonatomic) NSArray *oponentUserAnswers;
 @property(assign, nonatomic) NSInteger session_id;
-
 
 @end
 
@@ -119,8 +119,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
   NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
   NSInteger opponentUserId = -1;
   
-  QZBUser *user1 = [[QZBUser alloc] initWithId:firsUserId];
-  QZBUser *opponent = [[QZBUser alloc] initWithId:opponentUserId];
+  QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
+  QZBUser *opponent = nil;//не протестированно
   
   return [self initWithQestions:questions first:user1 opponentUser:opponent];
 }
