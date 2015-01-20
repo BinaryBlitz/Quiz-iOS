@@ -64,6 +64,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
   [[self navigationController] setNavigationBarHidden:YES animated:NO];
+  
+  [self setNamesAndUserpics];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -468,6 +470,14 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
 - (BOOL)prefersStatusBarHidden {
   return YES;
+}
+
+#pragma mark - user interface
+
+-(void)setNamesAndUserpics{
+  
+  self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
+  
 }
 
 @end

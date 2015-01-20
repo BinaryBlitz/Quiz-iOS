@@ -10,6 +10,7 @@
 #import "QZBGameTopic.h"
 #import "QZBProgressViewController.h"
 #import "QZBTopicChooserControllerViewController.h"
+#import "QZBCategoryChooserVC.h"
 
 @interface QZBEndSessionControllerViewController ()
 
@@ -47,35 +48,30 @@
 */
 - (IBAction)rematchAction:(UIButton *)sender {
   
-  NSLog(@"rematch");
-  NSArray *controllers = self.navigationController.viewControllers;
-  
-  UIViewController *destinationVC;
-  
-  for(UIViewController *controller in controllers){
-    
-    if([controller isKindOfClass:[QZBProgressViewController class]]){
-      NSLog(@"%@",[controller class]);
-      
-      destinationVC = controller;
-      break;
-      
-    }
-  }
-  [self.navigationController popToViewController:destinationVC animated:YES];
+  [self moveToVCWithClass:[QZBProgressViewController class]];
 }
 
 
 - (IBAction)ChooseTopicAction:(UIButton *)sender {
   
-  NSLog(@"topicChooser");
+  [self moveToVCWithClass:[QZBTopicChooserControllerViewController class]];
+  //[self.navigationController popToRootViewControllerAnimated:YES];
+ }
+- (IBAction)chooseCategoryAction:(id)sender {
+  [self moveToVCWithClass:[QZBCategoryChooserVC class]];
+  
+}
+
+
+-(void)moveToVCWithClass:(__unsafe_unretained Class) VCclass{
+  
   NSArray *controllers = self.navigationController.viewControllers;
   
   UIViewController *destinationVC;
   
   for(UIViewController *controller in controllers){
     
-    if([controller isKindOfClass:[QZBTopicChooserControllerViewController class]]){
+    if([controller isKindOfClass:VCclass]){
       NSLog(@"%@",[controller class]);
       
       destinationVC = controller;
@@ -85,7 +81,9 @@
   }
   [self.navigationController popToViewController:destinationVC animated:YES];
   
-  [self.navigationController popToRootViewControllerAnimated:YES];
- }
+  
+  
+}
+
 
 @end

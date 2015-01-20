@@ -271,7 +271,9 @@
                                
                                if(![responseObject objectForKey:@"error"]){
                                
-                               NSDictionary *dict = @{@"api_key":token, @"name":@"aa",@"email":email };//redo name
+                              NSString *name = [responseObject objectForKey:@"name"];
+                                 
+                               NSDictionary *dict = @{@"api_key":token, @"name":name,@"email":email };//redo name
                                
                                  QZBUser *user = [[QZBUser alloc] initWithDict:dict];
                                  
@@ -281,6 +283,10 @@
                                }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"%@",error);
+    if(failure){
+      failure(error, operation.response.statusCode);
+    }
+    
   }];
 }
 

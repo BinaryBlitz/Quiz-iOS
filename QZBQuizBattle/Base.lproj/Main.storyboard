@@ -473,6 +473,7 @@
                         <outlet property="qestionLabel" destination="SQ2-9D-ofz" id="GRX-Kc-2Ce"/>
                         <outlet property="roundLabel" destination="yfv-MY-T2r" id="7LY-MX-opC"/>
                         <outlet property="timeLabel" destination="llf-Ot-6hI" id="1EG-fr-xOo"/>
+                        <outlet property="userNameLabel" destination="wOr-tl-4Ie" id="eUp-PA-Glf"/>
                         <outletCollection property="answerButtons" destination="DM1-Tm-SNS" id="xdR-Tf-F3t"/>
                         <outletCollection property="answerButtons" destination="MRH-jw-acp" id="mhr-pm-rND"/>
                         <outletCollection property="answerButtons" destination="VeJ-SL-fql" id="8nE-hP-8Ok"/>
@@ -496,6 +497,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pbp-aU-8VR">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="zzt-Wu-tRF"/>
+                                </constraints>
+                                <state key="normal" title="ReMatch">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="zzt-Wu-tRF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="zzt-Wu-tRF"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="rematchAction:" destination="cHr-bK-2eS" eventType="touchUpInside" id="wmm-e7-yWv"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hw-Vm-uxn">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Choose topic">
@@ -505,59 +528,54 @@
                                     <action selector="ChooseTopicAction:" destination="cHr-bK-2eS" eventType="touchUpInside" id="08m-jA-T4t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pbp-aU-8VR">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu8-Jd-iui">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="77" id="8c4-qM-R7o"/>
-                                </constraints>
-                                <state key="normal" title="ReMatch">
+                                <state key="normal" title="Choose category">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="8c4-qM-R7o"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="8c4-qM-R7o"/>
-                                    </mask>
-                                </variation>
                                 <connections>
-                                    <action selector="rematchAction:" destination="cHr-bK-2eS" eventType="touchUpInside" id="wmm-e7-yWv"/>
+                                    <action selector="chooseCategoryAction:" destination="cHr-bK-2eS" eventType="touchUpInside" id="rxT-fv-9ad"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6hw-Vm-uxn" firstAttribute="centerX" secondItem="8Zj-Hw-7th" secondAttribute="centerX" id="VIw-rS-iVc"/>
-                            <constraint firstItem="Pbp-aU-8VR" firstAttribute="top" secondItem="eUA-P7-uNC" secondAttribute="bottom" constant="384" id="azv-tc-Kz6"/>
-                            <constraint firstItem="6hw-Vm-uxn" firstAttribute="top" secondItem="Pbp-aU-8VR" secondAttribute="bottom" constant="36" id="or3-a2-BMH"/>
-                            <constraint firstItem="Pbp-aU-8VR" firstAttribute="leading" secondItem="8Zj-Hw-7th" secondAttribute="leading" constant="146" id="upZ-ZH-mEB"/>
+                            <constraint firstItem="Bu8-Jd-iui" firstAttribute="top" secondItem="6hw-Vm-uxn" secondAttribute="bottom" constant="31" id="3fO-a0-fLW"/>
+                            <constraint firstItem="Bu8-Jd-iui" firstAttribute="centerX" secondItem="6hw-Vm-uxn" secondAttribute="centerX" id="EqY-dn-9Mb"/>
+                            <constraint firstItem="6hw-Vm-uxn" firstAttribute="centerX" secondItem="Pbp-aU-8VR" secondAttribute="centerX" id="IWE-6X-mi9"/>
+                            <constraint firstItem="6hw-Vm-uxn" firstAttribute="centerX" secondItem="8Zj-Hw-7th" secondAttribute="centerX" id="QeC-YC-biL"/>
+                            <constraint firstItem="Pbp-aU-8VR" firstAttribute="centerY" secondItem="8Zj-Hw-7th" secondAttribute="centerY" id="fly-h7-w6P"/>
+                            <constraint firstItem="6hw-Vm-uxn" firstAttribute="top" secondItem="Pbp-aU-8VR" secondAttribute="bottom" constant="36" id="wPh-uE-5Ma"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="6hw-Vm-uxn"/>
                                 <exclude reference="Pbp-aU-8VR"/>
+                                <exclude reference="6hw-Vm-uxn"/>
+                                <exclude reference="Bu8-Jd-iui"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="VIw-rS-iVc"/>
-                                <exclude reference="or3-a2-BMH"/>
-                                <exclude reference="azv-tc-Kz6"/>
-                                <exclude reference="upZ-ZH-mEB"/>
+                                <exclude reference="fly-h7-w6P"/>
+                                <exclude reference="IWE-6X-mi9"/>
+                                <exclude reference="QeC-YC-biL"/>
+                                <exclude reference="wPh-uE-5Ma"/>
+                                <exclude reference="3fO-a0-fLW"/>
+                                <exclude reference="EqY-dn-9Mb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="6hw-Vm-uxn"/>
                                 <include reference="Pbp-aU-8VR"/>
+                                <include reference="6hw-Vm-uxn"/>
+                                <include reference="Bu8-Jd-iui"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="VIw-rS-iVc"/>
-                                <include reference="or3-a2-BMH"/>
-                                <include reference="azv-tc-Kz6"/>
-                                <include reference="upZ-ZH-mEB"/>
+                                <include reference="fly-h7-w6P"/>
+                                <include reference="IWE-6X-mi9"/>
+                                <include reference="QeC-YC-biL"/>
+                                <include reference="wPh-uE-5Ma"/>
+                                <include reference="3fO-a0-fLW"/>
+                                <include reference="EqY-dn-9Mb"/>
                             </mask>
                         </variation>
                     </view>
@@ -766,17 +784,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Почта" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="My5-Tt-exj">
+                            <textField opaque="NO" clipsSubviews="YES" tag="33" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Почта" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="My5-Tt-exj" customClass="QZBEmailTextField">
                                 <rect key="frame" x="154" y="286" width="292" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xIU-Dq-fcX">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xIU-Dq-fcX" customClass="QZBPasswordTextField">
                                 <rect key="frame" x="154" y="351" width="292" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Юзернейм" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jc-4s-5JZ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Юзернейм" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jc-4s-5JZ" customClass="QZBUserNameTextField">
                                 <rect key="frame" x="154" y="218" width="292" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="292" id="ai6-Fa-RFJ"/>
@@ -807,9 +825,9 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="emailTextField" destination="My5-Tt-exj" id="vgb-JO-rQB"/>
-                        <outlet property="passwordTextField" destination="xIU-Dq-fcX" id="4R6-EX-3EK"/>
-                        <outlet property="userNameTextField" destination="9jc-4s-5JZ" id="T8H-Kh-voM"/>
+                        <outlet property="emailTextField" destination="My5-Tt-exj" id="Cva-CA-4XV"/>
+                        <outlet property="passwordTextField" destination="xIU-Dq-fcX" id="Uri-NC-H3R"/>
+                        <outlet property="userNameTextField" destination="9jc-4s-5JZ" id="i0o-F4-47R"/>
                         <segue destination="V4h-ET-EfJ" kind="show" identifier="registrationIsOk" id="eRs-ob-gvk"/>
                     </connections>
                 </viewController>
@@ -829,7 +847,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Почта" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vgk-yP-QW9">
+                            <textField opaque="NO" clipsSubviews="YES" tag="33" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Почта" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vgk-yP-QW9" customClass="QZBEmailTextField">
                                 <rect key="frame" x="154" y="254" width="292" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="292" id="1LX-Fb-3y2"/>
@@ -837,7 +855,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uqj-qm-8x0">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uqj-qm-8x0" customClass="QZBPasswordTextField">
                                 <rect key="frame" x="154" y="315" width="292" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
@@ -871,8 +889,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emailTextField" destination="Vgk-yP-QW9" id="ipP-Xn-mXv"/>
-                        <outlet property="passwordTextField" destination="Uqj-qm-8x0" id="UQv-Vh-Nun"/>
+                        <outlet property="emailTextField" destination="Vgk-yP-QW9" id="oDT-3a-Kk7"/>
+                        <outlet property="passwordTextField" destination="Uqj-qm-8x0" id="SgR-Zn-WTZ"/>
                         <segue destination="V4h-ET-EfJ" kind="show" identifier="LoginIsOK" id="YTP-yg-7mt"/>
                     </connections>
                 </viewController>
@@ -900,6 +918,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IvM-or-C3V"/>
+        <segue reference="YTP-yg-7mt"/>
     </inferredMetricsTieBreakers>
 </document>

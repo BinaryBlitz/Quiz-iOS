@@ -44,6 +44,11 @@
 		19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */; };
 		19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */; };
 		19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691141A6A91C7008B2AE1 /* NSString+MD5.m */; };
+		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
+		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
+		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
+		19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */; };
+		19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */; };
 		47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC7A8F9E1287DD166F770A8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +135,16 @@
 		19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressViewController.m; sourceTree = "<group>"; };
 		19D691131A6A91C7008B2AE1 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		19D691141A6A91C7008B2AE1 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
+		19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEmailTextField.m; sourceTree = "<group>"; };
+		19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QZBShakeExtension.h"; sourceTree = "<group>"; };
+		19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+QZBShakeExtension.m"; sourceTree = "<group>"; };
+		19D691221A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationAndLoginTextFieldBase.h; sourceTree = "<group>"; };
+		19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationAndLoginTextFieldBase.m; sourceTree = "<group>"; };
+		19D691251A6E6275008B2AE1 /* QZBPasswordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPasswordTextField.h; sourceTree = "<group>"; };
+		19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPasswordTextField.m; sourceTree = "<group>"; };
+		19D691281A6EA4E8008B2AE1 /* QZBUserNameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserNameTextField.h; sourceTree = "<group>"; };
+		19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserNameTextField.m; sourceTree = "<group>"; };
 		61CB57A856F89614168E9C5A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2892C94F45A4ABC9B49B297 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DBC7A8F9E1287DD166F770A8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +319,7 @@
 		19CB508E1A3C32F000A3CD74 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				19D691181A6E5E5B008B2AE1 /* textFields */,
 				1976FBAC1A4B04B50016130B /* cells */,
 				198066A81A39DB6500B749BA /* buttons */,
 			);
@@ -313,17 +329,9 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				19D691171A6D56D2008B2AE1 /* topic and group choose */,
+				19D691161A6D56A1008B2AE1 /* Game */,
 				197669991A67D057006C2757 /* Registration and login */,
-				191559CE1A39CDD400462C93 /* QZBGameSessionViewController.h */,
-				191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */,
-				19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */,
-				19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */,
-				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
-				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
-				1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */,
-				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
-				197669A01A67FDE2006C2757 /* QZBCategoryChooserVC.h */,
-				197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -368,6 +376,47 @@
 				1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */,
 			);
 			name = qestion;
+			sourceTree = "<group>";
+		};
+		19D691161A6D56A1008B2AE1 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				191559CE1A39CDD400462C93 /* QZBGameSessionViewController.h */,
+				191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */,
+				19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */,
+				19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */,
+				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
+				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		19D691171A6D56D2008B2AE1 /* topic and group choose */ = {
+			isa = PBXGroup;
+			children = (
+				1976FBA91A4B03E40016130B /* QZBTopicChooserControllerViewController.h */,
+				1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */,
+				197669A01A67FDE2006C2757 /* QZBCategoryChooserVC.h */,
+				197669A11A67FDE2006C2757 /* QZBCategoryChooserVC.m */,
+			);
+			name = "topic and group choose";
+			sourceTree = "<group>";
+		};
+		19D691181A6E5E5B008B2AE1 /* textFields */ = {
+			isa = PBXGroup;
+			children = (
+				19D691221A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.h */,
+				19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */,
+				19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */,
+				19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */,
+				19D691251A6E6275008B2AE1 /* QZBPasswordTextField.h */,
+				19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */,
+				19D691281A6EA4E8008B2AE1 /* QZBUserNameTextField.h */,
+				19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */,
+				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
+				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
+			);
+			name = textFields;
 			sourceTree = "<group>";
 		};
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
@@ -531,9 +580,11 @@
 			files = (
 				1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */,
 				191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */,
+				19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */,
 				1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */,
 				1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
+				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
@@ -542,12 +593,14 @@
 				1974BED11A4C4A3500E63D6B /* QZBCategory.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
+				19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */,
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
 				1976FBB31A4B062D0016130B /* QZBGameTopic.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				195A7E3C1A69822A003AC3BA /* JFBCrypt.m in Sources */,
 				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
+				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
@@ -561,6 +614,7 @@
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
+				19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

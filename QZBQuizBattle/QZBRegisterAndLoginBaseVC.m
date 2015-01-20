@@ -7,6 +7,12 @@
 //
 
 #import "QZBRegisterAndLoginBaseVC.h"
+#import "QZBRegistrationAndLoginTextFieldBase.h"
+#import "QZBEmailTextField.h"
+#import "QZBPasswordTextField.h"
+#import "QZBUserNameTextField.h"
+#import "TSMessage.h"
+#import "UIView+QZBShakeExtension.h"
 
 @interface QZBRegisterAndLoginBaseVC ()
 
@@ -22,6 +28,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+  [super viewWillDisappear:animated];
+  [TSMessage dismissActiveNotification];
 }
 
 /*
@@ -80,5 +91,93 @@
 
 
 
+#pragma mark - errors
+
+-(NSString *)errorAsNSString:(QZBLoginErrors)errorType{
+  
+  NSString *result = nil;
+  
+  
+  //NSString *password_error_message = @"Пароль должен быть длинее 5 символов";
+  //NSString *username_short_error_message = @"Имя должно быть длинее 1 символа";
+  //NSString *username_long_error_message = @"Имя должно быть короче 20 символов";
+  //NSString *email_error_message = @"Неверный формат почты";
+  
+  switch (errorType) {
+    case email_error_message:
+      result = @"Неверный формат почты";
+      break;
+    case password_error_message:
+      result = @"Пароль должен быть длинее 5 символов";
+      break;
+    case username_short_error_message:
+      result = @"Имя должно быть длинее 1 символа";
+      break;
+    case username_long_error_message:
+      result = @"Имя должно быть короче 20 символов";
+      break;
+    case user_alredy_exist:
+      result = @"Пользователь с такой почтой уже зарегистрирован";
+      break;
+    case login_fail:
+      result = @"Неверная почта или пароль";
+    
+    default:
+      break;
+  }
+  return result;
+}
+
+-(BOOL)validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField{
+  
+  
+  
+  if([textField isKindOfClass:[QZBEmailTextField class]]){
+    if(![textField validate]){
+      [TSMessage showNotificationWithTitle:[self errorAsNSString:email_error_message]
+                                      type:TSMessageNotificationTypeWarning];
+      [textField shakeView];
+      return NO;
+    }else{
+      return YES;
+    }
+    
+  } else if([textField isKindOfClass:[QZBPasswordTextField class]]){
+    if(![textField validate]){
+      [TSMessage showNotificationWithTitle:[self errorAsNSString:password_error_message]
+                                      type:TSMessageNotificationTypeWarning];
+      [textField shakeView];
+      return NO;
+      
+    } else{
+      return YES;
+    }
+    
+  }else if([textField isKindOfClass:[QZBUserNameTextField class]]){
+    if(![textField validate]){
+      if([textField.text length] < 2 ){
+        
+        [TSMessage showNotificationWithTitle:[self errorAsNSString:username_short_error_message]
+                                        type:TSMessageNotificationTypeWarning];}
+      else if ([textField.text length] > 20){
+        [TSMessage showNotificationWithTitle:[self errorAsNSString:username_long_error_message]
+                                        type:TSMessageNotificationTypeWarning];
+      }
+      
+      [textField shakeView];
+      return NO;
+
+    }else{
+      return YES;
+    }
+    
+  }
+  
+  else{
+    return NO;
+  }
+  
+  
+}
 
 @end

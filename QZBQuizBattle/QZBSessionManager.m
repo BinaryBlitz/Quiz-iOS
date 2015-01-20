@@ -9,6 +9,7 @@
 //
 
 #import "QZBSessionManager.h"
+#import "QZBUser.h"
 
 #define OFFLINE YES
 
@@ -18,6 +19,9 @@
 @property(strong, nonatomic) QZBQuestion *currentQuestion;
 @property(assign, nonatomic) NSUInteger roundNumber;
 @property(assign, nonatomic) BOOL isDoubled;
+
+@property(copy, nonatomic)NSString *firstUserName;
+@property(copy, nonatomic)NSString *opponentUserName;
 
 @property(strong, nonatomic) NSDate *startTime;
 @property(strong, nonatomic) NSTimer *questionTimer;
@@ -83,6 +87,8 @@
   self.questionTimer = nil;
   self.roundNumber = 1;
   self.isDoubled = NO;
+  
+  self.firstUserName = session.firstUser.user.name;
 }
 
 - (void)setBot:(QZBOpponentBot *)bot {

@@ -9,6 +9,11 @@
 #import "QZBLoginWithEmailVC.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "TSMessage.h"
+#import "UIView+QZBShakeExtension.h"
+#import "QZBEmailTextField.h"
+#import "QZBPasswordTextField.h"
+#import "QZBRegistrationAndLoginTextFieldBase.h"
 
 @interface QZBLoginWithEmailVC ()<UITextFieldDelegate>
 
@@ -50,18 +55,18 @@
   NSString *password = self.passwordTextField.text;
   
   
-  if (![self validateEmail:email]) {
+  if (![self validateTextField:self.emailTextField]) {
     [self.emailTextField becomeFirstResponder];
     //self.emailTextField.backgroundColor = [UIColor redColor];
-    [self shake:self.emailTextField direction:1 shakes:0];
+    //[self shake:self.emailTextField direction:1 shakes:0];
     return;
   } else {
     //self.emailTextField.backgroundColor = [UIColor greenColor];
   }
   
-  if(![self validatePassword:password]){
+  if(![self validateTextField:self.passwordTextField]){
     [self.passwordTextField becomeFirstResponder];
-    [self shake:self.passwordTextField direction:1 shakes:0];
+    //[self shake:self.passwordTextField direction:1 shakes:0];
     return;
     
   }
@@ -77,6 +82,12 @@
     
   } onFailure:^(NSError *error, NSInteger statusCode) {
     
+    if(statusCode == 401){
+      [TSMessage showNotificationWithTitle:[self errorAsNSString:login_fail]
+                                      type:TSMessageNotificationTypeError];
+      
+    }
+    
   }];
   
   
@@ -85,14 +96,16 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+  
+  
 
 if ([textField isEqual:self.emailTextField]){
-  NSString *email = self.emailTextField.text;
+ // NSString *email = self.emailTextField.text;
   
-  if (![self validateEmail:email]){
-    //direction = 1;
-    //shakes = 0;
-    [self shake:self.emailTextField direction:1 shakes:0];
+  if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
+
+    //[textField shakeView];
+   // [self shake:self.emailTextField direction:1 shakes:0];
     return NO;
   }else{
     [self.passwordTextField becomeFirstResponder];
@@ -102,10 +115,11 @@ if ([textField isEqual:self.emailTextField]){
 } else if([textField isEqual:self.passwordTextField]){
   NSString *password = self.passwordTextField.text;
   
-  if (![self validatePassword:password]){
-    //direction = 1;
-    //shakes = 0;
-    [self shake:self.passwordTextField direction:1 shakes:0];
+  
+  
+  if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
+    
+    //[textField shakeView];
     return NO;
   }else{
     
@@ -121,5 +135,7 @@ if ([textField isEqual:self.emailTextField]){
 
 return NO;
 }
+
+
 
 @end

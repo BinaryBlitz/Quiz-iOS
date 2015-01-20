@@ -9,6 +9,10 @@
 #import "QZBRegisterWithEmailVC.h"
 #import "QZBCurrentUser.h"
 #import "TSMessage.h"
+#import "QZBUserNameTextField.h"
+#import "QZBEmailTextField.h"
+#import "QZBPasswordTextField.h"
+#import "UIView+QZBShakeExtension.h"
 
 @interface QZBRegisterWithEmailVC () <UITextFieldDelegate>
 
@@ -52,28 +56,25 @@ preparation before navigation
   NSString *email = self.emailTextField.text;
   NSString *password = self.passwordTextField.text;
 
-  if (![self validateUsername:username]) {
+  if (![self validateTextField:self.userNameTextField]) {
     [self.userNameTextField becomeFirstResponder];
-    //self.userNameTextField.backgroundColor = [UIColor redColor];
     
-    [self shake:self.userNameTextField direction:1 shakes:0];
     return;
   } else {
-    //self.userNameTextField.backgroundColor = [UIColor greenColor];
+
   }
 
-  if (![self validateEmail:email]) {
+  if (![self validateTextField:self.emailTextField]) {
     [self.emailTextField becomeFirstResponder];
-    //self.emailTextField.backgroundColor = [UIColor redColor];
-    [self shake:self.emailTextField direction:1 shakes:0];
+
     return;
   } else {
-    //self.emailTextField.backgroundColor = [UIColor greenColor];
+
   }
   
-  if(![self validatePassword:password]){
+  if(![self validateTextField:self.passwordTextField]){
     [self.passwordTextField becomeFirstResponder];
-    [self shake:self.passwordTextField direction:1 shakes:0];
+
     return;
     
   }
@@ -102,7 +103,8 @@ preparation before navigation
 }
 
 -(void)userAlreadyExist{
-  [TSMessage showNotificationWithTitle:@"user already exist" type:TSMessageNotificationTypeError];
+  [TSMessage showNotificationWithTitle:[self errorAsNSString:user_alredy_exist]
+                                  type:TSMessageNotificationTypeError];
 
   NSLog(@"UserAlredyExist");
   
@@ -112,14 +114,8 @@ preparation before navigation
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   if ([textField isEqual:self.userNameTextField]) {
-    NSString *username = self.userNameTextField.text;
-   
-    
-    if (![self validateUsername:username]) {
+    if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]) {
       
-      //direction = 1;
-      //shakes = 0;
-      [self shake:self.userNameTextField direction:1 shakes:0];
       return NO;
 
     } else {
@@ -127,12 +123,8 @@ preparation before navigation
       return YES;
     }
   } else if ([textField isEqual:self.emailTextField]){
-    NSString *email = self.emailTextField.text;
     
-    if (![self validateEmail:email]){
-      //direction = 1;
-      //shakes = 0;
-      [self shake:self.emailTextField direction:1 shakes:0];
+    if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
       return NO;
     }else{
       [self.passwordTextField becomeFirstResponder];
@@ -140,12 +132,9 @@ preparation before navigation
     }
     
   } else if([textField isEqual:self.passwordTextField]){
-    NSString *password = self.passwordTextField.text;
+
     
-    if (![self validatePassword:password]){
-      //direction = 1;
-      //shakes = 0;
-      [self shake:self.passwordTextField direction:1 shakes:0];
+    if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
       return NO;
     }else{
       [self registerAction:nil];
@@ -156,6 +145,10 @@ preparation before navigation
 
   return NO;
 }
+
+
+
+//-(void)TextFieldIsNotOK:(UITextField *)textField
 
 
 @end

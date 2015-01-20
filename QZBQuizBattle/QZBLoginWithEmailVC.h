@@ -8,8 +8,11 @@
 
 #import "QZBRegisterAndLoginBaseVC.h"
 
+@class QZBEmailTextField;
+@class QZBPasswordTextField;
+
 @interface QZBLoginWithEmailVC : QZBRegisterAndLoginBaseVC
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet QZBEmailTextField *emailTextField;
+@property (weak, nonatomic) IBOutlet QZBPasswordTextField *passwordTextField;
 
 @end
