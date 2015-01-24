@@ -59,6 +59,13 @@
   [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+  [super viewWillDisappear:animated];
+  
+  [TSMessage dismissActiveNotification];
+  
+}
+
 #pragma mark - Actions
 
 - (IBAction)cancelFinding:(UIButton *)sender {
@@ -83,7 +90,8 @@
   
   NSLog(@"%@", self.topic);
   
-  [[QZBServerManager sharedManager] postSessionWithID:self.topic.topic_id
+  
+  [[QZBServerManager sharedManager] postSessionWithTopic:self.topic
                                             onSuccess:^(QZBSession *session,QZBOpponentBot *bot) {
                                               if(!weakSelf.isCanceled){
                                               

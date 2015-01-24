@@ -7,7 +7,7 @@
 //
 
 #import "QZBCurrentUser.h"
-#import "QZBUser.h"
+//#import "QZBUser.h"
 
 
 @interface QZBCurrentUser()

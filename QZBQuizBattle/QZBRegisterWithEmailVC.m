@@ -16,6 +16,8 @@
 
 @interface QZBRegisterWithEmailVC () <UITextFieldDelegate>
 
+@property(assign, nonatomic) BOOL registrationInProgress;
+
 @end
 
 @implementation QZBRegisterWithEmailVC
@@ -26,6 +28,7 @@
   self.userNameTextField.delegate = self;
   self.emailTextField.delegate = self;
   self.passwordTextField.delegate = self;
+  self.registrationInProgress = NO;
   // Do any additional setup after loading the view.
 }
 
@@ -81,14 +84,18 @@ preparation before navigation
 
   __weak typeof(self) weakSelf = self;
   
-  if([self validateEmail:email] && [self validatePassword:password] && [self validateUsername:username]){
-  
+  if([self validateEmail:email] && [self validatePassword:password] && [self validateUsername:username] && !self.registrationInProgress){
+    self.registrationInProgress = YES;
+    
   [[QZBServerManager sharedManager] POSTRegistrationUser:username
-      email:email
+         email:email
       password:password
       onSuccess:^(QZBUser *user) {
         NSLog(@"user %@", user.api_key);
         [[QZBCurrentUser sharedInstance] setUser:user];
+        
+        weakSelf.registrationInProgress = NO;
+        
         [weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
         
       }
@@ -98,6 +105,8 @@ preparation before navigation
           [weakSelf userAlreadyExist];
         }
         
+        weakSelf.registrationInProgress = NO;
+        
       }];
   }
 }
@@ -105,6 +114,8 @@ preparation before navigation
 -(void)userAlreadyExist{
   [TSMessage showNotificationWithTitle:[self errorAsNSString:user_alredy_exist]
                                   type:TSMessageNotificationTypeError];
+  
+  [self.emailTextField becomeFirstResponder];
 
   NSLog(@"UserAlredyExist");
   

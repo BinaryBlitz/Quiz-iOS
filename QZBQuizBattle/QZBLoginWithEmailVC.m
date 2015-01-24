@@ -17,6 +17,8 @@
 
 @interface QZBLoginWithEmailVC ()<UITextFieldDelegate>
 
+@property(assign, nonatomic) BOOL loginInProgress;
+
 @end
 
 @implementation QZBLoginWithEmailVC
@@ -26,6 +28,8 @@
   
   self.emailTextField.delegate = self;
   self.passwordTextField.delegate = self;
+  
+  self.loginInProgress = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -73,10 +77,16 @@
   
   
   __weak typeof(self) weakSelf = self;
+  
+  if(!weakSelf.loginInProgress){
+  
+  self.loginInProgress = YES;
 
   [[QZBServerManager sharedManager] POSTLoginUserEmail:email password:password onSuccess:^(QZBUser *user) {
     
     [[QZBCurrentUser sharedInstance] setUser:user];
+    
+    weakSelf.loginInProgress = NO;
     
     [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
     
@@ -86,9 +96,12 @@
       [TSMessage showNotificationWithTitle:[self errorAsNSString:login_fail]
                                       type:TSMessageNotificationTypeError];
       
+      
     }
     
-  }];
+    weakSelf.loginInProgress = NO;
+    
+  }];}
   
   
 }
@@ -100,12 +113,9 @@
   
 
 if ([textField isEqual:self.emailTextField]){
- // NSString *email = self.emailTextField.text;
   
   if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
 
-    //[textField shakeView];
-   // [self shake:self.emailTextField direction:1 shakes:0];
     return NO;
   }else{
     [self.passwordTextField becomeFirstResponder];
@@ -119,7 +129,6 @@ if ([textField isEqual:self.emailTextField]){
   
   if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]){
     
-    //[textField shakeView];
     return NO;
   }else{
     

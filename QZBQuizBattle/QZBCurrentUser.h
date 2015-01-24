@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QZBUser.h"
 
 @class QZBUser;
 @interface QZBCurrentUser : NSObject

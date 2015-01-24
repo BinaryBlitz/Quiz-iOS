@@ -88,16 +88,23 @@
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
   NSLog(@"category name:  %@", category.name);
+  
+  
+  self.topics = [NSArray arrayWithArray:[[category relationToTopic] allObjects]];
 
   self.title = category.name;
+  
+//  NSInteger category_id = [category.category_id integerValue];
+  
+  [[QZBServerManager sharedManager] getTopicsWithCategory:category onSuccess:^(NSArray *topics) {
+    self.topics = [NSArray arrayWithArray:[[category relationToTopic] allObjects]];
+    [self.topicTableView reloadData];
+    
+    
+  } onFailure:^(NSError *error, NSInteger statusCode) {
+    
+  }];
 
-  [[QZBServerManager sharedManager] getTopicsWithID:category.category_id
-      onSuccess:^(NSArray *topics) {
-        
-        NSLog(@"setted topics");
-          self.topics = [NSArray arrayWithArray:topics];
-          [self.topicTableView reloadData];
-      }
-      onFailure:^(NSError *error, NSInteger statusCode) { NSLog(@"fail"); }];
+
 }
 @end

@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import <Pusher/Pusher.h>
+#import "CoreData+MagicalRecord.h"
+
 
 @interface AppDelegate ()<PTPusherDelegate>
 
@@ -19,27 +21,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  // Override point for customization after application launch.
-  
-  /*
-  [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
-                                                                       settingsForTypes:UIUserNotificationTypeAlert
-                                                                       categories:nil]];
-  
-  [[UIApplication sharedApplication] registerForRemoteNotifications];
-  */
-  
-  
-  _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
-  
-  //[self.client connect];
-  
-  PTPusherChannel *channel = [_client subscribeToChannelNamed:@"my-channel"];
-  
-  [channel bindToEventNamed:@"my-event" handleWithBlock:^(PTPusherEvent *channelEvent) {
-   
-    NSLog(@"%@", channelEvent);
-  }];
+ 
+  [MagicalRecord setupAutoMigratingCoreDataStack];
   
   return YES;
 }

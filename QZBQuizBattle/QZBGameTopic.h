@@ -2,17 +2,19 @@
 //  QZBGameTopic.h
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 24/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
+//  Created by Andrey Mikhaylov on 21/01/15.
+//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface QZBGameTopic : NSObject
+@class QZBCategory;
 
-@property(copy,   nonatomic, readonly) NSString *name;
-@property(assign, nonatomic, readonly) NSInteger topic_id;
+@interface QZBGameTopic : NSManagedObject
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * topic_id;
+@property (nonatomic, retain) QZBCategory *relationToCategory;
 
 @end

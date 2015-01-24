@@ -2,31 +2,18 @@
 //  QZBCategory.m
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 25/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
+//  Created by Andrey Mikhaylov on 21/01/15.
+//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
 #import "QZBCategory.h"
+#import "QZBGameTopic.h"
 
-
-@interface QZBCategory()
-
-@property(copy, nonatomic) NSString *name;
-@property(assign, nonatomic) NSInteger category_id;
-
-@end
 
 @implementation QZBCategory
 
-- (instancetype)initWithDict:(NSDictionary *)dict
-{
-  self = [super init];
-  if (self) {
-    self.name = [dict objectForKey:@"name"];
-    self.category_id = [[dict objectForKey:@"id"] integerValue];
-  }
-  return self;
-}
-
+@dynamic category_id;
+@dynamic name;
+@dynamic relationToTopic;
 
 @end

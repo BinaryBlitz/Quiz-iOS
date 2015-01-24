@@ -15,6 +15,7 @@
 #import "QZBCurrentUser.h"
 #import "JFBCrypt.h"
 #import "NSString+MD5.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface QZBServerManager()
 @property (strong, nonatomic) AFHTTPRequestOperationManager* requestOperationManager;
@@ -48,10 +49,10 @@
 
 
 
-- (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) success
+- (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) successAF
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
 
-                 NSDictionary *params = @{@"token":[QZBCurrentUser sharedInstance].user.api_key};
+   NSDictionary *params = @{@"token":[QZBCurrentUser sharedInstance].user.api_key};
                  
   [self.requestOperationManager
    GET:@"categories"
@@ -65,16 +66,40 @@
      
      for (NSDictionary* dict in responseObject) {
 
-       QZBCategory *category = [[QZBCategory alloc] initWithDict:dict];
+       NSString *name = [dict objectForKey:@"name"];
+       id category_id = [dict objectForKey:@"id"];
        
-       [objectsArray addObject:category];
+       NSLog(@"%@ %@", name, category_id);
+       
+       //NSLog(@"   %ld", [category_id integerValue]);
+       
+       QZBCategory *existingEntity = [QZBCategory MR_findFirstByAttribute:@"category_id"
+                                                                withValue:category_id];
+       
+       if(!existingEntity){
+         NSLog(@"   %ld", [category_id integerValue]);
+         QZBCategory *categoryEntity = [QZBCategory MR_createEntity];
+         categoryEntity.category_id = category_id;
+         categoryEntity.name = name;
+         
+         [objectsArray addObject:categoryEntity];
+       }
+
+       
+       
+       
       
      }
      
-     if (success) {
-       success(objectsArray);
-     }
-     
+     [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil
+                                                completion:^(BOOL success, NSError *error) {
+       if (success) {
+         successAF([QZBCategory MR_findAll]);
+
+       }
+
+     }];
+ 
    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
      NSLog(@"Error: %@", error);
      
@@ -87,33 +112,57 @@
 
 
 
-- (void) getTopicsWithID:(NSInteger) ID
-               onSuccess:(void(^)(NSArray* topics)) success
+- (void) getTopicsWithCategory:(QZBCategory *) category
+               onSuccess:(void(^)(NSArray* topics)) successAF
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"ID":@(ID),@"token":[QZBCurrentUser sharedInstance].user.api_key};
+  NSDictionary* params =@{@"token":[QZBCurrentUser sharedInstance].user.api_key};
   
+  NSString *urlAsString = [NSString stringWithFormat:@"categories/%@", category.category_id];
   
   [self.requestOperationManager
-   GET:@"topics"
+   GET:urlAsString
    parameters:params
-   success:^(AFHTTPRequestOperation *operation, NSArray* responseObject) {
+   success:^(AFHTTPRequestOperation *operation, id responseObject) {
      NSLog(@"JSON: %@", responseObject);
      
-     //NSArray* dictsArray = [responseObject objectForKey:@"topics"];
-     //NSLog(@"%@", [responseObject firstObject]);
+     NSArray *topics = [responseObject objectForKey: @"topics"];
      
      NSMutableArray* objectsArray = [NSMutableArray array];
      
-     for (NSDictionary* dict in responseObject) {
-       QZBGameTopic *topic = [[QZBGameTopic alloc] initWithDictionary:dict];
+     for (NSDictionary* dict in topics) {
        
-       [objectsArray addObject:topic];
+       NSString *name = [dict objectForKey:@"name"];
+       id topic_id = [dict objectForKey:@"id"];
+       
+       QZBGameTopic *existingEntity = [QZBGameTopic MR_findFirstByAttribute:@"topic_id"
+                                                                  withValue:topic_id];
+       
+       if(!existingEntity){
+         QZBGameTopic *gameTopic = [QZBGameTopic MR_createEntity];
+         gameTopic.name = name;
+         gameTopic.topic_id = topic_id;
+         
+         [category addRelationToTopicObject:gameTopic];
+         
+         
+       }
+       
+      // QZBGameTopic *topic = [[QZBGameTopic alloc] initWithDictionary:dict];
+       
+       //[objectsArray addObject:topic];
      }
      
-     if (success) {
-       success(objectsArray);
-     }
+     [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:^(BOOL success, NSError *error) {
+       
+       if (successAF) {
+         successAF(objectsArray);
+       }
+       
+     }];
+     
+     
+    
      
    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
      NSLog(@"Error: %@", error);
@@ -128,11 +177,11 @@
 
 #pragma mark - session methods
 
-- (void) postSessionWithID:(NSInteger) topic_id
+- (void) postSessionWithTopic:(QZBGameTopic *)topic
                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
   
-  NSDictionary* params =@{@"game_session":@{@"host_id":@(1),@"topic_id":@(topic_id)},@"token":[QZBCurrentUser sharedInstance].user.api_key};
+  NSDictionary* params =@{@"game_session":@{@"host_id":@(1),@"topic_id":topic.topic_id},@"token":[QZBCurrentUser sharedInstance].user.api_key};
   
   [self.requestOperationManager POST:@"game_sessions"
                           parameters:params

@@ -7,6 +7,7 @@
 //
 
 #import "QZBCategoryChooserVC.h"
+#import "CoreData+MagicalRecord.h"
 #import "QZBServerManager.h"
 #import "QZBCategory.h"
 #import "QZBCategoryTableViewCell.h"
@@ -30,6 +31,7 @@
   
   self.mainTableView.delegate = self;
   self.mainTableView.dataSource = self;
+  _categories = [QZBCategory MR_findAll];
   [self initCategories];
     // Do any additional setup after loading the view.
 }
@@ -41,6 +43,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
+  //_categories = [QZBCategory MR_findAll];
  // self.navigationItem.hidesBackButton = YES;
   [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
@@ -93,13 +96,16 @@
 }
 
 
--(void)initCategories{
+-(void)initCategories{//костыли(
   
-  __weak typeof(self) weakSelf = self;
+  //__weak typeof(self) weakSelf = self;
   
   [[QZBServerManager sharedManager] getСategoriesOnSuccess:^(NSArray *topics) {
-    weakSelf.categories = topics;
+    
+    _categories = [QZBCategory MR_findAll];
+    
     [self.mainTableView reloadData];
+
   } onFailure:^(NSError *error, NSInteger statusCode) {
     
   }];

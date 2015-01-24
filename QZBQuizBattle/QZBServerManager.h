@@ -13,22 +13,25 @@
 @class QZBSession;
 @class QZBOpponentBot;
 @class QZBUser;
-//@class QZBCategory;
+@class QZBCategory;
+@class QZBGameTopic;
 
 @interface QZBServerManager : NSObject
 
 + (QZBServerManager*) sharedManager ;
 
 
-- (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) success onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) getСategoriesOnSuccess:(void(^)(NSArray* topics)) successAF
+onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
-- (void) getTopicsWithID:(NSInteger) ID
-               onSuccess:(void(^)(NSArray* topics)) success
-               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) getTopicsWithCategory:(QZBCategory *) category
+                     onSuccess:(void(^)(NSArray* topics)) successAF
+                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
-- (void) postSessionWithID:(NSInteger) topic_id
-                onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
-                onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void) postSessionWithTopic:(QZBGameTopic *)topic
+                    onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
+                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
 
 -(void)PATCHSessionQuestionWithID:(NSInteger)sessionQuestionID
                            answer:(NSInteger)answerID
