@@ -7,6 +7,7 @@
 //
 
 #import "QZBLastElementInHorizontalTCCell.h"
+#import "QZBFriendsHorizontalCell.h"
 
 @implementation QZBLastElementInHorizontalTCCell
 
@@ -27,9 +28,13 @@
     [self.button setFrame:CGRectMake(40, 0, 40, 100)];
     [self addSubview:self.button];
     
+    [self.button addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
+    
   }
   return self;
 }
+
+
 
 
 
@@ -44,5 +49,39 @@
 {
   return @"lastHorizontalElement";
 }
+
+
+-(void)showAll:(UIButton *)sender{
+  
+  if([ sender.superview isKindOfClass:[UITableViewCell class]]){
+  //  UITableViewCell *cell = (UITableViewCell *)sender.superview;
+   // NSLog(@"%ld",[self getIndexPathCell:self].row);
+    NSIndexPath *ip = [self getIndexPathCell:self];
+    
+    [[NSNotificationCenter defaultCenter]
+  
+     postNotificationName:@"QZBUserPressShowAllButton" object:ip];
+  }
+  
+  
+}
+
+-(NSIndexPath *)getIndexPathCell:(UIView *) view{
+  
+  if([view isKindOfClass:[QZBFriendsHorizontalCell class]]){
+    
+      //UITableView *tv = (UITableView *)view.superview;
+      
+      NSIndexPath *indexPath = [(UITableView *)view.superview.superview
+                                indexPathForCell: (UITableViewCell *)view];
+      return indexPath;
+    
+  }else{
+    return [self getIndexPathCell:view.superview];
+  }
+  
+}
+
+
 
 @end

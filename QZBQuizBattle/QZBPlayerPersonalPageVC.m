@@ -12,76 +12,101 @@
 #import "QZBFriendsHorizontalCell.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface QZBPlayerPersonalPageVC ()<UITableViewDataSource, UITableViewDelegate>
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
+                                       UITableViewDelegate>
 
 @end
 
 @implementation QZBPlayerPersonalPageVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-  
+  [super viewDidLoad];
+
   self.playerTableView.delegate = self;
   self.playerTableView.dataSource = self;
   
- 
-    // Do any additional setup after loading the view.
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userPressShowAllButton:) name:@"QZBUserPressShowAllButton" object:nil];
+
+  // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animate{
+- (void)viewWillAppear:(BOOL)animate {
   [super viewWillAppear:animate];
-  
+
   self.title = [QZBCurrentUser sharedInstance].user.name;
-  
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - UITableViewDataSource
 
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return 2;
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section {
+  return 3;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *playerIdentifier = @"playerСell";
   NSString *friendsIdentifier = @"friendsCell";
-  
+
   UITableViewCell *cell;
-  
-  
-  if(indexPath.row == 0){
-    QZBPlayerInfoCell *playerCell = (QZBPlayerInfoCell *)[tableView
-                                 dequeueReusableCellWithIdentifier:playerIdentifier];
-    
-    NSURL *picUrl = [NSURL URLWithString:@"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
-    
+
+  if (indexPath.row == 0) {
+    QZBPlayerInfoCell *playerCell = (QZBPlayerInfoCell *)
+        [tableView dequeueReusableCellWithIdentifier:playerIdentifier];
+
+    NSURL *picUrl =
+        [NSURL URLWithString:
+                   @"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
+
     [playerCell.playerUserpic setImageWithURL:picUrl];
-    
+
     cell = playerCell;
-  }else if (indexPath.row == 1){
-    QZBFriendsHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
-    
+  } else if (indexPath.row == 1 || indexPath.row == 2) {
+    QZBFriendsHorizontalCell *friendsCell =
+        [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
+
     cell = friendsCell;
-    
   }
   return cell;
 }
 
 
+-(void)userPressShowAllButton:(NSNotification *)notification{
+  
+  NSLog(@"%@",notification.object);
+  
+  NSIndexPath *indexPath = (NSIndexPath *)notification.object;
+  
+  if(indexPath.row == 1){
+    [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
+  }
+  
+}
+
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little
+preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)dissmisVC:(id)sender {
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+  
+}
 
 @end

@@ -54,7 +54,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVS-5e-Vx6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2287" y="629"/>
+            <point key="canvasLocation" x="3204" y="628.5"/>
         </scene>
         <!--Game Session View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -484,7 +484,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3037" y="637"/>
+            <point key="canvasLocation" x="3954" y="636.75"/>
         </scene>
         <!--End Session Controller View Controller-->
         <scene sceneID="sDx-oM-9Bk">
@@ -584,7 +584,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFh-Er-EEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3913.5" y="640.5"/>
+            <point key="canvasLocation" x="4831.5" y="640.5"/>
         </scene>
         <!--Topic Chooser Controller View Controller-->
         <scene sceneID="FEZ-9r-oxM">
@@ -648,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbp-XL-JbM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1503" y="619.5"/>
+            <point key="canvasLocation" x="2421" y="619.5"/>
         </scene>
         <!--Категории-->
         <scene sceneID="6Bo-cp-qUz">
@@ -709,7 +709,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="user" id="Tmm-nT-GJ3">
                             <connections>
-                                <segue destination="xaT-h4-8Ye" kind="show" id="s20-rv-rtP"/>
+                                <segue destination="THU-GX-zPI" kind="showDetail" id="s20-rv-rtP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -720,7 +720,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BW3-4X-fFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="733" y="620"/>
+            <point key="canvasLocation" x="1650" y="619.5"/>
         </scene>
         <!--mainRegister-->
         <scene sceneID="7dU-Nw-gD7">
@@ -771,7 +771,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="P2d-pE-Umc"/>
                     <connections>
-                        <segue destination="V4h-ET-EfJ" kind="show" identifier="userExist" id="IvM-or-C3V"/>
+                        <segue destination="9Do-pC-Wkd" kind="showDetail" identifier="userExist" id="IvM-or-C3V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JUL-8O-HXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -902,20 +902,20 @@
                                                     <exclude reference="qgW-WV-Ljw"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="YOv-mJ-XjN"/>
-                                                    <exclude reference="fCx-Yv-1Qh"/>
-                                                    <exclude reference="zil-e6-T3s"/>
+                                                    <exclude reference="Abl-in-3nd"/>
+                                                    <exclude reference="lOE-aK-YNt"/>
+                                                    <exclude reference="oZW-ha-zYd"/>
+                                                    <exclude reference="y4J-rV-bvT"/>
+                                                    <exclude reference="x7S-xV-pzb"/>
                                                     <exclude reference="GAf-EM-NuL"/>
                                                     <exclude reference="P13-pP-6Kl"/>
                                                     <exclude reference="Rfm-Oi-9M7"/>
                                                     <exclude reference="f4w-50-UHA"/>
                                                     <exclude reference="y2y-NT-Ukz"/>
                                                     <exclude reference="zqK-No-UwD"/>
-                                                    <exclude reference="Abl-in-3nd"/>
-                                                    <exclude reference="lOE-aK-YNt"/>
-                                                    <exclude reference="oZW-ha-zYd"/>
-                                                    <exclude reference="y4J-rV-bvT"/>
-                                                    <exclude reference="x7S-xV-pzb"/>
+                                                    <exclude reference="YOv-mJ-XjN"/>
+                                                    <exclude reference="fCx-Yv-1Qh"/>
+                                                    <exclude reference="zil-e6-T3s"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -926,20 +926,20 @@
                                                     <include reference="qgW-WV-Ljw"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="YOv-mJ-XjN"/>
-                                                    <include reference="fCx-Yv-1Qh"/>
-                                                    <include reference="zil-e6-T3s"/>
+                                                    <include reference="Abl-in-3nd"/>
+                                                    <include reference="lOE-aK-YNt"/>
+                                                    <include reference="oZW-ha-zYd"/>
+                                                    <include reference="y4J-rV-bvT"/>
+                                                    <include reference="x7S-xV-pzb"/>
                                                     <include reference="GAf-EM-NuL"/>
                                                     <include reference="P13-pP-6Kl"/>
                                                     <include reference="Rfm-Oi-9M7"/>
                                                     <include reference="f4w-50-UHA"/>
                                                     <include reference="y2y-NT-Ukz"/>
                                                     <include reference="zqK-No-UwD"/>
-                                                    <include reference="Abl-in-3nd"/>
-                                                    <include reference="lOE-aK-YNt"/>
-                                                    <include reference="oZW-ha-zYd"/>
-                                                    <include reference="y4J-rV-bvT"/>
-                                                    <include reference="x7S-xV-pzb"/>
+                                                    <include reference="YOv-mJ-XjN"/>
+                                                    <include reference="fCx-Yv-1Qh"/>
+                                                    <include reference="zil-e6-T3s"/>
                                                 </mask>
                                             </variation>
                                         </view>
@@ -991,7 +991,6 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fQF-fT-pVe" id="uew-i1-nYD">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -1000,13 +999,46 @@
                             <outlet property="delegate" destination="xaT-h4-8Ye" id="xof-UR-VNP"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="bWH-vr-LEy">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="nzt-9V-IcD">
+                            <connections>
+                                <action selector="dissmisVC:" destination="xaT-h4-8Ye" id="vtf-u2-hy4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="playerTableView" destination="OG1-q6-4AO" id="vVg-c0-5Mt"/>
+                        <segue destination="Kd7-hM-M1c" kind="show" identifier="showFriendsList" id="8lc-I4-Rer"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k8f-e2-Fhq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1516.5" y="-31.5"/>
+            <point key="canvasLocation" x="2434.5" y="-31.5"/>
+        </scene>
+        <!--FriendsTVC-->
+        <scene sceneID="Cvd-fl-jdH">
+            <objects>
+                <tableViewController id="Kd7-hM-M1c" customClass="QZBFriendsTVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="XKH-fQ-Gt8">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CNj-Kc-MJO">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CNj-Kc-MJO" id="BNl-LV-Nji">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Kd7-hM-M1c" id="ga1-sy-Qra"/>
+                            <outlet property="delegate" destination="Kd7-hM-M1c" id="WSy-ad-kIE"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GxE-2y-wXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3184.5" y="-31.5"/>
         </scene>
         <!--SignUpEmail-->
         <scene sceneID="qwd-er-KFD">
@@ -1112,7 +1144,7 @@
                         <outlet property="emailTextField" destination="My5-Tt-exj" id="Cva-CA-4XV"/>
                         <outlet property="passwordTextField" destination="xIU-Dq-fcX" id="Uri-NC-H3R"/>
                         <outlet property="userNameTextField" destination="9jc-4s-5JZ" id="i0o-F4-47R"/>
-                        <segue destination="V4h-ET-EfJ" kind="show" identifier="registrationIsOk" id="eRs-ob-gvk"/>
+                        <segue destination="9Do-pC-Wkd" kind="showDetail" identifier="registrationIsOk" id="eRs-ob-gvk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fp5-O3-fLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1231,7 +1263,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="Vgk-yP-QW9" id="oDT-3a-Kk7"/>
                         <outlet property="passwordTextField" destination="Uqj-qm-8x0" id="SgR-Zn-WTZ"/>
-                        <segue destination="V4h-ET-EfJ" kind="show" identifier="LoginIsOK" id="YTP-yg-7mt"/>
+                        <segue destination="9Do-pC-Wkd" kind="showDetail" identifier="LoginIsOK" id="YTP-yg-7mt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HmP-zb-D2n" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1256,8 +1288,44 @@
             </objects>
             <point key="canvasLocation" x="-879" y="-1719"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0zg-eI-cCi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="THU-GX-zPI" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tu5-cc-RhX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xaT-h4-8Ye" kind="relationship" relationship="rootViewController" id="NPf-Sg-hn2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wlh-ZW-gw4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1699.5" y="-31.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZRW-nQ-S8S">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Do-pC-Wkd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gbx-sb-IFS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="V4h-ET-EfJ" kind="relationship" relationship="rootViewController" id="RDR-29-3mj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5SG-AV-Q6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="732" y="619.5"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YTP-yg-7mt"/>
+        <segue reference="eRs-ob-gvk"/>
     </inferredMetricsTieBreakers>
 </document>

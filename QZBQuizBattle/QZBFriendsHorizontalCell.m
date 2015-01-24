@@ -33,6 +33,8 @@
   self.horizontalTabelView.showsHorizontalScrollIndicator = NO;
   self.horizontalTabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
+  self.horizontalTabelView.allowsSelection = NO;
+  
   CGAffineTransform transform = CGAffineTransformMakeRotation(-1.5707963);
   self.horizontalTabelView.transform = transform;
   

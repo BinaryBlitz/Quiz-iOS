@@ -28,8 +28,6 @@
 -(void)commonInit{
  //  CGAffineTransform transform = CGAffineTransformMakeRotation(-1.5707963);
   
-  NSLog(@" width %f heigth %f", self.bounds.size.width, self.bounds.size.height);
-  
  // self.transform = CGAffineTransformMakeRotation(1.5707963);
   self.userName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
   self.userName.textAlignment = NSTextAlignmentCenter;
