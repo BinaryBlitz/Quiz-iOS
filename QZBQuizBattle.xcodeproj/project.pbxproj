@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190151751A73FD9B00DD9899 /* QZBAchivmentsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 190151741A73FD9B00DD9899 /* QZBAchivmentsTVC.m */; };
 		1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */; };
 		1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */; };
 		1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */; };
@@ -18,11 +19,8 @@
 		191559D51A39CDD400462C93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 191559D41A39CDD400462C93 /* Images.xcassets */; };
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
-		195A7E3C1A69822A003AC3BA /* JFBCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E381A69822A003AC3BA /* JFBCrypt.m */; };
-		195A7E3D1A69822A003AC3BA /* JFRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3B1A69822A003AC3BA /* JFRandom.m */; };
 		195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
-		197669921A67B3CE006C2757 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 197669691A67B3CE006C2757 /* README */; };
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
 		197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */; };
 		1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */; };
@@ -55,6 +53,7 @@
 		19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33A1A70016300E8CB1C /* QZBGameTopic.m */; };
 		19DFF33E1A70016300E8CB1C /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33D1A70016300E8CB1C /* QZBCategory.m */; };
 		19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */; };
+		19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */ = {isa = PBXBuildFile; fileRef = 19E344571A792DF4000D0EDB /* QZBLobby.m */; };
 		47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC7A8F9E1287DD166F770A8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190151731A73FD9B00DD9899 /* QZBAchivmentsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAchivmentsTVC.h; sourceTree = "<group>"; };
+		190151741A73FD9B00DD9899 /* QZBAchivmentsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchivmentsTVC.m; sourceTree = "<group>"; };
 		1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndSessionControllerViewController.h; sourceTree = "<group>"; };
 		1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndSessionControllerViewController.m; sourceTree = "<group>"; };
 		1901B9AD1A4729A9002FC87C /* QZBAnswerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerButton.h; sourceTree = "<group>"; };
@@ -90,16 +91,10 @@
 		191559DD1A39CDD400462C93 /* QZBQuizBattleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QZBQuizBattleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559E21A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
-		195A7E371A69822A003AC3BA /* JFBCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFBCrypt.h; sourceTree = "<group>"; };
-		195A7E381A69822A003AC3BA /* JFBCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFBCrypt.m; sourceTree = "<group>"; };
-		195A7E391A69822A003AC3BA /* JFGC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFGC.h; sourceTree = "<group>"; };
-		195A7E3A1A69822A003AC3BA /* JFRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFRandom.h; sourceTree = "<group>"; };
-		195A7E3B1A69822A003AC3BA /* JFRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFRandom.m; sourceTree = "<group>"; };
 		195A7E3E1A69893B003AC3BA /* QZBRegistrationChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationChooserVC.h; sourceTree = "<group>"; };
 		195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationChooserVC.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
 		1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTextAndID.m; sourceTree = "<group>"; };
-		197669691A67B3CE006C2757 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterWithEmailVC.h; sourceTree = "<group>"; };
 		197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterWithEmailVC.m; sourceTree = "<group>"; };
 		197669961A67D040006C2757 /* QZBRegisterAndLoginBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterAndLoginBaseVC.h; sourceTree = "<group>"; };
@@ -163,6 +158,8 @@
 		19DFF33D1A70016300E8CB1C /* QZBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategory.m; sourceTree = "<group>"; };
 		19DFF3401A70161D00E8CB1C /* QZBPlayerPersonalPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerPersonalPageVC.h; sourceTree = "<group>"; };
 		19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerPersonalPageVC.m; sourceTree = "<group>"; };
+		19E344561A792DF4000D0EDB /* QZBLobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLobby.h; sourceTree = "<group>"; };
+		19E344571A792DF4000D0EDB /* QZBLobby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLobby.m; sourceTree = "<group>"; };
 		61CB57A856F89614168E9C5A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2892C94F45A4ABC9B49B297 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DBC7A8F9E1287DD166F770A8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,7 +224,6 @@
 			children = (
 				19D691131A6A91C7008B2AE1 /* NSString+MD5.h */,
 				19D691141A6A91C7008B2AE1 /* NSString+MD5.m */,
-				1976690F1A67B3CE006C2757 /* JFCommon-master */,
 				191559C81A39CDD400462C93 /* AppDelegate.h */,
 				191559C91A39CDD400462C93 /* AppDelegate.m */,
 				191559C51A39CDD400462C93 /* Info.plist */,
@@ -251,19 +247,6 @@
 				191559E21A39CDD400462C93 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1976690F1A67B3CE006C2757 /* JFCommon-master */ = {
-			isa = PBXGroup;
-			children = (
-				195A7E371A69822A003AC3BA /* JFBCrypt.h */,
-				195A7E381A69822A003AC3BA /* JFBCrypt.m */,
-				195A7E391A69822A003AC3BA /* JFGC.h */,
-				195A7E3A1A69822A003AC3BA /* JFRandom.h */,
-				195A7E3B1A69822A003AC3BA /* JFRandom.m */,
-				197669691A67B3CE006C2757 /* README */,
-			);
-			path = "JFCommon-master";
 			sourceTree = "<group>";
 		};
 		197669991A67D057006C2757 /* Registration and login */ = {
@@ -367,6 +350,8 @@
 			isa = PBXGroup;
 			children = (
 				19CB50A71A3C567A00A3CD74 /* qestion */,
+				19E344561A792DF4000D0EDB /* QZBLobby.h */,
+				19E344571A792DF4000D0EDB /* QZBLobby.m */,
 				19CB50941A3C37BA00A3CD74 /* QZBSession.h */,
 				19CB50951A3C37BA00A3CD74 /* QZBSession.m */,
 				190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */,
@@ -453,6 +438,8 @@
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
 				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
 				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
+				190151731A73FD9B00DD9899 /* QZBAchivmentsTVC.h */,
+				190151741A73FD9B00DD9899 /* QZBAchivmentsTVC.m */,
 			);
 			name = player;
 			sourceTree = "<group>";
@@ -562,7 +549,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				197669921A67B3CE006C2757 /* README in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,
@@ -624,6 +610,7 @@
 				19DFF33E1A70016300E8CB1C /* QZBCategory.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
+				19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
@@ -635,7 +622,6 @@
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
-				195A7E3C1A69822A003AC3BA /* JFBCrypt.m in Sources */,
 				19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */,
 				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
 				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
@@ -649,7 +635,6 @@
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
-				195A7E3D1A69822A003AC3BA /* JFRandom.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,
@@ -657,6 +642,7 @@
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
+				190151751A73FD9B00DD9899 /* QZBAchivmentsTVC.m in Sources */,
 				19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */,
 				19B5E0541A71018D00DCD9C3 /* QZBFriendsHorizontalCell.m in Sources */,
 			);

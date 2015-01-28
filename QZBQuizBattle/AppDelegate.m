@@ -24,6 +24,8 @@
  
   [MagicalRecord setupAutoMigratingCoreDataStack];
   
+  
+  
   return YES;
 }
 

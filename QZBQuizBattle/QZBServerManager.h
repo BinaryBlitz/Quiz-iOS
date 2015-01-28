@@ -11,6 +11,7 @@
 
 
 @class QZBSession;
+@class QZBLobby;
 @class QZBOpponentBot;
 @class QZBUser;
 @class QZBCategory;
@@ -27,6 +28,17 @@ onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 - (void) getTopicsWithCategory:(QZBCategory *) category
                      onSuccess:(void(^)(NSArray* topics)) successAF
                      onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+
+- (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
+                 onSuccess:(void (^)(QZBLobby *lobby))success
+                 onFailure:(void (^)(NSError *error,
+                                     NSInteger statusCode))failure;
+
+- (void)GETFindGameWithLobby:(QZBLobby *)lobby
+                   onSuccess:(void (^)(QZBSession *session,
+                                       QZBOpponentBot *bot))success
+                   onFailure:(void (^)(NSError *error,
+                                       NSInteger statusCode))failure;
 
 - (void) postSessionWithTopic:(QZBGameTopic *)topic
                     onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success

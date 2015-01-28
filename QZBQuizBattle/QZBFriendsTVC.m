@@ -8,7 +8,7 @@
 
 #import "QZBFriendsTVC.h"
 
-NSString *title = @"Друзья";
+
 
 @interface QZBFriendsTVC ()
 
@@ -18,7 +18,7 @@ NSString *title = @"Друзья";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  self.title = title;
+  self.title = @"Друзья";;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

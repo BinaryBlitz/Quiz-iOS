@@ -15,8 +15,8 @@
 @property(copy, nonatomic, readonly) NSString *name;
 @property(copy, nonatomic, readonly) NSString *email;
 @property(copy, nonatomic, readonly) NSString *api_key;
+@property(strong, nonatomic, readonly) NSNumber *user_id;
 
-//- (instancetype)initWithUserId:(NSInteger)user_id name:(NSString *) name userpicURL:(NSURL *)url;
-//-(instancetype)initWithId:(NSInteger)user_id;
+
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end

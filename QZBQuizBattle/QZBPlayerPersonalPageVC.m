@@ -9,6 +9,7 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBCurrentUser.h"
 #import "QZBPlayerInfoCell.h"
+#import "QZBTopicTableViewCell.h"
 #import "QZBFriendsHorizontalCell.h"
 #import "UIImageView+AFNetworking.h"
 
@@ -50,7 +51,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section {
-  return 3;
+  return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -74,8 +75,19 @@
   } else if (indexPath.row == 1 || indexPath.row == 2) {
     QZBFriendsHorizontalCell *friendsCell =
         [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
-
-    cell = friendsCell;
+    return friendsCell;
+   // cell = friendsCell;
+  }else if(indexPath.row == 3){
+    cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];
+    
+    return cell;
+  } else if(indexPath.row>3){
+    QZBTopicTableViewCell *topicCell =
+    [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
+    topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", indexPath.row];
+    return topicCell;
+   // cell = topicCell;
+    
   }
   return cell;
 }
@@ -89,6 +101,23 @@
   
   if(indexPath.row == 1){
     [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
+  } else if (indexPath.row == 2){
+    [self performSegueWithIdentifier:@"showAchivements" sender:nil];
+  }
+  
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+  
+  if(indexPath.row<3){
+    return 127.0f;
+  }else if(indexPath.row == 3){
+    return 47.0f;
+  }
+    else{
+    return 61.0f;
   }
   
 }
@@ -108,5 +137,8 @@ preparation before navigation
   [self dismissViewControllerAnimated:YES completion:nil];
   
 }
+
+
+
 
 @end

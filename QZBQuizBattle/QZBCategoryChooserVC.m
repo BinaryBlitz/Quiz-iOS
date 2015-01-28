@@ -118,19 +118,8 @@
   
   [[QZBCurrentUser sharedInstance] userLogOut];
   
-  UIViewController *destinationVC;
-  
-  NSArray *controllers = self.navigationController.viewControllers;
-  
-  for(UIViewController *controller in controllers){
-    if([controller isKindOfClass:[QZBRegistrationChooserVC class]]){
-      destinationVC = controller;
-      break;
-    }
     
-  }
-  
-  [self.navigationController popToViewController:destinationVC animated:YES];
+  [self dismissViewControllerAnimated:YES completion:nil];
   
 }
 

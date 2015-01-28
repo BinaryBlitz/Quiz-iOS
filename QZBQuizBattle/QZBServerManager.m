@@ -6,14 +6,16 @@
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
 //
 
+#define MR_LOGGING_ENABLED 0
+
 #import "QZBServerManager.h"
 #import "QZBGameTopic.h"
+#import "QZBLobby.h"
 #import "QZBSession.h"
 #import "QZBCategory.h"
 #import "QZBOpponentBot.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
-#import "JFBCrypt.h"
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
 
@@ -45,6 +47,8 @@
   return self;
 }
 
+#pragma mark - categories and topics
+
 - (void)getСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
                      onFailure:(void (^)(NSError *error,
                                          NSInteger statusCode))failure {
@@ -57,18 +61,13 @@
       success:^(AFHTTPRequestOperation *operation, NSArray *responseObject) {
           NSLog(@"JSON: %@", responseObject);
 
-          // [QZBCategory MR_truncateAll];
-
           NSMutableArray *objectsArray = [NSMutableArray array];
-
-          //  NSArray *objectsBeforeAdding = [QZBCategory
-          //  MR_findAllSortedBy:@"category_id" ascending:YES];
 
           for (NSDictionary *dict in responseObject) {
             NSString *name = [dict objectForKey:@"name"];
             id category_id = [dict objectForKey:@"id"];
 
-            NSLog(@"%@ %@", name, category_id);
+            // NSLog(@"%@ %@", name, category_id);
 
             QZBCategory *existingEntity =
                 [QZBCategory MR_findFirstByAttribute:@"category_id"
@@ -82,14 +81,13 @@
             [objectsArray addObject:existingEntity];
           }
 
-          NSLog(@"%@", [objectsArray debugDescription]);
+          // NSLog(@"%@", [objectsArray debugDescription]);
 
-          NSMutableArray *allCategories = [[QZBCategory MR_findAll] mutableCopy];
-        
-        [allCategories removeObjectsInArray:objectsArray];
-        
-        
-        
+          NSMutableArray *allCategories =
+              [[QZBCategory MR_findAll] mutableCopy];
+
+          [allCategories removeObjectsInArray:objectsArray];
+
           if (allCategories) {
             for (QZBCategory *categ in allCategories) {
               [categ MR_deleteEntity];
@@ -149,18 +147,18 @@
               [category addRelationToTopicObject:existingEntity];
             }
             [objectsArray addObject:existingEntity];
-            
           }
-        
-         NSMutableArray *allTopics = [NSMutableArray arrayWithArray:[[category relationToTopic] allObjects]];
-        
-        [allTopics removeObjectsInArray:objectsArray];
-        
-        if(allTopics){
-          for(QZBGameTopic *topic in allTopics){
-            [topic MR_deleteEntity];
+
+          NSMutableArray *allTopics = [NSMutableArray
+              arrayWithArray:[[category relationToTopic] allObjects]];
+
+          [allTopics removeObjectsInArray:objectsArray];
+
+          if (allTopics) {
+            for (QZBGameTopic *topic in allTopics) {
+              [topic MR_deleteEntity];
+            }
           }
-        }
 
           [MagicalRecord
               saveUsingCurrentThreadContextWithBlock:nil
@@ -185,13 +183,80 @@
 
 #pragma mark - session methods
 
+- (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
+                 onSuccess:(void (^)(QZBLobby *lobby))success
+                 onFailure:(void (^)(NSError *error,
+                                     NSInteger statusCode))failure {
+  NSDictionary *params = @{
+    @"lobby" : @{@"topic_id" : topic.topic_id},
+    @"token" : [QZBCurrentUser sharedInstance].user.api_key
+  };
+
+  [self.requestOperationManager POST:@"lobbies"
+      parameters:params
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSLog(@"lobby: %@  ", responseObject);
+
+          QZBLobby *lobby = [[QZBLobby alloc] initWithDict:responseObject];
+
+          if (success) {
+            success(lobby);
+          }
+
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSLog(@"%@, /n %@", operation, error);
+
+          if (failure) {
+            failure(error, operation.response.statusCode);
+          }
+
+      }];
+}
+
+- (void)GETFindGameWithLobby:(QZBLobby *)lobby
+                   onSuccess:(void (^)(QZBSession *session,
+                                       QZBOpponentBot *bot))success
+                   onFailure:(void (^)(NSError *error,
+                                       NSInteger statusCode))failure {
+  NSDictionary *params = @{
+    @"token" : [QZBCurrentUser sharedInstance].user.api_key
+  };
+
+  NSString *URLString =
+      [NSString stringWithFormat:@"lobbies/%ld/find", lobby.lobbyID];
+
+  NSLog(@"%@", URLString);
+
+  [self.requestOperationManager GET:URLString
+      parameters:params
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSLog(@"JSON: %@", responseObject);
+
+          QZBSession *session =
+              [[QZBSession alloc] initWIthDictionary:responseObject];
+
+          QZBOpponentBot *bot =
+              [[QZBOpponentBot alloc] initWithDictionary:responseObject];
+          if (success) {
+            success(session, bot);
+          }
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error){
+
+      }];
+}
+
 - (void)postSessionWithTopic:(QZBGameTopic *)topic
                    onSuccess:(void (^)(QZBSession *session,
                                        QZBOpponentBot *bot))success
                    onFailure:(void (^)(NSError *error,
                                        NSInteger statusCode))failure {
   NSDictionary *params = @{
-    @"game_session" : @{@"host_id" : @(1), @"topic_id" : topic.topic_id},
+    @"game_session" : @{
+      @"host_id" : [QZBCurrentUser sharedInstance].user.user_id,
+      @"topic_id" : topic.topic_id
+    },
     @"token" : [QZBCurrentUser sharedInstance].user.api_key
   };
 
@@ -233,6 +298,8 @@
         @{@"host_answer_id" : @(answerID), @"host_time" : @(answerTime)},
     @"token" : [QZBCurrentUser sharedInstance].user.api_key
   };
+
+  // NSLog(@"%@", [QZBCurrentUser sharedInstance].user.api_key);
 
   NSString *URLString = [NSString
       stringWithFormat:@"game_session_questions/%ld", sessionQuestionID];
@@ -305,11 +372,6 @@
 
   NSLog(@"email %@ password %@", email, hashedPassword);
 
-  // email = @"foo@bar.com";
-
-  // hashedPassword =
-  // @"$2a$10$qfOWhGZO92uXKTjYzzb/9efimcojZOHrTEe0NQPuXVKWljZ1N1mfy";
-
   NSDictionary *params = @{
     @"email" : email,
     @"password_digest" : hashedPassword
@@ -321,25 +383,8 @@
 
           NSLog(@"resp %@", responseObject);
 
-          NSString *token = [responseObject objectForKey:@"token"];
-
-          /*
-           self.api_key = [dict objectForKey:@"api_key"];
-           self.name = [dict objectForKey:@"name"];
-           self.email = [dict objectForKey:@"email"];
-
-           */
-
           if (![responseObject objectForKey:@"error"]) {
-            NSString *name = [responseObject objectForKey:@"name"];
-
-            NSDictionary *dict = @{
-              @"api_key" : token,
-              @"name" : name,
-              @"email" : email
-            };  // redo name
-
-            QZBUser *user = [[QZBUser alloc] initWithDict:dict];
+            QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
 
             if (success) {
               success(user);
