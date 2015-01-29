@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
 //
 
+#define MR_LOGGING_ENABLED 0
+
 #import "AppDelegate.h"
 #import <Pusher/Pusher.h>
 #import "CoreData+MagicalRecord.h"
