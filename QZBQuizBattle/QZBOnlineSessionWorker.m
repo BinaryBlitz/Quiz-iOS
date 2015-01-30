@@ -11,11 +11,13 @@
 #import "QZBSessionManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "QZBAnswerTextAndID.h"
 
 @interface QZBOnlineSessionWorker () <PTPusherDelegate>
 
 @property(strong, nonatomic) PTPusher *client;
 @property(strong, nonatomic) PTPusherChannel *channel;
+@property(assign, nonatomic) BOOL yetStarted;
 
 @end
 
@@ -24,6 +26,8 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    NSLog(@"online worker init");
+    
     NSNumber *playerID = [QZBCurrentUser sharedInstance].user.user_id;
 
     NSString *channelName =
@@ -41,11 +45,17 @@
 
     // NSLog(@"%@", self.channel);
 
+    self.yetStarted = NO;
+    
     [self.channel
         bindToEventNamed:@"game-start"
          handleWithBlock:^(PTPusherEvent *channelEvent) {
+           
 
              NSLog(@"need start game!!");
+           
+           if(!self.yetStarted){
+             self.yetStarted = YES;
              dispatch_after(
                  dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
@@ -54,6 +64,7 @@
                                        object:nil];
 
                  });
+           }
            
          }];
 
@@ -95,6 +106,14 @@
                [[QZBSessionManager sessionManager]
                    opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                                time:answerTime];
+           } else{
+             
+             QZBAnswerTextAndID *answ= [[QZBSessionManager sessionManager].currentQuestion.answers firstObject];
+             
+                                      
+             
+             [[QZBSessionManager sessionManager] opponentUserAnswerCurrentQuestinWithAnswerNumber:answ.answerID];
+             
            }
           //   }
 
@@ -103,7 +122,14 @@
   return self;
 }
 
+-(void)closeConnection{
+  
+  NSLog(@"close connection");
+  [self.client disconnect];
+}
+
 - (void)dealloc {
+  NSLog(@"online worker dealloc ");
   [self.client disconnect];
 }
 

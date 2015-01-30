@@ -116,8 +116,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
   
   
   
-  NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
-  NSInteger opponentUserId = -1;
+  //NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
+  //NSInteger opponentUserId = -1;
   
   QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
   QZBUser *opponent = nil;//не протестированно

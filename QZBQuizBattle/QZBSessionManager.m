@@ -74,6 +74,11 @@
 }
 
 - (void)setSession:(QZBSession *)session {
+  
+  if(_gameSession){
+    return;
+  }
+  
   _gameSession = session;
   self.currentQuestion = [session.questions firstObject];
 
@@ -94,20 +99,31 @@
 }
 
 - (void)setBot:(QZBOpponentBot *)bot {
+  if(_bot && _onlineSessionWorker){
+    return;
+  }else{
   _bot = bot;
+  }
 }
 
 -(void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker{
+  if(_onlineSessionWorker && _bot){
+    return;
+  } else{
   _onlineSessionWorker = onlineSessionWorker;
+  }
 }
 
 - (void)timeCountingStart {
+  
+  if(!self.questionTimer){
   self.questionTimer =
       [NSTimer scheduledTimerWithTimeInterval:1.0
                                        target:self
                                      selector:@selector(updateTime:)
                                      userInfo:nil
-                                      repeats:YES];
+                                      repeats:YES];}
+  
 }
 
 - (void)updateTime:(NSTimer *)timer {
@@ -115,10 +131,13 @@
 
   // NSLog(@"%lu",(unsigned long)self.currentTime);
   if (self.currentTime < 10) {
+    NSLog(@"%ld",(unsigned long)self.currentTime);
   } else {
-    if (timer != nil) {
-      [timer invalidate];
-      timer = nil;
+    if (self.questionTimer != nil) {
+      self.didFirstUserAnswered = YES;
+      self.didOpponentUserAnswered = YES;//чтобы нельзя было ответить пока переключаются вопросы
+      [self.questionTimer invalidate];
+      self.questionTimer = nil;
       [self postNotificationNeedUnshow];
     }
   }
@@ -131,6 +150,7 @@
   self.currentTime = 0;
   self.didFirstUserAnswered = NO;
   self.didOpponentUserAnswered = NO;
+  
 
   [self timeCountingStart];
 
@@ -232,7 +252,7 @@
 - (void)checkNeedUnshow {
   // NSLog(@"checking first %d seconf %d", self.didFirstUserAnswered,
   // self.didOpponentUserAnswered);
-  if (self.didFirstUserAnswered && self.didOpponentUserAnswered) {
+  if (self.didFirstUserAnswered && self.didOpponentUserAnswered ) {
     if (self.questionTimer != nil) {
       [self.questionTimer invalidate];
       self.questionTimer = nil;
@@ -319,6 +339,9 @@
 
   self.gameSession = nil;
   self.bot = nil;
+  if(self.onlineSessionWorker){
+    [self.onlineSessionWorker closeConnection];
+  }
   self.onlineSessionWorker = nil;
 }
 

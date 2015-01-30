@@ -59,6 +59,8 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
+  NSLog(@"showed progress VC");
+  
   self.setted = NO;
   self.isCanceled = NO;
   self.isOnline = NO;
@@ -102,6 +104,9 @@
 - (IBAction)cancelFinding:(UIButton *)sender {
   self.isCanceled = YES;
 
+  [self.onlineWorker closeConnection];
+  self.onlineWorker = nil;
+  
   [[QZBSessionManager sessionManager] closeSession];
   [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
                                           onSuccess:^(QZBSession *session, id bot) {
@@ -120,7 +125,7 @@
 - (void)initSession {
   //__weak typeof(self) weakSelf = self;
 
-  NSLog(@"%@", self.topic);
+ 
 
   /*[[QZBServerManager sharedManager] postSessionWithTopic:self.topic
       onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
@@ -145,35 +150,6 @@
 
   [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
       onSuccess:^(QZBLobby *lobby) {
-
-        /*
-        self.client =
-        [PTPusher pusherWithKey:@"d982e4517caa41cf637c"
-                       delegate:self encrypted:YES];
-        
-        [self.client connect];
-        
-        NSNumber *playerID = [QZBCurrentUser sharedInstance].user.user_id;
-        
-        NSString *channelName = [NSString stringWithFormat:@"player-start-%@",playerID];
-        
-        NSLog(@"channel name %@",channelName);
-        
-        PTPusherChannel *channel = [_client subscribeToChannelNamed:channelName];
-        
-        
-        
-        
-        [channel bindToEventNamed:@"game-start" handleWithBlock:^(PTPusherEvent *channelEvent) {
-          
-          if(self.setted){
-         [self performSegueWithIdentifier:@"showGame" sender:nil];
-          }
-          
-        }];*/
-        
-        
-
         
           [self sessionFromLobby:lobby];
 
@@ -261,6 +237,7 @@
 
 
 -(void)showGameVC:(NSNotification *)notification{
+  NSLog(@"setted %d online %d entered %d",self.setted ,self.isOnline , self.isEntered );
   if(self.setted && self.isOnline && !self.isEntered){
     self.isEntered = YES;
     [self performSegueWithIdentifier:@"showGame" sender:nil];

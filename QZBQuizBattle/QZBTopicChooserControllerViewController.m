@@ -78,16 +78,20 @@
 
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
   self.choosedTopic = self.topics[indexPath.row];
   NSLog(@"%ld", (long)self.choosedTopic.topic_id);
+  
   [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+  
 }
 
 #pragma mark - topics init
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
-  NSLog(@"category name:  %@", category.name);
+ // NSLog(@"category name:  %@", category.name);
   
   
   self.topics = [NSArray arrayWithArray:[[category relationToTopic] allObjects]];

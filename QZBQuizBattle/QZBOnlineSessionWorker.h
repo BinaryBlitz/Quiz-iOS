@@ -10,6 +10,7 @@
 
 @interface QZBOnlineSessionWorker : NSObject
 
-- (instancetype)init;
+//- (instancetype)init;
+-(void)closeConnection;
 
 @end

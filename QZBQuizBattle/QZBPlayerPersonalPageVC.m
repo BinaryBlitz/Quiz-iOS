@@ -51,7 +51,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section {
-  return 7;
+  return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -84,7 +84,7 @@
   } else if(indexPath.row>3){
     QZBTopicTableViewCell *topicCell =
     [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
-    topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", indexPath.row];
+    topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
     return topicCell;
    // cell = topicCell;
     
