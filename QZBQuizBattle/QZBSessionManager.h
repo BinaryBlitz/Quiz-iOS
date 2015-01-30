@@ -13,6 +13,7 @@
 #import "QZBOpponentBot.h"
 #import "QZBServerManager.h"
 
+@class QZBOnlineSessionWorker;
 @interface QZBSessionManager : NSObject
 
 @property(strong, nonatomic, readonly) QZBQuestion *currentQuestion;
@@ -35,6 +36,7 @@
 
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
+- (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker;
 
 + (instancetype)sessionManager;
 
@@ -43,6 +45,9 @@
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+
+- (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
+                                                    time:(NSUInteger)time;
 
 - (void)closeSession;
 @end

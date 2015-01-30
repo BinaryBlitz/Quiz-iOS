@@ -10,6 +10,7 @@
 
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
+#import "QZBOnlineSessionWorker.h"
 
 #define OFFLINE YES
 
@@ -37,6 +38,7 @@
 @property(assign, nonatomic) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
 @property(strong, nonatomic) QZBOpponentBot *bot;
+@property(strong, nonatomic) QZBOnlineSessionWorker *onlineSessionWorker;
 
 @end
 
@@ -93,6 +95,10 @@
 
 - (void)setBot:(QZBOpponentBot *)bot {
   _bot = bot;
+}
+
+-(void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker{
+  _onlineSessionWorker = onlineSessionWorker;
 }
 
 - (void)timeCountingStart {
@@ -156,11 +162,11 @@
 
 //главный метод для второго пользователя
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum {
-  if (self.didOpponentUserAnswered) {
+ /* if (self.didOpponentUserAnswered) {
     return;
   }
 
-  self.didOpponentUserAnswered = YES;
+  self.didOpponentUserAnswered = YES;*/
 
   [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                     time:self.currentTime];
@@ -192,6 +198,11 @@
 // метод для подсчета очков второго пользователя
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
                                                     time:(NSUInteger)time {
+  if (self.didOpponentUserAnswered) {
+    return;
+  }
+  self.didOpponentUserAnswered = YES;
+  
   [self someAnswerCurrentQuestinUser:self.gameSession.opponentUser
                         AnswerNumber:answerNum
                                 time:time];
@@ -308,6 +319,7 @@
 
   self.gameSession = nil;
   self.bot = nil;
+  self.onlineSessionWorker = nil;
 }
 
 @end

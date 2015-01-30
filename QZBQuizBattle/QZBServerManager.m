@@ -14,10 +14,12 @@
 #import "QZBSession.h"
 #import "QZBCategory.h"
 #import "QZBOpponentBot.h"
+#import "QZBOnlineSessionWorker.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
+#import "TSMessage.h"
 
 @interface QZBServerManager ()
 @property(strong, nonatomic)
@@ -215,8 +217,7 @@
 }
 
 - (void)GETFindGameWithLobby:(QZBLobby *)lobby
-                   onSuccess:(void (^)(QZBSession *session,
-                                       QZBOpponentBot *bot))success
+                   onSuccess:(void (^)(QZBSession *session, id bot))success
                    onFailure:(void (^)(NSError *error,
                                        NSInteger statusCode))failure {
   NSDictionary *params = @{
@@ -224,23 +225,57 @@
   };
 
   NSString *URLString =
-      [NSString stringWithFormat:@"lobbies/%ld/find", lobby.lobbyID];
+      [NSString stringWithFormat:@"lobbies/%ld/find", (long)lobby.lobbyID];
 
   NSLog(@"%@", URLString);
 
   [self.requestOperationManager GET:URLString
       parameters:params
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
           NSLog(@"JSON: %@", responseObject);
 
-          QZBSession *session =
-              [[QZBSession alloc] initWIthDictionary:responseObject];
+          if (responseObject) {
+            QZBSession *session =
+                [[QZBSession alloc] initWIthDictionary:responseObject];
 
-          QZBOpponentBot *bot =
-              [[QZBOpponentBot alloc] initWithDictionary:responseObject];
-          if (success) {
-            success(session, bot);
+            id bot = nil;
+
+            NSNumber *isOffline = responseObject[@"offline"];
+
+            if ([isOffline isEqual:@1]) {
+              bot = [[QZBOpponentBot alloc] initWithDictionary:responseObject];
+            } else {
+              
+            }
+            if (success) {
+              success(session, bot);
+            }
           }
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error){
+
+       //  NSLog(@"%@, /n %@", operation, error);
+      }];
+}
+
+- (void)PATCHCloseLobby:(QZBLobby *)lobby
+              onSuccess:(void (^)(QZBSession *session, id bot))success
+              onFailure:(void (^)(NSError *error,
+                                  NSInteger statusCode))failure {
+  NSDictionary *params = @{
+    @"token" : [QZBCurrentUser sharedInstance].user.api_key
+  };
+
+  NSString *URLString =
+      [NSString stringWithFormat:@"lobbies/%ld/close", (long)lobby.lobbyID];
+
+  NSLog(@"%@", URLString);
+
+  [self.requestOperationManager PATCH:URLString
+      parameters:params
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSLog(@"lobby closed");
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error){
 
@@ -299,10 +334,8 @@
     @"token" : [QZBCurrentUser sharedInstance].user.api_key
   };
 
-  // NSLog(@"%@", [QZBCurrentUser sharedInstance].user.api_key);
-
   NSString *URLString = [NSString
-      stringWithFormat:@"game_session_questions/%ld", sessionQuestionID];
+      stringWithFormat:@"game_session_questions/%ld", (long)sessionQuestionID];
 
   [self.requestOperationManager PATCH:URLString
       parameters:params

@@ -33,10 +33,15 @@ onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
                  onSuccess:(void (^)(QZBLobby *lobby))success
                  onFailure:(void (^)(NSError *error,
                                      NSInteger statusCode))failure;
+- (void)PATCHCloseLobby:(QZBLobby *)lobby
+              onSuccess:(void (^)(QZBSession *session,
+                                  id bot))success
+              onFailure:(void (^)(NSError *error,
+                                  NSInteger statusCode))failure;
 
 - (void)GETFindGameWithLobby:(QZBLobby *)lobby
                    onSuccess:(void (^)(QZBSession *session,
-                                       QZBOpponentBot *bot))success
+                                       id bot))success
                    onFailure:(void (^)(NSError *error,
                                        NSInteger statusCode))failure;
 

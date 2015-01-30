@@ -11,7 +11,7 @@
 #import "CoreData+MagicalRecord.h"
 
 
-@interface AppDelegate ()<PTPusherDelegate>
+@interface AppDelegate ()//<PTPusherDelegate>
 
 @property(strong, nonatomic) PTPusher *client;
 
@@ -23,9 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
   [MagicalRecord setupAutoMigratingCoreDataStack];
-  
-  
-  
+   
   return YES;
 }
 
