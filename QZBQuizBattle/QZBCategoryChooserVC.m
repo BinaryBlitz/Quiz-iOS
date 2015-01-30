@@ -32,7 +32,9 @@
   self.mainTableView.delegate = self;
   self.mainTableView.dataSource = self;
   _categories = [QZBCategory MR_findAll];
-  [self initCategories];
+  
+  
+  //[self initCategories];
     // Do any additional setup after loading the view.
 }
 
@@ -45,6 +47,13 @@
   [super viewWillAppear:animated];
   //_categories = [QZBCategory MR_findAll];
  // self.navigationItem.hidesBackButton = YES;
+  
+  if([[QZBCurrentUser sharedInstance] checkUser]){
+    
+    [self initCategories];
+    
+  }
+  
   [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
 
@@ -113,15 +122,7 @@
   
 }
 
-#pragma mark - actions
-- (IBAction)logOutAction:(id)sender {
-  
-  [[QZBCurrentUser sharedInstance] userLogOut];
-  
-    
-  [self dismissViewControllerAnimated:YES completion:nil];
-  
-}
+
 
 
 

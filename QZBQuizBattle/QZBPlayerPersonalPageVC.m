@@ -39,7 +39,7 @@
 - (void)viewWillAppear:(BOOL)animate {
   [super viewWillAppear:animate];
 
-  self.title = [QZBCurrentUser sharedInstance].user.name;
+  self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
 }
 
 - (void)dealloc
@@ -132,12 +132,14 @@ preparation before navigation
     // Pass the selected object to the new view controller.
 }
 */
-- (IBAction)dissmisVC:(id)sender {
-  
-  [self dismissViewControllerAnimated:YES completion:nil];
-  
-}
 
+
+- (IBAction)logOutAction:(UIBarButtonItem *)sender {
+  
+  [[QZBCurrentUser sharedInstance] userLogOut];
+  
+  [self performSegueWithIdentifier:@"showRegistrationScreenFromUserScreen" sender:nil];
+}
 
 
 

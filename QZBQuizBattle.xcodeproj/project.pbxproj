@@ -50,6 +50,7 @@
 		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
 		19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */; };
 		19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */; };
+		19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */; };
 		19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33A1A70016300E8CB1C /* QZBGameTopic.m */; };
 		19DFF33E1A70016300E8CB1C /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33D1A70016300E8CB1C /* QZBCategory.m */; };
 		19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */; };
@@ -153,6 +154,8 @@
 		19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPasswordTextField.m; sourceTree = "<group>"; };
 		19D691281A6EA4E8008B2AE1 /* QZBUserNameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserNameTextField.h; sourceTree = "<group>"; };
 		19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserNameTextField.m; sourceTree = "<group>"; };
+		19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainTBC.h; sourceTree = "<group>"; };
+		19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainTBC.m; sourceTree = "<group>"; };
 		19DFF3391A70016300E8CB1C /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
 		19DFF33A1A70016300E8CB1C /* QZBGameTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBGameTopic.m; sourceTree = "<group>"; };
 		19DFF33C1A70016300E8CB1C /* QZBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategory.h; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 				19D691171A6D56D2008B2AE1 /* topic and group choose */,
 				19D691161A6D56A1008B2AE1 /* Game */,
 				197669991A67D057006C2757 /* Registration and login */,
+				19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */,
+				19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,
 				19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
+				19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 				190151751A73FD9B00DD9899 /* QZBAchivmentsTVC.m in Sources */,
