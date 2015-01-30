@@ -96,7 +96,11 @@ preparation before navigation
         
         weakSelf.registrationInProgress = NO;
         
-        [weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
+        //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+          
+        }];
         
       }
       onFailure:^(NSError *error, NSInteger statusCode){

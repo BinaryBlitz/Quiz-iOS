@@ -224,7 +224,7 @@
   };
 
   NSString *URLString =
-      [NSString stringWithFormat:@"lobbies/%ld/find", lobby.lobbyID];
+      [NSString stringWithFormat:@"lobbies/%ld/find", (long)lobby.lobbyID];
 
   NSLog(@"%@", URLString);
 
@@ -235,9 +235,11 @@
 
           QZBSession *session =
               [[QZBSession alloc] initWIthDictionary:responseObject];
+       // if(responseObject[@"offline"] isEqual:@1)
 
           QZBOpponentBot *bot =
               [[QZBOpponentBot alloc] initWithDictionary:responseObject];
+        
           if (success) {
             success(session, bot);
           }

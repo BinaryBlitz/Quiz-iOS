@@ -22,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+  [TSMessage setDefaultViewController:self.navigationController];
     // Do any additional setup after loading the view.
 }
 

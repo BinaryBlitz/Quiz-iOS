@@ -88,11 +88,19 @@
     
     weakSelf.loginInProgress = NO;
     
-    [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+   // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+      
+    }];
     
   } onFailure:^(NSError *error, NSInteger statusCode) {
     
+    NSLog(@"login fail");
+    
     if(statusCode == 401){
+      
+      
       [TSMessage showNotificationWithTitle:[self errorAsNSString:login_fail]
                                       type:TSMessageNotificationTypeError];
       
