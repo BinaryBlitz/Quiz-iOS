@@ -49,12 +49,12 @@
   if (self) {
     NSLog(@"init");
     _sessionTime = 10;
-
+/*
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(receiveTimeStartNotification:)
                name:@"QZBStartTimeCounting"
-             object:nil];
+             object:nil];*/
   }
   return self;
 }

@@ -17,9 +17,9 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
-#import <Pusher/Pusher.h>
+//#import <Pusher/Pusher.h>
 
-@interface QZBProgressViewController ()<PTPusherDelegate>
+@interface QZBProgressViewController ()//<PTPusherDelegate>
 
 @property(strong, nonatomic) QZBSession *session;
 @property(strong, nonatomic) id bot;
@@ -32,7 +32,7 @@
 @property(assign, nonatomic) BOOL isOnline;
 @property(assign, nonatomic) BOOL isEntered;
 
-@property(strong, nonatomic) PTPusher *client;
+//@property(strong, nonatomic) PTPusher *client;
 
 @end
 
@@ -48,6 +48,7 @@
                                            selector:@selector(showGameVC:)
                                                name:@"QZBOnlineGameNeedStart"
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSubscribed:) name:@"subscribedToChanel" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,7 +69,7 @@
   
   self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
 
-  [self initSession];
+  //[self initSession];
   //[self initBot];
 }
 
@@ -83,7 +84,7 @@
   
   
   
-  [self.client disconnect];
+ // [self.client disconnect];
 
   if (self.timer) {
     [self.timer invalidate];
@@ -123,42 +124,20 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-  //__weak typeof(self) weakSelf = self;
+  __weak typeof(self) weakSelf = self;
 
  
-
-  /*[[QZBServerManager sharedManager] postSessionWithTopic:self.topic
-      onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
-          if (!weakSelf.isCanceled) {
-            weakSelf.session = session;
-            weakSelf.bot = bot;
-            NSLog(@"setSession");
-            [[QZBSessionManager sessionManager] setSession:weakSelf.session];
-            [[QZBSessionManager sessionManager] setBot:self.bot];
-
-            [weakSelf performSegueWithIdentifier:@"showGame" sender:nil];
-          };
-
-      }
-      onFailure:^(NSError *error, NSInteger statusCode) {
-
-          NSLog(@"failed");
-          [TSMessage showNotificationWithTitle:@"Somthing went wrong"
-                                          type:TSMessageNotificationTypeError];
-
-      }];*/
 
   [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
       onSuccess:^(QZBLobby *lobby) {
         
-          [self sessionFromLobby:lobby];
+          [weakSelf sessionFromLobby:lobby];
 
       }
       onFailure:^(NSError *error, NSInteger statusCode) {
 
           NSLog(@"failed");
-          [TSMessage showNotificationWithTitle:@"Somthing went wrong"
-                                          type:TSMessageNotificationTypeError];
+          
 
       }];
 }
@@ -220,9 +199,12 @@
     
     if([bot isKindOfClass:[QZBOpponentBot class]]){
     
+      
     [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)self.bot];
       if(!self.isEntered){
         self.isEntered = YES;
+        [self.onlineWorker closeConnection];
+        self.onlineWorker = nil;
       [self performSegueWithIdentifier:@"showGame" sender:nil];
       }
     }else {
@@ -240,8 +222,13 @@
   NSLog(@"setted %d online %d entered %d",self.setted ,self.isOnline , self.isEntered );
   if(self.setted && self.isOnline && !self.isEntered){
     self.isEntered = YES;
+    _onlineWorker = nil;
     [self performSegueWithIdentifier:@"showGame" sender:nil];
   }
+}
+
+-(void)didSubscribed:(NSNotification *)notification{
+  [self initSession];
 }
 
 @end

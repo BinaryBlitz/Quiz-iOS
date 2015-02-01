@@ -45,10 +45,6 @@ onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
                    onFailure:(void (^)(NSError *error,
                                        NSInteger statusCode))failure;
 
-- (void) postSessionWithTopic:(QZBGameTopic *)topic
-                    onSuccess:(void(^)(QZBSession *session, QZBOpponentBot *bot)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
-
 
 -(void)PATCHSessionQuestionWithID:(NSInteger)sessionQuestionID
                            answer:(NSInteger)answerID

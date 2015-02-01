@@ -9,13 +9,13 @@
 #define MR_LOGGING_ENABLED 0
 
 #import "AppDelegate.h"
-#import <Pusher/Pusher.h>
+//#import <Pusher/Pusher.h>
 #import "CoreData+MagicalRecord.h"
 
 
-@interface AppDelegate ()//<PTPusherDelegate>
+@interface AppDelegate ()
 
-@property(strong, nonatomic) PTPusher *client;
+
 
 @end
 
@@ -152,7 +152,5 @@
 */
 
 
-- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel{
-  NSLog(@"connected");
-}
+
 @end

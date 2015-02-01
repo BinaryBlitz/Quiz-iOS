@@ -35,19 +35,20 @@
 
     NSLog(@"channel name %@", channelName);
 
-    self.client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c"
+    _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c"
                                  delegate:self
                                 encrypted:YES];
 
-    self.channel = [_client subscribeToChannelNamed:channelName];
+    PTPusherChannel *channel = [_client subscribeToChannelNamed:channelName];
+    self.channel = channel;
 
-    [self.client connect];
+    [_client connect];
 
     // NSLog(@"%@", self.channel);
 
     self.yetStarted = NO;
     
-    [self.channel
+    [channel
         bindToEventNamed:@"game-start"
          handleWithBlock:^(PTPusherEvent *channelEvent) {
            
@@ -68,7 +69,7 @@
            
          }];
 
-    [self.channel
+    [channel
         bindToEventNamed:@"opponent-answer"
          handleWithBlock:^(PTPusherEvent *channelEvent) {
 
@@ -76,7 +77,7 @@
 
              NSLog(@"%@", pusherDict);
 
-             NSInteger questID = [pusherDict[@"question_id"] integerValue];
+           //  NSInteger questID = [pusherDict[@"question_id"] integerValue];
 
              //if ([QZBSessionManager sessionManager].currentQuestion.questionId == questID) {
            NSNumber *num = nil;
@@ -101,11 +102,15 @@
              [num unsignedIntegerValue];
              NSUInteger answerTime =
              [time unsignedIntegerValue];
-             
+             NSInteger questID = [pusherDict[@"game_session_question_id"] integerValue];
+             NSLog(@"%ld", (long)questID);
+
+             if ([QZBSessionManager sessionManager].currentQuestion.questionId == questID) {
              
                [[QZBSessionManager sessionManager]
                    opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                                time:answerTime];
+             }
            } else{
              
              QZBAnswerTextAndID *answ= [[QZBSessionManager sessionManager].currentQuestion.answers firstObject];
@@ -122,15 +127,29 @@
   return self;
 }
 
+- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel{
+  if([channel isEqual:self.channel]){
+    NSLog(@"subscribed");
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"subscribedToChanel" object:nil];
+  }
+}
+
 -(void)closeConnection{
   
   NSLog(@"close connection");
-  [self.client disconnect];
+  [_channel unsubscribe];
+  [_client disconnect];
+  
+  NSLog(@" client %@  connection %@", _client, _channel);
+  
 }
 
 - (void)dealloc {
+  [self closeConnection];
   NSLog(@"online worker dealloc ");
-  [self.client disconnect];
+ 
 }
 
 @end

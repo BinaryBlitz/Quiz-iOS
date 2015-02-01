@@ -209,8 +209,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
       options:UIViewAnimationOptionTransitionNone
       animations:^{ weakSelf.roundLabel.alpha = 1.0; }
       completion:^(BOOL finished) {
-          [UIView animateWithDuration:0.2
-              delay:1.2
+          [UIView animateWithDuration:0.1
+              delay:1
               options:UIViewAnimationOptionTransitionNone
               animations:^{ weakSelf.roundLabel.alpha = 0.0; }
               completion:^(BOOL finished) {
@@ -307,13 +307,13 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
   __weak typeof(self) weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                               (int64_t)(2.5 * NSEC_PER_SEC)),
+                               (int64_t)(2.0 * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
 
       [self UNShowQuestinAndAnswers];
       //[self prepareQuestion];
       dispatch_after(
-          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
           dispatch_get_main_queue(), ^{ [weakSelf showQuestionAndAnswers]; });
   });
 }
