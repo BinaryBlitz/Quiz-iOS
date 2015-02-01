@@ -33,6 +33,7 @@
     QZBQuestionWithUserAnswer *firstUserLastAnswer;
 @property(assign, nonatomic, readonly)
     QZBQuestionWithUserAnswer *opponentUserLastAnswer;
+@property(strong, nonatomic, readonly) NSMutableArray *askedQuestions;//QZBQuestion
 
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
@@ -50,4 +51,13 @@
                                                     time:(NSUInteger)time;
 
 - (void)closeSession;
+
+
+#pragma mark - online methods
+
+-(QZBQuestion *)findQZBQuestionWithID:(NSInteger)questionID;
+
+-(void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
+                          AnswerNumber:(NSUInteger)answerNum
+                                  time:(NSUInteger)time;
 @end

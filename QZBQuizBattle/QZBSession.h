@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, QZBWinnew) {
 
 @interface QZBSession : NSObject
 
-@property(nonatomic, strong, readonly) NSArray *questions;//QZBQestion
+@property(nonatomic, strong, readonly) NSArray          *questions;//QZBQestion
 @property(nonatomic, strong, readonly) QZBUserInSession *firstUser;
 @property(nonatomic, strong, readonly) QZBUserInSession *opponentUser;
 

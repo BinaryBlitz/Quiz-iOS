@@ -26,6 +26,7 @@
   if (self) {
     self.question = qestion;
     self.answer = answer;
+    if(answer){
     if (qestion.rightAnswer == answer.answerNum) {
       
       self.isRight = YES;
@@ -34,6 +35,9 @@
       
       self.isRight = NO;
       
+    }
+    }else {
+      self.isRight = NO;
     }
 
     

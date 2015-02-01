@@ -110,17 +110,26 @@
                [[QZBSessionManager sessionManager]
                    opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                                time:answerTime];
+             }else{
+              QZBQuestion *quest = [[QZBSessionManager sessionManager] findQZBQuestionWithID:questID];
+               
+               if(quest){
+                 NSLog(@"quest %@", quest);
+                 
+                 [[QZBSessionManager sessionManager] opponentAnswerNotInTimeQuestion:quest AnswerNumber:answerNum time:answerTime];
+               }
+               
              }
-           } else{
+           } else{/*
              
              QZBAnswerTextAndID *answ= [[QZBSessionManager sessionManager].currentQuestion.answers firstObject];
              
                                       
              
              [[QZBSessionManager sessionManager] opponentUserAnswerCurrentQuestinWithAnswerNumber:answ.answerID];
-             
+            */
            }
-          //   }
+          
 
          }];
   }

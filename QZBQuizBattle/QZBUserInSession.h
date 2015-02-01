@@ -16,7 +16,7 @@
 
 @property (nonatomic, assign) NSUInteger currentScore;
 
-@property (nonatomic, strong) NSMutableArray *userAnswers;//QZBQestionWithAnswer
+@property (nonatomic, strong) NSMutableArray *userAnswers;//QZBQuestionWithAnswer
 
 - (instancetype)initWithUser:(QZBUser *)user;
 

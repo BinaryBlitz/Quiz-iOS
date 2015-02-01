@@ -37,6 +37,8 @@
 @property(assign, nonatomic) QZBQuestionWithUserAnswer *firstUserLastAnswer;
 @property(assign, nonatomic) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
+@property(strong, nonatomic) NSMutableArray *askedQuestions;//QZBQuestion
+
 @property(strong, nonatomic) QZBOpponentBot *bot;
 @property(strong, nonatomic) QZBOnlineSessionWorker *onlineSessionWorker;
 
@@ -94,6 +96,7 @@
   self.questionTimer = nil;
   self.roundNumber = 1;
   self.isDoubled = NO;
+  self.askedQuestions = [NSMutableArray array];
   
   self.firstUserName = session.firstUser.user.name;
 }
@@ -269,6 +272,11 @@
   }
 }
 
+
+//answering question after end question
+
+//-(void)opponentUserAnswerPreviousQuestWithID:
+
 #pragma mark - post notifications
 
 - (void)postNotificationNeedUnshow {
@@ -284,6 +292,7 @@
     [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
                             forQestion:self.currentQuestion
                                 answer:nil];
+    
   }
 
   self.firstUserLastAnswer =
@@ -292,9 +301,11 @@
       [self.gameSession.opponentUser.userAnswers lastObject];
 
   self.roundNumber = index + 2;
+  
+  [self.askedQuestions addObject:self.currentQuestion];
+  //добавляет уже заданый вопрос в список заданых вопросов
 
   if (index < [self.gameSession.questions count] - 1) {
-    // self.currentTime = 0;
     index++;
     self.currentQuestion = [self.gameSession.questions objectAtIndex:index];
 
@@ -303,33 +314,39 @@
                       object:self];
 
   } else {
-    QZBWinnew winner = [self.gameSession getWinner];
 
-    NSString *resultOfGame = @"";
-
-    switch (winner) {
-      case QZBWinnerFirst:
-        resultOfGame = @"Победа";
-        break;
-      case QZBWinnerOpponent:
-        resultOfGame = @"Поражение";
-        break;
-
-      case QZBWinnerNone:
-        resultOfGame = @"Ничья";
-        break;
-      default:
-        resultOfGame = @"Проблемы";  //исправить
-        break;
-    }
-
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:@"QZBNeedFinishSession"
-                      object:resultOfGame];
+    [self postNotificationWithGameResult];
 
     [self closeSession];
   }
 }
+
+-(void)postNotificationWithGameResult{
+  QZBWinnew winner = [self.gameSession getWinner];
+  
+  NSString *resultOfGame = @"";
+  
+  switch (winner) {
+    case QZBWinnerFirst:
+      resultOfGame = @"Победа";
+      break;
+    case QZBWinnerOpponent:
+      resultOfGame = @"Поражение";
+      break;
+      
+    case QZBWinnerNone:
+      resultOfGame = @"Ничья";
+      break;
+    default:
+      resultOfGame = @"Проблемы";  //исправить
+      break;
+  }
+  
+  [[NSNotificationCenter defaultCenter]
+   postNotificationName:@"QZBNeedFinishSession"
+   object:resultOfGame];
+}
+
 
 - (void)closeSession {
   if (self.questionTimer != nil) {
@@ -339,10 +356,48 @@
 
   self.gameSession = nil;
   self.bot = nil;
+  self.askedQuestions = nil;
   if(self.onlineSessionWorker){
     [self.onlineSessionWorker closeConnection];
   }
   self.onlineSessionWorker = nil;
+}
+
+
+#pragma mark - online methods
+
+-(QZBQuestion *)findQZBQuestionWithID:(NSInteger)questionID{
+  
+  for(QZBQuestion *quest in self.askedQuestions){
+    
+    if(quest.questionId == questionID){
+      return quest;
+    }
+    
+  }
+  return nil;
+  
+}
+
+-(void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
+                          AnswerNumber:(NSUInteger)answerNum
+                                  time:(NSUInteger)time{
+  
+  
+  
+  QZBAnswer *answer =
+  [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
+  
+  QZBQuestionWithUserAnswer *qanda= [self.gameSession.opponentUser.userAnswers lastObject];
+  [self.gameSession.opponentUser.userAnswers removeObject:qanda];
+  
+  [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
+                          forQestion:question
+                              answer:answer];
+  self.opponentUserLastAnswer = [self.gameSession.opponentUser.userAnswers lastObject];
+  self.secondUserScore = self.gameSession.opponentUser.currentScore;
+  
+  
 }
 
 @end
