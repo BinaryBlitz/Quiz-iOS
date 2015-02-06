@@ -10,6 +10,7 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 #import "QZBAnswerButton.h"
+#import "QZBTopicChooserControllerViewController.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
@@ -395,6 +396,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
     dispatch_after(
         dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)),
         dispatch_get_main_queue(), ^{
+          [self setScores];
 
           [self UNShowQuestinAndAnswers];
 
@@ -511,5 +513,43 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 - (void)setNamesAndUserpics {
   self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
 }
+
+
+#pragma mark - close
+
+- (IBAction)closeSession:(UIButton *)sender {
+  
+  [self.globalTimer invalidate];
+  self.globalTimer = nil;
+  
+  if (self.backgroundTask != UIBackgroundTaskInvalid) {
+    [[UIApplication sharedApplication]
+     endBackgroundTask:self.backgroundTask];
+    self.backgroundTask = UIBackgroundTaskInvalid;
+  }
+  
+  [[QZBSessionManager sessionManager] closeSession];
+  
+  //[self.navigationController popViewControllerAnimated:YES];
+  
+  UIViewController *destinationVC = nil;
+  
+  for(UIViewController *vc in self.navigationController.viewControllers){
+    
+    if([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]){
+      destinationVC = vc;
+      break;
+    }
+    
+    
+  }
+  
+  if(destinationVC){
+  [self.navigationController popToViewController:destinationVC animated:YES];
+  }
+  
+  
+}
+
 
 @end

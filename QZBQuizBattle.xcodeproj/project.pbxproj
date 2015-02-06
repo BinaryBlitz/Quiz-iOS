@@ -19,6 +19,9 @@
 		191559D51A39CDD400462C93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 191559D41A39CDD400462C93 /* Images.xcassets */; };
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
+		192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */; };
+		19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */; };
+		19423D7E1A80F8740014B0AD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 19423D7D1A80F8740014B0AD /* Reachability.m */; };
 		195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
@@ -93,6 +96,11 @@
 		191559DD1A39CDD400462C93 /* QZBQuizBattleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QZBQuizBattleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559E21A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
+		192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
+		192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
+		19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		19423D7C1A80F8740014B0AD /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		19423D7D1A80F8740014B0AD /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		195A7E3E1A69893B003AC3BA /* QZBRegistrationChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationChooserVC.h; sourceTree = "<group>"; };
 		195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationChooserVC.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
@@ -176,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,6 +243,10 @@
 				191559C91A39CDD400462C93 /* AppDelegate.m */,
 				191559C51A39CDD400462C93 /* Info.plist */,
 				191559C61A39CDD400462C93 /* main.m */,
+				19423D7C1A80F8740014B0AD /* Reachability.h */,
+				19423D7D1A80F8740014B0AD /* Reachability.m */,
+				192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */,
+				192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -457,6 +470,7 @@
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */,
 				DBC7A8F9E1287DD166F770A8 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -633,6 +647,7 @@
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
+				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
 				19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */,
 				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
 				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
@@ -652,6 +667,7 @@
 				19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */,
+				19423D7E1A80F8740014B0AD /* Reachability.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 				190151751A73FD9B00DD9899 /* QZBAchivmentsTVC.m in Sources */,
