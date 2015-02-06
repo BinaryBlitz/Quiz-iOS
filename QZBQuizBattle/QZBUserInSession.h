@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @class QZBUser;
+@class QZBQuestion;
+@class QZBQuestionWithUserAnswer;
 
 @interface QZBUserInSession : NSObject
 
@@ -16,8 +18,11 @@
 
 @property (nonatomic, assign) NSUInteger currentScore;
 
-@property (nonatomic, strong) NSMutableArray *userAnswers;//QZBQuestionWithAnswer
+@property (nonatomic, strong) NSMutableArray *userAnswers;//QZBQuestionWithUserAnswer
 
 - (instancetype)initWithUser:(QZBUser *)user;
+
+-(BOOL)couldAnswerAfterTime:(QZBQuestion *)question;
+-(QZBQuestionWithUserAnswer *)findQuestionAndAnswerWithQuestion:(QZBQuestion *)question;
 
 @end

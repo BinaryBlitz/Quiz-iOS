@@ -17,12 +17,13 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
+#import "NSTimer+Blocks.h"
 //#import <Pusher/Pusher.h>
 
-@interface QZBProgressViewController ()//<PTPusherDelegate>
+@interface QZBProgressViewController () //<PTPusherDelegate>
 
-@property(strong, nonatomic) QZBSession *session;
-@property(strong, nonatomic) id bot;
+//@property(strong, nonatomic) QZBSession *session;
+//@property(strong, nonatomic) id bot;
 @property(strong, nonatomic) QZBOnlineSessionWorker *onlineWorker;
 @property(strong, nonatomic) QZBLobby *lobby;
 @property(strong, nonatomic) NSTimer *timer;
@@ -43,12 +44,15 @@
 
   // [[self navigationController] setNavigationBarHidden:YES animated:NO];
   // Do any additional setup after loading the view.
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(showGameVC:)
                                                name:@"QZBOnlineGameNeedStart"
                                              object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSubscribed:) name:@"subscribedToChanel" object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(didSubscribed:)
+                                               name:@"subscribedToChanel"
+                                             object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,43 +65,41 @@
   [super viewDidAppear:animated];
 
   NSLog(@"showed progress VC");
-  
+
   self.setted = NO;
   self.isCanceled = NO;
   self.isOnline = NO;
   self.isEntered = NO;
-  
-  self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
+  self.lobby = nil;
 
-  //[self initSession];
-  //[self initBot];
+  if(!self.onlineWorker){
+    self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [[self navigationController] setNavigationBarHidden:YES animated:NO];
-  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  
-  
-  
- // [self.client disconnect];
 
-  if (self.timer) {
+  // [self.client disconnect];
+
+  NSLog(@"progress disapear");
+
+  self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
-  }
+  
 
-  [TSMessage dismissActiveNotification];
+  //[TSMessage dismissActiveNotification];
 }
 
--(void)dealloc{
-  
+- (void)dealloc {
+
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
 }
 
 #pragma mark - Actions
@@ -107,14 +109,15 @@
 
   [self.onlineWorker closeConnection];
   self.onlineWorker = nil;
-  
+
   [[QZBSessionManager sessionManager] closeSession];
   [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
-                                          onSuccess:^(QZBSession *session, id bot) {
-                                            
-                                          } onFailure:^(NSError *error, NSInteger statusCode) {
-                                            
-                                          }];
+      onSuccess:^(QZBSession *session, id bot) {
+
+      }
+      onFailure:^(NSError *error, NSInteger statusCode){
+
+      }];
 
   [self.navigationController popViewControllerAnimated:YES];
 }
@@ -126,108 +129,135 @@
 - (void)initSession {
   __weak typeof(self) weakSelf = self;
 
- 
-
   [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
       onSuccess:^(QZBLobby *lobby) {
-        
-          [weakSelf sessionFromLobby:lobby];
+
+        [weakSelf sessionFromLobby:lobby];
 
       }
       onFailure:^(NSError *error, NSInteger statusCode) {
 
-          NSLog(@"failed");
-          
+        NSLog(@"failed");
 
       }];
 }
 
 - (void)sessionFromLobby:(QZBLobby *)lobby {
-  if (lobby) {
+  if (lobby && !self.lobby) {
     self.lobby = lobby;
   } else {
     return;
   }
   self.counter = 7;
+  __weak typeof(self)weakSelf = self;
+  if(!self.timer){
+    /*
+    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
+      id strongSelf = weakSelf;
+      
+      [strongSelf tryGetSession:nil];
+    } repeats:YES];
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
+      id strongSelf = weakSelf;
+      
+      [strongSelf tryGetSession:nil];
+    } repeats:YES];
+    */
+  
+    
   self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                 target:self
                                               selector:@selector(tryGetSession:)
                                               userInfo:nil
                                                repeats:YES];
+  
   [self tryGetSession:nil];
+  }
 }
 
 - (void)tryGetSession:(NSTimer *)timer {
-  self.counter--;
-  NSLog(@"%ld", (unsigned long)self.counter);
+  
+  if(![timer isEqual:self.timer]){
+    [timer invalidate];
+    timer = nil;
+  }
+  
+  if(_timer){
+  _counter--;
+  NSLog(@"%ld", (unsigned long)_counter);
 
-  [[QZBServerManager sharedManager] GETFindGameWithLobby:self.lobby
+  [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
       onSuccess:^(QZBSession *session, id bot) {
 
-        
-            [self settitingSession:session bot:bot];
-          
-          if (self.timer != nil) {
-            [self.timer invalidate];
-            self.timer = nil;
-          }
+        [self settitingSession:session bot:bot];
 
+          [_timer invalidate];
+          _timer = nil;
+        
       }
       onFailure:^(NSError *error, NSInteger statusCode){
 
+        NSLog(@"finding failure");
+        
       }];
 
-  if (self.counter == 0) {
-    if (self.timer != nil) {
-      [self.timer invalidate];
-      self.timer = nil;
-    }
+  if (_counter <= 0) {
+    
+      [_timer invalidate];
+      _timer = nil;
+    
+  }
+  }else{
+    [timer invalidate];
+    timer = nil;
+    
+    NSLog(@"problems");
   }
 }
-
 - (void)settitingSession:(QZBSession *)session bot:(id)bot {
-  if(!self.setted){
-    
-    self.setted = YES;
-  
-  if (!self.isCanceled) {
-    self.session = session;
-    self.bot = bot;
-  
-    NSLog(@"setSession");
-    [[QZBSessionManager sessionManager] setSession:self.session];
-    
-    if([bot isKindOfClass:[QZBOpponentBot class]]){
-    
-      
-    [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)self.bot];
-      if(!self.isEntered){
-        self.isEntered = YES;
-        [self.onlineWorker closeConnection];
-        self.onlineWorker = nil;
-      [self performSegueWithIdentifier:@"showGame" sender:nil];
-      }
-    }else {
-      self.isOnline = YES;
-      [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
-    }
+  if (!self.setted&&!self.isEntered) {
 
-    //[self performSegueWithIdentifier:@"showGame" sender:nil];
-  }
+    self.setted = YES;
+
+    if (!self.isCanceled) {
+
+
+      NSLog(@"setSession");
+      [[QZBSessionManager sessionManager] setSession:session];
+
+      if ([bot isKindOfClass:[QZBOpponentBot class]]) {
+
+        [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
+        if (!self.isEntered) {
+          self.isEntered = YES;
+          [self.onlineWorker closeConnection];
+          self.onlineWorker = nil;
+          [self performSegueWithIdentifier:@"showGame" sender:nil];
+        }
+      } else {
+        self.isOnline = YES;
+        [[QZBSessionManager sessionManager]
+            setOnlineSessionWorker:self.onlineWorker];
+      }
+
+      //[self performSegueWithIdentifier:@"showGame" sender:nil];
+    }
   }
 }
 
-
--(void)showGameVC:(NSNotification *)notification{
-  NSLog(@"setted %d online %d entered %d",self.setted ,self.isOnline , self.isEntered );
-  if(self.setted && self.isOnline && !self.isEntered){
+- (void)showGameVC:(NSNotification *)notification {
+  NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline,
+        self.isEntered);
+  if (self.setted && self.isOnline && !self.isEntered) {
     self.isEntered = YES;
     _onlineWorker = nil;
+
     [self performSegueWithIdentifier:@"showGame" sender:nil];
   }
 }
 
--(void)didSubscribed:(NSNotification *)notification{
+- (void)didSubscribed:(NSNotification *)notification {
   [self initSession];
 }
 

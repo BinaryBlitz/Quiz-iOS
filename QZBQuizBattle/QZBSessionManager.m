@@ -2,7 +2,8 @@
 //  QZBSessionManager.m
 //  QZBQuizBattle
 //
-// Менеджер сессии, контроллер общается именно с менеджером сессии, а не с самой сессией
+// Менеджер сессии, контроллер общается именно с менеджером сессии, а не с самой
+// сессией
 //
 //  Created by Andrey Mikhaylov on 17/12/14.
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
@@ -21,8 +22,8 @@
 @property(assign, nonatomic) NSUInteger roundNumber;
 @property(assign, nonatomic) BOOL isDoubled;
 
-@property(copy, nonatomic)NSString *firstUserName;
-@property(copy, nonatomic)NSString *opponentUserName;
+@property(copy, nonatomic) NSString *firstUserName;
+@property(copy, nonatomic) NSString *opponentUserName;
 
 @property(strong, nonatomic) NSDate *startTime;
 @property(strong, nonatomic) NSTimer *questionTimer;
@@ -37,10 +38,12 @@
 @property(assign, nonatomic) QZBQuestionWithUserAnswer *firstUserLastAnswer;
 @property(assign, nonatomic) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 
-@property(strong, nonatomic) NSMutableArray *askedQuestions;//QZBQuestion
+@property(strong, nonatomic) NSMutableArray *askedQuestions; // QZBQuestion
 
 @property(strong, nonatomic) QZBOpponentBot *bot;
 @property(strong, nonatomic) QZBOnlineSessionWorker *onlineSessionWorker;
+
+@property(assign, nonatomic) BOOL sessionSetted;
 
 @end
 
@@ -51,12 +54,12 @@
   if (self) {
     NSLog(@"init");
     _sessionTime = 10;
-/*
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(receiveTimeStartNotification:)
-               name:@"QZBStartTimeCounting"
-             object:nil];*/
+    /*
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(receiveTimeStartNotification:)
+                   name:@"QZBStartTimeCounting"
+                 object:nil];*/
   }
   return self;
 }
@@ -70,17 +73,19 @@
   static id sharedInstance = nil;
 
   static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{ sharedInstance = [[self alloc] init]; });
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [[self alloc] init];
+  });
 
   return sharedInstance;
 }
 
 - (void)setSession:(QZBSession *)session {
-  
-  if(_gameSession){
+
+  if (_gameSession) {
     return;
   }
-  
+
   _gameSession = session;
   self.currentQuestion = [session.questions firstObject];
 
@@ -97,51 +102,66 @@
   self.roundNumber = 1;
   self.isDoubled = NO;
   self.askedQuestions = [NSMutableArray array];
-  
+
+  self.sessionSetted = YES;
+
   self.firstUserName = session.firstUser.user.name;
 }
 
 - (void)setBot:(QZBOpponentBot *)bot {
-  if(_bot && _onlineSessionWorker){
+  if (_bot && _onlineSessionWorker) {
     return;
-  }else{
-  _bot = bot;
+  } else {
+    _bot = bot;
   }
 }
 
--(void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker{
-  if(_onlineSessionWorker && _bot){
+- (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker {
+  if (_onlineSessionWorker && _bot) {
     return;
-  } else{
-  _onlineSessionWorker = onlineSessionWorker;
+  } else {
+    _onlineSessionWorker = onlineSessionWorker;
   }
 }
 
 - (void)timeCountingStart {
   
-  if(!self.questionTimer){
-  self.questionTimer =
-      [NSTimer scheduledTimerWithTimeInterval:1.0
-                                       target:self
-                                     selector:@selector(updateTime:)
-                                     userInfo:nil
-                                      repeats:YES];}
-  
+
+  if (!self.questionTimer) {
+    self.questionTimer =
+        [NSTimer scheduledTimerWithTimeInterval:1.0
+                                         target:self
+                                       selector:@selector(updateTime:)
+                                       userInfo:nil
+                                        repeats:YES];
+    
+    
+    NSLog(@"new timer alloc");
+  }
 }
 
 - (void)updateTime:(NSTimer *)timer {
+  
+  if(self.questionTimer && [timer isEqual:self.questionTimer]){
   self.currentTime++;
-
-  // NSLog(@"%lu",(unsigned long)self.currentTime);
+  } else{
+    NSLog(@"bad timer invalidate");
+    [timer invalidate];
+    timer = nil;
+  }
+   NSLog(@"%lu",(unsigned long)self.currentTime);
   if (self.currentTime < 10) {
-    NSLog(@"%ld",(unsigned long)self.currentTime);
+    //NSLog(@"%ld", (unsigned long)self.currentTime);
   } else {
-    if (self.questionTimer != nil) {
-      self.didFirstUserAnswered = YES;
-      self.didOpponentUserAnswered = YES;//чтобы нельзя было ответить пока переключаются вопросы
+    if (self.questionTimer) {
+
       [self.questionTimer invalidate];
       self.questionTimer = nil;
       [self postNotificationNeedUnshow];
+    }else{
+      NSLog(@"session timer problem");
+      [timer invalidate];
+      timer = nil;
     }
   }
 }
@@ -153,7 +173,6 @@
   self.currentTime = 0;
   self.didFirstUserAnswered = NO;
   self.didOpponentUserAnswered = NO;
-  
 
   [self timeCountingStart];
 
@@ -161,7 +180,7 @@
     NSLog(@"new questionStarted");
     NSUInteger questNum =
         [self.gameSession.questions indexOfObject:self.currentQuestion];
-    
+
     NSNumber *questionNumber = [NSNumber numberWithUnsignedInteger:questNum];
 
     [[NSNotificationCenter defaultCenter]
@@ -185,11 +204,11 @@
 
 //главный метод для второго пользователя
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum {
- /* if (self.didOpponentUserAnswered) {
-    return;
-  }
+  /* if (self.didOpponentUserAnswered) {
+     return;
+   }
 
-  self.didOpponentUserAnswered = YES;*/
+   self.didOpponentUserAnswered = YES;*/
 
   [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
                                                     time:self.currentTime];
@@ -225,7 +244,7 @@
     return;
   }
   self.didOpponentUserAnswered = YES;
-  
+
   [self someAnswerCurrentQuestinUser:self.gameSession.opponentUser
                         AnswerNumber:answerNum
                                 time:time];
@@ -255,7 +274,7 @@
 - (void)checkNeedUnshow {
   // NSLog(@"checking first %d seconf %d", self.didFirstUserAnswered,
   // self.didOpponentUserAnswered);
-  if (self.didFirstUserAnswered && self.didOpponentUserAnswered ) {
+  if (self.didFirstUserAnswered && self.didOpponentUserAnswered) {
     if (self.questionTimer != nil) {
       [self.questionTimer invalidate];
       self.questionTimer = nil;
@@ -264,16 +283,15 @@
     [self postNotificationNeedUnshow];
   }
 }
-
+/*
 - (void)receiveTimeStartNotification:(NSNotification *)notification {
   if ([[notification name] isEqualToString:@"QZBStartTimeCounting"]) {
     NSLog(@"notification");
     [self timeCountingStart];
   }
-}
+}*/
 
-
-//answering question after end question
+// answering question after end question
 
 //-(void)opponentUserAnswerPreviousQuestWithID:
 
@@ -292,8 +310,11 @@
     [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
                             forQestion:self.currentQuestion
                                 answer:nil];
-    
   }
+
+  self.didFirstUserAnswered = YES;
+  self.didOpponentUserAnswered = YES;
+  //чтобы нельзя было ответить пока переключаются вопросы
 
   self.firstUserLastAnswer =
       [self.gameSession.firstUser.userAnswers lastObject];
@@ -301,7 +322,7 @@
       [self.gameSession.opponentUser.userAnswers lastObject];
 
   self.roundNumber = index + 2;
-  
+
   [self.askedQuestions addObject:self.currentQuestion];
   //добавляет уже заданый вопрос в список заданых вопросов
 
@@ -321,32 +342,31 @@
   }
 }
 
--(void)postNotificationWithGameResult{
+- (void)postNotificationWithGameResult {
   QZBWinnew winner = [self.gameSession getWinner];
-  
-  NSString *resultOfGame = @"";
-  
-  switch (winner) {
-    case QZBWinnerFirst:
-      resultOfGame = @"Победа";
-      break;
-    case QZBWinnerOpponent:
-      resultOfGame = @"Поражение";
-      break;
-      
-    case QZBWinnerNone:
-      resultOfGame = @"Ничья";
-      break;
-    default:
-      resultOfGame = @"Проблемы";  //исправить
-      break;
-  }
-  
-  [[NSNotificationCenter defaultCenter]
-   postNotificationName:@"QZBNeedFinishSession"
-   object:resultOfGame];
-}
 
+  NSString *resultOfGame = @"";
+
+  switch (winner) {
+  case QZBWinnerFirst:
+    resultOfGame = @"Победа";
+    break;
+  case QZBWinnerOpponent:
+    resultOfGame = @"Поражение";
+    break;
+
+  case QZBWinnerNone:
+    resultOfGame = @"Ничья";
+    break;
+  default:
+    resultOfGame = @"Проблемы"; //исправить
+    break;
+  }
+
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:@"QZBNeedFinishSession"
+                    object:resultOfGame];
+}
 
 - (void)closeSession {
   if (self.questionTimer != nil) {
@@ -357,47 +377,53 @@
   self.gameSession = nil;
   self.bot = nil;
   self.askedQuestions = nil;
-  if(self.onlineSessionWorker){
+  if (self.onlineSessionWorker) {
     [self.onlineSessionWorker closeConnection];
   }
   self.onlineSessionWorker = nil;
-}
 
+  self.sessionSetted = NO;
+}
 
 #pragma mark - online methods
 
--(QZBQuestion *)findQZBQuestionWithID:(NSInteger)questionID{
-  
-  for(QZBQuestion *quest in self.askedQuestions){
-    
-    if(quest.questionId == questionID){
+- (QZBQuestion *)findQZBQuestionWithID:(NSInteger)questionID {
+
+  for (QZBQuestion *quest in self.askedQuestions) {
+
+    if (quest.questionId == questionID) {
       return quest;
     }
-    
   }
   return nil;
-  
 }
 
--(void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
-                          AnswerNumber:(NSUInteger)answerNum
-                                  time:(NSUInteger)time{
-  
-  
-  
-  QZBAnswer *answer =
-  [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
-  
-  QZBQuestionWithUserAnswer *qanda= [self.gameSession.opponentUser.userAnswers lastObject];
-  [self.gameSession.opponentUser.userAnswers removeObject:qanda];
-  
-  [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
-                          forQestion:question
-                              answer:answer];
-  self.opponentUserLastAnswer = [self.gameSession.opponentUser.userAnswers lastObject];
-  self.secondUserScore = self.gameSession.opponentUser.currentScore;
-  
-  
+- (void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
+                           AnswerNumber:(NSUInteger)answerNum
+                                   time:(NSUInteger)time {
+
+  BOOL couldAnswer =
+      [self.gameSession.opponentUser couldAnswerAfterTime:question];
+
+  NSLog(couldAnswer ? @"Yes" : @"No");
+
+  if (couldAnswer) {
+
+    QZBAnswer *answer =
+        [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];
+
+    QZBQuestionWithUserAnswer *qanda = [self.gameSession.opponentUser
+        findQuestionAndAnswerWithQuestion:question];
+
+    [self.gameSession.opponentUser.userAnswers removeObject:qanda];
+
+    [self.gameSession gaveAnswerByUser:self.gameSession.opponentUser
+                            forQestion:question
+                                answer:answer];
+    self.opponentUserLastAnswer =
+        [self.gameSession.opponentUser.userAnswers lastObject];
+    self.secondUserScore = self.gameSession.opponentUser.currentScore;
+  }
 }
 
 @end

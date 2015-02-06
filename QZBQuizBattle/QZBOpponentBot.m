@@ -42,6 +42,8 @@
         [[questDict objectForKey:@"opponent_answer_id"] unsignedIntegerValue];
     NSUInteger time =
         [[questDict objectForKey:@"opponent_time"] unsignedIntegerValue];
+    
+    
     QZBAnswer *answerWithTime =
         [[QZBAnswer alloc] initWithAnswerNumber:answerID answerTime:time];
 
