@@ -10,6 +10,4 @@
 
 @interface QZBEndSessionControllerViewController : UIViewController
 
-
-
 @end

@@ -8,8 +8,7 @@
 
 #import "QZBQuestion.h"
 
-
-@interface QZBQuestion()
+@interface QZBQuestion ()
 
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) NSString *question;
@@ -23,24 +22,18 @@
 
 - (instancetype)initWithTopic:(NSString *)topic
                      question:(NSString *)question
-                      answers:(NSArray *) answers
-                  rightAnswer:(NSUInteger) rightAnswer
-                   questionID:(NSInteger) questionID
-{
-  self = [super init];
-  if (self) {
-    self.topic       = topic;
-    self.question    = question;
-    self.answers     = answers;
-    self.rightAnswer = rightAnswer;
-    self.questionId = questionID;
-  }
-  return self;
+                      answers:(NSArray *)answers
+                  rightAnswer:(NSUInteger)rightAnswer
+                   questionID:(NSInteger)questionID {
+    self = [super init];
+    if (self) {
+        self.topic = topic;
+        self.question = question;
+        self.answers = answers;
+        self.rightAnswer = rightAnswer;
+        self.questionId = questionID;
+    }
+    return self;
 }
-
-
-
-
-
 
 @end

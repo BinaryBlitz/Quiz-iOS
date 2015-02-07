@@ -13,113 +13,101 @@
 #import "QZBFriendsHorizontalCell.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
-                                       UITableViewDelegate>
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
 @implementation QZBPlayerPersonalPageVC
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  self.playerTableView.delegate = self;
-  self.playerTableView.dataSource = self;
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userPressShowAllButton:) name:@"QZBUserPressShowAllButton" object:nil];
+    self.playerTableView.delegate = self;
+    self.playerTableView.dataSource = self;
 
-  // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userPressShowAllButton:)
+                                                 name:@"QZBUserPressShowAllButton"
+                                               object:nil];
+
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animate {
-  [super viewWillAppear:animate];
+    [super viewWillAppear:animate];
 
-  self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
+    self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
 }
 
-- (void)dealloc
-{
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView
-    numberOfRowsInSection:(NSInteger)section {
-  return 10;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *playerIdentifier = @"playerСell";
-  NSString *friendsIdentifier = @"friendsCell";
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *playerIdentifier = @"playerСell";
+    NSString *friendsIdentifier = @"friendsCell";
 
-  UITableViewCell *cell;
+    UITableViewCell *cell;
 
-  if (indexPath.row == 0) {
-    QZBPlayerInfoCell *playerCell = (QZBPlayerInfoCell *)
-        [tableView dequeueReusableCellWithIdentifier:playerIdentifier];
+    if (indexPath.row == 0) {
+        QZBPlayerInfoCell *playerCell =
+            (QZBPlayerInfoCell *)[tableView dequeueReusableCellWithIdentifier:playerIdentifier];
 
-    NSURL *picUrl =
-        [NSURL URLWithString:
-                   @"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
+        NSURL *picUrl = [NSURL URLWithString:@"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
 
-    [playerCell.playerUserpic setImageWithURL:picUrl];
+        [playerCell.playerUserpic setImageWithURL:picUrl];
 
-    cell = playerCell;
-  } else if (indexPath.row == 1 || indexPath.row == 2) {
-    QZBFriendsHorizontalCell *friendsCell =
-        [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
-    return friendsCell;
-   // cell = friendsCell;
-  }else if(indexPath.row == 3){
-    cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];
-    
+        cell = playerCell;
+    } else if (indexPath.row == 1 || indexPath.row == 2) {
+        QZBFriendsHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
+        return friendsCell;
+        // cell = friendsCell;
+    } else if (indexPath.row == 3) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];
+
+        return cell;
+    } else if (indexPath.row > 3) {
+        QZBTopicTableViewCell *topicCell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
+        topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
+        return topicCell;
+        // cell = topicCell;
+    }
     return cell;
-  } else if(indexPath.row>3){
-    QZBTopicTableViewCell *topicCell =
-    [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
-    topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
-    return topicCell;
-   // cell = topicCell;
-    
-  }
-  return cell;
 }
 
+- (void)userPressShowAllButton:(NSNotification *)notification {
+    NSLog(@"%@", notification.object);
 
--(void)userPressShowAllButton:(NSNotification *)notification{
-  
-  NSLog(@"%@",notification.object);
-  
-  NSIndexPath *indexPath = (NSIndexPath *)notification.object;
-  
-  if(indexPath.row == 1){
-    [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
-  } else if (indexPath.row == 2){
-    [self performSegueWithIdentifier:@"showAchivements" sender:nil];
-  }
-  
+    NSIndexPath *indexPath = (NSIndexPath *)notification.object;
+
+    if (indexPath.row == 1) {
+        [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
+    } else if (indexPath.row == 2) {
+        [self performSegueWithIdentifier:@"showAchivements" sender:nil];
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-  if(indexPath.row<3){
-    return 127.0f;
-  }else if(indexPath.row == 3){
-    return 47.0f;
-  }
-    else{
-    return 61.0f;
-  }
-  
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row < 3) {
+        return 127.0f;
+    } else if (indexPath.row == 3) {
+        return 47.0f;
+    } else {
+        return 61.0f;
+    }
 }
 
 /*
@@ -133,14 +121,10 @@ preparation before navigation
 }
 */
 
-
 - (IBAction)logOutAction:(UIBarButtonItem *)sender {
-  
-  [[QZBCurrentUser sharedInstance] userLogOut];
-  
-  [self performSegueWithIdentifier:@"showRegistrationScreenFromUserScreen" sender:nil];
+    [[QZBCurrentUser sharedInstance] userLogOut];
+
+    [self performSegueWithIdentifier:@"showRegistrationScreenFromUserScreen" sender:nil];
 }
-
-
 
 @end

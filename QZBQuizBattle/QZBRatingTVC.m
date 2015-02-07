@@ -10,7 +10,7 @@
 #import "QZBRatingTVCell.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface QZBRatingTVC ()<UITableViewDataSource, UITableViewDelegate>
+@interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -18,10 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
-  self.ratingTableView.delegate = self;
-  self.ratingTableView.dataSource = self;
-  
+
+    self.ratingTableView.delegate = self;
+    self.ratingTableView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,38 +28,35 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  
-  return 30;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 30;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-  QZBRatingTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
-  cell.numberInRating.text = [NSString stringWithFormat:@"%d", (indexPath.row+1)];
-  
-  NSURL *url = [NSURL URLWithString:@"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg"];
-  
-  [cell.userpic setImageWithURL:url];
-  
-  return cell;
-  
-}
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QZBRatingTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
+    cell.numberInRating.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 1)];
 
+    NSURL *url = [NSURL URLWithString:@"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg"];
+
+    [cell.userpic setImageWithURL:url];
+
+    return cell;
+}
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before
+navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.

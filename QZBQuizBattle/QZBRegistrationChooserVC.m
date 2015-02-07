@@ -16,30 +16,29 @@
 @implementation QZBRegistrationChooserVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];/*
-  if([[QZBCurrentUser sharedInstance] checkUser]){
-    
-    NSLog(@"exist");
-    [self performSegueWithIdentifier:@"userExist" sender:nil];
-    
-  }*/
-  
+    [super viewDidLoad]; /*
+   if([[QZBCurrentUser sharedInstance] checkUser]){
+
+     NSLog(@"exist");
+     [self performSegueWithIdentifier:@"userExist" sender:nil];
+
+   }*/
+
     // Do any additional setup after loading the view.
 }
 
--(void)viewDidAppear:(BOOL)animated{
-  [super viewDidAppear:animated];
-  if([[QZBCurrentUser sharedInstance] checkUser]){
-    
-    NSLog(@"exist");
-    [self performSegueWithIdentifier:@"userExist" sender:nil];
-  }}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([[QZBCurrentUser sharedInstance] checkUser]) {
+        NSLog(@"exist");
+        [self performSegueWithIdentifier:@"userExist" sender:nil];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 #pragma mark - Navigation
 /*
@@ -47,9 +46,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-  
+
 //  NSLog(@"%@",segue);
 }*/
-
 
 @end

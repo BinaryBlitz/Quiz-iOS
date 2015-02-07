@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBRatingMainVC : UIViewController
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
 

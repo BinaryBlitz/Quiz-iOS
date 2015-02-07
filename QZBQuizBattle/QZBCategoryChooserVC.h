@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBCategoryChooserVC : UIViewController
+
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 
 @end

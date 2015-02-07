@@ -10,10 +10,8 @@
 
 @interface QZBAnswerButton : UIButton
 
--(void)addTriangleLeft;
-
--(void)addTriangleRight;
-
--(void)unshowTriangles;
+- (void)addTriangleLeft;
+- (void)addTriangleRight;
+- (void)unshowTriangles;
 
 @end

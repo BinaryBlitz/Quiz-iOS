@@ -14,33 +14,32 @@
 #import "QZBCategory.h"
 #import "CoreData+MagicalRecord.h"
 
-@interface QZBTopicChooserControllerViewController () <UITableViewDataSource,
-                                                       UITableViewDelegate>
+@interface QZBTopicChooserControllerViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property(strong, nonatomic) NSArray *topics;
-@property(strong, nonatomic) QZBGameTopic *choosedTopic;
+@property (strong, nonatomic) NSArray *topics;
+@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 
 @end
 
 @implementation QZBTopicChooserControllerViewController
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  self.topicTableView.delegate = self;
-  self.topicTableView.dataSource = self;
+    self.topicTableView.delegate = self;
+    self.topicTableView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+    [super viewWillAppear:animated];
 
-  self.navigationItem.hidesBackButton = NO;
-  [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.navigationItem.hidesBackButton = NO;
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
 
 #pragma mark - Navigation
@@ -48,71 +47,63 @@
 // In a storyboard-based application, you will often want to do a little
 // preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
-    QZBProgressViewController *navigationController =
-        segue.destinationViewController;
-    navigationController.topic = self.choosedTopic;
-  }
+    if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
+        QZBProgressViewController *navigationController = segue.destinationViewController;
+        navigationController.topic = self.choosedTopic;
+    }
 }
 
 #pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView
-    numberOfRowsInSection:(NSInteger)section {
-  return [self.topics count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.topics count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSString *identifier = @"topicCell";
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = @"topicCell";
 
-  QZBTopicTableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:identifier];
+    QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 
-  QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
+    QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
 
-  cell.topicName.text = topic.name;
+    cell.topicName.text = topic.name;
 
-  return cell;
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.choosedTopic = self.topics[indexPath.row];
+    NSLog(@"%ld", (long)self.choosedTopic.topic_id);
 
-  self.choosedTopic = self.topics[indexPath.row];
-  NSLog(@"%ld", (long)self.choosedTopic.topic_id);
-
-  [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+    [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
 }
 
 #pragma mark - topics init
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
-  // NSLog(@"category name:  %@", category.name);
+    // NSLog(@"category name:  %@", category.name);
 
-  NSSortDescriptor *sort =
-      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
 
-  self.topics =
-      [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
-          sortedArrayUsingDescriptors:@[ sort ]];
+    self.topics =
+        [[NSArray arrayWithArray:[[category relationToTopic] allObjects]] sortedArrayUsingDescriptors:@[ sort ]];
 
-  self.title = category.name;
+    self.title = category.name;
 
-  //  NSInteger category_id = [category.category_id integerValue];
+    //  NSInteger category_id = [category.category_id integerValue];
 
-  [[QZBServerManager sharedManager] getTopicsWithCategory:category
-      onSuccess:^(NSArray *topics) {
-        self.topics =
-        [[NSArray arrayWithArray:[[category relationToTopic] allObjects]] sortedArrayUsingDescriptors:@[sort]];
-        [self.topicTableView reloadData];
+    [[QZBServerManager sharedManager] getTopicsWithCategory:category
+        onSuccess:^(NSArray *topics) {
+          self.topics =
+              [[NSArray arrayWithArray:[[category relationToTopic] allObjects]] sortedArrayUsingDescriptors:@[ sort ]];
+          [self.topicTableView reloadData];
 
-      }
-      onFailure:^(NSError *error, NSInteger statusCode){
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
 
-      }];
+        }];
 }
 @end

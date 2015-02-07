@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBPlayerInfoCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *playerUserpic;
 
 @end
