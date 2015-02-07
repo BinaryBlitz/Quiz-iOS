@@ -71,6 +71,8 @@
   self.isOnline = NO;
   self.isEntered = NO;
   self.lobby = nil;
+  
+  self.cancelButton.enabled = YES;
 
   if(!self.onlineWorker){
     self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
@@ -250,6 +252,7 @@
   NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline,
         self.isEntered);
   if (self.setted && self.isOnline && !self.isEntered) {
+    self.cancelButton.enabled = NO;
     self.isEntered = YES;
     _onlineWorker = nil;
 

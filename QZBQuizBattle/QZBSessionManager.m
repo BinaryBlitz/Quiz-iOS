@@ -92,7 +92,7 @@
   // TODO timer invalidate
 
   self.firstUserLastAnswer = nil;
-  self.firstUserLastAnswer = nil;
+  self.opponentUserLastAnswer = nil;
 
   self.firstUserScore = 0;
   self.secondUserScore = 0;
@@ -318,6 +318,7 @@
 
   self.firstUserLastAnswer =
       [self.gameSession.firstUser.userAnswers lastObject];
+  
   self.opponentUserLastAnswer =
       [self.gameSession.opponentUser.userAnswers lastObject];
 
@@ -338,7 +339,9 @@
 
     [self postNotificationWithGameResult];
 
-    [self closeSession];
+    
+    
+   // [self closeSession];
   }
 }
 
@@ -369,10 +372,10 @@
 }
 
 - (void)closeSession {
-  if (self.questionTimer != nil) {
+  
     [self.questionTimer invalidate];
     self.questionTimer = nil;
-  }
+
 
   self.gameSession = nil;
   self.bot = nil;

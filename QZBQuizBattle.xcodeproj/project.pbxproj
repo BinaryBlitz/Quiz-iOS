@@ -54,6 +54,10 @@
 		19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */; };
 		19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */; };
 		19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */; };
+		19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA85B1A85532300E610DB /* QZBRatingTVC.m */; };
+		19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */; };
+		19DEA8621A8561E600E610DB /* QZBRatingTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */; };
+		19DEA8651A860E4500E610DB /* QZBRatingMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */; };
 		19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33A1A70016300E8CB1C /* QZBGameTopic.m */; };
 		19DFF33E1A70016300E8CB1C /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF33D1A70016300E8CB1C /* QZBCategory.m */; };
 		19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */; };
@@ -164,6 +168,14 @@
 		19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserNameTextField.m; sourceTree = "<group>"; };
 		19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainTBC.h; sourceTree = "<group>"; };
 		19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainTBC.m; sourceTree = "<group>"; };
+		19DEA85A1A85532300E610DB /* QZBRatingTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingTVC.h; sourceTree = "<group>"; };
+		19DEA85B1A85532300E610DB /* QZBRatingTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingTVC.m; sourceTree = "<group>"; };
+		19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingPageVC.h; sourceTree = "<group>"; };
+		19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingPageVC.m; sourceTree = "<group>"; };
+		19DEA8601A8561E600E610DB /* QZBRatingTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingTVCell.h; sourceTree = "<group>"; };
+		19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingTVCell.m; sourceTree = "<group>"; };
+		19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingMainVC.h; sourceTree = "<group>"; };
+		19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingMainVC.m; sourceTree = "<group>"; };
 		19DFF3391A70016300E8CB1C /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
 		19DFF33A1A70016300E8CB1C /* QZBGameTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBGameTopic.m; sourceTree = "<group>"; };
 		19DFF33C1A70016300E8CB1C /* QZBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategory.h; sourceTree = "<group>"; };
@@ -298,6 +310,8 @@
 				19B5E0561A7104D100DCD9C3 /* QZBFriendInHorizontalTabelViewCell.m */,
 				19B5E0581A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.h */,
 				19B5E0591A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m */,
+				19DEA8601A8561E600E610DB /* QZBRatingTVCell.h */,
+				19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -357,6 +371,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				19DEA8591A8552E800E610DB /* rating */,
 				19DFF33F1A700F5B00E8CB1C /* player */,
 				19D691171A6D56D2008B2AE1 /* topic and group choose */,
 				19D691161A6D56A1008B2AE1 /* Game */,
@@ -452,6 +467,19 @@
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
 			);
 			name = textFields;
+			sourceTree = "<group>";
+		};
+		19DEA8591A8552E800E610DB /* rating */ = {
+			isa = PBXGroup;
+			children = (
+				19DEA85A1A85532300E610DB /* QZBRatingTVC.h */,
+				19DEA85B1A85532300E610DB /* QZBRatingTVC.m */,
+				19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */,
+				19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */,
+				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
+				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
+			);
+			name = rating;
 			sourceTree = "<group>";
 		};
 		19DFF33F1A700F5B00E8CB1C /* player */ = {
@@ -632,6 +660,7 @@
 				1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */,
 				1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */,
 				19DFF33E1A70016300E8CB1C /* QZBCategory.m in Sources */,
+				19DEA8621A8561E600E610DB /* QZBRatingTVCell.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
 				19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */,
@@ -639,6 +668,7 @@
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
+				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
@@ -654,6 +684,7 @@
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
+				19DEA8651A860E4500E610DB /* QZBRatingMainVC.m in Sources */,
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBFriendInHorizontalTabelViewCell.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
@@ -661,6 +692,7 @@
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
+				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,

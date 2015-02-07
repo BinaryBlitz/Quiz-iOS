@@ -95,6 +95,15 @@
   return self;
 }
 
+-(void)dealloc{
+  
+  [self closeConnection];
+  NSLog(@"online worker dealloc ");
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+}
+
 -(void)oppomentAnswered:(NSDictionary *)pusherDict{
   
   NSLog(@"%@", pusherDict);
@@ -230,9 +239,5 @@
   NSLog(@" client %@  connection %@", _client, _channel);
 }
 
-- (void)dealloc {
-  [self closeConnection];
-  NSLog(@"online worker dealloc ");
-}
 
 @end

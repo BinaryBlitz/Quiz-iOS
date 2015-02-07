@@ -426,6 +426,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
                     dispatch_time(DISPATCH_TIME_NOW,
                                   (int64_t)(2 * NSEC_PER_SEC)),
                     dispatch_get_main_queue(), ^{
+                      
+                      
+                      
                       [weakSelf performSegueWithIdentifier:@"gameEnded"
                                                     sender:nil];
 

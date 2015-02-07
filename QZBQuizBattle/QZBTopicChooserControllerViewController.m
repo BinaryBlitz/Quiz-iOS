@@ -12,6 +12,7 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "QZBCategory.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface QZBTopicChooserControllerViewController () <UITableViewDataSource,
                                                        UITableViewDelegate>
@@ -25,7 +26,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.topicTableView.delegate = self;
   self.topicTableView.dataSource = self;
 }
@@ -78,37 +79,40 @@
 
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
+
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
-  
+
   self.choosedTopic = self.topics[indexPath.row];
   NSLog(@"%ld", (long)self.choosedTopic.topic_id);
-  
+
   [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
-  
 }
 
 #pragma mark - topics init
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
- // NSLog(@"category name:  %@", category.name);
-  
-  
-  self.topics = [NSArray arrayWithArray:[[category relationToTopic] allObjects]];
+  // NSLog(@"category name:  %@", category.name);
+
+  NSSortDescriptor *sort =
+      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+
+  self.topics =
+      [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
+          sortedArrayUsingDescriptors:@[ sort ]];
 
   self.title = category.name;
-  
-//  NSInteger category_id = [category.category_id integerValue];
-  
-  [[QZBServerManager sharedManager] getTopicsWithCategory:category onSuccess:^(NSArray *topics) {
-    self.topics = [NSArray arrayWithArray:[[category relationToTopic] allObjects]];
-    [self.topicTableView reloadData];
-    
-    
-  } onFailure:^(NSError *error, NSInteger statusCode) {
-    
-  }];
 
+  //  NSInteger category_id = [category.category_id integerValue];
 
+  [[QZBServerManager sharedManager] getTopicsWithCategory:category
+      onSuccess:^(NSArray *topics) {
+        self.topics =
+        [[NSArray arrayWithArray:[[category relationToTopic] allObjects]] sortedArrayUsingDescriptors:@[sort]];
+        [self.topicTableView reloadData];
+
+      }
+      onFailure:^(NSError *error, NSInteger statusCode){
+
+      }];
 }
 @end
