@@ -8,7 +8,7 @@
 
 #import "QZBLobby.h"
 
-@interface QZBLobby()
+@interface QZBLobby ()
 
 @property (assign, nonatomic) NSInteger lobbyID;
 @property (assign, nonatomic) NSInteger topicID;
@@ -21,19 +21,14 @@
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 {
-  self = [super init];
-  if (self) {
-    
-    self.lobbyID = [dict[@"id"] integerValue];
-    self.topicID = [dict[@"topic_id"] integerValue];
-    self.playerID = [dict[@"player_id"] integerValue];
-    self.queryCount = [dict[@"query_count"] integerValue];
-                     
-    
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        self.lobbyID = [dict[@"id"] integerValue];
+        self.topicID = [dict[@"topic_id"] integerValue];
+        self.playerID = [dict[@"player_id"] integerValue];
+        self.queryCount = [dict[@"query_count"] integerValue];
+    }
+    return self;
 }
-
-
 
 @end

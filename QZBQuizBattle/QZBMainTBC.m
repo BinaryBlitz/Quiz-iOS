@@ -17,8 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
-  [[QZBCurrentUser sharedInstance] checkUser];
+
+    [[QZBCurrentUser sharedInstance] checkUser];
     // Do any additional setup after loading the view.
 }
 
@@ -27,15 +27,13 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewDidAppear:(BOOL)animated{
-  [super viewDidAppear:animated];
-  
-  if(![[QZBCurrentUser sharedInstance] checkUser]){
-    
-    NSLog(@"exist");
-    [self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
-  }
-  
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    if (![[QZBCurrentUser sharedInstance] checkUser]) {
+        NSLog(@"exist");
+        [self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
+    }
 }
 
 /*

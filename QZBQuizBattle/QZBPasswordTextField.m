@@ -10,11 +10,8 @@
 
 @implementation QZBPasswordTextField
 
-
--(BOOL)validate{
-  
-  return ([self.text length] >= 6);
-  
+- (BOOL)validate {
+    return ([self.text length] >= 6);
 }
 
 @end

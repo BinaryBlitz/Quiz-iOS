@@ -13,9 +13,10 @@
 
 @interface QZBCategory : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * category_id;
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber *category_id;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSSet *relationToTopic;
+
 @end
 
 @interface QZBCategory (CoreDataGeneratedAccessors)

@@ -10,6 +10,6 @@
 
 @interface UIView (QZBShakeExtension)
 
--(void)shakeView;
+- (void)shakeView;
 
 @end

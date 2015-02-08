@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString(MD5)
+@interface NSString (MD5)
 
 - (NSString *)MD5;
-- (NSData*)MD5CharData;
+- (NSData *)MD5CharData;
 
 @end

@@ -10,10 +10,9 @@
 
 @interface QZBFriendInHorizontalTabelViewCell : UITableViewCell
 
-@property(strong, nonatomic) UIImageView *friendUserPic;
-@property(strong, nonatomic) UILabel *userName;
+@property (strong, nonatomic) UIImageView *friendUserPic;
+@property (strong, nonatomic) UILabel *userName;
 
--(void)setName:(NSString *)name userpicURLAsString:(NSString *)URLString;
-
+- (void)setName:(NSString *)name userpicURLAsString:(NSString *)URLString;
 
 @end

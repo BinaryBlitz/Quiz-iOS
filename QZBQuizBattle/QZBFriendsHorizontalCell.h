@@ -10,5 +10,6 @@
 
 @interface QZBFriendsHorizontalCell : UITableViewCell
 
-@property(strong, nonatomic) UITableView *horizontalTabelView;
+@property (strong, nonatomic) UITableView *horizontalTabelView;
+
 @end

@@ -15,14 +15,12 @@
 @interface QZBUserInSession : NSObject
 
 @property (strong, nonatomic) QZBUser *user;
-
 @property (nonatomic, assign) NSUInteger currentScore;
-
-@property (nonatomic, strong) NSMutableArray *userAnswers;//QZBQuestionWithUserAnswer
+@property (nonatomic, strong) NSMutableArray *userAnswers;  // QZBQuestionWithUserAnswer
 
 - (instancetype)initWithUser:(QZBUser *)user;
 
--(BOOL)couldAnswerAfterTime:(QZBQuestion *)question;
--(QZBQuestionWithUserAnswer *)findQuestionAndAnswerWithQuestion:(QZBQuestion *)question;
+- (BOOL)couldAnswerAfterTime:(QZBQuestion *)question;
+- (QZBQuestionWithUserAnswer *)findQuestionAndAnswerWithQuestion:(QZBQuestion *)question;
 
 @end

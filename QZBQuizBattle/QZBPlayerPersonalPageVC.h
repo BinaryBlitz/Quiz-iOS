@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBPlayerPersonalPageVC : UITableViewController
+
 @property (strong, nonatomic) IBOutlet UITableView *playerTableView;
 
 @end

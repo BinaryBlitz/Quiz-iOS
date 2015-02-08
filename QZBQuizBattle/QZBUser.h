@@ -12,11 +12,11 @@
 
 //@property(assign, nonatomic, readonly) NSInteger user_id;
 
-@property(copy, nonatomic, readonly) NSString *name;
-@property(copy, nonatomic, readonly) NSString *email;
-@property(copy, nonatomic, readonly) NSString *api_key;
-@property(strong, nonatomic, readonly) NSNumber *user_id;
-
+@property (copy, nonatomic, readonly) NSString *name;
+@property (copy, nonatomic, readonly) NSString *email;
+@property (copy, nonatomic, readonly) NSString *api_key;
+@property (strong, nonatomic, readonly) NSNumber *user_id;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
+
 @end

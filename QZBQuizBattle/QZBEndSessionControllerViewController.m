@@ -20,21 +20,21 @@
 @implementation QZBEndSessionControllerViewController
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  //[[self navigationController] setNavigationBarHidden:YES animated:NO];
-  // Do any additional setup after loading the view.
+    [super viewDidLoad];
+    //[[self navigationController] setNavigationBarHidden:YES animated:NO];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+    [super viewWillAppear:animated];
 
-  [[QZBSessionManager sessionManager] closeSession];
-  [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    [[QZBSessionManager sessionManager] closeSession];
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
 /*
@@ -48,35 +48,31 @@ preparation before navigation
 }
 */
 - (IBAction)rematchAction:(UIButton *)sender {
-
-  [self moveToVCWithClass:[QZBProgressViewController class]];
+    [self moveToVCWithClass:[QZBProgressViewController class]];
 }
 
 - (IBAction)ChooseTopicAction:(UIButton *)sender {
-
-  [self moveToVCWithClass:[QZBTopicChooserControllerViewController class]];
-  //[self.navigationController popToRootViewControllerAnimated:YES];
+    [self moveToVCWithClass:[QZBTopicChooserControllerViewController class]];
+    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (IBAction)chooseCategoryAction:(id)sender {
-  [self moveToVCWithClass:[QZBCategoryChooserVC class]];
+    [self moveToVCWithClass:[QZBCategoryChooserVC class]];
 }
 
 - (void)moveToVCWithClass:(__unsafe_unretained Class)VCclass {
+    NSArray *controllers = self.navigationController.viewControllers;
 
-  NSArray *controllers = self.navigationController.viewControllers;
+    UIViewController *destinationVC;
 
-  UIViewController *destinationVC;
+    for (UIViewController *controller in controllers) {
+        if ([controller isKindOfClass:VCclass]) {
+            NSLog(@"%@", [controller class]);
 
-  for (UIViewController *controller in controllers) {
-
-    if ([controller isKindOfClass:VCclass]) {
-      NSLog(@"%@", [controller class]);
-
-      destinationVC = controller;
-      break;
+            destinationVC = controller;
+            break;
+        }
     }
-  }
-  [self.navigationController popToViewController:destinationVC animated:YES];
+    [self.navigationController popToViewController:destinationVC animated:YES];
 }
 
 @end

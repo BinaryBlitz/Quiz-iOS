@@ -10,6 +10,6 @@
 
 @interface QZBLastElementInHorizontalTCCell : UITableViewCell
 
-@property(strong, nonatomic) UIButton *button;
+@property (strong, nonatomic) UIButton *button;
 
 @end
