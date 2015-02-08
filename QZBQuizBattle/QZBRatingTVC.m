@@ -18,8 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.multipleTouchEnabled = NO;
 
-    self.ratingTableView.delegate = self;
+    self.ratingTableView.delegate   = self;
     self.ratingTableView.dataSource = self;
 }
 
@@ -39,7 +41,7 @@
     QZBRatingTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
     cell.numberInRating.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 1)];
 
-    NSURL *url = [NSURL URLWithString:@"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg"];
+    NSURL *url = [NSURL URLWithString:self.urlString];
 
     [cell.userpic setImageWithURL:url];
 

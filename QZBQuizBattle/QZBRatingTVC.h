@@ -11,5 +11,6 @@
 @interface QZBRatingTVC : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
+@property (copy, nonatomic) NSString *urlString;
 
 @end
