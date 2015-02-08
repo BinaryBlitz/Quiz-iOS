@@ -12,156 +12,139 @@
 
 @interface QZBRatingPageVC ()
 
-@property(strong, nonatomic) NSArray *ratingTableViewControllers;
+@property (strong, nonatomic) NSArray *ratingTableViewControllers;
 
 @end
 
 @implementation QZBRatingPageVC
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  self.delegate = self;
-  self.dataSource = self;
+    self.delegate = self;
+    self.dataSource = self;
 
-  QZBRatingTVC *left =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
-  QZBRatingTVC *right =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
+    QZBRatingTVC *left = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
+    QZBRatingTVC *right = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
 
-  self.ratingTableViewControllers = @[ left, right ];
+    self.ratingTableViewControllers = @[ left, right ];
 
-  [self setViewControllers:@[ left ]
-                 direction:UIPageViewControllerNavigationDirectionForward
-                  animated:NO
-                completion:nil];
+    [self setViewControllers:@[ left ]
+                   direction:UIPageViewControllerNavigationDirectionForward
+                    animated:NO
+                  completion:nil];
 
-  NSLog(@"loaded!");
+    NSLog(@"loaded!");
 
-  // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark -
 
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index {
+    if (([self.ratingTableViewControllers count] == 0) || (index >= [self.ratingTableViewControllers count])) {
+        return nil;
+    }
 
-  if (([self.ratingTableViewControllers count] == 0) ||
-      (index >= [self.ratingTableViewControllers count])) {
-    return nil;
-  }
-
-  return self.ratingTableViewControllers[index];
+    return self.ratingTableViewControllers[index];
 }
 
-- (UIViewController *)pageViewController:
-                          (UIPageViewController *)pageViewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
       viewControllerBeforeViewController:(UIViewController *)viewController {
-  NSUInteger index =
-      [self.ratingTableViewControllers indexOfObject:viewController];
+    NSUInteger index = [self.ratingTableViewControllers indexOfObject:viewController];
 
-  if ((index == 0) || (index == NSNotFound)) {
-    return nil;
-  }
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
+    }
 
-  index--;
-  return [self viewControllerAtIndex:index];
+    index--;
+    return [self viewControllerAtIndex:index];
 }
 
-- (UIViewController *)pageViewController:
-                          (UIPageViewController *)pageViewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
        viewControllerAfterViewController:(UIViewController *)viewController {
-  NSUInteger index =
-      [self.ratingTableViewControllers indexOfObject:viewController];
+    NSUInteger index = [self.ratingTableViewControllers indexOfObject:viewController];
 
-  if (index == NSNotFound) {
-    return nil;
-  }
+    if (index == NSNotFound) {
+        return nil;
+    }
 
-  index++;
-  if (index == [self.ratingTableViewControllers count]) {
-    return nil;
-  }
-  return [self viewControllerAtIndex:index];
+    index++;
+    if (index == [self.ratingTableViewControllers count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
 }
 
-- (NSInteger)presentationCountForPageViewController:
-        (UIPageViewController *)pageViewController {
-  return self.ratingTableViewControllers.count;
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+    return self.ratingTableViewControllers.count;
 }
 
-- (NSInteger)presentationIndexForPageViewController:
-        (UIPageViewController *)pageViewController {
-  return 0;
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+    return 0;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
          didFinishAnimating:(BOOL)finished
     previousViewControllers:(NSArray *)previousViewControllers
         transitionCompleted:(BOOL)completed {
+    NSLog(@"finished %d comleted %d %@", finished, completed, previousViewControllers.debugDescription);
 
-  NSLog(@"called");
+    if (finished && completed &&
+        [[previousViewControllers firstObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
+        if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
+            [self colorRightButton];
+        }
 
-  if (finished && completed &&
-      [[previousViewControllers firstObject]
-          isEqual:[self.ratingTableViewControllers firstObject]]) {
-
-    if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
-
-      [self colorRightButton];
+    } else if (finished && completed &&
+               [[previousViewControllers lastObject] isEqual:[self.ratingTableViewControllers lastObject]]) {
+        if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
+            [self colorLeftButton];
+        }
     }
-
-  } else if (finished && completed &&
-             ![[previousViewControllers firstObject]
-                 isEqual:[self.ratingTableViewControllers firstObject]]) {
-    if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
-      [self colorLeftButton];
-    }
-  }
 }
 
 - (void)showLeftVC {
+    NSLog(@"button pressed");
 
-  NSLog(@"button pressed");
+    QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
 
-  QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
-
-  [self colorLeftButton];
-  [self setViewControllers:@[ leftPage ]
-                 direction:UIPageViewControllerNavigationDirectionReverse
-                  animated:YES
-                completion:nil];
+    [self colorLeftButton];
+    [self setViewControllers:@[ leftPage ]
+                   direction:UIPageViewControllerNavigationDirectionReverse
+                    animated:YES
+                  completion:nil];
 }
 
 - (void)showRightVC {
-  NSLog(@"button pressed");
+    NSLog(@"button pressed");
 
-  QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+    QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
 
-  [self colorRightButton];
-  [self setViewControllers:@[ rightPage ]
-                 direction:UIPageViewControllerNavigationDirectionForward
-                  animated:YES
-                completion:nil];
+    [self colorRightButton];
+    [self setViewControllers:@[ rightPage ]
+                   direction:UIPageViewControllerNavigationDirectionForward
+                    animated:YES
+                  completion:nil];
 }
 
 - (void)colorRightButton {
+    QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
 
-  QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
-
-  parentVC.rightButton.tintColor = self.view.tintColor;
-  parentVC.leftButton.tintColor = [UIColor lightGrayColor];
+    parentVC.rightButton.tintColor = self.view.tintColor;
+    parentVC.leftButton.tintColor = [UIColor lightGrayColor];
 }
 
 - (void)colorLeftButton {
-  QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
+    QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
 
-  parentVC.leftButton.tintColor = self.view.tintColor;
-  parentVC.rightButton.tintColor = [UIColor lightGrayColor];
+    parentVC.leftButton.tintColor = self.view.tintColor;
+    parentVC.rightButton.tintColor = [UIColor lightGrayColor];
 }
 
 /*
