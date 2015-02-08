@@ -15,10 +15,10 @@
 #import "QZBCurrentUser.h"
 #import "QZBRegistrationChooserVC.h"
 
+@interface QZBCategoryChooserVC () <UITableViewDataSource, UITableViewDelegate>
 
-@interface QZBCategoryChooserVC ()<UITableViewDataSource, UITableViewDelegate>
-@property(strong, nonatomic) NSArray *categories;
-@property(strong, nonatomic) QZBCategory *choosedCategory;
+@property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) QZBCategory *choosedCategory;
 
 @end
 
@@ -26,15 +26,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
-     //delete this line after added new controllers before this one
-  
-  self.mainTableView.delegate = self;
-  self.mainTableView.dataSource = self;
-  _categories = [QZBCategory MR_findAll];
-  
-  
-  //[self initCategories];
+
+    // delete this line after added new controllers before this one
+
+    self.mainTableView.delegate = self;
+    self.mainTableView.dataSource = self;
+    _categories = [QZBCategory MR_findAll];
+
+    //[self initCategories];
     // Do any additional setup after loading the view.
 }
 
@@ -43,20 +42,17 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated{
-  [super viewWillAppear:animated];
-  //_categories = [QZBCategory MR_findAll];
- // self.navigationItem.hidesBackButton = YES;
-  
-  if([[QZBCurrentUser sharedInstance] checkUser]){
-    
-    [self initCategories];
-    
-  }
-  
-  [[self navigationController] setNavigationBarHidden:NO animated:NO];
-}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //_categories = [QZBCategory MR_findAll];
+    // self.navigationItem.hidesBackButton = YES;
 
+    if ([[QZBCurrentUser sharedInstance] checkUser]) {
+        [self initCategories];
+    }
+
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+}
 
 #pragma mark - Navigation
 
@@ -64,67 +60,52 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-  if ([segue.identifier isEqualToString:@"showTopicsSegue"]) {
-    
-    QZBTopicChooserControllerViewController *destination =
-    segue.destinationViewController;
-    [destination initTopicsWithCategory:self.choosedCategory];
-    
-  }
-  
+    if ([segue.identifier isEqualToString:@"showTopicsSegue"]) {
+        QZBTopicChooserControllerViewController *destination = segue.destinationViewController;
+        [destination initTopicsWithCategory:self.choosedCategory];
+    }
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return [self.categories count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.categories count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-  NSString *identifier = @"categoryCell";
-  
-  QZBCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-  
-  QZBCategory *category =
-  self.categories[indexPath.row];
-  
-  cell.categoryLabel.text = category.name;
-  
-  return cell;
-}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = @"categoryCell";
 
+    QZBCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+
+    QZBCategory *category = self.categories[indexPath.row];
+
+    cell.categoryLabel.text = category.name;
+
+    return cell;
+}
 
 #pragma mark - UITableViewDelegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-  self.choosedCategory = self.categories[indexPath.row];
- //NSLog(@"%ld", (long)self.choosedCategory.category_id);
-  [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.choosedCategory = self.categories[indexPath.row];
+    // NSLog(@"%ld", (long)self.choosedCategory.category_id);
+    [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
 
+// Костыли
+- (void)initCategories {
+    //__weak typeof(self) weakSelf = self;
 
--(void)initCategories{//костыли(
-  
-  //__weak typeof(self) weakSelf = self;
-  
-  [[QZBServerManager sharedManager] getСategoriesOnSuccess:^(NSArray *topics) {
-    
-    _categories = [QZBCategory MR_findAll];
-    
-    [self.mainTableView reloadData];
+    [[QZBServerManager sharedManager] getСategoriesOnSuccess:^(NSArray *topics) {
 
-  } onFailure:^(NSError *error, NSInteger statusCode) {
-    
-  }];
-  
-  
+      _categories = [QZBCategory MR_findAll];
+
+      [self.mainTableView reloadData];
+
+    } onFailure:^(NSError *error, NSInteger statusCode){
+
+    }];
 }
-
-
-
-
-
 
 @end

@@ -14,32 +14,22 @@
 #import "QZBQuestionWithUserAnswer.h"
 #import "QZBAnswerTextAndID.h"
 
-
 @class QZBUserInSession;
 @class QZBUser;
 
-typedef NS_ENUM(NSInteger, QZBWinnew) {
-  QZBWinnerFirst,
-  QZBWinnerOpponent,
-  QZBWinnerNone
-};
+typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWinnerNone };
 
 @interface QZBSession : NSObject
 
-@property(nonatomic, strong, readonly) NSArray          *questions;//QZBQestion
-@property(nonatomic, strong, readonly) QZBUserInSession *firstUser;
-@property(nonatomic, strong, readonly) QZBUserInSession *opponentUser;
+@property (nonatomic, strong, readonly) NSArray *questions;  // QZBQestion
+@property (nonatomic, strong, readonly) QZBUserInSession *firstUser;
+@property (nonatomic, strong, readonly) QZBUserInSession *opponentUser;
 
+- (instancetype)initWithQestions:(NSArray *)qestions first:(QZBUser *)firstUser opponentUser:(QZBUser *)opponentUser;
 
-- (instancetype)initWithQestions:(NSArray *)qestions
-                           first:(QZBUser *)firstUser
-                    opponentUser:(QZBUser *)opponentUser;
+- (instancetype)initWIthDictionary:(NSDictionary *)dict;
 
--(instancetype)initWIthDictionary:(NSDictionary *)dict;
-
--(void)gaveAnswerByUser:(QZBUserInSession*)user
-             forQestion:(QZBQuestion *)qestion
-                 answer:(QZBAnswer*)answer;
+- (void)gaveAnswerByUser:(QZBUserInSession *)user forQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer;
 - (QZBWinnew)getWinner;
 
 @end

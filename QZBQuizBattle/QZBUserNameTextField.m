@@ -10,13 +10,10 @@
 
 @implementation QZBUserNameTextField
 
+- (BOOL)validate {
+    NSString *candidate = self.text;
 
--(BOOL)validate{
-  
-  NSString *candidate = self.text;
-  
-  return ([candidate length] <= 20 && [candidate length] >= 2);
-  
+    return ([candidate length] <= 20 && [candidate length] >= 2);
 }
 
 @end

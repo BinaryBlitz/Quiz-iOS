@@ -10,7 +10,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @class QZBSession;
 
 @interface QZBGameSessionViewController : UIViewController
@@ -24,13 +23,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *roundLabel;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 
 //@property (strong, nonatomic) QZBSession *session;
 
-
-
-
 @end
-

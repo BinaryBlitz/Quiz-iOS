@@ -13,8 +13,8 @@
 
 @interface QZBGameTopic : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * topic_id;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSNumber *topic_id;
 @property (nonatomic, retain) QZBCategory *relationToCategory;
 
 @end

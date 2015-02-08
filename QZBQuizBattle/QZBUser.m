@@ -11,10 +11,10 @@
 @interface QZBUser ()
 
 //@property(assign, nonatomic) NSInteger user_id;
-@property(copy, nonatomic) NSString *name;
-@property(copy, nonatomic) NSString *email;
-@property(copy, nonatomic) NSString *api_key;
-@property(strong, nonatomic) NSNumber *user_id;
+@property (copy, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *email;
+@property (copy, nonatomic) NSString *api_key;
+@property (strong, nonatomic) NSNumber *user_id;
 
 @end
 
@@ -29,54 +29,43 @@
   return self;
 }*/
 
-
-//REDO
+// REDO
 /*
 -(instancetype)initWithId:(NSInteger)user_id{
-  
+
   NSURL *url = [NSURL URLWithString:@""];
-  
+
   return [self initWithUserId:user_id name:@"" userpicURL:url];
-  
+
 }*/
 
-- (instancetype)initWithDict:(NSDictionary *)dict
-{
-  self = [super init];
-  if (self) {
-    self.api_key = [dict objectForKey:@"api_key"];
-    self.name = [dict objectForKey:@"name"];
-    self.email = [dict objectForKey:@"email"];
-    self.user_id = [dict objectForKey:@"id"];
-    
-  }
-  return self;
+- (instancetype)initWithDict:(NSDictionary *)dict {
+    self = [super init];
+    if (self) {
+        self.api_key = [dict objectForKey:@"api_key"];
+        self.name = [dict objectForKey:@"name"];
+        self.email = [dict objectForKey:@"email"];
+        self.user_id = [dict objectForKey:@"id"];
+    }
+    return self;
 }
 
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-  self = [[QZBUser alloc] init];
-  if (self) {
-    
-    self.name = [coder decodeObjectForKey:@"userName"];
-    self.email = [coder decodeObjectForKey:@"userEmail"];
-    self.api_key = [coder decodeObjectForKey:@"userApiKey"];
-    self.user_id = [coder decodeObjectForKey:@"user_id"];
-    
-    
-  }
-  return self;
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [[QZBUser alloc] init];
+    if (self) {
+        self.name = [coder decodeObjectForKey:@"userName"];
+        self.email = [coder decodeObjectForKey:@"userEmail"];
+        self.api_key = [coder decodeObjectForKey:@"userApiKey"];
+        self.user_id = [coder decodeObjectForKey:@"user_id"];
+    }
+    return self;
 }
 
--(void)encodeWithCoder:(NSCoder *)coder{
-  
-  [coder encodeObject:self.name forKey:@"userName"];
-  [coder encodeObject:self.email forKey:@"userEmail"];
-  [coder encodeObject:self.api_key forKey:@"userApiKey"];
-  [coder encodeObject:self.user_id forKey:@"user_id"];
-  
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.name forKey:@"userName"];
+    [coder encodeObject:self.email forKey:@"userEmail"];
+    [coder encodeObject:self.api_key forKey:@"userApiKey"];
+    [coder encodeObject:self.user_id forKey:@"user_id"];
 }
-
 
 @end

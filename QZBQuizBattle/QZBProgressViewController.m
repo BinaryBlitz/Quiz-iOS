@@ -20,18 +20,18 @@
 #import "NSTimer+Blocks.h"
 //#import <Pusher/Pusher.h>
 
-@interface QZBProgressViewController () //<PTPusherDelegate>
+@interface QZBProgressViewController ()  //<PTPusherDelegate>
 
 //@property(strong, nonatomic) QZBSession *session;
 //@property(strong, nonatomic) id bot;
-@property(strong, nonatomic) QZBOnlineSessionWorker *onlineWorker;
-@property(strong, nonatomic) QZBLobby *lobby;
-@property(strong, nonatomic) NSTimer *timer;
-@property(assign, nonatomic) NSUInteger counter;
-@property(assign, nonatomic) BOOL isCanceled;
-@property(assign, nonatomic) BOOL setted;
-@property(assign, nonatomic) BOOL isOnline;
-@property(assign, nonatomic) BOOL isEntered;
+@property (strong, nonatomic) QZBOnlineSessionWorker *onlineWorker;
+@property (strong, nonatomic) QZBLobby *lobby;
+@property (strong, nonatomic) NSTimer *timer;
+@property (assign, nonatomic) NSUInteger counter;
+@property (assign, nonatomic) BOOL isCanceled;
+@property (assign, nonatomic) BOOL setted;
+@property (assign, nonatomic) BOOL isOnline;
+@property (assign, nonatomic) BOOL isEntered;
 
 //@property(strong, nonatomic) PTPusher *client;
 
@@ -40,88 +40,86 @@
 @implementation QZBProgressViewController
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  // [[self navigationController] setNavigationBarHidden:YES animated:NO];
-  // Do any additional setup after loading the view.
+    // [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    // Do any additional setup after loading the view.
 
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(showGameVC:)
-                                               name:@"QZBOnlineGameNeedStart"
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(didSubscribed:)
-                                               name:@"subscribedToChanel"
-                                             object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showGameVC:)
+                                                 name:@"QZBOnlineGameNeedStart"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSubscribed:)
+                                                 name:@"subscribedToChanel"
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+    [super didReceiveMemoryWarning];
 
-  // Dispose of any resources that can be recreated.
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+    [super viewDidAppear:animated];
 
-  NSLog(@"showed progress VC");
+    NSLog(@"showed progress VC");
 
-  self.setted = NO;
-  self.isCanceled = NO;
-  self.isOnline = NO;
-  self.isEntered = NO;
-  self.lobby = nil;
-  
-  self.cancelButton.enabled = YES;
+    self.setted = NO;
+    self.isCanceled = NO;
+    self.isOnline = NO;
+    self.isEntered = NO;
+    self.lobby = nil;
 
-  if(!self.onlineWorker){
-    self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
-  }
+    self.cancelButton.enabled = YES;
+
+    if (!self.onlineWorker) {
+        self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
+    [super viewWillDisappear:animated];
 
-  // [self.client disconnect];
+    // [self.client disconnect];
 
-  NSLog(@"progress disapear");
+    NSLog(@"progress disapear");
 
-  self.lobby = nil;
+    self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
-  
 
-  //[TSMessage dismissActiveNotification];
+    //[TSMessage dismissActiveNotification];
 }
 
 - (void)dealloc {
-
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Actions
 
 - (IBAction)cancelFinding:(UIButton *)sender {
-  self.isCanceled = YES;
+    self.isCanceled = YES;
 
-  [self.onlineWorker closeConnection];
-  self.onlineWorker = nil;
+    [self.onlineWorker closeConnection];
+    self.onlineWorker = nil;
 
-  [[QZBSessionManager sessionManager] closeSession];
-  [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
-      onSuccess:^(QZBSession *session, id bot) {
+    [[QZBSessionManager sessionManager] closeSession];
+    [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
+        onSuccess:^(QZBSession *session, id bot) {
 
-      }
-      onFailure:^(NSError *error, NSInteger statusCode){
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
 
-      }];
+        }];
 
-  [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Navigation
@@ -129,139 +127,129 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-  __weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
 
-  [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
-      onSuccess:^(QZBLobby *lobby) {
+    [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
+        onSuccess:^(QZBLobby *lobby) {
 
-        [weakSelf sessionFromLobby:lobby];
+          [weakSelf sessionFromLobby:lobby];
 
-      }
-      onFailure:^(NSError *error, NSInteger statusCode) {
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
 
-        NSLog(@"failed");
+          NSLog(@"failed");
 
-      }];
+        }];
 }
 
 - (void)sessionFromLobby:(QZBLobby *)lobby {
-  if (lobby && !self.lobby) {
-    self.lobby = lobby;
-  } else {
-    return;
-  }
-  self.counter = 7;
-  __weak typeof(self)weakSelf = self;
-  if(!self.timer){
-    /*
-    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
-      id strongSelf = weakSelf;
-      
-      [strongSelf tryGetSession:nil];
-    } repeats:YES];
-    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
-      id strongSelf = weakSelf;
-      
-      [strongSelf tryGetSession:nil];
-    } repeats:YES];
-    */
-  
-    
-  self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
-                                                target:self
-                                              selector:@selector(tryGetSession:)
-                                              userInfo:nil
-                                               repeats:YES];
-  
-  [self tryGetSession:nil];
-  }
+    if (lobby && !self.lobby) {
+        self.lobby = lobby;
+    } else {
+        return;
+    }
+    self.counter = 7;
+    __weak typeof(self) weakSelf = self;
+    if (!self.timer) {
+        /*
+        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
+          id strongSelf = weakSelf;
+
+          [strongSelf tryGetSession:nil];
+        } repeats:YES];
+
+        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
+          id strongSelf = weakSelf;
+
+          [strongSelf tryGetSession:nil];
+        } repeats:YES];
+        */
+
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                                      target:self
+                                                    selector:@selector(tryGetSession:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+
+        [self tryGetSession:nil];
+    }
 }
 
 - (void)tryGetSession:(NSTimer *)timer {
-  
-  if(![timer isEqual:self.timer]){
-    [timer invalidate];
-    timer = nil;
-  }
-  
-  if(_timer){
-  _counter--;
-  NSLog(@"%ld", (unsigned long)_counter);
+    if (![timer isEqual:self.timer]) {
+        [timer invalidate];
+        timer = nil;
+    }
 
-  [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
-      onSuccess:^(QZBSession *session, id bot) {
+    if (_timer) {
+        _counter--;
+        NSLog(@"%ld", (unsigned long)_counter);
 
-        [self settitingSession:session bot:bot];
+        [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
+            onSuccess:^(QZBSession *session, id bot) {
 
-          [_timer invalidate];
-          _timer = nil;
-        
-      }
-      onFailure:^(NSError *error, NSInteger statusCode){
+              [self settitingSession:session bot:bot];
 
-        NSLog(@"finding failure");
-        
-      }];
+              [_timer invalidate];
+              _timer = nil;
 
-  if (_counter <= 0) {
-    
-      [_timer invalidate];
-      _timer = nil;
-    
-  }
-  }else{
-    [timer invalidate];
-    timer = nil;
-    
-    NSLog(@"problems");
-  }
+            }
+            onFailure:^(NSError *error, NSInteger statusCode) {
+
+              NSLog(@"finding failure");
+
+            }];
+
+        if (_counter <= 0) {
+            [_timer invalidate];
+            _timer = nil;
+        }
+    } else {
+        [timer invalidate];
+        timer = nil;
+
+        NSLog(@"problems");
+    }
 }
 - (void)settitingSession:(QZBSession *)session bot:(id)bot {
-  if (!self.setted&&!self.isEntered) {
+    if (!self.setted && !self.isEntered) {
+        self.setted = YES;
 
-    self.setted = YES;
+        if (!self.isCanceled) {
+            NSLog(@"setSession");
+            [[QZBSessionManager sessionManager] setSession:session];
 
-    if (!self.isCanceled) {
+            if ([bot isKindOfClass:[QZBOpponentBot class]]) {
+                [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
+                if (!self.isEntered) {
+                    self.isEntered = YES;
+                    [self.onlineWorker closeConnection];
+                    self.onlineWorker = nil;
+                    [self performSegueWithIdentifier:@"showGame" sender:nil];
+                }
+            } else {
+                self.isOnline = YES;
+                [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
+            }
 
-
-      NSLog(@"setSession");
-      [[QZBSessionManager sessionManager] setSession:session];
-
-      if ([bot isKindOfClass:[QZBOpponentBot class]]) {
-
-        [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
-        if (!self.isEntered) {
-          self.isEntered = YES;
-          [self.onlineWorker closeConnection];
-          self.onlineWorker = nil;
-          [self performSegueWithIdentifier:@"showGame" sender:nil];
+            //[self performSegueWithIdentifier:@"showGame" sender:nil];
         }
-      } else {
-        self.isOnline = YES;
-        [[QZBSessionManager sessionManager]
-            setOnlineSessionWorker:self.onlineWorker];
-      }
-
-      //[self performSegueWithIdentifier:@"showGame" sender:nil];
     }
-  }
 }
 
 - (void)showGameVC:(NSNotification *)notification {
-  NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline,
-        self.isEntered);
-  if (self.setted && self.isOnline && !self.isEntered) {
-    self.cancelButton.enabled = NO;
-    self.isEntered = YES;
-    _onlineWorker = nil;
+    NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline, self.isEntered);
+    if (self.setted && self.isOnline && !self.isEntered) {
+        self.cancelButton.enabled = NO;
+        self.isEntered = YES;
+        _onlineWorker = nil;
 
-    [self performSegueWithIdentifier:@"showGame" sender:nil];
-  }
+        [self performSegueWithIdentifier:@"showGame" sender:nil];
+    }
 }
 
 - (void)didSubscribed:(NSNotification *)notification {
-  [self initSession];
+    [self initSession];
 }
 
 @end

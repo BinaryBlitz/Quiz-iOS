@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBRatingPageVC : UIPageViewController<UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+@interface QZBRatingPageVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
--(void)showLeftVC;
--(void)showRightVC;
+- (void)showLeftVC;
+- (void)showRightVC;
 @end

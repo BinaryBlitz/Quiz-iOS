@@ -10,7 +10,6 @@
 
 @interface QZBRegistrationAndLoginTextFieldBase : UITextField
 
-
--(BOOL)validate;
+- (BOOL)validate;
 
 @end

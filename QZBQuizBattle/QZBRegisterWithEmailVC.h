@@ -11,6 +11,7 @@
 @class QZBPasswordTextField;
 @class QZBEmailTextField;
 @class QZBUserNameTextField;
+
 @interface QZBRegisterWithEmailVC : QZBRegisterAndLoginBaseVC
 
 @property (weak, nonatomic) IBOutlet QZBUserNameTextField *userNameTextField;

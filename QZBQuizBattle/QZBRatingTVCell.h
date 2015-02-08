@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBRatingTVCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *numberInRating;
 @property (weak, nonatomic) IBOutlet UIImageView *userpic;
 @property (weak, nonatomic) IBOutlet UILabel *name;

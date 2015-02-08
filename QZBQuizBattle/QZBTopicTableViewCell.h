@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBTopicTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *topicName;
 
 @end
