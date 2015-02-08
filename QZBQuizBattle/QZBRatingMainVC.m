@@ -35,24 +35,19 @@
 }
 */
 - (IBAction)leftButtonAction:(UIBarButtonItem *)sender {
-  NSLog(@"%@", self.childViewControllers.debugDescription);
-  
-  if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]){
-    QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
-    [pageVC showLeftVC];
-    
-  }
-  
-  
+    NSLog(@"%@", self.childViewControllers.debugDescription);
+
+    if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
+        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
+        [pageVC showLeftVC];
+    }
 }
 
 - (IBAction)rightButtonAction:(UIBarButtonItem *)sender {
-  if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]){
-    QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
-    [pageVC showRightVC];
-    
-  }
-  
+    if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
+        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
+        [pageVC showRightVC];
+    }
 }
 
 @end
