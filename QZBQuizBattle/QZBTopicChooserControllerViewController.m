@@ -14,9 +14,9 @@
 #import "QZBCategory.h"
 #import "CoreData+MagicalRecord.h"
 
-@interface QZBTopicChooserControllerViewController () <UITableViewDataSource, UITableViewDelegate>
-
+@interface QZBTopicChooserControllerViewController () 
 @property (strong, nonatomic) NSArray *topics;
+@property(strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 
 @end
@@ -85,6 +85,8 @@
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
     // NSLog(@"category name:  %@", category.name);
+    
+    self.category = category;
 
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
 

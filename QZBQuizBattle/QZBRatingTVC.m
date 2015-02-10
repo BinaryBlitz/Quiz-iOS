@@ -9,8 +9,9 @@
 #import "QZBRatingTVC.h"
 #import "QZBRatingTVCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "QZBRatingPageVC.h"
 
-@interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
+@interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @end
 
@@ -23,7 +24,44 @@
 
     self.ratingTableView.delegate   = self;
     self.ratingTableView.dataSource = self;
+    
+  /*  UIPanGestureRecognizer *panGest = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(move:)];
+    
+    panGest.delegate = self;
+    
+    [self.ratingTableView addGestureRecognizer:panGest];*/
+    
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSLog(@"it shown %ld", self.tableType);
+    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
+        
+        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
+        pageVC.expectedType = self.tableType;
+       
+        
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    NSLog(@"hided %ld", self.tableType);
+}
+/*
+-(void)move:(UIPanGestureRecognizer *)sender{
+    if(sender.state == UIGestureRecognizerStateBegan){
+        NSLog(@"move");
+    }else if (sender.state == UIGestureRecognizerStateCancelled ||sender.state == UIGestureRecognizerStateEnded){
+        NSLog(@"ended");
+    }
+    
+}*/
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -53,6 +91,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+#pragma mark - UIGestureRecognizerDelegate
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    NSLog(@"touches began");
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    NSLog(@"mm");
+    return NO;
+}
+
+
 
 /*
 #pragma mark - Navigation

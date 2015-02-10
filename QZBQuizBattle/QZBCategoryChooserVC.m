@@ -15,7 +15,7 @@
 #import "QZBCurrentUser.h"
 #import "QZBRegistrationChooserVC.h"
 
-@interface QZBCategoryChooserVC () <UITableViewDataSource, UITableViewDelegate>
+@interface QZBCategoryChooserVC () 
 
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) QZBCategory *choosedCategory;
@@ -33,8 +33,6 @@
     self.mainTableView.dataSource = self;
     _categories = [QZBCategory MR_findAll];
 
-    //[self initCategories];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,8 +42,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //_categories = [QZBCategory MR_findAll];
-    // self.navigationItem.hidesBackButton = YES;
 
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         [self initCategories];

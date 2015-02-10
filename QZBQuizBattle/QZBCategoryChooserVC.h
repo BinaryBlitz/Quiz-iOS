@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBCategoryChooserVC : UIViewController
+@interface QZBCategoryChooserVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 

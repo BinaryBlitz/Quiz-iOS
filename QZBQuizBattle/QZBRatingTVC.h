@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, QZBRatingTableType) {
+    QZBRatingTableAllTime,
+    QZBRatingTableWeek
+};
+
 @interface QZBRatingTVC : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
 @property (copy, nonatomic) NSString *urlString;
+@property (assign, nonatomic)QZBRatingTableType tableType;
+
+
 
 @end

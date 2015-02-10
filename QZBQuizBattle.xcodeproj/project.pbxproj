@@ -35,6 +35,9 @@
 		1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB61A4B12280016130B /* QZBServerManager.m */; };
 		199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 199820A91A447628003AECB9 /* QZBOpponentBot.m */; };
 		199820AD1A44A039003AECB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 199820AB1A44A039003AECB9 /* Main.storyboard */; };
+		199CD93C1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD93B1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m */; };
+		199CD93F1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD93E1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m */; };
+		199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */; };
 		19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */; };
 		19B5E0541A71018D00DCD9C3 /* QZBFriendsHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0531A71018D00DCD9C3 /* QZBFriendsHorizontalCell.m */; };
 		19B5E0571A7104D100DCD9C3 /* QZBFriendInHorizontalTabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0561A7104D100DCD9C3 /* QZBFriendInHorizontalTabelViewCell.m */; };
@@ -130,6 +133,12 @@
 		199820A81A447628003AECB9 /* QZBOpponentBot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBOpponentBot.h; sourceTree = "<group>"; };
 		199820A91A447628003AECB9 /* QZBOpponentBot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBOpponentBot.m; sourceTree = "<group>"; };
 		199820AC1A44A039003AECB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		199CD93A1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCustomVerticalSegue.h; sourceTree = "<group>"; };
+		199CD93B1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCustomVerticalSegue.m; sourceTree = "<group>"; };
+		199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingCategoryChooserVC.h; sourceTree = "<group>"; };
+		199CD93E1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingCategoryChooserVC.m; sourceTree = "<group>"; };
+		199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingTopicChooserVC.h; sourceTree = "<group>"; };
+		199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingTopicChooserVC.m; sourceTree = "<group>"; };
 		19B5E04F1A70E6AD00DCD9C3 /* QZBPlayerInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerInfoCell.h; sourceTree = "<group>"; };
 		19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerInfoCell.m; sourceTree = "<group>"; };
 		19B5E0521A71018D00DCD9C3 /* QZBFriendsHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsHorizontalCell.h; sourceTree = "<group>"; };
@@ -347,6 +356,15 @@
 			name = buttons;
 			sourceTree = "<group>";
 		};
+		199CD9391A8A7BFB00FBF820 /* segue */ = {
+			isa = PBXGroup;
+			children = (
+				199CD93A1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.h */,
+				199CD93B1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m */,
+			);
+			name = segue;
+			sourceTree = "<group>";
+		};
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +379,7 @@
 		19CB508E1A3C32F000A3CD74 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				199CD9391A8A7BFB00FBF820 /* segue */,
 				19D691181A6E5E5B008B2AE1 /* textFields */,
 				1976FBAC1A4B04B50016130B /* cells */,
 				198066A81A39DB6500B749BA /* buttons */,
@@ -478,6 +497,10 @@
 				19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */,
 				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
 				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
+				199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */,
+				199CD93E1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m */,
+				199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */,
+				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
 			);
 			name = rating;
 			sourceTree = "<group>";
@@ -669,6 +692,7 @@
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
+				199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */,
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
@@ -680,6 +704,8 @@
 				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
 				19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */,
 				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
+				199CD93C1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m in Sources */,
+				199CD93F1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m in Sources */,
 				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,

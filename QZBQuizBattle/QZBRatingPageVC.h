@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "QZBRatingTVC.h"
+
 @interface QZBRatingPageVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+
+@property(assign, nonatomic) QZBRatingTableType expectedType;
 
 - (void)showLeftVC;
 - (void)showRightVC;
+
 @end

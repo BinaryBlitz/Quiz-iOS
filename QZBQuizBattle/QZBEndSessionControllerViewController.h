@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface QZBEndSessionControllerViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *firstUserScore;
+@property (weak, nonatomic) IBOutlet UILabel *opponentUserScore;
+
 
 @end

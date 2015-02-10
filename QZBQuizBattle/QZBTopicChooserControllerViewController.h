@@ -10,8 +10,10 @@
 
 @class QZBCategory;
 
-@interface QZBTopicChooserControllerViewController : UIViewController
+@interface QZBTopicChooserControllerViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property(strong, nonatomic,readonly) QZBCategory *category;
+@property (strong, nonatomic, readonly) NSArray *topics;
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
 //@property (strong, nonatomic) QZBCategory *category;
 

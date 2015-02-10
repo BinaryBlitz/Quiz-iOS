@@ -32,6 +32,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.firstUserScore.text = [NSString stringWithFormat:@"%lu",(unsigned long)[QZBSessionManager sessionManager].firstUserScore ];
+    
+    self.opponentUserScore.text = [NSString stringWithFormat:@"%lu",
+                                   (unsigned long)[QZBSessionManager sessionManager].secondUserScore];
 
     [[QZBSessionManager sessionManager] closeSession];
     [[self navigationController] setNavigationBarHidden:YES animated:NO];

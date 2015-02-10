@@ -7,13 +7,14 @@
 //
 
 #import "QZBRatingPageVC.h"
-#import "QZBRatingTVC.h"
+//#import "QZBRatingTVC.h"
 #import "QZBRatingMainVC.h"
 
 @interface QZBRatingPageVC ()
 
 @property (strong, nonatomic) NSArray *ratingTableViewControllers;
 @property (assign, nonatomic) BOOL motionInProgress;
+@property (assign, nonatomic) QZBRatingTableType currentTableType;
 
 @end
 
@@ -21,20 +22,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.view.multipleTouchEnabled = NO;
+    self.currentTableType = QZBRatingTableAllTime;
+    self.expectedType = QZBRatingTableAllTime;
 
     self.delegate = self;
     self.dataSource = self;
 
     QZBRatingTVC *left = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
     left.urlString = @"https://pp.vk.me/c623927/v623927224/18741/HERAwb-7YGw.jpg";
+    left.tableType = QZBRatingTableAllTime;
     QZBRatingTVC *right = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
     right.urlString = @"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg";
-    
+    right.tableType = QZBRatingTableWeek;
+
     NSLog(@"left %@ right %@", left, right);
     self.ratingTableViewControllers = @[ left, right ];
 
+    self.currentTableType = QZBRatingTableAllTime;
     [self setViewControllers:@[ left ]
                    direction:UIPageViewControllerNavigationDirectionForward
                     animated:NO
@@ -42,11 +48,11 @@
 
     NSLog(@"loaded!");
     self.motionInProgress = NO;
-    
-    
-    for(UIGestureRecognizer *gr in self.gestureRecognizers){
-        NSLog(@"%@", gr);
-    }
+
+    UIPanGestureRecognizer *panGestureRecognizer =
+        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRcognizer:)];
+
+    [self.view addGestureRecognizer:panGestureRecognizer];
 
     // Do any additional setup after loading the view.
 }
@@ -54,6 +60,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)panRcognizer:(id)sender {
+    NSLog(@"mooved");
 }
 
 #pragma mark -
@@ -101,8 +111,9 @@
     return 0;
 }
 
-- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
-    NSLog(@"transition start");
+- (void)pageViewController:(UIPageViewController *)pageViewController
+    willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+    //  NSLog(@"transition start");
     self.motionInProgress = YES;
 }
 
@@ -110,68 +121,101 @@
          didFinishAnimating:(BOOL)finished
     previousViewControllers:(NSArray *)previousViewControllers
         transitionCompleted:(BOOL)completed {
-    
-    
     self.motionInProgress = NO;
-    
-    if(!completed){
+
+    if (!completed) {
         return;
     }
-    
-    NSLog(@"current %@", [self.viewControllers firstObject]);
-    
-    NSLog(@"finished %d comleted %d %@ current %@", finished, completed,
-          [previousViewControllers debugDescription], [self.viewControllers lastObject]);
-    
-    if(finished && completed){
 
-    if (![[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
-            
-        if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
-            [self colorRightButton];
-            NSLog(@"colored right");
-        }
+    // NSLog(@"current %@", [self.viewControllers firstObject]);
 
-    }else
-    if ([[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
-                   
-        if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
-            [self colorLeftButton];
-            NSLog(@"colored left");
-            
+    // NSLog(@"finished %d comleted %d %@ current %@", finished, completed, [previousViewControllers debugDescription],
+    //       [self.viewControllers lastObject]);
+
+    if (finished && completed) {
+        if (![[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
+            if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
+                [self colorRightButton];
+                self.currentTableType = QZBRatingTableWeek;
+                //  NSLog(@"colored right");
+            }
+
+        } else if ([[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
+            if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
+                [self colorLeftButton];
+                self.currentTableType = QZBRatingTableAllTime;
+            }
         }
-    }
     }
 }
 
 - (void)showLeftVC {
     NSLog(@"left button pressed");
-    
-    if(!self.motionInProgress){
 
-    QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
+    if (!self.motionInProgress) {
+        QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
 
-    [self colorLeftButton];
-    [self setViewControllers:@[ leftPage ]
-                   direction:UIPageViewControllerNavigationDirectionReverse
-                    animated:YES
-                  completion:nil];
+        [self colorLeftButton];
+        [self setViewControllers:@[ leftPage ]
+                       direction:UIPageViewControllerNavigationDirectionReverse
+                        animated:YES
+                      completion:nil];
+        self.currentTableType = QZBRatingTableAllTime;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSLog(@"expected %ld current %ld", self.expectedType, self.currentTableType);
+
+            if (self.expectedType != self.currentTableType) {
+                self.currentTableType = QZBRatingTableWeek;
+                self.expectedType = QZBRatingTableWeek;
+                [self colorRightButton];
+                QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+                [self setViewControllers:@[ rightPage ]
+                               direction:UIPageViewControllerNavigationDirectionReverse
+                                animated:NO
+                              completion:^(BOOL finished) {
+                                  NSLog(@"finished %d left canceled", finished);
+                              }];
+            }
+        });
     }
 }
 
 - (void)showRightVC {
     NSLog(@"right button pressed");
-    
-    if(!self.motionInProgress){
 
-    QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+    if (!self.motionInProgress) {
+        QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+        // QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
 
-    [self colorRightButton];
-    [self setViewControllers:@[ rightPage ]
-                   direction:UIPageViewControllerNavigationDirectionForward
-                    animated:YES
-                  completion:nil];
-        
+        [self colorRightButton];
+
+        //  __weak typeof(self) weakSelf = self;
+
+        [self setViewControllers:@[ rightPage ]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                        animated:YES
+                      completion:^(BOOL finished) {
+                          NSLog(@"finished %d right", finished);
+
+                      }];
+        self.currentTableType = QZBRatingTableWeek;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSLog(@"expected %ld current %ld", self.expectedType, self.currentTableType);
+            if (self.expectedType != self.currentTableType) {
+                QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
+                self.currentTableType = QZBRatingTableAllTime;
+                self.currentTableType = QZBRatingTableAllTime;
+                [self colorLeftButton];
+                [self setViewControllers:@[ leftPage ]
+                               direction:UIPageViewControllerNavigationDirectionReverse
+                                animated:NO
+                              completion:^(BOOL finished) {
+                                  NSLog(@"finished %d right canceled", finished);
+                              }];
+            }
+        });
     }
 }
 
@@ -189,9 +233,8 @@
     parentVC.rightButton.tintColor = [UIColor lightGrayColor];
 }
 
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"began" );
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"began");
 }
 /*
 #pragma mark - Navigation

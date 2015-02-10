@@ -8,6 +8,8 @@
 
 #import "QZBRatingMainVC.h"
 #import "QZBRatingPageVC.h"
+#import "QZBCategory.h"
+#import "QZBGameTopic.h"
 
 @interface QZBRatingMainVC ()
 
@@ -19,14 +21,37 @@
     [super viewDidLoad];
     self.view.multipleTouchEnabled = NO;
     
+        
+    
    // self.rightButton.
     // Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if(self.topic){
+        
+        [self.chooseTopicButton setTitle:self.topic.name forState:UIControlStateNormal];
+
+    
+    }else if(self.category){
+        [self.chooseTopicButton setTitle:self.category.name forState:UIControlStateNormal];
+    }else{
+        [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    
+}
+
 
 /*
 #pragma mark - Navigation
@@ -38,7 +63,6 @@
 }
 */
 - (IBAction)leftButtonAction:(UIBarButtonItem *)sender {
-    NSLog(@"%@", self.childViewControllers.debugDescription);
     
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -52,7 +76,7 @@
 }
 
 - (IBAction)rightButtonAction:(UIBarButtonItem *)sender {
-    
+
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
@@ -63,6 +87,8 @@
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
         [pageVC showRightVC];
     }
+    
+    
 }
 
 @end

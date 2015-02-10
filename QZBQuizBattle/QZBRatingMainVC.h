@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class QZBCategory;
+@class QZBGameTopic;
+
 @interface QZBRatingMainVC : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *chooseTopicButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
+@property (strong, nonatomic) QZBCategory *category;
+@property (strong, nonatomic) QZBGameTopic *topic;
 
 @end

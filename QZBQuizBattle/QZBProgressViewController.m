@@ -138,6 +138,8 @@
         onFailure:^(NSError *error, NSInteger statusCode) {
 
           NSLog(@"failed");
+            
+            [self cancelFinding:nil];
 
         }];
 }

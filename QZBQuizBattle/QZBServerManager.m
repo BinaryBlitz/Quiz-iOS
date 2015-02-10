@@ -42,7 +42,8 @@
     self = [super init];
     if (self) {
         
-        NSString *apiPath = [NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
+        NSString *apiPath =@"https://protected-atoll-5061.herokuapp.com/";
+        //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
         //url.port = @3000;
 
