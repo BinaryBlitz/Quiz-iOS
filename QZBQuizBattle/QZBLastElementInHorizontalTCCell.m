@@ -7,7 +7,7 @@
 //
 
 #import "QZBLastElementInHorizontalTCCell.h"
-#import "QZBFriendsHorizontalCell.h"
+#import "QZBHorizontalCell.h"
 
 @implementation QZBLastElementInHorizontalTCCell
 
@@ -55,7 +55,7 @@
 }
 
 - (NSIndexPath *)getIndexPathCell:(UIView *)view {
-    if ([view isKindOfClass:[QZBFriendsHorizontalCell class]]) {
+    if ([view isKindOfClass:[QZBHorizontalCell class]]) {
         // UITableView *tv = (UITableView *)view.superview;
 
         NSIndexPath *indexPath = [(UITableView *)view.superview.superview indexPathForCell:(UITableViewCell *)view];

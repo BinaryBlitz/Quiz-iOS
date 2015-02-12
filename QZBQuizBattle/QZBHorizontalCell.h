@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBFriendsHorizontalCell : UITableViewCell
+
+@interface QZBHorizontalCell : UITableViewCell <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *horizontalTabelView;
+
+-(void)setSomethingArray:(NSArray *)somethingArray;
 
 @end

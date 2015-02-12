@@ -6,15 +6,18 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "QZBFriendsHorizontalCell.h"
-#import "QZBFriendInHorizontalTabelViewCell.h"
+#import "QZBHorizontalCell.h"
+#import "QZBSomethingInHorizontalTabelViewCell.h"
 #import "QZBLastElementInHorizontalTCCell.h"
+#import "QZBAchievement.h"
 
-@interface QZBFriendsHorizontalCell () <UITableViewDataSource, UITableViewDelegate>
+@interface QZBHorizontalCell ()
+
+@property (strong, nonatomic) NSArray *somethingArray;
 
 @end
 
-@implementation QZBFriendsHorizontalCell
+@implementation QZBHorizontalCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -48,8 +51,8 @@
     self.horizontalTabelView.delegate = self;
     self.horizontalTabelView.dataSource = self;
 
-    [self.horizontalTabelView registerClass:[QZBFriendInHorizontalTabelViewCell class]
-                     forCellReuseIdentifier:@"friendInHorizontalTableView"];
+    [self.horizontalTabelView registerClass:[QZBSomethingInHorizontalTabelViewCell class]
+                     forCellReuseIdentifier:@"somethingInHorizontalCell"];
 
     [self.horizontalTabelView registerClass:[QZBLastElementInHorizontalTCCell class]
                      forCellReuseIdentifier:@"lastHorizontalElement"];
@@ -64,18 +67,18 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [self.somethingArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"friendInHorizontalTableView";
+    static NSString *identifier = @"somethingInHorizontalCell";
     static NSString *lastIdentifier = @"lastHorizontalElement";
 
     UITableViewCell *cell;
 
-    if (indexPath.row < 9) {
-        QZBFriendInHorizontalTabelViewCell *playerCell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        [playerCell setName:@"drumih" userpicURLAsString:@"https://pp.vk.me/c320926/v320926839/c6aa/E7Ai5pmMgn4.jpg"];
+    if (indexPath.row < [self.somethingArray count] - 1) {
+        QZBSomethingInHorizontalTabelViewCell *playerCell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        [self setCell:playerCell withObject:self.somethingArray[indexPath.row]];
         cell = playerCell;
     } else {
         QZBLastElementInHorizontalTCCell *lastCell = [tableView dequeueReusableCellWithIdentifier:lastIdentifier];
@@ -84,6 +87,22 @@
     }
 
     return cell;
+}
+
+- (void)setCell:(QZBSomethingInHorizontalTabelViewCell *)cell withObject:(id)object {
+    if ([object isKindOfClass:[QZBAchievement class]]) {
+        QZBAchievement *achiv = (QZBAchievement *)object;
+
+        [cell setName:achiv.name picture:achiv.image];
+
+    } else {  // redo
+        [cell setName:@"drumih" picURLAsString:@"https://pp.vk.me/c320926/v320926839/c6aa/E7Ai5pmMgn4.jpg"];
+    }
+}
+
+- (void)setSomethingArray:(NSArray *)somethingArray {
+    _somethingArray = somethingArray;
+   // [self.horizontalTabelView reloadData];
 }
 
 @end

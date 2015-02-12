@@ -10,10 +10,14 @@
 #import "QZBCurrentUser.h"
 #import "QZBPlayerInfoCell.h"
 #import "QZBTopicTableViewCell.h"
-#import "QZBFriendsHorizontalCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "QZBFriendHorizontalCell.h"
+#import "QZBAchivHorizontalCell.h"
+#import "QZBAchievement.h"
 
 @interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
+
+@property(strong, nonatomic)NSArray *achivArray;
 
 @end
 
@@ -22,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self initAchivs];
+    
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
 
@@ -55,8 +61,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *playerIdentifier = @"playerСell";
-    NSString *friendsIdentifier = @"friendsCell";
+   static NSString *playerIdentifier = @"playerСell";
+   static NSString *friendsIdentifier = @"friendsCell";
+    static NSString *achivIdentifier = @"achivCell";
 
     UITableViewCell *cell;
 
@@ -69,11 +76,17 @@
         [playerCell.playerUserpic setImageWithURL:picUrl];
 
         cell = playerCell;
-    } else if (indexPath.row == 1 || indexPath.row == 2) {
-        QZBFriendsHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
+    } else if (indexPath.row == 1 ) {
+        QZBFriendHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
         return friendsCell;
         // cell = friendsCell;
-    } else if (indexPath.row == 3) {
+    } else if(indexPath.row == 2){
+        QZBAchivHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
+        
+        [friendsCell setAchivArray:self.achivArray];
+        return friendsCell;
+    }
+    else if (indexPath.row == 3) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];
 
         return cell;
@@ -121,10 +134,44 @@ preparation before navigation
 }
 */
 
+#pragma mark - actions
+- (IBAction)showAchivements:(UIButton *)sender {
+    
+    [self performSegueWithIdentifier:@"showAchivements" sender:nil];
+}
+
 - (IBAction)logOutAction:(UIBarButtonItem *)sender {
     [[QZBCurrentUser sharedInstance] userLogOut];
 
     [self performSegueWithIdentifier:@"showRegistrationScreenFromUserScreen" sender:nil];
+}
+
+
+#pragma mark - init friends and achivs
+
+-(void)initAchivs{
+    
+    [UIImage imageNamed:@"achiv"];
+    [UIImage imageNamed:@"notAchiv"];
+    
+    self.achivArray = @[[[QZBAchievement alloc] initWithName:@"achiv"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv2"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv2"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
+                                                   imageName:@"notAchiv"]
+                        ];
+    
 }
 
 @end

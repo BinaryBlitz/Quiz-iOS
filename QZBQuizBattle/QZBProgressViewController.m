@@ -151,7 +151,7 @@
         return;
     }
     self.counter = 7;
-    __weak typeof(self) weakSelf = self;
+   // __weak typeof(self) weakSelf = self;
     if (!self.timer) {
         /*
         _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{

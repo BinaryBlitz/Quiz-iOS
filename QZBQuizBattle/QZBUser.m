@@ -19,25 +19,6 @@
 @end
 
 @implementation QZBUser
-/*
-- (instancetype)initWithUserId:(NSInteger)user_id name:(NSString *) name userpicURL:(NSURL *)url
-{
-  self = [super init];
-  if (self) {
-    self.user_id = user_id;
-  }
-  return self;
-}*/
-
-// REDO
-/*
--(instancetype)initWithId:(NSInteger)user_id{
-
-  NSURL *url = [NSURL URLWithString:@""];
-
-  return [self initWithUserId:user_id name:@"" userpicURL:url];
-
-}*/
 
 - (instancetype)initWithDict:(NSDictionary *)dict {
     self = [super init];
