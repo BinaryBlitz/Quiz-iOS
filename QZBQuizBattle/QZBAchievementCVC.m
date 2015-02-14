@@ -9,8 +9,11 @@
 #import "QZBAchievementCVC.h"
 #import "QZBAchievementCollectionCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "QZBAchievement.h"
 
 @interface QZBAchievementCVC ()
+
+@property (strong, nonatomic) NSArray *achivArray;
 
 @end
 
@@ -21,6 +24,8 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self initAchivs];
+    
     self.achivTableView.dataSource = self;
     self.achivTableView.delegate = self;
     
@@ -47,23 +52,22 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     //#warning Incomplete method implementation -- Return the number of items in the section
-    return 20;
+    return [self.achivArray count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QZBAchievementCollectionCell *cell =
-        [self.achivTableView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        [self.achivTableView dequeueReusableCellWithReuseIdentifier:@"cell"
+                                                       forIndexPath:indexPath];
 
-    // NSURL *url = [NSURL URLWithString:@"https://pp.vk.me/c624622/v624622532/14797/nkV5EYb57S4.jpg"];
-    UIImage *img = nil;
-    if (indexPath.row % 5 == 0) {
-        img = [UIImage imageNamed:@"achiv"];
-    } else {
-        img = [UIImage imageNamed:@"notAchiv"];
-    }
-    [cell.achievementPic setImage:img];
-    cell.achievementTitle.text = [NSString stringWithFormat:@"achiv %ld", (long)indexPath.row];
+    
+   
+    
+    QZBAchievement *achiv = self.achivArray[indexPath.row];
+    
+    [cell.achievementPic setImage:achiv.image];
+    cell.achievementTitle.text = achiv.name;;
 
     // Configure the cell
 
@@ -71,6 +75,32 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
 
     return cell;
 }
+
+-(void)initAchivs{
+    
+    [UIImage imageNamed:@"achiv"];
+    [UIImage imageNamed:@"notAchiv"];
+    
+    self.achivArray = @[[[QZBAchievement alloc] initWithName:@"achiv"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv2"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv"
+                                                   imageName:@"notAchiv"],
+                        [[QZBAchievement alloc] initWithName:@"achiv2"
+                                                   imageName:@"achiv"],
+                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
+                                                   imageName:@"notAchiv"]
+                        ];
+    
+}
+
 
 
 #pragma mark <UICollectionViewDelegate>

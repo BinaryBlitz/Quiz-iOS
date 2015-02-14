@@ -81,10 +81,11 @@
         return friendsCell;
         // cell = friendsCell;
     } else if(indexPath.row == 2){
-        QZBAchivHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
+        QZBAchivHorizontalCell *achivCell = [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
         
-        [friendsCell setAchivArray:self.achivArray];
-        return friendsCell;
+        [achivCell setAchivArray:self.achivArray];
+        achivCell.buttonTitle = @"Показать\n все";
+        return achivCell;
     }
     else if (indexPath.row == 3) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];

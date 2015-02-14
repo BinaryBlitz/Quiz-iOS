@@ -10,6 +10,7 @@
 #import "QZBRatingPageVC.h"
 #import "QZBCategory.h"
 #import "QZBGameTopic.h"
+#import "QZBServerManager.h"
 
 @interface QZBRatingMainVC ()
 
@@ -45,6 +46,15 @@
         [self.chooseTopicButton setTitle:self.category.name forState:UIControlStateNormal];
     }else{
         [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
+        
+        [[QZBServerManager sharedManager] GETGeneralRankinOnSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+            
+            QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
+            [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
+            
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+        }];
     }
 }
 

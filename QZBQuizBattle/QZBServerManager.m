@@ -41,11 +41,10 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
-        NSString *apiPath =@"https://protected-atoll-5061.herokuapp.com/";
+        NSString *apiPath = @"https://protected-atoll-5061.herokuapp.com/";
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
-        //url.port = @3000;
+        // url.port = @3000;
 
         self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
     }
@@ -361,5 +360,40 @@
 
         }];
 }
+
+-(void)GETPlayerWithID:(NSInteger)playerID
+             onSuccess:(void (^)(QZBUser *user))success
+             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    NSString *urlString = [NSString stringWithFormat:@"players/%ld",(long)playerID];
+    
+    [self.requestOperationManager GET:urlString
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"user JSON : %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"user fail");
+    }];
+    
+}
+
+#pragma mark - ranking
+
+-(void)GETGeneralRankinOnSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    [self.requestOperationManager GET:@"/rankings/general"
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ranking JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+}
+
 
 @end

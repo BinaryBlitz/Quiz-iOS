@@ -9,6 +9,7 @@
 #import "QZBSession.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
+#import "QZBServerManager.h"
 
 static const NSUInteger QZBTimeForAnswer = 10;
 static const NSUInteger QZBResultForRightAnswer = 10;
@@ -95,7 +96,10 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     // NSInteger opponentUserId = -1;
 
     QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
+       
     QZBUser *opponent = nil;  //не протестированно
+    
+    
 
     return [self initWithQestions:questions first:user1 opponentUser:opponent];
 }

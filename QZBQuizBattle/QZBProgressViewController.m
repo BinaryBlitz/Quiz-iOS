@@ -220,7 +220,9 @@
         if (!self.isCanceled) {
             NSLog(@"setSession");
             [[QZBSessionManager sessionManager] setSession:session];
-
+            
+            
+            
             if ([bot isKindOfClass:[QZBOpponentBot class]]) {
                 [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
                 if (!self.isEntered) {
@@ -232,6 +234,8 @@
             } else {
                 self.isOnline = YES;
                 [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
+                
+                                
             }
 
             //[self performSegueWithIdentifier:@"showGame" sender:nil];

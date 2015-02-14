@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *roundLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
 
 //@property (strong, nonatomic) QZBSession *session;
 

@@ -17,4 +17,8 @@
 - (void)showLeftVC;
 - (void)showRightVC;
 
+-(void)setAllTimeRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
+-(void)setWeekRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
+
+
 @end

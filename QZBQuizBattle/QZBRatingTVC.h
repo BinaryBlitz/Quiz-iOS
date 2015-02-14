@@ -20,5 +20,6 @@ typedef NS_ENUM(NSInteger, QZBRatingTableType) {
 @property (assign, nonatomic)QZBRatingTableType tableType;
 
 
+-(void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
 
 @end

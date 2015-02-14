@@ -55,6 +55,13 @@
                  onSuccess:(void (^)(QZBUser *user))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)GETPlayerWithID:(NSInteger)playerID
+             onSuccess:(void (^)(QZBUser *user))success
+             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+-(void)GETGeneralRankinOnSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 - (NSString *)hashPassword:(NSString *)password;
 
 @end

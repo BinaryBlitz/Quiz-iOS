@@ -21,25 +21,33 @@
 
 - (void)addTriangleLeft {
     CGRect rect =
-        CGRectMake(0, 4 * self.frame.size.height / 12, self.frame.size.height / 12, self.frame.size.height / 3);
+        CGRectMake(0,
+                   3.0 * self.frame.size.height / 12.0,
+                   self.frame.size.height / 12.0,
+                   self.frame.size.height / 2.0);
 
     QZBAnswerTriangle *triangle = [[QZBAnswerTriangle alloc] initWithFrame:rect];
     //[triangle setNeedsDisplay];
     triangle.backgroundColor = [UIColor clearColor];
-    triangle.tintColor = [UIColor redColor];
+    //triangle.tintColor = [UIColor redColor];
 
     [self addSubview:triangle];
 }
 
 - (void)addTriangleRight {
-    CGRect rect = CGRectMake(11 * self.frame.size.width / 12, 4 * self.frame.size.height / 12,
-                             self.frame.size.height / 12, self.frame.size.width / 3);
+    
+
+    CGRect rect = CGRectMake(11.0 * self.frame.size.width / 12.0,
+                             3.0 * self.frame.size.height / 12.0,
+                             self.frame.size.height / 12.0,
+                             self.frame.size.height / 2.0);
 
     QZBAnswerTriangle *triangle = [[QZBAnswerTriangle alloc] initWithFrame:rect];
+    
     triangle.transform = CGAffineTransformMakeRotation(M_PI);
-    //[triangle setNeedsDisplay];
+
     triangle.backgroundColor = [UIColor clearColor];
-    triangle.tintColor = [UIColor redColor];
+   // triangle.tintColor = [UIColor redColor];
 
     [self addSubview:triangle];
 }

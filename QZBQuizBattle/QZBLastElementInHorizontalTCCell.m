@@ -9,6 +9,7 @@
 #import "QZBLastElementInHorizontalTCCell.h"
 #import "QZBHorizontalCell.h"
 
+
 @implementation QZBLastElementInHorizontalTCCell
 
 - (void)awakeFromNib {
@@ -19,7 +20,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.button = [UIButton buttonWithType:UIButtonTypeSystem];
-        [self.button setTitle:@"Показать \nвсех" forState:UIControlStateNormal];
+       // [self.button setTitle:@"Показать \nвсех" forState:UIControlStateNormal];
         self.button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.button.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.button.transform = CGAffineTransformMakeRotation(1.5707963);
@@ -64,6 +65,11 @@
     } else {
         return [self getIndexPathCell:view.superview];
     }
+}
+
+-(void)setButtonTitle:(NSString *)buttonTitle{
+    
+    [self.button setTitle:buttonTitle forState:UIControlStateNormal];
 }
 
 @end

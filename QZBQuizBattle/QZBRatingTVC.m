@@ -13,6 +13,9 @@
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) NSArray *topRank;
+@property (strong, nonatomic) NSArray *playerRank;
+
 @end
 
 @implementation QZBRatingTVC
@@ -71,6 +74,9 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    
+    
     return 30;
 }
 
@@ -92,18 +98,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - UIGestureRecognizerDelegate
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [super touchesBegan:touches withEvent:event];
-    NSLog(@"touches began");
+
+-(void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
+    self.topRank = topArray;
+    self.playerRank = playerArray;
 }
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    NSLog(@"mm");
-    return NO;
-}
-
 
 
 /*

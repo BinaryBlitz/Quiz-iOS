@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) UITableView *horizontalTabelView;
 
+@property(copy, nonatomic)NSString *buttonTitle;
+
 -(void)setSomethingArray:(NSArray *)somethingArray;
 
 @end

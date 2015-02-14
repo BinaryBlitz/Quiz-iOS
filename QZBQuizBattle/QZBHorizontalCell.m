@@ -82,6 +82,8 @@
         cell = playerCell;
     } else {
         QZBLastElementInHorizontalTCCell *lastCell = [tableView dequeueReusableCellWithIdentifier:lastIdentifier];
+        
+        [lastCell setButtonTitle:self.buttonTitle];
 
         cell = lastCell;
     }

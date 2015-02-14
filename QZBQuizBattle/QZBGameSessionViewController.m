@@ -481,6 +481,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
 - (void)setNamesAndUserpics {
     self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
+    
+    if([QZBSessionManager sessionManager].opponentUserName){
+        self.opponentNameLabel.text = [QZBSessionManager sessionManager].opponentUserName;
+    }
 }
 
 #pragma mark - close

@@ -9,6 +9,7 @@
 #import "QZBRatingPageVC.h"
 //#import "QZBRatingTVC.h"
 #import "QZBRatingMainVC.h"
+#import "QZBServerManager.h"
 
 @interface QZBRatingPageVC ()
 
@@ -235,6 +236,22 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"began");
+}
+
+-(void)setAllTimeRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
+    
+    QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
+    
+    [leftPage setPlayersRanksWithTop:topArray playerArray:playerArray];
+    
+    
+}
+
+-(void)setWeekRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
+    QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+    
+    [rightPage setPlayersRanksWithTop:topArray playerArray:playerArray];
+    
 }
 /*
 #pragma mark - Navigation
