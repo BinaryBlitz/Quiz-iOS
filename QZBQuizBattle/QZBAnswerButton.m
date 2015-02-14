@@ -35,9 +35,9 @@
 }
 
 - (void)addTriangleRight {
-    
+    //CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>);
 
-    CGRect rect = CGRectMake(11.0 * self.frame.size.width / 12.0,
+    CGRect rect = CGRectMake(CGRectGetWidth(self.frame) - CGRectGetHeight(self.frame)/12.0,
                              3.0 * self.frame.size.height / 12.0,
                              self.frame.size.height / 12.0,
                              self.frame.size.height / 2.0);

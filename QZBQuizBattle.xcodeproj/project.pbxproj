@@ -399,6 +399,17 @@
 			name = serverAPI;
 			sourceTree = "<group>";
 		};
+		197E47C71A8F6B4400E43120 /* CategoryChoosers */ = {
+			isa = PBXGroup;
+			children = (
+				199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */,
+				199CD93E1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m */,
+				199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */,
+				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
+			);
+			name = CategoryChoosers;
+			sourceTree = "<group>";
+		};
 		198066A81A39DB6500B749BA /* buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,16 +580,13 @@
 		19DEA8591A8552E800E610DB /* rating */ = {
 			isa = PBXGroup;
 			children = (
+				197E47C71A8F6B4400E43120 /* CategoryChoosers */,
 				19DEA85A1A85532300E610DB /* QZBRatingTVC.h */,
 				19DEA85B1A85532300E610DB /* QZBRatingTVC.m */,
 				19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */,
 				19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */,
 				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
 				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
-				199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */,
-				199CD93E1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m */,
-				199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */,
-				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
 			);
 			name = rating;
 			sourceTree = "<group>";

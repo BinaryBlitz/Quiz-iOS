@@ -10,11 +10,12 @@
 #import "QZBRatingTVCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "QZBRatingPageVC.h"
+#import "QZBUserInRating.h"
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) NSArray *topRank;
-@property (strong, nonatomic) NSArray *playerRank;
+@property (strong, nonatomic) NSArray *topRank;   //QZBUserInRating
+@property (strong, nonatomic) NSArray *playerRank;//QZBUserInRating
 
 @end
 
@@ -28,17 +29,12 @@
     self.ratingTableView.delegate   = self;
     self.ratingTableView.dataSource = self;
     
-  /*  UIPanGestureRecognizer *panGest = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                              action:@selector(move:)];
-    
-    panGest.delegate = self;
-    
-    [self.ratingTableView addGestureRecognizer:panGest];*/
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.ratingTableView reloadData];
     NSLog(@"it shown %ld", self.tableType);
     if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
         
@@ -77,13 +73,18 @@
     
     
     
-    return 30;
+    return [self.topRank count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QZBRatingTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
+    
+    QZBUserInRating *user = self.topRank[indexPath.row];
+    
     cell.numberInRating.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 1)];
+    cell.name.text = user.name;
+    cell.score.text = [NSString stringWithFormat:@"%ld", user.points];
 
     NSURL *url = [NSURL URLWithString:self.urlString];
 
@@ -103,6 +104,9 @@
 -(void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
     self.topRank = topArray;
     self.playerRank = playerArray;
+    
+    [self.ratingTableView reloadData];
+    NSLog(@"%@ \n %@", self.topRank,self.playerRank);
 }
 
 

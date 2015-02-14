@@ -12,4 +12,6 @@
 
 @property(assign, nonatomic) NSInteger points;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
+
 @end

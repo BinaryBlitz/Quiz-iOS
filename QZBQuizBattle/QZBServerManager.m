@@ -17,6 +17,7 @@
 #import "QZBOnlineSessionWorker.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
+#import "QZBUserInRating.h"
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
 #import "TSMessage.h"
@@ -389,6 +390,23 @@
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ranking JSON: %@", responseObject);
+                                  NSInteger userPosition = [responseObject[@"player_position"] integerValue];
+                                  NSArray *usersDict = responseObject[@"top_rankings"];
+                                  
+                                  NSMutableArray *usersTop = [NSMutableArray array];//QZBUserInRating
+                                  NSMutableArray *usersPlayer = nil;
+
+                                  for(NSDictionary *dict in usersDict){
+                                      
+                                      QZBUserInRating *user = [[QZBUserInRating alloc] initWithDictionary:dict];
+                                      [usersTop addObject:user];
+                                      
+                                  }
+                                  
+                                  if(success){
+                                      success(usersTop, usersPlayer);
+                                  }
+                                  
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
