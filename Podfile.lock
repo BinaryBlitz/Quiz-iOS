@@ -20,6 +20,9 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - DBCamera (2.3.10):
+    - GPUImage (~> 0.1)
+  - GPUImage (0.1.6)
   - HexColors (2.2.1)
   - libPusher (1.5):
     - libPusher/Core (= 1.5)
@@ -35,6 +38,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - DBCamera
   - libPusher (~> 1.5)
   - MagicalRecord
   - TSMessages
@@ -42,6 +46,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  DBCamera: 831e958699d8f728a23d6620415e2b6dcbc090d5
+  GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
   HexColors: 01384d2bbe8dc4ffa43c3b4135db6e976952d153
   libPusher: 583326327a72ab7cd0f38692f61f9061cf4be3d9
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224

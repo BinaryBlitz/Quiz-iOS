@@ -45,6 +45,8 @@
 }
 
 - (void)userLogOut {
+    //self.user.api_key = nil;
+    
     self.user = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentUser"];
 }

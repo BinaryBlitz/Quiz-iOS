@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface QZBUser : NSObject
 
@@ -16,7 +17,9 @@
 @property (copy, nonatomic, readonly) NSString *email;
 @property (copy, nonatomic, readonly) NSString *api_key;
 @property (strong, nonatomic, readonly) NSNumber *user_id;
+@property (strong, nonatomic, readonly) UIImage *userPic;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
+- (void)setUserPic:(UIImage *)userPic;
 
 @end

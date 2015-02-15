@@ -11,6 +11,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "QZBRatingPageVC.h"
 #import "QZBUserInRating.h"
+#import "QZBCurrentUser.h"
+#import "QZBUser.h"
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
@@ -82,8 +84,19 @@
     
     QZBUserInRating *user = self.topRank[indexPath.row];
     
+    if(user.userID == [[QZBCurrentUser sharedInstance].user.user_id integerValue]){
+       
+        NSMutableAttributedString *atrName = [[NSMutableAttributedString alloc] initWithString:user.name];
+        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
+        [atrName addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [atrName length])];
+        cell.name.attributedText = atrName;
+        
+    }else{
+        cell.name.text = user.name;
+    }
+    
     cell.numberInRating.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 1)];
-    cell.name.text = user.name;
+   // cell.name.text = user.name;
     cell.score.text = [NSString stringWithFormat:@"%ld", user.points];
 
     NSURL *url = [NSURL URLWithString:self.urlString];

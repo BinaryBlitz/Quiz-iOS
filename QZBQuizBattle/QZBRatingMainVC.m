@@ -52,7 +52,7 @@
 
             QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
             [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
-             [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
+             //[pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
 
         } onFailure:^(NSError *error, NSInteger statusCode){
 

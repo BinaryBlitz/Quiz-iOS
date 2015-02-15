@@ -39,6 +39,9 @@
 		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB61A4B12280016130B /* QZBServerManager.m */; };
+		197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */; };
+		197E47CE1A8FAF7B00E43120 /* QZBCameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */; };
+		197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */; };
 		199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 199820A91A447628003AECB9 /* QZBOpponentBot.m */; };
 		199820AD1A44A039003AECB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 199820AB1A44A039003AECB9 /* Main.storyboard */; };
 		199CD93C1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD93B1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m */; };
@@ -148,6 +151,11 @@
 		1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicTableViewCell.m; sourceTree = "<group>"; };
 		1976FBB51A4B12280016130B /* QZBServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBServerManager.h; sourceTree = "<group>"; };
 		1976FBB61A4B12280016130B /* QZBServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBServerManager.m; sourceTree = "<group>"; };
+		197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSettingsTVC.h; sourceTree = "<group>"; };
+		197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSettingsTVC.m; sourceTree = "<group>"; };
+		197E47CC1A8FAF7B00E43120 /* QZBCameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCameraVC.h; sourceTree = "<group>"; };
+		197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCameraVC.m; sourceTree = "<group>"; };
+		197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		199820A81A447628003AECB9 /* QZBOpponentBot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBOpponentBot.h; sourceTree = "<group>"; };
 		199820A91A447628003AECB9 /* QZBOpponentBot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBOpponentBot.m; sourceTree = "<group>"; };
 		199820AC1A44A039003AECB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -227,6 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */,
 				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */,
 			);
@@ -408,6 +417,17 @@
 				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
 			);
 			name = CategoryChoosers;
+			sourceTree = "<group>";
+		};
+		197E47CB1A8FAF5000E43120 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */,
+				197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */,
+				197E47CC1A8FAF7B00E43120 /* QZBCameraVC.h */,
+				197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */,
+			);
+			name = settings;
 			sourceTree = "<group>";
 		};
 		198066A81A39DB6500B749BA /* buttons */ = {
@@ -594,6 +614,7 @@
 		19DFF33F1A700F5B00E8CB1C /* player */ = {
 			isa = PBXGroup;
 			children = (
+				197E47CB1A8FAF5000E43120 /* settings */,
 				19DFF3401A70161D00E8CB1C /* QZBPlayerPersonalPageVC.h */,
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
 				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
@@ -605,6 +626,7 @@
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */,
 				19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */,
 				DBC7A8F9E1287DD166F770A8 /* libPods.a */,
 			);
@@ -798,6 +820,7 @@
 				199CD93C1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m in Sources */,
 				199CD93F1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m in Sources */,
 				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
+				197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
@@ -809,6 +832,7 @@
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
+				197E47CE1A8FAF7B00E43120 /* QZBCameraVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,

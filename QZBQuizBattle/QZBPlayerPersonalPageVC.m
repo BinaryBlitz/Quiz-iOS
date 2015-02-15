@@ -14,8 +14,12 @@
 #import "QZBFriendHorizontalCell.h"
 #import "QZBAchivHorizontalCell.h"
 #import "QZBAchievement.h"
+#import "DBCameraViewController.h"
+#import "DBCameraContainerViewController.h"
+#import <DBCamera/DBCameraLibraryViewController.h>
+#import <DBCamera/DBCameraSegueViewController.h>
 
-@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate, DBCameraViewControllerDelegate>
 
 @property(strong, nonatomic)NSArray *achivArray;
 
@@ -35,6 +39,9 @@
                                              selector:@selector(userPressShowAllButton:)
                                                  name:@"QZBUserPressShowAllButton"
                                                object:nil];
+    
+    
+    
 
     // Do any additional setup after loading the view.
 }
@@ -48,6 +55,7 @@
     [super viewWillAppear:animate];
 
     self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
+    [self.playerTableView reloadData];
 }
 
 - (void)dealloc {
@@ -71,9 +79,9 @@
         QZBPlayerInfoCell *playerCell =
             (QZBPlayerInfoCell *)[tableView dequeueReusableCellWithIdentifier:playerIdentifier];
 
-        NSURL *picUrl = [NSURL URLWithString:@"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
+       // NSURL *picUrl = [NSURL URLWithString:@"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
 
-        [playerCell.playerUserpic setImageWithURL:picUrl];
+        [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
         cell = playerCell;
     } else if (indexPath.row == 1 ) {
@@ -174,5 +182,10 @@ preparation before navigation
                         ];
     
 }
+
+
+
+
+
 
 @end

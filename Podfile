@@ -5,3 +5,4 @@ pod 'libPusher', '~> 1.5'
 pod "VK-ios-sdk"
 pod "TSMessages"
 pod "MagicalRecord"
+pod "DBCamera"
