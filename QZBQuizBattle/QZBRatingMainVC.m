@@ -36,37 +36,55 @@
 
     if (self.topic) {
         [self.chooseTopicButton setTitle:self.topic.name forState:UIControlStateNormal];
-        
-        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
-        [pageVC setAllTimeRanksWithTop:nil playerArray:nil];
+
+        [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
 
     } else if (self.category) {
         [self.chooseTopicButton setTitle:self.category.name forState:UIControlStateNormal];
+
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
+
         [pageVC setAllTimeRanksWithTop:nil playerArray:nil];
+        [pageVC setWeekRanksWithTop:nil playerArray:nil];
+
     } else {
         [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
 
-        [[QZBServerManager sharedManager]
-         GETGeneralRankinOnSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-
-            QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
-            [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
-             //[pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
-
-        } onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
+        [self setRatingWithTopicID:0];
     }
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)setRatingWithTopicID:(NSInteger)topicID {
+    [[QZBServerManager sharedManager]
+        GETRankingWeekly:NO
+              isCategory:NO
+                  withID:topicID
+               onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+                   QZBRatingPageVC *pageVC =
+                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+                   [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
+
+               }
+               onFailure:nil];
+    [[QZBServerManager sharedManager]
+        GETRankingWeekly:YES
+              isCategory:NO
+                  withID:topicID
+               onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+                   QZBRatingPageVC *pageVC =
+                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+
+                   [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
+
+               }
+               onFailure:nil];
 }
 
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before
+navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -76,8 +94,8 @@
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-    });
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                   });
 
     if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
@@ -89,8 +107,8 @@
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-    });
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                   });
 
     if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];

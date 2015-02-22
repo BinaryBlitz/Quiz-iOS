@@ -36,6 +36,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.emailTextField becomeFirstResponder];
+    
+    NSLog(@"authr showed");
 }
 
 - (void)didReceiveMemoryWarning {

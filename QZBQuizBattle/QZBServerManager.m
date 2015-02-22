@@ -122,7 +122,8 @@
         NSString *name = [dict objectForKey:@"name"];
         id category_id = [dict objectForKey:@"id"];
 
-        QZBCategory *existingEntity = [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
+        QZBCategory *existingEntity =
+            [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
 
         if (!existingEntity) {
             existingEntity = [QZBCategory MR_createEntity];
@@ -154,7 +155,8 @@
         NSString *name = [dict objectForKey:@"name"];
         id topic_id = [dict objectForKey:@"id"];
 
-        QZBGameTopic *existingEntity = [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
+        QZBGameTopic *existingEntity =
+            [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
 
         if (!existingEntity) {
             existingEntity = [QZBGameTopic MR_createEntity];
@@ -166,7 +168,8 @@
         [objectsArray addObject:existingEntity];
     }
 
-    NSMutableArray *allTopics = [NSMutableArray arrayWithArray:[[category relationToTopic] allObjects]];
+    NSMutableArray *allTopics =
+        [NSMutableArray arrayWithArray:[[category relationToTopic] allObjects]];
 
     [allTopics removeObjectsInArray:objectsArray];
 
@@ -182,9 +185,10 @@
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)(QZBLobby *lobby))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params =
-        @{ @"lobby" : @{@"topic_id" : topic.topic_id},
-           @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSDictionary *params = @{
+        @"lobby" : @{@"topic_id" : topic.topic_id},
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key
+    };
 
     [self.requestOperationManager POST:@"lobbies"
         parameters:params
@@ -274,7 +278,8 @@
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
     };
 
-    NSString *URLString = [NSString stringWithFormat:@"game_session_questions/%ld", (long)sessionQuestionID];
+    NSString *URLString =
+        [NSString stringWithFormat:@"game_session_questions/%ld", (long)sessionQuestionID];
 
     [self.requestOperationManager PATCH:URLString
         parameters:params
@@ -305,8 +310,10 @@
 
     NSLog(@"hashed %@", hashedPassword);
 
-    NSDictionary *params =
-        @{ @"player" : @{@"name" : userName, @"email" : userEmail, @"password_digest" : hashedPassword} };
+    NSDictionary *params = @{
+        @"player" :
+            @{@"name" : userName, @"email" : userEmail, @"password_digest" : hashedPassword}
+    };
 
     [self.requestOperationManager POST:@"players"
         parameters:params
@@ -362,56 +369,133 @@
         }];
 }
 
--(void)GETPlayerWithID:(NSInteger)playerID
-             onSuccess:(void (^)(QZBUser *user))success
-             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    
+- (void)GETPlayerWithID:(NSInteger)playerID
+              onSuccess:(void (^)(QZBUser *user))success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    NSString *urlString = [NSString stringWithFormat:@"players/%ld",(long)playerID];
-    
+
+    NSString *urlString = [NSString stringWithFormat:@"players/%ld", (long)playerID];
+
     [self.requestOperationManager GET:urlString
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"user JSON : %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"user fail");
-    }];
-    
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"user JSON : %@", responseObject);
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"user fail");
+        }];
+}
+
+- (void)PATCHPlayerWithNewPassword:(NSString *)password
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSString *hashedPassword = [self hashPassword:password];
+
+    NSNumber *userID = [QZBCurrentUser sharedInstance].user.user_id;
+
+    NSString *urlString = [NSString stringWithFormat:@"players/%@", userID];
+
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"player" :
+            @{
+        @"password_digest" : hashedPassword
+        }
+    };
+
+    [self.requestOperationManager PATCH:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"patched %@", responseObject);
+            
+            if(success){
+                success();
+            }
+            
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+
+            NSLog(@"not patched %@", error);
+        }];
 }
 
 #pragma mark - ranking
 
--(void)GETGeneralRankinOnSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    [self.requestOperationManager GET:@"/rankings/general"
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"ranking JSON: %@", responseObject);
-                                  NSInteger userPosition = [responseObject[@"player_position"] integerValue];
-                                  NSArray *usersDict = responseObject[@"top_rankings"];
-                                  
-                                  NSMutableArray *usersTop = [NSMutableArray array];//QZBUserInRating
-                                  NSMutableArray *usersPlayer = nil;
+- (void)GETRankingWeekly:(BOOL)isWeekly
+              isCategory:(BOOL)isCategory
+                  withID:(NSInteger)ID
+               onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSMutableString *urlAsString = [NSMutableString stringWithString:@"/rankings/"];
+    if (isWeekly) {
+        [urlAsString appendString:@"weekly"];
+    } else {
+        [urlAsString appendString:@"general"];
+    }
 
-                                  for(NSDictionary *dict in usersDict){
-                                      
-                                      QZBUserInRating *user = [[QZBUserInRating alloc] initWithDictionary:dict];
-                                      [usersTop addObject:user];
-                                      
-                                  }
-                                  
-                                  if(success){
-                                      success(usersTop, usersPlayer);
-                                  }
-                                  
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key
     }];
-    
+
+    if (ID > 0) {
+        params[@"topic_id"] = [NSString stringWithFormat:@"%ld", ID];
+    }
+
+    NSLog(@"params ranking %@", params);
+
+    [self.requestOperationManager GET:urlAsString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@" %@ ranking JSON: %@", urlAsString, responseObject);
+
+            NSMutableArray *usersTop = [NSMutableArray array];
+            NSMutableArray *usersPlayer = [NSMutableArray array];
+
+            [self parseRatingDict:responseObject toTopArray:usersTop playerRating:usersPlayer];
+
+            if (success) {
+                success(usersTop, usersPlayer);
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@", error);
+        }];
 }
 
+- (void)parseRatingDict:(NSDictionary *)responseObject
+             toTopArray:(NSMutableArray *)usersTop
+           playerRating:(NSMutableArray *)usersPlayer {
+    NSArray *usersTopArray = responseObject[@"rankings"];
+    NSArray *usersPlayerArray = responseObject[@"player_rankings"];
+
+    NSInteger playerPosition = [responseObject[@"position"] integerValue];
+
+    // NSLog(@"player ranks %@", usersPlayerArray);
+
+    NSInteger position = 1;
+    for (NSDictionary *dict in usersTopArray) {
+        QZBUserInRating *user = [[QZBUserInRating alloc] initWithDictionary:dict position:position];
+        position++;
+
+        [usersTop addObject:user];
+    }
+    if (usersPlayerArray) {
+        position = playerPosition - 4;
+
+        for (NSDictionary *dict in usersPlayerArray) {
+            QZBUserInRating *user =
+                [[QZBUserInRating alloc] initWithDictionary:dict position:position];
+            position++;
+
+            [usersPlayer addObject:user];
+        }
+        [usersPlayer removeObjectsInArray:usersTop];
+    }
+}
 
 @end

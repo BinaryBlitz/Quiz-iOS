@@ -24,7 +24,7 @@
 - (instancetype)initWithDict:(NSDictionary *)dict {
     self = [super init];
     if (self) {
-        self.api_key = [dict objectForKey:@"api_key"];
+        self.api_key = [dict objectForKey:@"token"];
         self.name = [dict objectForKey:@"name"];
         self.email = [dict objectForKey:@"email"];
         self.user_id = [dict objectForKey:@"id"];

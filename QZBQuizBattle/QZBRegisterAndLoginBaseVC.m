@@ -23,8 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [TSMessage setDefaultViewController:self.navigationController];
+    //[TSMessage setDefaultViewController:self.navigationController];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [TSMessage setDefaultViewController:self.navigationController];
 }
 
 - (void)didReceiveMemoryWarning {

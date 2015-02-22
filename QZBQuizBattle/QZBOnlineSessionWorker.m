@@ -73,12 +73,6 @@
                       [weakSelf oppomentAnswered:channelEvent.data];
 
                   }];
-        /*
-        [presentChannel bindToEventNamed:@"test" handleWithBlock:^(PTPusherEvent *channelEvent) {
-          NSDictionary *pusherDict = channelEvent.data;
-
-          NSLog(@"%@", pusherDict);
-        }];*/
 
         [_client connect];
     }

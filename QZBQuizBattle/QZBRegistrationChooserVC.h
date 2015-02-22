@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface QZBRegistrationChooserVC : UIViewController
+#import <VKSdk.h>
+@interface QZBRegistrationChooserVC : UIViewController <VKSdkDelegate>
 
 @end

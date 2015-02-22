@@ -16,8 +16,8 @@
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) NSArray *topRank;   //QZBUserInRating
-@property (strong, nonatomic) NSArray *playerRank;//QZBUserInRating
+@property (strong, nonatomic) NSArray *topRank;  // QZBUserInRating
+@property (strong, nonatomic) NSArray *playerRank;  // QZBUserInRating
 
 @end
 
@@ -25,29 +25,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.view.multipleTouchEnabled = NO;
 
-    self.ratingTableView.delegate   = self;
+    self.ratingTableView.delegate = self;
     self.ratingTableView.dataSource = self;
-    
-    
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.ratingTableView reloadData];
     NSLog(@"it shown %ld", self.tableType);
-    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
-        
+    if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
         pageVC.expectedType = self.tableType;
-       
-        
     }
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     NSLog(@"hided %ld", self.tableType);
 }
@@ -55,14 +50,12 @@
 -(void)move:(UIPanGestureRecognizer *)sender{
     if(sender.state == UIGestureRecognizerStateBegan){
         NSLog(@"move");
-    }else if (sender.state == UIGestureRecognizerStateCancelled ||sender.state == UIGestureRecognizerStateEnded){
+    }else if (sender.state == UIGestureRecognizerStateCancelled ||sender.state ==
+UIGestureRecognizerStateEnded){
         NSLog(@"ended");
     }
-    
+
 }*/
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -72,38 +65,90 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    
-    
-    return [self.topRank count];
+    NSInteger result = 0;
+
+    if (self.topRank) {
+        result += [self.topRank count];
+    }
+
+    if (self.playerRank) {
+        result += [self.playerRank count];
+    }
+    if([self shouldShowSeperator]){
+        result++;
+    }
+
+    return result;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    QZBRatingTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
+    UITableViewCell *resultCell = nil;
+
+    if (indexPath.row == [self.topRank count] && [self shouldShowSeperator]) {
+        resultCell = [tableView dequeueReusableCellWithIdentifier:@"ratingSeperator"];
+    } else {
+        QZBRatingTVCell *cell =
+            (QZBRatingTVCell *)[tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
+        QZBUserInRating *user = nil;
+
+        if (indexPath.row < [self.topRank count]) {
+            user = self.topRank[indexPath.row];
+        } else {
+            if([self shouldShowSeperator]){
+                user = self.playerRank[indexPath.row - [self.topRank count]-1];
+            }else{
+                user = self.playerRank[indexPath.row - [self.topRank count]];
+            }
+        }
+
+        [self setCell:cell user:user];
+        resultCell = cell;
+    }
+    return resultCell;
+}
+
+
+-(void)setCell:(QZBRatingTVCell *)cell user:(QZBUserInRating *)user{
     
-    QZBUserInRating *user = self.topRank[indexPath.row];
-    
-    if(user.userID == [[QZBCurrentUser sharedInstance].user.user_id integerValue]){
-       
-        NSMutableAttributedString *atrName = [[NSMutableAttributedString alloc] initWithString:user.name];
+    if (user.userID == [[QZBCurrentUser sharedInstance].user.user_id integerValue]) {
+        NSMutableAttributedString *atrName =
+        [[NSMutableAttributedString alloc] initWithString:user.name];
         UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
-        [atrName addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [atrName length])];
+        [atrName addAttribute:NSFontAttributeName
+                        value:font
+                        range:NSMakeRange(0, [atrName length])];
         cell.name.attributedText = atrName;
         
-    }else{
+    } else {
         cell.name.text = user.name;
     }
     
-    cell.numberInRating.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 1)];
-   // cell.name.text = user.name;
+    cell.numberInRating.text = [NSString stringWithFormat:@"%ld", user.position];
+    
     cell.score.text = [NSString stringWithFormat:@"%ld", user.points];
-
+    
     NSURL *url = [NSURL URLWithString:self.urlString];
-
+    
     [cell.userpic setImageWithURL:url];
+    
+    
+}
+//-(void)setUserCell:(QZBRatingTVCell *)cell
 
-    return cell;
+-(BOOL)shouldShowSeperator{
+    
+    if(self.playerRank){
+        QZBUserInRating *user = [self.playerRank firstObject];
+        if(user.position <= 21){
+            return NO;
+        }
+    }
+    if(!self.topRank || !self.playerRank){
+        return NO;
+    }
+    return YES;
+    
 }
 
 #pragma mark - UITableViewDelegate
@@ -112,16 +157,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-
--(void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
+- (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray {
     self.topRank = topArray;
     self.playerRank = playerArray;
-    
-    [self.ratingTableView reloadData];
-    NSLog(@"%@ \n %@", self.topRank,self.playerRank);
-}
 
+    [self.ratingTableView reloadData];
+    NSLog(@"%@ \n %@", self.topRank, self.playerRank);
+}
 
 /*
 #pragma mark - Navigation

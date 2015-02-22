@@ -936,6 +936,9 @@
                                 <state key="normal" title="VK">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="authorize:" destination="PGL-zc-O32" eventType="touchUpInside" id="Fsz-Uh-Tq9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npd-jS-N4Z">
                                 <rect key="frame" x="274" y="305" width="52" height="30"/>
@@ -1346,7 +1349,7 @@
         <scene sceneID="cqM-vG-Otm">
             <objects>
                 <tableViewController title="Настройки" id="EJB-6Y-rgL" customClass="QZBSettingsTVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cp2-tm-c0u">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cp2-tm-c0u">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1468,53 +1471,15 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="j7n-yx-qH7">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j7n-yx-qH7" id="Cre-Sv-kOV">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Старый пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fav-Ck-3s5">
-                                                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Fav-Ck-3s5" firstAttribute="top" secondItem="Cre-Sv-kOV" secondAttribute="topMargin" constant="-1" id="5oJ-Oc-C5u"/>
-                                                <constraint firstItem="Fav-Ck-3s5" firstAttribute="leading" secondItem="Cre-Sv-kOV" secondAttribute="leadingMargin" id="Drj-vV-6Ej"/>
-                                                <constraint firstItem="Fav-Ck-3s5" firstAttribute="trailing" secondItem="Cre-Sv-kOV" secondAttribute="trailingMargin" id="wbF-1E-zRx"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="Fav-Ck-3s5"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="5oJ-Oc-C5u"/>
-                                                    <exclude reference="Drj-vV-6Ej"/>
-                                                    <exclude reference="wbF-1E-zRx"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="Fav-Ck-3s5"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="5oJ-Oc-C5u"/>
-                                                    <include reference="Drj-vV-6Ej"/>
-                                                    <include reference="wbF-1E-zRx"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="AMC-4i-XoN">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AMC-4i-XoN" id="9Ki-F1-am7">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Новый пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jl-PZ-xxF">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Новый пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jl-PZ-xxF" customClass="QZBPasswordTextField">
                                                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -1549,10 +1514,10 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dFg-cX-iwd" id="PCw-Gm-aF3">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Новый пароль, еще раз" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KgQ-7L-CgI">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Новый пароль, еще раз" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KgQ-7L-CgI" customClass="QZBPasswordTextField">
                                                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -1586,6 +1551,42 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SRA-m4-hSj" id="COU-kl-sCl">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74M-Of-vqS">
+                                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                    <state key="normal" title="Обновить пароль">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="updatePasswordAction:" destination="EJB-6Y-rgL" eventType="touchUpInside" id="A3N-r8-6SB"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="74M-Of-vqS" firstAttribute="trailing" secondItem="COU-kl-sCl" secondAttribute="trailingMargin" id="P9b-Rn-fp0"/>
+                                                <constraint firstItem="74M-Of-vqS" firstAttribute="top" secondItem="COU-kl-sCl" secondAttribute="topMargin" constant="-1" id="aLc-8C-ECJ"/>
+                                                <constraint firstItem="74M-Of-vqS" firstAttribute="leading" secondItem="COU-kl-sCl" secondAttribute="leadingMargin" id="gL0-DS-Vmm"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="74M-Of-vqS"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="P9b-Rn-fp0"/>
+                                                    <exclude reference="aLc-8C-ECJ"/>
+                                                    <exclude reference="gL0-DS-Vmm"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="74M-Of-vqS"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="P9b-Rn-fp0"/>
+                                                    <include reference="aLc-8C-ECJ"/>
+                                                    <include reference="gL0-DS-Vmm"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ObB-L5-1fr">
@@ -1646,6 +1647,9 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="userNameTextField" destination="xv2-Bd-4v2" id="6Lx-eO-GvP"/>
+                        <outlet property="userNewPasswordAgainTextField" destination="KgQ-7L-CgI" id="gRT-dp-YYE"/>
+                        <outlet property="userNewPasswordTextField" destination="6Jl-PZ-xxF" id="Dhb-HV-eyT"/>
                         <outlet property="userPicImageView" destination="ZPh-cg-XPb" id="g2A-bo-U4L"/>
                         <segue destination="lF6-of-vYv" kind="replace" splitViewControllerTargetIndex="1" id="Kcj-KK-esH"/>
                     </connections>
@@ -2367,6 +2371,49 @@
                                     <outlet property="score" destination="Cc3-Ir-7gN" id="aqa-d4-dfN"/>
                                     <outlet property="userpic" destination="LNP-w9-rfi" id="jnK-W1-RTx"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ratingSeperator" id="HfW-6W-vai" customClass="QZBRatingSeperatorCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HfW-6W-vai" id="nJu-lK-EBi">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agF-Es-BX9">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="agF-Es-BX9" firstAttribute="leading" secondItem="nJu-lK-EBi" secondAttribute="leadingMargin" id="8H0-Rm-DbL"/>
+                                        <constraint firstItem="agF-Es-BX9" firstAttribute="centerY" secondItem="nJu-lK-EBi" secondAttribute="centerY" id="Aur-KS-q8j"/>
+                                        <constraint firstItem="agF-Es-BX9" firstAttribute="trailing" secondItem="nJu-lK-EBi" secondAttribute="trailingMargin" id="Dkk-eq-D4n"/>
+                                        <constraint firstItem="agF-Es-BX9" firstAttribute="top" secondItem="nJu-lK-EBi" secondAttribute="topMargin" constant="6" id="dgg-MH-QLQ"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="agF-Es-BX9"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="8H0-Rm-DbL"/>
+                                            <exclude reference="Aur-KS-q8j"/>
+                                            <exclude reference="Dkk-eq-D4n"/>
+                                            <exclude reference="dgg-MH-QLQ"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="agF-Es-BX9"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="8H0-Rm-DbL"/>
+                                            <include reference="Aur-KS-q8j"/>
+                                            <include reference="Dkk-eq-D4n"/>
+                                            <include reference="dgg-MH-QLQ"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>

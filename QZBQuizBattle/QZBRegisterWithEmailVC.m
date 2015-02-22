@@ -99,9 +99,7 @@ preparation before navigation
 
               [self dismissViewControllerAnimated:YES
                                        completion:^{
-
                                        }];
-
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
 

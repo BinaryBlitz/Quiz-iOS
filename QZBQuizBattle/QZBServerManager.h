@@ -59,8 +59,16 @@
              onSuccess:(void (^)(QZBUser *user))success
              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)GETGeneralRankinOnSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)PATCHPlayerWithNewPassword:(NSString *)password
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+- (void)GETRankingWeekly:(BOOL)isWeekly
+              isCategory:(BOOL)isCategory
+                  withID:(NSInteger)ID
+               onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (NSString *)hashPassword:(NSString *)password;
 
