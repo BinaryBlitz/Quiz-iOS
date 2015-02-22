@@ -149,12 +149,6 @@ preparation before navigation
     [self performSegueWithIdentifier:@"showAchivements" sender:nil];
 }
 
-- (IBAction)logOutAction:(UIBarButtonItem *)sender {
-    [[QZBCurrentUser sharedInstance] userLogOut];
-
-    [self performSegueWithIdentifier:@"showRegistrationScreenFromUserScreen" sender:nil];
-}
-
 
 #pragma mark - init friends and achivs
 

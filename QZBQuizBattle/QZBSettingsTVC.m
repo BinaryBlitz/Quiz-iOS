@@ -16,6 +16,8 @@
 #import "UIView+QZBShakeExtension.h"
 #import "QZBRegistrationAndLoginTextFieldBase.h"
 #import "QZBServerManager.h"
+#import "QZBPasswordTextField.h"
+#import "QZBUserNameTextField.h"
 #import <TSMessages/TSMessage.h>
 
 @interface QZBSettingsTVC () <UIActionSheetDelegate,
@@ -36,6 +38,7 @@
 
     self.userNewPasswordTextField.delegate = self;
     self.userNewPasswordAgainTextField.delegate = self;
+    self.userNameTextField.delegate = self;
 }
 
 - (IBAction)changePicture:(UIButton *)sender {
@@ -54,44 +57,37 @@
     QZBRegistrationAndLoginTextFieldBase *tf = (QZBRegistrationAndLoginTextFieldBase *)textField;
 
     if ([tf isEqual:self.userNewPasswordTextField]) {
-        if ([tf validate]) {
+        if ([self checkFirstPassword]) {
             [self.userNewPasswordAgainTextField becomeFirstResponder];
             return YES;
-        } else {
-            [TSMessage showNotificationWithTitle:
-                           @"Пароль должен быть длинее 5 символов"
-                                            type:TSMessageNotificationTypeWarning];
         }
+    } else if ([tf isEqual:self.userNewPasswordAgainTextField]) {
+        if ([self checkPasswords]) {
+            [self patchPassword];
+            return YES;
+        }
+    } else if ([tf isEqual:self.userNameTextField]) {
+        
+        if ([self checkUserName]) {
+            [self updateUserName];
 
-    } else if ([tf isEqual:self.userNewPasswordAgainTextField]){
-        if ([tf validate]) {
-            if ([tf.text isEqualToString:self.userNewPasswordTextField.text]) {
-                [self patchPassword];
-                return YES;
-            }else{
-                [TSMessage showNotificationWithTitle:@"Пароли должны совпадать"
-                                                type:TSMessageNotificationTypeWarning];
-            }
-            
-        }else if(![self.userNewPasswordTextField validate]){
-            
-            [TSMessage showNotificationWithTitle:@"Введите пароль"
-                                            type:TSMessageNotificationTypeWarning];
-            
-            self.userNewPasswordAgainTextField.text = @"";
-            
-            [self.userNewPasswordTextField becomeFirstResponder];
-            
-        } else {
-          
+            return YES;
         }
     }
 
-    [tf shakeView];
     return NO;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if([textField isEqual:self.userNameTextField]){
+        NSString *res = [textField.text stringByAppendingString:string];
+        if([res length]>20){
+            return NO;
+        }
+    }
+    
+        return YES;
     
 }
 
@@ -108,12 +104,46 @@
     }
 }
 
-- (IBAction)updatePasswordAction:(id)sender {
-    
-    
-    
+- (BOOL)checkPasswords {
+    return [self checkFirstPassword] && [self checkSecondPassword];
 }
 
+- (BOOL)checkFirstPassword {
+    if (![self.userNewPasswordTextField validate]) {
+        [self.userNewPasswordTextField becomeFirstResponder];
+        [TSMessage showNotificationWithTitle:@"Пароль должен быть длинее 5 "
+                   @"символов" type:TSMessageNotificationTypeWarning];
+
+        self.userNewPasswordAgainTextField.text = @"";
+
+        [self.userNewPasswordTextField shakeView];
+
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (BOOL)checkSecondPassword {
+    if (![self.userNewPasswordTextField.text
+            isEqualToString:self.userNewPasswordAgainTextField.text]) {
+        [TSMessage showNotificationWithTitle:@"Пароли должны совпадать"
+                                        type:TSMessageNotificationTypeWarning];
+
+        [self.userNewPasswordAgainTextField becomeFirstResponder];
+        [self.userNewPasswordAgainTextField shakeView];
+        return NO;
+
+    } else {
+        return YES;
+    }
+}
+
+- (IBAction)updatePasswordAction:(id)sender {
+    if ([self checkPasswords]) {
+        [self patchPassword];
+    }
+}
 
 - (void)patchPassword {
     [[QZBServerManager sharedManager]
@@ -125,8 +155,42 @@
             self.userNewPasswordAgainTextField.text = @"";
             self.userNewPasswordTextField.text = @"";
         }
-        onFailure:^(NSError *error, NSInteger statusCode){
+        onFailure:^(NSError *error, NSInteger statusCode) {
 
+            [TSMessage showNotificationWithTitle:@"Пароль не обновлен"
+                                            type:TSMessageNotificationTypeWarning];
+
+        }];
+}
+
+- (BOOL)checkUserName {
+    if (![self.userNameTextField validate]) {
+        [TSMessage
+            showNotificationWithTitle:@"Имя должно быть длинее 1 символа"
+                                 type:TSMessageNotificationTypeWarning];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)updateUserName {
+    
+    NSString *newName = [self.userNameTextField.text copy];
+    
+    [[QZBServerManager sharedManager] PATCHPlayerWithNewUserName:newName
+        onSuccess:^{
+            NSLog(@"name updated");
+            [TSMessage showNotificationWithTitle:@"Имя обновлено"
+                                            type:TSMessageNotificationTypeSuccess];
+            [[QZBCurrentUser sharedInstance].user setUserName:newName];
+            
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
+            [TSMessage
+                showNotificationWithTitle:@"Имя не обновлено, проверьте "
+                                          @"интернет-соединение"
+                                     type:TSMessageNotificationTypeSuccess];
         }];
 }
 
@@ -174,4 +238,18 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [cameraViewController restoreFullScreenMode];
 }
+
+#pragma mark - actions
+
+- (IBAction)logOutAction:(UIButton *)sender {
+    
+   
+        [[QZBCurrentUser sharedInstance] userLogOut];
+        
+        [self performSegueWithIdentifier:@"logOutFromSettings"
+                                  sender:nil];
+
+    
+}
+
 @end

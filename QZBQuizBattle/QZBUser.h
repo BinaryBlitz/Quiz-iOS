@@ -20,6 +20,8 @@
 @property (strong, nonatomic, readonly) UIImage *userPic;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
+
 - (void)setUserPic:(UIImage *)userPic;
+-(void)setUserName:(NSString *)userName;
 
 @end

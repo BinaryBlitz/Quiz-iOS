@@ -81,6 +81,17 @@
 }
 
 
+-(void)setUserName:(NSString *)userName{
+    self.name = userName;
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
+    
+    NSLog(@"userName %@", self.name);
+    
+}
+
 -(void)setUserPic:(UIImage *)userPic{
     
     _userPic = userPic;
@@ -93,11 +104,6 @@
     
     // Write image data to user's folder
     [imageData writeToFile:imagePath atomically:YES];
-    
-    // Store path in NSUserDefaults
-    
-        
-    
     
     
     //todo load to server

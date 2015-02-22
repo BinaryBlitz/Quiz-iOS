@@ -390,28 +390,41 @@
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *hashedPassword = [self hashPassword:password];
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"player" : @{@"password_digest" : hashedPassword}
+    };
+    
+    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+}
 
+- (void)PATCHPlayerWithNewUserName:(NSString *)userName
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{
+                             @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                             @"player" : @{@"name" : userName}
+                             };
+    
+    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+
+}
+
+- (void)PATHPlayerDataWithDict:(NSDictionary *)params
+                     onSuccess:(void (^)())success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSNumber *userID = [QZBCurrentUser sharedInstance].user.user_id;
 
     NSString *urlString = [NSString stringWithFormat:@"players/%@", userID];
-
-    NSDictionary *params = @{
-        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"player" :
-            @{
-        @"password_digest" : hashedPassword
-        }
-    };
-
     [self.requestOperationManager PATCH:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"patched %@", responseObject);
-            
-            if(success){
+
+            if (success) {
                 success();
             }
-            
+
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (failure) {

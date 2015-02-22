@@ -40,7 +40,6 @@
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB61A4B12280016130B /* QZBServerManager.m */; };
 		197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */; };
-		197E47CE1A8FAF7B00E43120 /* QZBCameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */; };
 		197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */; };
 		199062DC1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */; };
 		199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 199820A91A447628003AECB9 /* QZBOpponentBot.m */; };
@@ -154,8 +153,6 @@
 		1976FBB61A4B12280016130B /* QZBServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBServerManager.m; sourceTree = "<group>"; };
 		197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSettingsTVC.h; sourceTree = "<group>"; };
 		197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSettingsTVC.m; sourceTree = "<group>"; };
-		197E47CC1A8FAF7B00E43120 /* QZBCameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCameraVC.h; sourceTree = "<group>"; };
-		197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCameraVC.m; sourceTree = "<group>"; };
 		197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingSeperatorCell.h; sourceTree = "<group>"; };
 		199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingSeperatorCell.m; sourceTree = "<group>"; };
@@ -429,8 +426,6 @@
 			children = (
 				197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */,
 				197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */,
-				197E47CC1A8FAF7B00E43120 /* QZBCameraVC.h */,
-				197E47CD1A8FAF7B00E43120 /* QZBCameraVC.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -838,7 +833,6 @@
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
-				197E47CE1A8FAF7B00E43120 /* QZBCameraVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,

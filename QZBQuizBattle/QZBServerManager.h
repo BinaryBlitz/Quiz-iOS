@@ -44,6 +44,8 @@
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+#pragma mark - user registration and login
+
 - (void)POSTRegistrationUser:(NSString *)userName
                        email:(NSString *)userEmail
                     password:(NSString *)password
@@ -59,7 +61,12 @@
              onSuccess:(void (^)(QZBUser *user))success
              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+#pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
