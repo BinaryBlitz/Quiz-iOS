@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "VKSdk.h"
 #import "CoreData+MagicalRecord.h"
+#import "QZBQuizIAPHelper.h"
+
 
 @interface AppDelegate ()
 
@@ -20,7 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
-
+    //[QZBQuizIAPHelper sharedInstance];
+    
     return YES;
 }
 

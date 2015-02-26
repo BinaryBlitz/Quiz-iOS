@@ -113,6 +113,8 @@
 
     NSIndexPath *indexPath = (NSIndexPath *)notification.object;
 
+    
+    
     if (indexPath.row == 1) {
         [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
     } else if (indexPath.row == 2) {

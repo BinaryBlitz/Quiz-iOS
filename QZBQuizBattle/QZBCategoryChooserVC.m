@@ -13,6 +13,7 @@
 #import "QZBCategoryTableViewCell.h"
 #import "QZBTopicChooserControllerViewController.h"
 #import "QZBCurrentUser.h"
+#import "QZBUser.h"
 #import "QZBRegistrationChooserVC.h"
 
 @interface QZBCategoryChooserVC () 
@@ -100,6 +101,11 @@
       [self.mainTableView reloadData];
 
     } onFailure:^(NSError *error, NSInteger statusCode){
+        
+        if(statusCode == 401){
+        [[QZBCurrentUser sharedInstance] userLogOut];
+        [self performSegueWithIdentifier:@"logOutUnauthorized" sender:nil];
+        }
 
     }];
 }

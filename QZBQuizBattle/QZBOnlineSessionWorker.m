@@ -43,7 +43,8 @@
         PTPusherChannel *channel = [_client subscribeToChannelNamed:channelName];
         self.channel = channel;
 
-        // PTPusherChannel *presentChannel = [_client subscribeToPresenceChannelNamed:@"presence-test"];
+        // PTPusherChannel *presentChannel = [_client
+        // subscribeToPresenceChannelNamed:@"presence-test"];
 
         self.yetStarted = NO;
 
@@ -57,10 +58,11 @@
                       if (!self.yetStarted) {
                           self.yetStarted = YES;
                           dispatch_after(
-                              dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(),
-                              ^{
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBOnlineGameNeedStart"
-                                                                                      object:nil];
+                              dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                              dispatch_get_main_queue(), ^{
+                                  [[NSNotificationCenter defaultCenter]
+                                      postNotificationName:@"QZBOnlineGameNeedStart"
+                                                    object:nil];
 
                               });
                       }
@@ -108,8 +110,9 @@
         NSLog(@"%ld", (long)questID);
 
         if ([QZBSessionManager sessionManager].currentQuestion.questionId == questID) {
-            [[QZBSessionManager sessionManager] opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
-                                                                                            time:answerTime];
+            [[QZBSessionManager sessionManager]
+                opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum
+                                                            time:answerTime];
         } else {
             QZBQuestion *quest = [[QZBSessionManager sessionManager] findQZBQuestionWithID:questID];
 
@@ -129,14 +132,17 @@
     if ([channel isEqual:self.channel]) {
         NSLog(@"subscribed");
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"subscribedToChanel" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"subscribedToChanel"
+                                                            object:nil];
     }
 }
 
 - (void)pusher:(PTPusher *)client connectionDidConnect:(PTPusherConnection *)connection {
 }
 
-- (void)pusher:(PTPusher *)pusher connection:(PTPusherConnection *)connection failedWithError:(NSError *)error {
+- (void)pusher:(PTPusher *)pusher
+         connection:(PTPusherConnection *)connection
+    failedWithError:(NSError *)error {
     [self handleDisconnectionWithError:error];
 }
 
@@ -150,11 +156,13 @@
 }
 
 - (void)pusher:(PTPusher *)pusher willAuthorizeChannelWithRequest:(NSMutableURLRequest *)request {
-    [request setValue:@"some-authentication-token" forHTTPHeaderField:@"X-MyCustom-AuthTokenHeader"];
+    [request setValue:@"some-authentication-token"
+        forHTTPHeaderField:@"X-MyCustom-AuthTokenHeader"];
 }
 
 - (void)handleDisconnectionWithError:(NSError *)error {
-    Reachability *reachability = [Reachability reachabilityWithHostname:self.client.connection.URL.host];
+    Reachability *reachability =
+        [Reachability reachabilityWithHostname:self.client.connection.URL.host];
 
     if (error && [error.domain isEqualToString:PTPusherFatalErrorDomain]) {
         NSLog(@"FATAL PUSHER ERROR, COULD NOT CONNECT! %@", error);

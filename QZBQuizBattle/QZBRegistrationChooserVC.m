@@ -23,10 +23,10 @@ static NSArray  * SCOPE = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    SCOPE = @[VK_PER_FRIENDS, VK_PER_EMAIL];
+    SCOPE = @[VK_PER_FRIENDS, VK_PER_EMAIL, VK_PER_OFFLINE];
     [super viewDidLoad];
     
-    [VKSdk initializeWithDelegate:self andAppId:@"4793505"];
+    [VKSdk initializeWithDelegate:self andAppId:@"4795421"];
     if ([VKSdk wakeUpSession])
     {
         [self startWorking];
@@ -51,6 +51,7 @@ static NSArray  * SCOPE = nil;
     
     [req executeWithResultBlock:^(VKResponse *response) {
         NSLog(@"user: %@", response.json);
+        NSLog(TOKEN_KEY);
     } errorBlock:^(NSError *error) {
         
     }];
@@ -81,6 +82,7 @@ static NSArray  * SCOPE = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
+    NSLog(@"%@ %@", newToken.accessToken, newToken.expiresIn);
     [self startWorking];
 }
 

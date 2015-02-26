@@ -43,16 +43,19 @@
 }
 
 - (void)showAll:(UIButton *)sender {
-    if ([sender.superview isKindOfClass:[UITableViewCell class]]) {
+    
+  //sender superview check
+    
         //  UITableViewCell *cell = (UITableViewCell *)sender.superview;
-        // NSLog(@"%ld",[self getIndexPathCell:self].row);
+        NSLog(@"%ld",[self getIndexPathCell:self].row);
+        
         NSIndexPath *ip = [self getIndexPathCell:self];
 
         [[NSNotificationCenter defaultCenter]
 
             postNotificationName:@"QZBUserPressShowAllButton"
                           object:ip];
-    }
+    
 }
 
 - (NSIndexPath *)getIndexPathCell:(UIView *)view {

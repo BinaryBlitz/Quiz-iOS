@@ -25,9 +25,16 @@
 		191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12F01A8CA22600AFB829 /* QZBAchievement.m */; };
 		191E12F81A8CD80400AFB829 /* QZBAnotherUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12F71A8CD80400AFB829 /* QZBAnotherUser.m */; };
 		191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12FA1A8CD87700AFB829 /* QZBUserInRating.m */; };
+		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
+		1927967A1A9A1B2500A468E5 /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 192796791A9A1B2500A468E5 /* MKStoreKit.m */; };
 		192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */; };
 		19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */; };
 		19423D7E1A80F8740014B0AD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 19423D7D1A80F8740014B0AD /* Reachability.m */; };
+		19446A6E1A9E226C005BB485 /* QZBIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */; };
+		19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */; };
+		19446A751A9E3620005BB485 /* QZBStoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A741A9E3620005BB485 /* QZBStoreTVC.m */; };
+		19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */; };
+		194D7D0E1A9F665E003E1F5F /* QZBIAPBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 194D7D0D1A9F665E003E1F5F /* QZBIAPBoosterCell.m */; };
 		195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
@@ -124,11 +131,24 @@
 		191E12F71A8CD80400AFB829 /* QZBAnotherUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnotherUser.m; sourceTree = "<group>"; };
 		191E12F91A8CD87700AFB829 /* QZBUserInRating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserInRating.h; sourceTree = "<group>"; };
 		191E12FA1A8CD87700AFB829 /* QZBUserInRating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserInRating.m; sourceTree = "<group>"; };
+		192796761A9A026F00A468E5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		192796781A9A1B2500A468E5 /* MKStoreKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKStoreKit.h; sourceTree = "<group>"; };
+		192796791A9A1B2500A468E5 /* MKStoreKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKStoreKit.m; sourceTree = "<group>"; };
 		192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
 		19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		19423D7C1A80F8740014B0AD /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		19423D7D1A80F8740014B0AD /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		19446A6C1A9E226C005BB485 /* QZBIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBIAPHelper.h; sourceTree = "<group>"; };
+		19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBIAPHelper.m; sourceTree = "<group>"; };
+		19446A6F1A9E247C005BB485 /* QZBQuizIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuizIAPHelper.h; sourceTree = "<group>"; };
+		19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuizIAPHelper.m; sourceTree = "<group>"; };
+		19446A731A9E3620005BB485 /* QZBStoreTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreTVC.h; sourceTree = "<group>"; };
+		19446A741A9E3620005BB485 /* QZBStoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreTVC.m; sourceTree = "<group>"; };
+		19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreBoosterCell.h; sourceTree = "<group>"; };
+		19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreBoosterCell.m; sourceTree = "<group>"; };
+		194D7D0C1A9F665E003E1F5F /* QZBIAPBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBIAPBoosterCell.h; sourceTree = "<group>"; };
+		194D7D0D1A9F665E003E1F5F /* QZBIAPBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBIAPBoosterCell.m; sourceTree = "<group>"; };
 		195A7E3E1A69893B003AC3BA /* QZBRegistrationChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationChooserVC.h; sourceTree = "<group>"; };
 		195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationChooserVC.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
@@ -238,6 +258,7 @@
 				197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */,
 				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */,
+				192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +311,8 @@
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				192796781A9A1B2500A468E5 /* MKStoreKit.h */,
+				192796791A9A1B2500A468E5 /* MKStoreKit.m */,
 				19D691131A6A91C7008B2AE1 /* NSString+MD5.h */,
 				19D691141A6A91C7008B2AE1 /* NSString+MD5.m */,
 				191559C81A39CDD400462C93 /* AppDelegate.h */,
@@ -356,6 +379,26 @@
 			name = horizontal;
 			sourceTree = "<group>";
 		};
+		19446A6B1A9E224E005BB485 /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				19446A6C1A9E226C005BB485 /* QZBIAPHelper.h */,
+				19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */,
+				19446A6F1A9E247C005BB485 /* QZBQuizIAPHelper.h */,
+				19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */,
+			);
+			name = IAP;
+			sourceTree = "<group>";
+		};
+		19446A721A9E35CE005BB485 /* store */ = {
+			isa = PBXGroup;
+			children = (
+				19446A731A9E3620005BB485 /* QZBStoreTVC.h */,
+				19446A741A9E3620005BB485 /* QZBStoreTVC.m */,
+			);
+			name = store;
+			sourceTree = "<group>";
+		};
 		197669991A67D057006C2757 /* Registration and login */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +429,10 @@
 				19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */,
 				199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */,
 				199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */,
+				19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */,
+				19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */,
+				194D7D0C1A9F665E003E1F5F /* QZBIAPBoosterCell.h */,
+				194D7D0D1A9F665E003E1F5F /* QZBIAPBoosterCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -471,6 +518,7 @@
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				19446A6B1A9E224E005BB485 /* IAP */,
 				1976FBB41A4B11DF0016130B /* serverAPI */,
 				191E12EE1A8CA1FD00AFB829 /* achievement */,
 				1976FBB01A4B05FF0016130B /* topic */,
@@ -494,6 +542,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				19446A721A9E35CE005BB485 /* store */,
 				199CD9431A8BAFAB00FBF820 /* achievement */,
 				19DEA8591A8552E800E610DB /* rating */,
 				19DFF33F1A700F5B00E8CB1C /* player */,
@@ -626,6 +675,7 @@
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				192796761A9A026F00A468E5 /* StoreKit.framework */,
 				197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */,
 				19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */,
 				DBC7A8F9E1287DD166F770A8 /* libPods.a */,
@@ -696,6 +746,9 @@
 						DevelopmentTeam = 85N5TFNM2M;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 						};
@@ -801,9 +854,13 @@
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
+				19446A6E1A9E226C005BB485 /* QZBIAPHelper.m in Sources */,
 				199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */,
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
+				19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */,
+				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
+				1927967A1A9A1B2500A468E5 /* MKStoreKit.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */,
@@ -824,6 +881,7 @@
 				197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
+				194D7D0E1A9F665E003E1F5F /* QZBIAPBoosterCell.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
 				19DEA8651A860E4500E610DB /* QZBRatingMainVC.m in Sources */,
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
@@ -833,6 +891,7 @@
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
+				19446A751A9E3620005BB485 /* QZBStoreTVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
