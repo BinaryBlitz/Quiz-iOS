@@ -7,13 +7,15 @@
 //
 
 #import "QZBStoreTVC.h"
-#import "QZBQuizIAPHelper.h"
+#import "QZBQuizTopicIAPHelper.h"
+#import "QZBStoreBoosterCell.h"
 #import <StoreKit/StoreKit.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface QZBStoreTVC ()
 
 @property (strong, nonatomic) NSArray *products;
-@property (strong, nonatomic) NSNumberFormatter *priceFormatter;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -22,34 +24,46 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(reload)
                   forControlEvents:UIControlEventValueChanged];
+    
+    [self.tableView addSubview:self.refreshControl];
     [self reload];
-    [self.refreshControl beginRefreshing];
+    //[self.refreshControl beginRefreshing];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
 
-    _priceFormatter = [[NSNumberFormatter alloc] init];
-    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
 
-    self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(restoreTapped:)];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(productPurchased:)
+                                                 name:IAPHelperProductPurchasedNotification
+                                               object:nil];
 }
 
 // 4
 - (void)reload {
     _products = nil;
     [self.tableView reloadData];
-    [[QZBQuizIAPHelper sharedInstance]
+    [[QZBQuizTopicIAPHelper sharedInstance]
         requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
             if (success) {
                 _products = products;
                 [self.tableView reloadData];
+                [SVProgressHUD dismiss];
             }
+            [SVProgressHUD dismiss];
             [self.refreshControl endRefreshing];
         }];
 }
@@ -60,35 +74,32 @@
     return 1;
 }
 
-// 5
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _products.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell =
+    QZBStoreBoosterCell *cell =
         [tableView dequeueReusableCellWithIdentifier:@"boosterCell" forIndexPath:indexPath];
 
     SKProduct *product = (SKProduct *)_products[indexPath.row];
-    cell.textLabel.text = product.localizedTitle;
+    cell.IAPName.text = product.localizedTitle;
 
-    [_priceFormatter setLocale:product.priceLocale];
-    cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
+    [self.priceFormatter setLocale:product.priceLocale];
 
-    if ([[QZBQuizIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.accessoryView = nil;
+    if ([[QZBQuizTopicIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+        [cell.purchaseButton setTitle:@"Куплено" forState:UIControlStateNormal];
+        cell.purchaseButton.enabled = NO;
+
     } else {
-        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        buyButton.frame = CGRectMake(0, 0, 72, 37);
-        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
-        buyButton.tag = indexPath.row;
-        [buyButton addTarget:self
-                      action:@selector(buyButtonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = buyButton;
+        [cell.purchaseButton setTitle:[self.priceFormatter stringFromNumber:product.price]
+                             forState:UIControlStateNormal];
+
+        cell.purchaseButton.tag = indexPath.row;
+        [cell.purchaseButton addTarget:self
+                                action:@selector(buyButtonTapped:)
+                      forControlEvents:UIControlEventTouchUpInside];
     }
 
     return cell;
@@ -99,14 +110,7 @@
     SKProduct *product = _products[buyButton.tag];
 
     NSLog(@"Buying %@...", product.productIdentifier);
-    [[QZBQuizIAPHelper sharedInstance] buyProduct:product];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(productPurchased:)
-                                                 name:IAPHelperProductPurchasedNotification
-                                               object:nil];
+    [[QZBQuizTopicIAPHelper sharedInstance] buyProduct:product];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -126,7 +130,7 @@
 }
 
 - (void)restoreTapped:(id)sender {
-    [[QZBQuizIAPHelper sharedInstance] restoreCompletedTransactions];
+    [[QZBQuizTopicIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 
 @end

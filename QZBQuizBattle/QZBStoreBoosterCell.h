@@ -10,4 +10,8 @@
 
 @interface QZBStoreBoosterCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *IAPName;
+
+@property (weak, nonatomic) IBOutlet UIButton *purchaseButton;
+
 @end
