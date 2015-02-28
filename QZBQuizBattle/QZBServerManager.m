@@ -369,6 +369,32 @@
         }];
 }
 
+- (void)POSTAuthWithVKToken:(NSString *)token
+                 onSuccess:(void (^)(QZBUser *user))success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    
+    NSDictionary *params = @{@"token":token};
+    
+    [self.requestOperationManager POST:@"/players/authenticate_vk"
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                                   if (![responseObject objectForKey:@"error"]) {
+                                       
+                                       QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
+                        
+                                       if (success) {
+                                           success(user);
+                                       }
+                                   }
+                            }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                
+                            }];
+    
+}
+
 - (void)GETPlayerWithID:(NSInteger)playerID
               onSuccess:(void (^)(QZBUser *user))success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
@@ -414,7 +440,7 @@
 - (void)PATHPlayerDataWithDict:(NSDictionary *)params
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSNumber *userID = [QZBCurrentUser sharedInstance].user.user_id;
+    NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
 
     NSString *urlString = [NSString stringWithFormat:@"players/%@", userID];
     [self.requestOperationManager PATCH:urlString

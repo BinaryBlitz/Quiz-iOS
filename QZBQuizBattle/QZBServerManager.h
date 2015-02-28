@@ -61,6 +61,10 @@
              onSuccess:(void (^)(QZBUser *user))success
              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)POSTAuthWithVKToken:(NSString *)token
+                  onSuccess:(void (^)(QZBUser *user))success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success

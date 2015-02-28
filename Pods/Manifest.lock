@@ -32,6 +32,7 @@ PODS:
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
   - SocketRocket (0.3.1-beta2)
+  - SVProgressHUD (1.1.2)
   - TSMessages (0.9.12):
     - HexColors
   - VK-ios-sdk (1.0.9.2)
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - DBCamera
   - libPusher (~> 1.5)
   - MagicalRecord
+  - SVProgressHUD
   - TSMessages
   - VK-ios-sdk
 
@@ -52,6 +54,7 @@ SPEC CHECKSUMS:
   libPusher: 583326327a72ab7cd0f38692f61f9061cf4be3d9
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
+  SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
   TSMessages: b2b5dc71f65146387e51f2600bb0eb8f3a6c4ab8
   VK-ios-sdk: b5d95b5f3bedaa6432906a9ac728a84335e6b3d0
 

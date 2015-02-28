@@ -128,11 +128,6 @@
         return;
     }
 
-    // NSLog(@"current %@", [self.viewControllers firstObject]);
-
-    // NSLog(@"finished %d comleted %d %@ current %@", finished, completed, [previousViewControllers debugDescription],
-    //       [self.viewControllers lastObject]);
-
     if (finished && completed) {
         if (![[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
             if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
@@ -251,6 +246,15 @@
     QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
     
     [rightPage setPlayersRanksWithTop:topArray playerArray:playerArray];
+    
+}
+
+-(void)showUserPage:(id<QZBUserProtocol>)user{
+    
+    if([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]){
+        QZBRatingMainVC *vc = (QZBRatingMainVC *)self.parentViewController;
+        [vc showUserPage:user];
+    }
     
 }
 /*

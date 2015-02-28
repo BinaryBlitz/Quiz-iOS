@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QZBUserProtocol.h"
 
 @class QZBCategory;
 @class QZBGameTopic;
@@ -18,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *topic;
+
+-(void)showUserPage:(id<QZBUserProtocol>)user;
 
 @end

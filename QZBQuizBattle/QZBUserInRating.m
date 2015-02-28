@@ -10,6 +10,8 @@
 
 @implementation QZBUserInRating
 
+
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
 
@@ -19,7 +21,7 @@
     self = [super init];
     if (self) {
         self.name = dict[@"name"];
-        self.userID = [dict[@"id"] integerValue];
+        self.userID = dict[@"id"] ;
         self.points = [dict[@"points"] integerValue];
         self.position = position;
     }

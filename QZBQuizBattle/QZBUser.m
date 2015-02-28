@@ -14,7 +14,7 @@
 @property (copy, nonatomic) NSString *name;
 @property (copy, nonatomic) NSString *email;
 @property (copy, nonatomic) NSString *api_key;
-@property (strong, nonatomic) NSNumber *user_id;
+@property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) UIImage *userPic;
 
 @end
@@ -26,8 +26,11 @@
     if (self) {
         self.api_key = [dict objectForKey:@"token"];
         self.name = [dict objectForKey:@"name"];
-        self.email = [dict objectForKey:@"email"];
-        self.user_id = [dict objectForKey:@"id"];
+        
+        if([dict objectForKey:@"email"]){
+            self.email = [dict objectForKey:@"email"];
+        }
+        self.userID = [dict objectForKey:@"id"];
         self.userPic = nil;
         
     }
@@ -40,7 +43,7 @@
         self.name = [coder decodeObjectForKey:@"userName"];
         self.email = [coder decodeObjectForKey:@"userEmail"];
         self.api_key = [coder decodeObjectForKey:@"userApiKey"];
-        self.user_id = [coder decodeObjectForKey:@"user_id"];
+        self.userID = [coder decodeObjectForKey:@"user_id"];
         NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
         NSLog(@"path %@", imagePath);
         if (imagePath) {
@@ -56,7 +59,7 @@
     [coder encodeObject:self.name forKey:@"userName"];
     [coder encodeObject:self.email forKey:@"userEmail"];
     [coder encodeObject:self.api_key forKey:@"userApiKey"];
-    [coder encodeObject:self.user_id forKey:@"user_id"];
+    [coder encodeObject:self.userID forKey:@"user_id"];
     if(self.userPic){
     NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
     

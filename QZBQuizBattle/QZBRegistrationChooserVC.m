@@ -7,7 +7,9 @@
 //
 
 #import "QZBRegistrationChooserVC.h"
+#import "QZBServerManager.h"
 #import "QZBCurrentUser.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
@@ -37,6 +39,7 @@ static NSArray  * SCOPE = nil;
 - (IBAction)authorize:(id)sender {
     //[VKSdk authorize:SCOPE revokeAccess:YES];
     
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
@@ -83,6 +86,26 @@ static NSArray  * SCOPE = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
     NSLog(@"%@ %@", newToken.accessToken, newToken.expiresIn);
+    
+    [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken onSuccess:^(QZBUser *user) {
+        
+        [[QZBCurrentUser sharedInstance] setUser:user];
+        
+        
+        // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+        
+        [SVProgressHUD dismiss];
+        
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     
+                                 }];
+
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
     [self startWorking];
 }
 
@@ -95,6 +118,8 @@ static NSArray  * SCOPE = nil;
 }
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError {
     [[[UIAlertView alloc] initWithTitle:nil message:@"Access denied" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    
+    [SVProgressHUD dismiss];
     
     NSLog(@"deny");
 }

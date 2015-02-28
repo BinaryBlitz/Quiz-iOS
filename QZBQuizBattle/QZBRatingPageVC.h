@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "QZBRatingTVC.h"
+#import "QZBUserProtocol.h"
 
 @interface QZBRatingPageVC : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
@@ -20,5 +21,6 @@
 -(void)setAllTimeRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
 -(void)setWeekRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
 
+-(void)showUserPage:(id<QZBUserProtocol>)user;
 
 @end

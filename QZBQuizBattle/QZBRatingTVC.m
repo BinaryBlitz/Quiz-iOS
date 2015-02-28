@@ -14,9 +14,9 @@
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 
-@interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSArray *topRank;  // QZBUserInRating
+@property (strong, nonatomic) NSArray *topRank;     // QZBUserInRating
 @property (strong, nonatomic) NSArray *playerRank;  // QZBUserInRating
 
 @end
@@ -46,16 +46,6 @@
     [super viewWillDisappear:animated];
     NSLog(@"hided %ld", self.tableType);
 }
-/*
--(void)move:(UIPanGestureRecognizer *)sender{
-    if(sender.state == UIGestureRecognizerStateBegan){
-        NSLog(@"move");
-    }else if (sender.state == UIGestureRecognizerStateCancelled ||sender.state ==
-UIGestureRecognizerStateEnded){
-        NSLog(@"ended");
-    }
-
-}*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -111,22 +101,7 @@ UIGestureRecognizerStateEnded){
 
 -(void)setCell:(QZBRatingTVCell *)cell user:(QZBUserInRating *)user{
     
-    if (user.userID == [[QZBCurrentUser sharedInstance].user.user_id integerValue]) {
-        NSMutableAttributedString *atrName =
-        [[NSMutableAttributedString alloc] initWithString:user.name];
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
-        [atrName addAttribute:NSFontAttributeName
-                        value:font
-                        range:NSMakeRange(0, [atrName length])];
-        cell.name.attributedText = atrName;
-        
-    } else {
-        cell.name.text = user.name;
-    }
-    
-    cell.numberInRating.text = [NSString stringWithFormat:@"%ld", user.position];
-    
-    cell.score.text = [NSString stringWithFormat:@"%ld", user.points];
+    [cell setCellWithUser:user];
     
     NSURL *url = [NSURL URLWithString:self.urlString];
     
@@ -155,6 +130,25 @@ UIGestureRecognizerStateEnded){
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if(![cell isKindOfClass:[QZBRatingTVCell class]]){
+        return;
+    }
+    
+    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
+        
+        QZBRatingTVCell *userCell = (QZBRatingTVCell *)cell;
+        QZBUserInRating *user = userCell.user;
+        
+        QZBRatingPageVC *vc = (QZBRatingPageVC *)self.parentViewController;
+        
+        [vc showUserPage:user];
+        
+    }
+    
+    
 }
 
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray {

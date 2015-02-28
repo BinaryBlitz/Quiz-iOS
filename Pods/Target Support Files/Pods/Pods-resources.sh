@@ -67,6 +67,7 @@ install_resource()
                     install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
                     install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
                     install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
+                    install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
                     install_resource "TSMessages/Pod/Assets/NotificationBackgroundError.png"
                     install_resource "TSMessages/Pod/Assets/NotificationBackgroundError@2x.png"
                     install_resource "TSMessages/Pod/Assets/NotificationBackgroundErrorIcon.png"

@@ -14,14 +14,17 @@
 #import "QZBFriendHorizontalCell.h"
 #import "QZBAchivHorizontalCell.h"
 #import "QZBAchievement.h"
-#import "DBCameraViewController.h"
-#import "DBCameraContainerViewController.h"
-#import <DBCamera/DBCameraLibraryViewController.h>
-#import <DBCamera/DBCameraSegueViewController.h>
 
-@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate, DBCameraViewControllerDelegate>
+//#import "DBCameraViewController.h"
+//#import "DBCameraContainerViewController.h"
+//#import <DBCamera/DBCameraLibraryViewController.h>
+//#import <DBCamera/DBCameraSegueViewController.h>
+
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property(strong, nonatomic)NSArray *achivArray;
+@property(strong, nonatomic) id<QZBUserProtocol> user;
+@property(assign, nonatomic) BOOL isCurrent;
 
 @end
 
@@ -40,6 +43,13 @@
                                                  name:@"QZBUserPressShowAllButton"
                                                object:nil];
     
+    if(!self.user || self.user.userID == [QZBCurrentUser sharedInstance].user.userID){
+        self.user = [QZBCurrentUser sharedInstance].user;
+        self.isCurrent = YES;
+    }else{
+        self.isCurrent = NO;
+    }
+    self.navigationItem.title = self.user.name;
     
     
 
@@ -54,12 +64,35 @@
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
 
-    self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
+  //  self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
+    /*
     [self.playerTableView reloadData];
+    if(!self.user){
+        self.user = [QZBCurrentUser sharedInstance].user;
+        self.isCurrent = YES;
+    }else{
+        self.isCurrent = NO;
+    }
+    self.navigationItem.title = self.user.name;*/
+    
 }
 
 - (void)dealloc {
+    self.user = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)initPlayerPageWithUser:(id<QZBUserProtocol>)user{
+    
+    self.user = user;
+    self.navigationItem.title = [user name];
+    NSLog(@"%@", user);
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.user = nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -68,6 +101,8 @@
     return 10;
 }
 
+
+//REDO player pic
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    static NSString *playerIdentifier = @"playerСell";
    static NSString *friendsIdentifier = @"friendsCell";
@@ -78,8 +113,23 @@
     if (indexPath.row == 0) {
         QZBPlayerInfoCell *playerCell =
             (QZBPlayerInfoCell *)[tableView dequeueReusableCellWithIdentifier:playerIdentifier];
-
-       // NSURL *picUrl = [NSURL URLWithString:@"https://pp.vk.me/c608721/v608721290/27cd/SV28DOJ177Q.jpg"];
+        
+        [playerCell.multiUseButton addTarget:self
+                                      action:@selector(multiUseButtonAction:)
+                            forControlEvents:UIControlEventTouchUpInside];
+        
+        NSString *buttonTitle = nil;
+        if(self.isCurrent){
+            
+            buttonTitle = @"Настройки";
+            [playerCell.multiUseButton setTitle:@"settings"
+                                       forState:UIControlStateNormal];
+        }else{
+            buttonTitle = @"add friend";
+        }
+        [playerCell.multiUseButton setTitle:buttonTitle
+                                   forState:UIControlStateNormal];
+        
 
         [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
@@ -151,6 +201,12 @@ preparation before navigation
     [self performSegueWithIdentifier:@"showAchivements" sender:nil];
 }
 
+- (void)multiUseButtonAction:(id)sender {
+    
+    if(self.isCurrent){
+        [self performSegueWithIdentifier:@"showSettings" sender:nil];
+    }
+}
 
 #pragma mark - init friends and achivs
 

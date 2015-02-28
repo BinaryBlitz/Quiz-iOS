@@ -11,5 +11,6 @@
 @interface QZBPlayerInfoCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *playerUserpic;
+@property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
 
 @end

@@ -30,7 +30,7 @@
     if (self) {
         NSLog(@"online worker init");
 
-        NSNumber *playerID = [QZBCurrentUser sharedInstance].user.user_id;
+        NSNumber *playerID = [QZBCurrentUser sharedInstance].user.userID;
 
         NSString *channelName = [NSString stringWithFormat:@"player-session-%@", playerID];
 

@@ -6,3 +6,4 @@ pod "VK-ios-sdk"
 pod "TSMessages"
 pod "MagicalRecord"
 pod "DBCamera"
+pod 'SVProgressHUD'

@@ -7,8 +7,9 @@
 //
 
 #import "QZBAnotherUser.h"
+#import "QZBUserProtocol.h"
 
-@interface QZBUserInRating : QZBAnotherUser
+@interface QZBUserInRating : QZBAnotherUser<QZBUserProtocol>
 
 @property(assign, nonatomic) NSInteger points;
 @property(assign, nonatomic) NSInteger position;
