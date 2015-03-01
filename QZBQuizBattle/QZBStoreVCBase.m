@@ -32,7 +32,7 @@
 }
 
 - (void)restoreTapped:(id)sender{
-    [NSException raise:@"not exist" format:nil];
+   // [NSException raise:@"not exist" format:nil];
 }
 
 

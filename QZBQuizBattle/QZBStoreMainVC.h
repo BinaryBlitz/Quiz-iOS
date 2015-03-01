@@ -11,7 +11,7 @@
 
 
 
-@interface QZBStoreMainVC : QZBStoreVCBase
+@interface QZBStoreMainVC : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *purchseTwiceBoosterButton;
 

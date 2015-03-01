@@ -34,7 +34,7 @@
     
     self.user = user;
     
-    if (user.userID == [QZBCurrentUser sharedInstance].user.userID ) {
+    if ([user.userID isEqual:[QZBCurrentUser sharedInstance].user.userID ]) {
         NSMutableAttributedString *atrName =
         [[NSMutableAttributedString alloc] initWithString:user.name];
         UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
@@ -47,9 +47,9 @@
         self.name.text = user.name;
     }
     
-    self.numberInRating.text = [NSString stringWithFormat:@"%ld", user.position];
+    self.numberInRating.text = [NSString stringWithFormat:@"%ld", (long)user.position];
     
-    self.score.text = [NSString stringWithFormat:@"%ld", user.points];
+    self.score.text = [NSString stringWithFormat:@"%ld", (long)user.points];
     
   //  NSURL *url = [NSURL URLWithString:self.urlString];
     

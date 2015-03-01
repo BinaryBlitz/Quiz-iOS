@@ -15,6 +15,7 @@
 
 @property(strong, nonatomic) SKProduct *twiceBooster;
 @property(strong, nonatomic) SKProduct *tripleBooster;
+@property (strong, nonatomic) NSNumberFormatter *priceFormatter;
 
 @end
 
@@ -22,8 +23,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _priceFormatter = [[NSNumberFormatter alloc] init];
+    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(restoreTapped:)];
+    
 
     [QZBQuizIAPHelper sharedInstance];
+    
 
     [self reload];
 }
@@ -39,6 +52,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

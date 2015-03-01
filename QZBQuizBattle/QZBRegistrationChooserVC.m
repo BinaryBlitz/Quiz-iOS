@@ -36,6 +36,12 @@ static NSArray  * SCOPE = nil;
 
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+    
+}
+
 - (IBAction)authorize:(id)sender {
     //[VKSdk authorize:SCOPE revokeAccess:YES];
     

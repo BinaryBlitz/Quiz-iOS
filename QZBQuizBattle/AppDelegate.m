@@ -11,7 +11,8 @@
 #import "AppDelegate.h"
 #import "VKSdk.h"
 #import "CoreData+MagicalRecord.h"
-#import "QZBQuizIAPHelper.h"
+//#import "QZBQuizIAPHelper.h"
+//#import "QZBQuizTopicIAPHelper.h"
 
 
 @interface AppDelegate ()

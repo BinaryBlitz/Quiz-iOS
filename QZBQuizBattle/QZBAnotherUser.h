@@ -10,7 +10,7 @@
 
 @interface QZBAnotherUser : NSObject
 
-@property(assign, nonatomic) NSNumber *userID;
+@property(strong, nonatomic) NSNumber *userID;
 @property(copy, nonatomic) NSString *name;
 
 

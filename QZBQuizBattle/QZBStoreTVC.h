@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "QZBStoreVCBase.h"
 
-@interface QZBStoreTVC : QZBStoreVCBase <UITableViewDataSource, UITableViewDelegate>
+@interface QZBStoreTVC : UITableViewController// <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

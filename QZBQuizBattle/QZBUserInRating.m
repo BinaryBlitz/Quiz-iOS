@@ -21,7 +21,7 @@
     self = [super init];
     if (self) {
         self.name = dict[@"name"];
-        self.userID = dict[@"id"] ;
+        self.userID = (NSNumber *)dict[@"id"] ;
         self.points = [dict[@"points"] integerValue];
         self.position = position;
     }

@@ -42,16 +42,6 @@
                                              selector:@selector(userPressShowAllButton:)
                                                  name:@"QZBUserPressShowAllButton"
                                                object:nil];
-    
-    if(!self.user || self.user.userID == [QZBCurrentUser sharedInstance].user.userID){
-        self.user = [QZBCurrentUser sharedInstance].user;
-        self.isCurrent = YES;
-    }else{
-        self.isCurrent = NO;
-    }
-    self.navigationItem.title = self.user.name;
-    
-    
 
     // Do any additional setup after loading the view.
 }
@@ -63,7 +53,20 @@
 
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
+    
+    
+    
+    if(!self.user || self.user.userID == [QZBCurrentUser sharedInstance].user.userID){
+        
+        self.user = [QZBCurrentUser sharedInstance].user;
+        self.isCurrent = YES;
+    }else{
+        self.isCurrent = NO;
+    }
+    self.navigationItem.title = self.user.name;
+    [self.tableView reloadData];
 
+    NSLog(@"viewWillAppear %@", self.user.name);
   //  self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
     /*
     [self.playerTableView reloadData];
@@ -84,15 +87,31 @@
 
 -(void)initPlayerPageWithUser:(id<QZBUserProtocol>)user{
     
-    self.user = user;
-    self.navigationItem.title = [user name];
-    NSLog(@"%@", user);
+    if([user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID] || !user ){
+        self.user = [QZBCurrentUser sharedInstance].user;
+        self.isCurrent = YES;
+    }else{
+        self.user = user;
+        self.isCurrent = NO;
+    }
+    
+   // self.user = user;
+   // self.navigationItem.title = user.name;
+    NSLog(@"user init %@", user);
+    
+  //  [self.tableView reloadData];
     
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.user = nil;
+
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+  //  self.user = nil;
+    
+    if(self.isCurrent){
+        self.user = nil;
+    }
 }
 
 #pragma mark - UITableViewDataSource

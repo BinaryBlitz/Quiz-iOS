@@ -23,6 +23,6 @@
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 - (void)setUserPic:(UIImage *)userPic;
--(void)setUserName:(NSString *)userName;
+- (void)setUserName:(NSString *)userName;
 
 @end

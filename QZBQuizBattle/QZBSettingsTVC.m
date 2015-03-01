@@ -67,7 +67,6 @@
             return YES;
         }
     } else if ([tf isEqual:self.userNameTextField]) {
-        
         if ([self checkUserName]) {
             [self updateUserName];
 
@@ -78,17 +77,17 @@
     return NO;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-    if([textField isEqual:self.userNameTextField]){
+- (BOOL)textField:(UITextField *)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string {
+    if ([textField isEqual:self.userNameTextField]) {
         NSString *res = [textField.text stringByAppendingString:string];
-        if([res length]>20){
+        if ([res length] > 20) {
             return NO;
         }
     }
-    
-        return YES;
-    
+
+    return YES;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -175,21 +174,20 @@
 }
 
 - (void)updateUserName {
-    
     NSString *newName = [self.userNameTextField.text copy];
-    
+
     [[QZBServerManager sharedManager] PATCHPlayerWithNewUserName:newName
         onSuccess:^{
             NSLog(@"name updated");
             [TSMessage showNotificationWithTitle:@"Имя обновлено"
                                             type:TSMessageNotificationTypeSuccess];
             [[QZBCurrentUser sharedInstance].user setUserName:newName];
-            
+
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
             [TSMessage
                 showNotificationWithTitle:@"Имя не обновлено, проверьте "
-                                          @"интернет-соединение"
+                @"интернет-соединение"
                                      type:TSMessageNotificationTypeSuccess];
         }];
 }
@@ -242,14 +240,16 @@
 #pragma mark - actions
 
 - (IBAction)logOutAction:(UIButton *)sender {
-    
-   
-        [[QZBCurrentUser sharedInstance] userLogOut];
-        
-        [self performSegueWithIdentifier:@"logOutFromSettings"
-                                  sender:nil];
+    [[QZBCurrentUser sharedInstance] userLogOut];
 
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    });
+    
+   // [self.navigationController popToRootViewControllerAnimated:NO];
+
+    [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
 }
 
 @end

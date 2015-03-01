@@ -198,7 +198,7 @@
         self.currentTableType = QZBRatingTableWeek;
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"expected %ld current %ld", self.expectedType, self.currentTableType);
+            NSLog(@"expected %d current %d", self.expectedType, self.currentTableType);
             if (self.expectedType != self.currentTableType) {
                 QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
                 self.currentTableType = QZBRatingTableAllTime;

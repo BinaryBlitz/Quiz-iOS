@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSArray *products;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) NSNumberFormatter *priceFormatter;
 
 @end
 
@@ -23,6 +24,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    _priceFormatter = [[NSNumberFormatter alloc] init];
+    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(restoreTapped:)];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -114,6 +126,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
