@@ -67,13 +67,17 @@
 // 4
 - (void)reload {
     _products = nil;
-    [self.tableView reloadData];
+    
+   // [self.tableView reloadData];
     [[QZBQuizTopicIAPHelper sharedInstance]
         requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
             if (success) {
                 _products = products;
+                SKProduct *product = [products firstObject];
+                [_priceFormatter setLocale:product.priceLocale];
+                
                 [self.tableView reloadData];
-                [SVProgressHUD dismiss];
+               // [SVProgressHUD dismiss];
             }
             [SVProgressHUD dismiss];
             [self.refreshControl endRefreshing];

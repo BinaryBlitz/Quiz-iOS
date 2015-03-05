@@ -38,6 +38,9 @@
     if (user) {
         _user = user;
 
+        
+        //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
 
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
@@ -48,6 +51,8 @@
     //self.user.api_key = nil;
     
     self.user = nil;
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentUser"];
 }
 

@@ -15,7 +15,7 @@
 
 @interface QZBRatingMainVC ()
 
-@property(strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) id<QZBUserProtocol> user;
 
 @end
 
@@ -45,16 +45,41 @@
     } else if (self.category) {
         [self.chooseTopicButton setTitle:self.category.name forState:UIControlStateNormal];
 
-        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
-
-        [pageVC setAllTimeRanksWithTop:nil playerArray:nil];
-        [pageVC setWeekRanksWithTop:nil playerArray:nil];
+        [self setRatingWithCategoryID:[self.category.category_id integerValue]];
 
     } else {
         [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
 
         [self setRatingWithTopicID:0];
     }
+}
+
+- (void)setRatingWithCategoryID:(NSInteger)categoryID {
+    [[QZBServerManager sharedManager]
+        GETRankingWeekly:NO
+              isCategory:YES
+                  withID:categoryID
+               onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+
+                   QZBRatingPageVC *pageVC =
+                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+                   [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
+
+               }
+               onFailure:nil];
+
+    [[QZBServerManager sharedManager]
+        GETRankingWeekly:YES
+              isCategory:YES
+                  withID:categoryID
+               onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+                   QZBRatingPageVC *pageVC =
+                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+
+                   [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
+
+               }
+               onFailure:nil];
 }
 
 - (void)setRatingWithTopicID:(NSInteger)topicID {
@@ -83,36 +108,30 @@
                onFailure:nil];
 }
 
-
 #pragma mark - Navigation
- 
--(void)showUserPage:(id<QZBUserProtocol>)user{
- 
-    self.user = user;
-     [self performSegueWithIdentifier:@"showUser" sender:nil];
- 
-    NSLog(@"destination user %@", [user name]);
-     
- 
- 
- }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)showUserPage:(id<QZBUserProtocol>)user {
+    self.user = user;
+    [self performSegueWithIdentifier:@"showUser" sender:nil];
+
+    NSLog(@"destination user %@", [user name]);
+}
+
+// In a storyboard-based application, you will often want to do a little preparation before
+// navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    if([segue.identifier isEqualToString:@"showUser"]){
-    
-    if([segue.destinationViewController isKindOfClass:[QZBPlayerPersonalPageVC class]]){
-        NSLog(@"YES");
+
+    if ([segue.identifier isEqualToString:@"showUser"]) {
+        if ([segue.destinationViewController isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
+            NSLog(@"YES");
+        }
+
+        QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
+
+        [vc initPlayerPageWithUser:self.user];
     }
-    
-    QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
-    
-    [vc initPlayerPageWithUser:self.user];
-    }
-    
 }
 
 #pragma mark - page choose
@@ -141,11 +160,5 @@
         [pageVC showRightVC];
     }
 }
-
-
-
-
-
-
 
 @end

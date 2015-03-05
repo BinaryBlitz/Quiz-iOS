@@ -23,7 +23,9 @@
 #import "TSMessage.h"
 
 @interface QZBServerManager ()
+
 @property (strong, nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
+
 @end
 
 @implementation QZBServerManager
@@ -147,6 +149,8 @@
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
+    [QZBGameTopic MR_truncateAll];  // comment on release version
+
     NSArray *topics = [topicsInRequest objectForKey:@"topics"];
 
     NSMutableArray *objectsArray = [NSMutableArray array];
@@ -208,7 +212,6 @@
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-
         }];
 }
 
@@ -370,29 +373,25 @@
 }
 
 - (void)POSTAuthWithVKToken:(NSString *)token
-                 onSuccess:(void (^)(QZBUser *user))success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
-    
-    NSDictionary *params = @{@"token":token};
-    
+                  onSuccess:(void (^)(QZBUser *user))success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"token" : token };
+
     [self.requestOperationManager POST:@"/players/authenticate_vk"
-                            parameters:params
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   
-                                   if (![responseObject objectForKey:@"error"]) {
-                                       
-                                       QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
-                        
-                                       if (success) {
-                                           success(user);
-                                       }
-                                   }
-                            }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                
-                            }];
-    
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (![responseObject objectForKey:@"error"]) {
+                QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
+
+                if (success) {
+                    success(user);
+                }
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+
+        }];
 }
 
 - (void)GETPlayerWithID:(NSInteger)playerID
@@ -420,21 +419,19 @@
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
         @"player" : @{@"password_digest" : hashedPassword}
     };
-    
+
     [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
 }
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
     NSDictionary *params = @{
-                             @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                             @"player" : @{@"name" : userName}
-                             };
-    
-    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"player" : @{@"name" : userName}
+    };
 
+    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
 }
 
 - (void)PATHPlayerDataWithDict:(NSDictionary *)params
@@ -446,10 +443,35 @@
     [self.requestOperationManager PATCH:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
             if (success) {
                 success();
             }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            NSLog(@"not patched %@", error);
+        }];
+}
+
+#pragma mark - friend
+
+- (void)POSTFriendWithID:(NSNumber *)userID
+               onSuccess:(void (^)())success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSLog(@"user id %@", userID);
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"friend_id" : userID };
+    NSString *urlString = @"/friendships";
+
+    [self.requestOperationManager POST:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"friend add request %@", responseObject);
+            if (success)
+                success();
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -457,7 +479,33 @@
                 failure(error, operation.response.statusCode);
             }
 
-            NSLog(@"not patched %@", error);
+            NSLog(@"not added %@", error);
+        }];
+}
+
+- (void)POSTUNFriendWithID:(NSNumber *)userID
+                 onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSLog(@"user id %@", userID);
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"friend_id" : userID };
+    NSString *urlString = @"/friendships/unfriend";
+
+    [self.requestOperationManager POST:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"friend add request %@", responseObject);
+            if (success)
+                success();
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+
+            NSLog(@"not added %@", error);
         }];
 }
 
@@ -475,12 +523,20 @@
         [urlAsString appendString:@"general"];
     }
 
+    if (isCategory) {
+        [urlAsString appendFormat:@"_by_category"];
+    }
+
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
     }];
 
     if (ID > 0) {
-        params[@"topic_id"] = [NSString stringWithFormat:@"%ld", ID];
+        if (isCategory) {
+            params[@"category_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
+        } else {
+            params[@"topic_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
+        }
     }
 
     NSLog(@"params ranking %@", params);

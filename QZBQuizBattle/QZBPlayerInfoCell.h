@@ -12,5 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *playerUserpic;
 @property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
+@property (weak, nonatomic) IBOutlet UIButton *friendsButton;
+@property (weak, nonatomic) IBOutlet UIButton *achievmentsButton;
 
 @end

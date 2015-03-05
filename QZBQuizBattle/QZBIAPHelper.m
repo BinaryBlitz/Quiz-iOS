@@ -9,7 +9,11 @@
 #import "QZBIAPHelper.h"
 //#import <StoreKit/StoreKit.h>
 
+
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
+
+NSString *const IAPHelperProductPurchaseFailed =
+    @"IAPHelperProductPurchaseFailed";
 
 @interface QZBIAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
@@ -24,6 +28,10 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     if ((self = [super init])) {
+        
+       // NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+       // NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
+      //  NSLog(@"receipt %@ %@",receiptURL, receipt);
         // Store product identifiers
         _productIdentifiers = productIdentifiers;
 
@@ -122,6 +130,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSLog(@"completeTransaction...");
     
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
+    
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
+    
+    NSLog(@"receipt %@ %@",receiptURL, receipt);
+    
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
@@ -139,6 +153,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     {
         NSLog(@"Transaction error: %@", transaction.error.localizedDescription);
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchaseFailed object:transaction];
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }

@@ -7,8 +7,15 @@
 //
 
 #import "QZBFriendsTVC.h"
+#import "QZBFriendCell.h"
+#import "QZBServerManager.h"
+#import "QZBAnotherUser.h"
+#import "QZBPlayerPersonalPageVC.h"
 
 @interface QZBFriendsTVC ()
+
+@property (strong, nonatomic) NSArray *friends; //QZBAnotherUser
+@property (strong, nonatomic) QZBAnotherUser *user;
 
 @end
 
@@ -17,12 +24,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Друзья";
-    ;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [[QZBServerManager sharedManager] GETRankingWeekly:YES isCategory:NO withID:0 onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+        self.friends = topRanking;
+        [self.tableView reloadData];
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,26 +43,34 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.friends.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
 
-    // Configure the cell...
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QZBFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
+
+    
+    QZBAnotherUser *user = self.friends[indexPath.row];
+    
+    [cell setCellWithUser:user];
+    
+    
 
     return cell;
 }
-*/
+
+
+
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -90,14 +108,41 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 */
 
-/*
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if(![cell isKindOfClass:[QZBFriendCell class]]){
+        return;
+    }
+    
+    QZBFriendCell *friendCell = (QZBFriendCell *)cell;
+    self.user = friendCell.user;
+    
+    
+    [self performSegueWithIdentifier:@"showUserpage" sender:nil];
+    
+    
+}
+
+
+ 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showUserpage"]) {
+
+    QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
+    
+    [vc initPlayerPageWithUser:self.user];
+    }
 }
-*/
+
 
 @end

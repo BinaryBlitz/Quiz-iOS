@@ -82,39 +82,40 @@ preparation before navigation
 
     __weak typeof(self) weakSelf = self;
 
-    if ([self validateEmail:email] && [self validatePassword:password] && [self validateUsername:username] &&
-        !self.registrationInProgress) {
+    if ([self validateEmail:email] && [self validatePassword:password] &&
+        [self validateUsername:username] && !self.registrationInProgress) {
         self.registrationInProgress = YES;
 
         [[QZBServerManager sharedManager] POSTRegistrationUser:username
             email:email
             password:password
             onSuccess:^(QZBUser *user) {
-              NSLog(@"user %@", user.api_key);
-              [[QZBCurrentUser sharedInstance] setUser:user];
+                NSLog(@"user %@", user.api_key);
+                [[QZBCurrentUser sharedInstance] setUser:user];
 
-              weakSelf.registrationInProgress = NO;
+                weakSelf.registrationInProgress = NO;
 
-              //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
+                //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
 
-              [self dismissViewControllerAnimated:YES
-                                       completion:^{
-                                       }];
+                [self dismissViewControllerAnimated:YES
+                                         completion:^{
+                                         }];
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
 
-              if (statusCode == 422) {
-                  [weakSelf userAlreadyExist];
-              }
+                if (statusCode == 422) {
+                    [weakSelf userAlreadyExist];
+                }
 
-              weakSelf.registrationInProgress = NO;
+                weakSelf.registrationInProgress = NO;
 
             }];
     }
 }
 
 - (void)userAlreadyExist {
-    [TSMessage showNotificationWithTitle:[self errorAsNSString:user_alredy_exist] type:TSMessageNotificationTypeError];
+    [TSMessage showNotificationWithTitle:[self errorAsNSString:user_alredy_exist]
+                                    type:TSMessageNotificationTypeError];
 
     [self.emailTextField becomeFirstResponder];
 

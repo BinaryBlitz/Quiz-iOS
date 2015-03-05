@@ -18,6 +18,7 @@
 		191559D51A39CDD400462C93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 191559D41A39CDD400462C93 /* Images.xcassets */; };
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
+		19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19168A961AA887EE0012341D /* QZBFriendCell.m */; };
 		191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 191E12E41A8BD3CA00AFB829 /* Artboard 1.png */; };
 		191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */ = {isa = PBXBuildFile; fileRef = 191E12E61A8BD48500AFB829 /* notAchiv.png */; };
 		191E12EA1A8C9FC700AFB829 /* QZBFriendHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12E91A8C9FC700AFB829 /* QZBFriendHorizontalCell.m */; };
@@ -121,6 +122,8 @@
 		191559DD1A39CDD400462C93 /* QZBQuizBattleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QZBQuizBattleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559E21A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
+		19168A951AA887EE0012341D /* QZBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendCell.h; sourceTree = "<group>"; };
+		19168A961AA887EE0012341D /* QZBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendCell.m; sourceTree = "<group>"; };
 		191E12E41A8BD3CA00AFB829 /* Artboard 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 1.png"; sourceTree = "<group>"; };
 		191E12E61A8BD48500AFB829 /* notAchiv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAchiv.png; sourceTree = "<group>"; };
 		191E12E81A8C9FC700AFB829 /* QZBFriendHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendHorizontalCell.h; sourceTree = "<group>"; };
@@ -444,6 +447,8 @@
 				199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */,
 				19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */,
 				19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */,
+				19168A951AA887EE0012341D /* QZBFriendCell.h */,
+				19168A961AA887EE0012341D /* QZBFriendCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -872,6 +877,7 @@
 				199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */,
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
+				19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */,
 				19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */,
 				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
 				1927967A1A9A1B2500A468E5 /* MKStoreKit.m in Sources */,

@@ -66,6 +66,12 @@
 #define COCOAPODS_VERSION_MINOR_HexColors 2
 #define COCOAPODS_VERSION_PATCH_HexColors 1
 
+// JSBadgeView
+#define COCOAPODS_POD_AVAILABLE_JSBadgeView
+#define COCOAPODS_VERSION_MAJOR_JSBadgeView 1
+#define COCOAPODS_VERSION_MINOR_JSBadgeView 3
+#define COCOAPODS_VERSION_PATCH_JSBadgeView 2
+
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2

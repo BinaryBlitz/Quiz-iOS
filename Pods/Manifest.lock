@@ -24,6 +24,7 @@ PODS:
     - GPUImage (~> 0.1)
   - GPUImage (0.1.6)
   - HexColors (2.2.1)
+  - JSBadgeView (1.3.2)
   - libPusher (1.5):
     - libPusher/Core (= 1.5)
   - libPusher/Core (1.5):
@@ -40,6 +41,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - DBCamera
+  - JSBadgeView
   - libPusher (~> 1.5)
   - MagicalRecord
   - SVProgressHUD
@@ -51,6 +53,7 @@ SPEC CHECKSUMS:
   DBCamera: 831e958699d8f728a23d6620415e2b6dcbc090d5
   GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
   HexColors: 01384d2bbe8dc4ffa43c3b4135db6e976952d153
+  JSBadgeView: 75bec79d76e0eb01d57c9ce75b7c5ea8d6707955
   libPusher: 583326327a72ab7cd0f38692f61f9061cf4be3d9
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304

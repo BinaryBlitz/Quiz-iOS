@@ -7,6 +7,7 @@
 //
 
 #import "QZBPlayerPersonalPageVC.h"
+#import "QZBServerManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBPlayerInfoCell.h"
 #import "QZBTopicTableViewCell.h"
@@ -14,6 +15,8 @@
 #import "QZBFriendHorizontalCell.h"
 #import "QZBAchivHorizontalCell.h"
 #import "QZBAchievement.h"
+#import "JSBadgeView.h"
+#import <TSMessages/TSMessage.h>
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -22,9 +25,9 @@
 
 @interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
 
-@property(strong, nonatomic)NSArray *achivArray;
-@property(strong, nonatomic) id<QZBUserProtocol> user;
-@property(assign, nonatomic) BOOL isCurrent;
+@property (strong, nonatomic) NSArray *achivArray;
+@property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (assign, nonatomic) BOOL isCurrent;
 
 @end
 
@@ -34,7 +37,7 @@
     [super viewDidLoad];
 
     [self initAchivs];
-    
+
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
 
@@ -53,31 +56,21 @@
 
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
-    
-    
-    
-    if(!self.user || self.user.userID == [QZBCurrentUser sharedInstance].user.userID){
-        
+
+    if (!self.user ||
+        [self.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
         self.user = [QZBCurrentUser sharedInstance].user;
         self.isCurrent = YES;
-    }else{
+
+    } else {
         self.isCurrent = NO;
     }
     self.navigationItem.title = self.user.name;
     [self.tableView reloadData];
+    
+    
 
     NSLog(@"viewWillAppear %@", self.user.name);
-  //  self.navigationItem.title = [QZBCurrentUser sharedInstance].user.name;
-    /*
-    [self.playerTableView reloadData];
-    if(!self.user){
-        self.user = [QZBCurrentUser sharedInstance].user;
-        self.isCurrent = YES;
-    }else{
-        self.isCurrent = NO;
-    }
-    self.navigationItem.title = self.user.name;*/
-    
 }
 
 - (void)dealloc {
@@ -85,31 +78,24 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)initPlayerPageWithUser:(id<QZBUserProtocol>)user{
-    
-    if([user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID] || !user ){
+- (void)initPlayerPageWithUser:(id<QZBUserProtocol>)user {
+    if ([user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID] || !user) {
         self.user = [QZBCurrentUser sharedInstance].user;
         self.isCurrent = YES;
-    }else{
+
+    } else {
         self.user = user;
         self.isCurrent = NO;
     }
-    
-   // self.user = user;
-   // self.navigationItem.title = user.name;
+
     NSLog(@"user init %@", user);
-    
-  //  [self.tableView reloadData];
-    
 }
 
-
-
--(void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-  //  self.user = nil;
-    
-    if(self.isCurrent){
+    //  self.user = nil;
+
+    if (self.isCurrent) {
         self.user = nil;
     }
 }
@@ -120,11 +106,11 @@
     return 10;
 }
 
-
-//REDO player pic
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   static NSString *playerIdentifier = @"playerСell";
-   static NSString *friendsIdentifier = @"friendsCell";
+// REDO player pic
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *playerIdentifier = @"playerСell";
+    static NSString *friendsIdentifier = @"friendsCell";
     static NSString *achivIdentifier = @"achivCell";
 
     UITableViewCell *cell;
@@ -132,44 +118,46 @@
     if (indexPath.row == 0) {
         QZBPlayerInfoCell *playerCell =
             (QZBPlayerInfoCell *)[tableView dequeueReusableCellWithIdentifier:playerIdentifier];
-        
+
         [playerCell.multiUseButton addTarget:self
                                       action:@selector(multiUseButtonAction:)
                             forControlEvents:UIControlEventTouchUpInside];
-        
+
         NSString *buttonTitle = nil;
-        if(self.isCurrent){
-            
+        if (self.isCurrent) {
             buttonTitle = @"Настройки";
-            [playerCell.multiUseButton setTitle:@"settings"
-                                       forState:UIControlStateNormal];
-        }else{
+            [playerCell.multiUseButton setTitle:@"settings" forState:UIControlStateNormal];
+
+            JSBadgeView *bv = [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
+                                                            alignment:JSBadgeViewAlignmentTopRight];
+            bv.badgeText = @"100000";
+        } else {
             buttonTitle = @"add friend";
         }
-        [playerCell.multiUseButton setTitle:buttonTitle
-                                   forState:UIControlStateNormal];
-        
+        [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
 
         [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
         cell = playerCell;
-    } else if (indexPath.row == 1 ) {
-        QZBFriendHorizontalCell *friendsCell = [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
+    } else if (indexPath.row == 1) {
+        QZBFriendHorizontalCell *friendsCell =
+            [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
         return friendsCell;
         // cell = friendsCell;
-    } else if(indexPath.row == 2){
-        QZBAchivHorizontalCell *achivCell = [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
-        
+    } else if (indexPath.row == 2) {
+        QZBAchivHorizontalCell *achivCell =
+            [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
+
         [achivCell setAchivArray:self.achivArray];
         achivCell.buttonTitle = @"Показать\n все";
         return achivCell;
-    }
-    else if (indexPath.row == 3) {
+    } else if (indexPath.row == 3) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"mostLovedTopics"];
 
         return cell;
     } else if (indexPath.row > 3) {
-        QZBTopicTableViewCell *topicCell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
+        QZBTopicTableViewCell *topicCell =
+            [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
         topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
         return topicCell;
         // cell = topicCell;
@@ -182,8 +170,6 @@
 
     NSIndexPath *indexPath = (NSIndexPath *)notification.object;
 
-    
-    
     if (indexPath.row == 1) {
         [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
     } else if (indexPath.row == 2) {
@@ -216,47 +202,45 @@ preparation before navigation
 
 #pragma mark - actions
 - (IBAction)showAchivements:(UIButton *)sender {
-    
     [self performSegueWithIdentifier:@"showAchivements" sender:nil];
+}
+- (IBAction)showFriendsAction:(id)sender {
+    [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
 }
 
 - (void)multiUseButtonAction:(id)sender {
-    
-    if(self.isCurrent){
+    if (self.isCurrent) {
         [self performSegueWithIdentifier:@"showSettings" sender:nil];
+    }else{
+        
+        NSNumber *friendID = self.user.userID;
+        
+        [[QZBServerManager sharedManager] POSTFriendWithID:friendID onSuccess:^{
+            
+            [TSMessage showNotificationInViewController:self title:@"Added" subtitle:@"" type:TSMessageNotificationTypeSuccess duration:1];
+            
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+        }];
     }
 }
 
 #pragma mark - init friends and achivs
 
--(void)initAchivs{
-    
+- (void)initAchivs {
     [UIImage imageNamed:@"achiv"];
     [UIImage imageNamed:@"notAchiv"];
-    
-    self.achivArray = @[[[QZBAchievement alloc] initWithName:@"achiv"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv2"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv2"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
-                                                   imageName:@"notAchiv"]
-                        ];
-    
+
+    self.achivArray = @[
+        [[QZBAchievement alloc] initWithName:@"achiv" imageName:@"achiv"],
+        [[QZBAchievement alloc] initWithName:@"notAchiv" imageName:@"notAchiv"],
+        [[QZBAchievement alloc] initWithName:@"achiv2" imageName:@"achiv"],
+        [[QZBAchievement alloc] initWithName:@"notAchiv2" imageName:@"notAchiv"],
+        [[QZBAchievement alloc] initWithName:@"achiv" imageName:@"achiv"],
+        [[QZBAchievement alloc] initWithName:@"notAchiv" imageName:@"notAchiv"],
+        [[QZBAchievement alloc] initWithName:@"achiv2" imageName:@"achiv"],
+        [[QZBAchievement alloc] initWithName:@"notAchiv2" imageName:@"notAchiv"]
+    ];
 }
-
-
-
-
-
 
 @end

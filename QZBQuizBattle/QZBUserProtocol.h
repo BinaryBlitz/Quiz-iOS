@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
+
+//Protocol for all users in program
 #import <Foundation/Foundation.h>
 
 @protocol QZBUserProtocol <NSObject>
@@ -15,6 +17,5 @@
 -(NSString *)name;
 
 -(NSNumber *)userID;
-
 
 @end

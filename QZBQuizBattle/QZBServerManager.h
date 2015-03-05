@@ -30,6 +30,7 @@
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)(QZBLobby *lobby))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 - (void)PATCHCloseLobby:(QZBLobby *)lobby
               onSuccess:(void (^)(QZBSession *session, id bot))success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -74,7 +75,13 @@
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+#pragma mark - friends
 
+- (void)POSTFriendWithID:(NSNumber *)userID
+               onSuccess:(void (^)())success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
                   withID:(NSInteger)ID

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QZBUserProtocol.h"
 
-@interface QZBAnotherUser : NSObject
+@interface QZBAnotherUser : NSObject<QZBUserProtocol>
 
 @property(strong, nonatomic) NSNumber *userID;
 @property(copy, nonatomic) NSString *name;

@@ -212,8 +212,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
                 }];
         }];
-
-    //[[QZBSessionManager sessionManager] newQuestionStart];
 }
 
 //вызывается после показа лейбла с номером раунда

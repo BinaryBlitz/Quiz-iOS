@@ -7,3 +7,4 @@ pod "TSMessages"
 pod "MagicalRecord"
 pod "DBCamera"
 pod 'SVProgressHUD'
+pod 'JSBadgeView'
