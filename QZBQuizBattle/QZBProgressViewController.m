@@ -17,7 +17,7 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
-#import "NSTimer+Blocks.h"
+//#import "NSTimer+Blocks.h"
 //#import <Pusher/Pusher.h>
 
 @interface QZBProgressViewController ()  //<PTPusherDelegate>
@@ -27,7 +27,9 @@
 @property (strong, nonatomic) QZBOnlineSessionWorker *onlineWorker;
 @property (strong, nonatomic) QZBLobby *lobby;
 @property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSTimer *checkNeedStartTimer;
 @property (assign, nonatomic) NSUInteger counter;
+@property (assign, nonatomic) NSUInteger needStartCounter;
 @property (assign, nonatomic) BOOL isCanceled;
 @property (assign, nonatomic) BOOL setted;
 @property (assign, nonatomic) BOOL isOnline;
@@ -71,6 +73,7 @@
     self.isOnline = NO;
     self.isEntered = NO;
     self.lobby = nil;
+    self.checkNeedStartTimer = nil;
 
     self.cancelButton.enabled = YES;
 
@@ -107,6 +110,9 @@
 - (IBAction)cancelFinding:(UIButton *)sender {
     self.isCanceled = YES;
 
+    [self.checkNeedStartTimer invalidate];
+    self.checkNeedStartTimer = nil;
+
     [self.onlineWorker closeConnection];
     self.onlineWorker = nil;
 
@@ -127,18 +133,18 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-    __weak typeof(self) weakSelf = self;
+    // __weak typeof(self) weakSelf = self;
 
     [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
         onSuccess:^(QZBLobby *lobby) {
 
-          [weakSelf sessionFromLobby:lobby];
+            [self sessionFromLobby:lobby];
 
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
 
-          NSLog(@"failed");
-            
+            NSLog(@"failed");
+
             [self cancelFinding:nil];
 
         }];
@@ -151,56 +157,40 @@
         return;
     }
     self.counter = 7;
-   // __weak typeof(self) weakSelf = self;
+    // __weak typeof(self) weakSelf = self;
     if (!self.timer) {
-        /*
-        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
-          id strongSelf = weakSelf;
-
-          [strongSelf tryGetSession:nil];
-        } repeats:YES];
-
-        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 block:^{
-          id strongSelf = weakSelf;
-
-          [strongSelf tryGetSession:nil];
-        } repeats:YES];
-        */
-
         self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                       target:self
                                                     selector:@selector(tryGetSession:)
                                                     userInfo:nil
                                                      repeats:YES];
 
-        [self tryGetSession:nil];
+        [self tryGetSession];
     }
 }
 
 - (void)tryGetSession:(NSTimer *)timer {
-    if (![timer isEqual:self.timer]) {
-        [timer invalidate];
-        timer = nil;
-    }
-
-    if (_timer) {
-        _counter--;
-        NSLog(@"%ld", (unsigned long)_counter);
-
-        [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
-            onSuccess:^(QZBSession *session, id bot) {
-
-              [self settitingSession:session bot:bot];
-
-              [_timer invalidate];
-              _timer = nil;
-
-            }
-            onFailure:^(NSError *error, NSInteger statusCode) {
-
-              NSLog(@"finding failure");
-
-            }];
+    if (_timer && [self.timer isEqual:timer]) {
+//        _counter--;
+//        NSLog(@"%ld", (unsigned long)_counter);
+//
+//        [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
+//            onSuccess:^(QZBSession *session, id bot) {
+//
+//                [self settitingSession:session bot:bot];
+//
+//                [_timer invalidate];
+//                _timer = nil;
+//
+//            }
+//            onFailure:^(NSError *error, NSInteger statusCode) {
+//
+//                NSLog(@"finding failure");
+//                [self.navigationController popViewControllerAnimated:YES];
+//
+//            }];
+        
+        [self tryGetSession];
 
         if (_counter <= 0) {
             [_timer invalidate];
@@ -213,6 +203,28 @@
         NSLog(@"problems");
     }
 }
+
+- (void)tryGetSession {
+    _counter--;
+    NSLog(@"%ld", (unsigned long)_counter);
+
+    [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
+        onSuccess:^(QZBSession *session, id bot) {
+
+            [self settitingSession:session bot:bot];
+
+            [_timer invalidate];
+            _timer = nil;
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
+
+            NSLog(@"finding failure");
+            [self.navigationController popViewControllerAnimated:YES];
+
+        }];
+}
+
 - (void)settitingSession:(QZBSession *)session bot:(id)bot {
     if (!self.setted && !self.isEntered) {
         self.setted = YES;
@@ -220,9 +232,7 @@
         if (!self.isCanceled) {
             NSLog(@"setSession");
             [[QZBSessionManager sessionManager] setSession:session];
-            
-            
-            
+
             if ([bot isKindOfClass:[QZBOpponentBot class]]) {
                 [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
                 if (!self.isEntered) {
@@ -234,8 +244,6 @@
             } else {
                 self.isOnline = YES;
                 [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
-                
-                                
             }
 
             //[self performSegueWithIdentifier:@"showGame" sender:nil];
@@ -245,19 +253,64 @@
 
 - (void)showGameVC:(NSNotification *)notification {
     NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline, self.isEntered);
-    if (self.setted && self.isOnline && !self.isEntered) {
-        self.cancelButton.enabled = NO;
-        self.isEntered = YES;
-        _onlineWorker = nil;
 
-        [self performSegueWithIdentifier:@"showGame" sender:nil];
-    }else{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self showGameVC:nil];
-        });
+    if ([self checkCanEnterGame]) {
+        NSLog(@"can enter");
+        [self enterGame];
+    } else {
+        if (!self.checkNeedStartTimer) {
+            NSLog(@"timer started");
+
+            self.needStartCounter = 5;
+            self.checkNeedStartTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                                        target:self
+                                                                      selector:@selector(startGame:)
+                                                                      userInfo:nil
+                                                                       repeats:YES];
+        }
     }
-        
-    
+}
+
+- (void)startGame:(NSTimer *)timer {
+    NSLog(@"enter in start game function");
+
+    if (self.checkNeedStartTimer && [timer isEqual:self.checkNeedStartTimer]) {
+        if ([self checkCanEnterGame]) {
+            NSLog(@"entered");
+
+            [self.checkNeedStartTimer invalidate];
+            self.checkNeedStartTimer = nil;
+            [self enterGame];
+
+        } else if (self.isEntered || self.isCanceled) {
+            [self.checkNeedStartTimer invalidate];
+            self.checkNeedStartTimer = nil;
+
+        } else if (--self.needStartCounter <= 0 && !self.isEntered && !self.isCanceled) {
+            [self.checkNeedStartTimer invalidate];
+            self.checkNeedStartTimer = nil;
+
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+
+    else {
+        NSLog(@"bad timer invalidate in progress");
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
+- (BOOL)checkCanEnterGame {
+    return self.setted && self.isOnline && !self.isEntered && !self.isCanceled;
+}
+
+- (void)enterGame {
+    self.cancelButton.enabled = NO;
+    self.isEntered = YES;
+    _onlineWorker = nil;
+    [self.checkNeedStartTimer invalidate];
+    [self performSegueWithIdentifier:@"showGame" sender:nil];
 }
 
 - (void)didSubscribed:(NSNotification *)notification {
