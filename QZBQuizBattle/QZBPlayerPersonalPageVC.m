@@ -17,6 +17,8 @@
 #import "QZBAchievement.h"
 #import "JSBadgeView.h"
 #import <TSMessages/TSMessage.h>
+#import "QZBFriendsTVC.h"
+#import "QZBAnotherUser.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -27,7 +29,9 @@
 
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) NSArray *friends; //id<QZBUserProtocol>
 @property (assign, nonatomic) BOOL isCurrent;
+@property (assign, nonatomic) BOOL isFriend;
 
 @end
 
@@ -45,6 +49,8 @@
                                              selector:@selector(userPressShowAllButton:)
                                                  name:@"QZBUserPressShowAllButton"
                                                object:nil];
+    
+   
 
     // Do any additional setup after loading the view.
 }
@@ -66,7 +72,10 @@
         self.isCurrent = NO;
     }
     self.navigationItem.title = self.user.name;
-    [self.tableView reloadData];
+    if(self.isCurrent){
+        [self initFriendsWithUser:self.user];
+    }
+   // [self.tableView reloadData];
     
     
 
@@ -86,14 +95,32 @@
     } else {
         self.user = user;
         self.isCurrent = NO;
+        [[QZBServerManager sharedManager] GETPlayerWithID:user.userID onSuccess:^(QZBAnotherUser *anotherUser) {
+            
+            if([user isKindOfClass:[QZBAnotherUser class]]){
+                QZBAnotherUser *currentUser = (QZBAnotherUser *) user;
+                
+                currentUser.isFriend = anotherUser.isFriend;
+            }
+            
+            //self.user.isFriend = anotherUser.isFriend;
+            NSLog(@" %d", user.isFriend);
+            [self.tableView reloadData];
+            
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+            
+            
+        }];
     }
+    
+    [self initFriendsWithUser:self.user];
 
     NSLog(@"user init %@", user);
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    //  self.user = nil;
 
     if (self.isCurrent) {
         self.user = nil;
@@ -107,6 +134,8 @@
 }
 
 // REDO player pic
+//TODO refactoring
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *playerIdentifier = @"playerСell";
@@ -122,6 +151,7 @@
         [playerCell.multiUseButton addTarget:self
                                       action:@selector(multiUseButtonAction:)
                             forControlEvents:UIControlEventTouchUpInside];
+        playerCell.friendsLabel.text = [NSString stringWithFormat:@"%ld", [self.friends count]];
 
         NSString *buttonTitle = nil;
         if (self.isCurrent) {
@@ -132,7 +162,11 @@
                                                             alignment:JSBadgeViewAlignmentTopRight];
             bv.badgeText = @"100000";
         } else {
-            buttonTitle = @"add friend";
+            if(!self.user.isFriend){
+                buttonTitle = @"add friend";
+            }else{
+                buttonTitle = @"delete from friends";
+            }
         }
         [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
 
@@ -189,16 +223,21 @@
     }
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little
-preparation before navigation
+//preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if([segue.identifier isEqualToString:@"showFriendsList"]){
+        QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
+        [vc setFriendsOwner:self.user andFriends:self.friends];
+    }
 }
-*/
+
 
 #pragma mark - actions
 - (IBAction)showAchivements:(UIButton *)sender {
@@ -212,20 +251,48 @@ preparation before navigation
     if (self.isCurrent) {
         [self performSegueWithIdentifier:@"showSettings" sender:nil];
     }else{
-        
         NSNumber *friendID = self.user.userID;
+        if(!self.user.isFriend){
         
         [[QZBServerManager sharedManager] POSTFriendWithID:friendID onSuccess:^{
             
-            [TSMessage showNotificationInViewController:self title:@"Added" subtitle:@"" type:TSMessageNotificationTypeSuccess duration:1];
+            [TSMessage showNotificationInViewController:self title:@"Друг добавлен"
+                                               subtitle:@""
+                                                   type:TSMessageNotificationTypeSuccess
+                                               duration:1];
+            if([self.user isKindOfClass:[QZBAnotherUser class]]){
+                
+                QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                currentUser.isFriend = YES;
+                [self.tableView reloadData];
+            }
             
         } onFailure:^(NSError *error, NSInteger statusCode) {
             
-        }];
+        }];}else{
+            
+            
+            [[QZBServerManager sharedManager] DELETEUNFriendWithID:friendID onSuccess:^{
+                
+                [TSMessage showNotificationInViewController:self title:@"Друг удален"
+                                                   subtitle:@""
+                                                       type:TSMessageNotificationTypeSuccess
+                                                   duration:1];
+                if([self.user isKindOfClass:[QZBAnotherUser class]]){
+                
+                    QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                    currentUser.isFriend = NO;
+                    [self.tableView reloadData];
+                }
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                
+            }];
+        }
     }
 }
 
 #pragma mark - init friends and achivs
+
 
 - (void)initAchivs {
     [UIImage imageNamed:@"achiv"];
@@ -241,6 +308,29 @@ preparation before navigation
         [[QZBAchievement alloc] initWithName:@"achiv2" imageName:@"achiv"],
         [[QZBAchievement alloc] initWithName:@"notAchiv2" imageName:@"notAchiv"]
     ];
+}
+
+#pragma mark - friends 
+
+-(void)initFriendsWithUser:(id<QZBUserProtocol>) user{
+    
+    [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:user.userID OnSuccess:^(NSArray *friends) {
+        self.friends = friends;
+        [self.tableView reloadData];
+        
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
+    if(self.isCurrent){
+        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends) {
+            
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+        }];
+    }
+    
 }
 
 @end

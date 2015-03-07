@@ -16,6 +16,7 @@
 @property (copy, nonatomic) NSString *api_key;
 @property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) UIImage *userPic;
+@property(assign, nonatomic) BOOL isFriend;
 
 @end
 
@@ -33,6 +34,8 @@
         self.userID = [dict objectForKey:@"id"];
         self.userPic = nil;
         
+        self.isFriend = NO;
+        
     }
     return self;
 }
@@ -44,6 +47,7 @@
         self.email = [coder decodeObjectForKey:@"userEmail"];
         self.api_key = [coder decodeObjectForKey:@"userApiKey"];
         self.userID = [coder decodeObjectForKey:@"user_id"];
+        self.isFriend = NO;
         NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
         NSLog(@"path %@", imagePath);
         if (imagePath) {

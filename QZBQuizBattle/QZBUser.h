@@ -19,6 +19,7 @@
 @property (copy, nonatomic, readonly) NSString *api_key;
 @property (strong, nonatomic, readonly) NSNumber *userID;
 @property (strong, nonatomic, readonly) UIImage *userPic;
+@property (assign, nonatomic, readonly) BOOL isFriend;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

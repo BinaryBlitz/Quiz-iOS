@@ -15,10 +15,10 @@
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict position:(NSInteger)position {
-    self = [super init];
+    self = [super initWithDictionary:dict];
     if (self) {
-        self.name = dict[@"name"];
-        self.userID = (NSNumber *)dict[@"id"];
+       // self.name = dict[@"name"];
+       // self.userID = (NSNumber *)dict[@"id"];
         self.points = [dict[@"points"] integerValue];
         self.position = position;
     }

@@ -13,4 +13,13 @@
 //@synthesize name = _name;
 //@synthesize userID = _userID;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
+    self = [super init];
+    if (self) {
+        self.name = dict[@"name"];
+        self.userID = (NSNumber *)dict[@"id"];
+    }
+    return self;
+}
+
 @end

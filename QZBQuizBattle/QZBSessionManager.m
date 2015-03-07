@@ -143,7 +143,7 @@
         [timer invalidate];
         timer = nil;
     }
-    NSLog(@"%lu", (unsigned long)self.currentTime);
+  //  NSLog(@"%lu", (unsigned long)self.currentTime);
     if (self.currentTime < 10) {
         // NSLog(@"%ld", (unsigned long)self.currentTime);
     } else {

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
+#import "QZBUserProtocol.h"
 
 @class QZBSession;
 @class QZBLobby;
@@ -15,6 +16,7 @@
 @class QZBUser;
 @class QZBCategory;
 @class QZBGameTopic;
+@class QZBAnotherUser;
 
 @interface QZBServerManager : NSObject
 
@@ -58,9 +60,9 @@
                  onSuccess:(void (^)(QZBUser *user))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)GETPlayerWithID:(NSInteger)playerID
-             onSuccess:(void (^)(QZBUser *user))success
-             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)GETPlayerWithID:(NSNumber *)playerID
+              onSuccess:(void (^)(QZBAnotherUser *anotherUser))success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure ;
 
 - (void)POSTAuthWithVKToken:(NSString *)token
                   onSuccess:(void (^)(QZBUser *user))success
@@ -80,6 +82,18 @@
 - (void)POSTFriendWithID:(NSNumber *)userID
                onSuccess:(void (^)())success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)DELETEUNFriendWithID:(NSNumber *)userID
+                   onSuccess:(void (^)())success
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)GETAllFriendsOfUserWithID:(NSNumber *)userID OnSuccess:(void (^)(NSArray *friends))success
+                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
 
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly

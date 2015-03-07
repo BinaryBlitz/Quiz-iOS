@@ -15,7 +15,7 @@
 
 -(void)initPlayerPageWithUser:(id<QZBUserProtocol>)user;
 
-@property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
+//@property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
 //@property (weak, nonatomic) IBOutlet UIButton *friendsButton;
 //@property (weak, nonatomic) IBOutlet UIButton *achievmentsButtons;
 

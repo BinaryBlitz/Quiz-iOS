@@ -13,7 +13,7 @@
 #import "QZBTopicChooserControllerViewController.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
-static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
+static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 @interface QZBGameSessionViewController ()
 
@@ -183,18 +183,19 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
     }
 }
 
+
+//показывает лейбл раунда
 - (void)showQuestionAndAnswers {
     [self prepareQuestion];
     __weak typeof(self) weakSelf = self;
 
     NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
 
-    // NSString *textForLabel = [NSString stringWithFormat:@"Раунд %ld",
-    // roundNum];
-
     self.roundLabel.text = [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
+    
+    NSLog(@"Before showing label");
 
-    [UIView animateWithDuration:0.1
+    [UIView animateWithDuration:0.3
         delay:0
         options:UIViewAnimationOptionTransitionNone
         animations:^{
@@ -242,6 +243,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
                                weakSelf.timeLabel.alpha = 1.0;
                            }
                            completion:^(BOOL finished){
+                               //[[QZBSessionManager sessionManager] newQuestionStart];
                            }];
 
                        [[QZBSessionManager sessionManager] newQuestionStart];
@@ -274,6 +276,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
                 button.enabled = YES;
                 QZBAnswerButton *b = (QZBAnswerButton *)button;
                 [b unshowTriangles];
+                
+                NSLog(@"Buttons and over unshow");
             }];
     }
 }
@@ -311,9 +315,11 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.4;
 
                        [self UNShowQuestinAndAnswers];
                        //[self prepareQuestion];
+                       NSLog(@"before before showing");
                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                                       dispatch_get_main_queue(), ^{
                                           [weakSelf showQuestionAndAnswers];
+                                         
                                       });
                    });
 }

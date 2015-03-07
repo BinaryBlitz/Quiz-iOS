@@ -13,8 +13,9 @@
 
 @property(strong, nonatomic) NSNumber *userID;
 @property(copy, nonatomic) NSString *name;
+@property(assign, nonatomic) BOOL isFriend;
 
-
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 
 @end

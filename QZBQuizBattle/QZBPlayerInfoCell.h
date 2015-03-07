@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendsButton;
 @property (weak, nonatomic) IBOutlet UIButton *achievmentsButton;
+@property (weak, nonatomic) IBOutlet UILabel *friendsLabel;
 
 @end

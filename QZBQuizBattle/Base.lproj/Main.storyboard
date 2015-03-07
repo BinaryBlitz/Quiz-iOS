@@ -1089,11 +1089,6 @@
                                                     <exclude reference="bTl-M1-HLB"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="0ac-d9-mne"/>
-                                                    <exclude reference="DMX-Yx-LYE"/>
-                                                    <exclude reference="HkH-G0-Y5R"/>
-                                                    <exclude reference="MqC-iq-UBg"/>
-                                                    <exclude reference="yZu-Sj-8X3"/>
                                                     <exclude reference="IUX-kC-vYv"/>
                                                     <exclude reference="Jen-QQ-P2I"/>
                                                     <exclude reference="RfH-Kc-25f"/>
@@ -1102,6 +1097,11 @@
                                                     <exclude reference="Q4r-up-m5D"/>
                                                     <exclude reference="bKI-tY-ShO"/>
                                                     <exclude reference="f7k-fD-16G"/>
+                                                    <exclude reference="0ac-d9-mne"/>
+                                                    <exclude reference="DMX-Yx-LYE"/>
+                                                    <exclude reference="HkH-G0-Y5R"/>
+                                                    <exclude reference="MqC-iq-UBg"/>
+                                                    <exclude reference="yZu-Sj-8X3"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -1112,11 +1112,6 @@
                                                     <include reference="bTl-M1-HLB"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="0ac-d9-mne"/>
-                                                    <include reference="DMX-Yx-LYE"/>
-                                                    <include reference="HkH-G0-Y5R"/>
-                                                    <include reference="MqC-iq-UBg"/>
-                                                    <include reference="yZu-Sj-8X3"/>
                                                     <include reference="IUX-kC-vYv"/>
                                                     <include reference="Jen-QQ-P2I"/>
                                                     <include reference="RfH-Kc-25f"/>
@@ -1125,12 +1120,17 @@
                                                     <include reference="Q4r-up-m5D"/>
                                                     <include reference="bKI-tY-ShO"/>
                                                     <include reference="f7k-fD-16G"/>
+                                                    <include reference="0ac-d9-mne"/>
+                                                    <include reference="DMX-Yx-LYE"/>
+                                                    <include reference="HkH-G0-Y5R"/>
+                                                    <include reference="MqC-iq-UBg"/>
+                                                    <include reference="yZu-Sj-8X3"/>
                                                 </mask>
                                             </variation>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEe-jJ-VX7">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                            <state key="normal" title="Button">
+                                            <state key="normal" title=" ">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
@@ -1190,6 +1190,7 @@
                                 <connections>
                                     <outlet property="achievmentsButton" destination="UZf-Fm-etX" id="pK2-Lr-Ldz"/>
                                     <outlet property="friendsButton" destination="bTl-M1-HLB" id="oyf-mM-FuN"/>
+                                    <outlet property="friendsLabel" destination="UQK-5l-dzZ" id="4ee-7d-hXq"/>
                                     <outlet property="multiUseButton" destination="TEe-jJ-VX7" id="THE-jH-wHU"/>
                                     <outlet property="playerUserpic" destination="1J6-7c-bw3" id="m1X-fD-YEJ"/>
                                 </connections>
@@ -1266,7 +1267,8 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="8" y="20" width="584" height="22"/>
                                                 <mask key="constraints">
                                                     <exclude reference="WcC-nw-6qY"/>
                                                 </mask>
@@ -1755,13 +1757,13 @@
                                             <exclude reference="ReL-i4-Gwf"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <exclude reference="ADL-9X-ACk"/>
+                                            <exclude reference="K9B-R8-9mF"/>
+                                            <exclude reference="hpF-tR-doq"/>
                                             <exclude reference="Igq-91-dsP"/>
                                             <exclude reference="RPx-cN-uvw"/>
                                             <exclude reference="gay-Qd-lLw"/>
                                             <exclude reference="xFo-S7-NdU"/>
-                                            <exclude reference="ADL-9X-ACk"/>
-                                            <exclude reference="K9B-R8-9mF"/>
-                                            <exclude reference="hpF-tR-doq"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -1770,13 +1772,13 @@
                                             <include reference="ReL-i4-Gwf"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <include reference="ADL-9X-ACk"/>
+                                            <include reference="K9B-R8-9mF"/>
+                                            <include reference="hpF-tR-doq"/>
                                             <include reference="Igq-91-dsP"/>
                                             <include reference="RPx-cN-uvw"/>
                                             <include reference="gay-Qd-lLw"/>
                                             <include reference="xFo-S7-NdU"/>
-                                            <include reference="ADL-9X-ACk"/>
-                                            <include reference="K9B-R8-9mF"/>
-                                            <include reference="hpF-tR-doq"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -3033,6 +3035,7 @@
             <objects>
                 <tableViewController id="MJ9-in-zf6" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="22" sectionFooterHeight="22" id="59R-PV-9en">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>

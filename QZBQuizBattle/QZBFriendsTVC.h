@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QZBUserProtocol.h"
 
 @interface QZBFriendsTVC : UITableViewController
+
+- (void)setFriendsOwner:(id<QZBUserProtocol>)user andFriends:(NSArray *)friends;
 
 @end

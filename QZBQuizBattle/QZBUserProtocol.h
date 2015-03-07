@@ -18,4 +18,6 @@
 
 -(NSNumber *)userID;
 
+-(BOOL)isFriend;
+
 @end

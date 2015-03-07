@@ -17,6 +17,7 @@
 #import "QZBOnlineSessionWorker.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
+#import "QZBAnotherUser.h"
 #import "QZBUserInRating.h"
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
@@ -215,6 +216,7 @@
         }];
 }
 
+//?
 - (void)GETFindGameWithLobby:(QZBLobby *)lobby
                    onSuccess:(void (^)(QZBSession *session, id bot))success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
@@ -394,17 +396,25 @@
         }];
 }
 
-- (void)GETPlayerWithID:(NSInteger)playerID
-              onSuccess:(void (^)(QZBUser *user))success
+- (void)GETPlayerWithID:(NSNumber *)playerID
+              onSuccess:(void (^)(QZBAnotherUser *anotherUser))success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
-    NSString *urlString = [NSString stringWithFormat:@"players/%ld", (long)playerID];
+    NSString *urlString = [NSString stringWithFormat:@"players/%@", playerID];
 
     [self.requestOperationManager GET:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"user JSON : %@", responseObject);
+            QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:responseObject];
+            BOOL isFriend = [responseObject[@"is_friend"] boolValue];
+            user.isFriend = isFriend;
+            
+            if(success){
+                success(user);
+            }
+            
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"user fail");
@@ -483,19 +493,19 @@
         }];
 }
 
-- (void)POSTUNFriendWithID:(NSNumber *)userID
-                 onSuccess:(void (^)())success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+- (void)DELETEUNFriendWithID:(NSNumber *)userID
+                   onSuccess:(void (^)())success
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSLog(@"user id %@", userID);
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
     NSString *urlString = @"/friendships/unfriend";
 
-    [self.requestOperationManager POST:urlString
+    [self.requestOperationManager DELETE:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"friend add request %@", responseObject);
+            NSLog(@"deleted %@", responseObject);
             if (success)
                 success();
 
@@ -506,6 +516,92 @@
             }
 
             NSLog(@"not added %@", error);
+        }];
+}
+
+- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    [self.requestOperationManager GET:@"friendships/requests"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"friends request %@", responseObject);
+
+            NSMutableArray *friends = [NSMutableArray array];
+
+            NSArray *result = [NSArray arrayWithArray:friends];
+
+            if (success) {
+                success(result);
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
+}
+
+- (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    [self.requestOperationManager PATCH:@"/friendships/mark_requests_as_viewed"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
+}
+
+- (void)GETAllFriendsOfUserWithID:(NSNumber *)userID OnSuccess:(void (^)(NSArray *friends))success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+   // NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
+
+    NSString *urlString = [NSString stringWithFormat:@"/players/%@/friends", userID];
+    
+     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+
+    [self.requestOperationManager GET:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@"all friend %@", responseObject);
+
+            NSMutableArray *friends = [NSMutableArray array];
+            
+            for(NSDictionary *dict in responseObject){
+                QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
+                
+                [friends addObject:user];
+            }
+
+            NSArray *result = [NSArray arrayWithArray:friends];
+
+            if (success) {
+                success(result);
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            NSLog(@"friends error %@", error);
+            
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
         }];
 }
 
@@ -558,7 +654,9 @@
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
         }];
 }
 
@@ -591,6 +689,18 @@
         }
         [usersPlayer removeObjectsInArray:usersTop];
     }
+}
+
+#pragma mark - APNs token
+
+-(void)PUSHAPNsToken:(NSString *)token onSuccess:(void (^)())success
+           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"push_token":token };
+    
+    //[self.requestOperationManager ]
+    
+    
 }
 
 @end
