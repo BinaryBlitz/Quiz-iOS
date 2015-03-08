@@ -695,6 +695,11 @@
 - (void)POSTAPNsToken:(NSString *)token
             onSuccess:(void (^)())success
             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    if(!token){
+        return;
+    }
+    
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"push_token" : token };

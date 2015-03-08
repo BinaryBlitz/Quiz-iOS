@@ -122,6 +122,8 @@
 
     if (statusCode == 401) {
       [[QZBCurrentUser sharedInstance] userLogOut];
+        
+        //fix it
       [self performSegueWithIdentifier:@"logOutUnauthorized" sender:nil];
     }
 
