@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="xJG-qA-d0w">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="xJG-qA-d0w">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NB1-Pj-gFQ">
@@ -2809,7 +2809,7 @@
                         <segue destination="5KN-i7-TPc" kind="relationship" relationship="viewControllers" id="NqA-KN-gR7"/>
                         <segue destination="e6c-er-5lv" kind="relationship" relationship="viewControllers" id="6cb-yY-YQG"/>
                         <segue destination="fNL-rx-eLG" kind="relationship" relationship="viewControllers" id="BCb-25-goy"/>
-                        <segue destination="PGL-zc-O32" kind="modal" identifier="showRegistrationScreen" id="NZS-cc-4y0"/>
+                        <segue destination="PGL-zc-O32" kind="showDetail" identifier="showRegistrationScreen" id="NZS-cc-4y0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Oh-kD-0p4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3042,7 +3042,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGs-cE-miw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2859" y="-1222.5"/>
+            <point key="canvasLocation" x="3378" y="-1566"/>
         </scene>
         <!--game-->
         <scene sceneID="pAq-pB-zic">
@@ -3872,7 +3872,7 @@
         <image name="vkIcon" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nHr-TI-Liv"/>
-        <segue reference="1oA-Co-JGY"/>
+        <segue reference="NZS-cc-4y0"/>
+        <segue reference="13W-Ze-IAd"/>
     </inferredMetricsTieBreakers>
 </document>
