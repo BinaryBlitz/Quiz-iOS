@@ -14,6 +14,7 @@
 #import "QZBSessionManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "QZBCategory.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
@@ -43,6 +44,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 
     // [[self navigationController] setNavigationBarHidden:YES animated:NO];
     // Do any additional setup after loading the view.
@@ -82,9 +85,47 @@
     }
 }
 
+
+-(void)initNavigationBar:(NSString *)title {
+    self.navigationItem.hidesBackButton = YES;
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.title = title;
+    
+//    
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
+//    [self.navigationController.navigationBar  setTitleTextAttributes:@{[UIColor whiteColor]: NSForegroundColorAttributeName}];
+//    
+//    //[self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+//    //[self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    
+//    
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    self.navigationController.navigationBar.translucent = NO;
+
+    
+    
+}
+
+-(void)setTopic:(QZBGameTopic *)topic{
+    _topic = topic;
+    
+    NSLog(@"%@", topic.name);
+    
+    self.topicLabel.text = topic.name;
+    
+ //   topic.relationToCategory.name;
+    
+    
+    [self initNavigationBar:topic.relationToCategory.name];
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    self.topicLabel.text = self.topic.name;
+  //  [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -315,6 +356,10 @@
 
 - (void)didSubscribed:(NSNotification *)notification {
     [self initSession];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

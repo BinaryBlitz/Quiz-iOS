@@ -61,7 +61,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
 
     [self setNamesAndUserpics];
 }
@@ -488,7 +488,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 #pragma mark - status bar
 
 - (BOOL)prefersStatusBarHidden {
-    return YES;
+    return NO;
 }
 
 #pragma mark - user interface
