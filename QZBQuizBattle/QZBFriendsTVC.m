@@ -36,7 +36,7 @@
     self.friends = friends;
     
     [self.tableView reloadData];
-    /*
+    
     [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:self.user.userID
         OnSuccess:^(NSArray *friends) {
             self.friends = friends;
@@ -44,7 +44,7 @@
         }
         onFailure:^(NSError *error, NSInteger statusCode){
 
-        }];*/
+        }];
 }
 
 #pragma mark - Table view data source

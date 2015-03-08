@@ -16,9 +16,12 @@
 + (instancetype)sharedInstance;
 
 @property (strong, nonatomic, readonly) QZBUser *user;
+@property (strong, nonatomic, readonly) NSString *pushToken;
 
 - (void)setUser:(QZBUser *)user;
 - (BOOL)checkUser;
 - (void)userLogOut;
+
+-(void)setAPNsToken:(NSString *)pushToken;
 
 @end

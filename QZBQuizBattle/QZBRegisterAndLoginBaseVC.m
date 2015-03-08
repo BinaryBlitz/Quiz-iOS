@@ -27,7 +27,7 @@
     // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [TSMessage setDefaultViewController:self.navigationController];
 }
@@ -45,7 +45,8 @@
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before
+navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -75,18 +76,18 @@
 - (void)shake:(UIView *)theOneYouWannaShake direction:(int)direction shakes:(int)shakes {
     [UIView animateWithDuration:0.03
         animations:^{
-          theOneYouWannaShake.transform = CGAffineTransformMakeTranslation(5 * direction, 0);
+            theOneYouWannaShake.transform = CGAffineTransformMakeTranslation(5 * direction, 0);
         }
         completion:^(BOOL finished) {
-          if (shakes >= 10) {
-              theOneYouWannaShake.transform = CGAffineTransformIdentity;
-              return;
-          }
-          __block int shakess = shakes;
-          shakess++;
-          __block int directionn = direction;
-          directionn = directionn * -1;
-          [self shake:theOneYouWannaShake direction:directionn shakes:shakess];
+            if (shakes >= 10) {
+                theOneYouWannaShake.transform = CGAffineTransformIdentity;
+                return;
+            }
+            __block int shakess = shakes;
+            shakess++;
+            __block int directionn = direction;
+            directionn = directionn * -1;
+            [self shake:theOneYouWannaShake direction:directionn shakes:shakess];
         }];
 }
 
@@ -114,7 +115,8 @@
             result = @"Имя должно быть короче 20 символов";
             break;
         case user_alredy_exist:
-            result = @"Пользователь с такой почтой уже зарегистрирован";
+            result = @"Пользователь с такой почтой уже "
+                     @"зарегистрирован";
             break;
         case login_fail:
             result = @"Неверная почта или пароль";
@@ -150,11 +152,13 @@
     } else if ([textField isKindOfClass:[QZBUserNameTextField class]]) {
         if (![textField validate]) {
             if ([textField.text length] < 2) {
-                [TSMessage showNotificationWithTitle:[self errorAsNSString:username_short_error_message]
-                                                type:TSMessageNotificationTypeWarning];
+                [TSMessage
+                    showNotificationWithTitle:[self errorAsNSString:username_short_error_message]
+                                         type:TSMessageNotificationTypeWarning];
             } else if ([textField.text length] > 20) {
-                [TSMessage showNotificationWithTitle:[self errorAsNSString:username_long_error_message]
-                                                type:TSMessageNotificationTypeWarning];
+                [TSMessage
+                    showNotificationWithTitle:[self errorAsNSString:username_long_error_message]
+                                         type:TSMessageNotificationTypeWarning];
             }
 
             [textField shakeView];
@@ -170,5 +174,16 @@
         return NO;
     }
 }
+
+
+- (IBAction)dismisVC:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
+}
+
+
 
 @end

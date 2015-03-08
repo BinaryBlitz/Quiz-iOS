@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
+//@property(strong, nonatomic) NSString *pushToken;
 
 @end
 
@@ -48,6 +49,12 @@
         self.api_key = [coder decodeObjectForKey:@"userApiKey"];
         self.userID = [coder decodeObjectForKey:@"user_id"];
         self.isFriend = NO;
+//        NSString *pushToken = [coder decodeObjectForKey:@"pushToken"];
+//        
+//        if(pushToken){
+//            self.pushToken = pushToken;
+//        }
+        
         NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
         NSLog(@"path %@", imagePath);
         if (imagePath) {
@@ -64,6 +71,11 @@
     [coder encodeObject:self.email forKey:@"userEmail"];
     [coder encodeObject:self.api_key forKey:@"userApiKey"];
     [coder encodeObject:self.userID forKey:@"user_id"];
+    
+//    if(self.pushToken){
+//        [coder encodeObject:self.pushToken forKey:@"pushToken"];
+//    }
+    
     if(self.userPic){
     NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
     
@@ -88,6 +100,8 @@
 }
 
 
+
+//TODO ?
 -(void)setUserName:(NSString *)userName{
     self.name = userName;
     
@@ -115,6 +129,8 @@
     
     //todo load to server
 }
+
+
     
 
 

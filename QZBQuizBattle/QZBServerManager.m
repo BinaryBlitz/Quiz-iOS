@@ -45,7 +45,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        NSString *apiPath = @"https://protected-atoll-5061.herokuapp.com/";
+        NSString *apiPath = @"http://quizapp.binaryblitz.ru/";
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
         // url.port = @3000;
@@ -410,11 +410,11 @@
             QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:responseObject];
             BOOL isFriend = [responseObject[@"is_friend"] boolValue];
             user.isFriend = isFriend;
-            
-            if(success){
+
+            if (success) {
                 success(user);
             }
-            
+
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"user fail");
@@ -521,9 +521,8 @@
 
 - (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
+
     [self.requestOperationManager GET:@"friendships/requests"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -547,9 +546,8 @@
 
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
+
     [self.requestOperationManager PATCH:@"/friendships/mark_requests_as_viewed"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -566,13 +564,14 @@
         }];
 }
 
-- (void)GETAllFriendsOfUserWithID:(NSNumber *)userID OnSuccess:(void (^)(NSArray *friends))success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-   // NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
+- (void)GETAllFriendsOfUserWithID:(NSNumber *)userID
+                        OnSuccess:(void (^)(NSArray *friends))success
+                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    // NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
 
     NSString *urlString = [NSString stringWithFormat:@"/players/%@/friends", userID];
-    
-     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
     [self.requestOperationManager GET:urlString
         parameters:params
@@ -581,10 +580,10 @@
             NSLog(@"all friend %@", responseObject);
 
             NSMutableArray *friends = [NSMutableArray array];
-            
-            for(NSDictionary *dict in responseObject){
+
+            for (NSDictionary *dict in responseObject) {
                 QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
-                
+
                 [friends addObject:user];
             }
 
@@ -596,9 +595,9 @@
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+
             NSLog(@"friends error %@", error);
-            
+
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -693,14 +692,83 @@
 
 #pragma mark - APNs token
 
--(void)PUSHAPNsToken:(NSString *)token onSuccess:(void (^)())success
-           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                              @"push_token":token };
-    
+- (void)POSTAPNsToken:(NSString *)token
+            onSuccess:(void (^)())success
+            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"push_token" : token };
+
     //[self.requestOperationManager ]
-    
-    
+
+    [self.requestOperationManager POST:@"push_tokens"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"token response %@", responseObject);
+            if (success) {
+                success();
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"token failure %@", error);
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
+}
+
+- (void)PATCHAPNsTokenNew:(NSString *)newToken
+                 oldToken:(NSString *)oldToken
+                onSuccess:(void (^)())success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"old_token" : oldToken,
+        @"new_token" : newToken
+    };
+
+    [self.requestOperationManager PATCH:@"push_tokens/replace"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@"token replace response %@", responseObject);
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"token replace failure %@", error);
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
+}
+
+- (void)DELETEAPNsToken:(NSString *)token
+              onSuccess:(void (^)())success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"push_token" : token };
+
+    [self.requestOperationManager DELETE:@"push_tokens"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"token delete response %@", responseObject);
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"token delete failure %@", error);
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
 }
 
 @end

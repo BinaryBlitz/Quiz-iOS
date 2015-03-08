@@ -104,4 +104,23 @@
 
 - (NSString *)hashPassword:(NSString *)password;
 
+#pragma mark - APNs tokens
+
+- (void)POSTAPNsToken:(NSString *)token
+            onSuccess:(void (^)())success
+            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)PATCHAPNsTokenNew:(NSString *)newToken
+                 oldToken:(NSString *)oldToken
+                onSuccess:(void (^)())success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+
+- (void)DELETEAPNsToken:(NSString *)token
+              onSuccess:(void (^)())success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+
 @end

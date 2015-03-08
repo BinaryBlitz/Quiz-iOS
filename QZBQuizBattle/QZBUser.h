@@ -20,10 +20,13 @@
 @property (strong, nonatomic, readonly) NSNumber *userID;
 @property (strong, nonatomic, readonly) UIImage *userPic;
 @property (assign, nonatomic, readonly) BOOL isFriend;
+@property (strong, nonatomic, readonly) NSString *pushToken;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 - (void)setUserPic:(UIImage *)userPic;
 - (void)setUserName:(NSString *)userName;
+//-(void)setAPNsToken:(NSString *)pushToken;
+
 
 @end
