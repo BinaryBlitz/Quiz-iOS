@@ -29,6 +29,9 @@
     self.emailTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.registrationInProgress = NO;
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
     // Do any additional setup after loading the view.
 }
 

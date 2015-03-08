@@ -26,8 +26,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     self.topicTableView.delegate = self;
     self.topicTableView.dataSource = self;
+    
+    [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+
+    
+   // self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+   //
+   // [UINavigationBar appearance] setTitleTextAttributes:@{}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,9 +47,26 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    //self.navigationController.navigationBar.barTintColor = [UIColor redColor];
 
     self.navigationItem.hidesBackButton = NO;
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
+    [self.navigationController.navigationBar  setTitleTextAttributes:@{[UIColor whiteColor]: NSForegroundColorAttributeName}];
+    
+    [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    
+    
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    //self.navigationController.navigationBar.topItem.title = @"";
+    
 }
 
 #pragma mark - Navigation
@@ -107,5 +134,9 @@
         onFailure:^(NSError *error, NSInteger statusCode){
 
         }];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 @end

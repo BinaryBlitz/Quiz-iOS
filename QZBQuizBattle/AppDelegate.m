@@ -13,6 +13,8 @@
 #import "CoreData+MagicalRecord.h"
 #import "QZBQuizIAPHelper.h"
 #import "QZBQuizTopicIAPHelper.h"
+#import "QZBUser.h"
+#import "QZBCurrentUser.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -25,22 +27,22 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
-    [QZBQuizIAPHelper sharedInstance];
+    //[QZBQuizIAPHelper sharedInstance];
 
-    NSLog(@"launch options %@", launchOptions);
+    //NSLog(@"launch options %@", launchOptions);
     
     if (IS_OS_8_OR_LATER) {
-        [[UIApplication sharedApplication]
+        [application
             registerUserNotificationSettings:[UIUserNotificationSettings
                                                  settingsForTypes:(UIUserNotificationTypeSound |
                                                                    UIUserNotificationTypeAlert |
                                                                    UIUserNotificationTypeBadge)
                                                        categories:nil]];
 
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [application registerForRemoteNotifications];
 
     } else {
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
                                                          UIRemoteNotificationTypeBadge |
                                                          UIRemoteNotificationTypeSound)];
     }
@@ -200,6 +202,24 @@
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"My token is: %@", deviceToken);
+    
+    
+
+    //DataModel *dataModel = chatViewController.dataModel;
+    //NSString *oldToken = [dataModel deviceToken];
+    
+    NSString *newToken = [deviceToken description];
+    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSLog(@"My token is: %@", newToken);
+    
+    [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
+
+    
+   
+    
+    
 }
 
 - (void)application:(UIApplication *)application

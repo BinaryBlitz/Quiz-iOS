@@ -28,6 +28,8 @@
 
     self.emailTextField.delegate = self;
     self.passwordTextField.delegate = self;
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 
     self.loginInProgress = NO;
     // Do any additional setup after loading the view.

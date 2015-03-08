@@ -13,8 +13,7 @@
 
 static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
-static NSArray  * SCOPE = nil;
-
+static NSArray *SCOPE = nil;
 
 @interface QZBRegistrationChooserVC ()
 
@@ -25,53 +24,58 @@ static NSArray  * SCOPE = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    SCOPE = @[VK_PER_FRIENDS, VK_PER_EMAIL, VK_PER_OFFLINE];
+    [self setNeedsStatusBarAppearanceUpdate];
+
+    self.vkButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.enterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.registrationButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+
+    SCOPE = @[ VK_PER_FRIENDS, VK_PER_EMAIL, VK_PER_OFFLINE ];
     [super viewDidLoad];
-    
+
     [VKSdk initializeWithDelegate:self andAppId:@"4795421"];
-    if ([VKSdk wakeUpSession])
-    {
+    if ([VKSdk wakeUpSession]) {
         [self startWorking];
     }
-
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
-    
 }
 
 - (IBAction)authorize:(id)sender {
     //[VKSdk authorize:SCOPE revokeAccess:YES];
-    
+
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
-
 - (void)startWorking {
     //[self performSegueWithIdentifier:NEXT_CONTROLLER_SEGUE_ID sender:self];
-    
-    //NSString *curentUserId =[[VKSdk getAccessToken] userId];
-    
-    NSLog(@"all good %@" ,[[VKSdk getAccessToken] userId]);
-    VKRequest * req = [[VKApi users] get];
-    
-    [req executeWithResultBlock:^(VKResponse *response) {
-        NSLog(@"user: %@", response.json);
-        NSLog(TOKEN_KEY);
-    } errorBlock:^(NSError *error) {
-        
-    }];
-    
+
+    // NSString *curentUserId =[[VKSdk getAccessToken] userId];
+
+    NSLog(@"all good %@", [[VKSdk getAccessToken] userId]);
+    //    VKRequest * req = [[VKApi users] get];
+    //
+    //    [req executeWithResultBlock:^(VKResponse *response) {
+    //        NSLog(@"user: %@", response.json);
+    //        NSLog(TOKEN_KEY);
+    //    } errorBlock:^(NSError *error) {
+    //
+    //    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         NSLog(@"exist");
-        [self performSegueWithIdentifier:@"userExist" sender:nil];
+        [self dismissViewControllerAnimated:NO
+                                 completion:^{
+
+                                 }];
+        //[self performSegueWithIdentifier:@"userExist" sender:nil];
     }
 }
 
@@ -79,7 +83,6 @@ static NSArray  * SCOPE = nil;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {
     VKCaptchaViewController *vc = [VKCaptchaViewController captchaControllerWithError:captchaError];
@@ -92,26 +95,26 @@ static NSArray  * SCOPE = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
     NSLog(@"%@ %@", newToken.accessToken, newToken.expiresIn);
-    
-    [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken onSuccess:^(QZBUser *user) {
-        
-        [[QZBCurrentUser sharedInstance] setUser:user];
-        
-        
-        // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
-        
-        [SVProgressHUD dismiss];
-        
-        [self dismissViewControllerAnimated:YES
-                                 completion:^{
-                                     
-                                 }];
 
-        
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
-    }];
-    
+    [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
+        onSuccess:^(QZBUser *user) {
+
+            [[QZBCurrentUser sharedInstance] setUser:user];
+
+            // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+
+            [SVProgressHUD dismiss];
+
+            [self dismissViewControllerAnimated:YES
+                                     completion:^{
+
+                                     }];
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
+
     [self startWorking];
 }
 
@@ -123,17 +126,22 @@ static NSArray  * SCOPE = nil;
     [self startWorking];
 }
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError {
-    [[[UIAlertView alloc] initWithTitle:nil message:@"Access denied" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    
+    //[[[UIAlertView alloc] initWithTitle:nil message:@"Access denied" delegate:nil
+    //cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+
     [SVProgressHUD dismiss];
-    
+
     NSLog(@"deny");
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 
 #pragma mark - Navigation
 /*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before
+navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
