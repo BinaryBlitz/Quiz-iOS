@@ -12,7 +12,7 @@
 
 @implementation QZBUserInSession
 
-- (instancetype)initWithUser:(QZBUser *)user {
+- (instancetype)initWithUser:(id<QZBUserProtocol>)user {
     self = [super init];
     if (self) {
         self.user = user;

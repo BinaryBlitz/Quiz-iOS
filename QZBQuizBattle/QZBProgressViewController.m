@@ -66,6 +66,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.topicLabel.text = self.topic.name;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
@@ -78,17 +84,36 @@
     self.lobby = nil;
     self.checkNeedStartTimer = nil;
 
-    self.cancelButton.enabled = YES;
+    self.cancelCrossButton.enabled = YES;
 
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // [self.client disconnect];
+    
+    NSLog(@"progress disapear");
+    
+    self.lobby = nil;
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    //[TSMessage dismissActiveNotification];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 
 -(void)initNavigationBar:(NSString *)title {
     self.navigationItem.hidesBackButton = YES;
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+   // [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.title = title;
     
 //    
@@ -122,51 +147,34 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.topicLabel.text = self.topic.name;
-  //  [[self navigationController] setNavigationBarHidden:YES animated:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    // [self.client disconnect];
-
-    NSLog(@"progress disapear");
-
-    self.lobby = nil;
-    [self.timer invalidate];
-    self.timer = nil;
-
-    //[TSMessage dismissActiveNotification];
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 #pragma mark - Actions
-
-- (IBAction)cancelFinding:(UIButton *)sender {
+- (IBAction)cancelCrossAction:(id)sender {
+    
     self.isCanceled = YES;
-
+    
     [self.checkNeedStartTimer invalidate];
     self.checkNeedStartTimer = nil;
-
+    
     [self.onlineWorker closeConnection];
     self.onlineWorker = nil;
-
+    
     [[QZBSessionManager sessionManager] closeSession];
     [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
-        onSuccess:^(QZBSession *session, id bot) {
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
-
+                                            onSuccess:^(QZBSession *session, id bot) {
+                                                
+                                            }
+                                            onFailure:^(NSError *error, NSInteger statusCode){
+                                                
+                                            }];
+    
     [self.navigationController popViewControllerAnimated:YES];
+
+    
+}
+
+- (IBAction)cancelFinding:(UIButton *)sender {
+    
 }
 
 #pragma mark - Navigation
@@ -347,7 +355,7 @@
 }
 
 - (void)enterGame {
-    self.cancelButton.enabled = NO;
+    self.cancelCrossButton.enabled = NO;
     self.isEntered = YES;
     _onlineWorker = nil;
     [self.checkNeedStartTimer invalidate];

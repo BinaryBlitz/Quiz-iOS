@@ -15,6 +15,7 @@
 @interface QZBGameSessionViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *qestionLabel;
+@property (weak, nonatomic) IBOutlet UIView *questBackground;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *answerButtons;
 @property (weak, nonatomic) IBOutlet UILabel *firstUserScore;
@@ -25,6 +26,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
+@property (weak, nonatomic) IBOutlet UIImageView *opponentImage;
 
 //@property (strong, nonatomic) QZBSession *session;
 

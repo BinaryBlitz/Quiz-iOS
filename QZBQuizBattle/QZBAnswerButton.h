@@ -14,4 +14,8 @@
 - (void)addTriangleRight;
 - (void)unshowTriangles;
 
+-(void)addCircleRight;
+-(void)addCircleLeft;
+-(void)unshowCircles;
+
 @end
