@@ -11,6 +11,8 @@
 #import "QZBSessionManager.h"
 #import "QZBAnswerButton.h"
 #import "QZBTopicChooserControllerViewController.h"
+#import "UIColor+QZBProjectColors.h"
+#import <JSBadgeView/JSBadgeView.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -22,12 +24,17 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (strong, nonatomic) NSTimer *globalTimer;  //нужен для работы проги в бекграунде
 
+@property(strong, nonatomic) JSBadgeView *userBV;
+@property(strong, nonatomic) JSBadgeView *opponentBV;
+
 @end
 
 @implementation QZBGameSessionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 
     //[[self navigationController] setNavigationBarHidden:YES animated:NO];
     self.backgroundTask = UIBackgroundTaskInvalid;
@@ -57,11 +64,32 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                                              selector:@selector(opponentMadeChoose:)
                                                  name:@"QZBOpponentUserMadeChoose"
                                                object:nil];
+    
+    
+
+    
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    self.firstUserScore.hidden = YES;
+    self.opponentScore.hidden = YES;
+    
+    self.userBV= [[JSBadgeView alloc] initWithParentView:self.userImage
+                                                     alignment:JSBadgeViewAlignmentCenterRight];
+    self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentImage
+                                                     alignment:JSBadgeViewAlignmentCenterLeft];
+    
+   // self.userBV = [JSBadgeView ]
+    
+
+    self.opponentBV.badgeText = @"0";
+    self.userBV.badgeText = @"0";
+    
 
     [self setNamesAndUserpics];
 }
@@ -127,6 +155,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 #pragma mark - actions
 
+
+
 - (IBAction)pressAnswerButton:(UIButton *)sender {
     // NSLog(@"%ld", (long)sender.tag);
 
@@ -146,14 +176,15 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     QZBAnswerButton *button = (QZBAnswerButton *)sender;
 
-    [button addTriangleLeft];
+    //[button addTriangleLeft];
+    [button addCircleLeft];
 
     UIColor *color;
 
     if (isTrue) {
-        color = [UIColor greenColor];
+        color = [UIColor lightGreenColor];
     } else {
-        color = [UIColor redColor];
+        color = [UIColor lightRedColor];
     }
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
@@ -165,6 +196,35 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         }];
 
     //[self UNShowQuestinAndAnswers];
+}
+- (IBAction)closeSession:(id)sender {
+    
+    [self.globalTimer invalidate];
+    self.globalTimer = nil;
+    
+    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+        self.backgroundTask = UIBackgroundTaskInvalid;
+    }
+    
+    [[QZBSessionManager sessionManager] closeSession];
+    
+    //[self.navigationController popViewControllerAnimated:YES];
+    
+    UIViewController *destinationVC = nil;
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
+            destinationVC = vc;
+            break;
+        }
+    }
+    
+    if (destinationVC) {
+        [self.navigationController popToViewController:destinationVC animated:YES];
+    }
+
+    
 }
 
 #pragma mark - init qestion
@@ -191,7 +251,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
 
-    self.roundLabel.text = [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
+    NSString *roundAsString = [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
+    
+    self.roundLabel.text = roundAsString;
+    self.title = roundAsString;
     
     NSLog(@"Before showing label");
 
@@ -221,6 +284,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     [UIView animateWithDuration:0.2
                      animations:^{
+                         self.questBackground.alpha = 1.0;
                          weakSelf.qestionLabel.alpha = 1.0;
                      }];
 
@@ -260,6 +324,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     [UIView animateWithDuration:unShowTime
                      animations:^{
                          weakSelf.qestionLabel.alpha = .0;
+                         weakSelf.questBackground.alpha = .0;
                          weakSelf.opponentScore.textColor = [UIColor whiteColor];
                          weakSelf.firstUserScore.textColor = [UIColor whiteColor];
                          weakSelf.timeLabel.alpha = .0;
@@ -275,8 +340,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
             completion:^(BOOL finished) {
                 button.enabled = YES;
                 QZBAnswerButton *b = (QZBAnswerButton *)button;
-                [b unshowTriangles];
-                
+                //[b unshowTriangles];
+                [b unshowCircles];
                 NSLog(@"Buttons and over unshow");
             }];
     }
@@ -336,7 +401,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         if (b.tag == quest.rightAnswer) {
             [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                 animations:^{
-                    b.backgroundColor = [UIColor greenColor];
+                    b.backgroundColor = [UIColor lightGreenColor];
                 }
                 completion:^(BOOL finished){
 
@@ -358,11 +423,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
             NSInteger right = qanda.question.rightAnswer;
 
             if (b.tag == num) {
-                [b addTriangleRight];
+                //[b addTriangleRight];
+                [b addCircleRight];
                 if (b.tag != right) {
                     [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                         animations:^{
-                            b.backgroundColor = [UIColor redColor];
+                            b.backgroundColor = [UIColor lightRedColor];
                         }
                         completion:^(BOOL finished){
 
@@ -434,10 +500,20 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 #pragma mark - game flow
 
 - (void)setScores {
-    self.firstUserScore.text = [NSString
-        stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].firstUserScore];
-    self.opponentScore.text = [NSString
-        stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].secondUserScore];
+    
+    NSString *firstScoreString = [NSString
+stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].firstUserScore];
+    
+    NSString *opponentScoreString = [NSString
+                                     stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].secondUserScore];
+    
+   
+    
+    self.userBV.badgeText = firstScoreString;
+    self.opponentBV.badgeText = opponentScoreString;
+    
+    self.firstUserScore.text = firstScoreString;
+    self.opponentScore.text = opponentScoreString;
 }
 
 #pragma mark - score labels colored
@@ -450,9 +526,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     UIColor *color;
 
     if (isRight) {
-        color = [UIColor greenColor];
+        color = [UIColor lightGreenColor];
     } else {
-        color = [UIColor redColor];
+        color = [UIColor lightRedColor];
     }
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
@@ -471,9 +547,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     UIColor *color;
 
     if (isRight) {
-        color = [UIColor greenColor];
+        color = [UIColor lightGreenColor];
     } else {
-        color = [UIColor redColor];
+        color = [UIColor lightRedColor];
     }
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
@@ -485,11 +561,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         }];
 }
 
-#pragma mark - status bar
-
-- (BOOL)prefersStatusBarHidden {
-    return NO;
-}
 
 #pragma mark - user interface
 
@@ -503,31 +574,42 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 #pragma mark - close
 
-- (IBAction)closeSession:(UIButton *)sender {
-    [self.globalTimer invalidate];
-    self.globalTimer = nil;
+//- (IBAction)closeSession:(UIButton *)sender {
+//    [self.globalTimer invalidate];
+//    self.globalTimer = nil;
+//
+//    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+//        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+//        self.backgroundTask = UIBackgroundTaskInvalid;
+//    }
+//
+//    [[QZBSessionManager sessionManager] closeSession];
+//
+//    //[self.navigationController popViewControllerAnimated:YES];
+//
+//    UIViewController *destinationVC = nil;
+//
+//    for (UIViewController *vc in self.navigationController.viewControllers) {
+//        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
+//            destinationVC = vc;
+//            break;
+//        }
+//    }
+//
+//    if (destinationVC) {
+//        [self.navigationController popToViewController:destinationVC animated:YES];
+//    }
+//}
 
-    if (self.backgroundTask != UIBackgroundTaskInvalid) {
-        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
-        self.backgroundTask = UIBackgroundTaskInvalid;
-    }
+#pragma mark - status bar
 
-    [[QZBSessionManager sessionManager] closeSession];
-
-    //[self.navigationController popViewControllerAnimated:YES];
-
-    UIViewController *destinationVC = nil;
-
-    for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
-            destinationVC = vc;
-            break;
-        }
-    }
-
-    if (destinationVC) {
-        [self.navigationController popToViewController:destinationVC animated:YES];
-    }
+- (BOOL)prefersStatusBarHidden {
+    return NO;
 }
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
 
 @end

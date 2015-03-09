@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QZBUserProtocol.h"
 
 @class QZBUser;
 @class QZBQuestion;
@@ -14,7 +15,7 @@
 
 @interface QZBUserInSession : NSObject
 
-@property (strong, nonatomic) QZBUser *user;
+@property (strong, nonatomic) id<QZBUserProtocol> user;
 @property (nonatomic, assign) NSUInteger currentScore;
 @property (nonatomic, strong) NSMutableArray *userAnswers;  // QZBQuestionWithUserAnswer
 

@@ -11,7 +11,8 @@
 
 @interface QZBProgressViewController : UIViewController
 @property (strong, nonatomic) QZBGameTopic *topic;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+//@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelCrossButton;
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;
 
 @end

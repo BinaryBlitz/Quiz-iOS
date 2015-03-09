@@ -8,6 +8,7 @@
 
 #import "QZBAnswerButton.h"
 #import "QZBAnswerTriangle.h"
+#import "QZBAnswerCircle.h"
 
 @implementation QZBAnswerButton
 
@@ -51,6 +52,50 @@
 
     [self addSubview:triangle];
 }
+
+-(void)addCircleLeft{
+    CGRect rect = CGRectMake(CGRectGetWidth(self.frame)/11,
+                             CGRectGetHeight(self.frame)/3,
+                             CGRectGetHeight(self.frame)/3,
+                             CGRectGetHeight(self.frame)/3);
+    
+    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:rect];
+    
+    circle.backgroundColor = [UIColor clearColor];
+    
+    [self addSubview:circle];
+    
+    
+}
+
+-(void)addCircleRight{
+    CGRect rect = CGRectMake(CGRectGetWidth(self.frame) -
+                             CGRectGetWidth(self.frame)/11 -
+                             CGRectGetHeight(self.frame)/3,
+                             CGRectGetHeight(self.frame)/3,
+                             CGRectGetHeight(self.frame)/3,
+                             CGRectGetHeight(self.frame)/3);
+    
+    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:rect];
+    
+    circle.backgroundColor = [UIColor clearColor];
+    
+    [self addSubview:circle];
+    
+}
+
+-(void)unshowCircles {
+    NSArray *subviews = self.subviews;
+    
+    for (UIView *view in subviews) {
+        if ([view isKindOfClass:[QZBAnswerCircle class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
+}
+
+
 
 - (void)unshowTriangles {
     NSArray *subviews = self.subviews;
