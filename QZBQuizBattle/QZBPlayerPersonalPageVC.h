@@ -11,9 +11,9 @@
 
 @interface QZBPlayerPersonalPageVC : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *playerTableView;
+@property(strong, nonatomic) IBOutlet UITableView *playerTableView;
 
--(void)initPlayerPageWithUser:(id<QZBUserProtocol>)user;
+- (void)initPlayerPageWithUser:(id<QZBUserProtocol>)user;
 
 //@property (weak, nonatomic) IBOutlet UIButton *multiUseButton;
 //@property (weak, nonatomic) IBOutlet UIButton *friendsButton;
