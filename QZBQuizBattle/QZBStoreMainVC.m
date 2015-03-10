@@ -8,6 +8,7 @@
 
 #import "QZBStoreMainVC.h"
 #import "QZBQuizIAPHelper.h"
+#import "QZBServerManager.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface QZBStoreMainVC ()
@@ -35,6 +36,12 @@
                                          style:UIBarButtonItemStyleBordered
                                         target:self
                                         action:@selector(restoreTapped:)];
+    
+    [[QZBServerManager sharedManager] GETInAppPurchasesOnSuccess:^(NSArray *purchases) {
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
 
     [QZBQuizIAPHelper sharedInstance];
 

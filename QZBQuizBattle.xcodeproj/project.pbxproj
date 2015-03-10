@@ -10,6 +10,7 @@
 		1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */; };
 		1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */; };
 		1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */; };
+		1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */; };
 		190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */; };
 		191559C71A39CDD400462C93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C61A39CDD400462C93 /* main.m */; };
 		191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C91A39CDD400462C93 /* AppDelegate.m */; };
@@ -116,6 +117,8 @@
 		1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerButton.m; sourceTree = "<group>"; };
 		1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTriangle.h; sourceTree = "<group>"; };
 		1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTriangle.m; sourceTree = "<group>"; };
+		1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsRequestsTVC.h; sourceTree = "<group>"; };
+		1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsRequestsTVC.m; sourceTree = "<group>"; };
 		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSessionManager.h; sourceTree = "<group>"; };
 		190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSessionManager.m; sourceTree = "<group>"; };
 		191559C11A39CDD400462C93 /* QZBQuizBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QZBQuizBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -728,6 +731,8 @@
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
 				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
 				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
+				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
+				1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */,
 			);
 			name = player;
 			sourceTree = "<group>";
@@ -942,6 +947,7 @@
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
+				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,
 				191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */,
 				19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */,
 				199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */,
