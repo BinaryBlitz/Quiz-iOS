@@ -14,6 +14,7 @@
 #import "QZBSessionManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "QZBCategory.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
@@ -43,6 +44,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 
     // [[self navigationController] setNavigationBarHidden:YES animated:NO];
     // Do any additional setup after loading the view.
@@ -63,6 +66,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.topicLabel.text = self.topic.name;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
@@ -75,29 +84,24 @@
     self.lobby = nil;
     self.checkNeedStartTimer = nil;
 
-    self.cancelButton.enabled = YES;
+    self.cancelCrossButton.enabled = YES;
 
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-
+    
     // [self.client disconnect];
-
+    
     NSLog(@"progress disapear");
-
+    
     self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
-
+    
     //[TSMessage dismissActiveNotification];
 }
 
@@ -105,27 +109,72 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+
+-(void)initNavigationBar:(NSString *)title {
+    self.navigationItem.hidesBackButton = YES;
+   // [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.title = title;
+    
+//    
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
+//    [self.navigationController.navigationBar  setTitleTextAttributes:@{[UIColor whiteColor]: NSForegroundColorAttributeName}];
+//    
+//    //[self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+//    //[self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    
+//    
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    self.navigationController.navigationBar.translucent = NO;
+
+    
+    
+}
+
+-(void)setTopic:(QZBGameTopic *)topic{
+    _topic = topic;
+    
+    NSLog(@"%@", topic.name);
+    
+    self.topicLabel.text = topic.name;
+    
+ //   topic.relationToCategory.name;
+    
+    
+    [self initNavigationBar:topic.relationToCategory.name];
+    
+}
+
+
 #pragma mark - Actions
-
-- (IBAction)cancelFinding:(UIButton *)sender {
+- (IBAction)cancelCrossAction:(id)sender {
+    
     self.isCanceled = YES;
-
+    
     [self.checkNeedStartTimer invalidate];
     self.checkNeedStartTimer = nil;
-
+    
     [self.onlineWorker closeConnection];
     self.onlineWorker = nil;
-
+    
     [[QZBSessionManager sessionManager] closeSession];
     [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
-        onSuccess:^(QZBSession *session, id bot) {
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
-
+                                            onSuccess:^(QZBSession *session, id bot) {
+                                                
+                                            }
+                                            onFailure:^(NSError *error, NSInteger statusCode){
+                                                
+                                            }];
+    
     [self.navigationController popViewControllerAnimated:YES];
+
+    
+}
+
+- (IBAction)cancelFinding:(UIButton *)sender {
+    
 }
 
 #pragma mark - Navigation
@@ -306,7 +355,7 @@
 }
 
 - (void)enterGame {
-    self.cancelButton.enabled = NO;
+    self.cancelCrossButton.enabled = NO;
     self.isEntered = YES;
     _onlineWorker = nil;
     [self.checkNeedStartTimer invalidate];
@@ -315,6 +364,10 @@
 
 - (void)didSubscribed:(NSNotification *)notification {
     [self initSession];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end
