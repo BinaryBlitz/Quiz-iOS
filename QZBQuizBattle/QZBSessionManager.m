@@ -105,6 +105,7 @@
     self.sessionSetted = YES;
 
     self.firstUserName = session.firstUser.user.name;
+    self.opponentUserName = session.opponentUser.user.name;
 }
 
 - (void)setBot:(QZBOpponentBot *)bot {

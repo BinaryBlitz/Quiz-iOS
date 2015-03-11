@@ -65,7 +65,7 @@
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.translucent = NO;
     
-    //self.navigationController.navigationBar.topItem.title = @"";
+    self.navigationController.navigationBar.topItem.title = @"";
     
 }
 

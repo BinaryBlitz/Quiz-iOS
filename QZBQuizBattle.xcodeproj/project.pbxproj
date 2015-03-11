@@ -20,6 +20,7 @@
 		191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 191559D61A39CDD400462C93 /* LaunchScreen.xib */; };
 		191559E41A39CDD400462C93 /* QZBQuizBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */; };
 		19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19168A961AA887EE0012341D /* QZBFriendCell.m */; };
+		191B9DDE1AACC48500611C71 /* QZBAnswerCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */; };
 		191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 191E12E41A8BD3CA00AFB829 /* Artboard 1.png */; };
 		191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */ = {isa = PBXBuildFile; fileRef = 191E12E61A8BD48500AFB829 /* notAchiv.png */; };
 		191E12EA1A8C9FC700AFB829 /* QZBFriendHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12E91A8C9FC700AFB829 /* QZBFriendHorizontalCell.m */; };
@@ -36,6 +37,7 @@
 		19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */; };
 		19446A751A9E3620005BB485 /* QZBStoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A741A9E3620005BB485 /* QZBStoreTVC.m */; };
 		19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */; };
+		194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */; };
 		1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */; };
 		1955A3EE1AAB11000083778A /* BG_iPhone_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */; };
 		1955A3F01AAB3C450083778A /* icon_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3EF1AAB3C450083778A /* icon_cancel.png */; };
@@ -137,6 +139,8 @@
 		191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QZBQuizBattleTests.m; sourceTree = "<group>"; };
 		19168A951AA887EE0012341D /* QZBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendCell.h; sourceTree = "<group>"; };
 		19168A961AA887EE0012341D /* QZBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendCell.m; sourceTree = "<group>"; };
+		191B9DDC1AACC48500611C71 /* QZBAnswerCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerCircle.h; sourceTree = "<group>"; };
+		191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerCircle.m; sourceTree = "<group>"; };
 		191E12E41A8BD3CA00AFB829 /* Artboard 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Artboard 1.png"; sourceTree = "<group>"; };
 		191E12E61A8BD48500AFB829 /* notAchiv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAchiv.png; sourceTree = "<group>"; };
 		191E12E81A8C9FC700AFB829 /* QZBFriendHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendHorizontalCell.h; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 		19446A741A9E3620005BB485 /* QZBStoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreTVC.m; sourceTree = "<group>"; };
 		19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreBoosterCell.h; sourceTree = "<group>"; };
 		19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreBoosterCell.m; sourceTree = "<group>"; };
+		194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+QZBProjectColors.h"; sourceTree = "<group>"; };
+		194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+QZBProjectColors.m"; sourceTree = "<group>"; };
 		1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG_iPhone_5.jpg; sourceTree = "<group>"; };
 		1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG_iPhone_6.jpg; sourceTree = "<group>"; };
 		1955A3EF1AAB3C450083778A /* icon_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cancel.png; sourceTree = "<group>"; };
@@ -357,6 +363,8 @@
 				19423D7D1A80F8740014B0AD /* Reachability.m */,
 				192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */,
 				192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */,
+				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
+				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -540,6 +548,8 @@
 				1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */,
 				1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */,
 				1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */,
+				191B9DDC1AACC48500611C71 /* QZBAnswerCircle.h */,
+				191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */,
 			);
 			name = buttons;
 			sourceTree = "<group>";
@@ -943,6 +953,7 @@
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
+				191B9DDE1AACC48500611C71 /* QZBAnswerCircle.m in Sources */,
 				19446A6E1A9E226C005BB485 /* QZBIAPHelper.m in Sources */,
 				199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */,
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
@@ -977,6 +988,7 @@
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
 				191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
+				194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
 				19B4DE661AA0E14F001CAA48 /* QZBStoreVCBase.m in Sources */,
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,

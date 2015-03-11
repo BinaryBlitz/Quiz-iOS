@@ -10,6 +10,8 @@
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
 #import "QZBServerManager.h"
+#import "QZBUserProtocol.h"
+#import "QZBAnotherUser.h"
 
 static const NSUInteger QZBTimeForAnswer = 10;
 static const NSUInteger QZBResultForRightAnswer = 10;
@@ -29,7 +31,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @implementation QZBSession
 
 #pragma mark - init
-- (instancetype)initWithQestions:(NSArray *)qestions first:(QZBUser *)firstUser opponentUser:(QZBUser *)opponentUser {
+- (instancetype)initWithQestions:(NSArray *)qestions first:(id<QZBUserProtocol> )firstUser opponentUser:(id<QZBUserProtocol> )opponentUser {
     self = [super init];
     if (self) {
         self.questions = qestions;
@@ -96,8 +98,23 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     // NSInteger opponentUserId = -1;
 
     QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
-       
-    QZBUser *opponent = nil;  //не протестированно
+    
+    NSNumber *hostID = dict[@"host_id"];
+    
+    QZBAnotherUser *opponent = nil;
+    
+    if([hostID isEqualToNumber:user1.userID]){
+        opponent = [[QZBAnotherUser alloc] init];
+        opponent.name = dict[@"opponent_name"];
+        if(dict[@"opponent_id"]){
+            opponent.userID = dict[@"opponent_id"];
+        }
+        
+    }else{
+        opponent.name = dict[@"host_name"];
+        opponent.userID = dict[@"id"];
+    }
+    
     
     
 
