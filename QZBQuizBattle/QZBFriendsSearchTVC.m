@@ -1,32 +1,50 @@
 //
-//  QZBFriendsRequestsTVC.m
+//  QZBFriendsSearchTVC.m
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 10/03/15.
+//  Created by Andrey Mikhaylov on 11/03/15.
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "QZBFriendsRequestsTVC.h"
+#import "QZBFriendsSearchTVC.h"
+#import "QZBServerManager.h"
 
-@interface QZBFriendsRequestsTVC ()
+@interface QZBFriendsSearchTVC ()
 
 @end
 
-@implementation QZBFriendsRequestsTVC
+@implementation QZBFriendsSearchTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Заявки в друзья";
+    
+    self.searchBar.delegate = self;
     // Do any additional setup after loading the view.
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+    NSLog(@"search taped");
+    
+    [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text
+OnSuccess:^(NSArray *friends) {
+    
+    
+    
+    [self setFriendsOwner:nil andFriends:friends];
+    
+    
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
 }
 
 /*

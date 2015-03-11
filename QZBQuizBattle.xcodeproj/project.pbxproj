@@ -81,6 +81,7 @@
 		19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB509F1A3C51CA00A3CD74 /* QZBUser.m */; };
 		19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */; };
 		19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */; };
+		19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */; };
 		19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691141A6A91C7008B2AE1 /* NSString+MD5.m */; };
 		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
 		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
@@ -244,6 +245,8 @@
 		19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuestionWithUserAnswer.m; sourceTree = "<group>"; };
 		19CB50AB1A3C62E000A3CD74 /* QZBProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBProgressViewController.h; sourceTree = "<group>"; };
 		19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressViewController.m; sourceTree = "<group>"; };
+		19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsSearchTVC.h; sourceTree = "<group>"; };
+		19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsSearchTVC.m; sourceTree = "<group>"; };
 		19D691131A6A91C7008B2AE1 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		19D691141A6A91C7008B2AE1 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
@@ -668,6 +671,17 @@
 			name = qestion;
 			sourceTree = "<group>";
 		};
+		19CECFB11AB099EA002F9224 /* friends */ = {
+			isa = PBXGroup;
+			children = (
+				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
+				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
+				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
+				1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */,
+			);
+			name = friends;
+			sourceTree = "<group>";
+		};
 		19D691161A6D56A1008B2AE1 /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,13 +740,12 @@
 		19DFF33F1A700F5B00E8CB1C /* player */ = {
 			isa = PBXGroup;
 			children = (
+				19CECFB11AB099EA002F9224 /* friends */,
 				197E47CB1A8FAF5000E43120 /* settings */,
 				19DFF3401A70161D00E8CB1C /* QZBPlayerPersonalPageVC.h */,
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
-				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
-				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
-				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
-				1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */,
+				19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */,
+				19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */,
 			);
 			name = player;
 			sourceTree = "<group>";
@@ -981,6 +994,7 @@
 				19423D7E1A80F8740014B0AD /* Reachability.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				191E12ED1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m in Sources */,
+				19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 				19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */,
 				19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */,

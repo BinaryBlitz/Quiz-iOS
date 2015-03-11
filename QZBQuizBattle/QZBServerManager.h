@@ -151,4 +151,10 @@
                           onFailure:(void (^)(NSError *error,
                                               NSInteger statusCode))failure;
 
+#pragma mark - search
+
+- (void)GETSearchFriendsWithText:(NSString *)text
+                       OnSuccess:(void (^)(NSArray *friends))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 @end
