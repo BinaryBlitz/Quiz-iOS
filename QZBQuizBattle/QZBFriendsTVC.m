@@ -12,91 +12,106 @@
 #import "QZBAnotherUser.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBFriendsRequestsTVC.h"
+#import <JSBadgeView/JSBadgeView.h>
 
 @interface QZBFriendsTVC ()
 
-@property(strong, nonatomic) NSArray *friends;         // QZBAnotherUser
-@property(strong, nonatomic) NSArray *friendsRequests; // QZBAnotherUser
-@property(strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) NSArray *friends;          // QZBAnotherUser
+@property (strong, nonatomic) NSArray *friendsRequests;  // QZBAnotherUser
+@property (strong, nonatomic) id<QZBUserProtocol> user;
 
 @end
 
 @implementation QZBFriendsTVC
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  self.title = @"Друзья";
+    [super viewDidLoad];
+    self.title = @"Друзья";
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    //    [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:self.user.userID
+    //                                                      OnSuccess:^(NSArray *friends) {
+    //                                                          self.friends = friends;
+    //                                                          [self.tableView reloadData];
+    //                                                      }
+    //                                                      onFailure:^(NSError *error, NSInteger
+    //                                                      statusCode){
+    //
+    //                                                      }];
+}
+
+#pragma mark - custom init
 
 - (void)setFriendsOwner:(id<QZBUserProtocol>)user
                 friends:(NSArray *)friends
         friendsRequests:(NSArray *)friendsRequest {
+    if (friendsRequest && friendsRequest.count > 0) {
+        NSString *requestTitle =
+            [NSString stringWithFormat:@"Заявки (%ld)", (unsigned long)friendsRequest.count];
 
-  self.friendsRequests = friendsRequest;
+        self.friendsRequests = friendsRequest;
+        self.navigationItem.rightBarButtonItem =
+            [[UIBarButtonItem alloc] initWithTitle:requestTitle
+                                             style:UIBarButtonItemStyleBordered
+                                            target:self
+                                            action:@selector(showFriendsRequestsAction:)];
 
-  [self setFriendsOwner:user andFriends:friends];
+    } else {
+        // self.friendsRequestsButton.enabled = NO;
+    }
+
+    [self setFriendsOwner:user andFriends:friends];
 }
 
-- (void)setFriendsOwner:(id<QZBUserProtocol>)user
-             andFriends:(NSArray *)friends {
-  self.user = user;
-  self.friends = friends;
+- (void)setFriendsOwner:(id<QZBUserProtocol>)user friendsRequests:(NSArray *)friendsRequest {
+}
 
-  [self.tableView reloadData];
+- (void)setFriendsOwner:(id<QZBUserProtocol>)user andFriends:(NSArray *)friends {
+    self.user = user;
+    self.friends = friends;
 
-  [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:self.user.userID
-      OnSuccess:^(NSArray *friends) {
-        self.friends = friends;
-        [self.tableView reloadData];
-      }
-      onFailure:^(NSError *error, NSInteger statusCode){
-
-      }];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  //#warning Potentially incomplete method implementation.
-  // Return the number of sections.
+    //#warning Potentially incomplete method implementation.
+    // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
-    numberOfRowsInSection:(NSInteger)section {
-  //#warning Incomplete method implementation.
-  // Return the number of rows in the section.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //#warning Incomplete method implementation.
+    // Return the number of rows in the section.
 
     return self.friends.count;
-    
-  }
-  //
-  //    if(self.friendsRequests && self.friendsRequests.count>0){
-  //        return self.friendsRequests.count +self.friends.count+1;
-  //    }else{
-  //
-  //    return self.friends.count;
-  //    }
-
+}
+//
+//    if(self.friendsRequests && self.friendsRequests.count>0){
+//        return self.friendsRequests.count +self.friends.count+1;
+//    }else{
+//
+//    return self.friends.count;
+//    }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     QZBFriendCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:@"friendCell"
-                                    forIndexPath:indexPath];
-    
+        [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
+
     QZBAnotherUser *user = self.friends[indexPath.row];
-    
+
     [cell setCellWithUser:user];
     return cell;
-
-    
 }
 
 /*
@@ -145,20 +160,19 @@ toIndexPath:(NSIndexPath
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 
-  if (![cell isKindOfClass:[QZBFriendCell class]]) {
-    return;
-  }
+    if (![cell isKindOfClass:[QZBFriendCell class]]) {
+        return;
+    }
 
-  QZBFriendCell *friendCell = (QZBFriendCell *)cell;
-  self.user = friendCell.user;
+    QZBFriendCell *friendCell = (QZBFriendCell *)cell;
+    self.user = friendCell.user;
 
-  [self performSegueWithIdentifier:@"showUserpage" sender:nil];
+    [self performSegueWithIdentifier:@"showUserpage" sender:nil];
 }
 
 #pragma mark - Navigation
@@ -167,27 +181,24 @@ toIndexPath:(NSIndexPath
 // preparation before
 // navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  // Get the new view controller using [segue destinationViewController].
-  // Pass the selected object to the new view controller.
-  if ([segue.identifier isEqualToString:@"showUserpage"]) {
-    QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showUserpage"]) {
+        QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
 
-    [vc initPlayerPageWithUser:self.user];
-  } else if([segue.identifier isEqualToString:@"showFriendsRequests"]){
-      
-      QZBFriendsRequestsTVC *destinationVC = (
-                                              QZBFriendsRequestsTVC *)segue.destinationViewController;
-      
-      [destinationVC setFriendsOwner:self.user andFriends:self.friendsRequests];
-      
-  }
+        [vc initPlayerPageWithUser:self.user];
+
+    } else if ([segue.identifier isEqualToString:@"showFriendsRequests"]) {
+        QZBFriendsRequestsTVC *destinationVC =
+            (QZBFriendsRequestsTVC *)segue.destinationViewController;
+
+        [destinationVC setFriendsOwner:self.user andFriends:self.friendsRequests];
+    }
 }
 
 #pragma mark - actions
-- (IBAction)showFriendsRequestsAction:(id)sender {
-    
+- (void)showFriendsRequestsAction:(id)sender {
     [self performSegueWithIdentifier:@"showFriendsRequests" sender:nil];
-    
 }
 
 @end
