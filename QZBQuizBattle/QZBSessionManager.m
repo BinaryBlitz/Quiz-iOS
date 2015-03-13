@@ -55,7 +55,7 @@
     self = [super init];
     if (self) {
         NSLog(@"init");
-        _sessionTime = 10;
+        _sessionTime = 100;
         /*
             [[NSNotificationCenter defaultCenter]
                 addObserver:self
@@ -129,7 +129,7 @@
 
 - (void)timeCountingStart {
     if (!self.questionTimer) {
-        self.questionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+        self.questionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1//redo this
                                                               target:self
                                                             selector:@selector(updateTime:)
                                                             userInfo:nil
@@ -142,13 +142,14 @@
 - (void)updateTime:(NSTimer *)timer {
     if (self.questionTimer && [timer isEqual:self.questionTimer]) {
         self.currentTime++;
+        
     } else {
         NSLog(@"bad timer invalidate");
         [timer invalidate];
         timer = nil;
     }
   //  NSLog(@"%lu", (unsigned long)self.currentTime);
-    if (self.currentTime < 10) {
+    if (self.currentTime < 100) {
         // NSLog(@"%ld", (unsigned long)self.currentTime);
     } else {
         if (self.questionTimer) {
@@ -192,8 +193,9 @@
         return;
     }
 
+     NSLog(@"%ld", self.currentTime/10);
     self.didFirstUserAnswered = YES;
-    [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime];
+    [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime/10];
 }
 
 //главный метод для второго пользователя
@@ -204,7 +206,8 @@
 
      self.didOpponentUserAnswered = YES;*/
 
-    [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime];
+    NSLog(@"%ld", self.currentTime/10);
+    [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime/10];
 }
 
 //метод для подсчета очков первого пользователя

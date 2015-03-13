@@ -36,6 +36,7 @@ PODS:
   - SVProgressHUD (1.1.2)
   - TSMessages (0.9.12):
     - HexColors
+  - UAProgressView (0.1.1)
   - VK-ios-sdk (1.0.9.2)
 
 DEPENDENCIES:
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - MagicalRecord
   - SVProgressHUD
   - TSMessages
+  - UAProgressView
   - VK-ios-sdk
 
 SPEC CHECKSUMS:
@@ -59,6 +61,7 @@ SPEC CHECKSUMS:
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
   TSMessages: b2b5dc71f65146387e51f2600bb0eb8f3a6c4ab8
+  UAProgressView: c393bc53d1cabc077279e957c5898a5bb7bdb3ce
   VK-ios-sdk: b5d95b5f3bedaa6432906a9ac728a84335e6b3d0
 
 COCOAPODS: 0.35.0

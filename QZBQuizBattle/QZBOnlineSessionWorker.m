@@ -15,6 +15,8 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
 
+NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
+
 @interface QZBOnlineSessionWorker () <PTPusherDelegate>
 
 @property (strong, nonatomic) PTPusher *client;
@@ -155,12 +157,20 @@
     }
 }
 
-- (void)pusher:(PTPusher *)pusher willAuthorizeChannelWithRequest:(NSMutableURLRequest *)request {
-    [request setValue:@"some-authentication-token"
-        forHTTPHeaderField:@"X-MyCustom-AuthTokenHeader"];
-}
+//- (void)pusher:(PTPusher *)pusher willAuthorizeChannelWithRequest:(NSMutableURLRequest *)request {
+//    [request setValue:@"some-authentication-token"
+//        forHTTPHeaderField:@"X-MyCustom-AuthTokenHeader"];
+//}
 
 - (void)handleDisconnectionWithError:(NSError *)error {
+    
+    NSLog(@"pusher problems");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:QZBPusherConnectionProblrms
+     
+                                                    object:nil];
+    
+    
     Reachability *reachability =
         [Reachability reachabilityWithHostname:self.client.connection.URL.host];
 
@@ -185,6 +195,8 @@
 
 - (void)reachabilityChanged:(NSNotification *)note {
     Reachability *reachability = [note object];
+    
+    
 
     if ([reachability isReachable]) {
         // we're reachable, we can try and reconnect, otherwise keep waiting

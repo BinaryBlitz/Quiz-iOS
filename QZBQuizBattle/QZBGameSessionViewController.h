@@ -9,8 +9,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UAProgressView.h"
 
 @class QZBSession;
+//@class UACircularProgressView;
 
 @interface QZBGameSessionViewController : UIViewController
 
@@ -28,6 +30,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UIImageView *opponentImage;
+
+@property (weak, nonatomic) IBOutlet UAProgressView *progressView;
+
+//@property (weak, nonatomic) IBOutlet UACircularProgressView *circularProgress;
 
 //@property (strong, nonatomic) QZBSession *session;
 

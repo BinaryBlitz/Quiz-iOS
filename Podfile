@@ -8,3 +8,4 @@ pod "MagicalRecord"
 pod "DBCamera"
 pod 'SVProgressHUD'
 pod 'JSBadgeView'
+pod 'UAProgressView'

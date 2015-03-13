@@ -151,7 +151,7 @@
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
-    [QZBGameTopic MR_truncateAll];  // comment on release version
+ //   [QZBGameTopic MR_truncateAll];  // comment on release version
 
     NSArray *topics = [topicsInRequest objectForKey:@"topics"];
 

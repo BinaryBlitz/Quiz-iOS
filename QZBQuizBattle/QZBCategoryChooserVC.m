@@ -112,7 +112,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.choosedCategory = self.categories[indexPath.row];
     // NSLog(@"%ld", (long)self.choosedCategory.category_id);
-    [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
+     [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
 
 - (void)initCategories {

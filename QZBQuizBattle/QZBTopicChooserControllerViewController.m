@@ -99,6 +99,7 @@
     UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
     backView.backgroundColor = [UIColor clearColor];
     cell.backgroundView = backView;
+     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
 
