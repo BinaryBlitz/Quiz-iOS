@@ -13,6 +13,7 @@
 #import "QZBTopicChooserControllerViewController.h"
 #import "UIColor+QZBProjectColors.h"
 #import <JSBadgeView/JSBadgeView.h>
+#import <UAProgressView.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -23,6 +24,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (strong, nonatomic) NSTimer *globalTimer;  //нужен для работы проги в бекграунде
+//@property (strong, nonatomic) UAProgressView *progressView;
 
 @property(strong, nonatomic) JSBadgeView *userBV;
 @property(strong, nonatomic) JSBadgeView *opponentBV;
@@ -66,10 +68,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                                                object:nil];
     
     
-
-    
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,19 +82,28 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentImage
                                                      alignment:JSBadgeViewAlignmentCenterLeft];
     
-    self.userBV.badgeTextFont =     [UIFont systemFontOfSize:20];
+    self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
     self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
     self.userBV.badgeBackgroundColor = [UIColor lightBlueColor];
     self.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
-    
-   // self.userBV = [JSBadgeView ]
-    
 
     self.opponentBV.badgeText = @"0";
     self.userBV.badgeText = @"0";
     
+    [self initCircularProgress];
+    
 
     [self setNamesAndUserpics];
+}
+
+-(void)initCircularProgress{
+    self.progressView.borderWidth = 0.0;
+    self.progressView.lineWidth = 3.0;
+    self.progressView.progress = 0;
+    self.progressView.backgroundColor = [UIColor clearColor];
+    self.progressView.centralView = self.timeLabel;
+    self.progressView.fillOnTouch = NO;
+    self.progressView.animationDuration = 0.1;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -403,8 +410,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     if ([keyPath isEqualToString:@"currentTime"]) {
         NSUInteger num = [[QZBSessionManager sessionManager] sessionTime] -
                          [[change objectForKey:@"new"] integerValue];
+        
+        [self.progressView setProgress:(100-num)/100.0 animated:YES];
 
-        self.timeLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)num];
+        self.timeLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)num/10];
     }
 }
 

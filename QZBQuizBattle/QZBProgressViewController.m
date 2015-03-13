@@ -21,7 +21,7 @@
 //#import "NSTimer+Blocks.h"
 //#import <Pusher/Pusher.h>
 
-@interface QZBProgressViewController ()  //<PTPusherDelegate>
+@interface QZBProgressViewController ()  <UIAlertViewDelegate>
 
 //@property(strong, nonatomic) QZBSession *session;
 //@property(strong, nonatomic) id bot;
@@ -35,6 +35,7 @@
 @property (assign, nonatomic) BOOL setted;
 @property (assign, nonatomic) BOOL isOnline;
 @property (assign, nonatomic) BOOL isEntered;
+//@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное управление
 
 //@property(strong, nonatomic) PTPusher *client;
 
@@ -50,14 +51,15 @@
     // [[self navigationController] setNavigationBarHidden:YES animated:NO];
     // Do any additional setup after loading the view.
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showGameVC:)
-                                                 name:@"QZBOnlineGameNeedStart"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSubscribed:)
-                                                 name:@"subscribedToChanel"
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(showGameVC:)
+//                                                 name:@"QZBOnlineGameNeedStart"
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(didSubscribed:)
+//                                                 name:@"subscribedToChanel"
+//                                               object:nil];
+//    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,6 +72,22 @@
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelCrossAction:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showGameVC:)
+                                                 name:@"QZBOnlineGameNeedStart"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSubscribed:)
+                                                 name:@"subscribedToChanel"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showAlertViewFromNotification:)
+                                                 name:QZBPusherConnectionProblrms
+                                               object:nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -101,35 +119,12 @@
     self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
-    
-    //[TSMessage dismissActiveNotification];
-}
-
-- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
-
 -(void)initNavigationBar:(NSString *)title {
     self.navigationItem.hidesBackButton = YES;
-   // [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.title = title;
-    
-//    
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
-//    [self.navigationController.navigationBar  setTitleTextAttributes:@{[UIColor whiteColor]: NSForegroundColorAttributeName}];
-//    
-//    //[self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
-//    //[self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-//    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-//    
-//    
-//    [self.navigationController.navigationBar
-//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//    self.navigationController.navigationBar.translucent = NO;
-
-    
     
 }
 
@@ -141,7 +136,6 @@
     self.topicLabel.text = topic.name;
     
  //   topic.relationToCategory.name;
-    
     
     [self initNavigationBar:topic.relationToCategory.name];
     
@@ -173,7 +167,19 @@
     
 }
 
-- (IBAction)cancelFinding:(UIButton *)sender {
+-(void)showAlertViewFromNotification:(NSNotification *)note{
+    [[[UIAlertView alloc]initWithTitle:@"Ошибка связи"
+                               message:@"Проверьте подключение к интернету"
+                              delegate:self
+                     cancelButtonTitle:@"Ок"
+                     otherButtonTitles: nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;{
+    
+    if(buttonIndex == 0){
+        [self cancelCrossAction:nil];
+    }
     
 }
 
@@ -192,9 +198,13 @@
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
 
-            NSLog(@"failed");
+           [[[UIAlertView alloc]initWithTitle:@"Ошибка связи"
+                                      message:@"Проверьте подключение к интернету"
+                                     delegate:self
+                            cancelButtonTitle:@"Ок"
+                            otherButtonTitles: nil] show];
 
-            [self cancelFinding:nil];
+            
 
         }];
 }
@@ -220,24 +230,6 @@
 
 - (void)tryGetSession:(NSTimer *)timer {
     if (_timer && [self.timer isEqual:timer]) {
-//        _counter--;
-//        NSLog(@"%ld", (unsigned long)_counter);
-//
-//        [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
-//            onSuccess:^(QZBSession *session, id bot) {
-//
-//                [self settitingSession:session bot:bot];
-//
-//                [_timer invalidate];
-//                _timer = nil;
-//
-//            }
-//            onFailure:^(NSError *error, NSInteger statusCode) {
-//
-//                NSLog(@"finding failure");
-//                [self.navigationController popViewControllerAnimated:YES];
-//
-//            }];
         
         [self tryGetSession];
 
@@ -293,6 +285,20 @@
             } else {
                 self.isOnline = YES;
                 [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
+                
+                //not tested
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    
+                    if([self checkCanEnterGame]){
+                        NSLog(@"after func");
+                        
+                        [[[UIAlertView alloc]initWithTitle:@"Ошибка на сервере" message:@"Попробуйте еще раз" delegate:self cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
+                        //[self showGameVC:nil];
+                        
+                        
+                    }
+                });
             }
 
             //[self performSegueWithIdentifier:@"showGame" sender:nil];

@@ -165,12 +165,13 @@
     static NSString *findFriendsIdentifier = @"searchFriends";
     static NSString *mostLovedTopicIdentifier = @"mostLovedTopics";
     static NSString *topicCellIdentifier = @"topicCell";
-    NSInteger number;
-    if(self.isCurrent){
-        number = 4;
-    } else{
-        number = 3;
-    }
+    static NSString *challengeCell = @"challengeCell";
+//    NSInteger number;
+//    if(self.isCurrent){
+//        number = 4;
+//    } else{
+//        number = 3;
+//    }
 
     UITableViewCell *cell;
 
@@ -193,15 +194,23 @@
         [achivCell setAchivArray:self.achivArray];
         achivCell.buttonTitle = @"Показать\n все";
         return achivCell;
-    } else if (indexPath.row == 3 && self.isCurrent) {
+    } else if ( indexPath.row == 3 ) {
+        
+        if(self.isCurrent){
+        
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
                 return cell;
-                
-            } else if (indexPath.row == number) {
+        } else{
+            
+                cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
+                return cell;
+        }
+        
+            } else if ( indexPath.row == 4 ) {
                 cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
                 
                 return cell;
-            } else if (indexPath.row > number) {
+            } else if ( indexPath.row > 4 ) {
                 QZBTopicTableViewCell *topicCell =
                 [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
                 topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
@@ -231,7 +240,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row < 3) {
         return 127.0f;
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == 3 || indexPath.row == 4) {
         return 47.0f;
     } else {
         return 61.0f;
@@ -240,7 +249,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell.reuseIdentifier isEqualToString:@"searchFriends"]) {
+    if ([cell.reuseIdentifier isEqualToString:@"searchFriends"] || [cell.reuseIdentifier isEqualToString:@"challengeCell"]) {
         return YES;
     } else {
         return NO;
@@ -254,6 +263,8 @@
     
     if([identifier isEqualToString:@"searchFriends"]){
         [self performSegueWithIdentifier:@"showSearch" sender:nil];
+    }else if([identifier isEqualToString:@"challengeCell"]){
+        [self performSegueWithIdentifier:@"challengeSegue" sender:nil];
     }
     
 }
