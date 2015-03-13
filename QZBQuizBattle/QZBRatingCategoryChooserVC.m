@@ -17,6 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -29,11 +32,14 @@
     return [super tableView:tableView numberOfRowsInSection:section]+1;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView
+        cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(indexPath.row == 0){
-        UITableViewCell *cell = [[UITableViewCell alloc] init];
-        cell.textLabel.text = @"все темы";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"allCategory"];
+        
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         NSIndexPath *ip =[NSIndexPath indexPathForRow:indexPath.row-1

@@ -27,6 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Друзья";
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -199,6 +204,10 @@ toIndexPath:(NSIndexPath
 #pragma mark - actions
 - (void)showFriendsRequestsAction:(id)sender {
     [self performSegueWithIdentifier:@"showFriendsRequests" sender:nil];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

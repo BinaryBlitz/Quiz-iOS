@@ -19,6 +19,7 @@
 #import <TSMessages/TSMessage.h>
 #import "QZBFriendsTVC.h"
 #import "QZBAnotherUser.h"
+#import "QZBRequestUser.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -45,11 +46,24 @@
 
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
+    [self.navigationController.navigationBar
+     setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar
+     setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userPressShowAllButton:)
-                                                 name:@"QZBUserPressShowAllButton"
-                                               object:nil];
 
     // Do any additional setup after loading the view.
 }
@@ -61,6 +75,11 @@
 
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userPressShowAllButton:)
+                                                 name:@"QZBUserPressShowAllButton"
+                                               object:nil];
 
     if (!self.user ||
         [self.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
@@ -77,6 +96,11 @@
     // [self.tableView reloadData];
 
     NSLog(@"viewWillAppear %@", self.user.name);
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)dealloc {
@@ -339,12 +363,12 @@
         [playerCell.multiUseButton setTitle:@"settings" forState:UIControlStateNormal];
 
         if (self.friendRequests) {
-            if (self.friendRequests.count > 0) {
+            if ([self badgeNumber] > 0) {
                 JSBadgeView *bv =
                     [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
                                                   alignment:JSBadgeViewAlignmentTopRight];
                 bv.badgeText =
-                    [NSString stringWithFormat:@"%ld", (unsigned long)self.friendRequests.count];
+                    [NSString stringWithFormat:@"%ld", (unsigned long)[self badgeNumber]];
             }
         }
     } else {
@@ -379,18 +403,42 @@
 
             self.friendRequests = friends;
             [self.tableView reloadData];
-            if (friends.count > 0) {
-                // NSString *bageValue = [NSString stringWithFormat:@"%ld",
-                // (unsigned long)friends.count];
-
-                self.friendRequests = friends;
-                [self.tableView reloadData];
+            
+            UITabBarController *tabController = self.tabBarController;
+            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+            
+    
+            
+            
+            if ([self badgeNumber] > 0) {
+                
+                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", [self badgeNumber]];
+                
+            }else{
+                 tabbarItem.badgeValue = nil;
             }
 
         } onFailure:^(NSError *error, NSInteger statusCode){
 
+            
         }];
     }
+}
+
+-(NSInteger)badgeNumber{
+    NSInteger count = 0;
+    
+    for(QZBRequestUser *user in self.friendRequests){
+        if(!user.viewed){
+            count++;
+        }
+    }
+    return count;
+
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

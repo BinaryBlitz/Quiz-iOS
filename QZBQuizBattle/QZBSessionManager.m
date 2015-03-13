@@ -17,6 +17,8 @@
 
 @interface QZBSessionManager ()
 
+@property(assign, nonatomic) BOOL isGoing;
+
 @property (strong, nonatomic) QZBSession *gameSession;
 @property (strong, nonatomic) QZBQuestion *currentQuestion;
 @property (assign, nonatomic) NSUInteger roundNumber;
@@ -85,6 +87,7 @@
         return;
     }
 
+    self.isGoing = YES;
     _gameSession = session;
     self.currentQuestion = [session.questions firstObject];
 
@@ -335,6 +338,7 @@
     [self.questionTimer invalidate];
     self.questionTimer = nil;
 
+    self.isGoing = NO;
     self.gameSession = nil;
     self.bot = nil;
     self.askedQuestions = nil;

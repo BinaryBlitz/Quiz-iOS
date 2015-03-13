@@ -17,6 +17,8 @@
 
 @interface QZBSessionManager : NSObject
 
+@property(assign, nonatomic, readonly) BOOL isGoing;
+
 @property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
 @property (assign, nonatomic, readonly) NSUInteger currentTime;
 

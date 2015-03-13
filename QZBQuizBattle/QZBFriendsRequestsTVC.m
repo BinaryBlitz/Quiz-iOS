@@ -7,6 +7,7 @@
 //
 
 #import "QZBFriendsRequestsTVC.h"
+#import "QZBServerManager.h"
 
 @interface QZBFriendsRequestsTVC ()
 
@@ -27,6 +28,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [[QZBServerManager sharedManager] PATCHMarkRequestsAsViewedOnSuccess:^{
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
 }
 
 /*

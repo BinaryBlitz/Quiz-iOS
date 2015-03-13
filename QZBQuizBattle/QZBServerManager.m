@@ -22,6 +22,7 @@
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
 #import "TSMessage.h"
+#import "QZBRequestUser.h"
 
 @interface QZBServerManager ()
 
@@ -531,7 +532,7 @@
             NSMutableArray *friends = [NSMutableArray array];
 
             for (NSDictionary *dict in responseObject) {
-                QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
+                QZBRequestUser *user = [[QZBRequestUser alloc] initWithDictionary:dict];
                 [friends addObject:user];
             }
 
@@ -784,7 +785,7 @@
 
 #pragma mark - IAP
 
-- (void)GETInAppPurchasesOnSuccess:(void (^)(NSArray *purchases))success
+- (void)GETInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
@@ -796,7 +797,7 @@
 
             NSMutableArray *purchases = [NSMutableArray array];
 
-            NSArray *result = [NSArray arrayWithArray:purchases];
+            NSSet *result = [NSSet setWithArray:purchases];
 
             if (success) {
                 success(result);
@@ -804,13 +805,28 @@
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"purchases failure %@", error);
-            if (failure) {
-                failure(error, operation.response.statusCode);
-            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                if(success){
+                    NSSet * productIdentifiers = [NSSet setWithObjects:
+                                                  @"drumih.QZBQuizBattle.smthnew",
+                                                  @"drumih.iQuiz.specialGeography",
+                                                  @"drumih.iQuiz.specialMath",
+                                                  
+                                                  nil];
+                    
+                    success(productIdentifiers);
+                }
+                
+            });//REDO THIS ITS FOR TEST
+//            if (failure) {
+//                failure(error, operation.response.statusCode);
+//            }
         }];
 }
 
-- (void)GETAvailableInAppPurchasesOnSuccess:(void (^)(NSArray *purchases))success
+- (void)GETAvailableInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
                                   onFailure:
                                       (void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
@@ -823,17 +839,37 @@
 
             NSMutableArray *purchases = [NSMutableArray array];
 
-            NSArray *result = [NSArray arrayWithArray:purchases];
+            NSSet *result = [NSSet setWithArray:purchases];
+            
+            
 
             if (success) {
                 success(result);
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@" purchases failure");
-            if (failure) {
-                failure(error, operation.response.statusCode);
-            }
+            NSLog(@" purchases failure %@", error);
+            
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                if(success){
+                    NSSet * productIdentifiers = [NSSet setWithObjects:
+                                                  @"drumih.QZBQuizBattle.smthnew",
+                                                  @"drumih.iQuiz.specialGeography",
+                                                  @"drumih.iQuiz.specialMath",
+                                                  
+                                                  nil];
+                    
+                    success(productIdentifiers);
+                }
+                
+            });
+            
+            
+//            if (failure) {
+//                failure(error, operation.response.statusCode);
+//            }
         }];
 }
 
@@ -870,13 +906,11 @@
 - (void)GETSearchFriendsWithText:(NSString *)text
                         OnSuccess:(void (^)(NSArray *friends))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    // NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
+
     
-    NSString *urlString = [NSString stringWithFormat:@"/players/%@/friends", [QZBCurrentUser sharedInstance].user.userID];
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,@"query":text };
     
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    [self.requestOperationManager GET:urlString
+    [self.requestOperationManager GET:@"/players/search"
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                   

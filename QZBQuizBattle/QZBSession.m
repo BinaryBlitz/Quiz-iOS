@@ -102,9 +102,9 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     NSNumber *hostID = dict[@"host_id"];
     
     QZBAnotherUser *opponent = nil;
-    
+    opponent = [[QZBAnotherUser alloc] init];
     if([hostID isEqualToNumber:user1.userID]){
-        opponent = [[QZBAnotherUser alloc] init];
+        //opponent = [[QZBAnotherUser alloc] init];
         opponent.name = dict[@"opponent_name"];
         if(dict[@"opponent_id"]){
             opponent.userID = dict[@"opponent_id"];
@@ -114,9 +114,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         opponent.name = dict[@"host_name"];
         opponent.userID = dict[@"id"];
     }
-    
-    
-    
 
     return [self initWithQestions:questions first:user1 opponentUser:opponent];
 }

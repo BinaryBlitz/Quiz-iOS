@@ -19,10 +19,15 @@
                                       @"drumih.QZBQuizBattle.twiceBooster",
                                       @"drumih.QZBQuizBattle.tripleBooster",
                                       nil];
+        
+        
+        
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
     return sharedInstance;
 }
+
+
 
 
 

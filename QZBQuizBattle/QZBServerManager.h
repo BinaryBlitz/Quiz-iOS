@@ -23,18 +23,15 @@
 + (QZBServerManager *)sharedManager;
 
 - (void)getСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
-                     onFailure:(void (^)(NSError *error,
-                                         NSInteger statusCode))failure;
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)getTopicsWithCategory:(QZBCategory *)category
                     onSuccess:(void (^)(NSArray *topics))successAF
-                    onFailure:
-                        (void (^)(NSError *error, NSInteger statusCode))failure;
+                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)(QZBLobby *lobby))success
-                 onFailure:
-                     (void (^)(NSError *error, NSInteger statusCode))failure;
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)PATCHCloseLobby:(QZBLobby *)lobby
               onSuccess:(void (^)(QZBSession *session, id bot))success
@@ -42,15 +39,13 @@
 
 - (void)GETFindGameWithLobby:(QZBLobby *)lobby
                    onSuccess:(void (^)(QZBSession *session, id bot))success
-                   onFailure:
-                       (void (^)(NSError *error, NSInteger statusCode))failure;
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)PATCHSessionQuestionWithID:(NSInteger)sessionQuestionID
                             answer:(NSInteger)answerID
                               time:(NSInteger)answerTime
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode))failure;
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - user registration and login
 
@@ -58,14 +53,12 @@
                        email:(NSString *)userEmail
                     password:(NSString *)password
                    onSuccess:(void (^)(QZBUser *user))success
-                   onFailure:
-                       (void (^)(NSError *error, NSInteger statusCode))failure;
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTLoginUserEmail:(NSString *)email
                   password:(NSString *)password
                  onSuccess:(void (^)(QZBUser *user))success
-                 onFailure:
-                     (void (^)(NSError *error, NSInteger statusCode))failure;
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)GETPlayerWithID:(NSNumber *)playerID
               onSuccess:(void (^)(QZBAnotherUser *anotherUser))success
@@ -73,49 +66,42 @@
 
 - (void)POSTAuthWithVKToken:(NSString *)token
                   onSuccess:(void (^)(QZBUser *user))success
-                  onFailure:
-                      (void (^)(NSError *error, NSInteger statusCode))failure;
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode))failure;
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode))failure;
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - friends
 
 - (void)POSTFriendWithID:(NSNumber *)userID
                onSuccess:(void (^)())success
-               onFailure:
-                   (void (^)(NSError *error, NSInteger statusCode))failure;
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)DELETEUNFriendWithID:(NSNumber *)userID
                    onSuccess:(void (^)())success
-                   onFailure:
-                       (void (^)(NSError *error, NSInteger statusCode))failure;
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)GETAllFriendsOfUserWithID:(NSNumber *)userID
                         OnSuccess:(void (^)(NSArray *friends))success
-                        onFailure:(void (^)(NSError *error,
-                                            NSInteger statusCode))failure;
+                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
-                          onFailure:(void (^)(NSError *error,
-                                              NSInteger statusCode))failure;
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
                   withID:(NSInteger)ID
-               onSuccess:(void (^)(NSArray *topRanking,
-                                   NSArray *playerRanking))success
-               onFailure:
-                   (void (^)(NSError *error, NSInteger statusCode))failure;
+               onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (NSString *)hashPassword:(NSString *)password;
 
@@ -128,8 +114,7 @@
 - (void)PATCHAPNsTokenNew:(NSString *)newToken
                  oldToken:(NSString *)oldToken
                 onSuccess:(void (^)())success
-                onFailure:
-                    (void (^)(NSError *error, NSInteger statusCode))failure;
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)DELETEAPNsToken:(NSString *)token
               onSuccess:(void (^)())success
@@ -137,19 +122,15 @@
 
 #pragma mark - IAP
 
-- (void)GETInAppPurchasesOnSuccess:(void (^)(NSArray *purchases))success
-                         onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode))failure;
+- (void)GETInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)
-    GETAvailableInAppPurchasesOnSuccess:(void (^)(NSArray *purchases))success
-                              onFailure:(void (^)(NSError *error,
-                                                  NSInteger statusCode))failure;
+- (void)GETAvailableInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
+                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTInAppPurchaseIdentifier:(NSString *)identifier
                           onSuccess:(void (^)())success
-                          onFailure:(void (^)(NSError *error,
-                                              NSInteger statusCode))failure;
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - search
 
