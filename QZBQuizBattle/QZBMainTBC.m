@@ -19,6 +19,10 @@
     [super viewDidLoad];
 
     [[QZBCurrentUser sharedInstance] checkUser];
+    
+    self.tabBar.tintColor = [UIColor whiteColor];
+    self.tabBar.barTintColor = [UIColor blackColor];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -34,6 +38,8 @@
         NSLog(@"exist");
         [self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
     }
+    
+    
 }
 
 /*

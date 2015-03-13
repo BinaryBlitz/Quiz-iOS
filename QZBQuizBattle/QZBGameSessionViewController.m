@@ -17,7 +17,7 @@
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
-@interface QZBGameSessionViewController ()
+@interface QZBGameSessionViewController ()<UIAlertViewDelegate>
 
 @property (assign, nonatomic) int time;
 
@@ -83,6 +83,11 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                                                      alignment:JSBadgeViewAlignmentCenterRight];
     self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentImage
                                                      alignment:JSBadgeViewAlignmentCenterLeft];
+    
+    self.userBV.badgeTextFont =     [UIFont systemFontOfSize:20];
+    self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
+    self.userBV.badgeBackgroundColor = [UIColor lightBlueColor];
+    self.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
     
    // self.userBV = [JSBadgeView ]
     
@@ -197,34 +202,74 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     //[self UNShowQuestinAndAnswers];
 }
+
+
+
+
 - (IBAction)closeSession:(id)sender {
     
-    [self.globalTimer invalidate];
-    self.globalTimer = nil;
+    [[[UIAlertView alloc] initWithTitle:@"Сдаться?"
+                                message:@"Вы уверены?"
+                               delegate:self
+                      cancelButtonTitle:@"Отмена"
+                      otherButtonTitles:@"Ок", nil] show];
     
-    if (self.backgroundTask != UIBackgroundTaskInvalid) {
-        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
-        self.backgroundTask = UIBackgroundTaskInvalid;
-    }
-    
-    [[QZBSessionManager sessionManager] closeSession];
-    
-    //[self.navigationController popViewControllerAnimated:YES];
-    
-    UIViewController *destinationVC = nil;
-    
-    for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
-            destinationVC = vc;
-            break;
-        }
-    }
-    
-    if (destinationVC) {
-        [self.navigationController popToViewController:destinationVC animated:YES];
-    }
+//    [self.globalTimer invalidate];
+//    self.globalTimer = nil;
+//    
+//    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+//        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+//        self.backgroundTask = UIBackgroundTaskInvalid;
+//    }
+//    
+//    [[QZBSessionManager sessionManager] closeSession];
+//    
+//    //[self.navigationController popViewControllerAnimated:YES];
+//    
+//    UIViewController *destinationVC = nil;
+//    
+//    for (UIViewController *vc in self.navigationController.viewControllers) {
+//        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
+//            destinationVC = vc;
+//            break;
+//        }
+//    }
+//    
+//    if (destinationVC) {
+//        [self.navigationController popToViewController:destinationVC animated:YES];
+//    }
 
     
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 1){
+        
+        [self.globalTimer invalidate];
+        self.globalTimer = nil;
+        
+        if (self.backgroundTask != UIBackgroundTaskInvalid) {
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+            self.backgroundTask = UIBackgroundTaskInvalid;
+        }
+        
+        [[QZBSessionManager sessionManager] closeSession];
+        
+        //[self.navigationController popViewControllerAnimated:YES];
+        
+        UIViewController *destinationVC = nil;
+        
+        for (UIViewController *vc in self.navigationController.viewControllers) {
+            if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
+                destinationVC = vc;
+                break;
+            }
+        }
+        
+        if (destinationVC) {
+            [self.navigationController popToViewController:destinationVC animated:YES];
+        }
+    }
 }
 
 #pragma mark - init qestion
@@ -327,6 +372,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                          weakSelf.questBackground.alpha = .0;
                          weakSelf.opponentScore.textColor = [UIColor whiteColor];
                          weakSelf.firstUserScore.textColor = [UIColor whiteColor];
+                         weakSelf.userBV.badgeBackgroundColor = [UIColor lightBlueColor];
+                         weakSelf.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
+                         
                          weakSelf.timeLabel.alpha = .0;
 
                      }];
@@ -533,6 +581,8 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
         animations:^{
+            
+            self.opponentBV.badgeBackgroundColor = color;
             weakSelf.opponentScore.textColor = color;
         }
         completion:^(BOOL finished){
@@ -554,6 +604,7 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
         animations:^{
+             self.userBV.badgeBackgroundColor = color;
             weakSelf.firstUserScore.textColor = color;
         }
         completion:^(BOOL finished){

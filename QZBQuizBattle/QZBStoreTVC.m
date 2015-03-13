@@ -25,10 +25,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
     
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
@@ -69,19 +72,31 @@
     _products = nil;
     
    // [self.tableView reloadData];
-    [[QZBQuizTopicIAPHelper sharedInstance]
-        requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-            if (success) {
-                _products = products;
-                SKProduct *product = [products firstObject];
-                [_priceFormatter setLocale:product.priceLocale];
-                
-                [self.tableView reloadData];
-               // [SVProgressHUD dismiss];
-            }
-            [SVProgressHUD dismiss];
-            [self.refreshControl endRefreshing];
-        }];
+    
+    [[QZBQuizTopicIAPHelper sharedInstance] getTopicIdentifiersFromServerOnSuccess:^{
+        
+        [[QZBQuizTopicIAPHelper sharedInstance]
+         requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+             if (success) {
+                 _products = products;
+                 SKProduct *product = [products firstObject];
+                 [_priceFormatter setLocale:product.priceLocale];
+                 
+                 [self.tableView reloadData];
+                 // [SVProgressHUD dismiss];
+             }
+             [SVProgressHUD dismiss];
+             [self.refreshControl endRefreshing];
+         }];
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        [SVProgressHUD dismiss];
+        [self.refreshControl endRefreshing];
+
+    }];
+     
+     
+     
 }
 
 #pragma mark - Table View
@@ -149,5 +164,7 @@
 - (void)restoreTapped:(id)sender {
     [[QZBQuizTopicIAPHelper sharedInstance] restoreCompletedTransactions];
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 @end

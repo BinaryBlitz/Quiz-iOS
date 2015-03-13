@@ -15,6 +15,9 @@
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
+#import "QZBPlayerPersonalPageVC.h"
+#import "QZBAnotherUser.h"
+#import "QZBSessionManager.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -29,7 +32,7 @@
     [MagicalRecord setupAutoMigratingCoreDataStack];
     //[QZBQuizIAPHelper sharedInstance];
 
-    //NSLog(@"launch options %@", launchOptions);
+    NSLog(@"launch options %@", launchOptions);
     
     if (IS_OS_8_OR_LATER) {
         [application
@@ -46,6 +49,17 @@
                                                          UIRemoteNotificationTypeBadge |
                                                          UIRemoteNotificationTypeSound)];
     }
+    
+    
+    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(notificationPayload) {
+        
+        [self showFriendRequestScreenWithDictionary:notificationPayload];
+
+        
+    }
+    
+    
     return YES;
 }
 
@@ -225,11 +239,54 @@
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Received notification: %@", userInfo);
+    
+    UIApplicationState state = application.applicationState;
+    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
+    {
+        [self showFriendRequestScreenWithDictionary:userInfo];
+    }else{
+    
+    [self setBadgeWithDictionary:nil];
+    }
+   // [self showFriendRequestScreenWithDictionary:userInfo];
 }
 
 - (void)application:(UIApplication *)application
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Failed to get token, error: %@", error);
+    
+    
+}
+
+
+-(void)setBadgeWithDictionary:(NSDictionary *)dict{
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+    tabbarItem.badgeValue = @"1";
+    
+    
+}
+
+-(void)showFriendRequestScreenWithDictionary:(NSDictionary *)dict{
+    
+    if(![QZBSessionManager sessionManager].isGoing){
+    
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    
+    UINavigationController *navController = (UINavigationController *)tabController.viewControllers[1];
+    
+    QZBPlayerPersonalPageVC *notificationController = (QZBPlayerPersonalPageVC *)[navController.storyboard instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
+    
+    tabController.selectedIndex = 1;
+    
+    NSDictionary *player = dict[@"player"];
+    
+    QZBAnotherUser *user = [[QZBAnotherUser alloc]initWithDictionary:player];
+    
+    [notificationController initPlayerPageWithUser:user];
+    [navController pushViewController:notificationController animated:YES];
+    }
+    
 }
 
 @end

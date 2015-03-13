@@ -26,6 +26,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
+    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+
     _priceFormatter = [[NSNumberFormatter alloc] init];
 
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
@@ -36,12 +46,6 @@
                                          style:UIBarButtonItemStyleBordered
                                         target:self
                                         action:@selector(restoreTapped:)];
-    
-    [[QZBServerManager sharedManager] GETInAppPurchasesOnSuccess:^(NSArray *purchases) {
-        
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
-    }];
 
     [QZBQuizIAPHelper sharedInstance];
 
@@ -57,12 +61,22 @@
     [super viewWillAppear:animated];
     //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
 
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+
+    self.navigationController.navigationItem.title = @"Все Категории";
+
+    [self.navigationController.navigationBar
+        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(productPurchased:)
                                                  name:IAPHelperProductPurchasedNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(transactionFailed:) name:IAPHelperProductPurchaseFailed object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(transactionFailed:)
+                                                 name:IAPHelperProductPurchaseFailed
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -73,12 +87,12 @@
 - (IBAction)purchaseTwiceBoosterAction:(id)sender {
     // NSLog(@"Buying %@...", product.productIdentifier);
     [[QZBQuizIAPHelper sharedInstance] buyProduct:self.twiceBooster];
-    
+
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 }
 - (IBAction)purchaseTripleBoosterAction:(id)sender {
     [[QZBQuizIAPHelper sharedInstance] buyProduct:self.tripleBooster];
-    
+
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 }
 
@@ -121,7 +135,7 @@
                    });
 }
 
--(void)transactionFailed:(NSNotification *)notification{
+- (void)transactionFailed:(NSNotification *)notification {
     [SVProgressHUD dismiss];
 }
 
@@ -140,5 +154,7 @@
     [[QZBQuizIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 @end

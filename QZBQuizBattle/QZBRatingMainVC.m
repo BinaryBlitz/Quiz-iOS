@@ -24,6 +24,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.multipleTouchEnabled = NO;
+    
+     [self setNeedsStatusBarAppearanceUpdate];
+    
+    //barButtonName.title = @"SOME TEXT TO DISPLAY";
+    NSUInteger size = 18;
+    UIFont * font = [UIFont boldSystemFontOfSize:size];
+    NSDictionary * attributes = @{NSFontAttributeName: font};
+    [self.leftButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.rightButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    
+//    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//
 
     // self.rightButton.
     // Do any additional setup after loading the view.
@@ -38,20 +55,33 @@
     [super viewWillAppear:animated];
 
     if (self.topic) {
-        [self.chooseTopicButton setTitle:self.topic.name forState:UIControlStateNormal];
+        
+        NSString *title = [NSString stringWithFormat:@"%@ >",self.topic.name];
+        
+        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
+        
+        //[self.chooseTopicButton setTitle:self.topic.name forState:UIControlStateNormal];
 
         [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
 
     } else if (self.category) {
-        [self.chooseTopicButton setTitle:self.category.name forState:UIControlStateNormal];
+        NSString *title = [NSString stringWithFormat:@"%@ >",self.category.name ];
+        
+        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
 
         [self setRatingWithCategoryID:[self.category.category_id integerValue]];
 
     } else {
-        [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
+        [self.chooseTopicButton setTitle:@"Все темы >" forState:UIControlStateNormal];
 
         [self setRatingWithTopicID:0];
     }
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//
+    
 }
 
 - (void)setRatingWithCategoryID:(NSInteger)categoryID {
@@ -159,6 +189,10 @@
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
         [pageVC showRightVC];
     }
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

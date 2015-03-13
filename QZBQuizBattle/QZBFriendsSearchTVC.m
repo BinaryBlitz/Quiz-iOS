@@ -8,8 +8,9 @@
 
 #import "QZBFriendsSearchTVC.h"
 #import "QZBServerManager.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface QZBFriendsSearchTVC ()
+@interface QZBFriendsSearchTVC ()<UIScrollViewDelegate>
 
 @end
 
@@ -18,7 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.searchBar.delegate = self;
+   // self.searchBar.delegate = self;
+    
+    //self.title = @"";
     // Do any additional setup after loading the view.
 }
 
@@ -27,21 +30,44 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.searchBar becomeFirstResponder];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.searchBar resignFirstResponder];
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
     NSLog(@"search taped");
+    [SVProgressHUD show];
+    
     
     [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text
 OnSuccess:^(NSArray *friends) {
     
     
+    if(friends.count == 0){
+        [SVProgressHUD showInfoWithStatus:@"Ничего не найдено,\n попробуйте другой запрос"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }else{
     
-    [self setFriendsOwner:nil andFriends:friends];
-    
-    
+        [self setFriendsOwner:nil andFriends:friends];
+        [SVProgressHUD dismiss];
+    }
+            
     } onFailure:^(NSError *error, NSInteger statusCode) {
+       [SVProgressHUD showInfoWithStatus:@"Проверьте интернет соединение"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        
         
     }];
     

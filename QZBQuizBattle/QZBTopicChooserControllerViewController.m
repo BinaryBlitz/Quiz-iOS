@@ -31,8 +31,15 @@
     self.topicTableView.delegate = self;
     self.topicTableView.dataSource = self;
     
-    [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+//    [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
+//    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
     [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+
 
     
    // self.navigationController.navigationBar.barTintColor = [UIColor redColor];
@@ -54,18 +61,17 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
-    [self.navigationController.navigationBar  setTitleTextAttributes:@{[UIColor whiteColor]: NSForegroundColorAttributeName}];
+    [self.navigationController.navigationBar  setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    
     
     
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.translucent = NO;
     
-    self.navigationController.navigationBar.topItem.title = @"";
+   // self.navigationController.navigationBar.topItem.title = @"";
     
 }
 
@@ -86,9 +92,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = @"topicCell";
-
+    static NSString *identifier = @"topicCell";
+    
     QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
+    backView.backgroundColor = [UIColor clearColor];
+    cell.backgroundView = backView;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
 
@@ -111,12 +121,14 @@
 #pragma mark - topics init
 
 - (void)initTopicsWithCategory:(QZBCategory *)category {
-    // NSLog(@"category name:  %@", category.name);
     
     self.category = category;
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];//redo for colors
+//    self.topicTableView.backgroundColor = [UIColor redColor];
 
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-
+    
     self.topics =
         [[NSArray arrayWithArray:[[category relationToTopic] allObjects]] sortedArrayUsingDescriptors:@[ sort ]];
 

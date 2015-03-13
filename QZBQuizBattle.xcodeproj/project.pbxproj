@@ -91,6 +91,7 @@
 		19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691261A6E6275008B2AE1 /* QZBPasswordTextField.m */; };
 		19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */; };
 		19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */; };
+		19DCB7051AB1979B00385C19 /* QZBRequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DCB7041AB1979B00385C19 /* QZBRequestUser.m */; };
 		19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA85B1A85532300E610DB /* QZBRatingTVC.m */; };
 		19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA85E1A855A1900E610DB /* QZBRatingPageVC.m */; };
 		19DEA8621A8561E600E610DB /* QZBRatingTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */; };
@@ -267,6 +268,8 @@
 		19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserNameTextField.m; sourceTree = "<group>"; };
 		19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainTBC.h; sourceTree = "<group>"; };
 		19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainTBC.m; sourceTree = "<group>"; };
+		19DCB7031AB1979B00385C19 /* QZBRequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRequestUser.h; sourceTree = "<group>"; };
+		19DCB7041AB1979B00385C19 /* QZBRequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRequestUser.m; sourceTree = "<group>"; };
 		19DEA85A1A85532300E610DB /* QZBRatingTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingTVC.h; sourceTree = "<group>"; };
 		19DEA85B1A85532300E610DB /* QZBRatingTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingTVC.m; sourceTree = "<group>"; };
 		19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingPageVC.h; sourceTree = "<group>"; };
@@ -662,6 +665,8 @@
 				191E12F91A8CD87700AFB829 /* QZBUserInRating.h */,
 				191E12FA1A8CD87700AFB829 /* QZBUserInRating.m */,
 				198E09651AA1E584006A08BB /* QZBUserProtocol.h */,
+				19DCB7031AB1979B00385C19 /* QZBRequestUser.h */,
+				19DCB7041AB1979B00385C19 /* QZBRequestUser.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1007,6 +1012,7 @@
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				191E12ED1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m in Sources */,
 				19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */,
+				19DCB7051AB1979B00385C19 /* QZBRequestUser.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 				19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */,
 				19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */,

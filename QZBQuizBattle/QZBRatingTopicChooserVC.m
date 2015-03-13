@@ -32,8 +32,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        UITableViewCell *cell = [[UITableViewCell alloc] init];
-        cell.textLabel.text = @"Рейтин по выбранной категории";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"allCategory"];
+        
+        //UITableViewCell *cell = [[UITableViewCell alloc] init];
+       // cell.textLabel.text = @"Рейтин по выбранной категории";
         return cell;
     } else {
         NSIndexPath *ip = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
