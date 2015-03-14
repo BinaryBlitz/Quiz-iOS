@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet QZBUserNameTextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet QZBPasswordTextField *userNewPasswordTextField;
 @property (weak, nonatomic) IBOutlet QZBPasswordTextField *userNewPasswordAgainTextField;
+@property (weak, nonatomic) IBOutlet UIButton *renewPasswordButton;
 
 @end

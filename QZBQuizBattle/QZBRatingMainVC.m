@@ -16,6 +16,7 @@
 @interface QZBRatingMainVC ()
 
 @property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (assign, nonatomic) BOOL fromTopics;
 
 @end
 
@@ -24,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.multipleTouchEnabled = NO;
+   // self.fromTopics = NO;
     
      [self setNeedsStatusBarAppearanceUpdate];
     
@@ -46,6 +48,13 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)initWithTopic:(QZBGameTopic *)topic{
+    
+    self.fromTopics = YES;
+    self.topic = topic;
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -56,7 +65,16 @@
 
     if (self.topic) {
         
-        NSString *title = [NSString stringWithFormat:@"%@ >",self.topic.name];
+        NSString *title = nil;
+        
+        if(self.fromTopics){
+            title = self.topic.name;
+            self.chooseTopicButton.enabled = NO;
+        }else{
+            title = [NSString stringWithFormat:@"%@ >",self.topic.name];
+        }
+        
+       // [NSString stringWithFormat:@"%@ >",self.topic.name];
         
         [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
         

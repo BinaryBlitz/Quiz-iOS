@@ -31,6 +31,8 @@
         
         if([dict objectForKey:@"email"]){
             self.email = [dict objectForKey:@"email"];
+        }else{
+            self.email = nil;
         }
         self.userID = [dict objectForKey:@"id"];
         self.userPic = nil;
