@@ -27,18 +27,31 @@
 @implementation QZBSettingsTVC
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
-
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     [TSMessage setDefaultViewController:self.navigationController];
 
     self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
     NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
 
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
+    
+    
 
     self.userNewPasswordTextField.delegate = self;
     self.userNewPasswordAgainTextField.delegate = self;
     self.userNameTextField.delegate = self;
+    
+    NSLog(@"user email %@", [[QZBCurrentUser sharedInstance].user.email class]);
+    if([[QZBCurrentUser sharedInstance].user.email isEqual:[NSNull null]]){
+        self.userNewPasswordAgainTextField.enabled = NO;
+        self.userNewPasswordTextField.enabled = NO;
+        self.userNameTextField.enabled = NO;
+        self.renewPasswordButton.enabled = NO;
+    }
+    
 }
 
 - (IBAction)changePicture:(UIButton *)sender {
@@ -59,11 +72,13 @@
     if ([tf isEqual:self.userNewPasswordTextField]) {
         if ([self checkFirstPassword]) {
             [self.userNewPasswordAgainTextField becomeFirstResponder];
+            
             return YES;
         }
     } else if ([tf isEqual:self.userNewPasswordAgainTextField]) {
         if ([self checkPasswords]) {
             [self patchPassword];
+            
             return YES;
         }
     } else if ([tf isEqual:self.userNameTextField]) {
@@ -250,6 +265,10 @@
    // [self.navigationController popToRootViewControllerAnimated:NO];
 
     [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end
