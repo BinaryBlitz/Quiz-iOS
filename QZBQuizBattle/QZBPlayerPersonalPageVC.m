@@ -20,6 +20,7 @@
 #import "QZBFriendsTVC.h"
 #import "QZBAnotherUser.h"
 #import "QZBRequestUser.h"
+#import "QZBCategoryChooserVC.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -96,6 +97,8 @@
     // [self.tableView reloadData];
 
     NSLog(@"viewWillAppear %@", self.user.name);
+    
+    [self updateBadges];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -281,6 +284,9 @@
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
         [vc setFriendsOwner:self.user friends:self.friends friendsRequests:self.friendRequests];
+    } else if([segue.identifier isEqualToString:@"challengeSegue"]){
+        QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
+        [destinationVC initWithUser:self.user];
     }
 }
 
@@ -374,13 +380,16 @@
         [playerCell.multiUseButton setTitle:@"settings" forState:UIControlStateNormal];
 
         if (self.friendRequests) {
-            if ([self badgeNumber] > 0) {
-                JSBadgeView *bv =
-                    [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
-                                                  alignment:JSBadgeViewAlignmentTopRight];
-                bv.badgeText =
-                    [NSString stringWithFormat:@"%ld", (unsigned long)[self badgeNumber]];
-            }
+            [playerCell setBAdgeCount:[self badgeNumber]];
+//            if ([self badgeNumber] > 0) {
+//                JSBadgeView *bv =
+//                    [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
+//                                                  alignment:JSBadgeViewAlignmentTopRight];
+//                bv.badgeText =
+//                    [NSString stringWithFormat:@"%ld", (unsigned long)[self badgeNumber]];
+//            }else{
+//                
+//            }
         }
     } else {
         if (!self.user.isFriend) {
@@ -423,7 +432,7 @@
             
             if ([self badgeNumber] > 0) {
                 
-                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", [self badgeNumber]];
+                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
                 
             }else{
                  tabbarItem.badgeValue = nil;
@@ -434,6 +443,36 @@
             
         }];
     }
+}
+
+-(void)updateBadges{
+    
+    if (self.isCurrent) {
+        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends) {
+            
+            self.friendRequests = friends;
+            [self.tableView reloadData];
+            
+            UITabBarController *tabController = self.tabBarController;
+            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+            
+            
+            
+            
+            if ([self badgeNumber] > 0) {
+                
+                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
+                
+            }else{
+                tabbarItem.badgeValue = nil;
+            }
+            
+        } onFailure:^(NSError *error, NSInteger statusCode){
+            
+            
+        }];}
+    
+    
 }
 
 -(NSInteger)badgeNumber{

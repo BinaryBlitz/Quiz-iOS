@@ -23,7 +23,7 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 
 - (void)restoreCompletedTransactions;
 
--(void)setProductIdentifiers:(NSSet *)productIdentifiers;
+-(void)setProductIdentifiersFromProducts:(NSSet *)productIdentifiers;
 
 
 @end

@@ -44,21 +44,38 @@
 -(void)getTopicIdentifiersFromServerOnSuccess:(void (^)())success
                                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
-    [[QZBServerManager sharedManager] GETAvailableInAppPurchasesOnSuccess:^(NSSet *purchases) {
+    [[QZBServerManager sharedManager] GETInAppPurchasesOnSuccess:^(NSSet *purchases) {
         
-      //  self.identifiers = purchases;
-        
-        [self setProductIdentifiers:purchases];
+        [self setProductIdentifiersFromProducts:purchases];
         
         if(success){
             success();
         }
+
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
         if(failure){
             failure(error, statusCode);
         }
+        
     }];
+    
+    
+//    [[QZBServerManager sharedManager] GETAvailableInAppPurchasesOnSuccess:^(NSSet *purchases) {
+//        
+//      //  self.identifiers = purchases;
+//        
+//        [self setProductIdentifiers:purchases];
+//        
+//        if(success){
+//            success();
+//        }
+//        
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//        if(failure){
+//            failure(error, statusCode);
+//        }
+//    }];
     
     
 }

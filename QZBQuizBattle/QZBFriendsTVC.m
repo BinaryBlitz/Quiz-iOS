@@ -111,7 +111,7 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     QZBFriendCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
+        [self.tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
 
     QZBAnotherUser *user = self.friends[indexPath.row];
 
@@ -163,6 +163,8 @@ toIndexPath:(NSIndexPath
 }
 */
 
+
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -208,6 +210,18 @@ toIndexPath:(NSIndexPath
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - support methods
+
+-(id<QZBUserProtocol>)userAtIndex:(NSUInteger)userIndex{
+    
+    if(userIndex<self.friends.count){
+        return [self.friends objectAtIndex:userIndex];
+    }else{
+        return nil;
+    }
+    
 }
 
 @end

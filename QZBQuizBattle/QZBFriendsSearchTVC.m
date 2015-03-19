@@ -8,6 +8,7 @@
 
 #import "QZBFriendsSearchTVC.h"
 #import "QZBServerManager.h"
+#import "QZBFriendsTVC+QZBFriendsCategory.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface QZBFriendsSearchTVC ()<UIScrollViewDelegate>
@@ -19,10 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   // self.searchBar.delegate = self;
-    
-    //self.title = @"";
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,33 +40,35 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
-    NSLog(@"search taped");
-    [SVProgressHUD show];
+    [self searchWithSearchBar:searchBar];
     
-    
-    [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text
-OnSuccess:^(NSArray *friends) {
-    
-    
-    if(friends.count == 0){
-        [SVProgressHUD showInfoWithStatus:@"Ничего не найдено,\n попробуйте другой запрос"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-        });
-    }else{
-    
-        [self setFriendsOwner:nil andFriends:friends];
-        [SVProgressHUD dismiss];
-    }
-            
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-       [SVProgressHUD showInfoWithStatus:@"Проверьте интернет соединение"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-        });
-        
-        
-    }];
+//    NSLog(@"search taped");
+//    [SVProgressHUD show];
+//    
+//    
+//    [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text
+//OnSuccess:^(NSArray *friends) {
+//    
+//    
+//    if(friends.count == 0){
+//        [SVProgressHUD showInfoWithStatus:@"Ничего не найдено,\n попробуйте другой запрос"];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [SVProgressHUD dismiss];
+//        });
+//    }else{
+//    
+//        [self setFriendsOwner:nil andFriends:friends];
+//        [SVProgressHUD dismiss];
+//    }
+//            
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//       [SVProgressHUD showInfoWithStatus:@"Проверьте интернет соединение"];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [SVProgressHUD dismiss];
+//        });
+//        
+//        
+//    }];
     
 }
 

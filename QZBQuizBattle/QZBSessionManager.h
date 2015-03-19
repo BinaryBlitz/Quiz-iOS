@@ -17,7 +17,8 @@
 
 @interface QZBSessionManager : NSObject
 
-@property(assign, nonatomic, readonly) BOOL isGoing;
+@property (assign, nonatomic, readonly) BOOL isGoing;
+@property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 
 @property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
 @property (assign, nonatomic, readonly) NSUInteger currentTime;
@@ -45,7 +46,9 @@
 - (void)newQuestionStart;
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
-- (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum time:(NSUInteger)time;
+- (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
+                                                    time:(NSUInteger)time;
+- (void)removeBotOrOnlineWorker;
 - (void)closeSession;
 
 #pragma mark - online methods

@@ -10,6 +10,7 @@
 		1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */; };
 		1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */; };
 		1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */; };
+		1902F3CB1AB877D300390FE8 /* QZBAcceptChallengeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1902F3CA1AB877D300390FE8 /* QZBAcceptChallengeVC.m */; };
 		1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */; };
 		190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */; };
 		191559C71A39CDD400462C93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C61A39CDD400462C93 /* main.m */; };
@@ -37,6 +38,7 @@
 		19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */; };
 		19446A751A9E3620005BB485 /* QZBStoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A741A9E3620005BB485 /* QZBStoreTVC.m */; };
 		19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */; };
+		1946058C1AB4977E0023BE0D /* QZBStoreListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */; };
 		194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */; };
 		1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */; };
 		1955A3EE1AAB11000083778A /* BG_iPhone_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */; };
@@ -71,12 +73,19 @@
 		199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */; };
 		199CD9461A8BB11600FBF820 /* QZBAchievementCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9451A8BB11600FBF820 /* QZBAchievementCVC.m */; };
 		199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9491A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m */; };
-		19B4DE661AA0E14F001CAA48 /* QZBStoreVCBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B4DE651AA0E14F001CAA48 /* QZBStoreVCBase.m */; };
+		19A1276F1AB9DCDE009075AD /* QZBMainGameScreenTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */; };
+		19A127731AB9DEC3009075AD /* QZBChallengeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127721AB9DEC3009075AD /* QZBChallengeDescription.m */; };
+		19A127761AB9E531009075AD /* QZBProgressChallengeTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127751AB9E531009075AD /* QZBProgressChallengeTVC.m */; };
+		19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127781AB9EA1C009075AD /* QZBChallengeCell.m */; };
+		19A1277D1AB9F065009075AD /* QZBMainChallengesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */; };
+		19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */; };
 		19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */; };
 		19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0531A71018D00DCD9C3 /* QZBHorizontalCell.m */; };
 		19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0561A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m */; };
 		19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0591A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m */; };
 		19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */; };
+		19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */; };
+		19C0DEC11AB4B81F005F27D4 /* QZBMainBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C0DEC01AB4B81F005F27D4 /* QZBMainBoosterCell.m */; };
 		19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50911A3C33B000A3CD74 /* QZBQuestion.m */; };
 		19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50951A3C37BA00A3CD74 /* QZBSession.m */; };
 		19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50981A3C388000A3CD74 /* QZBUserInSession.m */; };
@@ -122,6 +131,8 @@
 		1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerButton.m; sourceTree = "<group>"; };
 		1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTriangle.h; sourceTree = "<group>"; };
 		1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTriangle.m; sourceTree = "<group>"; };
+		1902F3C91AB877D300390FE8 /* QZBAcceptChallengeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAcceptChallengeVC.h; sourceTree = "<group>"; };
+		1902F3CA1AB877D300390FE8 /* QZBAcceptChallengeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAcceptChallengeVC.m; sourceTree = "<group>"; };
 		1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsRequestsTVC.h; sourceTree = "<group>"; };
 		1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsRequestsTVC.m; sourceTree = "<group>"; };
 		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSessionManager.h; sourceTree = "<group>"; };
@@ -171,6 +182,8 @@
 		19446A741A9E3620005BB485 /* QZBStoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreTVC.m; sourceTree = "<group>"; };
 		19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreBoosterCell.h; sourceTree = "<group>"; };
 		19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreBoosterCell.m; sourceTree = "<group>"; };
+		1946058A1AB4977E0023BE0D /* QZBStoreListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreListTVC.h; sourceTree = "<group>"; };
+		1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreListTVC.m; sourceTree = "<group>"; };
 		194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+QZBProjectColors.h"; sourceTree = "<group>"; };
 		194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+QZBProjectColors.m"; sourceTree = "<group>"; };
 		1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG_iPhone_5.jpg; sourceTree = "<group>"; };
@@ -229,8 +242,18 @@
 		199CD9451A8BB11600FBF820 /* QZBAchievementCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchievementCVC.m; sourceTree = "<group>"; };
 		199CD9481A8BB1DA00FBF820 /* QZBAchievementCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAchievementCollectionCell.h; sourceTree = "<group>"; };
 		199CD9491A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchievementCollectionCell.m; sourceTree = "<group>"; };
-		19B4DE641AA0E14F001CAA48 /* QZBStoreVCBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreVCBase.h; sourceTree = "<group>"; };
-		19B4DE651AA0E14F001CAA48 /* QZBStoreVCBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreVCBase.m; sourceTree = "<group>"; };
+		19A1276D1AB9DCDE009075AD /* QZBMainGameScreenTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainGameScreenTVC.h; sourceTree = "<group>"; };
+		19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainGameScreenTVC.m; sourceTree = "<group>"; };
+		19A127711AB9DEC3009075AD /* QZBChallengeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBChallengeDescription.h; sourceTree = "<group>"; };
+		19A127721AB9DEC3009075AD /* QZBChallengeDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBChallengeDescription.m; sourceTree = "<group>"; };
+		19A127741AB9E531009075AD /* QZBProgressChallengeTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBProgressChallengeTVC.h; sourceTree = "<group>"; };
+		19A127751AB9E531009075AD /* QZBProgressChallengeTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressChallengeTVC.m; sourceTree = "<group>"; };
+		19A127771AB9EA1C009075AD /* QZBChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBChallengeCell.h; sourceTree = "<group>"; };
+		19A127781AB9EA1C009075AD /* QZBChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBChallengeCell.m; sourceTree = "<group>"; };
+		19A1277B1AB9F065009075AD /* QZBMainChallengesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainChallengesCell.h; sourceTree = "<group>"; };
+		19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainChallengesCell.m; sourceTree = "<group>"; };
+		19A127811ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QZBFriendsTVC+QZBFriendsCategory.h"; sourceTree = "<group>"; };
+		19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QZBFriendsTVC+QZBFriendsCategory.m"; sourceTree = "<group>"; };
 		19B5E04F1A70E6AD00DCD9C3 /* QZBPlayerInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerInfoCell.h; sourceTree = "<group>"; };
 		19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerInfoCell.m; sourceTree = "<group>"; };
 		19B5E0521A71018D00DCD9C3 /* QZBHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBHorizontalCell.h; sourceTree = "<group>"; };
@@ -241,6 +264,10 @@
 		19B5E0591A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLastElementInHorizontalTCCell.m; sourceTree = "<group>"; };
 		19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsTVC.h; sourceTree = "<group>"; };
 		19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsTVC.m; sourceTree = "<group>"; };
+		19C0DEBC1AB4A1D1005F27D4 /* QZBProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBProduct.h; sourceTree = "<group>"; };
+		19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProduct.m; sourceTree = "<group>"; };
+		19C0DEBF1AB4B81F005F27D4 /* QZBMainBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainBoosterCell.h; sourceTree = "<group>"; };
+		19C0DEC01AB4B81F005F27D4 /* QZBMainBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainBoosterCell.m; sourceTree = "<group>"; };
 		19CB50901A3C33B000A3CD74 /* QZBQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuestion.h; sourceTree = "<group>"; };
 		19CB50911A3C33B000A3CD74 /* QZBQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuestion.m; sourceTree = "<group>"; };
 		19CB50941A3C37BA00A3CD74 /* QZBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSession.h; sourceTree = "<group>"; };
@@ -440,6 +467,8 @@
 				19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */,
 				198C33EF1A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.h */,
 				198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */,
+				19C0DEBC1AB4A1D1005F27D4 /* QZBProduct.h */,
+				19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */,
 			);
 			name = IAP;
 			sourceTree = "<group>";
@@ -447,12 +476,12 @@
 		19446A721A9E35CE005BB485 /* store */ = {
 			isa = PBXGroup;
 			children = (
-				19B4DE641AA0E14F001CAA48 /* QZBStoreVCBase.h */,
-				19B4DE651AA0E14F001CAA48 /* QZBStoreVCBase.m */,
 				19446A731A9E3620005BB485 /* QZBStoreTVC.h */,
 				19446A741A9E3620005BB485 /* QZBStoreTVC.m */,
 				198C33F21A9F71FD00A015E8 /* QZBStoreMainVC.h */,
 				198C33F31A9F71FD00A015E8 /* QZBStoreMainVC.m */,
+				1946058A1AB4977E0023BE0D /* QZBStoreListTVC.h */,
+				1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */,
 			);
 			name = store;
 			sourceTree = "<group>";
@@ -487,6 +516,7 @@
 		1976FBAC1A4B04B50016130B /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				19A1277A1AB9F033009075AD /* main */,
 				191E12F21A8CA65D00AFB829 /* horizontal */,
 				199CD9471A8BB19B00FBF820 /* collectionViewCells */,
 				1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */,
@@ -503,6 +533,8 @@
 				19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */,
 				19168A951AA887EE0012341D /* QZBFriendCell.h */,
 				19168A961AA887EE0012341D /* QZBFriendCell.m */,
+				19C0DEBF1AB4B81F005F27D4 /* QZBMainBoosterCell.h */,
+				19C0DEC01AB4B81F005F27D4 /* QZBMainBoosterCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -596,6 +628,37 @@
 			name = collectionViewCells;
 			sourceTree = "<group>";
 		};
+		19A1276C1AB9DCB3009075AD /* main */ = {
+			isa = PBXGroup;
+			children = (
+				19A1276D1AB9DCDE009075AD /* QZBMainGameScreenTVC.h */,
+				19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */,
+				19A127741AB9E531009075AD /* QZBProgressChallengeTVC.h */,
+				19A127751AB9E531009075AD /* QZBProgressChallengeTVC.m */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		19A127701AB9DE9C009075AD /* challenge */ = {
+			isa = PBXGroup;
+			children = (
+				19A127711AB9DEC3009075AD /* QZBChallengeDescription.h */,
+				19A127721AB9DEC3009075AD /* QZBChallengeDescription.m */,
+			);
+			name = challenge;
+			sourceTree = "<group>";
+		};
+		19A1277A1AB9F033009075AD /* main */ = {
+			isa = PBXGroup;
+			children = (
+				19A127771AB9EA1C009075AD /* QZBChallengeCell.h */,
+				19A127781AB9EA1C009075AD /* QZBChallengeCell.m */,
+				19A1277B1AB9F065009075AD /* QZBMainChallengesCell.h */,
+				19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +686,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				19A1276C1AB9DCB3009075AD /* main */,
 				19446A721A9E35CE005BB485 /* store */,
 				199CD9431A8BAFAB00FBF820 /* achievement */,
 				19DEA8591A8552E800E610DB /* rating */,
@@ -639,6 +703,7 @@
 		19CB50931A3C33B900A3CD74 /* Session */ = {
 			isa = PBXGroup;
 			children = (
+				19A127701AB9DE9C009075AD /* challenge */,
 				19CB50A71A3C567A00A3CD74 /* qestion */,
 				19E344561A792DF4000D0EDB /* QZBLobby.h */,
 				19E344571A792DF4000D0EDB /* QZBLobby.m */,
@@ -696,6 +761,8 @@
 				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
 				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
 				1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */,
+				19A127811ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.h */,
+				19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */,
 			);
 			name = friends;
 			sourceTree = "<group>";
@@ -709,6 +776,8 @@
 				19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */,
 				1901B9AA1A46E574002FC87C /* QZBEndSessionControllerViewController.h */,
 				1901B9AB1A46E574002FC87C /* QZBEndSessionControllerViewController.m */,
+				1902F3C91AB877D300390FE8 /* QZBAcceptChallengeVC.h */,
+				1902F3CA1AB877D300390FE8 /* QZBAcceptChallengeVC.m */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -961,6 +1030,7 @@
 				198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */,
 				198C33F41A9F71FD00A015E8 /* QZBStoreMainVC.m in Sources */,
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
+				19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
 				191B9DDE1AACC48500611C71 /* QZBAnswerCircle.m in Sources */,
@@ -969,6 +1039,7 @@
 				197669A51A67FE58006C2757 /* QZBCategoryTableViewCell.m in Sources */,
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */,
+				19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */,
 				197B4E0A1AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m in Sources */,
 				19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */,
 				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
@@ -982,16 +1053,19 @@
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
+				19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */,
 				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,
 				191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */,
 				19DFF33B1A70016300E8CB1C /* QZBGameTopic.m in Sources */,
 				199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */,
+				1902F3CB1AB877D300390FE8 /* QZBAcceptChallengeVC.m in Sources */,
 				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
 				199CD93C1A8A7C3A00FBF820 /* QZBCustomVerticalSegue.m in Sources */,
 				199062DC1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m in Sources */,
 				199CD93F1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.m in Sources */,
 				19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */,
 				197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */,
+				19A127731AB9DEC3009075AD /* QZBChallengeDescription.m in Sources */,
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
@@ -1001,7 +1075,6 @@
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
 				194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */,
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
-				19B4DE661AA0E14F001CAA48 /* QZBStoreVCBase.m in Sources */,
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
@@ -1011,17 +1084,22 @@
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,
+				19A1277D1AB9F065009075AD /* QZBMainChallengesCell.m in Sources */,
 				19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */,
 				19423D7E1A80F8740014B0AD /* Reachability.m in Sources */,
+				19A1276F1AB9DCDE009075AD /* QZBMainGameScreenTVC.m in Sources */,
+				19A127761AB9E531009075AD /* QZBProgressChallengeTVC.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
 				191E12ED1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m in Sources */,
 				19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */,
+				19C0DEC11AB4B81F005F27D4 /* QZBMainBoosterCell.m in Sources */,
 				19DCB7051AB1979B00385C19 /* QZBRequestUser.m in Sources */,
 				19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */,
 				19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */,
 				19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */,
+				1946058C1AB4977E0023BE0D /* QZBStoreListTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
