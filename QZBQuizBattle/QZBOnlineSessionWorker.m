@@ -16,6 +16,7 @@
 #import "Reachability.h"
 
 NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
+NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
 @interface QZBOnlineSessionWorker () <PTPusherDelegate>
 
@@ -70,6 +71,16 @@ NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
                       }
 
                   }];
+        [channel bindToEventNamed:@"challenge-declined" handleWithBlock:^(PTPusherEvent *channelEvent) {
+            
+            NSArray *description = @[@"Оппонент отклонил вызов",
+            @"Попробуйте сыграть с другим пользователем"];
+            
+            NSLog(@"challenge declined");
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:QZBPusherChallengeDeclined
+             object:description];
+        }];
 
         [channel bindToEventNamed:@"opponent-answer"
                   handleWithBlock:^(PTPusherEvent *channelEvent) {
@@ -166,9 +177,12 @@ NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
     
     NSLog(@"pusher problems");
     
+    NSArray *description = @[@"Ошибка связи",
+                             @"Проверьте подключение к интернету"];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:QZBPusherConnectionProblrms
      
-                                                    object:nil];
+                                                    object:description];
     
     
     Reachability *reachability =

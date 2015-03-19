@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QZBStoreVCBase.h"
+//#import "QZBStoreVCBase.h"
 
 @interface QZBStoreTVC : UITableViewController// <UITableViewDataSource, UITableViewDelegate>
 

@@ -206,8 +206,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         completion:^(BOOL finished){
 
         }];
-
-    //[self UNShowQuestinAndAnswers];
 }
 
 
@@ -221,30 +219,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                       cancelButtonTitle:@"Отмена"
                       otherButtonTitles:@"Ок", nil] show];
     
-//    [self.globalTimer invalidate];
-//    self.globalTimer = nil;
-//    
-//    if (self.backgroundTask != UIBackgroundTaskInvalid) {
-//        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
-//        self.backgroundTask = UIBackgroundTaskInvalid;
-//    }
-//    
-//    [[QZBSessionManager sessionManager] closeSession];
-//    
-//    //[self.navigationController popViewControllerAnimated:YES];
-//    
-//    UIViewController *destinationVC = nil;
-//    
-//    for (UIViewController *vc in self.navigationController.viewControllers) {
-//        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
-//            destinationVC = vc;
-//            break;
-//        }
-//    }
-//    
-//    if (destinationVC) {
-//        [self.navigationController popToViewController:destinationVC animated:YES];
-//    }
+
 
     
 }
@@ -275,6 +250,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         
         if (destinationVC) {
             [self.navigationController popToViewController:destinationVC animated:YES];
+        }else {
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }
@@ -576,6 +553,11 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
 #pragma mark - score labels colored
 
 - (void)colorOpponentUserScoreLabel {
+    
+    if([QZBSessionManager sessionManager].isOfflineChallenge){
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
 
     BOOL isRight = [QZBSessionManager sessionManager].opponentUserLastAnswer.isRight;

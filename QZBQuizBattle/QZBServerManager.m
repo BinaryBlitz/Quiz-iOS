@@ -23,6 +23,8 @@
 #import "CoreData+MagicalRecord.h"
 #import "TSMessage.h"
 #import "QZBRequestUser.h"
+#import "QZBProduct.h"
+#import "QZBChallengeDescription.h"
 
 @interface QZBServerManager ()
 
@@ -151,7 +153,7 @@
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
- //   [QZBGameTopic MR_truncateAll];  // comment on release version
+    //   [QZBGameTopic MR_truncateAll];  // comment on release version
 
     NSArray *topics = [topicsInRequest objectForKey:@"topics"];
 
@@ -299,6 +301,119 @@
             NSLog(@"%@", error);
 
         }];
+}
+
+#pragma mark - challenge
+
+// POST /lobbies/challenge
+//
+// Challenges and notifies opponent. You should open a Pusher channel and wait for game-start event
+// once the session was returned. You may also receive a challenge-declined event if the opponent
+// decided to decline your challenge.
+//
+// opponent_id — opponent
+//
+// topic_id — topic
+
+- (void)POSTLobbyChallengeWithUserID:(NSNumber *)userID
+                             inTopic:(QZBGameTopic *)topic
+                           onSuccess:(void (^)(QZBSession *session))success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"opponent_id" : userID,
+        @"topic_id" : topic.topic_id
+    };
+
+    [self.requestOperationManager POST:@"lobbies/challenge"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"challenge response %@",responseObject);
+            
+            QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
+
+            if (success) {
+                success(session);
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+
+        }];
+}
+
+// POST /lobbies/:id/accept_challenge
+//
+// Accepts the challenge and notifies the host about it. The host player will be notified with
+// game-start event.
+
+- (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
+                              onSuccess:(void (^)(QZBSession *session))success
+                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlString = [NSString stringWithFormat:@"/lobbies/%@/accept_challenge", lobbyID];
+
+    [self.requestOperationManager POST:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
+            if (success) {
+                success(session);
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        }];
+}
+
+- (void)POSTDeclineChallengeWhithLobbyID:(NSNumber *)lobbyID
+                               onSuccess:(void (^)())success
+                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlString = [NSString stringWithFormat:@"/lobbies/%@/decline_challenge", lobbyID];
+
+    [self.requestOperationManager POST:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (success) {
+                success();
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        }];
+}
+
+-(void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    [self.requestOperationManager GET:@"lobbies/challenges" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"challenges response %@",responseObject);
+        
+        NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
+        
+        for(NSDictionary *dict in responseObject){
+            QZBChallengeDescription *challengeDescription = [[QZBChallengeDescription alloc] initWithDictionary:dict];
+            [challengeDescriptionsMuttable addObject:challengeDescription];
+            }
+        
+        NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
+        
+        if(success){
+            success(challengeDescriptions);
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        NSLog(@"%@", error);
+    }];
+    
+    
 }
 
 #pragma mark - user registration
@@ -766,7 +881,7 @@
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"push_token" : token };
 
-    [self.requestOperationManager DELETE:@"push_tokens"
+    [self.requestOperationManager DELETE:@"push_tokens/delete"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"token delete response %@", responseObject);
@@ -793,83 +908,55 @@
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"GET purchases %@", responseObject);
+            NSLog(@"GET purchases пп %@", responseObject);
+
+            //            @"drumih.QZBQuizBattle.twiceBooster",
+            //            @"drumih.QZBQuizBattle.tripleBooster",
+
+            NSArray *response = @[
+                @{
+                    @"identifier" : @"drumih.iQuiz.specialMath",
+                    @"topic_id" : @10,
+                    @"purchased" : @0
+                },
+                @{
+                    @"identifier" : @"drumih.iQuiz.specialBiology",
+                    @"topic_id" : @1,
+                    @"purchased" : @0
+                },
+
+                @{
+                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
+                    @"topic_id" : @0,
+                    @"purchased" : @0
+                },
+                @{
+                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
+                    @"topic_id" : @0,
+                    @"purchased" : @0
+                }
+            ];
 
             NSMutableArray *purchases = [NSMutableArray array];
+            for (NSDictionary *dict in response) {
+                QZBProduct *product = [[QZBProduct alloc] initWhithDictionary:dict];
+                [purchases addObject:product];
+            }
 
             NSSet *result = [NSSet setWithArray:purchases];
 
+            NSLog(@" %@", result);
             if (success) {
                 success(result);
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"purchases failure %@", error);
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                if(success){
-                    NSSet * productIdentifiers = [NSSet setWithObjects:
-                                                  @"drumih.QZBQuizBattle.smthnew",
-                                                  @"drumih.iQuiz.specialGeography",
-                                                  @"drumih.iQuiz.specialMath",
-                                                  
-                                                  nil];
-                    
-                    success(productIdentifiers);
-                }
-                
-            });//REDO THIS ITS FOR TEST
-//            if (failure) {
-//                failure(error, operation.response.statusCode);
-//            }
-        }];
-}
 
-- (void)GETAvailableInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
-                                  onFailure:
-                                      (void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-
-    [self.requestOperationManager GET:@"/purchases/available"
-        parameters:params
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-            NSLog(@"GET available purchases %@", responseObject);
-
-            NSMutableArray *purchases = [NSMutableArray array];
-
-            NSSet *result = [NSSet setWithArray:purchases];
-            
-            
-
-            if (success) {
-                success(result);
+            // REDO THIS ITS FOR TEST
+            if (failure) {
+                failure(error, operation.response.statusCode);
             }
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@" purchases failure %@", error);
-            
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                if(success){
-                    NSSet * productIdentifiers = [NSSet setWithObjects:
-                                                  @"drumih.QZBQuizBattle.smthnew",
-                                                  @"drumih.iQuiz.specialGeography",
-                                                  @"drumih.iQuiz.specialMath",
-                                                  
-                                                  nil];
-                    
-                    success(productIdentifiers);
-                }
-                
-            });
-            
-            
-//            if (failure) {
-//                failure(error, operation.response.statusCode);
-//            }
         }];
 }
 
@@ -904,42 +991,39 @@
 #pragma mark - search
 
 - (void)GETSearchFriendsWithText:(NSString *)text
-                        OnSuccess:(void (^)(NSArray *friends))success
-                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                       OnSuccess:(void (^)(NSArray *friends))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"query" : text };
 
-    
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,@"query":text };
-    
     [self.requestOperationManager GET:@"/players/search"
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  
-                                  NSLog(@"all friend %@", responseObject);
-                                  
-                                  NSMutableArray *friends = [NSMutableArray array];
-                                  
-                                  for (NSDictionary *dict in responseObject) {
-                                      QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
-                                      
-                                      [friends addObject:user];
-                                  }
-                                  
-                                  NSArray *result = [NSArray arrayWithArray:friends];
-                                  
-                                  if (success) {
-                                      success(result);
-                                  }
-                                  
-                              }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  
-                                  NSLog(@"friends error %@", error);
-                                  
-                                  if (failure) {
-                                      failure(error, operation.response.statusCode);
-                                  }
-                              }];
-}
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
+            NSLog(@"all friend %@", responseObject);
+
+            NSMutableArray *friends = [NSMutableArray array];
+
+            for (NSDictionary *dict in responseObject) {
+                QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
+                [friends addObject:user];
+            }
+
+            NSArray *result = [NSArray arrayWithArray:friends];
+
+            if (success) {
+                success(result);
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"friends error %@", error);
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
+}
 
 @end

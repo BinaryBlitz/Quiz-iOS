@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QZBUserProtocol.h"
 
 @class QZBCategory;
+
 
 @interface QZBTopicChooserControllerViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
@@ -18,5 +20,6 @@
 //@property (strong, nonatomic) QZBCategory *category;
 
 - (void)initTopicsWithCategory:(QZBCategory *)category;
+- (void)initWithChallengeUser:(id<QZBUserProtocol>)user category:(QZBCategory *)category;
 
 @end

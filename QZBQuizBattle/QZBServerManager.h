@@ -29,6 +29,8 @@
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+#pragma mark - game
+
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)(QZBLobby *lobby))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -46,6 +48,24 @@
                               time:(NSInteger)answerTime
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - challenge
+
+-(void)POSTLobbyChallengeWithUserID:(NSNumber *)userID
+                            inTopic:(QZBGameTopic *)topic
+                          onSuccess:(void (^)(QZBSession *session))success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+-(void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
+                             onSuccess:(void (^)(QZBSession *session))success
+                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTDeclineChallengeWhithLobbyID:(NSNumber *)lobbyID
+                               onSuccess:(void (^)())success
+                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+-(void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 
 #pragma mark - user registration and login
 
@@ -124,9 +144,6 @@
 
 - (void)GETInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-- (void)GETAvailableInAppPurchasesOnSuccess:(void (^)(NSSet *purchases))success
-                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTInAppPurchaseIdentifier:(NSString *)identifier
                           onSuccess:(void (^)())success

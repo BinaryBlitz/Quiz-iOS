@@ -63,7 +63,7 @@
 
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
 
-    self.navigationController.navigationItem.title = @"Все Категории";
+  //  self.navigationController.navigationItem.title = @"Все Категории";
 
     [self.navigationController.navigationBar
         setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];

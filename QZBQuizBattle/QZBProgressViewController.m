@@ -18,13 +18,10 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
-//#import "NSTimer+Blocks.h"
-//#import <Pusher/Pusher.h>
 
-@interface QZBProgressViewController ()  <UIAlertViewDelegate>
+@interface QZBProgressViewController () <UIAlertViewDelegate>
 
-//@property(strong, nonatomic) QZBSession *session;
-//@property(strong, nonatomic) id bot;
+@property (strong, nonatomic) id<QZBUserProtocol> user;
 @property (strong, nonatomic) QZBOnlineSessionWorker *onlineWorker;
 @property (strong, nonatomic) QZBLobby *lobby;
 @property (strong, nonatomic) NSTimer *timer;
@@ -35,7 +32,10 @@
 @property (assign, nonatomic) BOOL setted;
 @property (assign, nonatomic) BOOL isOnline;
 @property (assign, nonatomic) BOOL isEntered;
-//@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное управление
+
+//@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное
+//управление
+//показывается уведомление об ошибках на сервере
 
 //@property(strong, nonatomic) PTPusher *client;
 
@@ -45,21 +45,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self setNeedsStatusBarAppearanceUpdate];
 
-    // [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    // Do any additional setup after loading the view.
-
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(showGameVC:)
-//                                                 name:@"QZBOnlineGameNeedStart"
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didSubscribed:)
-//                                                 name:@"subscribedToChanel"
-//                                               object:nil];
-//    
+    self.playOfflineButton.alpha = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,13 +57,16 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelCrossAction:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelCrossAction:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showGameVC:)
                                                  name:@"QZBOnlineGameNeedStart"
@@ -87,7 +79,11 @@
                                              selector:@selector(showAlertViewFromNotification:)
                                                  name:QZBPusherConnectionProblrms
                                                object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showAlertViewFromNotification:)
+                                                 name:QZBPusherChallengeDeclined
+                                               object:nil];
+    //  @"QZBChallengeDeclined"
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -104,6 +100,10 @@
 
     self.cancelCrossButton.enabled = YES;
 
+//    if (self.user) {
+//        self.playOfflineButton.alpha = 1.0;
+//    }
+
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
     }
@@ -111,75 +111,91 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
     // [self.client disconnect];
-    
+
     NSLog(@"progress disapear");
-    
+
     self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)initNavigationBar:(NSString *)title {
+- (void)initNavigationBar:(NSString *)title {
     self.navigationItem.hidesBackButton = YES;
     self.title = title;
-    
 }
 
--(void)setTopic:(QZBGameTopic *)topic{
+- (void)setTopic:(QZBGameTopic *)topic {
     _topic = topic;
-    
+
     NSLog(@"%@", topic.name);
-    
+
     self.topicLabel.text = topic.name;
-    
- //   topic.relationToCategory.name;
-    
+
+    //   topic.relationToCategory.name;
+
     [self initNavigationBar:topic.relationToCategory.name];
-    
 }
 
+#pragma mark - custom init
+
+- (void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
+    self.topic = topic;
+    if (user) {
+        NSLog(@"user exist in progress");
+        self.user = user;
+        //  self.playOfflineButton.alpha = 1.0;
+    } else {
+        //  self.playOfflineButton.alpha = 0;
+        self.playOfflineButton.enabled = NO;
+    }
+}
 
 #pragma mark - Actions
 - (IBAction)cancelCrossAction:(id)sender {
-    
     self.isCanceled = YES;
-    
+
     [self.checkNeedStartTimer invalidate];
     self.checkNeedStartTimer = nil;
-    
+
     [self.onlineWorker closeConnection];
     self.onlineWorker = nil;
-    
+
     [[QZBSessionManager sessionManager] closeSession];
     [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
-                                            onSuccess:^(QZBSession *session, id bot) {
-                                                
-                                            }
-                                            onFailure:^(NSError *error, NSInteger statusCode){
-                                                
-                                            }];
-    
+        onSuccess:^(QZBSession *session, id bot) {
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
+
     [self.navigationController popViewControllerAnimated:YES];
-
-    
 }
 
--(void)showAlertViewFromNotification:(NSNotification *)note{
-    [[[UIAlertView alloc]initWithTitle:@"Ошибка связи"
-                               message:@"Проверьте подключение к интернету"
-                              delegate:self
-                     cancelButtonTitle:@"Ок"
-                     otherButtonTitles: nil] show];
+- (void)showAlertViewFromNotification:(NSNotification *)note {
+    if ([note.object isKindOfClass:[NSArray class]]) {
+        NSArray *description = note.object;
+
+        [[[UIAlertView alloc] initWithTitle:description[0]
+                                    message:description[1]
+                                   delegate:self
+                          cancelButtonTitle:@"Ок"
+                          otherButtonTitles:nil] show];
+    }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;{
-    
-    if(buttonIndex == 0){
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+{
+    if (buttonIndex == 0) {
         [self cancelCrossAction:nil];
     }
+}
+- (IBAction)playOfflineAction:(id)sender {
+    [[QZBSessionManager sessionManager] removeBotOrOnlineWorker];
+    [self enterGame];
     
 }
 
@@ -188,25 +204,53 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-    // __weak typeof(self) weakSelf = self;
+    
+    if (!self.user) {
+        [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
+            onSuccess:^(QZBLobby *lobby) {
 
-    [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
-        onSuccess:^(QZBLobby *lobby) {
+                [self sessionFromLobby:lobby];
 
-            [self sessionFromLobby:lobby];
+            }
+            onFailure:^(NSError *error, NSInteger statusCode) {
 
-        }
-        onFailure:^(NSError *error, NSInteger statusCode) {
+                [[[UIAlertView alloc]
+                        initWithTitle:@"Ошибка связи"
+                              message:
+                                  @"Проверьте подключение к интернету"
+                             delegate:self
+                    cancelButtonTitle:@"Ок"
+                    otherButtonTitles:nil] show];
 
-           [[[UIAlertView alloc]initWithTitle:@"Ошибка связи"
-                                      message:@"Проверьте подключение к интернету"
-                                     delegate:self
-                            cancelButtonTitle:@"Ок"
-                            otherButtonTitles: nil] show];
+            }];
+    } else if (!self.isChallenge) {
+        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
+            inTopic:self.topic
+            onSuccess:^(QZBSession *session) {
 
-            
+                [self settitingSession:session bot:nil];
+                
+                [UIView animateWithDuration:0.4
+                                      delay:5
+                                    options:UIViewAnimationOptionCurveEaseInOut
+                                 animations:^{
+                    
+                    self.playOfflineButton.alpha = 1.0;
+                    
+                } completion:^(BOOL finished) {
+                    
+                    self.playOfflineButton.enabled = YES;
+                    
+                }];
+                
+                self.playOfflineButton.alpha = 1.0;
 
-        }];
+            }
+            onFailure:^(NSError *error, NSInteger statusCode){
+
+            }];
+    } else {
+    }
 }
 
 - (void)sessionFromLobby:(QZBLobby *)lobby {
@@ -216,21 +260,19 @@
         return;
     }
     self.counter = 7;
-    // __weak typeof(self) weakSelf = self;
+   
     if (!self.timer) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                       target:self
                                                     selector:@selector(tryGetSession:)
                                                     userInfo:nil
                                                      repeats:YES];
-
         [self tryGetSession];
     }
 }
 
 - (void)tryGetSession:(NSTimer *)timer {
     if (_timer && [self.timer isEqual:timer]) {
-        
         [self tryGetSession];
 
         if (_counter <= 0) {
@@ -285,23 +327,25 @@
             } else {
                 self.isOnline = YES;
                 [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
-                
-                //not tested
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    
-                    if([self checkCanEnterGame]){
-                        NSLog(@"after func");
-                        
-                        [[[UIAlertView alloc]initWithTitle:@"Ошибка на сервере" message:@"Попробуйте еще раз" delegate:self cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
-                        //[self showGameVC:nil];
-                        
-                        
-                    }
-                });
-            }
 
-            //[self performSegueWithIdentifier:@"showGame" sender:nil];
+                if (!self.user) {
+                    dispatch_after(
+                        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)),
+                        dispatch_get_main_queue(), ^{
+
+                            if ([self checkCanEnterGame]) {
+                                NSLog(@"after func");
+
+                                [[[UIAlertView alloc]
+                                        initWithTitle:@"Ошибка на сервере"
+                                              message:@"Попробуйте еще раз"
+                                             delegate:self
+                                    cancelButtonTitle:@"Ок"
+                                    otherButtonTitles:nil] show];
+                            }
+                        });
+                }
+            }
         }
     }
 }
@@ -372,7 +416,7 @@
     [self initSession];
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 

@@ -18,6 +18,7 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBAnotherUser.h"
 #import "QZBSessionManager.h"
+#import "QZBAcceptChallengeVC.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -51,12 +52,19 @@
     }
     
     
-    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(notificationPayload) {
+    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(userInfo) {
         
-        [self showFriendRequestScreenWithDictionary:notificationPayload];
+        if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
+            
+            [self showFriendRequestScreenWithDictionary:userInfo];
+            
+        }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
+            
+            [self acceptChallengeWithDict:userInfo];
 
         
+        }
     }
     
     
@@ -230,10 +238,6 @@
     
     [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
 
-    
-   
-    
-    
 }
 
 - (void)application:(UIApplication *)application
@@ -243,10 +247,20 @@
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
     {
+        if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
+        
         [self showFriendRequestScreenWithDictionary:userInfo];
+            
+        }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
+            
+        [self acceptChallengeWithDict:userInfo];
+            
+        }
     }else{
+        
+      //  if()
     
-    [self setBadgeWithDictionary:nil];
+    [self setBadgeWithDictionary:userInfo];
     }
    // [self showFriendRequestScreenWithDictionary:userInfo];
 }
@@ -259,9 +273,26 @@
 }
 
 
--(void)setBadgeWithDictionary:(NSDictionary *)dict{
+-(void)setBadgeWithDictionary:(NSDictionary *)userInfo{
+    NSUInteger vcNum = 0;
+    
+    if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
+        
+       // [self showFriendRequestScreenWithDictionary:userInfo];
+        
+        vcNum = 1;
+        
+    }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
+        
+       // [self acceptChallengeWithDict:userInfo];
+        vcNum = 2;
+    } else{
+        return;
+    }
+
+    
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+    UITabBarItem *tabbarItem = tabController.tabBar.items[vcNum];
     tabbarItem.badgeValue = @"1";
     
     
@@ -286,6 +317,43 @@
     [notificationController initPlayerPageWithUser:user];
     [navController pushViewController:notificationController animated:YES];
     }
+    
+}
+
+
+- (void)acceptChallengeWithDict:(NSDictionary *)dict{
+    if(![QZBSessionManager sessionManager].isGoing){
+        
+//        {
+//            action = CHALLENGE;
+//            aps =     {
+//                alert = "Foo challenged you.";
+//            };
+//            lobby =     {
+//                id = 421;
+//            };
+//        }
+//        
+        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+        
+        UINavigationController *navController = (UINavigationController *)tabController.viewControllers[2];
+        
+        QZBAcceptChallengeVC *notificationController = (QZBAcceptChallengeVC *)[navController.storyboard instantiateViewControllerWithIdentifier:@"challengesTVC"];
+        
+        tabController.selectedIndex = 2;
+        
+      //  NSDictionary *player = dict[@"player"];
+        
+      //  QZBAnotherUser *user = [[QZBAnotherUser alloc]initWithDictionary:player];
+        
+      //  NSDictionary *lobbyDict = dict[@"lobby"];
+      //  NSNumber *lobbyID = lobbyDict[@"id"];
+        
+       // [notificationController initWithLobbyID:lobbyID user:nil];
+        
+        [navController pushViewController:notificationController animated:YES];
+    }
+    
     
 }
 

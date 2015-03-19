@@ -11,14 +11,11 @@
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import <CommonCrypto/CommonCrypto.h>
-//#import <StoreKit/StoreKit.h>
+#import "QZBProduct.h"
 
+NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 
-NSString *const IAPHelperProductPurchasedNotification =
-@"IAPHelperProductPurchasedNotification";
-
-NSString *const IAPHelperProductPurchaseFailed =
-    @"IAPHelperProductPurchaseFailed";
+NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFailed";
 
 @interface QZBIAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
@@ -26,56 +23,38 @@ NSString *const IAPHelperProductPurchaseFailed =
 @property (copy, nonatomic) RequestProductsCompletionHandler completionHandler;
 @property (strong, nonatomic) NSSet *productIdentifiers;
 @property (strong, nonatomic) NSMutableSet *purchasedProductIdentifiers;
+@property (strong, nonatomic) NSMutableSet *products;  // QZBProduct
 
 @end
 
 @implementation QZBIAPHelper
 
-
-
-
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     if ((self = [super init])) {
-        
-        
         //[self checkProductIdentifiers:<#(NSSet *)#>]
-        [self setProductIdentifiers:productIdentifiers];
+        
+        
+        //[self setProductIdentifiersFromProducts:<#(NSSet *)#>;
     }
     return self;
 }
 
--(void)setProductIdentifiers:(NSSet *)productIdentifiers{
-    _productIdentifiers = productIdentifiers;
-    
-    // Check for previously purchased products
-    _purchasedProductIdentifiers = [NSMutableSet set];
-    for (NSString *productIdentifier in _productIdentifiers) {
-        BOOL productPurchased =
-        [[NSUserDefaults standardUserDefaults] boolForKey:productIdentifier];
-       // if (productPurchased) {
-            //[_purchasedProductIdentifiers addObject:productIdentifier];
-            NSLog(@"Previously purchased: %@", productIdentifier);
-//        } else {
-//            NSLog(@"Not purchased: %@", productIdentifier);
-//        }
+- (void)setProductIdentifiersFromProducts:(NSSet *)productIdentifiers {
+      NSMutableSet *tmpProducts = [NSMutableSet set];
+    for (QZBProduct *product in productIdentifiers) {
+        
+        NSLog(@"identifier %@", product.identifier);
+       // NSLog(product.identifier);
+        [tmpProducts addObject:product.identifier];
+        //[self.productIdentifiers addObject:product.identifier];
+        if (product.isPurchased) {
+            [_purchasedProductIdentifiers addObject:product.identifier];
+        }
     }
-    
-    //[self checkProductIdentifiers:nil];
-    
+    _productIdentifiers = [NSSet setWithSet: tmpProducts];
+
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-    
 }
-
-
--(void)getPurchasedIdentifiers{
-    [[QZBServerManager sharedManager] GETInAppPurchasesOnSuccess:^(NSSet *purchases) {
-        
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
-    }];
-    
-}
-
 
 
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
@@ -93,56 +72,45 @@ NSString *const IAPHelperProductPurchaseFailed =
 }
 
 - (void)buyProduct:(SKProduct *)product {
-    
     NSLog(@"Buying %@...", product.productIdentifier);
-    
-   // SKPayment * payment = [SKPayment paymentWithProduct:product];
+
+    // SKPayment * payment = [SKPayment paymentWithProduct:product];
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
     NSString *identifier = [[QZBCurrentUser sharedInstance].user.userID stringValue];
     payment.applicationUsername = [self hashedValueForAccountName:identifier];
-    
+
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    
 }
 
 #pragma mark - SKProductsRequestDelegate
 
 - (void)productsRequest:(SKProductsRequest *)request
      didReceiveResponse:(SKProductsResponse *)response {
-    
     NSLog(@"Loaded list of products...");
     _productsRequest = nil;
-   
-    NSArray * skProducts = response.products;
-    NSLog(@"sk %@", response.invalidProductIdentifiers);
-    for (SKProduct * skProduct in skProducts) {
-        NSLog(@"Found product: %@ %@ %0.2f",
-              skProduct.productIdentifier,
-              skProduct.localizedTitle,
+
+    NSArray *skProducts = response.products;
+    NSLog(@"sk %@", response.products);
+    for (SKProduct *skProduct in skProducts) {
+        NSLog(@"Found product: %@ %@ %0.2f", skProduct.productIdentifier, skProduct.localizedTitle,
               skProduct.price.floatValue);
     }
-    
+
     _completionHandler(YES, skProducts);
     _completionHandler = nil;
-    
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-    
     NSLog(@"Failed to load list of products.");
     _productsRequest = nil;
-    
+
     _completionHandler(NO, nil);
     _completionHandler = nil;
-    
 }
 
-
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
-{
-    for (SKPaymentTransaction * transaction in transactions) {
-        switch (transaction.transactionState)
-        {
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+    for (SKPaymentTransaction *transaction in transactions) {
+        switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchased:
                 [self completeTransaction:transaction];
                 break;
@@ -159,71 +127,77 @@ NSString *const IAPHelperProductPurchaseFailed =
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     NSLog(@"completeTransaction...");
-    
+
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
-    
+
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
-    
-    NSLog(@"receipt %@ %@",receiptURL, receipt);
-    
+
+    NSLog(@"receipt %@ %@", receiptURL, receipt);
+
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
-
-
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     NSLog(@"restoreTransaction...");
-    
-    [self provideContentForProductIdentifier:transaction.originalTransaction.payment.productIdentifier];
+
+    [self provideContentForProductIdentifier:transaction.originalTransaction.payment
+                                                 .productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
-
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
-    
     NSLog(@"failedTransaction...");
-    if (transaction.error.code != SKErrorPaymentCancelled)
-    {
+    if (transaction.error.code != SKErrorPaymentCancelled) {
         NSLog(@"Transaction error: %@", transaction.error.localizedDescription);
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchaseFailed object:transaction];
-    
-    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchaseFailed
+                                                        object:transaction];
+
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
-    
-    NSLog(@"%@",productIdentifier);
-    
-    //[QZBServerManager ]
-    
-    
+    NSLog(@"%@", productIdentifier);
+
+    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
+        onSuccess:^{
+            [_purchasedProductIdentifiers addObject:productIdentifier];
+
+            [[NSNotificationCenter defaultCenter]
+                postNotificationName:IAPHelperProductPurchasedNotification
+                              object:productIdentifier
+                            userInfo:nil];
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
+
     [_purchasedProductIdentifiers addObject:productIdentifier];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification object:productIdentifier userInfo:nil];
-    
+    //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
+    //    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification
+                                                        object:productIdentifier
+                                                      userInfo:nil];
 }
 
 - (void)restoreCompletedTransactions {
-    
     NSString *identifier = [[QZBCurrentUser sharedInstance].user.userID stringValue];
-    
-    [[SKPaymentQueue defaultQueue] restoreCompletedTransactionsWithApplicationUsername:[self hashedValueForAccountName:identifier]];
-}
 
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactionsWithApplicationUsername:
+                                       [self hashedValueForAccountName:identifier]];
+}
 
 #pragma mark - crypto
 
-- (NSString *)hashedValueForAccountName:(NSString*)userAccountName
-{
+- (NSString *)hashedValueForAccountName:(NSString *)userAccountName {
     const int HASH_SIZE = 32;
     unsigned char hashedChars[HASH_SIZE];
     const char *accountName = [userAccountName UTF8String];
     size_t accountNameLen = strlen(accountName);
-    
+
     // Confirm that the length of the user name is small enough
     // to be recast when calling the hash function.
     if (accountNameLen > UINT32_MAX) {
@@ -231,20 +205,18 @@ NSString *const IAPHelperProductPurchaseFailed =
         return nil;
     }
     CC_SHA256(accountName, (CC_LONG)accountNameLen, hashedChars);
-    
+
     // Convert the array of bytes into a string showing its hex representation.
     NSMutableString *userAccountHash = [[NSMutableString alloc] init];
     for (int i = 0; i < HASH_SIZE; i++) {
         // Add a dash every four bytes, for readability.
-        if (i != 0 && i%4 == 0) {
+        if (i != 0 && i % 4 == 0) {
             [userAccountHash appendString:@"-"];
         }
         [userAccountHash appendFormat:@"%02x", hashedChars[i]];
     }
-    
+
     return userAccountHash;
 }
-
-
 
 @end

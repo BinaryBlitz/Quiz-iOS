@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) QZBCategory *choosedCategory;
+@property (strong, nonatomic) id<QZBUserProtocol> user;
 
 @end
 
@@ -82,7 +83,11 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"showTopicsSegue"]) {
         QZBTopicChooserControllerViewController *destination = segue.destinationViewController;
-        [destination initTopicsWithCategory:self.choosedCategory];
+        if(self.user){
+            [destination initWithChallengeUser:self.user category:self.choosedCategory];
+        }else{
+            [destination initTopicsWithCategory:self.choosedCategory];
+        }
     }
 }
 
@@ -115,6 +120,9 @@
      [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
 
+
+#pragma mark - custom init
+
 - (void)initCategories {
     //__weak typeof(self) weakSelf = self;
 
@@ -134,6 +142,11 @@
         }
 
     }];
+}
+
+-(void)initWithUser:(id<QZBUserProtocol>) user{
+    self.user = user;
+  //  [self initCategories];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
