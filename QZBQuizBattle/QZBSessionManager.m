@@ -111,6 +111,7 @@
     if (_bot && _onlineSessionWorker) {
         return;
     } else {
+        self.isOfflineChallenge = NO;
         _bot = bot;
     }
 }
@@ -119,6 +120,7 @@
     if (_onlineSessionWorker && _bot) {
         return;
     } else {
+        self.isOfflineChallenge = NO;
         _onlineSessionWorker = onlineSessionWorker;
     }
 }

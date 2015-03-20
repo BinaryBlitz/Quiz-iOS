@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) QZBGameTopic *topic;
 @property (strong, nonatomic) id<QZBUserProtocol> choosedUser;
+@property (strong, nonatomic) NSArray *currentFriends;
 
 @end
 
@@ -23,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  //  self.searchBar.delegate = self;
+    self.searchBar.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -59,6 +60,7 @@
              andFriends:(NSArray *)friends
               gameTopic:(QZBGameTopic *)topic {
     self.topic = topic;
+    self.currentFriends = [friends copy];
     [super setFriendsOwner:user andFriends:friends];
 }
 
@@ -67,6 +69,29 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self searchWithSearchBar:searchBar];
     
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if(searchText.length == 0){
+        [super setFriendsOwner:nil andFriends:self.currentFriends];
+        
+    }
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    if(searchBar.text.length == 0){
+        
+        [super setFriendsOwner:nil andFriends:self.currentFriends];
+        
+    }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    if(searchBar.text.length == 0){
+        
+        [super setFriendsOwner:nil andFriends:self.currentFriends];
+        
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -10,6 +10,7 @@
 #import "QZBAchievementCollectionCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "QZBAchievement.h"
+#import "QZBServerManager.h"
 
 @interface QZBAchievementCVC ()
 
@@ -29,6 +30,11 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     self.achivTableView.dataSource = self;
     self.achivTableView.delegate = self;
     
+    [[QZBServerManager sharedManager] GETachievementsForUserID:@(1) onSuccess:^(NSArray *achievements) {
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
 
     // Do any additional setup after loading the view.
 }
@@ -66,7 +72,7 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     
     QZBAchievement *achiv = self.achivArray[indexPath.row];
     
-    [cell.achievementPic setImage:achiv.image];
+    [cell.achievementPic setImage:[UIImage imageNamed:@"notAchiv"]];
     cell.achievementTitle.text = achiv.name;;
 
     // Configure the cell
@@ -81,24 +87,14 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     [UIImage imageNamed:@"achiv"];
     [UIImage imageNamed:@"notAchiv"];
     
-    self.achivArray = @[[[QZBAchievement alloc] initWithName:@"achiv"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv2"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv"
-                                                   imageName:@"notAchiv"],
-                        [[QZBAchievement alloc] initWithName:@"achiv2"
-                                                   imageName:@"achiv"],
-                        [[QZBAchievement alloc] initWithName:@"notAchiv2"
-                                                   imageName:@"notAchiv"]
-                        ];
+    [[QZBServerManager sharedManager] GETachievementsForUserID:0 onSuccess:^(NSArray *achievements) {
+        self.achivArray = achievements;
+        [self.collectionView reloadData];
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
     
+       
 }
 
 

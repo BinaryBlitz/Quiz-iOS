@@ -9,6 +9,7 @@
 #import "QZBMainGameScreenTVC.h"
 #import "QZBServerManager.h"
 #import "QZBMainChallengesCell.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 @implementation QZBMainGameScreenTVC
 
@@ -18,19 +19,27 @@
   
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    self.title = @"iQuiz";//REDO
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QZBMainChallengesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mainChallengeCell"];
     return cell;
 }
+
+
 
 #pragma mark - UITableViewDelegate
 
@@ -39,6 +48,10 @@
     if([cell.reuseIdentifier isEqualToString:@"mainChallengeCell"]){
         [self performSegueWithIdentifier:@"showChallenges" sender:nil];
     }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

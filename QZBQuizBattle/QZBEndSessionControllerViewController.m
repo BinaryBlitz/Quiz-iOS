@@ -77,7 +77,11 @@ preparation before navigation
             break;
         }
     }
-    [self.navigationController popToViewController:destinationVC animated:YES];
+    if(!destinationVC){
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToViewController:destinationVC animated:YES];
+    }
 }
 
 @end

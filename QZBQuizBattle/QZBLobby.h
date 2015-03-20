@@ -16,5 +16,9 @@
 @property (assign, nonatomic, readonly) NSInteger queryCount;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
+-(instancetype)initWithLobbyID:(NSInteger)lobbyID
+                       topicID:(NSInteger)topicID
+                      playerID:(NSInteger)playerID
+                    queryCount:(NSInteger)queryCount;
 
 @end

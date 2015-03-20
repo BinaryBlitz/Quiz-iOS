@@ -22,6 +22,7 @@
 
 - (void)settitingSession:(QZBSession *)session bot:(id)bot;
 - (void)initSession;
+-(void)closeFinding;
 
 -(void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user;
 @property (weak, nonatomic) IBOutlet UIButton *playOfflineButton;

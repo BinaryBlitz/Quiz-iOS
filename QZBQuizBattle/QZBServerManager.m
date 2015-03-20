@@ -25,6 +25,7 @@
 #import "QZBRequestUser.h"
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
+#import "QZBAchievement.h"
 
 @interface QZBServerManager ()
 
@@ -349,7 +350,7 @@
 // game-start event.
 
 - (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
-                              onSuccess:(void (^)(QZBSession *session))success
+                              onSuccess:(void (^)(QZBSession *session, id bot))success
                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
     NSString *urlString = [NSString stringWithFormat:@"/lobbies/%@/accept_challenge", lobbyID];
@@ -357,9 +358,14 @@
     [self.requestOperationManager POST:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"accept challenge %@", responseObject);
+            
             QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
+            QZBOpponentBot *opponentBot = [[QZBOpponentBot alloc] initWithHostAnswers:responseObject];
+            
             if (success) {
-                success(session);
+                success(session, opponentBot);
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
@@ -933,7 +939,7 @@
                 @{
                     @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
                     @"topic_id" : @0,
-                    @"purchased" : @0
+                    @"purchased" : @1
                 }
             ];
 
@@ -1024,6 +1030,46 @@
                 failure(error, operation.response.statusCode);
             }
         }];
+}
+
+#pragma mark - achievements
+
+-(void)GETachievementsForUserID:(NSNumber *)userID
+                      onSuccess:(void (^)(NSArray *achievements))success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+    NSString *urlString = [NSString stringWithFormat:@"achievements"];
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    [self.requestOperationManager GET:@"achievements"
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  
+                                  NSLog(@"achievements %@", responseObject);
+                                  
+                                  NSMutableArray *tmpArr = [NSMutableArray array];
+                                  
+                                  for(NSDictionary *dict in responseObject){
+                                      QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
+                                      [tmpArr addObject:achiev];
+                                  }
+                                  
+                                  
+                                  NSArray *achievements = [NSArray arrayWithArray:tmpArr];
+                                  if(success){
+                                      success(achievements);
+                                  }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"achievments error %@",error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        
+    }];
+    
+    
 }
 
 @end
