@@ -21,14 +21,30 @@
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 {
+    
+    return [self initWithLobbyID:[dict[@"id"] integerValue]
+                         topicID:[dict[@"topic_id"] integerValue]
+                        playerID:[dict[@"player_id"] integerValue]
+                      queryCount:[dict[@"query_count"] integerValue]];
+    
+   
+}
+
+-(instancetype)initWithLobbyID:(NSInteger)lobbyID
+               topicID:(NSInteger)topicID
+              playerID:(NSInteger)playerID
+            queryCount:(NSInteger)queryCount{
     self = [super init];
     if (self) {
-        self.lobbyID = [dict[@"id"] integerValue];
-        self.topicID = [dict[@"topic_id"] integerValue];
-        self.playerID = [dict[@"player_id"] integerValue];
-        self.queryCount = [dict[@"query_count"] integerValue];
+    
+        self.lobbyID = lobbyID;
+        self.topicID = topicID;
+        self.playerID = topicID;
+        self.queryCount = queryCount;
     }
     return self;
+    
 }
+
 
 @end

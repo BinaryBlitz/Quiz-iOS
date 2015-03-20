@@ -100,9 +100,9 @@
 
     self.cancelCrossButton.enabled = YES;
 
-//    if (self.user) {
-//        self.playOfflineButton.alpha = 1.0;
-//    }
+    //    if (self.user) {
+    //        self.playOfflineButton.alpha = 1.0;
+    //    }
 
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
@@ -155,15 +155,9 @@
 
 #pragma mark - Actions
 - (IBAction)cancelCrossAction:(id)sender {
-    self.isCanceled = YES;
-
-    [self.checkNeedStartTimer invalidate];
-    self.checkNeedStartTimer = nil;
-
-    [self.onlineWorker closeConnection];
-    self.onlineWorker = nil;
-
-    [[QZBSessionManager sessionManager] closeSession];
+ 
+    [self closeFinding];
+    
     [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
         onSuccess:^(QZBSession *session, id bot) {
 
@@ -173,6 +167,20 @@
         }];
 
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)closeFinding{
+    
+    self.isCanceled = YES;
+    
+    [self.checkNeedStartTimer invalidate];
+    self.checkNeedStartTimer = nil;
+    
+    [self.onlineWorker closeConnection];
+    self.onlineWorker = nil;
+    
+    [[QZBSessionManager sessionManager] closeSession];
+    
 }
 
 - (void)showAlertViewFromNotification:(NSNotification *)note {
@@ -196,7 +204,6 @@
 - (IBAction)playOfflineAction:(id)sender {
     [[QZBSessionManager sessionManager] removeBotOrOnlineWorker];
     [self enterGame];
-    
 }
 
 #pragma mark - Navigation
@@ -204,7 +211,6 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-    
     if (!self.user) {
         [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
             onSuccess:^(QZBLobby *lobby) {
@@ -212,15 +218,7 @@
                 [self sessionFromLobby:lobby];
 
             }
-            onFailure:^(NSError *error, NSInteger statusCode) {
-
-                [[[UIAlertView alloc]
-                        initWithTitle:@"Ошибка связи"
-                              message:
-                                  @"Проверьте подключение к интернету"
-                             delegate:self
-                    cancelButtonTitle:@"Ок"
-                    otherButtonTitles:nil] show];
+            onFailure:^(NSError *error, NSInteger statusCode){
 
             }];
     } else if (!self.isChallenge) {
@@ -228,21 +226,29 @@
             inTopic:self.topic
             onSuccess:^(QZBSession *session) {
 
+                QZBLobby *lobby =
+                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
+                                              topicID:[self.topic.topic_id integerValue]
+                                             playerID:[self.user.userID integerValue]
+                                           queryCount:0];
+                self.lobby = lobby;
+
                 [self settitingSession:session bot:nil];
-                
+
                 [UIView animateWithDuration:0.4
-                                      delay:5
-                                    options:UIViewAnimationOptionCurveEaseInOut
-                                 animations:^{
-                    
-                    self.playOfflineButton.alpha = 1.0;
-                    
-                } completion:^(BOOL finished) {
-                    
-                    self.playOfflineButton.enabled = YES;
-                    
-                }];
-                
+                    delay:5
+                    options:UIViewAnimationOptionCurveEaseInOut
+                    animations:^{
+
+                        self.playOfflineButton.alpha = 1.0;
+
+                    }
+                    completion:^(BOOL finished) {
+
+                        self.playOfflineButton.enabled = YES;
+
+                    }];
+
                 self.playOfflineButton.alpha = 1.0;
 
             }
@@ -260,7 +266,7 @@
         return;
     }
     self.counter = 7;
-   
+
     if (!self.timer) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                       target:self

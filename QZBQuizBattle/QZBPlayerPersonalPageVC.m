@@ -47,24 +47,26 @@
 
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
-    
+
     [self setNeedsStatusBarAppearanceUpdate];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+
+    UIBarButtonItem *backButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                        target:nil
+                                        action:nil];
     [self.navigationItem setBackBarButtonItem:backButtonItem];
-    
+
     [self.navigationController.navigationBar
-     setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+        setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
     [self.navigationController.navigationBar
-     setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+        setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    
+
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-
+        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
     // Do any additional setup after loading the view.
 }
@@ -76,7 +78,7 @@
 
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userPressShowAllButton:)
                                                  name:@"QZBUserPressShowAllButton"
@@ -97,11 +99,11 @@
     // [self.tableView reloadData];
 
     NSLog(@"viewWillAppear %@", self.user.name);
-    
+
     [self updateBadges];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -169,12 +171,7 @@
     static NSString *mostLovedTopicIdentifier = @"mostLovedTopics";
     static NSString *topicCellIdentifier = @"topicCell";
     static NSString *challengeCell = @"challengeCell";
-//    NSInteger number;
-//    if(self.isCurrent){
-//        number = 4;
-//    } else{
-//        number = 3;
-//    }
+
 
     UITableViewCell *cell;
 
@@ -197,32 +194,27 @@
         [achivCell setAchivArray:self.achivArray];
         achivCell.buttonTitle = @"Показать\n все";
         return achivCell;
-    } else if ( indexPath.row == 3 ) {
-        
-        if(self.isCurrent){
-        
-                cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
-                return cell;
-        } else{
-            
-                cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
-                return cell;
+    } else if (indexPath.row == 3) {
+        if (self.isCurrent) {
+            cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
+            return cell;
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
+            return cell;
         }
-        
-            } else if ( indexPath.row == 4 ) {
-                cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
-                
-                return cell;
-            } else if ( indexPath.row > 4 ) {
-                QZBTopicTableViewCell *topicCell =
-                [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
-                topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
-                return topicCell;
-                // cell = topicCell;
-            }
-    
 
-    
+    } else if (indexPath.row == 4) {
+        cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
+
+        return cell;
+    } else if (indexPath.row > 4) {
+        QZBTopicTableViewCell *topicCell =
+            [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
+        topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
+        return topicCell;
+        // cell = topicCell;
+    }
+
     return cell;
 }
 
@@ -252,24 +244,24 @@
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell.reuseIdentifier isEqualToString:@"searchFriends"] || [cell.reuseIdentifier isEqualToString:@"challengeCell"]) {
+    if ([cell.reuseIdentifier isEqualToString:@"searchFriends"] ||
+        [cell.reuseIdentifier isEqualToString:@"challengeCell"]) {
         return YES;
     } else {
         return NO;
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSLog(@"taaped");
     NSString *identifier = [tableView cellForRowAtIndexPath:indexPath].reuseIdentifier;
-    
-    if([identifier isEqualToString:@"searchFriends"]){
+
+    if ([identifier isEqualToString:@"searchFriends"]) {
         [self performSegueWithIdentifier:@"showSearch" sender:nil];
-    }else if([identifier isEqualToString:@"challengeCell"]){
+    } else if ([identifier isEqualToString:@"challengeCell"]) {
         [self performSegueWithIdentifier:@"challengeSegue" sender:nil];
     }
-    
 }
 
 #pragma mark - Navigation
@@ -284,7 +276,7 @@
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
         [vc setFriendsOwner:self.user friends:self.friends friendsRequests:self.friendRequests];
-    } else if([segue.identifier isEqualToString:@"challengeSegue"]){
+    } else if ([segue.identifier isEqualToString:@"challengeSegue"]) {
         QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithUser:self.user];
     }
@@ -381,15 +373,16 @@
 
         if (self.friendRequests) {
             [playerCell setBAdgeCount:[self badgeNumber]];
-//            if ([self badgeNumber] > 0) {
-//                JSBadgeView *bv =
-//                    [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
-//                                                  alignment:JSBadgeViewAlignmentTopRight];
-//                bv.badgeText =
-//                    [NSString stringWithFormat:@"%ld", (unsigned long)[self badgeNumber]];
-//            }else{
-//                
-//            }
+            //            if ([self badgeNumber] > 0) {
+            //                JSBadgeView *bv =
+            //                    [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
+            //                                                  alignment:JSBadgeViewAlignmentTopRight];
+            //                bv.badgeText =
+            //                    [NSString stringWithFormat:@"%ld", (unsigned long)[self
+            //                    badgeNumber]];
+            //            }else{
+            //
+            //            }
         }
     } else {
         if (!self.user.isFriend) {
@@ -423,71 +416,60 @@
 
             self.friendRequests = friends;
             [self.tableView reloadData];
-            
+
             UITabBarController *tabController = self.tabBarController;
             UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-            
-    
-            
-            
+
             if ([self badgeNumber] > 0) {
-                
-                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
-                
-            }else{
-                 tabbarItem.badgeValue = nil;
+                tabbarItem.badgeValue =
+                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
+
+            } else {
+                tabbarItem.badgeValue = nil;
             }
 
         } onFailure:^(NSError *error, NSInteger statusCode){
 
-            
         }];
     }
 }
 
--(void)updateBadges{
-    
+- (void)updateBadges {
     if (self.isCurrent) {
         [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends) {
-            
+
             self.friendRequests = friends;
             [self.tableView reloadData];
-            
+
             UITabBarController *tabController = self.tabBarController;
             UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-            
-            
-            
-            
+
             if ([self badgeNumber] > 0) {
-                
-                tabbarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
-                
-            }else{
+                tabbarItem.badgeValue =
+                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
+
+            } else {
                 tabbarItem.badgeValue = nil;
             }
-            
+
         } onFailure:^(NSError *error, NSInteger statusCode){
-            
-            
-        }];}
-    
-    
+
+        }];
+    }
 }
 
--(NSInteger)badgeNumber{
+- (NSInteger)badgeNumber {
     NSInteger count = 0;
-    
-    for(QZBRequestUser *user in self.friendRequests){
-        if(!user.viewed){
+
+    for (QZBRequestUser *user in self.friendRequests) {
+        if (!user.viewed) {
             count++;
         }
     }
     return count;
-
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 

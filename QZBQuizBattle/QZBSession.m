@@ -25,6 +25,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property (strong, nonatomic) NSArray *firstUserAnswers;
 @property (strong, nonatomic) NSArray *oponentUserAnswers;
 @property (assign, nonatomic) NSInteger session_id;
+@property (strong, nonatomic) NSNumber *lobbyID;
 
 @end
 
@@ -48,6 +49,10 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     NSArray *arrayOfQuestionDicts = [dict objectForKey:@"game_session_questions"];
 
     NSInteger topic_id = [[dict objectForKey:@"id"] integerValue];
+    
+    if(dict[@"lobby_id"]){//инициализурет айди лобби, нужно для челенджей
+        self.lobbyID = dict[@"lobby_id"];
+    }
 
     NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
 

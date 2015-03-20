@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UAProgressView.h> 
 
 @interface QZBTopicTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *topicName;
+@property (weak, nonatomic) IBOutlet UAProgressView *topicProgressView;
 
 @end

@@ -11,6 +11,7 @@
 #import "QZBChallengeCell.h"
 #import "QZBChallengeDescription.h"
 #import "QZBGameTopic.h"
+//#import "QZBMainGameScreenTVC.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
 
@@ -74,6 +75,13 @@
     [SVProgressHUD dismiss];
 }
 
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
+    if (![parent isEqual:self.parentViewController]) {
+        NSLog(@"Back pressed");
+        [self closeFinding];
+    }
+}
 -(void)initSession{
     NSLog(@"subclassed");
     self.shouldEnable = YES;
@@ -131,9 +139,9 @@
         QZBChallengeDescription *description = self.challengeDescriptions[indexPath.row];
         NSNumber *lobbyNumber = description.lobbyID;
         
-        [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:lobbyNumber onSuccess:^(QZBSession *session) {
+        [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:lobbyNumber onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
             
-            [self settitingSession:session bot:nil];
+            [self settitingSession:session bot:bot];
             
         } onFailure:^(NSError *error, NSInteger statusCode) {
             [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к интернету"];

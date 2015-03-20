@@ -48,6 +48,43 @@
     return [self initWithAnswersAndTimes:answersWithTime];
 }
 
+-(instancetype)initWithHostAnswers:(NSDictionary *)dict{
+       NSArray *session_questions = [dict objectForKey:@"game_session_questions"];
+    
+    NSMutableArray *answersWithTime = [NSMutableArray array];
+    
+    NSInteger nullCount = 0;
+    
+    for (NSDictionary *questDict in session_questions) {
+        
+        NSNumber *answerIDNUM = [questDict objectForKey:@"host_answer_id"];
+        NSNumber *timeNUM = [questDict objectForKey:@"host_time"];
+        
+        if([timeNUM isEqual:[NSNull null]]){
+            nullCount++;
+            timeNUM = @(10);
+            answerIDNUM = @(0);
+        }
+    
+        
+        
+        NSUInteger answerID = [answerIDNUM unsignedIntegerValue];
+        NSUInteger time = [timeNUM unsignedIntegerValue];
+        
+        QZBAnswer *answerWithTime = [[QZBAnswer alloc] initWithAnswerNumber:answerID answerTime:time];
+        
+        [answersWithTime addObject:answerWithTime];
+    }
+    if(nullCount == session_questions.count){
+        return nil;
+    }
+    else{
+
+    return [self initWithAnswersAndTimes:answersWithTime];
+    }
+    
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

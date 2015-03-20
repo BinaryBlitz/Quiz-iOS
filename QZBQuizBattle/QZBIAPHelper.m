@@ -31,16 +31,16 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     if ((self = [super init])) {
-        //[self checkProductIdentifiers:<#(NSSet *)#>]
-        
-        
-        //[self setProductIdentifiersFromProducts:<#(NSSet *)#>;
+        self.purchasedProductIdentifiers = [NSMutableSet set];
     }
     return self;
 }
 
 - (void)setProductIdentifiersFromProducts:(NSSet *)productIdentifiers {
-      NSMutableSet *tmpProducts = [NSMutableSet set];
+     NSMutableSet *tmpProducts = [NSMutableSet set];
+    
+     self.purchasedProductIdentifiers = [NSMutableSet set];
+    
     for (QZBProduct *product in productIdentifiers) {
         
         NSLog(@"identifier %@", product.identifier);
@@ -68,13 +68,13 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {
+    
     return [_purchasedProductIdentifiers containsObject:productIdentifier];
 }
 
 - (void)buyProduct:(SKProduct *)product {
     NSLog(@"Buying %@...", product.productIdentifier);
 
-    // SKPayment * payment = [SKPayment paymentWithProduct:product];
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
     NSString *identifier = [[QZBCurrentUser sharedInstance].user.userID stringValue];
     payment.applicationUsername = [self hashedValueForAccountName:identifier];
@@ -133,7 +133,7 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
 
-    NSLog(@"receipt %@ %@", receiptURL, receipt);
+  //  NSLog(@"receipt %@ %@", receiptURL, receipt);
 
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
@@ -160,24 +160,26 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
     NSLog(@"%@", productIdentifier);
-
-    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
-        onSuccess:^{
-            [_purchasedProductIdentifiers addObject:productIdentifier];
-
-            [[NSNotificationCenter defaultCenter]
-                postNotificationName:IAPHelperProductPurchasedNotification
-                              object:productIdentifier
-                            userInfo:nil];
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
+//
+//    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
+//        onSuccess:^{
+//            
+//            //REDO when it will work
+////            [_purchasedProductIdentifiers addObject:productIdentifier];
+////
+////            [[NSNotificationCenter defaultCenter]
+////                postNotificationName:IAPHelperProductPurchasedNotification
+////                              object:productIdentifier
+////                            userInfo:nil];
+//
+//        }
+//        onFailure:^(NSError *error, NSInteger statusCode){
+//
+//        }];
+//    
 
     [_purchasedProductIdentifiers addObject:productIdentifier];
-    //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
-    //    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification
                                                         object:productIdentifier
                                                       userInfo:nil];

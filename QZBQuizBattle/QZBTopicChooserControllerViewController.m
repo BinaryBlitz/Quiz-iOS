@@ -141,8 +141,17 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
+    
+    UILabel *centralLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                     0,
+                                                                     CGRectGetWidth(cell.topicProgressView.frame)/2.0,
+                                                                     CGRectGetWidth(cell.topicProgressView.frame)/2.0)];
+    centralLabel.text = [NSString stringWithFormat:@"%@",@(1)];
+    centralLabel.textAlignment = NSTextAlignmentCenter;
 
     cell.topicName.text = topic.name;
+    cell.topicProgressView.progress = 0.5;
+    cell.topicProgressView.centralView = centralLabel;
 
     return cell;
 }

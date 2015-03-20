@@ -32,9 +32,15 @@
     [self.searchBar becomeFirstResponder];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.searchBar resignFirstResponder];
 }
+
 
 #pragma mark - UISearchBarDelegate
 

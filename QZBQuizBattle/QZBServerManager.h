@@ -56,9 +56,9 @@
                           onSuccess:(void (^)(QZBSession *session))success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
-                             onSuccess:(void (^)(QZBSession *session))success
-                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
+                              onSuccess:(void (^)(QZBSession *session, id bot))success
+                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTDeclineChallengeWhithLobbyID:(NSNumber *)lobbyID
                                onSuccess:(void (^)())success
@@ -154,5 +154,11 @@
 - (void)GETSearchFriendsWithText:(NSString *)text
                        OnSuccess:(void (^)(NSArray *friends))success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - achievements
+
+-(void)GETachievementsForUserID:(NSNumber *)userID
+                      onSuccess:(void (^)(NSArray *achievements))success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 @end

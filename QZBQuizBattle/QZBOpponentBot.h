@@ -12,5 +12,6 @@
 
 - (instancetype)initWithAnswersAndTimes:(NSArray *)answersWithTime;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
+-(instancetype)initWithHostAnswers:(NSDictionary *)dict;
 
 @end

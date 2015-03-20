@@ -15,5 +15,9 @@
 @property(copy, nonatomic, readonly) NSString *name;
 
 - (instancetype)initWithName:(NSString *)name imageName:(NSString *)imgName;
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
+
+
+
 
 @end
