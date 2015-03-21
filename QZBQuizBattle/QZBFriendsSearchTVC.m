@@ -48,44 +48,7 @@
     
     [self searchWithSearchBar:searchBar];
     
-//    NSLog(@"search taped");
-//    [SVProgressHUD show];
-//    
-//    
-//    [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text
-//OnSuccess:^(NSArray *friends) {
-//    
-//    
-//    if(friends.count == 0){
-//        [SVProgressHUD showInfoWithStatus:@"Ничего не найдено,\n попробуйте другой запрос"];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [SVProgressHUD dismiss];
-//        });
-//    }else{
-//    
-//        [self setFriendsOwner:nil andFriends:friends];
-//        [SVProgressHUD dismiss];
-//    }
-//            
-//    } onFailure:^(NSError *error, NSInteger statusCode) {
-//       [SVProgressHUD showInfoWithStatus:@"Проверьте интернет соединение"];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [SVProgressHUD dismiss];
-//        });
-//        
-//        
-//    }];
-    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

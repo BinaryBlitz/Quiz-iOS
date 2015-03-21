@@ -32,6 +32,7 @@ PODS:
   - MagicalRecord (2.2):
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
+  - SCLAlertView-Objective-C (0.5.9)
   - SocketRocket (0.3.1-beta2)
   - SVProgressHUD (1.1.2)
   - TSMessages (0.9.12):
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - JSBadgeView
   - libPusher (~> 1.5)
   - MagicalRecord
+  - SCLAlertView-Objective-C
   - SVProgressHUD
   - TSMessages
   - UAProgressView
@@ -58,6 +60,7 @@ SPEC CHECKSUMS:
   JSBadgeView: 75bec79d76e0eb01d57c9ce75b7c5ea8d6707955
   libPusher: 583326327a72ab7cd0f38692f61f9061cf4be3d9
   MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
+  SCLAlertView-Objective-C: 39e9c3a9135603f587ff2890217ed52a58bb0eab
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
   TSMessages: b2b5dc71f65146387e51f2600bb0eb8f3a6c4ab8

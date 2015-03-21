@@ -71,7 +71,7 @@
             title = self.topic.name;
             self.chooseTopicButton.enabled = NO;
         }else{
-            title = [NSString stringWithFormat:@"%@ >",self.topic.name];
+            title = [NSString stringWithFormat:@"%@",self.topic.name];
         }
         
        // [NSString stringWithFormat:@"%@ >",self.topic.name];
@@ -83,14 +83,14 @@
         [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
 
     } else if (self.category) {
-        NSString *title = [NSString stringWithFormat:@"%@ >",self.category.name ];
+        NSString *title = [NSString stringWithFormat:@"%@",self.category.name ];
         
         [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
 
         [self setRatingWithCategoryID:[self.category.category_id integerValue]];
 
     } else {
-        [self.chooseTopicButton setTitle:@"Все темы >" forState:UIControlStateNormal];
+        [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
 
         [self setRatingWithTopicID:0];
     }

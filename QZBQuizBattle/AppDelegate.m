@@ -34,7 +34,7 @@
     //[QZBQuizIAPHelper sharedInstance];
 
     NSLog(@"launch options %@", launchOptions);
-    
+
     if (IS_OS_8_OR_LATER) {
         [application
             registerUserNotificationSettings:[UIUserNotificationSettings
@@ -46,28 +46,25 @@
         [application registerForRemoteNotifications];
 
     } else {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-                                                         UIRemoteNotificationTypeBadge |
-                                                         UIRemoteNotificationTypeSound)];
+        [[UIApplication sharedApplication]
+            registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                UIRemoteNotificationTypeBadge |
+                                                UIRemoteNotificationTypeSound)];
     }
-    
-    
-    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(userInfo) {
-        
-        if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
-            
-            [self showFriendRequestScreenWithDictionary:userInfo];
-            
-        }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
-            
-            [self acceptChallengeWithDict:userInfo];
 
-        
+    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
+            [self showFriendRequestScreenWithDictionary:userInfo];
+
+        } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
+            [self acceptChallengeWithDict:userInfo];
+        }else if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
+            [self showAchiewvmentWithDict:userInfo];
+            
         }
     }
-    
-    
+
     return YES;
 }
 
@@ -224,136 +221,139 @@
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"My token is: %@", deviceToken);
-    
-    
 
-    //DataModel *dataModel = chatViewController.dataModel;
-    //NSString *oldToken = [dataModel deviceToken];
-    
+    // DataModel *dataModel = chatViewController.dataModel;
+    // NSString *oldToken = [dataModel deviceToken];
+
     NSString *newToken = [deviceToken description];
-    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    newToken = [newToken
+        stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    NSLog(@"My token is: %@", newToken);
-    
-    [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
 
+    NSLog(@"My token is: %@", newToken);
+
+    [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
 }
 
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Received notification: %@", userInfo);
-    
+
     UIApplicationState state = application.applicationState;
-    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
-    {
-        if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
-        
-        [self showFriendRequestScreenWithDictionary:userInfo];
-            
-        }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
-            
-        [self acceptChallengeWithDict:userInfo];
+    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
+        if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
+            [self showFriendRequestScreenWithDictionary:userInfo];
+
+        } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
+            [self acceptChallengeWithDict:userInfo];
+        } else if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
+            [self showAchiewvmentWithDict:userInfo];
             
         }
-    }else{
+    } else {
         
-      //  if()
-    
-    [self setBadgeWithDictionary:userInfo];
+        if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBAchievmentGet" object:userInfo];
+            
+        }
+
+        
+        //  if()
+
+        [self setBadgeWithDictionary:userInfo];
     }
-   // [self showFriendRequestScreenWithDictionary:userInfo];
+    // [self showFriendRequestScreenWithDictionary:userInfo];
 }
 
 - (void)application:(UIApplication *)application
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Failed to get token, error: %@", error);
-    
-    
 }
 
-
--(void)setBadgeWithDictionary:(NSDictionary *)userInfo{
+- (void)setBadgeWithDictionary:(NSDictionary *)userInfo {
     NSUInteger vcNum = 0;
-    
-    if([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]){
-        
-       // [self showFriendRequestScreenWithDictionary:userInfo];
-        
-        vcNum = 1;
-        
-    }else if([userInfo[@"action"] isEqualToString:@"CHALLENGE"]){
-        
-       // [self acceptChallengeWithDict:userInfo];
+
+    if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
+        // [self showFriendRequestScreenWithDictionary:userInfo];
+
         vcNum = 2;
-    } else{
+
+    } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"] ||
+               [userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
+        // [self acceptChallengeWithDict:userInfo];
+        vcNum = 0;
+    } else {
         return;
     }
 
-    
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     UITabBarItem *tabbarItem = tabController.tabBar.items[vcNum];
     tabbarItem.badgeValue = @"1";
-    
-    
 }
 
--(void)showFriendRequestScreenWithDictionary:(NSDictionary *)dict{
-    
-    if(![QZBSessionManager sessionManager].isGoing){
-    
-    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    
-    UINavigationController *navController = (UINavigationController *)tabController.viewControllers[1];
-    
-    QZBPlayerPersonalPageVC *notificationController = (QZBPlayerPersonalPageVC *)[navController.storyboard instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
-    
-    tabController.selectedIndex = 1;
-    
-    NSDictionary *player = dict[@"player"];
-    
-    QZBAnotherUser *user = [[QZBAnotherUser alloc]initWithDictionary:player];
-    
-    [notificationController initPlayerPageWithUser:user];
-    [navController pushViewController:notificationController animated:YES];
-    }
-    
-}
-
-
-- (void)acceptChallengeWithDict:(NSDictionary *)dict{
-    if(![QZBSessionManager sessionManager].isGoing){
-        
-//        {
-//            action = CHALLENGE;
-//            aps =     {
-//                alert = "Foo challenged you.";
-//            };
-//            lobby =     {
-//                id = 421;
-//            };
-//        }
-//        
+- (void)showFriendRequestScreenWithDictionary:(NSDictionary *)dict {
+    if (![QZBSessionManager sessionManager].isGoing) {
         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-        
-        UINavigationController *navController = (UINavigationController *)tabController.viewControllers[2];
-        
-        QZBAcceptChallengeVC *notificationController = (QZBAcceptChallengeVC *)[navController.storyboard instantiateViewControllerWithIdentifier:@"challengesTVC"];
-        
+
+        UINavigationController *navController =
+            (UINavigationController *)tabController.viewControllers[2];
+
+        QZBPlayerPersonalPageVC *notificationController =
+            (QZBPlayerPersonalPageVC *)[navController.storyboard
+                instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
+
         tabController.selectedIndex = 2;
-        
-      //  NSDictionary *player = dict[@"player"];
-        
-      //  QZBAnotherUser *user = [[QZBAnotherUser alloc]initWithDictionary:player];
-        
-      //  NSDictionary *lobbyDict = dict[@"lobby"];
-      //  NSNumber *lobbyID = lobbyDict[@"id"];
-        
-       // [notificationController initWithLobbyID:lobbyID user:nil];
-        
+
+        NSDictionary *player = dict[@"player"];
+
+        QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:player];
+
+        [notificationController initPlayerPageWithUser:user];
         [navController pushViewController:notificationController animated:YES];
     }
-    
+}
+
+- (void)acceptChallengeWithDict:(NSDictionary *)dict {
+    if (![QZBSessionManager sessionManager].isGoing) {
+        //        {
+        //            action = CHALLENGE;
+        //            aps =     {
+        //                alert = "Foo challenged you.";
+        //            };
+        //            lobby =     {
+        //                id = 421;
+        //            };
+        //        }
+        //
+        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+
+        UINavigationController *navController =
+            (UINavigationController *)tabController.viewControllers[0];
+
+        QZBAcceptChallengeVC *notificationController = (QZBAcceptChallengeVC *)
+            [navController.storyboard instantiateViewControllerWithIdentifier:@"challengesTVC"];
+
+        tabController.selectedIndex = 0;
+
+
+        [navController pushViewController:notificationController animated:YES];
+    }
+}
+
+-(void)showAchiewvmentWithDict:(NSDictionary *)dict{
+    if (![QZBSessionManager sessionManager].isGoing) {
+        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+        
+        UINavigationController *navController =
+        (UINavigationController *)tabController.viewControllers[2];
+        
+        QZBPlayerPersonalPageVC *notificationController = navController.viewControllers[0];
+        [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
+        tabController.selectedIndex = 2;
+        
+
+        
+    }
     
 }
 

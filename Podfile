@@ -9,3 +9,4 @@ pod "DBCamera"
 pod 'SVProgressHUD'
 pod 'JSBadgeView'
 pod 'UAProgressView'
+pod 'SCLAlertView-Objective-C'
