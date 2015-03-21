@@ -8,6 +8,7 @@
 
 #import "UIViewController+QZBControllerCategory.h"
 
+
 @implementation UIViewController (QZBControllerCategory)
 
 -(void)initStatusbarWithColor:(UIColor *)color{
@@ -32,6 +33,31 @@
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+}
+
+
+-(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict{
+    
+    // QZBAchievement *achievment = self.achivArray[indexPath.row];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.backgroundType = Blur;
+    alert.showAnimationType = FadeIn;
+    
+    NSString *descr =  @"Поздравляем!\n Вы получили новое достижение!";
+    NSString *name = dict[@"name"];
+    
+    
+    [alert showCustom:self
+                image:[UIImage imageNamed:@"achiv"]
+                color:[UIColor lightBlueColor]
+                title:name
+             subTitle:descr
+     closeButtonTitle:@"ОК"
+             duration:0.0f];
+    
+    
+    
 }
 
 

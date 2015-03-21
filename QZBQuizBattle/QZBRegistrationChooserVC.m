@@ -71,7 +71,7 @@ static NSArray *SCOPE = nil;
     [super viewDidAppear:animated];
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         NSLog(@"exist");
-        [self dismissViewControllerAnimated:NO
+        [self dismissViewControllerAnimated:YES
                                  completion:^{
 
                                  }];

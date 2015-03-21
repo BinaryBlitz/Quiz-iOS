@@ -12,6 +12,7 @@
 #import "QZBTopicChooserControllerViewController.h"
 #import "QZBCategoryChooserVC.h"
 #import "QZBSessionManager.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBEndSessionControllerViewController ()
 
@@ -32,14 +33,30 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    self.firstUserScore.text = [NSString stringWithFormat:@"%lu",(unsigned long)[QZBSessionManager sessionManager].firstUserScore ];
-    
-    self.opponentUserScore.text = [NSString stringWithFormat:@"%lu",
-                                   (unsigned long)[QZBSessionManager sessionManager].secondUserScore];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(achievementGet:)
+                                                 name:@"QZBAchievmentGet"
+                                               object:nil];
+
+    self.firstUserScore.text = [NSString
+        stringWithFormat:@"%lu", (unsigned long)[QZBSessionManager sessionManager].firstUserScore];
+
+    self.opponentUserScore.text = [NSString
+        stringWithFormat:@"%lu", (unsigned long)[QZBSessionManager sessionManager].secondUserScore];
 
     [[QZBSessionManager sessionManager] closeSession];
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)achievementGet:(NSNotification *)note {
+    
+    [self showAlertAboutAchievmentWithDict:note.object];
 }
 
 /*
@@ -77,9 +94,9 @@ preparation before navigation
             break;
         }
     }
-    if(!destinationVC){
+    if (!destinationVC) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-    }else{
+    } else {
         [self.navigationController popToViewController:destinationVC animated:YES];
     }
 }

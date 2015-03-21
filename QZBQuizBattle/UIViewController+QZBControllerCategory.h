@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SCLAlertView-Objective-C/SCLAlertView.h> 
+#import "UIColor+QZBProjectColors.h"
 
 @interface UIViewController (QZBControllerCategory)
 
 -(void)initStatusbarWithColor:(UIColor *)color;
+-(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict;
 
 @end

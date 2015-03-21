@@ -21,6 +21,8 @@
 #import "QZBAnotherUser.h"
 #import "QZBRequestUser.h"
 #import "QZBCategoryChooserVC.h"
+#import <SCLAlertView-Objective-C/SCLAlertView.h>
+#import "UIColor+QZBProjectColors.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -467,6 +469,32 @@
         }
     }
     return count;
+}
+
+#pragma mark - achievment
+
+-(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict{
+    
+   // QZBAchievement *achievment = self.achivArray[indexPath.row];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.backgroundType = Blur;
+    alert.showAnimationType = FadeIn;
+    
+    NSString *descr =  @"Поздравляем!\n Вы получили новое достижение!";
+    NSString *name = dict[@"name"];
+    
+    
+    [alert showCustom:self
+                image:[UIImage imageNamed:@"achiv"]
+                color:[UIColor lightBlueColor]
+                title:name
+             subTitle:descr
+     closeButtonTitle:@"ОК"
+             duration:0.0f];
+    
+    
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

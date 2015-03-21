@@ -8,6 +8,8 @@
 
 #import "QZBMainTBC.h"
 #import "QZBCurrentUser.h"
+#import "QZBRegistrationChooserVC.h"
+#import "UIColor+QZBProjectColors.h"
 
 @interface QZBMainTBC ()
 
@@ -23,7 +25,30 @@
     self.tabBar.tintColor = [UIColor whiteColor];
     self.tabBar.barTintColor = [UIColor blackColor];
     
+    UIView *view = [[UIView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.frame];
+    view.backgroundColor = [UIColor lightBlueColor];
+    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+    [currentWindow addSubview:view];
+    
+    
+    
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+   // AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//   UIView *backgrView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+//   backgrView.backgroundColor = [UIColor blackColor];
+//    backgrView.alpha = 1.0;
+//   [[[[UIApplication sharedApplication] delegate] window] addSubview:backgrView];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [backgrView removeFromSuperview];
+//    });
+
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,7 +61,24 @@
 
     if (![[QZBCurrentUser sharedInstance] checkUser]) {
         NSLog(@"exist");
-        [self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
+        
+        UIView *backgrView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+        backgrView.backgroundColor = [UIColor blackColor];
+        backgrView.alpha = 1.0;
+
+        
+        QZBRegistrationChooserVC *destination = [self.storyboard instantiateViewControllerWithIdentifier:@"registrationVC"];
+        [self.view addSubview:backgrView];
+        
+        [self presentViewController:destination animated:NO completion:^{
+            [UIView animateWithDuration:0.5 animations:^{
+                backgrView.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                [backgrView removeFromSuperview];
+            }];
+        }];
+        
+        //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
     }
     
     

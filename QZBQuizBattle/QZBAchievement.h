@@ -13,6 +13,8 @@
 
 @property(strong, nonatomic, readonly) UIImage *image;
 @property(copy, nonatomic, readonly) NSString *name;
+@property (copy, nonatomic, readonly)   NSString *achievementDescription;
+@property (assign, nonatomic, readonly) BOOL isAchieved;
 
 - (instancetype)initWithName:(NSString *)name imageName:(NSString *)imgName;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
