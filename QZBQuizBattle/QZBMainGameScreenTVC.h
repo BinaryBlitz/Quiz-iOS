@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QZBTopicChooserControllerViewController.h"
 
-@interface QZBMainGameScreenTVC : UITableViewController
+@interface QZBMainGameScreenTVC : QZBTopicChooserControllerViewController
 
 @end

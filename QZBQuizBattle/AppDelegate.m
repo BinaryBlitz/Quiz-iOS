@@ -19,6 +19,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBSessionManager.h"
 #import "QZBAcceptChallengeVC.h"
+#import "QZBRegistrationChooserVC.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -59,14 +60,53 @@
 
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
             [self acceptChallengeWithDict:userInfo];
-        }else if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
+        } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
-            
         }
     }
 
+     // [self presentRegistration];
+
     return YES;
 }
+
+//- (void)presentRegistration {
+//    if (![[QZBCurrentUser sharedInstance] checkUser]) {
+//        NSLog(@"exist");
+//
+////        UIView *backgrView = [[UIView alloc]
+////            initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,
+////                                     [[UIScreen mainScreen] bounds].size.height)];
+////        backgrView.backgroundColor = [UIColor blackColor];
+////        backgrView.alpha = 1.0;
+//
+//        // self.window.rootViewController.storyboard
+//        
+//        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+//        
+//        UINavigationController *navController =
+//        (UINavigationController *)tabController.viewControllers[0];
+//        
+//        QZBRegistrationChooserVC *notificationController =
+//        [navController.storyboard instantiateViewControllerWithIdentifier:@"registrationVC"];
+//        
+//        tabController.selectedIndex = 0;
+//
+//
+////        QZBRegistrationChooserVC *destination = [self.window.rootViewController.storyboard
+////            instantiateViewControllerWithIdentifier:@"registrationVC"];
+//        //[self.view addSubview:backgrView];
+//
+//        [navController pushViewController:notificationController animated:YES];
+////        [navController presentViewController:notificationController
+////                                                     animated:NO
+////                                                   completion:nil];
+////        
+//
+//        //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
+//    }
+//}
+
 
 - (BOOL)application:(UIApplication *)application
               openURL:(NSURL *)url
@@ -246,18 +286,15 @@
 
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
             [self acceptChallengeWithDict:userInfo];
-        } else if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
+        } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
-            
         }
     } else {
-        
-        if([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]){
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBAchievmentGet" object:userInfo];
-            
+        if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBAchievmentGet"
+                                                                object:userInfo];
         }
 
-        
         //  if()
 
         [self setBadgeWithDictionary:userInfo];
@@ -335,26 +372,21 @@
 
         tabController.selectedIndex = 0;
 
-
         [navController pushViewController:notificationController animated:YES];
     }
 }
 
--(void)showAchiewvmentWithDict:(NSDictionary *)dict{
+- (void)showAchiewvmentWithDict:(NSDictionary *)dict {
     if (![QZBSessionManager sessionManager].isGoing) {
         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-        
+
         UINavigationController *navController =
-        (UINavigationController *)tabController.viewControllers[2];
-        
+            (UINavigationController *)tabController.viewControllers[2];
+
         QZBPlayerPersonalPageVC *notificationController = navController.viewControllers[0];
         [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
         tabController.selectedIndex = 2;
-        
-
-        
     }
-    
 }
 
 @end

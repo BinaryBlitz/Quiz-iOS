@@ -29,7 +29,7 @@
 //#import <DBCamera/DBCameraLibraryViewController.h>
 //#import <DBCamera/DBCameraSegueViewController.h>
 
-@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate>
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate,UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
@@ -123,6 +123,13 @@
     } else {
         self.user = user;
         self.isCurrent = NO;
+        
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];
+      //  self.navigationItem.rightBarButtonItem.
+      //  self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+        
         [[QZBServerManager sharedManager] GETPlayerWithID:user.userID
             onSuccess:^(QZBAnotherUser *anotherUser) {
 
@@ -194,7 +201,11 @@
             [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
 
         [achivCell setAchivArray:self.achivArray];
-        achivCell.buttonTitle = @"Показать\n все";
+        
+        if(self.isCurrent){
+        
+            achivCell.buttonTitle = @"Показать\n все";
+        }
         return achivCell;
     } else if (indexPath.row == 3) {
         if (self.isCurrent) {
@@ -265,6 +276,18 @@
         [self performSegueWithIdentifier:@"challengeSegue" sender:nil];
     }
 }
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"%ld", buttonIndex);
+    
+    if (buttonIndex == 0) {
+        //Make user response
+    }
+    
+   }
+
 
 #pragma mark - Navigation
 
@@ -337,6 +360,18 @@
         }
     }
 }
+         
+         
+-(void)showActionSheet{
+             UIActionSheet *actSheet =
+             [[UIActionSheet alloc] initWithTitle:@"Пожаловаться на пользователя"
+                                         delegate:self
+                                cancelButtonTitle:@"Отменить"
+                           destructiveButtonTitle:nil
+                                otherButtonTitles:@"Пожаловаться", nil];
+             
+             [actSheet showInView:self.view];
+}
 
 #pragma mark - init friends and achivs
 
@@ -375,16 +410,6 @@
 
         if (self.friendRequests) {
             [playerCell setBAdgeCount:[self badgeNumber]];
-            //            if ([self badgeNumber] > 0) {
-            //                JSBadgeView *bv =
-            //                    [[JSBadgeView alloc] initWithParentView:playerCell.friendsButton
-            //                                                  alignment:JSBadgeViewAlignmentTopRight];
-            //                bv.badgeText =
-            //                    [NSString stringWithFormat:@"%ld", (unsigned long)[self
-            //                    badgeNumber]];
-            //            }else{
-            //
-            //            }
         }
     } else {
         if (!self.user.isFriend) {
@@ -397,6 +422,9 @@
 
     [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
+    
+    [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
+    
     // cell = playerCell;
 }
 

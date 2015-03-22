@@ -45,7 +45,11 @@
     alert.showAnimationType = FadeIn;
     
     NSString *descr =  @"Поздравляем!\n Вы получили новое достижение!";
-    NSString *name = dict[@"name"];
+    
+    
+    NSDictionary *achievDict = dict[@"badge"];
+    
+    NSString *name = achievDict[@"name"];
     
     
     [alert showCustom:self

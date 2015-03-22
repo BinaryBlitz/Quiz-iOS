@@ -14,6 +14,7 @@
 #import "UIColor+QZBProjectColors.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import <UAProgressView.h>
+#import "UIImageView+AFNetworking.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -74,13 +75,17 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     
-    self.firstUserScore.hidden = YES;
-    self.opponentScore.hidden = YES;
+ //   self.firstUserScore.hidden = YES;
+   // self.opponentScore.hidden = YES;
     
-    self.userBV= [[JSBadgeView alloc] initWithParentView:self.userImage
-                                                     alignment:JSBadgeViewAlignmentCenterRight];
-    self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentImage
+    self.firstUserScore.text = @"";
+    self.opponentScore.text = @"";
+  
+    
+    self.userBV= [[JSBadgeView alloc] initWithParentView:self.firstUserScore
                                                      alignment:JSBadgeViewAlignmentCenterLeft];
+    self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
+                                                     alignment:JSBadgeViewAlignmentCenterRight];
     
     self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
     self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
@@ -320,7 +325,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        for (UIButton *button in weakSelf.answerButtons) {
-                           button.backgroundColor = [UIColor whiteColor];
+                           button.backgroundColor = [UIColor blackColor];
                            button.enabled = YES;
                            [UIView animateWithDuration:0.3
                                animations:^{
@@ -546,8 +551,8 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
     self.userBV.badgeText = firstScoreString;
     self.opponentBV.badgeText = opponentScoreString;
     
-    self.firstUserScore.text = firstScoreString;
-    self.opponentScore.text = opponentScoreString;
+   // self.firstUserScore.text = firstScoreString;
+   // self.opponentScore.text = opponentScoreString;
 }
 
 #pragma mark - score labels colored
@@ -612,36 +617,17 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
     if ([QZBSessionManager sessionManager].opponentUserName) {
         self.opponentNameLabel.text = [QZBSessionManager sessionManager].opponentUserName;
     }
+    
+    if([QZBSessionManager sessionManager].firstImageURL){
+        [self.userImage setImageWithURL:[QZBSessionManager sessionManager].firstImageURL];
+    }
+    
+    if([QZBSessionManager sessionManager].opponentImageURL){
+        [self.opponentImage setImageWithURL:[QZBSessionManager sessionManager].opponentImageURL];
+    }
+    
 }
 
-#pragma mark - close
-
-//- (IBAction)closeSession:(UIButton *)sender {
-//    [self.globalTimer invalidate];
-//    self.globalTimer = nil;
-//
-//    if (self.backgroundTask != UIBackgroundTaskInvalid) {
-//        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
-//        self.backgroundTask = UIBackgroundTaskInvalid;
-//    }
-//
-//    [[QZBSessionManager sessionManager] closeSession];
-//
-//    //[self.navigationController popViewControllerAnimated:YES];
-//
-//    UIViewController *destinationVC = nil;
-//
-//    for (UIViewController *vc in self.navigationController.viewControllers) {
-//        if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
-//            destinationVC = vc;
-//            break;
-//        }
-//    }
-//
-//    if (destinationVC) {
-//        [self.navigationController popToViewController:destinationVC animated:YES];
-//    }
-//}
 
 #pragma mark - status bar
 

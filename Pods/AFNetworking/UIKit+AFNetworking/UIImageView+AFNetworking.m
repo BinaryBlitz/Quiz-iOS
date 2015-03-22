@@ -65,6 +65,17 @@
 @implementation UIImageView (AFNetworking)
 @dynamic imageResponseSerializer;
 
+
+- (void)clearImageCacheForURL:(NSURL *)url {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    
+    UIImage *cachedImage = [[[self class] sharedImageCache] cachedImageForRequest:request];
+    if (cachedImage) {
+        [[[self class] sharedImageCache] clearCachedRequest:request];
+    }
+}
+
 + (id <AFImageCache>)sharedImageCache {
     static AFImageCache *_af_defaultImageCache = nil;
     static dispatch_once_t oncePredicate;
@@ -190,6 +201,12 @@ static inline NSString * AFImageCacheKeyFromURLRequest(NSURLRequest *request) {
 }
 
 @implementation AFImageCache
+
+- (void)clearCachedRequest:(NSURLRequest *)request {
+    if (request) {
+        [self removeObjectForKey:AFImageCacheKeyFromURLRequest(request)];
+    }
+}
 
 - (UIImage *)cachedImageForRequest:(NSURLRequest *)request {
     switch ([request cachePolicy]) {

@@ -39,6 +39,8 @@
 /// @name Accessing Image Cache
 ///----------------------------
 
+- (void)clearImageCacheForURL:(NSURL *)url;
+
 /**
  The image cache used to improve image loadiing performance on scroll views. By default, this is an `NSCache` subclass conforming to the `AFImageCache` protocol, which listens for notification warnings and evicts objects accordingly.
 */
@@ -120,6 +122,8 @@
  The `AFImageCache` protocol is adopted by an object used to cache images loaded by the AFNetworking category on `UIImageView`.
  */
 @protocol AFImageCache <NSObject>
+
+- (void)clearCachedRequest:(NSURLRequest *)request;
 
 /**
  Returns a cached image for the specififed request, if available.

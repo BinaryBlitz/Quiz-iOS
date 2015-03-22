@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UIImageView *opponentImage;
+//@property (weak, nonatomic) IBOutlet UIView *opponentScoreView;
 
 @property (weak, nonatomic) IBOutlet UAProgressView *progressView;
 

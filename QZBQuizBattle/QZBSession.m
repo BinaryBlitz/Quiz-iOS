@@ -27,6 +27,9 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property (assign, nonatomic) NSInteger session_id;
 @property (strong, nonatomic) NSNumber *lobbyID;
 
+@property(strong, nonatomic) NSURL *firstUserImageURL;
+@property(strong, nonatomic) NSURL *opponentUserImageURL;
+
 @end
 
 @implementation QZBSession
@@ -48,13 +51,13 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     NSMutableArray *questions = [NSMutableArray array];
     NSArray *arrayOfQuestionDicts = [dict objectForKey:@"game_session_questions"];
 
-    NSInteger topic_id = [[dict objectForKey:@"id"] integerValue];
+    self.session_id = [[dict objectForKey:@"id"] integerValue];
     
     if(dict[@"lobby_id"]){//инициализурет айди лобби, нужно для челенджей
         self.lobbyID = dict[@"lobby_id"];
     }
 
-    NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
+   // NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
 
     for (NSDictionary *d in arrayOfQuestionDicts) {
         NSDictionary *questDict = [d objectForKey:@"question"];
@@ -89,7 +92,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
             [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
         }
 
-        QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:topic
+        QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:@""
                                                           question:questText
                                                            answers:answers
                                                        rightAnswer:correctAnswer
@@ -114,10 +117,26 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         if(dict[@"opponent_id"]){
             opponent.userID = dict[@"opponent_id"];
         }
+        if(dict[@"opponent_avatar_url"] &&
+           ![dict[@"opponent_avatar_url"] isEqual:[NSNull null]] ){
+            
+            NSString *url = [QZBServerBaseUrl stringByAppendingString: dict[@"opponent_avatar_url"]];
+            
+            opponent.imageURL = [NSURL URLWithString:url];
+        }else{
+            opponent.imageURL = nil;
+        }
         
     }else{
         opponent.name = dict[@"host_name"];
-        opponent.userID = dict[@"id"];
+        opponent.userID = dict[@"host_id"];
+        if(dict[@"host_avatar_url"] && ![dict[@"host_avatar_url"] isEqual:[NSNull null]] ){
+            NSString *url = [QZBServerBaseUrl stringByAppendingString: dict[@"host_avatar_url"]];
+            opponent.imageURL = [NSURL URLWithString:url];
+        }else{
+            opponent.imageURL = nil;
+        }
+        
     }
 
     return [self initWithQestions:questions first:user1 opponentUser:opponent];

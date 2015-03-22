@@ -14,6 +14,7 @@
 @property(strong, nonatomic) NSNumber *userID;
 @property(copy, nonatomic) NSString *name;
 @property(assign, nonatomic) BOOL isFriend;
+@property(strong, nonatomic) NSURL *imageURL;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 

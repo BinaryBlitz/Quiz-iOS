@@ -11,7 +11,6 @@
 #import "QZBChallengeCell.h"
 #import "QZBChallengeDescription.h"
 #import "QZBGameTopic.h"
-//#import "QZBMainGameScreenTVC.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface QZBProgressChallengeTVC ()
@@ -57,7 +56,7 @@
     [super viewDidAppear:animated];
 
     UITabBarController *tabController = self.tabBarController;
-    UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+    UITabBarItem *tabbarItem = tabController.tabBar.items[0];
 
     tabbarItem.badgeValue = nil;
 }

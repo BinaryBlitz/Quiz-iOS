@@ -7,6 +7,7 @@
 //
 
 #import "QZBAnotherUser.h"
+#import "QZBServerManager.h"
 
 @implementation QZBAnotherUser
 
@@ -18,6 +19,15 @@
     if (self) {
         self.name = dict[@"name"];
         self.userID = (NSNumber *)dict[@"id"];
+        
+        NSString *avaURL = dict[@"avatar_url"];
+        
+        if(![avaURL isEqual:[NSNull null]] && avaURL ){
+            NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:avaURL];
+            self.imageURL = [NSURL URLWithString:urlStr];
+        } else{
+            self.imageURL = nil;
+        }
     }
     return self;
 }

@@ -94,7 +94,7 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
-    NSLog(@"%@ %@", newToken.accessToken, newToken.expiresIn);
+    NSLog(@"vk %@ %@", newToken.accessToken, newToken.expiresIn);
 
     [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
         onSuccess:^(QZBUser *user) {
@@ -112,6 +112,10 @@ static NSArray *SCOPE = nil;
 
         }
         onFailure:^(NSError *error, NSInteger statusCode){
+            [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к интернету"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+            });
 
         }];
 

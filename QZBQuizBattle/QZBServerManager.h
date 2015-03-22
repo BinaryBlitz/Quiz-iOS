@@ -10,6 +10,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "QZBUserProtocol.h"
 
+UIKIT_EXTERN NSString *const QZBServerBaseUrl;
+
 @class QZBSession;
 @class QZBLobby;
 @class QZBOpponentBot;
@@ -19,6 +21,7 @@
 @class QZBAnotherUser;
 
 @interface QZBServerManager : NSObject
+@property (copy, nonatomic, readonly) NSString *baseURL;
 
 + (QZBServerManager *)sharedManager;
 
@@ -49,12 +52,15 @@
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)PATCHCloseSessionID:(NSNumber *)sessionID onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - challenge
 
--(void)POSTLobbyChallengeWithUserID:(NSNumber *)userID
-                            inTopic:(QZBGameTopic *)topic
-                          onSuccess:(void (^)(QZBSession *session))success
-                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)POSTLobbyChallengeWithUserID:(NSNumber *)userID
+                             inTopic:(QZBGameTopic *)topic
+                           onSuccess:(void (^)(QZBSession *session))success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
                               onSuccess:(void (^)(QZBSession *session, id bot))success
@@ -63,9 +69,8 @@
 - (void)POSTDeclineChallengeWhithLobbyID:(NSNumber *)lobbyID
                                onSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
--(void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
-                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
+- (void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - user registration and login
 
@@ -96,6 +101,9 @@
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
+                       onSuccess:(void (^)())success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - friends
 
@@ -157,8 +165,8 @@
 
 #pragma mark - achievements
 
--(void)GETachievementsForUserID:(NSNumber *)userID
-                      onSuccess:(void (^)(NSArray *achievements))success
-                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)GETachievementsForUserID:(NSNumber *)userID
+                       onSuccess:(void (^)(NSArray *achievements))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 @end

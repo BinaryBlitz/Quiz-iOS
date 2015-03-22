@@ -27,9 +27,12 @@
 #import "QZBChallengeDescription.h"
 #import "QZBAchievement.h"
 
+NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
+
 @interface QZBServerManager ()
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
+@property (copy, nonatomic) NSString *baseURL;
 
 @end
 
@@ -49,7 +52,8 @@
 - (id)init {
     self = [super init];
     if (self) {
-        NSString *apiPath = @"http://quizapp.binaryblitz.ru/";
+        NSString *apiPath = QZBServerBaseUrl;
+        self.baseURL = apiPath;
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
         // url.port = @3000;
@@ -136,6 +140,7 @@
             existingEntity = [QZBCategory MR_createEntity];
             existingEntity.category_id = category_id;
             existingEntity.name = name;
+            
         }
         [objectsArray addObject:existingEntity];
     }
@@ -154,7 +159,7 @@
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
-    //   [QZBGameTopic MR_truncateAll];  // comment on release version
+       [QZBGameTopic MR_truncateAll];  // comment on release version
 
     NSArray *topics = [topicsInRequest objectForKey:@"topics"];
 
@@ -163,6 +168,7 @@
     for (NSDictionary *dict in topics) {
         NSString *name = [dict objectForKey:@"name"];
         id topic_id = [dict objectForKey:@"id"];
+        NSNumber *points = [dict objectForKey:@"points"];
 
         QZBGameTopic *existingEntity =
             [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
@@ -174,6 +180,8 @@
 
             [category addRelationToTopicObject:existingEntity];
         }
+        
+        existingEntity.points = points;
         [objectsArray addObject:existingEntity];
     }
 
@@ -304,6 +312,32 @@
         }];
 }
 
+
+- (void)PATCHCloseSessionID:(NSNumber *)sessionID onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+ 
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@/close",sessionID];
+    
+    [self.requestOperationManager PATCH:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"session closed");
+        
+        if(success){
+            success();
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        NSLog(@"session close failure %@", error);
+        
+    }];
+    
+}
+
 #pragma mark - challenge
 
 // POST /lobbies/challenge
@@ -329,9 +363,9 @@
     [self.requestOperationManager POST:@"lobbies/challenge"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            NSLog(@"challenge response %@",responseObject);
-            
+
+            NSLog(@"challenge response %@", responseObject);
+
             QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
 
             if (success) {
@@ -341,6 +375,10 @@
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
 
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            NSLog(@" %@", error);
         }];
 }
 
@@ -358,12 +396,13 @@
     [self.requestOperationManager POST:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
+
             NSLog(@"accept challenge %@", responseObject);
-            
+
             QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
-            QZBOpponentBot *opponentBot = [[QZBOpponentBot alloc] initWithHostAnswers:responseObject];
-            
+            QZBOpponentBot *opponentBot =
+                [[QZBOpponentBot alloc] initWithHostAnswers:responseObject];
+
             if (success) {
                 success(session, opponentBot);
             }
@@ -390,36 +429,36 @@
         }];
 }
 
--(void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
-                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    
+- (void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    [self.requestOperationManager GET:@"lobbies/challenges" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"challenges response %@",responseObject);
-        
-        NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
-        
-        for(NSDictionary *dict in responseObject){
-            QZBChallengeDescription *challengeDescription = [[QZBChallengeDescription alloc] initWithDictionary:dict];
-            [challengeDescriptionsMuttable addObject:challengeDescription];
+
+    [self.requestOperationManager GET:@"lobbies/challenges"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"challenges response %@", responseObject);
+
+            NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
+
+            for (NSDictionary *dict in responseObject) {
+                QZBChallengeDescription *challengeDescription =
+                    [[QZBChallengeDescription alloc] initWithDictionary:dict];
+                [challengeDescriptionsMuttable addObject:challengeDescription];
             }
-        
-        NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
-        
-        if(success){
-            success(challengeDescriptions);
+
+            NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
+
+            if (success) {
+                success(challengeDescriptions);
+            }
+
         }
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (failure) {
-            failure(error, operation.response.statusCode);
-        }
-        NSLog(@"%@", error);
-    }];
-    
-    
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            NSLog(@"%@", error);
+        }];
 }
 
 #pragma mark - user registration
@@ -507,6 +546,7 @@
 
             if (![responseObject objectForKey:@"error"]) {
                 QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
+                NSLog(@"user response object %@", responseObject);
 
                 if (success) {
                     success(user);
@@ -564,6 +604,37 @@
     };
 
     [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+}
+
+- (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
+                       onSuccess:(void (^)())success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSString *base64str = [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
+
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"player" : @{@"avatar" : base64str}
+    };
+
+    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+}
+
+- (NSString *)encodeToBase64String:(UIImage *)image {
+    UIImage *newImage =[self imageWithImage:image scaledToSize:CGSizeMake(100,100)];
+    return [UIImageJPEGRepresentation(newImage, 1.0)
+        base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+}
+
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)PATHPlayerDataWithDict:(NSDictionary *)params
@@ -642,7 +713,8 @@
 }
 
 - (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
-                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                          onFailure:(void (^)(NSError *error,
+                                              NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
     [self.requestOperationManager GET:@"friendships/requests"
@@ -919,32 +991,32 @@
             //            @"drumih.QZBQuizBattle.twiceBooster",
             //            @"drumih.QZBQuizBattle.tripleBooster",
 
-            NSArray *response = @[
-                @{
-                    @"identifier" : @"drumih.iQuiz.specialMath",
-                    @"topic_id" : @10,
-                    @"purchased" : @0
-                },
-                @{
-                    @"identifier" : @"drumih.iQuiz.specialBiology",
-                    @"topic_id" : @1,
-                    @"purchased" : @0
-                },
-
-                @{
-                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
-                    @"topic_id" : @0,
-                    @"purchased" : @0
-                },
-                @{
-                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
-                    @"topic_id" : @0,
-                    @"purchased" : @1
-                }
-            ];
+//            NSArray *response = @[
+//                @{
+//                    @"identifier" : @"drumih.iQuiz.specialMath",
+//                    @"topic_id" : @10,
+//                    @"purchased" : @0
+//                },
+//                @{
+//                    @"identifier" : @"drumih.iQuiz.specialBiology",
+//                    @"topic_id" : @1,
+//                    @"purchased" : @0
+//                },
+//
+//                @{
+//                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
+//                    @"topic_id" : @0,
+//                    @"purchased" : @0
+//                },
+//                @{
+//                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
+//                    @"topic_id" : @0,
+//                    @"purchased" : @1
+//                }
+//            ];
 
             NSMutableArray *purchases = [NSMutableArray array];
-            for (NSDictionary *dict in response) {
+            for (NSDictionary *dict in responseObject) {
                 QZBProduct *product = [[QZBProduct alloc] initWhithDictionary:dict];
                 [purchases addObject:product];
             }
@@ -1034,42 +1106,39 @@
 
 #pragma mark - achievements
 
--(void)GETachievementsForUserID:(NSNumber *)userID
-                      onSuccess:(void (^)(NSArray *achievements))success
-                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    
+- (void)GETachievementsForUserID:(NSNumber *)userID
+                       onSuccess:(void (^)(NSArray *achievements))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *urlString = [NSString stringWithFormat:@"achievements"];
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
+
     [self.requestOperationManager GET:@"achievements"
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  
-                                  NSLog(@"achievements %@", responseObject);
-                                  
-                                  NSMutableArray *tmpArr = [NSMutableArray array];
-                                  
-                                  for(NSDictionary *dict in responseObject){
-                                      QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
-                                      [tmpArr addObject:achiev];
-                                  }
-                                  
-                                  
-                                  NSArray *achievements = [NSArray arrayWithArray:tmpArr];
-                                  if(success){
-                                      success(achievements);
-                                  }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"achievments error %@",error);
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@"achievements %@", responseObject);
+
+            NSMutableArray *tmpArr = [NSMutableArray array];
+
+            for (NSDictionary *dict in responseObject) {
+                QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
+                [tmpArr addObject:achiev];
+            }
+
+            NSArray *achievements = [NSArray arrayWithArray:tmpArr];
+            if (success) {
+                success(achievements);
+            }
+
         }
-        
-    }];
-    
-    
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"achievments error %@", error);
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+
+        }];
 }
 
 @end

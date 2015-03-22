@@ -67,7 +67,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.somethingArray count];
+    if(self.buttonTitle){
+        return [self.somethingArray count]+1;
+    } else{
+        return [self.somethingArray count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -76,7 +80,7 @@
 
     UITableViewCell *cell;
 
-    if (indexPath.row < [self.somethingArray count] - 1) {
+    if (indexPath.row <= [self.somethingArray count] - 1) {
         QZBSomethingInHorizontalTabelViewCell *playerCell = [tableView dequeueReusableCellWithIdentifier:identifier];
         [self setCell:playerCell withObject:self.somethingArray[indexPath.row]];
         cell = playerCell;

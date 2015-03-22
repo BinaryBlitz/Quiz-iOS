@@ -64,13 +64,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    // self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-
+    
     self.navigationItem.hidesBackButton = NO;
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
 
-    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
     [self.navigationController.navigationBar
         setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
@@ -80,8 +77,6 @@
         setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.translucent = NO;
 
-   
-    
     // self.navigationController.navigationBar.topItem.title = @"";
 }
 
@@ -92,10 +87,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
         QZBProgressViewController *navigationController = segue.destinationViewController;
-     //   navigationController.topic = self.choosedTopic;
-        
+        //   navigationController.topic = self.choosedTopic;
+
         [navigationController initSessionWithTopic:self.choosedTopic user:self.user];
-        
+
     } else if ([segue.identifier isEqualToString:@"showRate"]) {
         QZBRatingMainVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithTopic:self.choosedTopic];
@@ -123,15 +118,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *identifier = @"topicCell";
     static NSString *challengeIdentifier = @"topicChallengeCell";
-    
 
     QZBTopicTableViewCell *cell = nil;
-    if(self.user){
+    if (self.user) {
         cell = [tableView dequeueReusableCellWithIdentifier:challengeIdentifier];
-    }else{
+    } else {
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     }
 
@@ -141,16 +134,21 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
+
+    UILabel *centralLabel = [[UILabel alloc]
+        initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cell.topicProgressView.frame) / 2.0,
+                                 CGRectGetWidth(cell.topicProgressView.frame) / 2.0)];
     
-    UILabel *centralLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                     0,
-                                                                     CGRectGetWidth(cell.topicProgressView.frame)/2.0,
-                                                                     CGRectGetWidth(cell.topicProgressView.frame)/2.0)];
-    centralLabel.text = [NSString stringWithFormat:@"%@",@(1)];
+    NSInteger level = [topic.points integerValue]/100;
+    float progress = ([topic.points integerValue]%100)/100.0;
+    
+   // NSLog(@"")
+    
+    centralLabel.text = [NSString stringWithFormat:@"%ld", level];
     centralLabel.textAlignment = NSTextAlignmentCenter;
 
     cell.topicName.text = topic.name;
-    cell.topicProgressView.progress = 0.5;
+    cell.topicProgressView.progress = progress;
     cell.topicProgressView.centralView = centralLabel;
 
     return cell;
@@ -159,7 +157,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
     if (!self.user) {
         if ([self.choosedIndexPath isEqual:indexPath]) {
             self.choosedIndexPath = nil;
@@ -173,10 +170,7 @@
     } else {
         self.choosedTopic = self.topics[indexPath.row];
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
-        
     }
-
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -240,7 +234,7 @@
 - (void)initTopicsWithCategory:(QZBCategory *)category {
     self.category = category;
 
-    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];  // redo for
+ //   [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];  // redo for
                                                                                    // colors
     //    self.topicTableView.backgroundColor = [UIColor redColor];
 

@@ -62,6 +62,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:nil
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(showAnother:)];
+    self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"nextIcon"];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    
+   
 
     if (self.topic) {
         
@@ -70,7 +80,12 @@
         if(self.fromTopics){
             title = self.topic.name;
             self.chooseTopicButton.enabled = NO;
+            
+             self.navigationItem.rightBarButtonItem = nil;
         }else{
+            
+           // self.navigationItem.rightBarButtonItem = nil;
+
             title = [NSString stringWithFormat:@"%@",self.topic.name];
         }
         
@@ -180,6 +195,12 @@
 
         [vc initPlayerPageWithUser:self.user];
     }
+}
+
+#pragma mark - actions
+
+-(void)showAnother:(id)sender{
+    [self performSegueWithIdentifier:@"showCategories" sender:nil];
 }
 
 #pragma mark - page choose
