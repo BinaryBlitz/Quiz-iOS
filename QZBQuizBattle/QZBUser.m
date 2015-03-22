@@ -7,6 +7,8 @@
 //
 
 #import "QZBUser.h"
+#import "QZBServerManager.h"
+#import "QZBAnotherUser.h"
 
 @interface QZBUser ()
 
@@ -17,6 +19,7 @@
 @property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
+@property(strong, nonatomic) NSURL *imageURL;
 //@property(strong, nonatomic) NSString *pushToken;
 
 @end
@@ -39,6 +42,14 @@
         
         self.isFriend = NO;
         
+        NSString *urlAppend = dict[@"avatar_url"];
+        if(![urlAppend isEqual:[NSNull null]]){
+            NSString *urlString = [QZBServerBaseUrl stringByAppendingString:urlAppend];
+            self.imageURL = [NSURL URLWithString:urlString];
+        }else{
+            self.imageURL = nil;
+        }
+        
     }
     return self;
 }
@@ -51,12 +62,9 @@
         self.api_key = [coder decodeObjectForKey:@"userApiKey"];
         self.userID = [coder decodeObjectForKey:@"user_id"];
         self.isFriend = NO;
-//        NSString *pushToken = [coder decodeObjectForKey:@"pushToken"];
-//        
-//        if(pushToken){
-//            self.pushToken = pushToken;
-//        }
         
+        self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
+ 
         NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
         NSLog(@"path %@", imagePath);
         if (imagePath) {
@@ -73,6 +81,11 @@
     [coder encodeObject:self.email forKey:@"userEmail"];
     [coder encodeObject:self.api_key forKey:@"userApiKey"];
     [coder encodeObject:self.userID forKey:@"user_id"];
+    
+    if(self.imageURL){
+    
+        [coder encodeObject:self.imageURL forKey:@"user_image_url"];
+    }
     
 //    if(self.pushToken){
 //        [coder encodeObject:self.pushToken forKey:@"pushToken"];
@@ -132,6 +145,37 @@
     //todo load to server
 }
 
+
+-(void)updateUserFromServer{
+    if(self.userID){
+    [[QZBServerManager sharedManager] GETPlayerWithID:self.userID onSuccess:^(QZBAnotherUser *anotherUser) {
+        
+        BOOL changed = NO;
+        if(![self.imageURL isEqual: anotherUser.imageURL]){
+            self.imageURL = anotherUser.imageURL;
+            
+            changed = YES;
+            
+        }
+        
+        if(![self.name isEqual:anotherUser.name]){
+            self.name = anotherUser.name;
+            changed = YES;
+        }
+        
+        if(changed){
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
+        }
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    }
+    
+    
+}
 
     
 

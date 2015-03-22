@@ -103,9 +103,12 @@
     
     [cell setCellWithUser:user];
     
-    NSURL *url = [NSURL URLWithString:self.urlString];
-    
-    [cell.userpic setImageWithURL:url];
+   // NSURL *url = [NSURL URLWithString:self.urlString];
+    if(user.imageURL){
+    [cell.userpic setImageWithURL:user.imageURL];
+    }else{
+        [cell.userpic setImage:[UIImage imageNamed:@"icon_register"]];//redo
+    }
     
     
 }

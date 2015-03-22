@@ -29,6 +29,9 @@
 @property (copy, nonatomic) NSString *firstUserName;
 @property (copy, nonatomic) NSString *opponentUserName;
 
+@property (strong, nonatomic) NSURL *firstImageURL;
+@property (strong, nonatomic) NSURL *opponentImageURL;
+
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSTimer *questionTimer;
 @property (assign, nonatomic) NSUInteger currentTime;
@@ -58,7 +61,7 @@
     if (self) {
         NSLog(@"init");
         _sessionTime = 100;
-}
+    }
     return self;
 }
 
@@ -86,6 +89,9 @@
     self.isGoing = YES;
     _gameSession = session;
     self.currentQuestion = [session.questions firstObject];
+
+    self.firstImageURL = session.firstUser.user.imageURL;
+    self.opponentImageURL = session.opponentUser.user.imageURL;
 
     // TODO timer invalidate
 
@@ -125,15 +131,14 @@
     }
 }
 
--(void)removeBotOrOnlineWorker{
+- (void)removeBotOrOnlineWorker {
     self.bot = nil;
-    
+
     if (self.onlineSessionWorker) {
         [self.onlineSessionWorker closeConnection];
     }
     self.onlineSessionWorker = nil;
     self.isOfflineChallenge = YES;
-    
 }
 
 - (void)timeCountingStart {
@@ -232,13 +237,12 @@
     [self someAnswerCurrentQuestinUser:self.gameSession.firstUser AnswerNumber:answerNum time:time];
 
     self.firstUserScore = self.gameSession.firstUser.currentScore;
-    
 
     self.firstUserLastAnswer = [self.gameSession.firstUser.userAnswers lastObject];
 
     [self checkNeedUnshow];
-    
-    if(!self.bot && !self.onlineSessionWorker){//если пользователь играет оффлайн сам с собой
+
+    if (!self.bot && !self.onlineSessionWorker) {  //если пользователь играет оффлайн сам с собой
         [self opponentUserAnswerCurrentQuestinWithAnswerNumber:0];
     }
 }
@@ -283,7 +287,6 @@
         [self postNotificationNeedUnshow];
     }
 }
-
 
 // answering question after end question
 
@@ -351,6 +354,19 @@
         default:
             resultOfGame = @"Проблемы";  //исправить
             break;
+    }
+
+    NSNumber *sessionID = [NSNumber numberWithInteger:self.gameSession.session_id];
+
+    if (!self.isOfflineChallenge) {
+        [[QZBServerManager sharedManager] PATCHCloseSessionID:sessionID
+            onSuccess:^{
+                //закрывает сессию
+                NSLog(@"CLOSED PERFECTLY!!! %@", sessionID);
+            }
+            onFailure:^(NSError *error, NSInteger statusCode){
+
+            }];
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedFinishSession"

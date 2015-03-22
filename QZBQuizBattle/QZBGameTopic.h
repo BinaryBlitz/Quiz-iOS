@@ -2,7 +2,7 @@
 //  QZBGameTopic.h
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 21/01/15.
+//  Created by Andrey Mikhaylov on 22/03/15.
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
@@ -13,8 +13,9 @@
 
 @interface QZBGameTopic : NSManagedObject
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSNumber *topic_id;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * topic_id;
+@property (nonatomic, retain) NSNumber * points;
 @property (nonatomic, retain) QZBCategory *relationToCategory;
 
 @end

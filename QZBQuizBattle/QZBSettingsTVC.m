@@ -19,6 +19,8 @@
 #import "QZBPasswordTextField.h"
 #import "QZBUserNameTextField.h"
 #import <TSMessages/TSMessage.h>
+#import "UIImageView+AFNetworking.h"
+
 
 @interface QZBSettingsTVC () <UIActionSheetDelegate,
                               DBCameraViewControllerDelegate,
@@ -33,7 +35,8 @@
     
     [TSMessage setDefaultViewController:self.navigationController];
 
-    self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
+   // self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
+    [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
     NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
 
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
@@ -240,8 +243,25 @@
     didFinishWithImage:(UIImage *)image
           withMetadata:(NSDictionary *)metadata {
     NSLog(@"delegate work %@", image);
-    self.userPicImageView.image = image;
-    [[QZBCurrentUser sharedInstance].user setUserPic:image];
+    
+    
+    [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
+        NSLog(@"all good");
+        
+        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
+        self.userPicImageView.image = image;
+        
+        
+        [[QZBCurrentUser sharedInstance].user updateUserFromServer];
+        
+        
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"not good");
+    }];
+    
+   // self.userPicImageView.image = image;
+    //[[QZBCurrentUser sharedInstance].user setUserPic:image];
 
     [cameraViewController restoreFullScreenMode];
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];

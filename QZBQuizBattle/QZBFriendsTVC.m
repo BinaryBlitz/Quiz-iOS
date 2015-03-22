@@ -14,6 +14,7 @@
 #import "QZBFriendsRequestsTVC.h"
 #import <JSBadgeView/JSBadgeView.h>
 
+
 @interface QZBFriendsTVC ()
 
 @property (strong, nonatomic) NSArray *friends;          // QZBAnotherUser

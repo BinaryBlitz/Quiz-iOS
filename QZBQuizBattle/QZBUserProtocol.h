@@ -18,6 +18,8 @@
 
 -(NSNumber *)userID;
 
+-(NSURL *)imageURL;
+
 @optional
 
 -(BOOL)isFriend;

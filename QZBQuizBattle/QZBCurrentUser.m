@@ -128,6 +128,8 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"]) {
         NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
         self.user = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        [self.user updateUserFromServer];
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"APNStoken"]) {
             self.pushToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"APNStoken"];

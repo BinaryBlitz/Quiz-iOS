@@ -54,12 +54,16 @@
 }
 
 -(void)addCircleLeft{
-    CGRect rect = CGRectMake(CGRectGetWidth(self.frame)/11,
-                             CGRectGetHeight(self.frame)/3,
-                             CGRectGetHeight(self.frame)/3,
-                             CGRectGetHeight(self.frame)/3);
+    CGFloat diametr =  CGRectGetHeight(self.frame)/5;
     
-    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:rect];
+//    CGRect rect = CGRectMake(CGRectGetWidth(self.frame)/11,
+//                             CGRectGetHeight(self.frame)/3,
+//                             CGRectGetHeight(self.frame)/3,
+//                             CGRectGetHeight(self.frame)/3);
+    
+    CGRect r = CGRectMake(-diametr/2,  2*diametr, diametr, diametr);
+    
+    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:r];
     
     circle.backgroundColor = [UIColor clearColor];
     
@@ -69,14 +73,18 @@
 }
 
 -(void)addCircleRight{
-    CGRect rect = CGRectMake(CGRectGetWidth(self.frame) -
-                             CGRectGetWidth(self.frame)/11 -
-                             CGRectGetHeight(self.frame)/3,
-                             CGRectGetHeight(self.frame)/3,
-                             CGRectGetHeight(self.frame)/3,
-                             CGRectGetHeight(self.frame)/3);
+//    CGRect rect = CGRectMake(CGRectGetWidth(self.frame) -
+//                             CGRectGetWidth(self.frame)/11 -
+//                             CGRectGetHeight(self.frame)/3,
+//                             CGRectGetHeight(self.frame)/3,
+//                             CGRectGetHeight(self.frame)/3,
+//                             CGRectGetHeight(self.frame)/3);
     
-    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:rect];
+    CGFloat diametr =  CGRectGetHeight(self.frame)/5;
+    
+    CGRect r = CGRectMake(CGRectGetWidth(self.frame)-diametr/2, 2*diametr, diametr, diametr);
+    
+    QZBAnswerCircle *circle = [[QZBAnswerCircle alloc] initWithFrame:r];
     
     circle.backgroundColor = [UIColor clearColor];
     

@@ -8,7 +8,7 @@
 
 #import "QZBFriendCell.h"
 #import "QZBAnotherUser.h"
-
+#import "UIImageView+AFNetworking.h"
 @interface QZBFriendCell ()
 
 @property(strong, nonatomic) QZBAnotherUser *user;
@@ -30,6 +30,12 @@
     
     
     self.nameLabel.text = user.name;
+    
+    if(user.imageURL){
+        [self.userpicImageView setImageWithURL:user.imageURL];
+    }else{
+        [self.userpicImageView setImage:[UIImage imageNamed:@"icon_register"]];//redo
+    }
     
     
     //self.numberInRating.text = [NSString stringWithFormat:@"%ld", (long)user.position];

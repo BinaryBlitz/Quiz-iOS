@@ -15,6 +15,8 @@
 
 @property(copy, nonatomic)NSString *buttonTitle;
 
+
+
 -(void)setSomethingArray:(NSArray *)somethingArray;
 
 @end

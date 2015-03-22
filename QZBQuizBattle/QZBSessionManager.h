@@ -29,6 +29,9 @@
 @property (copy, nonatomic, readonly) NSString *firstUserName;
 @property (copy, nonatomic, readonly) NSString *opponentUserName;
 
+@property (strong, nonatomic, readonly) NSURL *firstImageURL;
+@property (strong, nonatomic, readonly) NSURL *opponentImageURL;
+
 @property (assign, nonatomic, readonly) NSUInteger roundNumber;
 @property (assign, nonatomic, readonly) BOOL isDoubled;
 @property (assign, nonatomic, readonly) NSUInteger sessionTime;

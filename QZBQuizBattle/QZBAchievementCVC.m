@@ -78,9 +78,16 @@ navigation
 
     QZBAchievement *achiv = self.achivArray[indexPath.row];
 
-    [cell.achievementPic setImage:[UIImage imageNamed:@"notAchiv"]];
+    UIImage *image = nil;
+    if(achiv.isAchieved){
+        image = [UIImage imageNamed:@"achiv"];
+    }else{
+        image = [UIImage imageNamed:@"notAchiv"];
+    }
+    
+    [cell.achievementPic setImage:image];
     cell.achievementTitle.text = achiv.name;
-    ;
+    
 
     // Configure the cell
 

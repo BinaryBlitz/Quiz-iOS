@@ -19,11 +19,12 @@
    // CGRect borderRect = CGRectMake(0.0, 0.0, 60.0, 60.0);
     CGRect borderRect = CGRectInset(rect, 2, 2);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 1.0);
-    CGContextSetRGBFillColor(context, 0.0 , 0.0, 0.0, 0.0);
-    CGContextSetLineWidth(context, 2.0);
+    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextSetRGBFillColor(context, 1.0 , 1.0, 1.0, 1.0);
+    CGContextSetLineWidth(context, 1.0);
     CGContextFillEllipseInRect (context, borderRect);
     CGContextStrokeEllipseInRect(context, borderRect);
+    
     CGContextFillPath(context);
 }
 
