@@ -19,12 +19,17 @@
 
 @property (assign, nonatomic) BOOL isGoing;
 @property (assign, nonatomic) BOOL isOfflineChallenge;
+@property (assign, nonatomic) BOOL isFinished;
 //если пользователель нажал играть оффлайн когда бросил вызов
+
+@property(strong, nonatomic) NSString *sessionResult;
 
 @property (strong, nonatomic) QZBSession *gameSession;
 @property (strong, nonatomic) QZBQuestion *currentQuestion;
 @property (assign, nonatomic) NSUInteger roundNumber;
 @property (assign, nonatomic) BOOL isDoubled;
+
+@property(assign, nonatomic) NSInteger userBeginingScore;
 
 @property (copy, nonatomic) NSString *firstUserName;
 @property (copy, nonatomic) NSString *opponentUserName;
@@ -86,8 +91,13 @@
         return;
     }
 
+    
+    self.isFinished = NO;
     self.isGoing = YES;
     _gameSession = session;
+    
+    self.userBeginingScore = session.userBeginingScore;
+    
     self.currentQuestion = [session.questions firstObject];
 
     self.firstImageURL = session.firstUser.user.imageURL;
@@ -106,6 +116,8 @@
     self.roundNumber = 1;
     self.isDoubled = NO;
     self.askedQuestions = [NSMutableArray array];
+    
+    self.sessionResult = nil;
 
     self.sessionSetted = YES;
 
@@ -355,27 +367,39 @@
             resultOfGame = @"Проблемы";  //исправить
             break;
     }
+    
+    
 
-    NSNumber *sessionID = [NSNumber numberWithInteger:self.gameSession.session_id];
-
-    if (!self.isOfflineChallenge) {
-        [[QZBServerManager sharedManager] PATCHCloseSessionID:sessionID
-            onSuccess:^{
-                //закрывает сессию
-                NSLog(@"CLOSED PERFECTLY!!! %@", sessionID);
-            }
-            onFailure:^(NSError *error, NSInteger statusCode){
-
-            }];
-    }
-
+    self.sessionResult = resultOfGame;
+    self.isFinished = YES;
+    
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedFinishSession"
                                                         object:resultOfGame];
 }
 
 - (void)closeSession {
+    
+    NSNumber *sessionID = [NSNumber numberWithInteger:self.gameSession.session_id];
+    
+    if (!self.isOfflineChallenge && self.isFinished) {
+        [[QZBServerManager sharedManager] PATCHCloseSessionID:sessionID
+                                                    onSuccess:^{
+                                                        //закрывает сессию
+                                                        NSLog(@"CLOSED PERFECTLY!!! %@", sessionID);
+                                                    }
+                                                    onFailure:^(NSError *error, NSInteger statusCode){
+                                                        
+                                                    }];
+    }
+    
+    
+    self.isFinished = NO;
+    self.isOfflineChallenge = NO;
+    
     [self.questionTimer invalidate];
     self.questionTimer = nil;
+    self.sessionResult = nil;
 
     self.isGoing = NO;
     self.gameSession = nil;
@@ -385,7 +409,8 @@
         [self.onlineSessionWorker closeConnection];
     }
     self.onlineSessionWorker = nil;
-
+    
+  
     self.sessionSetted = NO;
 }
 

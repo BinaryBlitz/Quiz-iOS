@@ -10,5 +10,6 @@
 #import "QZBTopicChooserControllerViewController.h"
 
 @interface QZBMainGameScreenTVC : QZBTopicChooserControllerViewController
+@property (strong, nonatomic) IBOutlet UITableView *mainTableView;
 
 @end

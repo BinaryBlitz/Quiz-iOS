@@ -24,4 +24,23 @@
     // Configure the view for the selected state
 }
 
+
+-(void)initCircularProgressWithLevel:(NSInteger)level progress:(float)progress{
+    
+    
+    UILabel *centralLabel = [[UILabel alloc]
+                             initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.topicProgressView.frame) / 2.0,
+                                                      CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
+    
+    
+    // NSLog(@"")
+    
+    centralLabel.text = [NSString stringWithFormat:@"%ld", level];
+    centralLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.topicProgressView.progress = progress;
+    self.topicProgressView.centralView = centralLabel;
+
+}
+
 @end

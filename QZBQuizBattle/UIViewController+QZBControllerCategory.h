@@ -14,5 +14,12 @@
 
 -(void)initStatusbarWithColor:(UIColor *)color;
 -(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict;
+-(void)calculateLevel:(NSInteger *)level
+        levelProgress:(float *)levelProgress
+            fromScore:(NSInteger)score;
+-(UILabel *)labelForNum:(NSInteger) num
+                 inView:(UIView *)view;
+
+- (UITableViewCell *)parentCellForView:(id)theView;
 
 @end

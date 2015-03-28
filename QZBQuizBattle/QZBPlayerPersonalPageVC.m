@@ -23,13 +23,17 @@
 #import "QZBCategoryChooserVC.h"
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 #import "UIColor+QZBProjectColors.h"
+#import "QZBVSScoreCell.h"
+#import "QZBStatiscticCell.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
 //#import <DBCamera/DBCameraLibraryViewController.h>
 //#import <DBCamera/DBCameraSegueViewController.h>
 
-@interface QZBPlayerPersonalPageVC () <UITableViewDataSource, UITableViewDelegate,UIActionSheetDelegate>
+@interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
+                                       UITableViewDelegate,
+                                       UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
@@ -89,6 +93,7 @@
     if (!self.user ||
         [self.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
         self.user = [QZBCurrentUser sharedInstance].user;
+        [self updateCurentUser:self.user];
         self.isCurrent = YES;
 
     } else {
@@ -119,39 +124,55 @@
     if ([user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID] || !user) {
         self.user = [QZBCurrentUser sharedInstance].user;
         self.isCurrent = YES;
+        [self updateCurentUser:user];
 
     } else {
         self.user = user;
         self.isCurrent = NO;
-        
+
         self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];
-      //  self.navigationItem.rightBarButtonItem.
-      //  self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                          target:self
+                                                          action:@selector(showActionSheet)];
+
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
-        
-        [[QZBServerManager sharedManager] GETPlayerWithID:user.userID
-            onSuccess:^(QZBAnotherUser *anotherUser) {
-
-                if ([user isKindOfClass:[QZBAnotherUser class]]) {
-                    QZBAnotherUser *currentUser = (QZBAnotherUser *)user;
-
-                    currentUser.isFriend = anotherUser.isFriend;
-                }
-
-                // self.user.isFriend = anotherUser.isFriend;
-                NSLog(@" %d", user.isFriend);
-                [self.tableView reloadData];
-
-            }
-            onFailure:^(NSError *error, NSInteger statusCode){
-
-            }];
     }
+
+    [self updateCurentUser:user];
 
     [self initFriendsWithUser:self.user];
 
     NSLog(@"user init %@", user);
+}
+
+- (void)updateCurentUser:(id<QZBUserProtocol>)user {
+    [[QZBServerManager sharedManager] GETPlayerWithID:user.userID
+        onSuccess:^(QZBAnotherUser *anotherUser) {
+
+            if ([user isKindOfClass:[QZBAnotherUser class]]) {
+                QZBAnotherUser *currentUser = (QZBAnotherUser *)user;
+                currentUser.userStatistics = anotherUser.userStatistics;
+                
+                self.user = currentUser;
+
+                if (!self.isCurrent) {
+                    currentUser.isFriend = anotherUser.isFriend;
+                }
+
+            } else if ([user isKindOfClass:[QZBUser class]]) {
+                QZBUser *u = (QZBUser *)user;
+
+                u.userStatistics = anotherUser.userStatistics;
+            }
+
+            // self.user.isFriend = anotherUser.isFriend;
+            NSLog(@" %d", user.isFriend);
+            [self.tableView reloadData];
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -180,7 +201,14 @@
     static NSString *mostLovedTopicIdentifier = @"mostLovedTopics";
     static NSString *topicCellIdentifier = @"topicCell";
     static NSString *challengeCell = @"challengeCell";
+    static NSString *vsScoreCellIndentifier = @"vsScoreCell";
+    static NSString *totalStatisticsIdentifier = @"totalStatistics";
 
+    NSInteger incrementForCurrent = 0;
+
+    if (self.isCurrent) {
+        incrementForCurrent = 1;
+    }
 
     UITableViewCell *cell;
 
@@ -201,9 +229,8 @@
             [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
 
         [achivCell setAchivArray:self.achivArray];
-        
-        if(self.isCurrent){
-        
+
+        if (self.isCurrent) {
             achivCell.buttonTitle = @"Показать\n все";
         }
         return achivCell;
@@ -217,10 +244,30 @@
         }
 
     } else if (indexPath.row == 4) {
+        QZBStatiscticCell *userStatisticCell =
+            [tableView dequeueReusableCellWithIdentifier:totalStatisticsIdentifier];
+
+        [userStatisticCell setCellWithUser:self.user];
+
+        return userStatisticCell;
+
+    } else if (indexPath.row == 5) {
+        if (!self.isCurrent) {
+            QZBVSScoreCell *vsCell =
+                [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
+            [vsCell setCellWithUser:self.user];
+            return vsCell;
+        } //else {
+//            cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
+//
+//            return cell;
+//        }
+    } if (indexPath.row == 6 - incrementForCurrent) {
         cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
 
         return cell;
-    } else if (indexPath.row > 4) {
+
+    } else if (indexPath.row > 6 - incrementForCurrent) {
         QZBTopicTableViewCell *topicCell =
             [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
         topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
@@ -246,9 +293,16 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < 3) {
+    
+    NSInteger incrementForCurrent = 0;
+    
+    if (self.isCurrent) {
+        incrementForCurrent = 1;
+    }
+    
+    if (indexPath.row < 3 || indexPath.row == 4 || indexPath.row == 5) {
         return 127.0f;
-    } else if (indexPath.row == 3 || indexPath.row == 4) {
+    } else if (indexPath.row == 3) {
         return 47.0f;
     } else {
         return 61.0f;
@@ -281,13 +335,13 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"%ld", buttonIndex);
-    
-    if (buttonIndex == 0) {
-        //Make user response
-    }
-    
-   }
 
+    if (buttonIndex == 0) {
+        // Make user response
+
+        // TODO
+    }
+}
 
 #pragma mark - Navigation
 
@@ -360,17 +414,16 @@
         }
     }
 }
-         
-         
--(void)showActionSheet{
-             UIActionSheet *actSheet =
-             [[UIActionSheet alloc] initWithTitle:@"Пожаловаться на пользователя"
-                                         delegate:self
-                                cancelButtonTitle:@"Отменить"
-                           destructiveButtonTitle:nil
-                                otherButtonTitles:@"Пожаловаться", nil];
-             
-             [actSheet showInView:self.view];
+
+- (void)showActionSheet {
+    UIActionSheet *actSheet = [[UIActionSheet alloc]
+                 initWithTitle:@"Пожаловаться на пользователя"
+                      delegate:self
+             cancelButtonTitle:@"Отменить"
+        destructiveButtonTitle:nil
+             otherButtonTitles:@"Пожаловаться", nil];
+
+    [actSheet showInView:self.view];
 }
 
 #pragma mark - init friends and achivs
@@ -422,9 +475,8 @@
 
     [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
-    
     [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
-    
+
     // cell = playerCell;
 }
 
@@ -448,7 +500,7 @@
             [self.tableView reloadData];
 
             UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+            UITabBarItem *tabbarItem = tabController.tabBar.items[2];
 
             if ([self badgeNumber] > 0) {
                 tabbarItem.badgeValue =
@@ -472,7 +524,7 @@
             [self.tableView reloadData];
 
             UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+            UITabBarItem *tabbarItem = tabController.tabBar.items[2];
 
             if ([self badgeNumber] > 0) {
                 tabbarItem.badgeValue =
@@ -501,28 +553,24 @@
 
 #pragma mark - achievment
 
--(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict{
-    
-   // QZBAchievement *achievment = self.achivArray[indexPath.row];
-    
+- (void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict {
+    // QZBAchievement *achievment = self.achivArray[indexPath.row];
+
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
-    
-    NSString *descr =  @"Поздравляем!\n Вы получили новое достижение!";
+
+    NSString *descr = @"Поздравляем!\n Вы получили новое " @"достижени"
+                                                                                     @"е" @"!";
     NSString *name = dict[@"name"];
-    
-    
+
     [alert showCustom:self
-                image:[UIImage imageNamed:@"achiv"]
-                color:[UIColor lightBlueColor]
-                title:name
-             subTitle:descr
-     closeButtonTitle:@"ОК"
-             duration:0.0f];
-    
-    
-    
+                   image:[UIImage imageNamed:@"achiv"]
+                   color:[UIColor lightBlueColor]
+                   title:name
+                subTitle:descr
+        closeButtonTitle:@"ОК"
+                duration:0.0f];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

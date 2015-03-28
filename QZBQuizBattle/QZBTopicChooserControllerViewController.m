@@ -16,11 +16,12 @@
 #import "QZBRatingMainVC.h"
 #import "QZBFriendsChallengeTVC.h"
 #import "QZBCurrentUser.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
-@property (strong, nonatomic) QZBGameTopic *choosedTopic;
+//@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (strong, nonatomic) NSIndexPath *choosedIndexPath;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 
@@ -36,10 +37,6 @@
     self.topicTableView.delegate = self;
     self.topicTableView.dataSource = self;
 
-    //    [self.navigationController.navigationBar  setTintColor:[UIColor whiteColor]];
-    //    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage
-    //    imageNamed:@"backWhiteIcon"]];
-
     UIBarButtonItem *backButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@""
                                          style:UIBarButtonItemStylePlain
@@ -51,10 +48,6 @@
         setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
     [self.navigationController.navigationBar
         setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-
-    // self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    //
-    // [UINavigationBar appearance] setTitleTextAttributes:@{}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,22 +127,15 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
-
-    UILabel *centralLabel = [[UILabel alloc]
-        initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cell.topicProgressView.frame) / 2.0,
-                                 CGRectGetWidth(cell.topicProgressView.frame) / 2.0)];
     
-    NSInteger level = [topic.points integerValue]/100;
-    float progress = ([topic.points integerValue]%100)/100.0;
+    NSInteger level = 0;
+    float progress = 0.0;
     
-   // NSLog(@"")
+    [self calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
     
-    centralLabel.text = [NSString stringWithFormat:@"%ld", level];
-    centralLabel.textAlignment = NSTextAlignmentCenter;
-
+    [cell initCircularProgressWithLevel:level progress:progress];
+    
     cell.topicName.text = topic.name;
-    cell.topicProgressView.progress = progress;
-    cell.topicProgressView.centralView = centralLabel;
 
     return cell;
 }
@@ -181,17 +167,17 @@
 }
 
 #pragma actions
-- (UITableViewCell *)parentCellForView:(id)theView {
-    id viewSuperView = [theView superview];
-    while (viewSuperView != nil) {
-        if ([viewSuperView isKindOfClass:[UITableViewCell class]]) {
-            return (UITableViewCell *)viewSuperView;
-        } else {
-            viewSuperView = [viewSuperView superview];
-        }
-    }
-    return nil;
-}
+//- (UITableViewCell *)parentCellForView:(id)theView {
+//    id viewSuperView = [theView superview];
+//    while (viewSuperView != nil) {
+//        if ([viewSuperView isKindOfClass:[UITableViewCell class]]) {
+//            return (UITableViewCell *)viewSuperView;
+//        } else {
+//            viewSuperView = [viewSuperView superview];
+//        }
+//    }
+//    return nil;
+//}
 
 - (IBAction)playButtonAction:(UIButton *)sender {
     UITableViewCell *cell = [self parentCellForView:sender];

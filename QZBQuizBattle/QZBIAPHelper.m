@@ -98,7 +98,10 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-    NSLog(@"Failed to load list of products.");
+    
+    
+    
+    NSLog(@"Failed to load list of products. %@", error);
     _productsRequest = nil;
 
     _completionHandler(NO, nil);

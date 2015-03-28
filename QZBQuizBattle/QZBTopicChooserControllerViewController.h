@@ -10,14 +10,15 @@
 #import "QZBUserProtocol.h"
 
 @class QZBCategory;
-
+@class QZBGameTopic;
 
 @interface QZBTopicChooserControllerViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property(strong, nonatomic,readonly) QZBCategory *category;
 @property (strong, nonatomic, readonly) NSArray *topics;
+@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
-//@property (strong, nonatomic) QZBCategory *category;
+
 
 - (void)initTopicsWithCategory:(QZBCategory *)category;
 - (void)initWithChallengeUser:(id<QZBUserProtocol>)user category:(QZBCategory *)category;

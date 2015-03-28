@@ -14,6 +14,7 @@
 #import "QZBEmailTextField.h"
 #import "QZBPasswordTextField.h"
 #import "QZBRegistrationAndLoginTextFieldBase.h"
+#import <SVProgressHUD.h>
 
 @interface QZBLoginWithEmailVC () <UITextFieldDelegate>
 
@@ -28,7 +29,7 @@
 
     self.emailTextField.delegate = self;
     self.passwordTextField.delegate = self;
-    
+
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 
     self.loginInProgress = NO;
@@ -38,7 +39,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.emailTextField becomeFirstResponder];
-    
+
     NSLog(@"authr showed");
 }
 
@@ -50,7 +51,8 @@
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before
+navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -80,32 +82,41 @@
     if (!weakSelf.loginInProgress) {
         self.loginInProgress = YES;
 
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         [[QZBServerManager sharedManager] POSTLoginUserEmail:email
             password:password
             onSuccess:^(QZBUser *user) {
 
-              [[QZBCurrentUser sharedInstance] setUser:user];
+                [[QZBCurrentUser sharedInstance] setUser:user];
 
-              weakSelf.loginInProgress = NO;
+                weakSelf.loginInProgress = NO;
 
-              // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+                // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
 
-              [self dismissViewControllerAnimated:YES
-                                       completion:^{
+                [SVProgressHUD dismiss];
+                [self dismissViewControllerAnimated:YES
+                                         completion:^{
 
-                                       }];
+                                         }];
 
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
 
-              NSLog(@"login fail");
+                NSLog(@"login fail");
 
-              if (statusCode == 401) {
-                  [TSMessage showNotificationWithTitle:[self errorAsNSString:login_fail]
-                                                  type:TSMessageNotificationTypeError];
-              }
+                if (statusCode == 401) {
+                    [SVProgressHUD dismiss];
+                    [TSMessage showNotificationWithTitle:[self errorAsNSString:login_fail]
+                                                    type:TSMessageNotificationTypeError];
+                } else {
+                    [SVProgressHUD showInfoWithStatus:QZBNoInternetConnectionMessage];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)),
+                                   dispatch_get_main_queue(), ^{
+                                       [SVProgressHUD dismiss];
+                                   });
+                }
 
-              weakSelf.loginInProgress = NO;
+                weakSelf.loginInProgress = NO;
 
             }];
     }

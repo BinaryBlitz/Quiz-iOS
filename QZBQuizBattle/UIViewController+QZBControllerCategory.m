@@ -60,8 +60,38 @@
      closeButtonTitle:@"ОК"
              duration:0.0f];
     
+}
+
+-(void)calculateLevel:(NSInteger *)level levelProgress:(float *)levelProgress fromScore:(NSInteger)score{
+
+
+    *level = score/100;
+    *levelProgress = (score%100)/100.0;
     
+}
+
+-(UILabel *)labelForNum:(NSInteger) num inView:(UIView *)view{
     
+    UILabel *centralLabel = [[UILabel alloc]
+                             initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame) / 2.0,
+                                                      CGRectGetWidth(view.frame) / 2.0)];
+
+    centralLabel.text = [NSString stringWithFormat:@"%ld", num];
+    centralLabel.textAlignment = NSTextAlignmentCenter;
+    
+    return centralLabel;
+}
+
+- (UITableViewCell *)parentCellForView:(id)theView {
+    id viewSuperView = [theView superview];
+    while (viewSuperView != nil) {
+        if ([viewSuperView isKindOfClass:[UITableViewCell class]]) {
+            return (UITableViewCell *)viewSuperView;
+        } else {
+            viewSuperView = [viewSuperView superview];
+        }
+    }
+    return nil;
 }
 
 

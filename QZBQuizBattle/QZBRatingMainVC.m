@@ -12,6 +12,7 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
+#import <SVProgressHUD.h>
 
 @interface QZBRatingMainVC ()
 
@@ -73,6 +74,8 @@
     
    
 
+    
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if (self.topic) {
         
         NSString *title = nil;

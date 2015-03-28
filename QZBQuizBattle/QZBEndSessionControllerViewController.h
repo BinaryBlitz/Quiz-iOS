@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class UAProgressView;
+
 @interface QZBEndSessionControllerViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *firstUserScore;
 @property (weak, nonatomic) IBOutlet UILabel *opponentUserScore;
+
+@property (weak, nonatomic) IBOutlet UAProgressView *circularProgress;
 
 
 @end
