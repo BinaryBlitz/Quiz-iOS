@@ -11,6 +11,7 @@
 #import "QZBUserProtocol.h"
 
 UIKIT_EXTERN NSString *const QZBServerBaseUrl;
+UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 
 @class QZBSession;
 @class QZBLobby;
@@ -31,6 +32,9 @@ UIKIT_EXTERN NSString *const QZBServerBaseUrl;
 - (void)getTopicsWithCategory:(QZBCategory *)category
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+-(void)GETTopicsForMainOnSuccess:(void (^)(NSArray *fave, NSArray *friendsFave, NSArray *featured))success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - game
 

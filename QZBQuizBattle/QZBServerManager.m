@@ -26,8 +26,11 @@
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
 #import "QZBAchievement.h"
+#import <SVProgressHUD.h>
+#import "AppDelegate.h"
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
+NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соединение";
 
 @interface QZBServerManager ()
 
@@ -52,7 +55,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 - (id)init {
     self = [super init];
     if (self) {
-        NSString *apiPath = QZBServerBaseUrl;
+        NSString *apiPath = [NSString stringWithFormat:@"http://quizapp.binaryblitz.ru/%@", @"api"];
         self.baseURL = apiPath;
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
@@ -140,7 +143,6 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
             existingEntity = [QZBCategory MR_createEntity];
             existingEntity.category_id = category_id;
             existingEntity.name = name;
-            
         }
         [objectsArray addObject:existingEntity];
     }
@@ -159,7 +161,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
-       [QZBGameTopic MR_truncateAll];  // comment on release version
+    //[QZBGameTopic MR_truncateAll];  // comment on release version
 
     NSArray *topics = [topicsInRequest objectForKey:@"topics"];
 
@@ -180,7 +182,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 
             [category addRelationToTopicObject:existingEntity];
         }
-        
+
         existingEntity.points = points;
         [objectsArray addObject:existingEntity];
     }
@@ -195,6 +197,76 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
             [topic MR_deleteEntity];
         }
     }
+}
+
+- (void)GETTopicsForMainOnSuccess:
+            (void (^)(NSArray *fave, NSArray *friendsFave, NSArray *featured))success
+                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    if(![QZBCurrentUser sharedInstance].user.api_key){
+        if(failure){
+            failure(nil, 0);
+        }
+        return;
+    }
+    
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+
+    [self.requestOperationManager GET:@"pages/home"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@"main %@", responseObject);
+
+            NSArray *faveTopicsDicts = responseObject[@"favorite_topics"];
+            NSArray *friendsFaveTopicsDicts = responseObject[@"friends_favorite_topics"];
+            NSArray *featuredTopicsDicts = responseObject[@"featured_topics"];
+
+            NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
+            NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
+            NSArray *featuredTopics = [self parseTopicsArray:featuredTopicsDicts];
+
+            //  NSDictionary *resultDict = @{};
+            if (success) {
+                success(faveTopics, friendsFaveTopics, featuredTopics);
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"%@, /n %@", operation, error);
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+
+        }];
+}
+
+- (NSArray *)parseTopicsArray:(NSArray *)topics {
+    AppDelegate *app = [[UIApplication sharedApplication] delegate];
+
+    id context = app.managedObjectContext;
+
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    for (NSDictionary *dict in topics) {
+        // QZBGameTopic *topic = [QZBGameTopic MR_createEntity];
+
+        NSEntityDescription *entity =
+            [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
+        QZBGameTopic *topic = (QZBGameTopic *)
+            [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+
+        topic.name = dict[@"name"];
+        topic.topic_id = dict[@"id"];
+        topic.points = dict[@"points"];
+        [tmpArr addObject:topic];
+    }
+
+    NSArray *result = [NSArray arrayWithArray:tmpArr];
+
+    return result;
 }
 
 #pragma mark - session methods
@@ -312,30 +384,31 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
         }];
 }
 
-
-- (void)PATCHCloseSessionID:(NSNumber *)sessionID onSuccess:(void (^)())success
+- (void)PATCHCloseSessionID:(NSNumber *)sessionID
+                  onSuccess:(void (^)())success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
- 
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@/close",sessionID];
-    
-    [self.requestOperationManager PATCH:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"session closed");
-        
-        if(success){
-            success();
+
+    NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@/close", sessionID];
+
+    [self.requestOperationManager PATCH:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"session closed");
+
+            if (success) {
+                success();
+            }
+
         }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
-        }
-        NSLog(@"session close failure %@", error);
-        
-    }];
-    
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            NSLog(@"session close failure %@", error);
+
+        }];
 }
 
 #pragma mark - challenge
@@ -373,7 +446,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
             }
 
         }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -391,7 +464,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                               onSuccess:(void (^)(QZBSession *session, id bot))success
                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    NSString *urlString = [NSString stringWithFormat:@"/lobbies/%@/accept_challenge", lobbyID];
+    NSString *urlString = [NSString stringWithFormat:@"lobbies/%@/accept_challenge", lobbyID];
 
     [self.requestOperationManager POST:urlString
         parameters:params
@@ -415,7 +488,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                                onSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    NSString *urlString = [NSString stringWithFormat:@"/lobbies/%@/decline_challenge", lobbyID];
+    NSString *urlString = [NSString stringWithFormat:@"lobbies/%@/decline_challenge", lobbyID];
 
     [self.requestOperationManager POST:urlString
         parameters:params
@@ -540,7 +613,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : token };
 
-    [self.requestOperationManager POST:@"/players/authenticate_vk"
+    [self.requestOperationManager POST:@"players/authenticate_vk"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -609,7 +682,8 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSString *base64str = [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
+    NSString *base64str =
+        [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
@@ -620,15 +694,15 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 }
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
-    UIImage *newImage =[self imageWithImage:image scaledToSize:CGSizeMake(100,100)];
+    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(100, 100)];
     return [UIImageJPEGRepresentation(newImage, 1.0)
         base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
 
-
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for
+    // Retina resolution).
     // Pass 1.0 to force exact pixel size.
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
@@ -667,7 +741,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
-    NSString *urlString = @"/friendships";
+    NSString *urlString = @"friendships";
 
     [self.requestOperationManager POST:urlString
         parameters:params
@@ -693,7 +767,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
-    NSString *urlString = @"/friendships/unfriend";
+    NSString *urlString = @"friendships/unfriend";
 
     [self.requestOperationManager DELETE:urlString
         parameters:params
@@ -713,8 +787,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 }
 
 - (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
-                          onFailure:(void (^)(NSError *error,
-                                              NSInteger statusCode))failure {
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
     [self.requestOperationManager GET:@"friendships/requests"
@@ -747,7 +820,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
-    [self.requestOperationManager PATCH:@"/friendships/mark_requests_as_viewed"
+    [self.requestOperationManager PATCH:@"friendships/mark_requests_as_viewed"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -770,7 +843,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     // NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
 
-    NSString *urlString = [NSString stringWithFormat:@"/players/%@/friends", userID];
+    NSString *urlString = [NSString stringWithFormat:@"players/%@/friends", userID];
 
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
@@ -812,7 +885,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                   withID:(NSInteger)ID
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSMutableString *urlAsString = [NSMutableString stringWithString:@"/rankings/"];
+    NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
     if (isWeekly) {
         [urlAsString appendString:@"weekly"];
     } else {
@@ -852,10 +925,17 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                 success(usersTop, usersPlayer);
             }
 
+            if ([SVProgressHUD isVisible]) {
+                [SVProgressHUD dismiss];
+            }
+
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (failure) {
                 failure(error, operation.response.statusCode);
+            }
+            if ([SVProgressHUD isVisible]) {
+                [SVProgressHUD dismiss];
             }
         }];
 }
@@ -982,7 +1062,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
-    [self.requestOperationManager GET:@"/purchases"
+    [self.requestOperationManager GET:@"purchases"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -991,29 +1071,29 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
             //            @"drumih.QZBQuizBattle.twiceBooster",
             //            @"drumih.QZBQuizBattle.tripleBooster",
 
-//            NSArray *response = @[
-//                @{
-//                    @"identifier" : @"drumih.iQuiz.specialMath",
-//                    @"topic_id" : @10,
-//                    @"purchased" : @0
-//                },
-//                @{
-//                    @"identifier" : @"drumih.iQuiz.specialBiology",
-//                    @"topic_id" : @1,
-//                    @"purchased" : @0
-//                },
-//
-//                @{
-//                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
-//                    @"topic_id" : @0,
-//                    @"purchased" : @0
-//                },
-//                @{
-//                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
-//                    @"topic_id" : @0,
-//                    @"purchased" : @1
-//                }
-//            ];
+            //            NSArray *response = @[
+            //                @{
+            //                    @"identifier" : @"drumih.iQuiz.specialMath",
+            //                    @"topic_id" : @10,
+            //                    @"purchased" : @0
+            //                },
+            //                @{
+            //                    @"identifier" : @"drumih.iQuiz.specialBiology",
+            //                    @"topic_id" : @1,
+            //                    @"purchased" : @0
+            //                },
+            //
+            //                @{
+            //                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
+            //                    @"topic_id" : @0,
+            //                    @"purchased" : @0
+            //                },
+            //                @{
+            //                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
+            //                    @"topic_id" : @0,
+            //                    @"purchased" : @1
+            //                }
+            //            ];
 
             NSMutableArray *purchases = [NSMutableArray array];
             for (NSDictionary *dict in responseObject) {
@@ -1075,7 +1155,7 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"query" : text };
 
-    [self.requestOperationManager GET:@"/players/search"
+    [self.requestOperationManager GET:@"players/search"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -1109,12 +1189,16 @@ NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 - (void)GETachievementsForUserID:(NSNumber *)userID
                        onSuccess:(void (^)(NSArray *achievements))success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSString *urlString = [NSString stringWithFormat:@"achievements"];
+    //  NSString *urlString = [NSString stringWithFormat:@"achievements"];
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+
+    // NSLog(@"%@",self.requestOperationManager.baseURL);
 
     [self.requestOperationManager GET:@"achievements"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSLog(@"%@", operation);
 
             NSLog(@"achievements %@", responseObject);
 

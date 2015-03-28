@@ -46,6 +46,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         b.enabled = NO;
         b.alpha = 0.0;
         [b setExclusiveTouch:YES];
+    
     }
 
     [[QZBSessionManager sessionManager] addObserver:self

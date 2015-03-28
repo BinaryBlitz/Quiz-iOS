@@ -13,6 +13,7 @@
 #import "QZBEmailTextField.h"
 #import "QZBPasswordTextField.h"
 #import "UIView+QZBShakeExtension.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface QZBRegisterWithEmailVC () <UITextFieldDelegate>
 
@@ -89,6 +90,7 @@ preparation before navigation
         [self validateUsername:username] && !self.registrationInProgress) {
         self.registrationInProgress = YES;
 
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         [[QZBServerManager sharedManager] POSTRegistrationUser:username
             email:email
             password:password
@@ -100,14 +102,22 @@ preparation before navigation
 
                 //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
 
+                [SVProgressHUD dismiss];
                 [self dismissViewControllerAnimated:YES
                                          completion:^{
                                          }];
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
+                
 
                 if (statusCode == 422) {
+                    [SVProgressHUD dismiss];
                     [weakSelf userAlreadyExist];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:QZBNoInternetConnectionMessage];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [SVProgressHUD dismiss];
+                    });
                 }
 
                 weakSelf.registrationInProgress = NO;

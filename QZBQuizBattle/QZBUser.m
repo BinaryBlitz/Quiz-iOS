@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
+
 //@property(strong, nonatomic) NSString *pushToken;
 
 @end

@@ -20,11 +20,15 @@
 @property (assign, nonatomic, readonly) BOOL isGoing;
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 
+@property(strong, nonatomic, readonly) NSString *sessionResult;
+
 @property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
 @property (assign, nonatomic, readonly) NSUInteger currentTime;
 
 @property (assign, nonatomic, readonly) NSUInteger firstUserScore;
 @property (assign, nonatomic, readonly) NSUInteger secondUserScore;
+
+@property(assign, nonatomic, readonly) NSInteger userBeginingScore;
 
 @property (copy, nonatomic, readonly) NSString *firstUserName;
 @property (copy, nonatomic, readonly) NSString *opponentUserName;

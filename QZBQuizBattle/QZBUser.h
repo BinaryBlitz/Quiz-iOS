@@ -12,8 +12,6 @@
 
 @interface QZBUser : NSObject <QZBUserProtocol>
 
-//@property(assign, nonatomic, readonly) NSInteger user_id;
-
 @property (copy, nonatomic, readonly) NSString *name;
 @property (copy, nonatomic, readonly) NSString *email;
 @property (copy, nonatomic, readonly) NSString *api_key;
@@ -22,6 +20,7 @@
 @property (assign, nonatomic, readonly) BOOL isFriend;
 @property (strong, nonatomic, readonly) NSString *pushToken;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
+@property (strong, nonatomic) QZBUserStatistic *userStatistics;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
