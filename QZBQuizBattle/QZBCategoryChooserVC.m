@@ -15,6 +15,7 @@
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import "QZBRegistrationChooserVC.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBCategoryChooserVC ()
 
@@ -36,12 +37,14 @@
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
     _categories = [QZBCategory MR_findAll];
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
 
-    [self.navigationController.navigationBar
-        setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    [self.navigationController.navigationBar
-        setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    [self.navigationController.navigationBar
+//        setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    [self.navigationController.navigationBar
+//        setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
     //  [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     //  [self.navigationController.navigationBar
@@ -59,13 +62,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-
-    self.navigationController.navigationItem.title = @"Все Категории";
-
-    [self.navigationController.navigationBar
-        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    // self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+//
+//    self.navigationController.navigationItem.title = @"Все Категории";
+//
+//    [self.navigationController.navigationBar
+//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    // self.navigationController.navigationBar.translucent = NO;
 
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         [self initCategories];

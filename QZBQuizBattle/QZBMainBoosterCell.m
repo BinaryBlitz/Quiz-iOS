@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    self.doubleBoosterButton.layer.borderWidth = 2.0;
+    self.doubleBoosterButton.layer.borderColor = (__bridge CGColorRef)(self.tintColor);
+    self.doubleBoosterButton.layer.cornerRadius = 5.0;
+    self.doubleBoosterButton.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

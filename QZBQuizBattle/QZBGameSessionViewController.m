@@ -110,6 +110,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     self.progressView.centralView = self.timeLabel;
     self.progressView.fillOnTouch = NO;
     self.progressView.animationDuration = 0.1;
+    self.progressView.tintColor = [UIColor brightRedColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -340,8 +341,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                        [UIView animateWithDuration:0.3
                            animations:^{
                                weakSelf.timeLabel.alpha = 1.0;
+                               weakSelf.progressView.alpha = 1.0;
                            }
                            completion:^(BOOL finished){
+                              
                                //[[QZBSessionManager sessionManager] newQuestionStart];
                            }];
 
@@ -355,7 +358,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     static float unShowTime = 0.5;
 
     __weak typeof(self) weakSelf = self;
-
+    
     [UIView animateWithDuration:unShowTime
                      animations:^{
                          weakSelf.qestionLabel.alpha = .0;
@@ -366,8 +369,16 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                          weakSelf.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
                          
                          weakSelf.timeLabel.alpha = .0;
-
-                     }];
+                         weakSelf.progressView.alpha = .0;
+        
+        
+        
+    } completion:^(BOOL finished) {
+        
+        weakSelf.progressView.progress = 0.0;
+        
+    }];
+    
 
     for (UIButton *button in weakSelf.answerButtons) {
         button.enabled = NO;
@@ -391,12 +402,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                         change:(NSDictionary *)change
                        context:(void *)context {
     if ([keyPath isEqualToString:@"currentTime"]) {
-        NSUInteger num = [[QZBSessionManager sessionManager] sessionTime] -
-                         [[change objectForKey:@"new"] integerValue];
         
-        [self.progressView setProgress:(100-num)/100.0 animated:YES];
+        [self.progressView setProgress:([[change objectForKey:@"new"] integerValue])/100.0
+                              animated:YES];
 
-        self.timeLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)num/10];
+        self.timeLabel.text = [NSString stringWithFormat:@"%ld", 10 -
+                               [[change objectForKey:@"new"] integerValue]/10 ];
     }
 }
 

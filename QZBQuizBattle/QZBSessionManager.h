@@ -21,6 +21,8 @@
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 
 @property(strong, nonatomic, readonly) NSString *sessionResult;
+@property(assign, nonatomic, readonly) NSInteger multiplier;
+@property (strong, nonatomic, readonly) QZBGameTopic *topic;
 
 @property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
 @property (assign, nonatomic, readonly) NSUInteger currentTime;
@@ -47,6 +49,7 @@
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
 - (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker;
+-(void)setTopicForSession:(QZBGameTopic *)topic;
 
 + (instancetype)sessionManager;
 

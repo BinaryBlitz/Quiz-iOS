@@ -10,6 +10,7 @@
 #import "QZBSomethingInHorizontalTabelViewCell.h"
 #import "QZBLastElementInHorizontalTCCell.h"
 #import "QZBAchievement.h"
+#import "QZBAnotherUser.h"
 
 @interface QZBHorizontalCell ()
 
@@ -25,6 +26,9 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
 
     CGRect rect = CGRectMake(0, 0, 100, screenRect.size.width);
+    
+    self.horizontalTabelView.backgroundColor = [UIColor clearColor];
+    self.horizontalTabelView.backgroundView.backgroundColor = [UIColor clearColor];
 
     self.horizontalTabelView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
     self.horizontalTabelView.rowHeight = 100;
@@ -33,7 +37,8 @@
     self.horizontalTabelView.showsHorizontalScrollIndicator = NO;
     self.horizontalTabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    self.horizontalTabelView.allowsSelection = NO;
+    self.horizontalTabelView.allowsSelection = YES;
+   // self.horizontalTabelView.
 
     CGAffineTransform transform = CGAffineTransformMakeRotation(-1.5707963);
     self.horizontalTabelView.transform = transform;
@@ -47,6 +52,7 @@
     // self.horizontalTabelView.rowHeight = 100;
 
     [self addSubview:self.horizontalTabelView];
+    self.horizontalTabelView.backgroundColor = [UIColor clearColor];
 
     self.horizontalTabelView.delegate = self;
     self.horizontalTabelView.dataSource = self;
@@ -92,6 +98,7 @@
         cell = lastCell;
     }
 
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
@@ -101,14 +108,49 @@
 
         [cell setName:achiv.name picture:achiv.image];
 
-    } else {  // redo
-        [cell setName:@"drumih" picURLAsString:@"https://pp.vk.me/c320926/v320926839/c6aa/E7Ai5pmMgn4.jpg"];
+    } else if([object isKindOfClass:[QZBAnotherUser class]]){  // redo
+        
+        QZBAnotherUser *user = (QZBAnotherUser *)object;
+        
+       // [cell setName:user.name picURLAsString:@"https://pp.vk.me/c320926/v320926839/c6aa/E7Ai5pmMgn4.jpg"];
+        [cell setName:user.name picURL:user.imageURL];
     }
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell= [tableView cellForRowAtIndexPath:indexPath];
+    
+    NSIndexPath *globalIP = [self getIndexPathCell:cell];
+    
+    NSDictionary *dict = @{@"indexInLocalTable":indexPath,@"indexInGlobalTable": globalIP};
+    
+    NSLog(@"row in global %ld , row in local %ld",(long)globalIP.row, (long)indexPath.row);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBUserPressSomethingInHorizontallTV"
+                                                        object:dict];
+    
+    
+}
+
+- (NSIndexPath *)getIndexPathCell:(UIView *)view {
+    if ([view isKindOfClass:[QZBHorizontalCell class]]) {
+        // UITableView *tv = (UITableView *)view.superview;
+        
+        NSIndexPath *indexPath = [(UITableView *)view.superview.superview indexPathForCell:(UITableViewCell *)view];
+        return indexPath;
+        
+    } else {
+        return [self getIndexPathCell:view.superview];
+    }
+}
+
+
 - (void)setSomethingArray:(NSArray *)somethingArray {
     _somethingArray = somethingArray;
-   // [self.horizontalTabelView reloadData];
+    [self.horizontalTabelView reloadData];
 }
 
 @end

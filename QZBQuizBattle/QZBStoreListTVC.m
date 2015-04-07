@@ -11,6 +11,7 @@
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBStoreBoosterCell.h"
 #import "QZBMainBoosterCell.h"
+#import "UIViewController+QZBControllerCategory.h"
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
@@ -31,6 +32,8 @@
     [super viewDidLoad];
 
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
 
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
@@ -63,7 +66,7 @@
 
     [self reload];
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(productPurchased:)

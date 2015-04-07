@@ -9,6 +9,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBServerManager.h"
 #import "QZBUserStatistic.h"
+#import "QZBAchievement.h"
 
 @implementation QZBAnotherUser
 
@@ -32,6 +33,12 @@
         } else{
             self.imageURL = nil;
         }
+        
+        //NSArray *achievements = dict[@"achievements"];
+        
+        
+        
+        
     }
     return self;
 }

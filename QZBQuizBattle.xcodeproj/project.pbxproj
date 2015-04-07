@@ -52,6 +52,7 @@
 		1965879D1AC5879200C58C60 /* QZBVSScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */; };
 		196587A01AC58A8E00C58C60 /* QZBUserStatistic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */; };
 		196587A71AC5B5C100C58C60 /* QZBStatiscticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */; };
+		196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
 		197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */; };
@@ -208,6 +209,8 @@
 		1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserStatistic.m; sourceTree = "<group>"; };
 		196587A51AC5B5C100C58C60 /* QZBStatiscticCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStatiscticCell.h; sourceTree = "<group>"; };
 		196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStatiscticCell.m; sourceTree = "<group>"; };
+		196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionForHorizontalCell.h; sourceTree = "<group>"; };
+		196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionForHorizontalCell.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
 		1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTextAndID.m; sourceTree = "<group>"; };
 		197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterWithEmailVC.h; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */,
 				196587A51AC5B5C100C58C60 /* QZBStatiscticCell.h */,
 				196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */,
+				196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */,
+				196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */,
 			);
 			name = user;
 			sourceTree = "<group>";
@@ -1102,6 +1107,7 @@
 				19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */,
 				19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */,
 				197B4E0A1AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m in Sources */,
+				196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */,
 				19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */,
 				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
 				1927967A1A9A1B2500A468E5 /* MKStoreKit.m in Sources */,

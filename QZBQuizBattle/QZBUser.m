@@ -17,7 +17,7 @@
 @property (copy, nonatomic) NSString *email;
 @property (copy, nonatomic) NSString *api_key;
 @property (strong, nonatomic) NSNumber *userID;
-@property (strong, nonatomic) UIImage *userPic;
+//@property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
 
@@ -39,7 +39,7 @@
             self.email = nil;
         }
         self.userID = [dict objectForKey:@"id"];
-        self.userPic = nil;
+       // self.userPic = nil;
         
         self.isFriend = NO;
         
@@ -66,13 +66,13 @@
         
         self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
  
-        NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
-        NSLog(@"path %@", imagePath);
-        if (imagePath) {
-            self.userPic = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
-        }else{
-            self.userPic = [UIImage imageNamed:@"achiv"];
-        }
+//        NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
+//        NSLog(@"path %@", imagePath);
+//        if (imagePath) {
+//            self.userPic = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
+//        }else{
+//            self.userPic = [UIImage imageNamed:@"achiv"];
+//        }
     }
     return self;
 }
@@ -92,19 +92,19 @@
 //        [coder encodeObject:self.pushToken forKey:@"pushToken"];
 //    }
     
-    if(self.userPic){
-    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
-    
-    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
-    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
-    
-    // Write image data to user's folder
-    [imageData writeToFile:imagePath atomically:YES];
-    
-    // Store path in NSUserDefaults
-        
-    [coder encodeObject:imagePath forKey:@"userPic"];
-    }
+//    if(self.userPic){
+//    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
+//    
+//    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
+//    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
+//    
+//    // Write image data to user's folder
+//    [imageData writeToFile:imagePath atomically:YES];
+//    
+//    // Store path in NSUserDefaults
+//        
+//    [coder encodeObject:imagePath forKey:@"userPic"];
+//    }
     
 }
 
@@ -129,22 +129,22 @@
     
 }
 
--(void)setUserPic:(UIImage *)userPic{
-    
-    _userPic = userPic;
-    NSLog(@"setted %@", [userPic debugDescription]);
-    
-    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
-    
-    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
-    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
-    
-    // Write image data to user's folder
-    [imageData writeToFile:imagePath atomically:YES];
-    
-    
-    //todo load to server
-}
+//-(void)setUserPic:(UIImage *)userPic{
+//    
+//    _userPic = userPic;
+//    NSLog(@"setted %@", [userPic debugDescription]);
+//    
+//    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
+//    
+//    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
+//    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
+//    
+//    // Write image data to user's folder
+//    [imageData writeToFile:imagePath atomically:YES];
+//    
+//    
+//    //todo load to server
+//}
 
 
 -(void)updateUserFromServer{

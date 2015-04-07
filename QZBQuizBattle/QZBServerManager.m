@@ -200,7 +200,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 }
 
 - (void)GETTopicsForMainOnSuccess:
-            (void (^)(NSArray *fave, NSArray *friendsFave, NSArray *featured))success
+            (void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
     if(![QZBCurrentUser sharedInstance].user.api_key){
@@ -222,14 +222,26 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             NSArray *faveTopicsDicts = responseObject[@"favorite_topics"];
             NSArray *friendsFaveTopicsDicts = responseObject[@"friends_favorite_topics"];
             NSArray *featuredTopicsDicts = responseObject[@"featured_topics"];
+            
+            NSArray *challengesDicts = responseObject[@"challenges"];
+            
+            
 
             NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
             NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
             NSArray *featuredTopics = [self parseTopicsArray:featuredTopicsDicts];
 
+            NSArray *challenges = [self parseChallengesFromArray:challengesDicts];
+            
+            NSDictionary *resultDict = @{@"favorite_topics":faveTopics,
+                                         @"friends_favorite_topics":friendsFaveTopics,
+                                         @"featured_topics":featuredTopics,
+                                         @"challenges":challenges
+                                         };
+            
             //  NSDictionary *resultDict = @{};
             if (success) {
-                success(faveTopics, friendsFaveTopics, featuredTopics);
+                success(resultDict);
             }
 
         }
@@ -243,6 +255,8 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
         }];
 }
+
+
 
 - (NSArray *)parseTopicsArray:(NSArray *)topics {
     AppDelegate *app = [[UIApplication sharedApplication] delegate];
@@ -511,15 +525,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"challenges response %@", responseObject);
 
-            NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
-
-            for (NSDictionary *dict in responseObject) {
-                QZBChallengeDescription *challengeDescription =
-                    [[QZBChallengeDescription alloc] initWithDictionary:dict];
-                [challengeDescriptionsMuttable addObject:challengeDescription];
-            }
-
-            NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
+            NSArray *challengeDescriptions = [self parseChallengesFromArray:responseObject];
 
             if (success) {
                 success(challengeDescriptions);
@@ -532,6 +538,26 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             }
             NSLog(@"%@", error);
         }];
+}
+
+
+-(NSArray *)parseChallengesFromArray:(NSArray *)responseObject{
+    
+    NSLog(@"challenges response %@", responseObject);
+    
+    NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
+    
+    for (NSDictionary *dict in responseObject) {
+        QZBChallengeDescription *challengeDescription =
+        [[QZBChallengeDescription alloc] initWithDictionary:dict];
+        [challengeDescriptionsMuttable addObject:challengeDescription];
+    }
+    
+    NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
+    
+    
+    return challengeDescriptions;
+    
 }
 
 #pragma mark - user registration
@@ -645,6 +671,12 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:responseObject];
             BOOL isFriend = [responseObject[@"is_friend"] boolValue];
             user.isFriend = isFriend;
+            
+            NSArray *topics = responseObject[@"favorite_topics"];
+            
+            user.faveTopics = [self parseTopicsArray:topics];
+            
+            user.achievements = [self parseAchievementsFromArray:responseObject[@"achievements"]];
 
             if (success) {
                 success(user);
@@ -1202,14 +1234,14 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
             NSLog(@"achievements %@", responseObject);
 
-            NSMutableArray *tmpArr = [NSMutableArray array];
+//            NSMutableArray *tmpArr = [NSMutableArray array];
+//
+//            for (NSDictionary *dict in responseObject) {
+//                QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
+//                [tmpArr addObject:achiev];
+//            }
 
-            for (NSDictionary *dict in responseObject) {
-                QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
-                [tmpArr addObject:achiev];
-            }
-
-            NSArray *achievements = [NSArray arrayWithArray:tmpArr];
+            NSArray *achievements = [self parseAchievementsFromArray:responseObject];
             if (success) {
                 success(achievements);
             }
@@ -1223,6 +1255,21 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             }
 
         }];
+}
+
+
+-(NSArray *)parseAchievementsFromArray:(NSArray *)responseObject{
+    
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    
+    for (NSDictionary *dict in responseObject) {
+        QZBAchievement *achiev = [[QZBAchievement alloc] initWithDictionary:dict];
+        [tmpArr addObject:achiev];
+    }
+    
+    return [NSArray arrayWithArray:tmpArr];
+    
+    
 }
 
 @end

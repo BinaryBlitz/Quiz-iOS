@@ -17,6 +17,8 @@
 @property(copy, nonatomic) NSString *name;
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
+@property(strong, nonatomic) NSArray *faveTopics;//QZBGameTopic
+@property(strong, nonatomic) NSArray *achievements;//QZBAchievement
 
 @property(strong, nonatomic) QZBUserStatistic *userStatistics;
 

@@ -29,7 +29,7 @@
     
   //  QZBUserStatistic
     
-    self.anotherUserNameLabel.text = user.name;
+    //self.anotherUserNameLabel.text = user.name;
     
     NSNumber *opponentUserScore = @(0);
     
@@ -37,14 +37,15 @@
         opponentUserScore = user.userStatistics.losses;
     }
     
-    self.opponentUserScoreLabel.text = [NSString stringWithFormat:@"%@", opponentUserScore];
-    self.currentUserNameLabel.text = [QZBCurrentUser sharedInstance].user.name;
+    //self.opponentUserScoreLabel.text = [NSString stringWithFormat:@"%@", opponentUserScore];
+    //self.currentUserNameLabel.text = [QZBCurrentUser sharedInstance].user.name;
     
     NSNumber *currentUserScore = @(0);
     if(user.userStatistics.wins){
         currentUserScore = user.userStatistics.wins;
     }
-    self.currentUserScoreLabel.text = [NSString stringWithFormat:@"%@", currentUserScore];
+    self.currentUserScoreLabel.text = [NSString stringWithFormat:@"%@-%@",
+                                       currentUserScore,opponentUserScore];
 
     
 }

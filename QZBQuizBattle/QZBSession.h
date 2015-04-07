@@ -28,6 +28,8 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 @property (assign, nonatomic, readonly) NSInteger session_id;
 @property (assign, nonatomic, readonly) NSInteger userBeginingScore;
 
+@property (assign, nonatomic, readonly) NSInteger userMultiplier;
+
 - (instancetype)initWithQestions:(NSArray *)qestions
                            first:(id<QZBUserProtocol> )firstUser
                     opponentUser:(id<QZBUserProtocol> )opponentUser;

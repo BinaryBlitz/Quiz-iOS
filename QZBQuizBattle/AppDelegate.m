@@ -364,15 +364,11 @@
         //
         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
 
-        UINavigationController *navController =
-            (UINavigationController *)tabController.viewControllers[0];
-
-        QZBAcceptChallengeVC *notificationController = (QZBAcceptChallengeVC *)
-            [navController.storyboard instantiateViewControllerWithIdentifier:@"challengesTVC"];
+        
 
         tabController.selectedIndex = 0;
 
-        [navController pushViewController:notificationController animated:YES];
+      
     }
 }
 
