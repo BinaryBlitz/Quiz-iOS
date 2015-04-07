@@ -11,6 +11,7 @@
 #import "QZBLastElementInHorizontalTCCell.h"
 #import "QZBAchievement.h"
 #import "QZBAnotherUser.h"
+#import "UITableViewCell+QZBCellCategory.h"
 
 @interface QZBHorizontalCell ()
 
@@ -62,6 +63,8 @@
 
     [self.horizontalTabelView registerClass:[QZBLastElementInHorizontalTCCell class]
                      forCellReuseIdentifier:@"lastHorizontalElement"];
+    
+    //[self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

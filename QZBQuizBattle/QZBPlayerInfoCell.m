@@ -8,6 +8,7 @@
 
 #import "QZBPlayerInfoCell.h"
 #import <JSBadgeView/JSBadgeView.h>
+#import "UITableViewCell+QZBCellCategory.h"
 
 @interface QZBPlayerInfoCell ()
 
@@ -23,6 +24,9 @@
     NSLog(@"awake from nib");
     self.badgeView = [[JSBadgeView alloc] initWithParentView:self.friendsButton
                                                    alignment:JSBadgeViewAlignmentTopRight];
+    
+    //[self addDropShadows];
+    
     
     
 }

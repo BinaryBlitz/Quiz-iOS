@@ -11,5 +11,6 @@
 
 @interface QZBMainGameScreenTVC : QZBTopicChooserControllerViewController
 @property (strong, nonatomic) IBOutlet UITableView *mainTableView;
+-(void)reloadTopicsData;
 
 @end

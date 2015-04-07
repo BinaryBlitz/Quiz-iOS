@@ -11,11 +11,13 @@
 #import "QZBUserStatistic.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "UITableViewCell+QZBCellCategory.h"
 
 @implementation QZBVSScoreCell
 
 - (void)awakeFromNib {
     // Initialization code
+    [self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
