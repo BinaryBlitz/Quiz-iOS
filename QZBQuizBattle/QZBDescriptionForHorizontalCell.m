@@ -7,11 +7,14 @@
 //
 
 #import "QZBDescriptionForHorizontalCell.h"
-
+#import "UITableViewCell+QZBCellCategory.h"
 @implementation QZBDescriptionForHorizontalCell
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self addDropShadows];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -27,8 +27,12 @@
 #import "QZBStatiscticCell.h"
 #import <SVProgressHUD.h>
 #import "UIViewController+QZBControllerCategory.h"
+#import "UITableViewCell+QZBCellCategory.h"
 #import "QZBGameTopic.h"
 #import "QZBDescriptionForHorizontalCell.h"
+#import "QZBRatingMainVC.h"
+#import "QZBProgressViewController.h"
+#import "QZBFriendsChallengeTVC.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -45,6 +49,7 @@ static NSString *challengeCell = @"challengeCell";
 static NSString *vsScoreCellIndentifier = @"vsScoreCell";
 static NSString *totalStatisticsIdentifier = @"totalStatistics";
 static NSString *descriptionIdentifier = @"descriptionForHorizontal";
+static NSInteger topicsOffset = 7;
 
 @interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
                                        UITableViewDelegate,
@@ -57,6 +62,10 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 @property (strong, nonatomic) NSArray *faveTopics;      // QZBGameTopic
 @property (assign, nonatomic) BOOL isCurrent;
 @property (assign, nonatomic) BOOL isFriend;
+
+@property (strong, nonatomic) NSIndexPath *choosedIndexPath;
+@property (strong, nonatomic) QZBGameTopic *choosedTopic;
+@property (assign, nonatomic) BOOL isOnlineChallenge;
 
 @end
 
@@ -229,12 +238,11 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
     NSInteger increment = 0;
 
     if (self.faveTopics.count > 0) {
-        increment += self.faveTopics.count+1;
+        increment += self.faveTopics.count + 1;
     }
     if (!self.isCurrent) {
         increment += 1;
     }
-   
 
     return 7 + increment;
 }
@@ -269,6 +277,8 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 
         [self playerCellCustomInit:playerCell];
 
+        // [playerCell addDropShadows];
+
         // cell = playerCell;
         return playerCell;
     } else if (indexPath.row == 1) {
@@ -299,27 +309,28 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 
     } else if (indexPath.row == 3) {
         if (self.friends.count == 0) {
-            if(self.isCurrent){
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
-            cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
-            return cell;
-            }else{
-                
+            if (self.isCurrent) {
+                cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
+                cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
+                return cell;
+            } else {
                 QZBDescriptionForHorizontalCell *descrForHorizontal =
-                [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
-                
-                descrForHorizontal.descriptionLabel.text =@"У игрока еще нет друзей, добавьте его в друзья =)";
+                    [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+
+                descrForHorizontal.descriptionLabel.text =
+                    @"У игрока еще нет друзей, добавьте его в друзья "
+                    @"=)";
                 return descrForHorizontal;
 
-                //cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
-                
+                // cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
             }
         } else {
             QZBFriendHorizontalCell *friendsHorizontalCell =
                 [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
 
             // friendsHorizontalCell.buttonTitle = @"Показать\n всех";
+
+            // [friendsHorizontalCell addDropShadows];
 
             [friendsHorizontalCell setFriendArray:self.friends];
 
@@ -429,22 +440,33 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
     else if (indexPath.row > 6) {
         QZBTopicTableViewCell *topicCell =
             [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
-        topicCell.topicName.text = [NSString stringWithFormat:@"топик %ld", (long)indexPath.row];
+
+        QZBGameTopic *topic = self.faveTopics[indexPath.row - topicsOffset];
+
+        topicCell.topicName.text = topic.name;
+
+        NSInteger level = 0;
+        float progress = 0.0;
+
+        [self calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+
+        [topicCell initCircularProgressWithLevel:level progress:progress];
+
         topicCell.backgroundColor = [UIColor veryDarkGreyColor];
 
         return topicCell;
         // cell = topicCell;
     }
 
-//    if (!self.isCurrent &&
-//        indexPath.row == [self tableView:tableView numberOfRowsInSection:0] - 1) {
-//        QZBVSScoreCell *vsCell =
-//            [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
-//        [vsCell setCellWithUser:self.user];
-//
-//        vsCell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
-//        return vsCell;
-//    }
+    //    if (!self.isCurrent &&
+    //        indexPath.row == [self tableView:tableView numberOfRowsInSection:0] - 1) {
+    //        QZBVSScoreCell *vsCell =
+    //            [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
+    //        [vsCell setCellWithUser:self.user];
+    //
+    //        vsCell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
+    //        return vsCell;
+    //    }
 
     return cell;
 }
@@ -491,11 +513,14 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
     //    if (self.isCurrent) {
     //        incrementForCurrent = 1;
     //    }
-    
-    if(indexPath.row == 6 && self.faveTopics.count==0){
+
+    if ([self.choosedIndexPath isEqual:indexPath]) {
+        return 120.0f;
+    }
+
+    if (indexPath.row == 6 && self.faveTopics.count == 0) {
         return 74.0;
     }
-    
 
     if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
@@ -532,6 +557,15 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
         [self performSegueWithIdentifier:@"showSearch" sender:nil];
     } else if ([identifier isEqualToString:@"challengeCell"]) {
         [self performSegueWithIdentifier:@"challengeSegue" sender:nil];
+    } else if ([identifier isEqualToString:topicCellIdentifier]) {
+        if ([self.choosedIndexPath isEqual:indexPath]) {
+            self.choosedIndexPath = nil;
+        } else {
+            self.choosedIndexPath = indexPath;
+        }
+
+        [tableView beginUpdates];
+        [tableView endUpdates];
     }
 }
 
@@ -562,6 +596,37 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
     } else if ([segue.identifier isEqualToString:@"challengeSegue"]) {
         QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithUser:self.user];
+    } else if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
+        QZBProgressViewController *navigationController = segue.destinationViewController;
+        
+        if(!self.isOnlineChallenge){
+            [navigationController initSessionWithTopic:self.choosedTopic user:nil];
+            self.isOnlineChallenge = NO;
+        }else{
+           
+            [navigationController initSessionWithTopic:self.choosedTopic user:self.user];
+            self.isOnlineChallenge = NO;
+        }
+
+    } else if ([segue.identifier isEqualToString:@"showRate"]) {
+        
+        QZBRatingMainVC *destinationVC = segue.destinationViewController;
+        [destinationVC initWithTopic:self.choosedTopic];
+        
+    }else if ([segue.identifier isEqualToString:@"showFriendsChallenge"]) {
+        
+        QZBFriendsChallengeTVC *destinationVC = segue.destinationViewController;
+        QZBUser *user = [QZBCurrentUser sharedInstance].user;
+        
+        if(self.friends){
+    
+            [destinationVC setFriendsOwner:user
+                                andFriends:self.friends
+                                 gameTopic:self.choosedTopic];
+        }
+        
+
+        
     }
 }
 
@@ -628,6 +693,49 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
              otherButtonTitles:@"Пожаловаться", nil];
 
     [actSheet showInView:self.view];
+}
+
+- (IBAction)playButtonAction:(UIButton *)sender {
+    UITableViewCell *cell = [self parentCellForView:sender];
+    if (cell != nil) {
+        NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
+        // NSLog(@"show detail for item at row %d", indexPath.row);
+        self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
+        NSLog(@"%ld", (long)self.choosedTopic.topic_id);
+
+        [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+    }
+}
+- (IBAction)challengeAction:(id)sender {
+    UITableViewCell *cell = [self parentCellForView:sender];
+    if (cell != nil) {
+        NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
+        //   NSLog(@"show detail for item at row %d", indexPath.row);
+        self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
+        
+        if(self.isCurrent){
+           // self.isOnlineChallenge = YES;
+          //  [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+            self.isOnlineChallenge = NO;
+            [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
+            
+        }else{
+            self.isOnlineChallenge = YES;
+            [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+        }
+
+       
+    }
+}
+- (IBAction)rateAction:(UIButton *)sender {
+    UITableViewCell *cell = [self parentCellForView:sender];
+    if (cell != nil) {
+        NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
+        // NSLog(@"show detail for item at row %d", indexPath.row);
+        self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
+
+        [self performSegueWithIdentifier:@"showRate" sender:nil];
+    }
 }
 
 #pragma mark - init friends and achivs
@@ -764,8 +872,8 @@ static NSString *descriptionIdentifier = @"descriptionForHorizontal";
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
 
-    NSString *descr = @"Поздравляем!\n Вы получили новое " @"достижение"
-                                                                                     @"!";
+    NSString *descr = @"Поздравляем!\n Вы получили новое " @"достижени"
+                                                                                     @"е" @"!";
     NSString *name = dict[@"name"];
 
     [alert showCustom:self

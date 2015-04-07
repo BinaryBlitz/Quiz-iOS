@@ -246,7 +246,7 @@
     
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:20];
+    label.font = [UIFont boldSystemFontOfSize:20];
     
     [view addSubview:label];
     
@@ -289,10 +289,8 @@
         self.choosedTopic = arr[ip.row];
         
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
-        
-        
+   
     }
-    
 }
 
 - (IBAction)throwChallengeAction:(id)sender {

@@ -158,16 +158,29 @@
         QZBMainBoosterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"boosterCell"];
 
         if (self.twiceBooster && self.tripleBooster) {
+            
+            cell.doubleBoosterLabel.text = [self.priceFormatter stringFromNumber:self.twiceBooster.price];
+            cell.tripleBoosterLabel.text = [self.priceFormatter stringFromNumber:self.tripleBooster.price];
+            
             if ([[QZBQuizTopicIAPHelper sharedInstance]
                     productPurchased:self.twiceBooster.productIdentifier]) {
-                [cell.doubleBoosterButton setTitle:@"Куплено" forState:UIControlStateNormal];
-                cell.doubleBoosterButton.enabled = NO;
+                [cell configButtonPurchased:cell.doubleBoosterButton];
+                
+//                [cell.doubleBoosterButton setTitle:@"Куплено" forState:UIControlStateNormal];
+//                cell.doubleBoosterButton.enabled = NO;
+//                cell.doubleBoosterButton.titleLabel.textColor = [UIColor lightGrayColor];
 
             } else {
-                [cell.doubleBoosterButton
-                    setTitle:[self.priceFormatter stringFromNumber:self.twiceBooster.price]
-                    forState:UIControlStateNormal];
-                cell.doubleBoosterButton.enabled = YES;
+            
+              //  cell.doubleBoosterLabel
+                
+                [cell configButtonNotPurchased:cell.doubleBoosterButton];
+                
+//                [cell.doubleBoosterButton
+//                    setTitle:[self.priceFormatter stringFromNumber:self.twiceBooster.price]
+//                    forState:UIControlStateNormal];
+//                cell.doubleBoosterButton.enabled = YES;
+//                cell.doubleBoosterButton.titleLabel.textColor = cell.tintColor;
 
                 cell.doubleBoosterButton.tag = 1;
                 [cell.doubleBoosterButton addTarget:self
@@ -177,17 +190,21 @@
             
             if ([[QZBQuizTopicIAPHelper sharedInstance]
                  productPurchased:self.tripleBooster.productIdentifier]) {
-                [cell.tripleBoosterCell setTitle:@"Куплено" forState:UIControlStateNormal];
-                cell.tripleBoosterCell.enabled = NO;
+//                [cell.tripleBoosterButton setTitle:@"Куплено" forState:UIControlStateNormal];
+//                cell.tripleBoosterButton.enabled = NO;
+                
+                [cell configButtonPurchased:cell.tripleBoosterButton];
                 
             } else {
-                [cell.tripleBoosterCell
-                 setTitle:[self.priceFormatter stringFromNumber:self.twiceBooster.price]
-                 forState:UIControlStateNormal];
-                cell.tripleBoosterCell.enabled = YES;
+//                [cell.tripleBoosterButton
+//                 setTitle:[self.priceFormatter stringFromNumber:self.twiceBooster.price]
+//                 forState:UIControlStateNormal];
+//                cell.tripleBoosterButton.enabled = YES;
                 
-                cell.tripleBoosterCell.tag = 2;
-                [cell.tripleBoosterCell addTarget:self
+                [cell configButtonNotPurchased:cell.tripleBoosterButton];
+                
+                cell.tripleBoosterButton.tag = 2;
+                [cell.tripleBoosterButton addTarget:self
                                              action:@selector(buyTripleBoosterButtonTapped:)
                                    forControlEvents:UIControlEventTouchUpInside];
             }

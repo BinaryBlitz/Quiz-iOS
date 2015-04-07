@@ -9,6 +9,7 @@
 #import "QZBStatiscticCell.h"
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"
+#import "UITableViewCell+QZBCellCategory.h"
 
 @implementation QZBStatiscticCell
 
@@ -38,6 +39,8 @@
     self.winCircular.centralView = self.winLabel;
     self.drawsCircular.centralView = self.drawsLabel;
     self.lossesCircular.centralView = self.lossesLabel;
+    
+    [self addDropShadows];
     
     
 }

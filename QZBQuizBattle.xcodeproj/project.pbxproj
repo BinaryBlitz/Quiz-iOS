@@ -53,6 +53,8 @@
 		196587A01AC58A8E00C58C60 /* QZBUserStatistic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */; };
 		196587A71AC5B5C100C58C60 /* QZBStatiscticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */; };
 		196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */; };
+		196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */; };
+		196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */; };
 		1974BED41A4C81C600E63D6B /* QZBAnswerTextAndID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */; };
 		197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */; };
 		197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */; };
@@ -211,6 +213,10 @@
 		196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStatiscticCell.m; sourceTree = "<group>"; };
 		196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionForHorizontalCell.h; sourceTree = "<group>"; };
 		196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionForHorizontalCell.m; sourceTree = "<group>"; };
+		196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+QZBCellCategory.h"; sourceTree = "<group>"; };
+		196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+QZBCellCategory.m"; sourceTree = "<group>"; };
+		196EA35C1AD4000200AAF94E /* QZBFindFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFindFriendsCell.h; sourceTree = "<group>"; };
+		196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFindFriendsCell.m; sourceTree = "<group>"; };
 		1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTextAndID.h; sourceTree = "<group>"; };
 		1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTextAndID.m; sourceTree = "<group>"; };
 		197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterWithEmailVC.h; sourceTree = "<group>"; };
@@ -419,6 +425,8 @@
 				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 				19D8914B1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.h */,
 				19D8914C1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.m */,
+				196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */,
+				196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -532,6 +540,8 @@
 				196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */,
 				196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */,
 				196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */,
+				196EA35C1AD4000200AAF94E /* QZBFindFriendsCell.h */,
+				196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */,
 			);
 			name = user;
 			sourceTree = "<group>";
@@ -1088,8 +1098,10 @@
 				196587A71AC5B5C100C58C60 /* QZBStatiscticCell.m in Sources */,
 				191E12F81A8CD80400AFB829 /* QZBAnotherUser.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
+				196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
 				19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */,
+				196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */,
 				19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */,
 				1901B9AC1A46E574002FC87C /* QZBEndSessionControllerViewController.m in Sources */,
 				19CB50A01A3C51CA00A3CD74 /* QZBUser.m in Sources */,
