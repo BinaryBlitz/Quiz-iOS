@@ -14,5 +14,15 @@
 +(UIColor *)lightGreenColor;
 +(UIColor *)lightBlueColor;
 +(UIColor *)brightRedColor;
++(UIColor *)goldColor;
++(UIColor *)silverColor;
++(UIColor *)bronzeColor;
++(UIColor *)strongGreenColor;
++(UIColor *)almostWhiteColor;
++(UIColor *)friendsLightGreyColor;
++(UIColor *)lightButtonColor;
++(UIColor *)veryDarkGreyColor;
++(UIColor *)middleDarkGreyColor;
+
 
 @end

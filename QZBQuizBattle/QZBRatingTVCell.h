@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *score;
 @property (strong, nonatomic, readonly) QZBUserInRating *user;
+@property (weak, nonatomic) IBOutlet UIView *myMedalView;
 
 -(void)setCellWithUser:(QZBUserInRating *)user;
 

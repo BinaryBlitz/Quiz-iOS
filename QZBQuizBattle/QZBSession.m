@@ -30,6 +30,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property (strong, nonatomic) NSURL *firstUserImageURL;
 @property (strong, nonatomic) NSURL *opponentUserImageURL;
 @property (assign, nonatomic) NSInteger userBeginingScore;
+@property (assign, nonatomic) NSInteger userMultiplier;
 
 
 @end
@@ -123,6 +124,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     
     if ([hostID isEqualToNumber:user1.userID]) {
         self.userBeginingScore = [hostDict[@"points"] integerValue];
+        self.userMultiplier = [hostDict[@"multiplier"] integerValue];
         
         
         opponent.name = opponentDict[@"name"];
@@ -140,6 +142,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
     } else {
         self.userBeginingScore = [opponentDict[@"points"] integerValue];
+        self.userMultiplier = [opponentDict[@"multiplier"] integerValue];
         
         opponent.name = hostDict[@"name"];//dict[@"host_name"];
         opponent.userID = hostDict[@"id"];

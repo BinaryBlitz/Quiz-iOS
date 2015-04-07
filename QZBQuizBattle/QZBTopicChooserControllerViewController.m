@@ -18,6 +18,7 @@
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
 
+
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
@@ -58,17 +59,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.hidesBackButton = NO;
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-
-    [self.navigationController.navigationBar
-        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-
-    [self.navigationController.navigationBar
-        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationItem.hidesBackButton = NO;
+//    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+//
+//    [self.navigationController.navigationBar
+//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//
+//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//
+//    [self.navigationController.navigationBar
+//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    self.navigationController.navigationBar.translucent = NO;
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
 
     // self.navigationController.navigationBar.topItem.title = @"";
 }

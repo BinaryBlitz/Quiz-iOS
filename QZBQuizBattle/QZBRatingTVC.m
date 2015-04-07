@@ -13,6 +13,7 @@
 #import "QZBUserInRating.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "UIColor+QZBProjectColors.h"
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -35,6 +36,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.ratingTableView reloadData];
+    
+    //[self.refreshControl beginRefreshing];
+    
     NSLog(@"it shown %ld", self.tableType);
     if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
@@ -81,6 +85,17 @@
         QZBRatingTVCell *cell =
             (QZBRatingTVCell *)[tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
         QZBUserInRating *user = nil;
+        
+        if(indexPath.row==0 || indexPath.row == 1 || indexPath.row == 2){
+            cell.myMedalView.alpha = 1.0;
+            if(indexPath.row == 0){
+                cell.myMedalView.backgroundColor = [UIColor goldColor];
+            }else if(indexPath.row == 1){
+                cell.myMedalView.backgroundColor = [UIColor silverColor];
+            }else if(indexPath.row == 2){
+                cell.myMedalView.backgroundColor = [UIColor bronzeColor];
+            }
+        }
 
         if (indexPath.row < [self.topRank count]) {
             user = self.topRank[indexPath.row];

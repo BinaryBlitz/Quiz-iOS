@@ -33,8 +33,9 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)GETTopicsForMainOnSuccess:(void (^)(NSArray *fave, NSArray *friendsFave, NSArray *featured))success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)GETTopicsForMainOnSuccess:
+(void (^)(NSDictionary *resultDict))success
+                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - game
 

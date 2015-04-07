@@ -37,7 +37,7 @@
 
    // self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
     [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
-    NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
+   // NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
 
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
     

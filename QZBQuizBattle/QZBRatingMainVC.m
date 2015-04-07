@@ -13,6 +13,7 @@
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import <SVProgressHUD.h>
+#import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBRatingMainVC ()
 
@@ -37,8 +38,10 @@
     [self.leftButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [self.rightButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+    [self initStatusbarWithColor:[UIColor whiteColor]];
+    
+//    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+//    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
     
 //    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
 //    [self.navigationController.navigationBar
@@ -75,7 +78,7 @@
    
 
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+   // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if (self.topic) {
         
         NSString *title = nil;

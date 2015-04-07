@@ -11,10 +11,21 @@
 @class UAProgressView;
 
 @interface QZBEndSessionControllerViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UILabel *firstUserScore;
-@property (weak, nonatomic) IBOutlet UILabel *opponentUserScore;
 
 @property (weak, nonatomic) IBOutlet UAProgressView *circularProgress;
+@property (weak, nonatomic) IBOutlet UAProgressView *circularOldProgress;
+
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
+@property (weak, nonatomic) IBOutlet UIImageView *opponentImage;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *firstUserScore;
+@property (weak, nonatomic) IBOutlet UILabel *opponentScore;
+
+@property (weak, nonatomic) IBOutlet UILabel *resultOfSessionLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *resultScoreLabel;
 
 
 @end

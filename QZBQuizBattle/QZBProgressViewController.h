@@ -10,6 +10,7 @@
 #import "QZBUserProtocol.h"
 @class QZBGameTopic;
 @class QZBSession;
+@class QZBChallengeDescription;
 
 @interface QZBProgressViewController : UIViewController
 @property (strong, nonatomic) QZBGameTopic *topic;
@@ -25,6 +26,7 @@
 -(void)closeFinding;
 
 -(void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user;
+-(void)initSessionWithDescription:(QZBChallengeDescription *)description;
 @property (weak, nonatomic) IBOutlet UIButton *playOfflineButton;
 
 @end

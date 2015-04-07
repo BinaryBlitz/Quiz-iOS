@@ -22,12 +22,16 @@
 @property (assign, nonatomic) BOOL isFinished;
 //если пользователель нажал играть оффлайн когда бросил вызов
 
+@property(assign, nonatomic) NSInteger multiplier;
+
 @property(strong, nonatomic) NSString *sessionResult;
 
 @property (strong, nonatomic) QZBSession *gameSession;
 @property (strong, nonatomic) QZBQuestion *currentQuestion;
 @property (assign, nonatomic) NSUInteger roundNumber;
 @property (assign, nonatomic) BOOL isDoubled;
+
+@property (strong, nonatomic) QZBGameTopic *topic;
 
 @property(assign, nonatomic) NSInteger userBeginingScore;
 
@@ -90,11 +94,11 @@
     if (_gameSession) {
         return;
     }
-
     
     self.isFinished = NO;
     self.isGoing = YES;
     _gameSession = session;
+    self.multiplier = session.userMultiplier;
     
     self.userBeginingScore = session.userBeginingScore;
     
@@ -123,6 +127,10 @@
 
     self.firstUserName = session.firstUser.user.name;
     self.opponentUserName = session.opponentUser.user.name;
+}
+
+-(void)setTopicForSession:(QZBGameTopic *)topic{
+    self.topic = topic;
 }
 
 - (void)setBot:(QZBOpponentBot *)bot {
@@ -396,10 +404,13 @@
     
     self.isFinished = NO;
     self.isOfflineChallenge = NO;
+    self.multiplier = 1;
     
     [self.questionTimer invalidate];
     self.questionTimer = nil;
     self.sessionResult = nil;
+    
+    self.topic = nil;
 
     self.isGoing = NO;
     self.gameSession = nil;

@@ -14,6 +14,7 @@
 #import "QZBSessionManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
+#import "QZBChallengeDescription.h"
 #import "QZBCategory.h"
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
@@ -32,6 +33,7 @@
 @property (assign, nonatomic) BOOL setted;
 @property (assign, nonatomic) BOOL isOnline;
 @property (assign, nonatomic) BOOL isEntered;
+@property (strong, nonatomic) NSNumber *lobbyNumber;  // for accept challenges
 
 //@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное
 //управление
@@ -61,6 +63,7 @@
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
+    self.tabBarController.tabBar.hidden = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelCrossAction:)
@@ -90,11 +93,13 @@
     [super viewDidAppear:animated];
 
     NSLog(@"showed progress VC");
+    self.tabBarController.tabBar.hidden = YES;
 
     self.setted = NO;
     self.isCanceled = NO;
     self.isOnline = NO;
     self.isEntered = NO;
+
     self.lobby = nil;
     self.checkNeedStartTimer = nil;
 
@@ -116,10 +121,13 @@
 
     NSLog(@"progress disapear");
 
+    self.isChallenge = NO;
     self.lobby = nil;
     [self.timer invalidate];
     self.timer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)initNavigationBar:(NSString *)title {
@@ -134,12 +142,22 @@
 
     self.topicLabel.text = topic.name;
 
+    [[QZBSessionManager sessionManager] setTopicForSession:topic];
+
     //   topic.relationToCategory.name;
 
     [self initNavigationBar:topic.relationToCategory.name];
 }
 
 #pragma mark - custom init
+
+-(void)initSessionWithDescription:(QZBChallengeDescription *)description{
+    
+    self.topic = description.topic;
+    self.isChallenge = YES;
+    self.lobbyNumber = description.lobbyID;
+    
+}
 
 - (void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
     self.topic = topic;
@@ -155,9 +173,8 @@
 
 #pragma mark - Actions
 - (IBAction)cancelCrossAction:(id)sender {
- 
     [self closeFinding];
-    
+
     [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
         onSuccess:^(QZBSession *session, id bot) {
 
@@ -169,18 +186,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)closeFinding{
-    
+- (void)closeFinding {
     self.isCanceled = YES;
-    
+
     [self.checkNeedStartTimer invalidate];
     self.checkNeedStartTimer = nil;
-    
+
     [self.onlineWorker closeConnection];
     self.onlineWorker = nil;
-    
+
     [[QZBSessionManager sessionManager] closeSession];
-    
 }
 
 - (void)showAlertViewFromNotification:(NSNotification *)note {
@@ -211,7 +226,19 @@
 #pragma mark - init session
 // тестовая инициализация сессии
 - (void)initSession {
-    if (!self.user) {
+    if (self.isChallenge) {
+        [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:self.lobbyNumber
+            onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
+
+                [self settitingSession:session bot:bot];
+
+            }
+            onFailure:^(NSError *error, NSInteger statusCode) {
+                
+            }];
+    }
+
+   else if (!self.user) {
         [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
             onSuccess:^(QZBLobby *lobby) {
 
@@ -332,11 +359,12 @@
                 }
             } else {
                 self.isOnline = YES;
-                [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
+                [[QZBSessionManager sessionManager]
+                 setOnlineSessionWorker:self.onlineWorker];
 
-                if (!self.user) {
+                if (!self.user && self.isChallenge) {
                     dispatch_after(
-                        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)),
+                        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)),
                         dispatch_get_main_queue(), ^{
 
                             if ([self checkCanEnterGame]) {

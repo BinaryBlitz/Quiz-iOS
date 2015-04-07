@@ -17,15 +17,17 @@
 #import "QZBChallengeCell.h"
 #import "QZBChallengeDescription.h"
 #import "QZBGameTopic.h"
+#import "QZBProgressViewController.h"
 
 @interface QZBMainGameScreenTVC ()
 
 @property (strong, nonatomic) NSArray *faveTopics;
 @property (strong, nonatomic) NSArray *friendsTopics;
 @property (strong, nonatomic) NSArray *featured;
-@property (strong, nonatomic) NSArray *challenges;
+@property (strong, nonatomic) NSMutableArray *challenges;
 @property (strong, nonatomic) NSMutableArray *workArray;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) QZBChallengeDescription *challengeDescription;
 
 @end
 
@@ -36,7 +38,7 @@
     
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
-    self.mainTableView.backgroundColor = [UIColor lightGreenColor];
+    self.mainTableView.backgroundColor = [UIColor strongGreenColor];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor whiteColor];
@@ -46,6 +48,8 @@
     
     [self.mainTableView addSubview:self.refreshControl];
 
+    [self.refreshControl beginRefreshing];
+   
     
 }
 
@@ -65,6 +69,7 @@
 
     [self initStatusbarWithColor:[UIColor blackColor]];
     
+    
     [self reloadTopicsData];
 }
 
@@ -72,7 +77,19 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    [super prepareForSegue:segue sender:sender];
+    if([segue.identifier isEqualToString:@"showPreparingVC"] &&
+       self.challengeDescription){
+        QZBProgressViewController *destinationController =
+        segue.destinationViewController;
+        
+        [destinationController initSessionWithDescription:self.challengeDescription];
+        
+        self.challengeDescription = nil;
+        
+    }else{
+    
+        [super prepareForSegue:segue sender:sender];
+    }
     
     
 }
@@ -103,11 +120,11 @@
     
     NSArray *arr = self.workArray[section];
     
-    if(arr.count>3){
-        return 5;
-    }else{
+//    if(arr.count>3){
+//        return 5;
+//    }else{
         return arr.count;
-    }
+  //  }
     
 }
 
@@ -117,10 +134,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    NSArray *arr = self.workArray[indexPath.section];
+    
+    if([arr isEqualToArray:self.challenges]){
+        QZBChallengeCell *cell = [tableView
+                                  dequeueReusableCellWithIdentifier:@"challengeCell"];
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        
+        QZBChallengeDescription *descr = arr[indexPath.row];
+        
+        cell.topicNameLabel.text = descr.topicName;
+        cell.opponentNameLabel.text = descr.name;
+        
+        return cell;
+        
+        
+    }else{
+    
     
     QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
     
-    NSArray *arr = self.workArray[indexPath.section];
+   // NSArray *arr = self.workArray[indexPath.section];
     
     QZBGameTopic *topic = arr[indexPath.row];
     
@@ -136,22 +170,35 @@
     cell.topicName.text = topic.name;
    
     return cell;
+    }
     
     
 }
 
 
+
+
 -(UIColor *)colorForSection:(NSInteger)section{
     
-    if(section == 0){
-        return [UIColor lightGreenColor];
-    }else if(section==1){
-        return [UIColor lightBlueColor];
-    }else if(section == 2){
-        return [UIColor lightRedColor];
-    }else{
-        return [UIColor brightRedColor];
+    UIColor *color = [UIColor blackColor];
+    
+    NSArray *arr = self.workArray[section];
+    
+    if([arr isEqualToArray:self.faveTopics]){
+        color = [UIColor strongGreenColor];
+    }else if([arr isEqualToArray:self.friendsTopics]){
+        color = [UIColor lightBlueColor];
+        
+    } else if([arr isEqualToArray:self.featured]){
+        
+        color = [UIColor brightRedColor];
+        
+    }else if ([arr isEqualToArray:self.challenges]){
+        color = [UIColor lightGreenColor];
     }
+    
+  
+    return color;
     
 }
 
@@ -216,6 +263,8 @@
         
         text = @"Популярные темы";
         
+    }else if ([arr isEqualToArray:self.challenges]){
+        text = @"Брошенные вызовы";
     }
     
     
@@ -283,38 +332,132 @@
         
         [self performSegueWithIdentifier:@"showRate" sender:nil];
     }
+}
+- (IBAction)acceptChallengeAction:(UIButton *)sender {
     
+    UITableViewCell *cell = [self parentCellForView:sender];
+    
+    if(cell){
+        
+        NSIndexPath *ip = [self.mainTableView indexPathForCell: cell];
+        
+        NSMutableArray *arr = self.workArray[ip.section];
+        
+        QZBChallengeDescription *description = arr[ip.row];
+        
+        //NSNumber *lobbyNumber = description.lobbyID;
+        
+        self.challengeDescription = description;
+        
+        [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+        
+    }
+}
+
+- (IBAction)declineChallengeAction:(id)sender {
+    
+    UITableViewCell *cell = [self parentCellForView:sender];
+    
+    if(cell){
+        
+        NSIndexPath *ip = [self.mainTableView indexPathForCell: cell];
+        
+        NSMutableArray *arr = self.workArray[ip.section];
+        
+        QZBChallengeDescription *description = arr[ip.row];
+        
+        
+        NSNumber *lobbyNumber = description.lobbyID;
+        
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                       });
+        
+        [self.mainTableView beginUpdates];
+        
+        [self.mainTableView deleteRowsAtIndexPaths:@[ ip ]
+                              withRowAnimation:UITableViewRowAnimationRight];
+        [self.challenges removeObjectAtIndex:ip.row];
+        
+        if(self.challenges.count==0){
+            
+            NSUInteger numInWorkArray = [self.workArray indexOfObject:self.challenges];
+            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:numInWorkArray];
+            [self.mainTableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationRight];
+            [self.workArray removeObject:self.challenges];
+        }
+        
+        //[arr removeObjectAtIndex:ip.row];
+        
+        [self.mainTableView endUpdates];
+        
+        [[QZBServerManager sharedManager] POSTDeclineChallengeWhithLobbyID:lobbyNumber
+                                                                 onSuccess:^{
+                                                                     
+                                                                 }
+                                                                 onFailure:^(NSError *error, NSInteger statusCode){
+                                                                     
+                                                                 }];
+
+        
+        
+       // self.choosedTopic = arr[ip.row];
+        
+        //[self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+        // [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
+        
+       // [self performSegueWithIdentifier:@"showRate" sender:nil];
+    }
     
 }
+
+
+
+#pragma mark - reload topics
 
 -(void)reloadTopicsData{
     
     [[QZBServerManager sharedManager]
-     GETTopicsForMainOnSuccess:^(NSArray *fave, NSArray *friendsFave, NSArray *featured) {
+     GETTopicsForMainOnSuccess:^(NSDictionary *resultDict) {
+         
+//         @{@"favorite_topics":faveTopics,
+//           @"friends_favorite_topics":friendsFaveTopics,
+//           @"featured_topics":featuredTopics,
+//           @"challenges":challenges
+//           };
          
          [self.refreshControl endRefreshing];
          
-         self.faveTopics = fave;
-         self.friendsTopics = friendsFave;
-         self.featured = featured;
+         self.faveTopics = resultDict[@"favorite_topics"];
+         self.friendsTopics = resultDict[@"friends_favorite_topics"];
+         self.featured = resultDict[@"featured_topics"];
+         
+         NSArray *challArr = resultDict[@"challenges"];
+         
+         self.challenges = [challArr mutableCopy];
          
          [self.workArray removeAllObjects];
          
-         if(featured.count>0){
-             [self.workArray addObject:featured];
+         if(self.challenges.count > 0){
+             [self.workArray addObject:self.challenges];
          }
          
-         if(fave.count>0){
-             [self.workArray addObject:fave];
+         if(self.featured.count>0){
+             [self.workArray addObject:self.featured];
          }
          
-         if(friendsFave.count>0){
-             [self.workArray addObject:friendsFave];
+         if(self.friendsTopics.count>0){
+             [self.workArray addObject:self.friendsTopics];
          }
          
-         NSLog(@"in arr fave %@",fave);
+         if(self.faveTopics.count>0){
+             [self.workArray addObject:self.faveTopics];
+         }
+
          
-         [self.mainTableView reloadData];
+        [self.mainTableView reloadData];
          
      }
      onFailure:^(NSError *error, NSInteger statusCode){
@@ -324,28 +467,6 @@
      }];
     
 }
-
-
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    CGFloat sectionHeaderHeight = 48;
-//    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//    }
-//}
-
-//- (void)tableView:(UITableView *)tableView
-//      willDisplayCell:(UITableViewCell *)cell
-//    forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.row == 2) {
-//        tableView.backgroundColor = [UIColor lightGreenColor];
-//    }
-//    if (indexPath.row == [tableView numberOfRowsInSection:0]) {
-//        tableView.backgroundColor = [UIColor lightGreenColor];
-//    }
-//}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
