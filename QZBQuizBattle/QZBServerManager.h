@@ -37,6 +37,8 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 (void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic;
+
 #pragma mark - game
 
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic

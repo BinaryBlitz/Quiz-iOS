@@ -55,6 +55,10 @@
     
     QZBUserStatistic *statistic = user.userStatistics;
     
+    if(!statistic){
+        return;
+    }
+    
     NSNumber *wins = @(0);
     NSNumber *losses = @(0);
     NSNumber *draws = @(0);

@@ -1,9 +1,9 @@
 //
 //  QZBGameTopic.m
-//  QZBQuizBattle
+//  
 //
-//  Created by Andrey Mikhaylov on 22/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
+//  Created by Andrey Mikhaylov on 08/04/15.
+//
 //
 
 #import "QZBGameTopic.h"
@@ -13,8 +13,8 @@
 @implementation QZBGameTopic
 
 @dynamic name;
-@dynamic topic_id;
 @dynamic points;
+@dynamic topic_id;
 @dynamic relationToCategory;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  QZBFindFriendsCell.h
+//  UIButton+QZBButtonCategory.h
 //  QZBQuizBattle
 //
 //  Created by Andrey Mikhaylov on 07/04/15.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBFindFriendsCell : UITableViewCell
+@interface UIButton (QZBButtonCategory)
 
-@property(strong, nonatomic) UIView *shadowView;
+-(void)configButtonWithRoundedBorders;
 
 @end

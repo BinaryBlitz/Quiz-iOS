@@ -13,8 +13,9 @@
 #import "QZBServerManager.h"
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 #import "UIColor+QZBProjectColors.h"
+#import "QZBAchievementManager.h"
 
-@interface QZBAchievementCVC ()
+@interface QZBAchievementCVC ()<UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *achivArray;
 //@property (strong, nonatomic) SCLAlertView *alert;
@@ -29,21 +30,23 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.title = @"Достижения";
+    
+    
 
 
-    [self initAchivs];
+  //  [self initAchivs];
 
     self.achivTableView.dataSource = self;
     self.achivTableView.delegate = self;
 
-    [[QZBServerManager sharedManager] GETachievementsForUserID:@(1)
-        onSuccess:^(NSArray *achievements) {
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
-
+//    [[QZBServerManager sharedManager] GETachievementsForUserID:@(1)
+//        onSuccess:^(NSArray *achievements) {
+//
+//        }
+//        onFailure:^(NSError *error, NSInteger statusCode){
+//
+//        }];
+//
     // Do any additional setup after loading the view.
 }
 
@@ -62,6 +65,18 @@ navigation
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark - custom init
+
+-(void)initAchievmentsWithGettedAchievements:(NSArray *)achievs{
+    
+    self.achivArray = [[QZBAchievementManager sharedInstance]
+                      mergeAchievemtsWithGetted:achievs];
+    
+    [self.collectionView reloadData];
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -168,6 +183,14 @@ forItemAtIndexPath:(NSIndexPath
 
 }
 */
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    CGRect rect = [UIScreen mainScreen].bounds;
+    
+    CGFloat width = (CGRectGetWidth(rect)/3.0)-10;
+    
+    return CGSizeMake(width, width*1.5);
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

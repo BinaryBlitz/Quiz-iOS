@@ -16,7 +16,9 @@
 
 @interface QZBGameSessionViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UILabel *qestionLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *questionImageView;
 @property (weak, nonatomic) IBOutlet UIView *questBackground;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *answerButtons;

@@ -16,6 +16,7 @@
 #import "QZBUser.h"
 #import "QZBRegistrationChooserVC.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface QZBCategoryChooserVC ()
 
@@ -39,19 +40,6 @@
     _categories = [QZBCategory MR_findAll];
     
     [self initStatusbarWithColor:[UIColor blackColor]];
-
-//    [self.navigationController.navigationBar
-//        setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-//    [self.navigationController.navigationBar
-//        setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-
-    //  [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    //  [self.navigationController.navigationBar
-    //      setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-
-    // self.navigationController.navigationBar.barTintColor = [UIColor
-    // whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,14 +49,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-//    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-//
-//    self.navigationController.navigationItem.title = @"Все Категории";
-//
-//    [self.navigationController.navigationBar
-//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//    // self.navigationController.navigationBar.translucent = NO;
 
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         [self initCategories];
@@ -108,9 +88,22 @@
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     QZBCategory *category = self.categories[indexPath.row];
+    
 
     cell.categoryLabel.text = category.name;
+    NSURL *categoryBannerURL =
+    [NSURL URLWithString:category.banner_url];
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:categoryBannerURL
+                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                              timeoutInterval:60];
+    
+    [cell.categoryImageView  setImageWithURLRequest:imageRequest
+                                   placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
+                                            success:nil
+                                            failure:nil];
 
+  //  [cell.categoryImageView setImageWithURL:categoryBannerURL];
     return cell;
 }
 

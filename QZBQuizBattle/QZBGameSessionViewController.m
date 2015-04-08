@@ -15,6 +15,7 @@
 #import <JSBadgeView/JSBadgeView.h>
 #import <UAProgressView.h>
 #import "UIImageView+AFNetworking.h"
+#import "QZBCategory.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -100,6 +101,28 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     
 
     [self setNamesAndUserpics];
+    
+    QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
+    
+    QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
+    if(category){
+        
+        NSURL *url = [NSURL URLWithString:category.background_url];
+        NSURLRequest *imageRequest =
+        [NSURLRequest requestWithURL:url
+                         cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                     timeoutInterval:60];
+        //   UIImage *image = [[UIImage alloc] init];
+        
+        [self.backgroundImageView setImageWithURLRequest:imageRequest
+                                        placeholderImage:nil
+                                                 success:nil
+                                                 failure:nil];
+
+        
+    }
+    
+    
 }
 
 -(void)initCircularProgress{
@@ -320,8 +343,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     [UIView animateWithDuration:0.2
                      animations:^{
-                         self.questBackground.alpha = 1.0;
-                         weakSelf.qestionLabel.alpha = 1.0;
+                         self.questBackground.alpha = 0.8;
+                         self.qestionLabel.alpha = 1.0;
                      }];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),

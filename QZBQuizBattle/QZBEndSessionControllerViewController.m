@@ -82,51 +82,16 @@
                                                  name:@"QZBAchievmentGet"
                                                object:nil];
 
-    // [self setResultsOfSession];
-
-    //    self.firstUserScore.text = [NSString
-    //        stringWithFormat:@"%lu", (unsigned long)[QZBSessionManager
-    //        sessionManager].firstUserScore];
-    //
-    //    self.opponentUserScore.text = [NSString
-    //        stringWithFormat:@"%lu", (unsigned long)[QZBSessionManager
-    //        sessionManager].secondUserScore];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    //[[QZBSessionManager sessionManager] closeSession];
 
     self.tabBarController.tabBar.hidden = NO;
-
-    //  [self setResultsOfSession];
 }
 
 - (void)movingProgress {
-    //   __weak typeof(self)weakSelf = self;
-
-    //    [self.circularProgress setProgressChangedBlock:^(UAProgressView *progressView, float
-    //    progress) {
-    //
-    //        if(progress == 0.9999){
-    //            progress = 0.0;
-    //            progressView.progress = progress;
-    //        }
-    //        if(progress == 0){
-    //
-    //            UILabel *centralLabel = (UILabel *)progressView.centralView;
-    //
-    //            if(weakSelf.currentLevel<weakSelf.resultLevel){
-    //                centralLabel.text = [NSString stringWithFormat:@"%ld", weakSelf.currentLevel];
-    //                weakSelf.currentLevel++;
-    //            }
-    //
-    //            if(weakSelf.currentLevel >= weakSelf.resultLevel){
-    //                [progressView setProgress:weakSelf.resultProgress animated:YES];
-    //            }
-    //        }
-    //    }];
-
+ 
     NSInteger beginScore = [QZBSessionManager sessionManager].userBeginingScore;
     NSUInteger gettedScore = [QZBSessionManager sessionManager].firstUserScore;
     NSInteger multiplier = [QZBSessionManager sessionManager].multiplier;
@@ -156,14 +121,6 @@
     
     [self turningCircularView];
 
-    //  float needProgress = (float)(resultLevel-beginLevel)+resultProgress-beginProgress;
-
-    //    if(beginLevel == resultLevel){
-    //        [self.circularProgress setProgress:resultProgress
-    //                                  animated:YES];
-    //    }else{
-    //        [self.circularProgress setProgress:0.9999 animated:YES];
-    //    }
 }
 
 - (void)turningCircularView {
@@ -187,8 +144,7 @@
                            [self turningCircularView];
 
                        });
-        // self.currentLevel++;
-    }
+     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -200,16 +156,7 @@
     [self showAlertAboutAchievmentWithDict:note.object];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little
-preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (IBAction)rematchAction:(UIButton *)sender {
     [self moveToVCWithClass:[QZBProgressViewController class]];
 }
@@ -288,7 +235,7 @@ preparation before navigation
 
     NSInteger resultScore = userScore * multiplier;
 
-    self.resultScoreLabel.text = [NSString stringWithFormat:@"%ld", resultScore];
+    self.resultScoreLabel.text = [NSString stringWithFormat:@"%ld", (long)resultScore];
 
     [self movingProgress];
 

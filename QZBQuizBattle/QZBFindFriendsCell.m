@@ -13,7 +13,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [self addDropShadows];
+    self.shadowView = [self addDropShadows];
 }
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import "QZBStoreBoosterCell.h"
+#import "UIButton+QZBButtonCategory.h"
 
 @implementation QZBStoreBoosterCell
+
+- (void)awakeFromNib {
+    [self.purchaseButton configButtonWithRoundedBorders];
+    
+    
+}
 
 @end

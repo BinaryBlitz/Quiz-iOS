@@ -10,6 +10,8 @@
 #import "QZBCurrentUser.h"
 #import "QZBRegistrationChooserVC.h"
 #import "UIColor+QZBProjectColors.h"
+#import "QZBAchievementManager.h"
+#import "QZBServerManager.h"
 
 @interface QZBMainTBC ()
 
@@ -79,6 +81,9 @@
         }];
         
         //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
+    }else {
+        [[QZBAchievementManager sharedInstance] updateAchievements];
+        [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
     }
     
     

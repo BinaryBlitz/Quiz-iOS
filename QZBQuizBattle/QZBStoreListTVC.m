@@ -11,9 +11,11 @@
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBStoreBoosterCell.h"
 #import "QZBMainBoosterCell.h"
+#import "QZBDescriptionForHorizontalCell.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+
 
 @interface QZBStoreListTVC ()
 
@@ -52,8 +54,12 @@
     [self.refreshControl addTarget:self
                             action:@selector(reload)
                   forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.tintColor = [UIColor whiteColor];
 
     [self.tableView addSubview:self.refreshControl];
+    
+    self.tableView.backgroundColor = [UIColor veryDarkGreyColor];
     // [self reload];
     //[self.refreshControl beginRefreshing];
   //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
@@ -139,8 +145,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return 200.0;
-    } else {
-        return 44.0;
+    } else if(indexPath.row == 1){
+        return 32.0;
+    }else{
+        return 72.0;
     }
 }
 
@@ -149,7 +157,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _products.count + 1;
+    return _products.count + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -213,11 +221,23 @@
 
         return cell;
 
+    } else if(indexPath.row == 1){
+        QZBDescriptionForHorizontalCell *descrCell =
+        [tableView dequeueReusableCellWithIdentifier:@"descriptionForHorizontal"];
+        
+        descrCell.descriptionLabel.text = @"Платные топики";
+        descrCell.descriptionLabel.textColor = [UIColor whiteColor];
+        descrCell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
+        
+        return descrCell;
+    
     } else {
         QZBStoreBoosterCell *cell =
             [tableView dequeueReusableCellWithIdentifier:@"topicCell" forIndexPath:indexPath];
+        
+        cell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
 
-        SKProduct *product = (SKProduct *)self.products[indexPath.row - 1];
+        SKProduct *product = (SKProduct *)self.products[indexPath.row - 2];
         cell.IAPName.text = product.localizedTitle;
 
         [self.priceFormatter setLocale:product.priceLocale];
@@ -268,7 +288,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
         // UIButton *buyButton = (UIButton *)sender;
-        SKProduct *product = _products[indexPath.row - 1];
+        SKProduct *product = _products[indexPath.row - 2];
 
         [self buyProduct:product];
     }

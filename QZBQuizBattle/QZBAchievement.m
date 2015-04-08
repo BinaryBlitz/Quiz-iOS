@@ -43,4 +43,25 @@
     return self;
 }
 
+-(void)makeAchievementGetted{
+    self.isAchieved = YES;
+}
+
+-(void)makeAchievementUnGetted{
+    self.isAchieved = NO;
+}
+
+-(BOOL)isEqual:(id)object{
+    if([object isKindOfClass:[QZBAchievement class]]){
+        QZBAchievement *anotherAchievement = (QZBAchievement *)object;
+        
+        if([anotherAchievement.achievementID isEqualToNumber:self.achievementID]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
+
 @end

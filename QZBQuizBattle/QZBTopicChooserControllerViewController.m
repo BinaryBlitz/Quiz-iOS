@@ -17,6 +17,7 @@
 #import "QZBFriendsChallengeTVC.h"
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import <AFNetworking/UIImageView+AFNetworking.h> 
 
 
 @interface QZBTopicChooserControllerViewController ()
@@ -37,6 +38,10 @@
 
     self.topicTableView.delegate = self;
     self.topicTableView.dataSource = self;
+    
+    
+    
+    
 
     UIBarButtonItem *backButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@""
@@ -73,6 +78,19 @@
     
     [self initStatusbarWithColor:[UIColor blackColor]];
 
+    NSURL *url = [NSURL URLWithString:self.category.background_url];
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
+                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                              timeoutInterval:60];
+    
+    [self.backgroundImageView  setImageWithURLRequest:imageRequest
+                                   placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
+                                            success:nil
+                                            failure:nil];
+    
+    //[self.backgroundImageView setImageWithURL:url];
+    
     // self.navigationController.navigationBar.topItem.title = @"";
 }
 
@@ -226,7 +244,11 @@
  //   [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];  // redo for
                                                                                    // colors
     //    self.topicTableView.backgroundColor = [UIColor redColor];
+    
+    //NSURL *backURL = [NSURL URLWithString:category.banner_url];
 
+    
+    
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
 
     self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]

@@ -19,6 +19,8 @@
 - (instancetype)initWithName:(NSString *)name imageName:(NSString *)imgName;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
+-(void)makeAchievementGetted;
+-(void)makeAchievementUnGetted;
 
 
 

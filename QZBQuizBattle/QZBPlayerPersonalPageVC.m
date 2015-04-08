@@ -33,6 +33,9 @@
 #import "QZBRatingMainVC.h"
 #import "QZBProgressViewController.h"
 #import "QZBFriendsChallengeTVC.h"
+#import "QZBAchievementManager.h"
+#import "QZBAchievementCVC.h"
+#import "QZBFindFriendsCell.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -67,13 +70,15 @@ static NSInteger topicsOffset = 7;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
 
+
+
 @end
 
 @implementation QZBPlayerPersonalPageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
     //  [self initAchivs];
 
@@ -82,6 +87,9 @@ static NSInteger topicsOffset = 7;
     self.playerTableView.backgroundColor = [UIColor middleDarkGreyColor];
 
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    
+    
     //    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     //
     //    UIBarButtonItem *backButtonItem =
@@ -214,7 +222,7 @@ static NSInteger topicsOffset = 7;
 
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
-            [SVProgressHUD showWithStatus:QZBNoInternetConnectionMessage];
+            [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
 
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)),
                            dispatch_get_main_queue(), ^{
@@ -277,9 +285,7 @@ static NSInteger topicsOffset = 7;
 
         [self playerCellCustomInit:playerCell];
 
-        // [playerCell addDropShadows];
-
-        // cell = playerCell;
+        
         return playerCell;
     } else if (indexPath.row == 1) {
         QZBStatiscticCell *userStatisticCell =
@@ -311,15 +317,19 @@ static NSInteger topicsOffset = 7;
         if (self.friends.count == 0) {
             if (self.isCurrent) {
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
+                QZBFindFriendsCell *ffCell = (QZBFindFriendsCell *)cell;
+                if(self.friends){
+                    [ffCell.shadowView removeFromSuperview];
+                }
                 cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
                 return cell;
             } else {
                 QZBDescriptionForHorizontalCell *descrForHorizontal =
                     [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+               // [descrForHorizontal.shadowView removeFromSuperview];
 
                 descrForHorizontal.descriptionLabel.text =
-                    @"У игрока еще нет друзей, добавьте его в друзья "
-                    @"=)";
+                    @"У игрока еще нет друзей, добавьте его в друзья";
                 return descrForHorizontal;
 
                 // cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
@@ -328,9 +338,7 @@ static NSInteger topicsOffset = 7;
             QZBFriendHorizontalCell *friendsHorizontalCell =
                 [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
 
-            // friendsHorizontalCell.buttonTitle = @"Показать\n всех";
-
-            // [friendsHorizontalCell addDropShadows];
+            
 
             [friendsHorizontalCell setFriendArray:self.friends];
 
@@ -388,9 +396,23 @@ static NSInteger topicsOffset = 7;
         //        //        }
     } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
         if (self.isCurrent) {
-            cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
-            cell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
-            return cell;
+            if(!self.friends.count==0){
+                cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
+                cell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
+              //  QZBFindFriendsCell *ffCell = (QZBFindFriendsCell *)cell;
+//                if(ffCell.shadowView){
+//                    [ffCell.shadowView removeFromSuperview];
+//                }
+//                [ffCell addDropShadows];
+                return cell;
+            }else{
+                QZBDescriptionForHorizontalCell *descrCell =
+                [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+                descrCell.descriptionLabel.text = @"";
+                descrCell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
+                return descrCell;
+                
+            }
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
             return cell;
@@ -589,7 +611,14 @@ static NSInteger topicsOffset = 7;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-    if ([segue.identifier isEqualToString:@"showFriendsList"]) {
+    if([segue.identifier isEqualToString:@"showAchivements"]){
+        QZBAchievementCVC *destinationVC = segue.destinationViewController;
+        
+        [destinationVC initAchievmentsWithGettedAchievements:self.achivArray];
+        
+    }
+    
+    else if ([segue.identifier isEqualToString:@"showFriendsList"]) {
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
         [vc setFriendsOwner:self.user friends:self.friends friendsRequests:self.friendRequests];
@@ -632,10 +661,19 @@ static NSInteger topicsOffset = 7;
 
 #pragma mark - actions
 - (IBAction)showAchivements:(UIButton *)sender {
-    [self performSegueWithIdentifier:@"showAchivements" sender:nil];
+    [self showAchievementsTapAction:nil];
 }
 - (IBAction)showFriendsAction:(id)sender {
+    [self showFriendsTapAction:nil];
+}
+
+-(void)showFriendsTapAction:(id)sender{
+    NSLog(@"tapped gesture");
     [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
+}
+
+-(void)showAchievementsTapAction:(id)sender{
+    [self performSegueWithIdentifier:@"showAchivements" sender:nil];
 }
 
 - (void)multiUseButtonAction:(id)sender {
@@ -788,6 +826,16 @@ static NSInteger topicsOffset = 7;
     //  [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
 
     [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
+    
+    NSNumber *allAchievementsCount = @([QZBAchievementManager sharedInstance].achievements.count);
+    
+    NSNumber *currentAchievementsCount = @(self.achivArray.count);
+    
+    playerCell.achievementLabel.text = [NSString
+                                        stringWithFormat:@"%@/%@",
+                                        currentAchievementsCount,allAchievementsCount];
+    
+        
 
     // cell = playerCell;
 }

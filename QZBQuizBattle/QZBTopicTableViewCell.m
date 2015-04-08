@@ -15,7 +15,6 @@
     self.topicProgressView.lineWidth = 4;
     self.topicProgressView.fillOnTouch = NO;
     self.topicProgressView.tintColor = [UIColor blackColor];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -24,23 +23,20 @@
     // Configure the view for the selected state
 }
 
-
--(void)initCircularProgressWithLevel:(NSInteger)level progress:(float)progress{
-    
-    
+- (void)initCircularProgressWithLevel:(NSInteger)level progress:(float)progress {
     UILabel *centralLabel = [[UILabel alloc]
-                             initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.topicProgressView.frame) / 2.0,
-                                                      CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
+        initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.topicProgressView.frame) / 2.0,
+                                 CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
     
-    
+    centralLabel.adjustsFontSizeToFitWidth = YES;
+
     // NSLog(@"")
-    
+
     centralLabel.text = [NSString stringWithFormat:@"%ld", level];
     centralLabel.textAlignment = NSTextAlignmentCenter;
-    
+
     self.topicProgressView.progress = progress;
     self.topicProgressView.centralView = centralLabel;
-
 }
 
 @end

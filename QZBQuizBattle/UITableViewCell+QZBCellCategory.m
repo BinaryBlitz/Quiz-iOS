@@ -11,7 +11,7 @@
 @implementation UITableViewCell (QZBCellCategory)
 
 
--(void)addDropShadows{
+-(UIView *)addDropShadows{
     
 //    CALayer *bottomBorder = [CALayer layer];
 //    bottomBorder.frame    = CGRectMake(0.0f,
@@ -69,6 +69,7 @@
     
     [self addSubview:view];
 
+    return view;
     
     
 }

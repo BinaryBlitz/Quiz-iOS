@@ -9,6 +9,7 @@
 #import "QZBPlayerInfoCell.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import "UITableViewCell+QZBCellCategory.h"
+#import "UIButton+Badge.h"
 
 @interface QZBPlayerInfoCell ()
 
@@ -21,11 +22,13 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    NSLog(@"awake from nib");
-    self.badgeView = [[JSBadgeView alloc] initWithParentView:self.friendsButton
-                                                   alignment:JSBadgeViewAlignmentTopRight];
+   // NSLog(@"awake from nib");
+//    self.badgeView = [[JSBadgeView alloc] initWithParentView:self.friendsButton
+//                                                   alignment:JSBadgeViewAlignmentTopRight];
     
     //[self addDropShadows];
+   
+    
     
     
     
@@ -35,11 +38,18 @@
     
     NSLog(@"badge count %ld", (long)count);
     if(count <= 0){
-        self.badgeView.badgeText = @"";
-        self.badgeView.hidden = YES;
+       // self.badgeView.badgeText = @"";
+       // self.badgeView.hidden = YES;
+        
+        self.friendsButton.badgeValue = nil;
     } else{
 
-        self.badgeView.badgeText =  [NSString stringWithFormat:@"%ld", (long)count];
+        self.friendsButton.badgeOriginX = 3*self.friendsButton.bounds.size.width/4;
+        self.friendsButton.badgeOriginY = self.friendsButton.bounds.size.height/5;
+        self.friendsButton.badgeMinSize = 10;
+        
+        self.friendsButton.badgeValue = [NSString stringWithFormat:@"%ld", (long)count];
+       // self.badgeView.badgeText =  [NSString stringWithFormat:@"%ld", (long)count];
     }
 }
 
