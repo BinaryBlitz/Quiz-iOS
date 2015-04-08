@@ -12,14 +12,16 @@
 #import "QZBAnotherUser.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBFriendsRequestsTVC.h"
+#import "QZBRequestUser.h"
 #import <JSBadgeView/JSBadgeView.h>
-
+#import "UIBarButtonItem+Badge.h"
 
 @interface QZBFriendsTVC ()
 
 @property (strong, nonatomic) NSArray *friends;          // QZBAnotherUser
 @property (strong, nonatomic) NSArray *friendsRequests;  // QZBAnotherUser
 @property (strong, nonatomic) id<QZBUserProtocol> user;
+
 
 @end
 
@@ -59,15 +61,34 @@
                 friends:(NSArray *)friends
         friendsRequests:(NSArray *)friendsRequest {
     if (friendsRequest && friendsRequest.count > 0) {
-        NSString *requestTitle =
-            [NSString stringWithFormat:@"Заявки (%ld)", (unsigned long)friendsRequest.count];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0,0,100, 20);
+        [button addTarget:self action:@selector(showFriendsRequestsAction:) forControlEvents:UIControlEventTouchUpInside];
+        
 
+        NSString *requestTitle = @"Заявки";
+
+        [button setTitle:requestTitle forState:UIControlStateNormal];
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        
         self.friendsRequests = friendsRequest;
         self.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithTitle:requestTitle
-                                             style:UIBarButtonItemStyleBordered
-                                            target:self
-                                            action:@selector(showFriendsRequestsAction:)];
+        [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        NSInteger count = 0;
+        if(friendsRequest ){
+            count = [self badgeNumberWithRequestFriends:friendsRequest];
+        }
+        if(count>0){
+            button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+            //[NSString stringWithFormat:@"Заявки (%ld)", count];
+            self.navigationItem.rightBarButtonItem.badgeValue =
+            [NSString stringWithFormat:@"%ld",(long)count];
+            
+        }
+        
+       
 
     } else {
         // self.friendsRequestsButton.enabled = NO;
@@ -75,6 +96,18 @@
 
     [self setFriendsOwner:user andFriends:friends];
 }
+
+- (NSInteger)badgeNumberWithRequestFriends:(NSArray *)arr {
+    NSInteger count = 0;
+    
+    for (QZBRequestUser *user in arr) {
+        if (!user.viewed) {
+            count++;
+        }
+    }
+    return count;
+}
+
 
 - (void)setFriendsOwner:(id<QZBUserProtocol>)user friendsRequests:(NSArray *)friendsRequest {
 }

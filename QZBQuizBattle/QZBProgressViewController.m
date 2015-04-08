@@ -8,6 +8,8 @@
 
 #import "QZBProgressViewController.h"
 #import "QZBGameSessionViewController.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
+#import "CoreData+MagicalRecord.h"
 #import "QZBLobby.h"
 #import "QZBSession.h"
 #import "QZBOnlineSessionWorker.h"
@@ -61,6 +63,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    QZBCategory *category =
+        [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:self.topic];
+    if (category) {
+       
+        //[self initNavigationBar:topic.relationToCategory.name];
+        [self initScreenWithCategory:category];
+    }
+
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
     self.tabBarController.tabBar.hidden = YES;
@@ -88,6 +99,17 @@
                                                object:nil];
     //  @"QZBChallengeDeclined"
 }
+
+//- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {
+//    QZBGameTopic *exitedTopic =
+//        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
+//    QZBCategory *category = nil;
+//
+//    if (exitedTopic) {
+//        category = exitedTopic.relationToCategory;
+//    }
+//    return category;
+//}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -135,6 +157,26 @@
     self.title = title;
 }
 
+- (void)initScreenWithCategory:(QZBCategory *)category {
+    if (category) {
+        [self initNavigationBar:category.name];
+
+        NSURL *url = [NSURL URLWithString:category.background_url];
+        NSURLRequest *imageRequest =
+            [NSURLRequest requestWithURL:url
+                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                         timeoutInterval:60];
+        //   UIImage *image = [[UIImage alloc] init];
+
+        [self.backgroundImageView
+            setImageWithURLRequest:imageRequest
+                  placeholderImage:nil
+                           success:nil
+                           failure:nil];
+       // [self.view sendSubviewToBack:self.backgroundImageView];
+    }
+}
+
 - (void)setTopic:(QZBGameTopic *)topic {
     _topic = topic;
 
@@ -146,17 +188,21 @@
 
     //   topic.relationToCategory.name;
 
-    [self initNavigationBar:topic.relationToCategory.name];
+    //    QZBCategory *category = [self tryFindRelatedCategoryToTopic:self.topic];
+    //    if (category) {
+    //        NSLog(@"category backgroundURL %@", category.background_url);
+    //
+    //        //[self initNavigationBar:topic.relationToCategory.name];
+    //        [self initScreenWithCategory:category];
+    //    }
 }
 
 #pragma mark - custom init
 
--(void)initSessionWithDescription:(QZBChallengeDescription *)description{
-    
+- (void)initSessionWithDescription:(QZBChallengeDescription *)description {
     self.topic = description.topic;
     self.isChallenge = YES;
     self.lobbyNumber = description.lobbyID;
-    
 }
 
 - (void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
@@ -233,12 +279,12 @@
                 [self settitingSession:session bot:bot];
 
             }
-            onFailure:^(NSError *error, NSInteger statusCode) {
-                
+            onFailure:^(NSError *error, NSInteger statusCode){
+
             }];
     }
 
-   else if (!self.user) {
+    else if (!self.user) {
         [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
             onSuccess:^(QZBLobby *lobby) {
 
@@ -359,8 +405,7 @@
                 }
             } else {
                 self.isOnline = YES;
-                [[QZBSessionManager sessionManager]
-                 setOnlineSessionWorker:self.onlineWorker];
+                [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
 
                 if (!self.user && self.isChallenge) {
                     dispatch_after(

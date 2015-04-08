@@ -2,7 +2,9 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14D113c" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="QZBCategory" representedClassName="QZBCategory" syncable="YES">
         <attribute name="background" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="background_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="banner" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="banner_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="category_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="relationToTopic" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QZBGameTopic" inverseName="relationToCategory" inverseEntity="QZBGameTopic" syncable="YES"/>
@@ -14,7 +16,7 @@
         <relationship name="relationToCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QZBCategory" inverseName="relationToTopic" inverseEntity="QZBCategory" syncable="YES"/>
     </entity>
     <elements>
-        <element name="QZBCategory" positionX="2403" positionY="-153" width="128" height="120"/>
+        <element name="QZBCategory" positionX="2403" positionY="-153" width="128" height="148"/>
         <element name="QZBGameTopic" positionX="2635" positionY="-153" width="128" height="103"/>
     </elements>
 </model>

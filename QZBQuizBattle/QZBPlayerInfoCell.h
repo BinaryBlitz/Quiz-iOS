@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *friendsButton;
 @property (weak, nonatomic) IBOutlet UIButton *achievmentsButton;
 @property (weak, nonatomic) IBOutlet UILabel *friendsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *achievementLabel;
 
 -(void)setBAdgeCount:(NSInteger)count;
 

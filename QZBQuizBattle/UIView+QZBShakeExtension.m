@@ -32,4 +32,31 @@
         }];
 }
 
+-(void)addDropShadowsForView{
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                            -10,
+                                                            CGRectGetWidth([UIScreen
+                                                                            mainScreen].bounds),
+                                                            10)];
+    
+    view.backgroundColor = [UIColor clearColor];
+     self.clipsToBounds = YES;
+    //self.layer.masksToBounds = YES;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(0.0f, 4.0f);
+    view.layer.shadowColor = [[UIColor blackColor] CGColor];
+    view.layer.shadowRadius = 5;
+    view.layer.shadowOpacity = .4;
+    
+    [view.layer setShadowPath:[UIBezierPath
+                               bezierPathWithRect:view.bounds].CGPath];
+    
+    [self addSubview:view];
+    
+    
+    
+}
+
+
 @end

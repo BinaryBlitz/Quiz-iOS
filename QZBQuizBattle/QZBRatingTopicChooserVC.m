@@ -9,6 +9,8 @@
 #import "QZBRatingTopicChooserVC.h"
 #import "QZBRatingMainVC.h"
 #import "QZBGameTopic.h"
+#import "QZBCategory.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface QZBRatingTopicChooserVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -21,6 +23,14 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSURL *url = [NSURL URLWithString:self.category.background_url];
+    
+    [self.backgroundImageView setImageWithURL:url];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -29,6 +39,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [super tableView:tableView numberOfRowsInSection:section] + 1;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {

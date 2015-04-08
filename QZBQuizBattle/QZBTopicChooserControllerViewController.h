@@ -18,6 +18,7 @@
 @property (strong, nonatomic, readonly) NSArray *topics;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 
 - (void)initTopicsWithCategory:(QZBCategory *)category;

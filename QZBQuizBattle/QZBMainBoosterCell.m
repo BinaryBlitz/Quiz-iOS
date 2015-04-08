@@ -7,6 +7,7 @@
 //
 
 #import "QZBMainBoosterCell.h"
+#import "UIButton+QZBButtonCategory.h"
 
 @implementation QZBMainBoosterCell
 
@@ -14,9 +15,12 @@
     // Initialization code
     //self.doubleBoosterButton.backgroundColor = [UIColor greenColor];
     
-    [self configButton:self.doubleBoosterButton];
-    [self configButton:self.tripleBoosterButton];
-    [self configButton:self.fiveTimesBoosterButton];
+    [self.doubleBoosterButton configButtonWithRoundedBorders];
+    [self.tripleBoosterButton configButtonWithRoundedBorders];
+    [self.fiveTimesBoosterButton configButtonWithRoundedBorders];
+//    [self configButton:self.doubleBoosterButton];
+//    [self configButton:self.tripleBoosterButton];
+//    [self configButton:self.fiveTimesBoosterButton];
     
     
 }

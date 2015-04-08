@@ -11,5 +11,6 @@
 @interface QZBCategoryTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *categoryImageView;
 
 @end

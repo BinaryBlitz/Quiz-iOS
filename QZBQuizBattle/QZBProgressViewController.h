@@ -16,6 +16,7 @@
 @property (strong, nonatomic) QZBGameTopic *topic;
 
 //@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelCrossButton;
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;
 @property (assign, nonatomic) BOOL isChallenge;//for subclasses

@@ -69,7 +69,14 @@
     }
     
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 0){
+        return 47.0;
+    }else{
+        return 119.0;
+    }
+    
+}
 
 /*
 #pragma mark - Navigation

@@ -10,4 +10,9 @@
 
 @implementation QZBAchievementCollectionCell
 
+-(void)awakeFromNib{
+    self.achievementTitle.adjustsFontSizeToFitWidth = YES;
+   // self.achievementTitle.minimumScaleFactor = 1.5;
+}
+
 @end

@@ -1,9 +1,9 @@
 //
 //  QZBCategory.h
-//  QZBQuizBattle
+//  
 //
-//  Created by Andrey Mikhaylov on 22/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
+//  Created by Andrey Mikhaylov on 08/04/15.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -13,8 +13,12 @@
 
 @interface QZBCategory : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSData * background;
+@property (nonatomic, retain) NSData * banner;
 @property (nonatomic, retain) NSNumber * category_id;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * banner_url;
+@property (nonatomic, retain) NSString * background_url;
 @property (nonatomic, retain) NSSet *relationToTopic;
 @end
 

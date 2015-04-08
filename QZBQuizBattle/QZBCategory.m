@@ -1,9 +1,9 @@
 //
 //  QZBCategory.m
-//  QZBQuizBattle
+//  
 //
-//  Created by Andrey Mikhaylov on 22/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
+//  Created by Andrey Mikhaylov on 08/04/15.
+//
 //
 
 #import "QZBCategory.h"
@@ -12,8 +12,12 @@
 
 @implementation QZBCategory
 
-@dynamic name;
+@dynamic background;
+@dynamic banner;
 @dynamic category_id;
+@dynamic name;
+@dynamic banner_url;
+@dynamic background_url;
 @dynamic relationToTopic;
 
 @end

@@ -18,6 +18,7 @@
 #import "QZBChallengeDescription.h"
 #import "QZBGameTopic.h"
 #import "QZBProgressViewController.h"
+#import "UIView+QZBShakeExtension.h"
 
 @interface QZBMainGameScreenTVC ()
 
@@ -248,7 +249,13 @@
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont boldSystemFontOfSize:20];
     
+    if(section>0){
+        [view addDropShadowsForView];
+    }
+    
     [view addSubview:label];
+    
+    
     
     
     NSString *text = @"";
@@ -456,13 +463,21 @@
 
          
         [self.mainTableView reloadData];
-         
+         UITabBarController *tabController = self.tabBarController;
+         UITabBarItem *tabbarItem = tabController.tabBar.items[0];
+         tabbarItem.badgeValue = nil;
      }
      onFailure:^(NSError *error, NSInteger statusCode){
          [self.refreshControl endRefreshing];
+         UITabBarController *tabController = self.tabBarController;
+         UITabBarItem *tabbarItem = tabController.tabBar.items[0];
+         tabbarItem.badgeValue = nil;
          
+         [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
          
      }];
+    
+   // self.tabBarItem.badgeValue = nil;
     
 }
 
