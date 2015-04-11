@@ -308,7 +308,7 @@
 
 
 - (void)productPurchased:(NSNotification *)notification {
-    NSString *productIdentifier = notification.object;
+  ///  NSString *productIdentifier = notification.object;
     [self.tableView reloadData];
 //    [_products enumerateObjectsUsingBlock:^(SKProduct *product, NSUInteger idx, BOOL *stop) {
 //        if ([product.productIdentifier isEqualToString:productIdentifier]) {

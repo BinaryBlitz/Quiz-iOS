@@ -64,6 +64,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    self.topicLabel.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.topicLabel.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+    self.topicLabel.layer.shadowRadius = 2.0;
+    self.topicLabel.layer.shadowOpacity = 0.5;
+    
     QZBCategory *category =
         [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:self.topic];
     if (category) {

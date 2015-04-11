@@ -17,6 +17,8 @@
 #import <UAProgressView.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <JSBadgeView.h>
+#import "NSObject+QZBSpecialCategory.h"
+
 
 @interface QZBEndSessionControllerViewController ()
 
@@ -103,13 +105,13 @@
     NSInteger resultLevel = 0;
     float resultProgress = 0.0;
 
-    [self calculateLevel:&beginLevel levelProgress:&beginProgress fromScore:beginScore];
+    [NSObject calculateLevel:&beginLevel levelProgress:&beginProgress fromScore:beginScore];
 
     self.circularProgress.centralView = [self labelForNum:beginLevel inView:self.circularProgress];
 
     [self.circularProgress setProgress:beginProgress animated:NO];
 
-    [self calculateLevel:&resultLevel levelProgress:&resultProgress fromScore:newScore];
+    [NSObject calculateLevel:&resultLevel levelProgress:&resultProgress fromScore:newScore];
 
     self.resultLevel = resultLevel;
     self.currentLevel = beginLevel;

@@ -131,8 +131,8 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
 
     //[self provideContentForProductWithTansaction:transaction];
-    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
+//    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+//    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
 
     //  NSLog(@"receipt %@ %@", receiptURL, receipt);
 

@@ -65,46 +65,48 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     // NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
 
     for (NSDictionary *d in arrayOfQuestionDicts) {
-        NSDictionary *questDict = [d objectForKey:@"question"];
-        NSString *questText = [questDict objectForKey:@"content"];
-        NSInteger questionID = [[d objectForKey:@"id"] integerValue];
-        NSInteger correctAnswer = -1;
-        NSArray *answersDicts = [questDict objectForKey:@"answers"];
-        NSMutableArray *answers = [NSMutableArray array];
+//        NSDictionary *questDict = [d objectForKey:@"question"];
+//        NSString *questText = [questDict objectForKey:@"content"];
+//        NSInteger questionID = [[d objectForKey:@"id"] integerValue];
+//        NSInteger correctAnswer = -1;
+//        NSArray *answersDicts = [questDict objectForKey:@"answers"];
+//        NSMutableArray *answers = [NSMutableArray array];
+//
+//        // NSInteger i = 0;
+//        for (NSDictionary *answDict in answersDicts) {
+//            // NSLog(@"%@", answDict);
+//
+//            NSString *textOfAnswer = [answDict objectForKey:@"content"];
+//            NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];
+//            QZBAnswerTextAndID *answerWithId =
+//                [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer answerID:answerID];
+//
+//            [answers addObject:answerWithId];
+//            NSNumber *isRight = [answDict objectForKey:@"correct"];
+//            if ([isRight isEqual:@(1)]) {
+//                correctAnswer = answerID;  //[[answDict objectForKey:@"id"] integerValue];
+//            }
+//            //  i++;
+//        }
+//
+//        //перемешивает ответы в массиве(json приходит так, что правильный всегда
+//        //первый
+//        NSUInteger count = [answers count];
+//        for (NSUInteger i = 0; i < count; ++i) {
+//            NSUInteger nElements = count - i;
+//            NSUInteger n = (arc4random() % nElements) + i;
+//            [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
+//        }
+        
+        QZBQuestion *question = [[QZBQuestion alloc] initWithDictionary:d];
 
-        // NSInteger i = 0;
-        for (NSDictionary *answDict in answersDicts) {
-            // NSLog(@"%@", answDict);
+//        QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:@""
+//                                                          question:questText
+//                                                           answers:answers
+//                                                       rightAnswer:correctAnswer
+//                                                        questionID:questionID];
 
-            NSString *textOfAnswer = [answDict objectForKey:@"content"];
-            NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];
-            QZBAnswerTextAndID *answerWithId =
-                [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer answerID:answerID];
-
-            [answers addObject:answerWithId];
-            NSNumber *isRight = [answDict objectForKey:@"correct"];
-            if ([isRight isEqual:@(1)]) {
-                correctAnswer = answerID;  //[[answDict objectForKey:@"id"] integerValue];
-            }
-            //  i++;
-        }
-
-        //перемешивает ответы в массиве(json приходит так, что правильный всегда
-        //первый
-        NSUInteger count = [answers count];
-        for (NSUInteger i = 0; i < count; ++i) {
-            NSUInteger nElements = count - i;
-            NSUInteger n = (arc4random() % nElements) + i;
-            [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
-        }
-
-        QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:@""
-                                                          question:questText
-                                                           answers:answers
-                                                       rightAnswer:correctAnswer
-                                                        questionID:questionID];
-
-        NSLog(@"%ld", (long)questionID);
+       // NSLog(@"%ld", (long)questionID);
         [questions addObject:question];
     }
 

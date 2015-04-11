@@ -56,7 +56,7 @@
     NSString *name = achievDict[@"name"];
     
     
-    [alert showCustom:self
+    [alert showCustom:self.navigationController
                 image:[UIImage imageNamed:@"achiv"]
                 color:[UIColor lightBlueColor]
                 title:name
@@ -66,13 +66,13 @@
     
 }
 
--(void)calculateLevel:(NSInteger *)level levelProgress:(float *)levelProgress fromScore:(NSInteger)score{
-
-
-    *level = score/100;
-    *levelProgress = (score%100)/100.0;
-    
-}
+//-(void)calculateLevel:(NSInteger *)level levelProgress:(float *)levelProgress fromScore:(NSInteger)score{
+//
+//
+//    *level = score/100;
+//    *levelProgress = (score%100)/100.0;
+//    
+//}
 
 -(UILabel *)labelForNum:(NSInteger) num inView:(UIView *)view{
     

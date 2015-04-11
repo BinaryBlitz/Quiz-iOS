@@ -8,6 +8,8 @@
 
 #import "QZBQuestion.h"
 #import "QZBAnswerTextAndID.h"
+#import "QZBServerManager.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface QZBQuestion ()
 
@@ -46,6 +48,7 @@
         
         NSDictionary *questDict = [dict objectForKey:@"question"];
         NSString *questText = [questDict objectForKey:@"content"];
+        
         NSInteger questionID = [[dict objectForKey:@"id"] integerValue];
         NSInteger correctAnswer = -1;
         NSArray *answersDicts = [questDict objectForKey:@"answers"];
@@ -76,6 +79,24 @@
             NSUInteger n = (arc4random() % nElements) + i;
             [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
         }
+        
+        NSString *imageURLAsString = questDict[@"image_url"];
+        
+        if(imageURLAsString && ![imageURLAsString isEqual:[NSNull null]]){
+            
+            NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:imageURLAsString];
+            
+            NSURL *imgURL = [NSURL URLWithString:urlStr];
+            
+            UIImageView *iv = [[UIImageView alloc] init];
+            
+            [iv setImageWithURL:imgURL];
+            
+            self.imageURL = imgURL;
+        }else{
+            self.imageURL = nil;
+        }
+        
 
         self.answers = answers;
         self.question = questText;

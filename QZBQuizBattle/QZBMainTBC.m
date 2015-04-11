@@ -32,6 +32,19 @@
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
     [currentWindow addSubview:view];
     
+    UITabBar *tabBar = self.tabBar;
+    
+    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+    
+    UIImage *img = [UIImage imageNamed:@"topRateIcon"];
+    
+   // (void)[tabBarItem4 initWithTitle:nil image:img selectedImage:nil];
+    [tabBarItem4 setImage:img ];
+    tabBarItem4.title = nil;
+    
+    for(UITabBarItem *item in tabBar.items){
+        item.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    }
     
     
     // Do any additional setup after loading the view.
@@ -48,6 +61,7 @@
 //        [backgrView removeFromSuperview];
 //    });
 
+    self.tabBar.translucent = NO;
     
     
     

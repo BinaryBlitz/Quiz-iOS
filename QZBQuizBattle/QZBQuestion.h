@@ -17,11 +17,14 @@
 @property (nonatomic, strong, readonly) NSArray *answers;  // QZBAnswerTextAndID
 @property (nonatomic, assign, readonly) NSUInteger rightAnswer;
 @property (assign, nonatomic, readonly) NSInteger questionId;
+@property (strong, nonatomic, readonly) NSURL *imageURL;
 
 - (instancetype)initWithTopic:(NSString *)topic
                      question:(NSString *)question
                       answers:(NSArray *)answers
                   rightAnswer:(NSUInteger)rightAnswer
                    questionID:(NSInteger)questionID;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @end

@@ -18,6 +18,7 @@
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <AFNetworking/UIImageView+AFNetworking.h> 
+#import "NSObject+QZBSpecialCategory.h"
 
 
 @interface QZBTopicChooserControllerViewController ()
@@ -152,7 +153,7 @@
     NSInteger level = 0;
     float progress = 0.0;
     
-    [self calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+    [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
     
     [cell initCircularProgressWithLevel:level progress:progress];
     
@@ -182,7 +183,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.choosedIndexPath isEqual:indexPath]) {
-        return 120.0f;
+        return 130.0f;
     }
     return 74.0f;
 }

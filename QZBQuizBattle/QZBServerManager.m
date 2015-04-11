@@ -246,9 +246,10 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
     if (![QZBCurrentUser sharedInstance].user.api_key) {
         if (failure) {
-            failure(nil, 0);
+            failure(nil, -1);
         }
         return;
     }

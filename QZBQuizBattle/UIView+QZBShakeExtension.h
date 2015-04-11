@@ -11,6 +11,7 @@
 @interface UIView (QZBShakeExtension)
 
 - (void)shakeView;
--(void)addDropShadowsForView;
+- (void)addDropShadowsForView;
+- (void)addShadows;
 
 @end

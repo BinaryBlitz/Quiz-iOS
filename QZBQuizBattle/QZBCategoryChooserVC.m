@@ -37,7 +37,13 @@
 
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
-    _categories = [QZBCategory MR_findAll];
+    
+     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                            ascending:YES];
+    
+    _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[ sort ]]];
+    
+   // _categories = [QZBCategory MR_findAll];
     
     [self initStatusbarWithColor:[UIColor blackColor]];
 }
@@ -124,7 +130,10 @@
 
     [[QZBServerManager sharedManager] getСategoriesOnSuccess:^(NSArray *topics) {
 
-        _categories = [QZBCategory MR_findAll];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                               ascending:YES];
+        
+        _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[ sort ]]];
 
         [self.mainTableView reloadData];
 

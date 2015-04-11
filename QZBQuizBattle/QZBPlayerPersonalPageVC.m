@@ -36,6 +36,7 @@
 #import "QZBAchievementManager.h"
 #import "QZBAchievementCVC.h"
 #import "QZBFindFriendsCell.h"
+#import "NSObject+QZBSpecialCategory.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -134,6 +135,11 @@ static NSInteger topicsOffset = 7;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userPressSomethingInHorizontalTV:)
                                                  name:@"QZBUserPressSomethingInHorizontallTV"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(achievementGet:)
+                                                 name:@"QZBAchievmentGet"
                                                object:nil];
 
     if (!self.user ||
@@ -274,7 +280,7 @@ static NSInteger topicsOffset = 7;
     NSInteger incrementForCurrent = 0;
 
     if (self.isCurrent) {
-        incrementForCurrent = 1;
+       // incrementForCurrent = 1;
     }
 
     UITableViewCell *cell;
@@ -470,7 +476,7 @@ static NSInteger topicsOffset = 7;
         NSInteger level = 0;
         float progress = 0.0;
 
-        [self calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+        [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
 
         [topicCell initCircularProgressWithLevel:level progress:progress];
 
@@ -537,7 +543,7 @@ static NSInteger topicsOffset = 7;
     //    }
 
     if ([self.choosedIndexPath isEqual:indexPath]) {
-        return 120.0f;
+        return 130.0f;
     }
 
     if (indexPath.row == 6 && self.faveTopics.count == 0) {
@@ -924,7 +930,7 @@ static NSInteger topicsOffset = 7;
                                                                                      @"е" @"!";
     NSString *name = dict[@"name"];
 
-    [alert showCustom:self
+    [alert showCustom:self.navigationController
                    image:[UIImage imageNamed:@"achiv"]
                    color:[UIColor lightBlueColor]
                    title:name
@@ -949,6 +955,11 @@ static NSInteger topicsOffset = 7;
         closeButtonTitle:@"ОК"
                 duration:0.0f];
 }
+
+- (void)achievementGet:(NSNotification *)note {
+    [self showAlertAboutAchievmentWithDict:note.object];
+}
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
