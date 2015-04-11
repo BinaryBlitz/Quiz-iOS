@@ -16,6 +16,7 @@
 #import <UAProgressView.h>
 #import "UIImageView+AFNetworking.h"
 #import "QZBCategory.h"
+#import "UIView+QZBShakeExtension.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -30,6 +31,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 @property(strong, nonatomic) JSBadgeView *userBV;
 @property(strong, nonatomic) JSBadgeView *opponentBV;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraint;
+
 
 @end
 
@@ -47,6 +50,13 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         b.enabled = NO;
         b.alpha = 0.0;
         [b setExclusiveTouch:YES];
+        b.titleLabel.minimumScaleFactor = 0.5;
+        b.titleLabel.adjustsFontSizeToFitWidth = YES;
+        b.titleLabel.numberOfLines = 0;
+        CGFloat inset = CGRectGetHeight(b.frame)/5;
+        b.titleEdgeInsets = UIEdgeInsetsMake(inset/2, inset/2, inset/2, inset/2);
+        
+        //b.titleLabel.lineBreakMode = NSLineBreakByClipping;
     
     }
 
@@ -80,9 +90,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
  //   self.firstUserScore.hidden = YES;
    // self.opponentScore.hidden = YES;
     
+   // self.originalPosition = self.questionImageView.frame;
+    
     self.firstUserScore.text = @"";
     self.opponentScore.text = @"";
   
+    [self.roundLabel addShadows];
     
     self.userBV= [[JSBadgeView alloc] initWithParentView:self.firstUserScore
                                                      alignment:JSBadgeViewAlignmentCenterLeft];
@@ -91,8 +104,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     
     self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
     self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
-    self.userBV.badgeBackgroundColor = [UIColor lightBlueColor];
-    self.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
+    self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
+    self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
 
     self.opponentBV.badgeText = @"0";
     self.userBV.badgeText = @"0";
@@ -224,10 +237,13 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     UIColor *color;
 
     if (isTrue) {
-        color = [UIColor lightGreenColor];
+        color = [UIColor transperentLightGreenColor];
     } else {
-        color = [UIColor lightRedColor];
+        color = [UIColor transperentLightRedColor];
     }
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
         animations:^{
@@ -236,6 +252,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         completion:^(BOOL finished){
 
         }];
+    
+     });
 }
 
 
@@ -292,6 +310,31 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     QZBQuestion *question = [QZBSessionManager sessionManager].currentQuestion;
 
     self.qestionLabel.text = question.question;
+    
+
+    self.questionImageView.image = nil;
+    if(question.imageURL){
+        //self.questionImageView.frame = self.originalPosition;
+        [self.questionImageView setImageWithURL:question.imageURL];
+        self.verticalConstraint.constant = 10;
+        [self.qestionLabel layoutIfNeeded];
+    }else{
+       
+        self.verticalConstraint.constant = -self.questionImageView.frame.size.height;
+        [self.qestionLabel layoutIfNeeded];
+    
+        
+        
+//        self.questionImageView.constraint
+//        
+//        [self.qestionLabel layoutIfNeeded];
+//        [self.questionImageView layoutIfNeeded];
+      //  CGRect r = self.questionImageView.superview.frame;
+        
+       // self.questionImageView.frame = CGRectMake(50, 0, 100, 1);
+      //  [self updateViewConstraints];
+    }
+    
     int i = 0;
     for (UIButton *b in self.answerButtons) {
         QZBAnswerTextAndID *answerAndId = question.answers[i];
@@ -343,14 +386,14 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     [UIView animateWithDuration:0.2
                      animations:^{
-                         self.questBackground.alpha = 0.8;
+                         self.questBackground.alpha = 1.0;
                          self.qestionLabel.alpha = 1.0;
                      }];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        for (UIButton *button in weakSelf.answerButtons) {
-                           button.backgroundColor = [UIColor blackColor];
+                           button.backgroundColor = [UIColor transperentBlackColor];
                            button.enabled = YES;
                            [UIView animateWithDuration:0.3
                                animations:^{
@@ -388,8 +431,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                          weakSelf.questBackground.alpha = .0;
                          weakSelf.opponentScore.textColor = [UIColor whiteColor];
                          weakSelf.firstUserScore.textColor = [UIColor whiteColor];
-                         weakSelf.userBV.badgeBackgroundColor = [UIColor lightBlueColor];
-                         weakSelf.opponentBV.badgeBackgroundColor = [UIColor lightBlueColor];
+                         weakSelf.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
+                         weakSelf.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
                          
                          weakSelf.timeLabel.alpha = .0;
                          weakSelf.progressView.alpha = .0;
@@ -475,7 +518,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         if (b.tag == quest.rightAnswer) {
             [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                 animations:^{
-                    b.backgroundColor = [UIColor lightGreenColor];
+                    b.backgroundColor = [UIColor transperentLightGreenColor];
                 }
                 completion:^(BOOL finished){
 
@@ -502,7 +545,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                 if (b.tag != right) {
                     [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                         animations:^{
-                            b.backgroundColor = [UIColor lightRedColor];
+                            b.backgroundColor = [UIColor transperentLightRedColor];//??
                         }
                         completion:^(BOOL finished){
 
@@ -605,9 +648,9 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
     UIColor *color;
 
     if (isRight) {
-        color = [UIColor lightGreenColor];
+        color = [UIColor transperentLightGreenColor];
     } else {
-        color = [UIColor lightRedColor];
+        color = [UIColor transperentLightRedColor];
     }
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL
@@ -628,9 +671,9 @@ stringWithFormat:@"%ld", (unsigned long)[QZBSessionManager sessionManager].first
     UIColor *color;
 
     if (isRight) {
-        color = [UIColor lightGreenColor];
+        color = [UIColor transperentLightGreenColor];
     } else {
-        color = [UIColor lightRedColor];
+        color = [UIColor transperentLightRedColor];
     }
 
     [UIView animateWithDuration:QZB_TIME_OF_COLORING_SCORE_LABEL

@@ -58,5 +58,12 @@
     
 }
 
+-(void)addShadows{
+    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+    self.layer.shadowRadius = 2.0;
+    self.layer.shadowOpacity = 0.5;
+}
+
 
 @end

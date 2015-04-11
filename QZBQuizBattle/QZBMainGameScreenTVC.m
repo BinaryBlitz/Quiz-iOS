@@ -19,6 +19,7 @@
 #import "QZBGameTopic.h"
 #import "QZBProgressViewController.h"
 #import "UIView+QZBShakeExtension.h"
+#import "NSObject+QZBSpecialCategory.h"
 
 @interface QZBMainGameScreenTVC ()
 
@@ -39,7 +40,7 @@
     
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
-    self.mainTableView.backgroundColor = [UIColor strongGreenColor];
+    self.mainTableView.backgroundColor = [UIColor ultralightGreenColor];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor whiteColor];
@@ -164,7 +165,7 @@
     NSInteger level = 0;
     float progress = 0.0;
     
-    [self calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+    [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
     
     [cell initCircularProgressWithLevel:level progress:progress];
     
@@ -186,13 +187,13 @@
     NSArray *arr = self.workArray[section];
     
     if([arr isEqualToArray:self.faveTopics]){
-        color = [UIColor strongGreenColor];
+        color = [UIColor ultralightGreenColor];
     }else if([arr isEqualToArray:self.friendsTopics]){
-        color = [UIColor lightBlueColor];
+        color = [UIColor lightCyanColor];
         
     } else if([arr isEqualToArray:self.featured]){
         
-        color = [UIColor brightRedColor];
+        color = [UIColor lightPincColor];
         
     }else if ([arr isEqualToArray:self.challenges]){
         color = [UIColor lightGreenColor];
@@ -241,13 +242,13 @@
     
     view.backgroundColor = [self colorForSection:section];
     
-    CGRect rect = CGRectMake(0, 0,CGRectGetWidth(tableView.frame), 48);
+    CGRect rect = CGRectMake(0, 7,CGRectGetWidth(tableView.frame), 42);
     
     UILabel *label = [[UILabel alloc] initWithFrame:rect];
     
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:20];
+    label.font = [UIFont boldSystemFontOfSize:18];
     
     if(section>0){
         [view addDropShadowsForView];
@@ -274,8 +275,8 @@
         text = @"Брошенные вызовы";
     }
     
-    
-    label.text = text;
+    //[text uppercaseString];
+    label.text = [text uppercaseString];
     
     return view;
     
@@ -472,8 +473,10 @@
          UITabBarController *tabController = self.tabBarController;
          UITabBarItem *tabbarItem = tabController.tabBar.items[0];
          tabbarItem.badgeValue = nil;
-         
-         [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+         NSLog(@"status code %ld", (long)statusCode);
+         if(statusCode!=-1){
+             [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+         }
          
      }];
     

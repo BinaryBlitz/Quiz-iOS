@@ -95,6 +95,8 @@
             }else if(indexPath.row == 2){
                 cell.myMedalView.backgroundColor = [UIColor bronzeColor];
             }
+        }else{
+            cell.myMedalView.backgroundColor = [UIColor clearColor];
         }
 
         if (indexPath.row < [self.topRank count]) {

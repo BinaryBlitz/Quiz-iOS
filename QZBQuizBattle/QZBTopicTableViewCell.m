@@ -15,6 +15,8 @@
     self.topicProgressView.lineWidth = 4;
     self.topicProgressView.fillOnTouch = NO;
     self.topicProgressView.tintColor = [UIColor blackColor];
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

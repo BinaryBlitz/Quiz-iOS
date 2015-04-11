@@ -8,6 +8,7 @@
 
 #import "UITableViewCell+QZBCellCategory.h"
 
+
 @implementation UITableViewCell (QZBCellCategory)
 
 
@@ -51,7 +52,7 @@
                                                                             mainScreen].bounds),
                                                             10)];
     
-    view.backgroundColor = [UIColor greenColor];
+    view.backgroundColor = [UIColor clearColor];
    // self.clipsToBounds = YES;
     //self.layer.masksToBounds = YES;
     view.layer.masksToBounds = NO;

@@ -24,5 +24,15 @@
 +(UIColor *)veryDarkGreyColor;
 +(UIColor *)middleDarkGreyColor;
 
++(UIColor *)transperentBlackColor;
++(UIColor *)transperentLightGreenColor;
++(UIColor *)transperentLightRedColor;
++(UIColor *)transperentLightBlueColor;
+
+
++(UIColor *)lightCyanColor;
++(UIColor *)ultralightGreenColor;
++(UIColor *)lightPincColor;
+
 
 @end
