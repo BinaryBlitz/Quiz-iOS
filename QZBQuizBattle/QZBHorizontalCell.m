@@ -109,7 +109,7 @@
     if ([object isKindOfClass:[QZBAchievement class]]) {
         QZBAchievement *achiv = (QZBAchievement *)object;
 
-        [cell setName:achiv.name picture:achiv.image];
+        [cell setName:achiv.name picURL:achiv.imageURL];
 
     } else if([object isKindOfClass:[QZBAnotherUser class]]){  // redo
         

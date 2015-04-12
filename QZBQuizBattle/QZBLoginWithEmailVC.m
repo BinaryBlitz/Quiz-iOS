@@ -13,6 +13,7 @@
 #import "UIView+QZBShakeExtension.h"
 #import "QZBEmailTextField.h"
 #import "QZBPasswordTextField.h"
+#import "QZBUserNameTextField.h"
 #import "QZBRegistrationAndLoginTextFieldBase.h"
 #import <SVProgressHUD.h>
 
@@ -27,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.emailTextField.delegate = self;
+    self.userNameTextField.delegate = self;
     self.passwordTextField.delegate = self;
 
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
@@ -38,7 +39,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.emailTextField becomeFirstResponder];
+    [self.userNameTextField becomeFirstResponder];
 
     NSLog(@"authr showed");
 }
@@ -47,6 +48,30 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomSuperViewConstraint.constant = kbSize.height;
+                         [self.userNameTextField.superview layoutIfNeeded];
+                         [self.view layoutIfNeeded];
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomSuperViewConstraint.constant = 0;
+                         [self.view layoutIfNeeded];
+                     }];
+}
+
 
 /*
 #pragma mark - Navigation
@@ -59,11 +84,11 @@ navigation
 }
 */
 - (IBAction)loginAction:(id)sender {
-    NSString *email = self.emailTextField.text;
+    NSString *userName = self.userNameTextField.text;
     NSString *password = self.passwordTextField.text;
 
-    if (![self validateTextField:self.emailTextField]) {
-        [self.emailTextField becomeFirstResponder];
+    if (![self validateTextField:self.userNameTextField]) {
+        [self.userNameTextField becomeFirstResponder];
         // self.emailTextField.backgroundColor = [UIColor redColor];
         //[self shake:self.emailTextField direction:1 shakes:0];
         return;
@@ -83,7 +108,7 @@ navigation
         self.loginInProgress = YES;
 
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        [[QZBServerManager sharedManager] POSTLoginUserEmail:email
+        [[QZBServerManager sharedManager] POSTLoginUserName:userName
             password:password
             onSuccess:^(QZBUser *user) {
 
@@ -125,7 +150,7 @@ navigation
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if ([textField isEqual:self.emailTextField]) {
+    if ([textField isEqual:self.userNameTextField]) {
         if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]) {
             return NO;
         } else {
@@ -134,14 +159,14 @@ navigation
         }
 
     } else if ([textField isEqual:self.passwordTextField]) {
-        NSString *password = self.passwordTextField.text;
+       // NSString *password = self.passwordTextField.text;
 
         if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]) {
             return NO;
         } else {
-            NSString *hashed = [[QZBServerManager sharedManager] hashPassword:password];
+           // NSString *hashed = [[QZBServerManager sharedManager] hashPassword:password];
 
-            NSLog(@"%@", hashed);
+           // NSLog(@"%@", hashed);
 
             [self loginAction:nil];
             return YES;

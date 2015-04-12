@@ -140,9 +140,19 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     for (NSDictionary *dict in categoryRequest) {
         NSString *name = [dict objectForKey:@"name"];
         id category_id = [dict objectForKey:@"id"];
-        NSString *bannerURL = dict[@"banner_url"];
-        NSString *backgroundURL = dict[@"background_url"];
-
+        
+        NSString *bannerURL = nil;
+        NSString *backgroundURL = nil;
+        
+        if(![dict[@"banner_url"] isEqual:[NSNull null]]){
+            bannerURL = dict[@"banner_url"];
+        }
+        
+        if(![dict[@"background_url"] isEqual:[NSNull null]]){
+            backgroundURL = dict[@"background_url"];
+        }
+        
+        
         QZBCategory *existingEntity =
             [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
 
@@ -150,31 +160,19 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             existingEntity = [QZBCategory MR_createEntity];
             existingEntity.category_id = category_id;
             existingEntity.name = name;
+            
+            if(bannerURL){
             existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
-            existingEntity.background_url =
+                
+                [self savePictureFromString:existingEntity.banner_url];
+             
+            }
+            if(backgroundURL){
+                existingEntity.background_url =
                 [QZBServerBaseUrl stringByAppendingString:backgroundURL];
-
-            NSURL *url = [NSURL URLWithString:existingEntity.background_url];
-            NSURL *bannerURL = [NSURL URLWithString:existingEntity.banner_url];
-            
-            UIImageView *v = [[UIImageView alloc] init];//дичайшие костыли
-            UIImageView *b = [[UIImageView alloc] init];
-            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
-                                                          cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                                      timeoutInterval:60];
-            
-            NSURLRequest *banerRequest = [NSURLRequest requestWithURL:bannerURL
-                                                          cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                                      timeoutInterval:60];
-
-            
-            
-            [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
-            [b setImageWithURLRequest:banerRequest placeholderImage:nil success:nil failure:nil];
-            
-           
-
-            // existingEntity.banner = [
+                
+                [self savePictureFromString:existingEntity.background_url];
+            }
         }
         [self updateTopcs:dict inCategory:existingEntity];  // TODO!
 
@@ -191,6 +189,25 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }
     }
 
+    
+}
+
+
+-(void)savePictureFromString:(NSString *)urlAsString{
+    if(urlAsString){
+        
+        NSURL *url = [NSURL URLWithString:urlAsString];
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
+                                                      cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                                  timeoutInterval:60];
+        
+        UIImageView *v = [[UIImageView alloc] init];
+        [v setImageWithURLRequest:imageRequest
+                 placeholderImage:nil
+                          success:nil
+                          failure:nil];
+        
+    }
     
 }
 
@@ -606,16 +623,33 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
                        email:(NSString *)userEmail
                     password:(NSString *)password
                    onSuccess:(void (^)(QZBUser *user))success
-                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                   onFailure:(void (^)(NSError *error,
+                                       NSInteger statusCode,
+                                       QZBUserRegistrationProblem problem))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
     NSLog(@"hashed %@", hashedPassword);
 
-    NSDictionary *params = @{
+    NSDictionary *params = nil;
+    if(userEmail.length>0){
+  params = @{
         @"player" :
-            @{@"name" : userName, @"email" : userEmail, @"password_digest" : hashedPassword}
-    };
+            @{@"name" : userName,
+              @"username" : userName,
+              @"email" : userEmail,
+              @"password_digest" : hashedPassword}
+    } ;
+    }else{
+        params = @{
+                   @"player" :
+                       @{@"name" : userName,
+                         @"username" : userName,
+                         @"password_digest" : hashedPassword}
+                   } ;
 
+    }
+    
+    
     [self.requestOperationManager POST:@"players"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -626,26 +660,46 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             if (success) {
                 success(user);
             }
-
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            QZBUserRegistrationProblem problem = QZBNoProblems;
+            
+
+            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
+            
+            if(![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
+               operation.responseObject[@"username"]){
+                
+                NSArray *usernameProblems = operation.responseObject[@"username"];
+                //NSString *problem = [usernameProblems firstObject];
+                NSLog(@"problem %@", usernameProblems);
+                problem = QZBUserNameProblem;
+            }else if(![operation.responseObject[@"email"] isEqual:[NSNull null]]&&
+                     operation.responseObject[@"email"]){
+                
+                NSArray *usernameProblems = operation.responseObject[@"email"];
+                //NSString *problem = [usernameProblems firstObject];
+                NSLog(@"problem %@", usernameProblems);
+                problem = QZBEmailProblem;
+            }
 
             if (failure) {
-                failure(error, operation.response.statusCode);
+                failure(error, operation.response.statusCode,problem);
             }
-            NSLog(@"%@", error);
+          
         }];
 }
 
-- (void)POSTLoginUserEmail:(NSString *)email
+- (void)POSTLoginUserName:(NSString *)username
                   password:(NSString *)password
                  onSuccess:(void (^)(QZBUser *user))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
-    NSLog(@"email %@ password %@", email, hashedPassword);
+ //   NSLog(@"email %@ password %@", email, hashedPassword);
 
-    NSDictionary *params = @{ @"email" : email, @"password_digest" : hashedPassword };
+    NSDictionary *params = @{ @"username" : username,
+                              @"password_digest" : hashedPassword };
 
     [self.requestOperationManager POST:@"players/authenticate"
         parameters:params
@@ -662,8 +716,12 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
+            
+            
+            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
             if (failure) {
+                
+                
                 failure(error, operation.response.statusCode);
             }
 

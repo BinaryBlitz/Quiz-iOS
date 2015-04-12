@@ -317,6 +317,8 @@ static NSInteger topicsOffset = 7;
 
         descrForHorizontal.descriptionLabel.text =
             [NSString stringWithFormat:@"Друзья (%ld):", (unsigned long)self.friends.count];
+        
+        descrForHorizontal.contentView.backgroundColor = [UIColor friendsLightGreyColor];
 
         return descrForHorizontal;
 
@@ -560,18 +562,6 @@ static NSInteger topicsOffset = 7;
     }
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath
-//*)indexPath{
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//
-//    if([cell.reuseIdentifier isEqualToString:descriptionIdentifier]){
-//        return 32;
-//    }else{
-//        return 127;
-//    }
-//
-//
-//}
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
