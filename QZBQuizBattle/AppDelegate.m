@@ -279,6 +279,8 @@
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Received notification: %@", userInfo);
+    
+    
 
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
@@ -286,6 +288,7 @@
             [self showFriendRequestScreenWithDictionary:userInfo];
 
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
+            
             [self acceptChallengeWithDict:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
@@ -294,6 +297,9 @@
         if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBAchievmentGet"
                                                                 object:userInfo];
+        }else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
+            
+            [self acceptChallengeWithDict:userInfo];
         }
 
         //  if()
@@ -352,7 +358,7 @@
 }
 
 - (void)acceptChallengeWithDict:(NSDictionary *)dict {
-    if (![QZBSessionManager sessionManager].isGoing) {
+  //  if (![QZBSessionManager sessionManager].isGoing) {
         //        {
         //            action = CHALLENGE;
         //            aps =     {
@@ -363,20 +369,22 @@
         //            };
         //        }
         //
-        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+      //  UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
 
         
-        UINavigationController *navController =
-        (UINavigationController *)tabController.viewControllers[0];
+//        UINavigationController *navController =
+//        (UINavigationController *)tabController.viewControllers[0];
         
-        QZBMainGameScreenTVC *mainScreen = navController.viewControllers[0];
-        [mainScreen reloadTopicsData];
+       // QZBMainGameScreenTVC *mainScreen = navController.viewControllers[0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen" object:nil];
+        
+      //  [mainScreen reloadTopicsData];
         
 
-        tabController.selectedIndex = 0;
+      //   tabController.selectedIndex = 0;
 
       
-    }
+   // }
 }
 
 - (void)showAchiewvmentWithDict:(NSDictionary *)dict {

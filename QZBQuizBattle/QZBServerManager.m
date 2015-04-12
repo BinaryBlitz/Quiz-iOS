@@ -950,7 +950,35 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }];
 }
 
-//-(void)
+-(void)GETReportForUserID:(NSNumber *)userID
+                message:(NSString *)reportMessage
+              onSuccess:(void (^)())success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+     NSString *urlString = [NSString stringWithFormat:@"players/%@/report", userID];
+    
+     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                               @"message":reportMessage};
+    
+    [self.requestOperationManager GET:urlString
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  NSLog(@"report ok");
+                                  
+                                  if(success){
+                                      success();
+                                  }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"report error %@", error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+    
+    
+}
 
 #pragma mark - ranking
 
