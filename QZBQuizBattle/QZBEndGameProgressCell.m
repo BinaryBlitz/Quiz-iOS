@@ -133,6 +133,7 @@
         [self.circularProgress setProgress:(CGFloat)self.resultProgress animated:YES];
         return;
     }else if (self.currentLevel < self.resultLevel) {
+        
         [self.circularProgress setProgress:0.9999 animated:YES];
         CFTimeInterval time = self.circularProgress.animationDuration + 0.1;
         

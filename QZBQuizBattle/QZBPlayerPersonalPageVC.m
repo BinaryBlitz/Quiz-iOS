@@ -37,6 +37,7 @@
 #import "QZBAchievementCVC.h"
 #import "QZBFindFriendsCell.h"
 #import "NSObject+QZBSpecialCategory.h"
+#import "QZBReportVC.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -277,11 +278,11 @@ static NSInteger topicsOffset = 7;
     //    static NSString *totalStatisticsIdentifier = @"totalStatistics";
     //    static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 
-    NSInteger incrementForCurrent = 0;
+   /// NSInteger incrementForCurrent = 0;
 
-    if (self.isCurrent) {
-       // incrementForCurrent = 1;
-    }
+//    if (self.isCurrent) {
+//       // incrementForCurrent = 1;
+//    }
 
     UITableViewCell *cell;
 
@@ -604,6 +605,11 @@ static NSInteger topicsOffset = 7;
 
     if (buttonIndex == 0) {
         // Make user response
+        
+        if(self.user){
+        
+            [self performSegueWithIdentifier:@"showReportScreen" sender:nil];
+        }
 
         // TODO
     }
@@ -660,8 +666,11 @@ static NSInteger topicsOffset = 7;
                                  gameTopic:self.choosedTopic];
         }
         
-
+    } else if ([segue.identifier isEqualToString:@"showReportScreen"]){
         
+        QZBReportVC *destVC = (QZBReportVC *)segue.destinationViewController;
+        
+        [destVC initWithUser:self.user];
     }
 }
 

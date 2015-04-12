@@ -131,6 +131,11 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)GETReportForUserID:(NSNumber *)userID
+                  message:(NSString *)reportMessage
+                onSuccess:(void (^)())success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory

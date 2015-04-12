@@ -18,6 +18,9 @@
 #import <JSBadgeView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "QZBCategory.h"
+#import "QZBTopicChooserControllerViewController.h"
+#import "QZBPlayerPersonalPageVC.h"
+
 
 @interface QZBEndGameVC ()
 
@@ -322,6 +325,63 @@
     cell.resultOfSessionLabel.text = self.sessionResult;
     
 }
+
+#pragma mark - actions
+
+- (IBAction)playAgainAction:(UIButton *)sender {
+    
+    
+}
+- (IBAction)chooseAnotherTopic:(id)sender {
+    
+    NSEnumerator *controllers = [self.navigationController.viewControllers reverseObjectEnumerator];
+    
+    UIViewController *destinationVC;
+    
+    for (UIViewController *controller in controllers) {
+        if ([controller isKindOfClass:
+             [QZBTopicChooserControllerViewController class]] ||
+            [controller isKindOfClass: [QZBPlayerPersonalPageVC class]] ) {
+           // NSLog(@"%@", [controller class]);
+            
+            destinationVC = controller;
+            break;
+        }
+    }
+
+    
+    if (!destinationVC) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        [self.navigationController popToViewController:destinationVC animated:YES];
+    }
+
+    
+    
+}
+
+- (void)moveToVCWithClass:(__unsafe_unretained Class)VCclass {
+    NSArray *controllers = self.navigationController.viewControllers;
+    
+    UIViewController *destinationVC;
+    
+    for (UIViewController *controller in controllers) {
+        if ([controller isKindOfClass:VCclass]) {
+            NSLog(@"%@", [controller class]);
+            
+            destinationVC = controller;
+            break;
+        }
+    }
+    if (!destinationVC) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        [self.navigationController popToViewController:destinationVC animated:YES];
+    }
+}
+
+
+
 
 - (BOOL)hidesBottomBarWhenPushed {
     return NO;
