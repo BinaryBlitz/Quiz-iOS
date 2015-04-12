@@ -38,6 +38,12 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)initWithUser:(id<QZBUserProtocol>)user {
     self.user = user;
 }

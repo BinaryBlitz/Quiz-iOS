@@ -21,8 +21,14 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 @class QZBGameTopic;
 @class QZBAnotherUser;
 
+typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
+    QZBUserNameProblem, QZBEmailProblem};
+
 @interface QZBServerManager : NSObject
 @property (copy, nonatomic, readonly) NSString *baseURL;
+
+
+
 
 + (QZBServerManager *)sharedManager;
 
@@ -85,12 +91,15 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
                        email:(NSString *)userEmail
                     password:(NSString *)password
                    onSuccess:(void (^)(QZBUser *user))success
-                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+                   onFailure:(void (^)(NSError *error,
+                                       NSInteger statusCode,
+                                       QZBUserRegistrationProblem problem))failure;
 
-- (void)POSTLoginUserEmail:(NSString *)email
-                  password:(NSString *)password
-                 onSuccess:(void (^)(QZBUser *user))success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)POSTLoginUserName:(NSString *)username
+                     password:(NSString *)password
+                    onSuccess:(void (^)(QZBUser *user))success
+                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 
 - (void)GETPlayerWithID:(NSNumber *)playerID
               onSuccess:(void (^)(QZBAnotherUser *anotherUser))success

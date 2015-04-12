@@ -7,6 +7,7 @@
 //
 
 #import "QZBAchievement.h"
+#import "QZBServerManager.h"
 
 @interface QZBAchievement ()
 
@@ -15,6 +16,7 @@
 @property (strong, nonatomic) NSNumber *achievementID;
 @property (copy, nonatomic)   NSString *achievementDescription;
 @property (assign, nonatomic) BOOL isAchieved;
+@property (strong, nonatomic) NSURL *imageURL;
 
 @end
 
@@ -37,7 +39,17 @@
         self.name = dict[@"name"];
         self.achievementID = dict[@"id"];
         self.achievementDescription = dict[@"description"];
-        self.isAchieved = [dict[@"achieved"] boolValue];   
+        self.isAchieved = [dict[@"achieved"] boolValue];
+        
+        
+        if(![dict[@"icon_url"] isEqual:[NSNull null]] && dict[@"icon_url"] ){
+            NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:dict[@"icon_url"]];
+            
+            self.imageURL = [NSURL URLWithString:urlAsString];
+            
+           // UIImageView *v = [[UIImageView alloc] init];
+            
+        }
         
     }
     return self;

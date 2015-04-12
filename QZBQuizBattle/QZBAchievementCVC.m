@@ -18,6 +18,7 @@
 @interface QZBAchievementCVC ()<UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *achivArray;
+@property(assign, nonatomic) float cornerRadius;
 //@property (strong, nonatomic) SCLAlertView *alert;
 
 @end
@@ -31,7 +32,11 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     [self setNeedsStatusBarAppearanceUpdate];
     self.title = @"Достижения";
     
+    CGRect rect = [UIScreen mainScreen].bounds;
     
+    CGFloat width = (CGRectGetWidth(rect)/3.0)-10;
+    
+    self.cornerRadius = width/2.0;
 
 
   //  [self initAchivs];
@@ -94,13 +99,19 @@ navigation
     QZBAchievement *achiv = self.achivArray[indexPath.row];
 
     UIImage *image = nil;
+    
+    cell.achievementPic.layer.cornerRadius = self.cornerRadius;
+    cell.achievementPic.layer.masksToBounds = YES;
     if(achiv.isAchieved){
         image = [UIImage imageNamed:@"achiv"];
+        [cell.achievementPic setImageWithURL:achiv.imageURL];
     }else{
+         [cell.achievementPic setImageWithURL:achiv.imageURL];//??
+        
         image = [UIImage imageNamed:@"notAchiv"];
     }
     
-    [cell.achievementPic setImage:image];
+    //[cell.achievementPic setImage:image];
     cell.achievementTitle.text = achiv.name;
     
 
@@ -136,9 +147,13 @@ navigation
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
 
+    QZBAchievementCollectionCell *cell =
+    (QZBAchievementCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    UIImage *img = cell.achievementPic.image;
  
     [alert showCustom:self
-                   image:[UIImage imageNamed:@"achiv"]
+                   image:img
                    color:[UIColor lightBlueColor]
                    title:achievment.name
                 subTitle:achievment.achievementDescription
@@ -188,6 +203,7 @@ forItemAtIndexPath:(NSIndexPath
     CGRect rect = [UIScreen mainScreen].bounds;
     
     CGFloat width = (CGRectGetWidth(rect)/3.0)-10;
+    
     
     return CGSizeMake(width, width*1.5);
 }

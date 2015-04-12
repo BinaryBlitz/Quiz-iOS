@@ -46,6 +46,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomSuperViewConstraint.constant = kbSize.height;
+                         [self.emailTextField.superview layoutIfNeeded];
+                         [self.view layoutIfNeeded];
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomSuperViewConstraint.constant = 0;
+                         [self.view layoutIfNeeded];
+                     }];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -107,12 +130,12 @@ preparation before navigation
                                          completion:^{
                                          }];
             }
-            onFailure:^(NSError *error, NSInteger statusCode) {
+            onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
                 
 
                 if (statusCode == 422) {
                     [SVProgressHUD dismiss];
-                    [weakSelf userAlreadyExist];
+                    [weakSelf userAlreadyExist:problem];
                 }else{
                     [SVProgressHUD showInfoWithStatus:QZBNoInternetConnectionMessage];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -126,11 +149,26 @@ preparation before navigation
     }
 }
 
-- (void)userAlreadyExist {
-    [TSMessage showNotificationWithTitle:[self errorAsNSString:user_alredy_exist]
+- (void)userAlreadyExist:(QZBUserRegistrationProblem)problem {
+    NSString *message = @"";
+    switch (problem) {
+        case QZBUserNameProblem:
+            message = @"Пользователь с таким именем уже существует, введите другое имя";
+            [self.userNameTextField becomeFirstResponder];
+            break;
+        case QZBEmailProblem:
+            message = @"Пользователь с такой почтой уже существует, введите другую почту";
+            [self.emailTextField becomeFirstResponder];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [TSMessage showNotificationWithTitle:message
                                     type:TSMessageNotificationTypeError];
 
-    [self.emailTextField becomeFirstResponder];
+    //[self.emailTextField becomeFirstResponder];
 
     NSLog(@"UserAlredyExist");
 }

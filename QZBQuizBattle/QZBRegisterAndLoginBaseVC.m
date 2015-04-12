@@ -29,7 +29,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [TSMessage setDefaultViewController:self.navigationController];
+    [TSMessage setDefaultViewController:self];
+    [self registerForKeyboardNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,8 +40,56 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [TSMessage dismissActiveNotification];
 }
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+}
+
+
+
+
+
+//- (void)keyboardWillShow:(NSNotification *)aNotification {
+//    NSDictionary *info = [aNotification userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    
+//    [self.view layoutIfNeeded];
+//    [UIView animateWithDuration:0.3
+//                     animations:^{
+//                         self.bottomSuperViewConstraint.constant = kbSize.height;
+//                         [self.userNameTextField.superview layoutIfNeeded];
+//                         [self.view layoutIfNeeded];
+//                     }];
+//}
+//
+//- (void)keyboardWillHide:(NSNotification *)aNotification {
+//    [self.view layoutIfNeeded];
+//    [UIView animateWithDuration:0.3
+//                     animations:^{
+//                         self.bottomSuperViewConstraint.constant = 0;
+//                         [self.view layoutIfNeeded];
+//                     }];
+//}
+
+
 
 /*
 #pragma mark - Navigation
@@ -60,7 +109,7 @@ navigation
         @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
 
-    return [emailTest evaluateWithObject:candidate];
+    return [emailTest evaluateWithObject:candidate]|| candidate.length == 0;
 }
 
 - (BOOL)validatePassword:(NSString *)candidate {
@@ -119,7 +168,7 @@ navigation
                      @"зарегистрирован";
             break;
         case login_fail:
-            result = @"Неверная почта или пароль";
+            result = @"Неверное имя или пароль";
 
         default:
             break;

@@ -47,8 +47,9 @@ static NSArray *SCOPE = nil;
 - (IBAction)authorize:(id)sender {
     //[VKSdk authorize:SCOPE revokeAccess:YES];
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    [VKSdk authorize:SCOPE revokeAccess:YES];
+    [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
+  //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+  //  [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
 - (void)startWorking {

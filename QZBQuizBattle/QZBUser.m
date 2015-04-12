@@ -31,7 +31,7 @@
     self = [super init];
     if (self) {
         self.api_key = [dict objectForKey:@"token"];
-        self.name = [dict objectForKey:@"name"];
+        self.name = [dict objectForKey:@"username"];//??
         
         if([dict objectForKey:@"email"]){
             self.email = [dict objectForKey:@"email"];
