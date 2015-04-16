@@ -15,8 +15,12 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 
 @interface QZBIAPHelper : NSObject
 
+
+
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
+
+-(int)daysRemainingOnSubscriptionFromIdentifier:(NSString *)identifier;
 
 - (void)buyProduct:(SKProduct *)product;
 - (BOOL)productPurchased:(NSString *)productIdentifier;

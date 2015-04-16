@@ -21,6 +21,8 @@
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
 
+@property(assign, nonatomic) BOOL isRegistred;
+
 //@property(strong, nonatomic) NSString *pushToken;
 
 @end
@@ -31,7 +33,14 @@
     self = [super init];
     if (self) {
         self.api_key = [dict objectForKey:@"token"];
-        self.name = [dict objectForKey:@"username"];//??
+       // self.name = [dict objectForKey:@"username"];//??
+        if(![dict[@"username"] isEqual:[NSNull null]] && dict[@"username"]){
+            self.name = [dict objectForKey:@"username"];
+            self.isRegistred = YES;
+        }else{
+            self.name = nil;
+            self.isRegistred = NO;
+        }
         
         if([dict objectForKey:@"email"]){
             self.email = [dict objectForKey:@"email"];
@@ -127,6 +136,17 @@
     
     NSLog(@"userName %@", self.name);
     
+}
+
+
+-(void)makeUserRegisterWithUserName:(NSString *)username{
+
+    self.isRegistred = YES;
+    [self setUserName:username];
+    
+    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    
+   // [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
 }
 
 //-(void)setUserPic:(UIImage *)userPic{

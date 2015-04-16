@@ -833,6 +833,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				197669991A67D057006C2757 /* Registration and login */,
 				19A1276C1AB9DCB3009075AD /* main */,
 				19446A721A9E35CE005BB485 /* store */,
 				199CD9431A8BAFAB00FBF820 /* achievement */,
@@ -840,7 +841,6 @@
 				19DFF33F1A700F5B00E8CB1C /* player */,
 				19D691171A6D56D2008B2AE1 /* topic and group choose */,
 				19D691161A6D56A1008B2AE1 /* Game */,
-				197669991A67D057006C2757 /* Registration and login */,
 				19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */,
 				19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */,
 			);

@@ -40,10 +40,12 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     NSMutableSet *tmpProducts = [NSMutableSet set];
 
     self.purchasedProductIdentifiers = [NSMutableSet set];
+    self.products = [productIdentifiers mutableCopy];
 
     for (QZBProduct *product in productIdentifiers) {
         NSLog(@"identifier %@", product.identifier);
         // NSLog(product.identifier);
+                
         [tmpProducts addObject:product.identifier];
         //[self.productIdentifiers addObject:product.identifier];
         if (product.isPurchased) {
@@ -77,6 +79,18 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     payment.applicationUsername = [self hashedValueForAccountName:identifier];
 
     [[SKPaymentQueue defaultQueue] addPayment:payment];
+}
+
+-(int)daysRemainingOnSubscriptionFromIdentifier:(NSString *)identifier{
+    
+    for(QZBProduct *product in self.products){
+        if([product.identifier isEqualToString:identifier]){
+            return  product.dayCount;
+        }
+    }
+    
+    return -1;
+    
 }
 
 #pragma mark - SKProductsRequestDelegate
@@ -159,31 +173,33 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
-- (void)provideContentForProductWithTansaction:(SKPaymentTransaction *)transaction {
-    NSString *productIdentifier = transaction.payment.productIdentifier;
-
-    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
-        onSuccess:^{
-
-            // REDO when it will work
-            [_purchasedProductIdentifiers addObject:productIdentifier];
-
-            [[NSNotificationCenter defaultCenter]
-                postNotificationName:IAPHelperProductPurchasedNotification
-                              object:productIdentifier
-                            userInfo:nil];
-            [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode) {
-
-            [[NSNotificationCenter defaultCenter]
-                postNotificationName:IAPHelperProductPurchaseFailed
-                              object:transaction];
-            
-
-        }];
-}
+//- (void)provideContentForProductWithTansaction:(SKPaymentTransaction *)transaction {
+//    NSString *productIdentifier = transaction.payment.productIdentifier;
+//
+//    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
+//        onSuccess:^{
+//
+//           
+//            [_purchasedProductIdentifiers addObject:productIdentifier];
+//
+//            [[NSNotificationCenter defaultCenter]
+//                postNotificationName:IAPHelperProductPurchasedNotification
+//                              object:productIdentifier
+//                            userInfo:nil];
+//            //[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+//
+//        }
+//        onFailure:^(NSError *error, NSInteger statusCode) {
+//
+//            [[NSNotificationCenter defaultCenter]
+//                postNotificationName:IAPHelperProductPurchaseFailed
+//                              object:productIdentifier];
+//            
+//
+//        }];
+//    
+//    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+//}
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
     NSLog(@"%@", productIdentifier);
@@ -191,7 +207,7 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
         onSuccess:^{
 
-            // REDO when it will work
+
                         [_purchasedProductIdentifiers addObject:productIdentifier];
             
                         [[NSNotificationCenter defaultCenter]
@@ -201,6 +217,10 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 
         }
         onFailure:^(NSError *error, NSInteger statusCode){
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:IAPHelperProductPurchaseFailed
+             object:productIdentifier];
 
         }];
     //

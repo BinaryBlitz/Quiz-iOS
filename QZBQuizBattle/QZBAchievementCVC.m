@@ -14,11 +14,12 @@
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "QZBAchievementManager.h"
+#import "GPUImage.h"
 
-@interface QZBAchievementCVC ()<UICollectionViewDelegateFlowLayout>
+@interface QZBAchievementCVC () <UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *achivArray;
-@property(assign, nonatomic) float cornerRadius;
+@property (assign, nonatomic) float cornerRadius;
 //@property (strong, nonatomic) SCLAlertView *alert;
 
 @end
@@ -31,27 +32,26 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.title = @"Достижения";
-    
+
     CGRect rect = [UIScreen mainScreen].bounds;
-    
-    CGFloat width = (CGRectGetWidth(rect)/3.0)-10;
-    
-    self.cornerRadius = width/2.0;
 
+    CGFloat width = (CGRectGetWidth(rect) / 3.0) - 10;
 
-  //  [self initAchivs];
+    self.cornerRadius = width / 2.0;
+
+    //  [self initAchivs];
 
     self.achivTableView.dataSource = self;
     self.achivTableView.delegate = self;
 
-//    [[QZBServerManager sharedManager] GETachievementsForUserID:@(1)
-//        onSuccess:^(NSArray *achievements) {
-//
-//        }
-//        onFailure:^(NSError *error, NSInteger statusCode){
-//
-//        }];
-//
+    //    [[QZBServerManager sharedManager] GETachievementsForUserID:@(1)
+    //        onSuccess:^(NSArray *achievements) {
+    //
+    //        }
+    //        onFailure:^(NSError *error, NSInteger statusCode){
+    //
+    //        }];
+    //
     // Do any additional setup after loading the view.
 }
 
@@ -71,16 +71,12 @@ navigation
 }
 */
 
-
 #pragma mark - custom init
 
--(void)initAchievmentsWithGettedAchievements:(NSArray *)achievs{
-    
-    self.achivArray = [[QZBAchievementManager sharedInstance]
-                      mergeAchievemtsWithGetted:achievs];
-    
+- (void)initAchievmentsWithGettedAchievements:(NSArray *)achievs {
+    self.achivArray = [[QZBAchievementManager sharedInstance] mergeAchievemtsWithGetted:achievs];
+
     [self.collectionView reloadData];
-    
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -99,21 +95,43 @@ navigation
     QZBAchievement *achiv = self.achivArray[indexPath.row];
 
     UIImage *image = nil;
-    
+
     cell.achievementPic.layer.cornerRadius = self.cornerRadius;
     cell.achievementPic.layer.masksToBounds = YES;
-    if(achiv.isAchieved){
+    if (achiv.isAchieved) {
         image = [UIImage imageNamed:@"achiv"];
         [cell.achievementPic setImageWithURL:achiv.imageURL];
-    }else{
-         [cell.achievementPic setImageWithURL:achiv.imageURL];//??
-        
+    } else {
+        NSURLRequest *imageRequest =
+            [NSURLRequest requestWithURL:achiv.imageURL
+                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                         timeoutInterval:60];
+
+        [cell.achievementPic setImageWithURLRequest:imageRequest
+                                   placeholderImage:[UIImage imageNamed:@"achiv"]
+                                            success:^(NSURLRequest *request,
+                                                      NSHTTPURLResponse *response, UIImage *image) {
+
+                                                cell.achievementPic.image =
+                                                    [self grayscaleImagefromImage:image];
+
+                                            }
+                                            failure:nil];
+
+        //        [cell.achievementPic  setImageWithURLRequest:imageRequest
+        //                 placeholderImage:[UIImage imageNamed:@"achiv"]
+        //                          success:nil
+        //                          failure:nil];
+
+        //         [cell.achievementPic setImageWithURL:achiv.imageURL];//??
+        //        cell.achievementPic.image = [self
+        //        grayscaleImagefromImage:cell.achievementPic.image];
+
         image = [UIImage imageNamed:@"notAchiv"];
     }
-    
+
     //[cell.achievementPic setImage:image];
     cell.achievementTitle.text = achiv.name;
-    
 
     // Configure the cell
 
@@ -122,9 +140,20 @@ navigation
     return cell;
 }
 
+- (UIImage *)grayscaleImagefromImage:(UIImage *)image {
+    UIGraphicsBeginImageContextWithOptions(image.size, YES, 1.0);
+    CGRect imageRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    // Draw the image with the luminosity blend mode.
+    [image drawInRect:imageRect blendMode:kCGBlendModeLuminosity alpha:1.0];
+    // Get the resulting image.
+    UIImage *filteredImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return filteredImage;
+}
+
 - (void)initAchivs {
-    [UIImage imageNamed:@"achiv"];
-    [UIImage imageNamed:@"notAchiv"];
+    //[UIImage imageNamed:@"achiv"];
+    //[UIImage imageNamed:@"notAchiv"];
 
     [[QZBServerManager sharedManager] GETachievementsForUserID:0
         onSuccess:^(NSArray *achievements) {
@@ -140,18 +169,17 @@ navigation
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     QZBAchievement *achievment = self.achivArray[indexPath.row];
-    
+
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
 
     QZBAchievementCollectionCell *cell =
-    (QZBAchievementCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
+        (QZBAchievementCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+
     UIImage *img = cell.achievementPic.image;
- 
+
     [alert showCustom:self
                    image:img
                    color:[UIColor lightBlueColor]
@@ -199,18 +227,18 @@ forItemAtIndexPath:(NSIndexPath
 }
 */
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGRect rect = [UIScreen mainScreen].bounds;
-    
-    CGFloat width = (CGRectGetWidth(rect)/3.0)-10;
-    
-    
-    return CGSizeMake(width, width*1.5);
+
+    CGFloat width = (CGRectGetWidth(rect) / 3.0) - 10;
+
+    return CGSizeMake(width, width * 1.5);
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
-
 
 @end

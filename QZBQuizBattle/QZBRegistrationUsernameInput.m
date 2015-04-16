@@ -8,10 +8,16 @@
 
 #import "QZBRegistrationUsernameInput.h"
 #import "QZBUserNameTextField.h"
+#import <TSMessages/TSMessage.h>
+#import "QZBCurrentUser.h"
+#import <SVProgressHUD.h>
+
 
 @interface QZBRegistrationUsernameInput() <UITextFieldDelegate>
 
 @property(assign, nonatomic) BOOL loginInPRogress;
+@property(strong, nonatomic) QZBUser *user;
+@property(assign, nonatomic) BOOL registrationInProgress;
 
 @end
 
@@ -36,7 +42,11 @@
 }
 
 
-
+-(void)setUSerWhithoutUsername:(QZBUser *)user{
+    
+    self.user = user;
+    
+}
 
 //- (void)registerForKeyboardNotifications {
 //    [[NSNotificationCenter defaultCenter] addObserver:self
@@ -78,12 +88,56 @@
 - (IBAction)loginAction:(id)sender {
     NSLog(@"login action");
     
+    NSString *username = [self.usernameTextField.text copy];
+    
     if (![self validateTextField:self.usernameTextField]) {
         [self.usernameTextField becomeFirstResponder];
         
         return;
     }else{
+        if(!self.registrationInProgress){
+            
+            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+            self.registrationInProgress = YES;
+        [[QZBServerManager sharedManager]
+         PATCHPlayerWithNewUserNameThenRegistration:username
+    user:self.user
+    onSuccess:^{
         
+        [self.user makeUserRegisterWithUserName:username];
+        
+        [[QZBCurrentUser sharedInstance] setUser:self.user];
+        
+        self.registrationInProgress = NO;
+        
+        //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
+        
+        [SVProgressHUD dismiss];
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                 }];
+        
+        
+        
+        
+        self.registrationInProgress = NO;
+    } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
+        self.registrationInProgress = NO;
+        [SVProgressHUD dismiss];
+        if(problem == QZBUserNameProblem){
+            [TSMessage
+             showNotificationWithTitle:@"Это имя уже занято"
+             type:TSMessageNotificationTypeWarning];
+            
+        }else{
+            [TSMessage
+             showNotificationWithTitle:@"Имя не обновлено, проверьте "
+             @"интернет-соединение"
+             type:TSMessageNotificationTypeWarning];
+        }
+
+    }];
+        }
     }
 }
 

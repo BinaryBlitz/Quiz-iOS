@@ -172,7 +172,7 @@
             self.userNewPasswordAgainTextField.text = @"";
             self.userNewPasswordTextField.text = @"";
         }
-        onFailure:^(NSError *error, NSInteger statusCode) {
+        onFailure:^(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem) {
 
             [TSMessage showNotificationWithTitle:@"Пароль не обновлен"
                                             type:TSMessageNotificationTypeWarning];
@@ -202,11 +202,20 @@
             [[QZBCurrentUser sharedInstance].user setUserName:newName];
 
         }
-        onFailure:^(NSError *error, NSInteger statusCode) {
-            [TSMessage
-                showNotificationWithTitle:@"Имя не обновлено, проверьте "
-                @"интернет-соединение"
-                                     type:TSMessageNotificationTypeSuccess];
+        onFailure:^(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem) {
+            
+            if(problem == QZBUserNameProblem){
+                [TSMessage
+                 showNotificationWithTitle:@"Это имя уже занято"
+                 type:TSMessageNotificationTypeWarning];
+
+            }else{
+                [TSMessage
+                 showNotificationWithTitle:@"Имя не обновлено, проверьте "
+                 @"интернет-соединение"
+                 type:TSMessageNotificationTypeWarning];
+            }
+           
         }];
 }
 
@@ -256,7 +265,7 @@
         
         
         
-    } onFailure:^(NSError *error, NSInteger statusCode) {
+    } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
         NSLog(@"not good");
     }];
     

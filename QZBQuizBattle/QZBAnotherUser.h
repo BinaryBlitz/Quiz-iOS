@@ -19,6 +19,7 @@
 @property(strong, nonatomic) NSURL *imageURL;
 @property(strong, nonatomic) NSArray *faveTopics;//QZBGameTopic
 @property(strong, nonatomic) NSArray *achievements;//QZBAchievement
+@property(assign, nonatomic) BOOL isViewed;
 
 @property(strong, nonatomic) QZBUserStatistic *userStatistics;
 

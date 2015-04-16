@@ -19,7 +19,14 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     self = [super init];
     if (self) {
-        self.name = dict[@"name"];
+        
+        if(![dict[@"username"] isEqual:[NSNull null]] && dict[@"username"] ){
+            self.name = dict[@"username"];
+        }else{
+            self.name = dict[@"name"];
+        }
+        
+       // self.name = dict[@"name"];
         self.userID = (NSNumber *)dict[@"id"];
         
         NSString *avaURL = dict[@"avatar_url"];
@@ -31,7 +38,17 @@
             NSLog(@"ava url %@", urlStr);
             self.imageURL = [NSURL URLWithString:urlStr];
         } else{
+            
+            //NSURL *imgURlLocal = [NSURL ]
+            
             self.imageURL = nil;
+        }
+        
+        if(![dict[@"viewed"] isEqual:[NSNull null]] && dict[@"viewed"]){
+            BOOL viewed = [dict[@"viewed"] boolValue];
+            self.isViewed = viewed;
+        }else{
+            self.isViewed = YES;
         }
         
         //NSArray *achievements = dict[@"achievements"];

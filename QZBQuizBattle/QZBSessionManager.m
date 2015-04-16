@@ -19,8 +19,11 @@
 
 @property (assign, nonatomic) BOOL isGoing;
 @property (assign, nonatomic) BOOL isOfflineChallenge;
+@property(assign, nonatomic) BOOL isChallenge;
 @property (assign, nonatomic) BOOL isFinished;
 //если пользователель нажал играть оффлайн когда бросил вызов
+
+@property(strong, nonatomic) id<QZBUserProtocol>opponent;
 
 @property(assign, nonatomic) NSInteger multiplier;
 
@@ -127,6 +130,12 @@
 
     self.firstUserName = session.firstUser.user.name;
     self.opponentUserName = session.opponentUser.user.name;
+    
+    self.opponent = session.opponentUser.user;
+}
+
+-(void)setIsChallenge:(BOOL)isChallenge{
+    _isChallenge =  isChallenge;
 }
 
 -(void)setTopicForSession:(QZBGameTopic *)topic{
@@ -228,7 +237,7 @@
         return;
     }
 
-    NSLog(@"%ld", self.currentTime / 10);
+    NSLog(@"%ld", (long)self.currentTime / 10);
     self.didFirstUserAnswered = YES;
     [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime / 10];
 }
@@ -241,7 +250,7 @@
 
      self.didOpponentUserAnswered = YES;*/
 
-    NSLog(@"%ld", self.currentTime / 10);
+    NSLog(@"%ld", (long)self.currentTime / 10);
     [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime / 10];
 }
 
@@ -413,8 +422,10 @@
     self.topic = nil;
 
     self.isGoing = NO;
+    self.isChallenge = NO;
     self.gameSession = nil;
     self.bot = nil;
+    self.opponent = nil;
     self.askedQuestions = nil;
     if (self.onlineSessionWorker) {
         [self.onlineSessionWorker closeConnection];

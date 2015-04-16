@@ -20,6 +20,8 @@
 #import "QZBCategory.h"
 #import "QZBTopicChooserControllerViewController.h"
 #import "QZBPlayerPersonalPageVC.h"
+#import "QZBProgressViewController.h"
+#import "QZBFriendsChallengeTVC.h"
 
 
 @interface QZBEndGameVC ()
@@ -37,6 +39,9 @@
 @property(assign, nonatomic) NSInteger endScore;
 @property(assign, nonatomic) BOOL progressShown;
 @property(assign, nonatomic) BOOL cellInited;
+@property(assign, nonatomic) BOOL isOfflineChallenge;
+@property(assign, nonatomic) BOOL isChallenge;
+@property(strong, nonatomic) id<QZBUserProtocol> opponent;
 
 @end
 
@@ -153,6 +158,9 @@
     
     self.secondUserScore = [QZBSessionManager sessionManager].secondUserScore;
     
+    
+    self.isOfflineChallenge = [QZBSessionManager sessionManager].isOfflineChallenge;
+    
     if (![QZBSessionManager sessionManager].isOfflineChallenge) {
         self.sessionResult = [QZBSessionManager sessionManager].sessionResult;
     } else {
@@ -167,6 +175,11 @@
     
     self.endScore = self.beginScore + self.firstUserScore*self.multiplier;
     
+    if([QZBSessionManager sessionManager].isChallenge){
+        self.opponent = [QZBSessionManager sessionManager].opponent;
+    }else{
+        self.opponent = nil;
+    }
     [[QZBSessionManager sessionManager] closeSession];
 
 }
@@ -324,12 +337,69 @@
     
     cell.resultOfSessionLabel.text = self.sessionResult;
     
+    cell.playAgainButton.exclusiveTouch = YES;
+    cell.chooseAnotherTopicButton.exclusiveTouch = YES;
+    
+    if(self.isOfflineChallenge){
+        [cell.playAgainButton setTitle:@"Выбрать другого соперника" forState:UIControlStateNormal];
+    }
+    
 }
 
 #pragma mark - actions
 
 - (IBAction)playAgainAction:(UIButton *)sender {
     
+    if(self.isOfflineChallenge){
+        [self moveToPlayerChooseVC];
+        return;
+    }
+    
+    NSMutableArray *controllers = [self.navigationController.viewControllers mutableCopy];
+    
+    UIViewController *destinationVC;
+    
+    for (UIViewController *controller in controllers) {
+        if ([controller isKindOfClass:
+             [QZBProgressViewController class]]  ) {
+            
+            destinationVC = controller;
+            break;
+        }
+    }
+ 
+    
+    QZBProgressViewController *progressVC =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+    
+    [progressVC initSessionWithTopic:self.topic user:nil];
+    
+    
+    if (!destinationVC) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        
+        NSUInteger objectIndex = [self.navigationController.viewControllers indexOfObject:destinationVC];
+
+        QZBProgressViewController *progressVC =
+        [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+        
+        
+        [progressVC initSessionWithTopic:self.topic user:self.opponent];
+        
+        
+        
+        
+        [controllers replaceObjectAtIndex:objectIndex withObject:progressVC];
+        
+        [self.navigationController setViewControllers:[NSArray arrayWithArray:controllers]];
+        
+        [self.navigationController popToViewController:progressVC animated:YES];
+        
+    }
+    
+    
+    //self.navigationController.viewControllers
     
 }
 - (IBAction)chooseAnotherTopic:(id)sender {
@@ -355,8 +425,37 @@
     } else {
         [self.navigationController popToViewController:destinationVC animated:YES];
     }
-
     
+}
+
+-(void)moveToPlayerChooseVC{
+    if(self.isOfflineChallenge){
+        NSEnumerator *controllers = [self.navigationController.viewControllers reverseObjectEnumerator];
+        
+        UIViewController *destinationVC;
+        
+        for (UIViewController *controller in controllers) {
+            if ([controller isKindOfClass:
+                 [QZBFriendsChallengeTVC class]] ||
+                [controller isKindOfClass: [QZBPlayerPersonalPageVC class]] ) {
+                // NSLog(@"%@", [controller class]);
+                
+                destinationVC = controller;
+                break;
+            }
+        }
+        
+        
+        if (!destinationVC) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else {
+            [self.navigationController popToViewController:destinationVC animated:YES];
+        }
+        
+        
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
     
 }
 

@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet QZBUserNameTextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomSuperViewConstraint;
 
+-(void)setUSerWhithoutUsername:(QZBUser *)user;
+
 @end

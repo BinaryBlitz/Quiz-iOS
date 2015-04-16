@@ -39,6 +39,7 @@
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBReportVC.h"
 
+
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
 //#import <DBCamera/DBCameraLibraryViewController.h>
@@ -72,49 +73,21 @@ static NSInteger topicsOffset = 7;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
 
-
-
 @end
 
 @implementation QZBPlayerPersonalPageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-
-    //  [self initAchivs];
 
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
     self.playerTableView.backgroundColor = [UIColor middleDarkGreyColor];
 
     [self setNeedsStatusBarAppearanceUpdate];
-    
-    
-    
-    //    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    //
-    //    UIBarButtonItem *backButtonItem =
-    //        [[UIBarButtonItem alloc] initWithTitle:@""
-    //                                         style:UIBarButtonItemStylePlain
-    //                                        target:nil
-    //                                        action:nil];
-    //    [self.navigationItem setBackBarButtonItem:backButtonItem];
-    //
-    //    [self.navigationController.navigationBar
-    //        setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    //    [self.navigationController.navigationBar
-    //        setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    //    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    //
-    //    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-    //    [self.navigationController.navigationBar
-    //        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
     [self initStatusbarWithColor:[UIColor blackColor]];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,10 +96,7 @@ static NSInteger topicsOffset = 7;
 }
 
 - (void)viewWillAppear:(BOOL)animate {
-    //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [super viewWillAppear:animate];
-
-    //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userPressShowAllButton:)
@@ -137,7 +107,7 @@ static NSInteger topicsOffset = 7;
                                              selector:@selector(userPressSomethingInHorizontalTV:)
                                                  name:@"QZBUserPressSomethingInHorizontallTV"
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(achievementGet:)
                                                  name:@"QZBAchievmentGet"
@@ -267,22 +237,6 @@ static NSInteger topicsOffset = 7;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    static NSString *playerIdentifier = @"playerСell";
-    //    static NSString *friendsIdentifier = @"friendsCell";
-    //    static NSString *achivIdentifier = @"achivCell";
-    //    static NSString *findFriendsIdentifier = @"searchFriends";
-    //    static NSString *mostLovedTopicIdentifier = @"mostLovedTopics";
-    //    static NSString *topicCellIdentifier = @"topicCell";
-    //    static NSString *challengeCell = @"challengeCell";
-    //    static NSString *vsScoreCellIndentifier = @"vsScoreCell";
-    //    static NSString *totalStatisticsIdentifier = @"totalStatistics";
-    //    static NSString *descriptionIdentifier = @"descriptionForHorizontal";
-
-   /// NSInteger incrementForCurrent = 0;
-
-//    if (self.isCurrent) {
-//       // incrementForCurrent = 1;
-//    }
 
     UITableViewCell *cell;
 
@@ -292,7 +246,6 @@ static NSInteger topicsOffset = 7;
 
         [self playerCellCustomInit:playerCell];
 
-        
         return playerCell;
     } else if (indexPath.row == 1) {
         QZBStatiscticCell *userStatisticCell =
@@ -303,21 +256,13 @@ static NSInteger topicsOffset = 7;
         return userStatisticCell;
 
     } else if (indexPath.row == 2) {
-        //        QZBAchivHorizontalCell *achivCell =
-        //            [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
-        //
-        //        [achivCell setAchivArray:self.achivArray];
-        //
-        //        if (self.isCurrent) {
-        //            achivCell.buttonTitle = @"Показать\n все";
-        //        }
-        //        return achivCell;
+
         QZBDescriptionForHorizontalCell *descrForHorizontal =
             [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
 
         descrForHorizontal.descriptionLabel.text =
             [NSString stringWithFormat:@"Друзья (%ld):", (unsigned long)self.friends.count];
-        
+
         descrForHorizontal.contentView.backgroundColor = [UIColor friendsLightGreyColor];
 
         return descrForHorizontal;
@@ -327,7 +272,7 @@ static NSInteger topicsOffset = 7;
             if (self.isCurrent) {
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
                 QZBFindFriendsCell *ffCell = (QZBFindFriendsCell *)cell;
-                if(self.friends){
+                if (self.friends) {
                     [ffCell.shadowView removeFromSuperview];
                 }
                 cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
@@ -335,10 +280,11 @@ static NSInteger topicsOffset = 7;
             } else {
                 QZBDescriptionForHorizontalCell *descrForHorizontal =
                     [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
-               // [descrForHorizontal.shadowView removeFromSuperview];
+                // [descrForHorizontal.shadowView removeFromSuperview];
 
                 descrForHorizontal.descriptionLabel.text =
-                    @"У игрока еще нет друзей, добавьте его в друзья";
+                    @"У игрока еще нет друзей, добавьте его в "
+                    @"друзья";
                 return descrForHorizontal;
 
                 // cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
@@ -347,20 +293,10 @@ static NSInteger topicsOffset = 7;
             QZBFriendHorizontalCell *friendsHorizontalCell =
                 [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
 
-            
-
             [friendsHorizontalCell setFriendArray:self.friends];
 
             return friendsHorizontalCell;
         }
-
-        //        if (self.isCurrent) {
-        //            cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
-        //            return cell;
-        //        } else {
-        //            cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
-        //            return cell;
-        //        }
 
     } else if (indexPath.row == 4) {
         QZBDescriptionForHorizontalCell *descrForHorizontal =
@@ -373,13 +309,6 @@ static NSInteger topicsOffset = 7;
 
         return descrForHorizontal;
 
-        //        QZBStatiscticCell *userStatisticCell =
-        //            [tableView dequeueReusableCellWithIdentifier:totalStatisticsIdentifier];
-        //
-        //        [userStatisticCell setCellWithUser:self.user];
-        //
-        //        return userStatisticCell;
-
     } else if (indexPath.row == 5) {
         QZBAchivHorizontalCell *achivCell =
             [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
@@ -387,40 +316,22 @@ static NSInteger topicsOffset = 7;
 
         [achivCell setAchivArray:self.achivArray];
 
-        if (self.isCurrent) {
-            //  achivCell.buttonTitle = @"Показать\n все";
-        }
+
         return achivCell;
 
-        //        if (!self.isCurrent) {
-        //            QZBVSScoreCell *vsCell =
-        //                [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
-        //            [vsCell setCellWithUser:self.user];
-        //            return vsCell;
-        //        }  // else {
-        //        //            cell = [tableView
-        //        dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
-        //        //
-        //        //            return cell;
-        //        //        }
     } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
         if (self.isCurrent) {
-            if(!self.friends.count==0){
+            if (!self.friends.count == 0) {
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
                 cell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
-              //  QZBFindFriendsCell *ffCell = (QZBFindFriendsCell *)cell;
-//                if(ffCell.shadowView){
-//                    [ffCell.shadowView removeFromSuperview];
-//                }
-//                [ffCell addDropShadows];
+                
                 return cell;
-            }else{
+            } else {
                 QZBDescriptionForHorizontalCell *descrCell =
-                [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+                    [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
                 descrCell.descriptionLabel.text = @"";
                 descrCell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
                 return descrCell;
-                
             }
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
@@ -438,18 +349,6 @@ static NSInteger topicsOffset = 7;
 
         return descrForHorizontal;
 
-        //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //                if (self.isCurrent) {
-        //                    cell = [tableView
-        //                    dequeueReusableCellWithIdentifier:findFriendsIdentifier];
-        //                    return cell;
-        //                } else {
-        //                    cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
-        //                    return cell;
-        //                }
-
-        //  cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
-
     } else if (!self.isCurrent && indexPath.row == [tableView numberOfRowsInSection:0] - 2) {
         QZBVSScoreCell *vsCell =
             [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
@@ -459,14 +358,6 @@ static NSInteger topicsOffset = 7;
         return vsCell;
 
     }
-
-    // if(indexPath.row ==  self.faveTopics.count>0)
-
-    //    if (indexPath.row == 6 - incrementForCurrent) {
-    //        cell = [tableView dequeueReusableCellWithIdentifier:mostLovedTopicIdentifier];
-    //
-    //        return cell;
-    //
 
     else if (indexPath.row > 6) {
         QZBTopicTableViewCell *topicCell =
@@ -479,25 +370,16 @@ static NSInteger topicsOffset = 7;
         NSInteger level = 0;
         float progress = 0.0;
 
-        [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+        [NSObject calculateLevel:&level
+                   levelProgress:&progress
+                       fromScore:[topic.points integerValue]];
 
         [topicCell initCircularProgressWithLevel:level progress:progress];
 
         topicCell.backgroundColor = [UIColor veryDarkGreyColor];
 
         return topicCell;
-        // cell = topicCell;
     }
-
-    //    if (!self.isCurrent &&
-    //        indexPath.row == [self tableView:tableView numberOfRowsInSection:0] - 1) {
-    //        QZBVSScoreCell *vsCell =
-    //            [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
-    //        [vsCell setCellWithUser:self.user];
-    //
-    //        vsCell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
-    //        return vsCell;
-    //    }
 
     return cell;
 }
@@ -539,20 +421,12 @@ static NSInteger topicsOffset = 7;
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    NSInteger incrementForCurrent = 0;
-    //
-    //    if (self.isCurrent) {
-    //        incrementForCurrent = 1;
-    //    }
-
     if ([self.choosedIndexPath isEqual:indexPath]) {
         return 130.0f;
     }
-
     if (indexPath.row == 6 && self.faveTopics.count == 0) {
         return 74.0;
     }
-
     if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
     } else if (indexPath.row == 2 || indexPath.row == 4 || indexPath.row == 6) {
@@ -561,7 +435,6 @@ static NSInteger topicsOffset = 7;
         return 74.0f;
     }
 }
-
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -595,9 +468,8 @@ static NSInteger topicsOffset = 7;
 
     if (buttonIndex == 0) {
         // Make user response
-        
-        if(self.user){
-        
+
+        if (self.user) {
             [self performSegueWithIdentifier:@"showReportScreen" sender:nil];
         }
 
@@ -613,13 +485,13 @@ static NSInteger topicsOffset = 7;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-    if([segue.identifier isEqualToString:@"showAchivements"]){
+    if ([segue.identifier isEqualToString:@"showAchivements"]) {
         QZBAchievementCVC *destinationVC = segue.destinationViewController;
-        
+
         [destinationVC initAchievmentsWithGettedAchievements:self.achivArray];
-        
+
     }
-    
+
     else if ([segue.identifier isEqualToString:@"showFriendsList"]) {
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
@@ -627,39 +499,36 @@ static NSInteger topicsOffset = 7;
     } else if ([segue.identifier isEqualToString:@"challengeSegue"]) {
         QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithUser:self.user];
+
     } else if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
         QZBProgressViewController *navigationController = segue.destinationViewController;
-        
-        if(!self.isOnlineChallenge){
+
+        if (!self.isOnlineChallenge) {
             [navigationController initSessionWithTopic:self.choosedTopic user:nil];
             self.isOnlineChallenge = NO;
-        }else{
-           
+
+        } else {
             [navigationController initSessionWithTopic:self.choosedTopic user:self.user];
             self.isOnlineChallenge = NO;
         }
 
     } else if ([segue.identifier isEqualToString:@"showRate"]) {
-        
         QZBRatingMainVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithTopic:self.choosedTopic];
-        
-    }else if ([segue.identifier isEqualToString:@"showFriendsChallenge"]) {
-        
+
+    } else if ([segue.identifier isEqualToString:@"showFriendsChallenge"]) {
         QZBFriendsChallengeTVC *destinationVC = segue.destinationViewController;
         QZBUser *user = [QZBCurrentUser sharedInstance].user;
-        
-        if(self.friends){
-    
+
+        if (self.friends) {
             [destinationVC setFriendsOwner:user
                                 andFriends:self.friends
                                  gameTopic:self.choosedTopic];
         }
-        
-    } else if ([segue.identifier isEqualToString:@"showReportScreen"]){
-        
+
+    } else if ([segue.identifier isEqualToString:@"showReportScreen"]) {
         QZBReportVC *destVC = (QZBReportVC *)segue.destinationViewController;
-        
+
         [destVC initWithUser:self.user];
     }
 }
@@ -672,12 +541,12 @@ static NSInteger topicsOffset = 7;
     [self showFriendsTapAction:nil];
 }
 
--(void)showFriendsTapAction:(id)sender{
+- (void)showFriendsTapAction:(id)sender {
     NSLog(@"tapped gesture");
     [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
 }
 
--(void)showAchievementsTapAction:(id)sender{
+- (void)showAchievementsTapAction:(id)sender {
     [self performSegueWithIdentifier:@"showAchivements" sender:nil];
 }
 
@@ -742,7 +611,7 @@ static NSInteger topicsOffset = 7;
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
-        // NSLog(@"show detail for item at row %d", indexPath.row);
+
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
         NSLog(@"%ld", (long)self.choosedTopic.topic_id);
 
@@ -755,19 +624,15 @@ static NSInteger topicsOffset = 7;
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
         //   NSLog(@"show detail for item at row %d", indexPath.row);
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
-        
-        if(self.isCurrent){
-           // self.isOnlineChallenge = YES;
-          //  [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
+
+        if (self.isCurrent) {
             self.isOnlineChallenge = NO;
             [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
-            
-        }else{
+
+        } else {
             self.isOnlineChallenge = YES;
             [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
         }
-
-       
     }
 }
 - (IBAction)rateAction:(UIButton *)sender {
@@ -782,22 +647,6 @@ static NSInteger topicsOffset = 7;
 }
 
 #pragma mark - init friends and achivs
-
-//- (void)initAchivs {
-//    [UIImage imageNamed:@"achiv"];
-//    [UIImage imageNamed:@"notAchiv"];
-//
-//    self.achivArray = @[
-//        [[QZBAchievement alloc] initWithName:@"achiv" imageName:@"achiv"],
-//        [[QZBAchievement alloc] initWithName:@"notAchiv" imageName:@"notAchiv"],
-//        [[QZBAchievement alloc] initWithName:@"achiv2" imageName:@"achiv"],
-//        [[QZBAchievement alloc] initWithName:@"notAchiv2" imageName:@"notAchiv"],
-//        [[QZBAchievement alloc] initWithName:@"achiv" imageName:@"achiv"],
-//        [[QZBAchievement alloc] initWithName:@"notAchiv" imageName:@"notAchiv"],
-//        [[QZBAchievement alloc] initWithName:@"achiv2" imageName:@"achiv"],
-//        [[QZBAchievement alloc] initWithName:@"notAchiv2" imageName:@"notAchiv"]
-//    ];
-//}
 
 - (void)playerCellCustomInit:(QZBPlayerInfoCell *)playerCell {
     [playerCell.multiUseButton addTarget:self
@@ -828,19 +677,20 @@ static NSInteger topicsOffset = 7;
     }
     [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
 
-    //  [playerCell.playerUserpic setImage:[QZBCurrentUser sharedInstance].user.userPic];
+    
 
-    [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
-    
+    if(self.user.imageURL){
+        [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
+    }else{
+        [playerCell.playerUserpic setImage:[UIImage imageNamed:@"userpicStandart"]];
+    }
+
     NSNumber *allAchievementsCount = @([QZBAchievementManager sharedInstance].achievements.count);
-    
+
     NSNumber *currentAchievementsCount = @(self.achivArray.count);
-    
-    playerCell.achievementLabel.text = [NSString
-                                        stringWithFormat:@"%@/%@",
-                                        currentAchievementsCount,allAchievementsCount];
-    
-        
+
+    playerCell.achievementLabel.text =
+        [NSString stringWithFormat:@"%@/%@", currentAchievementsCount, allAchievementsCount];
 
     // cell = playerCell;
 }
@@ -918,25 +768,7 @@ static NSInteger topicsOffset = 7;
 
 #pragma mark - achievment
 
-- (void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict {
-    // QZBAchievement *achievment = self.achivArray[indexPath.row];
 
-    SCLAlertView *alert = [[SCLAlertView alloc] init];
-    alert.backgroundType = Blur;
-    alert.showAnimationType = FadeIn;
-
-    NSString *descr = @"Поздравляем!\n Вы получили новое " @"достижени"
-                                                                                     @"е" @"!";
-    NSString *name = dict[@"name"];
-
-    [alert showCustom:self.navigationController
-                   image:[UIImage imageNamed:@"achiv"]
-                   color:[UIColor lightBlueColor]
-                   title:name
-                subTitle:descr
-        closeButtonTitle:@"ОК"
-                duration:0.0f];
-}
 
 - (void)showAchievement:(QZBAchievement *)achievment {
     // QZBAchievement *achievment = self.achivArray[indexPath.row];
@@ -946,8 +778,30 @@ static NSInteger topicsOffset = 7;
     alert.showAnimationType = FadeIn;
     alert.shouldDismissOnTapOutside = YES;
 
+    [alert alertIsDismissed:^{
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           [self setNeedsStatusBarAppearanceUpdate];
+                       });
+
+    }];
+
+    UIImageView *v = [[UIImageView alloc] init];
+
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:achievment.imageURL
+                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                              timeoutInterval:60];
+
+    [v setImageWithURLRequest:imageRequest
+              placeholderImage:[UIImage imageNamed:@"achiv"]
+                       success:nil
+                       failure:nil];
+
+    // UIImage *img =
+
     [alert showCustom:self.navigationController
-                   image:[UIImage imageNamed:@"achiv"]
+                   image:v.image
                    color:[UIColor lightBlueColor]
                    title:achievment.name
                 subTitle:achievment.achievementDescription
@@ -958,7 +812,6 @@ static NSInteger topicsOffset = 7;
 - (void)achievementGet:(NSNotification *)note {
     [self showAlertAboutAchievmentWithDict:note.object];
 }
-
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

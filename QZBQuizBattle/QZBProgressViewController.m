@@ -36,6 +36,7 @@
 @property (assign, nonatomic) BOOL isOnline;
 @property (assign, nonatomic) BOOL isEntered;
 @property (strong, nonatomic) NSNumber *lobbyNumber;  // for accept challenges
+@property (assign, nonatomic) BOOL alertShown;
 
 //@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное
 //управление
@@ -191,15 +192,6 @@
 
     [[QZBSessionManager sessionManager] setTopicForSession:topic];
 
-    //   topic.relationToCategory.name;
-
-    //    QZBCategory *category = [self tryFindRelatedCategoryToTopic:self.topic];
-    //    if (category) {
-    //        NSLog(@"category backgroundURL %@", category.background_url);
-    //
-    //        //[self initNavigationBar:topic.relationToCategory.name];
-    //        [self initScreenWithCategory:category];
-    //    }
 }
 
 #pragma mark - custom init
@@ -253,11 +245,14 @@
     if ([note.object isKindOfClass:[NSArray class]]) {
         NSArray *description = note.object;
 
+        if(!self.alertShown){
+            self.alertShown = YES;
         [[[UIAlertView alloc] initWithTitle:description[0]
                                     message:description[1]
                                    delegate:self
                           cancelButtonTitle:@"Ок"
                           otherButtonTitles:nil] show];
+        }
     }
 }
 
@@ -275,7 +270,7 @@
 #pragma mark - Navigation
 
 #pragma mark - init session
-// тестовая инициализация сессии
+
 - (void)initSession {
     if (self.isChallenge) {
         [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:self.lobbyNumber
@@ -311,7 +306,8 @@
                                            queryCount:0];
                 self.lobby = lobby;
 
-                [self settitingSession:session bot:nil];
+                [self settitingSession:session
+                                   bot:nil];
 
                 [UIView animateWithDuration:0.4
                     delay:5
@@ -327,7 +323,7 @@
 
                     }];
 
-                self.playOfflineButton.alpha = 1.0;
+               // self.playOfflineButton.alpha = 1.0;//??
 
             }
             onFailure:^(NSError *error, NSInteger statusCode){
@@ -399,6 +395,10 @@
         if (!self.isCanceled) {
             NSLog(@"setSession");
             [[QZBSessionManager sessionManager] setSession:session];
+            if(self.isChallenge || self.user){
+                [[QZBSessionManager sessionManager] setIsChallenge:YES];
+            }
+            
 
             if ([bot isKindOfClass:[QZBOpponentBot class]]) {
                 [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];

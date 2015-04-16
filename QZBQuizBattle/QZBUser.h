@@ -21,11 +21,13 @@
 @property (strong, nonatomic, readonly) NSString *pushToken;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
 @property (strong, nonatomic) QZBUserStatistic *userStatistics;
+@property(assign, nonatomic, readonly) BOOL isRegistred;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 //- (void)setUserPic:(UIImage *)userPic;
 - (void)setUserName:(NSString *)userName;
+-(void)makeUserRegisterWithUserName:(NSString *)username;
 - (void)updateUserFromServer;
 //-(void)setAPNsToken:(NSString *)pushToken;
 
