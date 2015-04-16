@@ -21,6 +21,7 @@
 #import "QZBAcceptChallengeVC.h"
 #import "QZBRegistrationChooserVC.h"
 #import "QZBMainGameScreenTVC.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -322,8 +323,7 @@
 
         vcNum = 2;
 
-    } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"] ||
-               [userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
+    } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
         // [self acceptChallengeWithDict:userInfo];
         vcNum = 0;
     } else {

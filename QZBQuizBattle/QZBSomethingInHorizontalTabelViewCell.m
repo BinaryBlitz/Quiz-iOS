@@ -61,7 +61,11 @@
 - (void)setName:(NSString *)name picURL:(NSURL *)picURL {
     self.name.text = name;
 
-    [self.picture setImageWithURL:picURL];
+    if(picURL){
+        [self.picture setImageWithURL:picURL];
+    }else{
+        [self.picture setImage:[UIImage imageNamed:@"userpicStandart"]];
+    }
 }
 
 - (void)setName:(NSString *)name picture:(UIImage *)image{

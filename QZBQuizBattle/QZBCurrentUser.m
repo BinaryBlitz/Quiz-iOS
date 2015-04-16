@@ -140,19 +140,7 @@
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"APNStoken"]) {
             //если нет пользователя, но есть токен. Токен необходимо удалить с сервера.
 
-//            NSString *oldToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"APNStoken"];
-//            if(oldToken){
-//            [[QZBServerManager sharedManager] DELETEAPNsToken:oldToken
-//                onSuccess:^{
-//
-//                    //  self.pushToken = nil;
-//                    //  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
-//
-//                }
-//                onFailure:^(NSError *error, NSInteger statusCode){
-//
-//                }];
-//            }
+
         }
 
         return NO;

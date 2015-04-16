@@ -8,6 +8,7 @@
 
 #import "QZBAchievement.h"
 #import "QZBServerManager.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface QZBAchievement ()
 
@@ -43,11 +44,25 @@
         
         
         if(![dict[@"icon_url"] isEqual:[NSNull null]] && dict[@"icon_url"] ){
+            
+            
             NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:dict[@"icon_url"]];
             
             self.imageURL = [NSURL URLWithString:urlAsString];
             
-           // UIImageView *v = [[UIImageView alloc] init];
+            
+            UIImageView *v = [[UIImageView alloc] init];
+            
+                NSURLRequest *imageRequest =
+                [NSURLRequest requestWithURL:self.imageURL
+                                 cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                             timeoutInterval:60];
+                
+                [v setImageWithURLRequest:imageRequest
+                         placeholderImage:[UIImage imageNamed:@"achiv"]
+                                  success:nil
+                                  failure:nil];
+            
             
         }
         

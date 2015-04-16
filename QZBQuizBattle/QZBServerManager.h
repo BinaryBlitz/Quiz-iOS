@@ -112,14 +112,19 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 #pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure;
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure;
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure;
+
+-(void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName user:(QZBUser *)user
+                                        onSuccess:(void (^)())success
+                                        onFailure:(void (^)(NSError *error, NSInteger statusCode,
+                                                            QZBUserRegistrationProblem problem))failure;
 
 #pragma mark - friends
 

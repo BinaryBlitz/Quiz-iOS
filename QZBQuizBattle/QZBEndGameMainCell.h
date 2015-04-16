@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultOfSessionLabel;
 @property (strong, nonatomic) JSBadgeView *userBV;
 @property (strong, nonatomic) JSBadgeView *opponentBV;
+@property (weak, nonatomic) IBOutlet UIButton *playAgainButton;
+@property (weak, nonatomic) IBOutlet UIButton *chooseAnotherTopicButton;
 
 -(void)initCell;
 

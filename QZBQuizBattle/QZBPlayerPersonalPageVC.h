@@ -14,7 +14,7 @@
 @property(strong, nonatomic) IBOutlet UITableView *playerTableView;
 
 - (void)initPlayerPageWithUser:(id<QZBUserProtocol>)user;
-- (void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict;
+//- (void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict;
 
 
 //@property (weak, nonatomic) IBOutlet UIButton *multiUseButton;

@@ -34,7 +34,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    //[SVProgressHUD dismiss];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

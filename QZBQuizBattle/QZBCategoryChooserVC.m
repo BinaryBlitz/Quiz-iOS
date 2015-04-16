@@ -133,7 +133,8 @@
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                                ascending:YES];
         
-        _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[ sort ]]];
+        _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll]
+                                               sortedArrayUsingDescriptors:@[ sort ]]];
 
         [self.mainTableView reloadData];
 

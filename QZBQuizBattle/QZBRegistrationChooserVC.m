@@ -10,12 +10,15 @@
 #import "QZBServerManager.h"
 #import "QZBCurrentUser.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "QZBRegistrationUsernameInput.h"
 
 static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
 static NSArray *SCOPE = nil;
 
 @interface QZBRegistrationChooserVC ()
+
+@property(strong, nonatomic) QZBUser *user;
 
 @end
 
@@ -45,11 +48,11 @@ static NSArray *SCOPE = nil;
 }
 
 - (IBAction)authorize:(id)sender {
-    //[VKSdk authorize:SCOPE revokeAccess:YES];
+    [VKSdk authorize:SCOPE revokeAccess:YES];
 
-    [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
-  //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-  //  [VKSdk authorize:SCOPE revokeAccess:YES];
+    //[self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
 - (void)startWorking {
@@ -99,6 +102,8 @@ static NSArray *SCOPE = nil;
 
     [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
         onSuccess:^(QZBUser *user) {
+            
+            if(user.isRegistred){
 
             [[QZBCurrentUser sharedInstance] setUser:user];
 
@@ -110,6 +115,10 @@ static NSArray *SCOPE = nil;
                                      completion:^{
 
                                      }];
+            }else{
+                self.user = user;
+                [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
+            }
 
         }
         onFailure:^(NSError *error, NSInteger statusCode){
@@ -144,14 +153,34 @@ static NSArray *SCOPE = nil;
 }
 
 #pragma mark - Navigation
-/*
+
 // In a storyboard-based application, you will often want to do a little preparation before
-navigation
+//navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
 //  NSLog(@"%@",segue);
-}*/
+   
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        
+        if ([segue.identifier isEqualToString:@"enterUsernameSegue"]) {
+           UINavigationController *navController = segue.destinationViewController;
+            
+            for(UIViewController *vc in navController.viewControllers){
+                if([vc isKindOfClass:[QZBRegistrationUsernameInput class]]){
+                    QZBRegistrationUsernameInput *destVC = (QZBRegistrationUsernameInput *)vc;
+                    [destVC setUSerWhithoutUsername:self.user];
+                    break;
+                }
+            }
+            
+            //[destVC setUSerWhithoutUsername:self.user];
+            
+        }
+    
+    
+}
 
 @end

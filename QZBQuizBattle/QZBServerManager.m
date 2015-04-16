@@ -788,30 +788,46 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure {
     NSString *hashedPassword = [self hashPassword:password];
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
         @"player" : @{@"password_digest" : hashedPassword}
     };
 
-    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+    [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure {
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"player" : @{@"name" : userName}
+        @"player" : @{@"username" : userName}
     };
 
-    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+    [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
+}
+
+-(void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName user:(QZBUser *)user
+                                        onSuccess:(void (^)())success
+                                        onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure{
+    
+    NSDictionary *params = @{
+                             @"token" : user.api_key,
+                             @"player" : @{@"username" : userName}
+                             };
+    
+    
+    
+    
+
+    [self PATHPlayerDataWithDict:params userID:user.userID onSuccess:success  onFailure:failure];
 }
 
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure {
     NSString *base64str =
         [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
@@ -820,7 +836,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         @"player" : @{@"avatar" : base64str}
     };
 
-    [self PATHPlayerDataWithDict:params onSuccess:success onFailure:failure];
+    [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
@@ -841,22 +857,46 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     return newImage;
 }
 
-- (void)PATHPlayerDataWithDict:(NSDictionary *)params
+- (void)PATHPlayerDataWithDict:(NSDictionary *)params userID:(NSNumber *)userID
                      onSuccess:(void (^)())success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSNumber *userID = [QZBCurrentUser sharedInstance].user.userID;
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure {
+    
+    if(!userID){
+        userID = [QZBCurrentUser sharedInstance].user.userID;
+    }
 
     NSString *urlString = [NSString stringWithFormat:@"players/%@", userID];
     [self.requestOperationManager PATCH:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"pathed response %@", responseObject);
+            
             if (success) {
                 success();
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            NSLog(@"response for patch player %@",operation.responseObject);
+            
+            
+            QZBUserRegistrationProblem problem = QZBNoProblems;
+            
+            
+            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
+            
+            if(![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
+               operation.responseObject[@"username"]){
+                
+                NSArray *usernameProblems = operation.responseObject[@"username"];
+                //NSString *problem = [usernameProblems firstObject];
+                NSLog(@"problem %@", usernameProblems);
+                problem = QZBUserNameProblem;
+            }
+            
+            
             if (failure) {
-                failure(error, operation.response.statusCode);
+                failure(error, operation.response.statusCode, problem);
             }
             NSLog(@"not patched %@", error);
         }];

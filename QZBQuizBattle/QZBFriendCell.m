@@ -37,15 +37,12 @@
         [self.userpicImageView setImage:[UIImage imageNamed:@"icon_register"]];//redo
     }
     
-    
-    //self.numberInRating.text = [NSString stringWithFormat:@"%ld", (long)user.position];
-    
-    //self.score.text = [NSString stringWithFormat:@"%ld", (long)user.points];
-    
-    //  NSURL *url = [NSURL URLWithString:self.urlString];
-    
-    // [self.userpic setImageWithURL:url];
-    
+    if(!user.isViewed){
+        self.nameLabel.font = [UIFont boldSystemFontOfSize:17.0];
+    }else{
+        self.nameLabel.font = [UIFont systemFontOfSize:17.0];
+    }
+
 }
 
 

@@ -32,6 +32,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 @property(strong, nonatomic) JSBadgeView *userBV;
 @property(strong, nonatomic) JSBadgeView *opponentBV;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraint;
+@property(assign, nonatomic) BOOL isEnded;
 
 
 @end
@@ -54,7 +55,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         b.titleLabel.adjustsFontSizeToFitWidth = YES;
         b.titleLabel.numberOfLines = 0;
         CGFloat inset = CGRectGetHeight(b.frame)/5;
-        b.titleEdgeInsets = UIEdgeInsetsMake(inset/2, inset/2, inset/2, inset/2);
+        b.titleEdgeInsets = UIEdgeInsetsMake(inset/3, inset/3, inset/3, inset/3);
         
         //b.titleLabel.lineBreakMode = NSLineBreakByClipping;
     
@@ -114,6 +115,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     
 
     [self setNamesAndUserpics];
+    self.roundLabel.adjustsFontSizeToFitWidth = YES;
     
     QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
     
@@ -131,9 +133,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                                         placeholderImage:nil
                                                  success:nil
                                                  failure:nil];
+        
 
         
     }
+    
+   
     
     
 }
@@ -296,6 +301,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
             }
         }
         
+        self.isEnded = YES;//чтобы не открылся последний экран если пользователь сдался
+        
         if (destinationVC) {
             [self.navigationController popToViewController:destinationVC animated:YES];
         }else {
@@ -316,11 +323,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     if(question.imageURL){
         //self.questionImageView.frame = self.originalPosition;
         [self.questionImageView setImageWithURL:question.imageURL];
-        self.verticalConstraint.constant = 10;
+        self.verticalConstraint.constant = 30;
         [self.qestionLabel layoutIfNeeded];
     }else{
-       
-        self.verticalConstraint.constant = -self.questionImageView.frame.size.height;
+    
+        self.verticalConstraint.constant = self.questBackground.frame.size.height-20.0;
+      //  self.verticalConstraint.constant = 10;
         [self.qestionLabel layoutIfNeeded];
     
         
@@ -558,6 +566,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 //принимает нотификейшен о окончании сессии из QZBSessionManager
 - (void)endGameSession:(NSNotification *)notification {
     if ([[notification name] isEqualToString:@"QZBNeedFinishSession"]) {
+        self.navigationController.navigationItem.leftBarButtonItem.enabled = NO;
+        
         [self setScores];
 
         [self showResultOfQuestion];
@@ -566,13 +576,20 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         dispatch_after(
             dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)),
             dispatch_get_main_queue(), ^{
+                
+                if(!self.isEnded){
+                
                 [self setScores];
 
                 [self UNShowQuestinAndAnswers];
 
                 NSLog(@"session ended");
 
-                self.roundLabel.text = (NSString *)notification.object;
+                    if(![QZBSessionManager sessionManager].isOfflineChallenge){
+                        self.roundLabel.text = (NSString *)notification.object;
+                    }else{
+                        self.roundLabel.text = @"Ждем соперника";
+                    }
 
                 [UIView animateWithDuration:0.3
                     delay:0.5
@@ -602,7 +619,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
                     }];
 
-            });
+                }});
     }
 }
 

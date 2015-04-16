@@ -17,9 +17,8 @@
 #import "QZBFriendsChallengeTVC.h"
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import <AFNetworking/UIImageView+AFNetworking.h> 
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "NSObject+QZBSpecialCategory.h"
-
 
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
@@ -39,10 +38,6 @@
 
     self.topicTableView.delegate = self;
     self.topicTableView.dataSource = self;
-    
-    
-    
-    
 
     UIBarButtonItem *backButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@""
@@ -64,34 +59,34 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-//    self.navigationItem.hidesBackButton = NO;
-//    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-//
-//    [self.navigationController.navigationBar
-//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//
-//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-//
-//    [self.navigationController.navigationBar
-//        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//    self.navigationController.navigationBar.translucent = NO;
-    
+
+    //    self.navigationItem.hidesBackButton = NO;
+    //    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    //
+    //    [self.navigationController.navigationBar
+    //        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //
+    //    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    //
+    //    [self.navigationController.navigationBar
+    //        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //    self.navigationController.navigationBar.translucent = NO;
+
     [self initStatusbarWithColor:[UIColor blackColor]];
 
     NSURL *url = [NSURL URLWithString:self.category.background_url];
-    
+
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
                                                   cachePolicy:NSURLRequestReturnCacheDataElseLoad
                                               timeoutInterval:60];
-    
-    [self.backgroundImageView  setImageWithURLRequest:imageRequest
-                                   placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
-                                            success:nil
-                                            failure:nil];
-    
+
+    [self.backgroundImageView setImageWithURLRequest:imageRequest
+                                    placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
+                                             success:nil
+                                             failure:nil];
+
     //[self.backgroundImageView setImageWithURL:url];
-    
+
     // self.navigationController.navigationBar.topItem.title = @"";
 }
 
@@ -149,14 +144,14 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
-    
+
     NSInteger level = 0;
     float progress = 0.0;
-    
+
     [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
-    
+
     [cell initCircularProgressWithLevel:level progress:progress];
-    
+
     cell.topicName.text = topic.name;
 
     return cell;
@@ -189,17 +184,6 @@
 }
 
 #pragma actions
-//- (UITableViewCell *)parentCellForView:(id)theView {
-//    id viewSuperView = [theView superview];
-//    while (viewSuperView != nil) {
-//        if ([viewSuperView isKindOfClass:[UITableViewCell class]]) {
-//            return (UITableViewCell *)viewSuperView;
-//        } else {
-//            viewSuperView = [viewSuperView superview];
-//        }
-//    }
-//    return nil;
-//}
 
 - (IBAction)playButtonAction:(UIButton *)sender {
     UITableViewCell *cell = [self parentCellForView:sender];
@@ -242,14 +226,6 @@
 - (void)initTopicsWithCategory:(QZBCategory *)category {
     self.category = category;
 
- //   [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];  // redo for
-                                                                                   // colors
-    //    self.topicTableView.backgroundColor = [UIColor redColor];
-    
-    //NSURL *backURL = [NSURL URLWithString:category.banner_url];
-
-    
-    
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
 
     self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
