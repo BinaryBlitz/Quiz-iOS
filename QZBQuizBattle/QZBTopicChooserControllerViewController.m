@@ -19,12 +19,13 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "NSObject+QZBSpecialCategory.h"
+#import "UIColor+QZBProjectColors.h"
 
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
 //@property (strong, nonatomic) QZBGameTopic *choosedTopic;
-@property (strong, nonatomic) NSIndexPath *choosedIndexPath;
+
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 
 @end
@@ -150,7 +151,7 @@
 
     [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
 
-    [cell initCircularProgressWithLevel:level progress:progress];
+    [cell initCircularProgressWithLevel:level progress:progress visible:[topic.visible boolValue]];
 
     cell.topicName.text = topic.name;
 
@@ -160,6 +161,20 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [tableView beginUpdates];
+            [tableView endUpdates];
+            [self showAlertAboutUnvisibleTopic:topicCell.topicName.text];//REDO
+            
+            return;
+        }
+    }
+    
     if (!self.user) {
         if ([self.choosedIndexPath isEqual:indexPath]) {
             self.choosedIndexPath = nil;
@@ -176,6 +191,9 @@
     }
 }
 
+
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.choosedIndexPath isEqual:indexPath]) {
         return 130.0f;
@@ -187,6 +205,18 @@
 
 - (IBAction)playButtonAction:(UIButton *)sender {
     UITableViewCell *cell = [self parentCellForView:sender];
+    
+    if([cell isKindOfClass:[QZBGameTopic class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [self.topicTableView beginUpdates];
+            [self.topicTableView endUpdates];
+            return;
+        }
+    }
+    
     if (cell != nil) {
         NSIndexPath *indexPath = [self.topicTableView indexPathForCell:cell];
         // NSLog(@"show detail for item at row %d", indexPath.row);
@@ -198,6 +228,19 @@
 }
 - (IBAction)challengeAction:(id)sender {
     UITableViewCell *cell = [self parentCellForView:sender];
+    
+    if([cell isKindOfClass:[QZBGameTopic class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [self.topicTableView beginUpdates];
+            [self.topicTableView endUpdates];
+            return;
+        }
+    }
+    
+    
     if (cell != nil) {
         NSIndexPath *indexPath = [self.topicTableView indexPathForCell:cell];
         //   NSLog(@"show detail for item at row %d", indexPath.row);
@@ -207,6 +250,20 @@
 }
 - (IBAction)rateAction:(UIButton *)sender {
     UITableViewCell *cell = [self parentCellForView:sender];
+    
+    
+    if([cell isKindOfClass:[QZBGameTopic class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [self.topicTableView beginUpdates];
+            [self.topicTableView endUpdates];
+            return;
+        }
+    }
+    
+    
     if (cell != nil) {
         NSIndexPath *indexPath = [self.topicTableView indexPathForCell:cell];
         // NSLog(@"show detail for item at row %d", indexPath.row);
@@ -215,6 +272,28 @@
         [self performSegueWithIdentifier:@"showRate" sender:nil];
     }
 }
+
+
+-(BOOL)checkVisibiliti:(UITableViewCell *)cell{
+    
+    if([cell isKindOfClass:[QZBGameTopic class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [self.topicTableView beginUpdates];
+            [self.topicTableView endUpdates];
+            
+        }
+        return topicCell.visible;
+    
+    }
+    return NO;
+    
+    
+}
+
+
 
 #pragma mark - custom init
 

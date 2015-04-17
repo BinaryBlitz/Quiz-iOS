@@ -13,7 +13,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *topicName;
 @property (weak, nonatomic) IBOutlet UAProgressView *topicProgressView;
+@property(assign, nonatomic, readonly) BOOL visible;
 
--(void)initCircularProgressWithLevel:(NSInteger)level progress:(float)progress;
+-(void)initCircularProgressWithLevel:(NSInteger)level
+                            progress:(float)progress
+                             visible:(BOOL)visible;
 
 @end

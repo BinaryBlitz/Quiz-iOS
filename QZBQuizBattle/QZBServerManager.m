@@ -222,6 +222,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         NSString *name = [dict objectForKey:@"name"];
         id topic_id = [dict objectForKey:@"id"];
         NSNumber *points = [dict objectForKey:@"points"];
+        NSNumber *visible = dict[@"visible"];
 
         QZBGameTopic *existingEntity =
             [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
@@ -235,6 +236,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }
 
         existingEntity.points = points;
+        existingEntity.visible = visible;
         [objectsArray addObject:existingEntity];
     }
 
@@ -332,6 +334,7 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         topic.name = dict[@"name"];
         topic.topic_id = dict[@"id"];
         topic.points = dict[@"points"];
+        topic.visible = dict[@"visible"];
         [tmpArr addObject:topic];
     }
 

@@ -59,6 +59,8 @@
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
         [self initCategories];
     }
+    
+    
 
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
@@ -88,7 +90,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = @"categoryCell";
+    static NSString *identifier = @"categoryCell";
 
     QZBCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 
@@ -121,6 +123,11 @@
     // NSLog(@"%ld", (long)self.choosedCategory.category_id);
      [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [[UIScreen mainScreen] bounds].size.width/3.3;
+}
+
 
 
 #pragma mark - custom init

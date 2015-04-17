@@ -54,7 +54,6 @@
 		195EA0AB1AD520AA000C4341 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0A81AD520AA000C4341 /* UIBarButtonItem+Badge.m */; };
 		195EA0AC1AD520AA000C4341 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */; };
 		195EA0B11AD52DE7000C4341 /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0AE1AD52DE7000C4341 /* QZBCategory.m */; };
-		195EA0B21AD52DE7000C4341 /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0B01AD52DE7000C4341 /* QZBGameTopic.m */; };
 		195FDA851ADA662E000F86F9 /* QZBReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA841ADA662E000F86F9 /* QZBReportVC.m */; };
 		195FDA881ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */; };
 		196472611AD84D9200CAC8F3 /* QZBEndGameProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */; };
@@ -78,6 +77,8 @@
 		1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAA1A4B03E40016130B /* QZBTopicChooserControllerViewController.m */; };
 		1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */; };
 		1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976FBB61A4B12280016130B /* QZBServerManager.m */; };
+		197A092B1AE0F74300D00993 /* lock-icon-614x460.png in Resources */ = {isa = PBXBuildFile; fileRef = 197A092A1AE0F74300D00993 /* lock-icon-614x460.png */; };
+		197A092E1AE0F8BE00D00993 /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 197A092D1AE0F8BE00D00993 /* QZBGameTopic.m */; };
 		197B4E0A1AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197B4E091AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m */; };
 		197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */; };
 		197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */; };
@@ -100,6 +101,8 @@
 		19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127781AB9EA1C009075AD /* QZBChallengeCell.m */; };
 		19A1277D1AB9F065009075AD /* QZBMainChallengesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */; };
 		19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */; };
+		19B3746F1AE1668B007F05EA /* rightGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B3746E1AE1668B007F05EA /* rightGreen.png */; };
+		19B374711AE16694007F05EA /* leftRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B374701AE16694007F05EA /* leftRed.png */; };
 		19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */; };
 		19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0531A71018D00DCD9C3 /* QZBHorizontalCell.m */; };
 		19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0561A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m */; };
@@ -228,8 +231,6 @@
 		195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
 		195EA0AD1AD52DE7000C4341 /* QZBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategory.h; sourceTree = "<group>"; };
 		195EA0AE1AD52DE7000C4341 /* QZBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategory.m; sourceTree = "<group>"; };
-		195EA0AF1AD52DE7000C4341 /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
-		195EA0B01AD52DE7000C4341 /* QZBGameTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBGameTopic.m; sourceTree = "<group>"; };
 		195FDA831ADA662E000F86F9 /* QZBReportVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBReportVC.h; sourceTree = "<group>"; };
 		195FDA841ADA662E000F86F9 /* QZBReportVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBReportVC.m; sourceTree = "<group>"; };
 		195FDA861ADA84E8000F86F9 /* QZBRegistrationUsernameInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationUsernameInput.h; sourceTree = "<group>"; };
@@ -276,6 +277,9 @@
 		1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicTableViewCell.m; sourceTree = "<group>"; };
 		1976FBB51A4B12280016130B /* QZBServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBServerManager.h; sourceTree = "<group>"; };
 		1976FBB61A4B12280016130B /* QZBServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBServerManager.m; sourceTree = "<group>"; };
+		197A092A1AE0F74300D00993 /* lock-icon-614x460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock-icon-614x460.png"; sourceTree = "<group>"; };
+		197A092C1AE0F8BE00D00993 /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
+		197A092D1AE0F8BE00D00993 /* QZBGameTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBGameTopic.m; sourceTree = "<group>"; };
 		197B4E081AB3647E00BBEDBC /* QZBFriendsChallengeTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsChallengeTVC.h; sourceTree = "<group>"; };
 		197B4E091AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsChallengeTVC.m; sourceTree = "<group>"; };
 		197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSettingsTVC.h; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 		19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainChallengesCell.m; sourceTree = "<group>"; };
 		19A127811ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QZBFriendsTVC+QZBFriendsCategory.h"; sourceTree = "<group>"; };
 		19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QZBFriendsTVC+QZBFriendsCategory.m"; sourceTree = "<group>"; };
+		19B3746E1AE1668B007F05EA /* rightGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightGreen.png; sourceTree = "<group>"; };
+		19B374701AE16694007F05EA /* leftRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftRed.png; sourceTree = "<group>"; };
 		19B5E04F1A70E6AD00DCD9C3 /* QZBPlayerInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerInfoCell.h; sourceTree = "<group>"; };
 		19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerInfoCell.m; sourceTree = "<group>"; };
 		19B5E0521A71018D00DCD9C3 /* QZBHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBHorizontalCell.h; sourceTree = "<group>"; };
@@ -508,6 +514,7 @@
 		191E12E31A8BD3A700AFB829 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				19B3746D1AE16673007F05EA /* animation */,
 				19D258D41AD8682C00F15395 /* icons */,
 				1983EE2F1AAC6DC200D59268 /* indicators */,
 				1955A3F71AAB408F0083778A /* login */,
@@ -689,8 +696,8 @@
 			children = (
 				195EA0AD1AD52DE7000C4341 /* QZBCategory.h */,
 				195EA0AE1AD52DE7000C4341 /* QZBCategory.m */,
-				195EA0AF1AD52DE7000C4341 /* QZBGameTopic.h */,
-				195EA0B01AD52DE7000C4341 /* QZBGameTopic.m */,
+				197A092C1AE0F8BE00D00993 /* QZBGameTopic.h */,
+				197A092D1AE0F8BE00D00993 /* QZBGameTopic.m */,
 			);
 			name = topic;
 			sourceTree = "<group>";
@@ -804,6 +811,15 @@
 				19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */,
 			);
 			name = main;
+			sourceTree = "<group>";
+		};
+		19B3746D1AE16673007F05EA /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				19B374701AE16694007F05EA /* leftRed.png */,
+				19B3746E1AE1668B007F05EA /* rightGreen.png */,
+			);
+			name = animation;
 			sourceTree = "<group>";
 		};
 		19CB508D1A3C32E700A3CD74 /* model */ = {
@@ -920,6 +936,7 @@
 		19D258D41AD8682C00F15395 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				197A092A1AE0F74300D00993 /* lock-icon-614x460.png */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -1114,7 +1131,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19B3746F1AE1668B007F05EA /* rightGreen.png in Resources */,
 				1955A3F01AAB3C450083778A /* icon_cancel.png in Resources */,
+				19B374711AE16694007F05EA /* leftRed.png in Resources */,
 				191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */,
 				1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */,
 				1955A3F61AAB40870083778A /* icon_vk.png in Resources */,
@@ -1122,6 +1141,7 @@
 				1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
 				1955A3F51AAB40870083778A /* icon_register.png in Resources */,
+				197A092B1AE0F74300D00993 /* lock-icon-614x460.png in Resources */,
 				191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
 				1955A3F41AAB40870083778A /* icon_login.png in Resources */,
@@ -1225,6 +1245,7 @@
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
+				197A092E1AE0F8BE00D00993 /* QZBGameTopic.m in Sources */,
 				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
 				19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */,
 				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,
@@ -1252,7 +1273,6 @@
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
 				19446A751A9E3620005BB485 /* QZBStoreTVC.m in Sources */,
-				195EA0B21AD52DE7000C4341 /* QZBGameTopic.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,

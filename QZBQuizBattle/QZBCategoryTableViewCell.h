@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *categoryImageView;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end

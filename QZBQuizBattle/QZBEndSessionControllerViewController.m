@@ -205,10 +205,14 @@
 
     if ([QZBSessionManager sessionManager].firstImageURL) {
         [self.userImage setImageWithURL:[QZBSessionManager sessionManager].firstImageURL];
+    }else{
+        [self.userImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
 
     if ([QZBSessionManager sessionManager].opponentImageURL) {
         [self.opponentImage setImageWithURL:[QZBSessionManager sessionManager].opponentImageURL];
+    }else{
+        [self.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
 
     self.userBV = [[JSBadgeView alloc] initWithParentView:self.firstUserScore

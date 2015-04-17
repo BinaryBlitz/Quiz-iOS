@@ -50,12 +50,14 @@
 
     [self.mainTableView addSubview:self.refreshControl];
 
-    [self.refreshControl beginRefreshing];
+   
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadTopicsDataFromNotification:)
                                                  name:@"QZBNeedUpdateMainScreen"
                                                object:nil];
+    
+    [self.refreshControl beginRefreshing];
 }
 
 - (void)dealloc {
@@ -77,6 +79,8 @@
     self.title = @"iQuiz";  // REDO
 
     [self initStatusbarWithColor:[UIColor blackColor]];
+    
+   // [self.refreshControl beginRefreshing];
 
     [self reloadTopicsData];
 }
@@ -139,7 +143,9 @@
                    levelProgress:&progress
                        fromScore:[topic.points integerValue]];
 
-        [cell initCircularProgressWithLevel:level progress:progress];
+        [cell initCircularProgressWithLevel:level
+                                   progress:progress
+                                    visible:[topic.visible boolValue]];
 
         cell.topicName.text = topic.name;
 
@@ -241,6 +247,7 @@
         NSArray *arr = self.workArray[ip.section];
 
         self.choosedTopic = arr[ip.row];
+         self.choosedIndexPath = nil;
 
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
     }
@@ -255,6 +262,7 @@
         NSArray *arr = self.workArray[ip.section];
 
         self.choosedTopic = arr[ip.row];
+         self.choosedIndexPath = nil;
 
         //[self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
 
@@ -271,6 +279,8 @@
         NSArray *arr = self.workArray[ip.section];
 
         self.choosedTopic = arr[ip.row];
+         self.choosedIndexPath = nil;
+        
 
         //[self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
         // [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
@@ -289,8 +299,14 @@
         QZBChallengeDescription *description = arr[ip.row];
 
         // NSNumber *lobbyNumber = description.lobbyID;
+        
+        
 
         self.challengeDescription = description;
+        
+        self.choosedIndexPath = nil;
+        [self.topicTableView beginUpdates];
+        [self.topicTableView endUpdates];
 
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
     }
@@ -313,6 +329,8 @@
                        dispatch_get_main_queue(), ^{
                            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                        });
+        
+        self.choosedIndexPath = nil;
 
         [self.mainTableView beginUpdates];
 
@@ -351,6 +369,8 @@
 }
 
 - (void)reloadTopicsData {
+    
+    
     [[QZBServerManager sharedManager] GETTopicsForMainOnSuccess:^(NSDictionary *resultDict) {
 
         //         @{@"favorite_topics":faveTopics,
