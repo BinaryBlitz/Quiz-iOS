@@ -40,7 +40,6 @@
     return [UIColor colorWithRed:245.0/255.0 green:146.0/255.0 blue:63.0/255.0 alpha:1];
 }
 
-
 +(UIColor *)strongGreenColor{
     return [UIColor colorWithRed:64.0/255.0 green:180.0/255.0 blue:79.0/255.0 alpha:1];
 }

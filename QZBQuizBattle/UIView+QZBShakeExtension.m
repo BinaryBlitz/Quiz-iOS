@@ -63,6 +63,26 @@
     self.layer.shadowOffset = CGSizeMake(2.0, 2.0);
     self.layer.shadowRadius = 2.0;
     self.layer.shadowOpacity = 0.5;
+    
+}
+
+-(void)addShadowsCategory{
+    
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+    self.layer.shadowRadius = 3.0;
+    self.layer.shadowOpacity = 0.6;
+//    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.frame
+//                                                    cornerRadius:5];
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    
+    //[self.layer setShadowPath:path.CGPath];
+    
+//    [self.layer setShadowPath:[UIBezierPath
+//                               bezierPathWithRect:self.bounds].CGPath];
+
+    
 }
 
 

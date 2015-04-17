@@ -51,7 +51,7 @@ static NSArray *SCOPE = nil;
     [VKSdk authorize:SCOPE revokeAccess:YES];
 
     //[self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+   // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
@@ -99,6 +99,8 @@ static NSArray *SCOPE = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
     NSLog(@"vk %@ %@", newToken.accessToken, newToken.expiresIn);
+    
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
 
     [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
         onSuccess:^(QZBUser *user) {

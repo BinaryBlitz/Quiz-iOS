@@ -14,6 +14,7 @@
 
 -(void)initStatusbarWithColor:(UIColor *)color;
 -(void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict;
+-(void)showAlertAboutUnvisibleTopic:(NSString *)topicName;
 //-(void)calculateLevel:(NSInteger *)level
 //        levelProgress:(float *)levelProgress
 //            fromScore:(NSInteger)score;

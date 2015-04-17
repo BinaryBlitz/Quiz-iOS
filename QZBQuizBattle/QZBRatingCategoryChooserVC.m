@@ -8,6 +8,7 @@
 
 #import "QZBRatingCategoryChooserVC.h"
 #import "QZBRatingMainVC.h"
+#import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBRatingCategoryChooserVC ()
 
@@ -19,6 +20,8 @@
     [super viewDidLoad];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backButtonItem];
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
     
     // Do any additional setup after loading the view.
 }
@@ -73,7 +76,7 @@
     if(indexPath.row == 0){
         return 47.0;
     }else{
-        return 119.0;
+        return [[UIScreen mainScreen] bounds].size.width/3.3;
     }
     
 }

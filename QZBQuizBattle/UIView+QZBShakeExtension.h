@@ -14,4 +14,6 @@
 - (void)addDropShadowsForView;
 - (void)addShadows;
 
+-(void)addShadowsCategory;
+
 @end

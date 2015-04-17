@@ -12,6 +12,7 @@
 
 @property(strong, nonatomic) UILabel *centralLabel;
 @property(strong, nonatomic) UIImageView *icon;
+@property(assign, nonatomic) BOOL visible;
 
 @end
 
@@ -30,15 +31,18 @@
     // Configure the view for the selected state
 }
 
-- (void)initCircularProgressWithLevel:(NSInteger)level progress:(float)progress {
-//    UILabel *centralLabel = [[UILabel alloc]
-//        initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.topicProgressView.frame) / 2.0,
-//                                 CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
-//
-//    centralLabel.textColor = [UIColor blackColor];
-//    centralLabel.textAlignment = NSTextAlignmentCenter;
-//    centralLabel.adjustsFontSizeToFitWidth = YES;
-//    self.topicProgressView.centralView = self.centralLabel;
+-(void)initCircularProgressWithLevel:(NSInteger)level
+                            progress:(float)progress
+                             visible:(BOOL)visible{
+    self.visible = visible;
+    
+    if(!visible){
+        self.topicProgressView.tintColor = [UIColor clearColor];
+        self.topicProgressView.centralView = self.icon;
+        self.icon.image = [UIImage imageNamed:@"lockIcon"];
+        return;
+    }
+
 
     if (progress > 0 && level > 0) {
         
@@ -49,12 +53,17 @@
 
     } else {
         self.topicProgressView.tintColor = [UIColor clearColor];
-       
         self.topicProgressView.centralView = self.icon;
+        
+        
+        self.icon.image = [UIImage imageNamed:@"downIcon"];
+        
         
     }
     // self.topicProgressView.centralView = centralLabel;
 }
+
+
 
 -(UILabel *)centralLabel{
     if(!_centralLabel){
@@ -73,9 +82,13 @@
 
 -(UIImageView *)icon{
     if(!_icon){
-        _icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"downIcon"]];
-        _icon.frame = CGRectMake(0, 0, 25,
-                                25);
+        
+        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25,
+                                                              25)];
+        
+        
+       // _icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"downIcon"]];
+       
         
     }
     return _icon;

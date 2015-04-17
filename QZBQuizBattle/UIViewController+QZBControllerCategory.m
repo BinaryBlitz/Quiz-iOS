@@ -89,6 +89,47 @@
                 duration:0.0f];
 }
 
+
+-(void)showAlertAboutUnvisibleTopic:(NSString *)topicName{
+    // NSDictionary *d = dict[@"badge"];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.backgroundType = Blur;
+    alert.showAnimationType = FadeIn;
+    
+    // NSString *descr = @"Поздравляем!\n Вы получили новое " @"достиже" @"н" @"и" @"е" @"!";
+    //NSString *name = d[@"name"];
+    
+    [alert alertIsDismissed:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           [self setNeedsStatusBarAppearanceUpdate];
+                       });
+    }];
+    
+    NSString *title = [NSString stringWithFormat:@"Топик не куплен!"];
+    NSString *subTitle = [NSString
+                          stringWithFormat:@"Перейти в магазин, чтобы купить топик '%@'?",
+                          topicName];
+    
+    alert.completeButtonFormatBlock = ^NSDictionary*(void){
+        NSDictionary *formatDict = @{@"backgroundColor":[UIColor middleDarkGreyColor]};
+        return formatDict;
+    };
+    
+    [alert addButton:@"Да" actionBlock:^{
+        self.tabBarController.selectedIndex = 4;
+    }];
+    
+    
+    [alert showInfo:self.navigationController
+              title:title subTitle:subTitle
+   closeButtonTitle:@"Нет" duration:0.0f];
+    
+    
+}
+
+
 - (UILabel *)labelForNum:(NSInteger)num inView:(UIView *)view {
     UILabel *centralLabel =
         [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame) / 2.0,

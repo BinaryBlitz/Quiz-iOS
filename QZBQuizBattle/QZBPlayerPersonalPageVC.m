@@ -374,7 +374,9 @@ static NSInteger topicsOffset = 7;
                    levelProgress:&progress
                        fromScore:[topic.points integerValue]];
 
-        [topicCell initCircularProgressWithLevel:level progress:progress];
+        [topicCell initCircularProgressWithLevel:level
+                                        progress:progress
+                                         visible:[topic.visible boolValue]];
 
         topicCell.backgroundColor = [UIColor veryDarkGreyColor];
 
@@ -443,7 +445,22 @@ static NSInteger topicsOffset = 7;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSLog(@"taaped");
-    NSString *identifier = [tableView cellForRowAtIndexPath:indexPath].reuseIdentifier;
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        if(!topicCell.visible){
+            self.choosedIndexPath = nil;
+            [tableView beginUpdates];
+            [tableView endUpdates];
+            [self showAlertAboutUnvisibleTopic:topicCell.topicName.text];//REDO
+            
+            return;
+        }
+    }
+    
+    
+    NSString *identifier = cell.reuseIdentifier;
 
     if ([identifier isEqualToString:@"searchFriends"]) {
         [self performSegueWithIdentifier:@"showSearch" sender:nil];

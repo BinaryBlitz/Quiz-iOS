@@ -322,14 +322,20 @@
     
     if (self.firstImageURL) {
         [cell.userImage setImageWithURL:self.firstImageURL];
+    }else{
+        
+        [cell.userImage setImage:[UIImage imageNamed:@"userpicStandart"]];
+        
     }
     
     if (self.opponentImageURL) {
         [cell.opponentImage setImageWithURL:self.opponentImageURL];
+    }else{
+        
+        [cell.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
+        
     }
-    
-    
-    
+ 
     cell.opponentBV.badgeText = [NSString
                                  stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
     cell.userBV.badgeText = [NSString
