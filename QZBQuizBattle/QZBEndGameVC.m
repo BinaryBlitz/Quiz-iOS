@@ -111,6 +111,8 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    
+    [self animateLose];
 }
 
 //- (void)viewWillDisappear:(BOOL)animated {
@@ -485,7 +487,40 @@
     }
 }
 
+-(void)animateLose{
+    CGRect mainRect = [UIScreen mainScreen].bounds;
+    
+    CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect)*1.4, 0.8773*CGRectGetWidth(mainRect), 1.4*CGRectGetHeight(mainRect));
+    CGRect rRight = CGRectMake(0.4914*CGRectGetWidth(mainRect),
+                               CGRectGetHeight(mainRect),
+                               0.508*CGRectGetWidth(mainRect),
+                               CGRectGetHeight(mainRect));
 
+    
+    
+    UIImageView *leftImage = [[UIImageView alloc] initWithFrame:rLeft];
+    UIImageView *rightImage = [[UIImageView alloc] initWithFrame:rRight];
+    
+    leftImage.image = [UIImage imageNamed:@"leftRed"];
+    rightImage.image = [UIImage imageNamed:@"rightGreen"];
+    
+    [self.backgroundImageView addSubview:rightImage];
+    [self.backgroundImageView sendSubviewToBack:rightImage];
+    [self.backgroundImageView addSubview:leftImage];
+    [self.backgroundImageView sendSubviewToBack:leftImage];
+    
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        leftImage.frame = CGRectMake(0, 0, CGRectGetWidth(leftImage.frame),
+                                     1.4*CGRectGetHeight(mainRect));;
+        rightImage.frame = CGRectMake(0.4914*CGRectGetWidth(mainRect), 0,
+                                       0.508*CGRectGetWidth(mainRect), CGRectGetHeight(mainRect));
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    
+    
+}
 
 
 - (BOOL)hidesBottomBarWhenPushed {
