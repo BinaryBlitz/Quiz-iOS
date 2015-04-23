@@ -43,6 +43,7 @@
 
 -(void)configButtonPurchased:(UIButton *)button{
     [button setTitle:@"Куплено" forState:UIControlStateNormal];
+    [button setTitle:@"Куплено" forState:UIControlStateDisabled];
     button.enabled = NO;
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
 }

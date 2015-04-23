@@ -36,7 +36,11 @@
     [TSMessage setDefaultViewController:self.navigationController];
 
    // self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
-    [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
+    if([QZBCurrentUser sharedInstance].user.imageURL){
+        [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
+    }else{
+        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+    }
    // NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
 
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;

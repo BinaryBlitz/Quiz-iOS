@@ -429,6 +429,10 @@ static NSInteger topicsOffset = 7;
     if (indexPath.row == 6 && self.faveTopics.count == 0) {
         return 74.0;
     }
+    
+    if(indexPath.row == 1){
+        return 105.0;
+    }else
     if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
     } else if (indexPath.row == 2 || indexPath.row == 4 || indexPath.row == 6) {

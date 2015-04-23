@@ -12,12 +12,16 @@
 #import "UIColor+QZBProjectColors.h"
 #import "QZBAchievementManager.h"
 #import "QZBServerManager.h"
+#import "QZBQuizTopicIAPHelper.h"
+#import "QZBStoreListTVC.h"
 
 @interface QZBMainTBC ()
 
 @end
 
 @implementation QZBMainTBC
+
+//-(void)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,22 +36,6 @@
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
     [currentWindow addSubview:view];
     
-//    UITabBar *tabBar = self.tabBar;
-//
-//    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
-//    
-//    UIImage *img = [UIImage imageNamed:@"topRateIcon"];
-//    
-//   // (void)[tabBarItem4 initWithTitle:nil image:img selectedImage:nil];
-//    [tabBarItem4 setImage:img ];
-//    tabBarItem4.title = nil;
-//    
-//    for(UITabBarItem *item in tabBar.items){
-//        item.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
-//    }
-    
-    
-    // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -96,8 +84,32 @@
         
         //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
     }else {
+        
+        
+//        [[QZBQuizTopicIAPHelper sharedInstance] getTopicIdentifiersFromServerOnSuccess:^{
+//            [[QZBQuizTopicIAPHelper
+//              sharedInstance] requestProductsWithCompletionHandler:^(BOOL success,
+//                                                                     NSArray *products) {
+//            
+//                NSLog(@"store loaded");
+//            }];
+//        } onFailure:^(NSError *error, NSInteger statusCode) {
+//            
+//        }];
+        
+        UINavigationController *navVC =  self.viewControllers[4];
+        
+        QZBStoreListTVC *storeTVC = [navVC.viewControllers firstObject];
+        
+        [storeTVC reload];
+        
+        [storeTVC setNeedRelaod:YES];
+        
+        
         [[QZBAchievementManager sharedInstance] updateAchievements];
         [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
+        
+        
     }
     
     

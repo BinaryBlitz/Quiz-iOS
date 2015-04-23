@@ -45,6 +45,7 @@
     self.centralLabel.textColor = [UIColor whiteColor];
     self.centralLabel.adjustsFontSizeToFitWidth = YES;
     self.centralLabel.textAlignment = NSTextAlignmentCenter;
+    self.centralLabel.numberOfLines = 2;
     
     self.circularBackgroundProgress.centralView = self.centralLabel;
     
@@ -82,27 +83,27 @@
     [NSObject calculateLevel:&beginLevel
                levelProgress:&beginProgress
                    fromScore:beginScore];
-     self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)beginLevel];
+    self.centralLabel.attributedText = [self stringWithNumber:beginLevel];//[NSString stringWithFormat:@"%ld", (long)beginLevel];
     self.circularOldProgress.progress = beginProgress;
 }
 
 
 -(void)moveProgressFromBeginScore:(NSInteger)beginScore toEndScore:(NSInteger )endScore{
     
-    
     NSInteger beginLevel = 0;
     float beginProgress = 0.0;
     NSInteger resultLevel = 0;
     float resultProgress = 0.0;
     
-   
-    
     [NSObject calculateLevel:&beginLevel
                levelProgress:&beginProgress
                    fromScore:beginScore];
     
-   
-    self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)beginLevel];
+    
+    
+   // self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)beginLevel];
+    
+    self.centralLabel.attributedText = [self stringWithNumber:beginLevel];
     
     [self.circularProgress setProgress:beginProgress animated:NO];
     
@@ -124,10 +125,27 @@
     //[self turningCircularView];
 }
 
+-(NSAttributedString *)stringWithNumber:(NSInteger)level{
+    
+    NSString *string = [NSString stringWithFormat:@"%ld \nуровень", (long)level];
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]
+                                             initWithString:string];
+    
+    NSRange r = {.location = string.length -7, .length = 7};
+   // NSDictionary *atributes = @{};
+    
+    [attrString addAttribute:NSFontAttributeName
+                  value:[UIFont systemFontOfSize:12.0]
+                  range:r];
+    
+    return attrString;
+}
+
 
 - (void)turningCircularView {
-    self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)self.currentLevel];
-    //self.centralLabel.attributedText = [NSAttributedString ]
+   // self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)self.currentLevel];
+    self.centralLabel.attributedText = [self stringWithNumber:self.currentLevel];
     
     if (self.currentLevel == self.resultLevel) {
         [self.circularProgress setProgress:(CGFloat)self.resultProgress animated:YES];
