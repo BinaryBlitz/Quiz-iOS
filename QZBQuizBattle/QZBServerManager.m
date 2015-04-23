@@ -750,6 +750,12 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            
+            NSLog(@"vk token failure %@  %@" , error, operation.responseObject);
 
         }];
 }

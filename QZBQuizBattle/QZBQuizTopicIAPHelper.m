@@ -21,12 +21,6 @@
     static dispatch_once_t once;
     static QZBQuizTopicIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
-//        NSSet * productIdentifiers = [NSSet setWithObjects:
-//                                      @"drumih.QZBQuizBattle.smthnew",
-//                                      @"drumih.iQuiz.specialGeography",
-//                                      @"drumih.iQuiz.specialMath",
-//                                      nil];
-        
         
         sharedInstance = [[self alloc] init];
     });

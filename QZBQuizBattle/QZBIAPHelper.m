@@ -144,12 +144,6 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
 
-    //[self provideContentForProductWithTansaction:transaction];
-//    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-//    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
-
-    //  NSLog(@"receipt %@ %@", receiptURL, receipt);
-
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
@@ -173,33 +167,7 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
-//- (void)provideContentForProductWithTansaction:(SKPaymentTransaction *)transaction {
-//    NSString *productIdentifier = transaction.payment.productIdentifier;
-//
-//    [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
-//        onSuccess:^{
-//
-//           
-//            [_purchasedProductIdentifiers addObject:productIdentifier];
-//
-//            [[NSNotificationCenter defaultCenter]
-//                postNotificationName:IAPHelperProductPurchasedNotification
-//                              object:productIdentifier
-//                            userInfo:nil];
-//            //[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-//
-//        }
-//        onFailure:^(NSError *error, NSInteger statusCode) {
-//
-//            [[NSNotificationCenter defaultCenter]
-//                postNotificationName:IAPHelperProductPurchaseFailed
-//                              object:productIdentifier];
-//            
-//
-//        }];
-//    
-//    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-//}
+
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
     NSLog(@"%@", productIdentifier);

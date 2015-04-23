@@ -124,7 +124,7 @@
     if(user.imageURL){
     [cell.userpic setImageWithURL:user.imageURL];
     }else{
-        [cell.userpic setImage:[UIImage imageNamed:@"icon_register"]];//redo
+        [cell.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];//redo
     }
     
     

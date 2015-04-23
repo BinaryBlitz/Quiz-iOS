@@ -35,6 +35,9 @@
 		1927967A1A9A1B2500A468E5 /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 192796791A9A1B2500A468E5 /* MKStoreKit.m */; };
 		192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */; };
 		1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */; };
+		19407B0D1AE8E20D00A12F20 /* rightRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 19407B0C1AE8E20D00A12F20 /* rightRed.png */; };
+		19407B0F1AE8E21600A12F20 /* leftGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 19407B0E1AE8E21600A12F20 /* leftGreen.png */; };
+		19407B111AE8E24E00A12F20 /* rightGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 19407B101AE8E24E00A12F20 /* rightGreen.png */; };
 		19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */; };
 		19423D7E1A80F8740014B0AD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 19423D7D1A80F8740014B0AD /* Reachability.m */; };
 		19446A6E1A9E226C005BB485 /* QZBIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */; };
@@ -101,7 +104,6 @@
 		19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127781AB9EA1C009075AD /* QZBChallengeCell.m */; };
 		19A1277D1AB9F065009075AD /* QZBMainChallengesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */; };
 		19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */; };
-		19B3746F1AE1668B007F05EA /* rightGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B3746E1AE1668B007F05EA /* rightGreen.png */; };
 		19B374731AE4033E007F05EA /* leftRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B374721AE4033E007F05EA /* leftRed.png */; };
 		19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */; };
 		19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0531A71018D00DCD9C3 /* QZBHorizontalCell.m */; };
@@ -200,6 +202,9 @@
 		192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
 		1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+QZBButtonCategory.h"; sourceTree = "<group>"; };
 		1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+QZBButtonCategory.m"; sourceTree = "<group>"; };
+		19407B0C1AE8E20D00A12F20 /* rightRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightRed.png; sourceTree = "<group>"; };
+		19407B0E1AE8E21600A12F20 /* leftGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftGreen.png; sourceTree = "<group>"; };
+		19407B101AE8E24E00A12F20 /* rightGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightGreen.png; sourceTree = "<group>"; };
 		19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		19423D7C1A80F8740014B0AD /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		19423D7D1A80F8740014B0AD /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -320,7 +325,6 @@
 		19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainChallengesCell.m; sourceTree = "<group>"; };
 		19A127811ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QZBFriendsTVC+QZBFriendsCategory.h"; sourceTree = "<group>"; };
 		19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QZBFriendsTVC+QZBFriendsCategory.m"; sourceTree = "<group>"; };
-		19B3746E1AE1668B007F05EA /* rightGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightGreen.png; sourceTree = "<group>"; };
 		19B374721AE4033E007F05EA /* leftRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftRed.png; sourceTree = "<group>"; };
 		19B5E04F1A70E6AD00DCD9C3 /* QZBPlayerInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerInfoCell.h; sourceTree = "<group>"; };
 		19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerInfoCell.m; sourceTree = "<group>"; };
@@ -452,9 +456,9 @@
 				19CB508F1A3C32FA00A3CD74 /* Controller */,
 				19CB508E1A3C32F000A3CD74 /* View */,
 				19CB508D1A3C32E700A3CD74 /* model */,
-				191559D41A39CDD400462C93 /* Images.xcassets */,
 				191E12E31A8BD3A700AFB829 /* resources */,
 				199820AB1A44A039003AECB9 /* Main.storyboard */,
+				191559D41A39CDD400462C93 /* Images.xcassets */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
 				191559C41A39CDD400462C93 /* Supporting Files */,
 			);
@@ -816,8 +820,10 @@
 		19B3746D1AE16673007F05EA /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				19407B101AE8E24E00A12F20 /* rightGreen.png */,
+				19407B0E1AE8E21600A12F20 /* leftGreen.png */,
+				19407B0C1AE8E20D00A12F20 /* rightRed.png */,
 				19B374721AE4033E007F05EA /* leftRed.png */,
-				19B3746E1AE1668B007F05EA /* rightGreen.png */,
 			);
 			name = animation;
 			sourceTree = "<group>";
@@ -1131,8 +1137,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19B3746F1AE1668B007F05EA /* rightGreen.png in Resources */,
 				1955A3F01AAB3C450083778A /* icon_cancel.png in Resources */,
+				19407B0D1AE8E20D00A12F20 /* rightRed.png in Resources */,
 				19B374731AE4033E007F05EA /* leftRed.png in Resources */,
 				191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */,
 				1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */,
@@ -1140,9 +1146,11 @@
 				1955A3EE1AAB11000083778A /* BG_iPhone_6.jpg in Resources */,
 				1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
+				19407B111AE8E24E00A12F20 /* rightGreen.png in Resources */,
 				1955A3F51AAB40870083778A /* icon_register.png in Resources */,
 				197A092B1AE0F74300D00993 /* lock-icon-614x460.png in Resources */,
 				191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */,
+				19407B0F1AE8E21600A12F20 /* leftGreen.png in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
 				1955A3F41AAB40870083778A /* icon_login.png in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,

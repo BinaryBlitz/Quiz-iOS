@@ -20,12 +20,14 @@
 #import "QZBProgressViewController.h"
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface QZBMainGameScreenTVC ()
 
 @property (strong, nonatomic) NSArray *faveTopics;
 @property (strong, nonatomic) NSArray *friendsTopics;
 @property (strong, nonatomic) NSArray *featured;
+@property (strong, nonatomic) NSArray *additionalTopics;
 @property (strong, nonatomic) NSMutableArray *challenges;
 @property (strong, nonatomic) NSMutableArray *workArray;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
@@ -40,7 +42,7 @@
 
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
-    self.mainTableView.backgroundColor = [UIColor ultralightGreenColor];
+    self.mainTableView.backgroundColor = [UIColor veryDarkGreyColor];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor whiteColor];
@@ -154,12 +156,13 @@
 }
 
 - (UIColor *)colorForSection:(NSInteger)section {
-    UIColor *color = [UIColor blackColor];
+    UIColor *color = [UIColor veryDarkGreyColor];
 
     NSArray *arr = self.workArray[section];
 
     if ([arr isEqualToArray:self.faveTopics]) {
         color = [UIColor ultralightGreenColor];
+        
     } else if ([arr isEqualToArray:self.friendsTopics]) {
         color = [UIColor lightCyanColor];
 
@@ -168,9 +171,36 @@
 
     } else if ([arr isEqualToArray:self.challenges]) {
         color = [UIColor lightGreenColor];
+    } else if( [arr isEqualToArray:self.additionalTopics]){
+        
     }
 
     return color;
+}
+
+-(NSString *)textForArray:(NSArray *)arr{
+
+    NSString *text = @"";
+    
+    
+    if ([arr isEqualToArray:self.faveTopics]) {
+        
+        text = @"Любимые топики";
+       
+    } else if ([arr isEqualToArray:self.friendsTopics]) {
+        text = @"Популярное у друзей";
+        
+    } else if ([arr isEqualToArray:self.featured]) {
+        text = @"Популярные темы";
+        
+    } else if ([arr isEqualToArray:self.challenges]) {
+        text = @"Брошенные вызовы";
+    } else if ([arr isEqualToArray:self.additionalTopics]){
+        text = @"Сыграйте эти темы";
+        
+    }
+    return text;
+    
 }
 
 #pragma mark - UITableViewDelegate
@@ -216,26 +246,34 @@
 
     [view addSubview:label];
 
-    NSString *text = @"";
+   // NSString *text = @"";
     NSArray *arr = self.workArray[section];
 
-    if ([arr isEqualToArray:self.faveTopics]) {
-        text = @"Любимые топики";
-    } else if ([arr isEqualToArray:self.friendsTopics]) {
-        text = @"Популярное у друзей";
-
-    } else if ([arr isEqualToArray:self.featured]) {
-        text = @"Популярные темы";
-
-    } else if ([arr isEqualToArray:self.challenges]) {
-        text = @"Брошенные вызовы";
-    }
+//    if ([arr isEqualToArray:self.faveTopics]) {
+//        
+//        if(self.faveTopics.count<=3){
+//        text = @"Любимые топики";
+//        }else{
+//            text = @"Сыграйте эти темы";
+//        }
+//    } else if ([arr isEqualToArray:self.friendsTopics]) {
+//        text = @"Популярное у друзей";
+//
+//    } else if ([arr isEqualToArray:self.featured]) {
+//        text = @"Популярные темы";
+//
+//    } else if ([arr isEqualToArray:self.challenges]) {
+//        text = @"Брошенные вызовы";
+//    }
 
     //[text uppercaseString];
-    label.text = [text uppercaseString];
+    label.text = [[self textForArray:arr] uppercaseString];
 
     return view;
 }
+
+
+
 #pragma mark - actions
 
 - (IBAction)playGameAction:(id)sender {
@@ -297,10 +335,6 @@
         NSMutableArray *arr = self.workArray[ip.section];
 
         QZBChallengeDescription *description = arr[ip.row];
-
-        // NSNumber *lobbyNumber = description.lobbyID;
-        
-        
 
         self.challengeDescription = description;
         
@@ -406,11 +440,48 @@
         if (self.faveTopics.count > 0) {
             [self.workArray addObject:self.faveTopics];
         }
+        
+        
+        
+        
+        NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
+        
+        if(allTopics && allTopics.count>0){
+            NSInteger length = 0;
+            
+            NSInteger allC = [self allCount];
+        
+            if(allC>=9){
+                length = 3;
+            }else{
+                length = 12-allC;
+            }
+            
+            
+            if(length>allTopics.count){
+                length = allTopics.count;
+            }
+            
+            NSRange r = {.location = 0, .length = length};
+        
+        
+            NSArray *additionalArr = [allTopics subarrayWithRange:r];
+        
+
+        
+            [self.workArray addObject:additionalArr];
+            self.additionalTopics = additionalArr;
+            
+        }else{
+            
+        }
+        
 
         [self.mainTableView reloadData];
         UITabBarController *tabController = self.tabBarController;
         UITabBarItem *tabbarItem = tabController.tabBar.items[0];
         tabbarItem.badgeValue = nil;
+        
     } onFailure:^(NSError *error, NSInteger statusCode) {
         [self.refreshControl endRefreshing];
         UITabBarController *tabController = self.tabBarController;
@@ -424,6 +495,14 @@
     }];
 
     // self.tabBarItem.badgeValue = nil;
+}
+
+-(NSInteger)allCount{
+    NSInteger count = 0;
+    for(NSArray *arr in self.workArray){
+        count+=arr.count;
+    }
+    return count;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

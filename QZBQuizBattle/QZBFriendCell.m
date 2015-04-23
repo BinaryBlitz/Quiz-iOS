@@ -28,13 +28,12 @@
     
     self.user = user;
     
-    
     self.nameLabel.text = user.name;
     
     if(user.imageURL){
         [self.userpicImageView setImageWithURL:user.imageURL];
     }else{
-        [self.userpicImageView setImage:[UIImage imageNamed:@"icon_register"]];//redo
+        [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];//redo
     }
     
     if(!user.isViewed){
