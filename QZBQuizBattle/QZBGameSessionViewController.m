@@ -300,21 +300,14 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     if (question.imageURL) {
         // self.questionImageView.frame = self.originalPosition;
         [self.questionImageView setImageWithURL:question.imageURL];
-        self.verticalConstraint.constant = 30;
+        self.verticalConstraint.constant = [self calculateVerticalConstraints];
         [self.qestionLabel layoutIfNeeded];
     } else {
         self.verticalConstraint.constant = self.questBackground.frame.size.height - 20.0;
-        //  self.verticalConstraint.constant = 10;
+        
         [self.qestionLabel layoutIfNeeded];
 
-        //        self.questionImageView.constraint
-        //
-        //        [self.qestionLabel layoutIfNeeded];
-        //        [self.questionImageView layoutIfNeeded];
-        //  CGRect r = self.questionImageView.superview.frame;
 
-        // self.questionImageView.frame = CGRectMake(50, 0, 100, 1);
-        //  [self updateViewConstraints];
     }
 
     int i = 0;
@@ -325,6 +318,21 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         b.tag = answerAndId.answerID;
         i++;
     }
+}
+
+-(CGFloat)calculateVerticalConstraints{//для размера картинки вопроса
+    
+    CGFloat width = CGRectGetWidth(self.questBackground.frame)-16.0;
+    CGFloat heigth = CGRectGetHeight(self.questBackground.frame)-24.0;
+    
+    if((heigth - (width*9.0)/16.0)<30){
+        return 30.0;
+    }else{
+        return heigth - (width*9.0)/16.0;
+    }
+    
+    
+    //return 30.0;
 }
 
 //показывает лейбл раунда

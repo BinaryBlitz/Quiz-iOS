@@ -17,6 +17,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFailed";
 
+NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinished";
+
 @interface QZBIAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
 @property (strong, nonatomic) SKProductsRequest *productsRequest;
@@ -75,7 +77,7 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
     NSLog(@"Buying %@...", product.productIdentifier);
 
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
-    NSString *identifier = [[QZBCurrentUser sharedInstance].user.userID stringValue];
+    NSString *identifier = [QZBCurrentUser sharedInstance].user.name;
     payment.applicationUsername = [self hashedValueForAccountName:identifier];
 
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -201,18 +203,25 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
 }
 
 - (void)restoreCompletedTransactions {
-    NSString *identifier = [[QZBCurrentUser sharedInstance].user.userID stringValue];
+    NSString *identifier = [QZBCurrentUser sharedInstance].user.name ;
 
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactionsWithApplicationUsername:
                                        [self hashedValueForAccountName:identifier]];
 }
 
-//- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue{
-//    NSLog(@"restored");
-//}
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue{
+    
+    NSLog(@"restored");
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:IAPHelperProductRestoreFinished object:nil];
+
+}
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
     NSLog(@"restore fail %@", error);
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:IAPHelperProductRestoreFinished object:nil];
 }
 
 #pragma mark - crypto

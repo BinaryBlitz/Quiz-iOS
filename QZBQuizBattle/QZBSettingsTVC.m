@@ -20,6 +20,7 @@
 #import "QZBUserNameTextField.h"
 #import <TSMessages/TSMessage.h>
 #import "UIImageView+AFNetworking.h"
+#import "UIButton+QZBButtonCategory.h"
 
 
 @interface QZBSettingsTVC () <UIActionSheetDelegate,
@@ -51,14 +52,29 @@
     self.userNewPasswordAgainTextField.delegate = self;
     self.userNameTextField.delegate = self;
     
-    NSLog(@"user email %@", [[QZBCurrentUser sharedInstance].user.email class]);
-    if([[QZBCurrentUser sharedInstance].user.email isEqual:[NSNull null]]){
-        self.userNewPasswordAgainTextField.enabled = NO;
-        self.userNewPasswordTextField.enabled = NO;
-        self.userNameTextField.enabled = NO;
-        self.renewPasswordButton.enabled = NO;
-    }
     
+    NSString *renewPasswordText = self.renewPasswordButton.currentTitle;
+    NSString *renewNameText = self.renewNameButton.currentTitle;
+    
+    [self.renewPasswordButton configButtonWithRoundedBorders];
+    [self.renewNameButton configButtonWithRoundedBorders];
+    [self.renewPasswordButton setTitle:renewPasswordText forState:UIControlStateNormal];
+    [self.renewNameButton setTitle:renewNameText forState:UIControlStateNormal];
+    
+    self.renewNameButton.enabled = YES;
+    self.renewPasswordButton.enabled = YES;
+    
+    
+    
+    
+//    NSLog(@"user email %@", [[QZBCurrentUser sharedInstance].user.email class]);
+//    if([[QZBCurrentUser sharedInstance].user.email isEqual:[NSNull null]]){
+//        self.userNewPasswordAgainTextField.enabled = NO;
+//        self.userNewPasswordTextField.enabled = NO;
+//        self.userNameTextField.enabled = NO;
+//        self.renewPasswordButton.enabled = NO;
+//    }
+//    
 }
 
 - (IBAction)changePicture:(UIButton *)sender {
@@ -164,6 +180,12 @@
     if ([self checkPasswords]) {
         [self patchPassword];
     }
+}
+- (IBAction)updateNameAction:(id)sender {
+    if([self checkUserName]){
+        [self updateUserName];
+    }
+    
 }
 
 - (void)patchPassword {

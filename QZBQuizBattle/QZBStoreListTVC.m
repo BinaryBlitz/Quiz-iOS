@@ -93,7 +93,10 @@
                                                  name:IAPHelperProductPurchaseFailed
                                                object:nil];
     
-   // [[Crashlytics sharedInstance] crash];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(transactionFailed:)
+                                                 name:IAPHelperProductRestoreFinished
+                                               object:nil];
     
 }
 
@@ -390,7 +393,7 @@
 }
 
 - (void)restoreTapped:(id)sender {
-    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBQuizTopicIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 - (UIStatusBarStyle)preferredStatusBarStyle {
