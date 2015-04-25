@@ -11,6 +11,9 @@
 #import "QZBProgressViewController.h"
 #import "QZBServerManager.h"
 #import "QZBFriendsTVC+QZBFriendsCategory.h"
+#import "UIViewController+QZBControllerCategory.h"
+#import "QZBCurrentUser.h"
+#import "QZBUser.h"
 
 @interface QZBFriendsChallengeTVC ()
 
@@ -35,8 +38,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.choosedUser = [self userAtIndex:indexPath.row];
+    if(![self.choosedUser.userID
+        isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]){
 
-    [self performSegueWithIdentifier:@"startChallengeSegue" sender:nil];
+        [self performSegueWithIdentifier:@"startChallengeSegue" sender:nil];
+    }else{
+        [self showAlertAboutUnabletoPlay];
+    }
 }
 
 #pragma mark - Navigation

@@ -125,7 +125,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UIScreen mainScreen] bounds].size.width/3.3;
+    return [[UIScreen mainScreen] bounds].size.width/3.0;
 }
 
 

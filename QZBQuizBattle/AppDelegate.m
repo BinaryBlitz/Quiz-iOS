@@ -10,6 +10,8 @@
 
 #import "AppDelegate.h"
 #import "VKSdk.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "CoreData+MagicalRecord.h"
 #import "QZBQuizIAPHelper.h"
 #import "QZBQuizTopicIAPHelper.h"
@@ -35,6 +37,8 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
     //[QZBQuizIAPHelper sharedInstance];
+
+    [Fabric with:@[CrashlyticsKit]];
 
     NSLog(@"launch options %@", launchOptions);
 

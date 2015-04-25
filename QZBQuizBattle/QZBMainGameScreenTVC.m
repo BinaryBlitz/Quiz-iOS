@@ -96,7 +96,7 @@
         [destinationController initSessionWithDescription:self.challengeDescription];
 
         self.challengeDescription = nil;
-
+        
     } else {
         [super prepareForSegue:segue sender:sender];
     }
@@ -126,6 +126,7 @@
 
         cell.topicNameLabel.text = descr.topicName;
         cell.opponentNameLabel.text = descr.name;
+       // cell.visible = descr.topic.visible;
 
         return cell;
 
@@ -184,9 +185,8 @@
     
     
     if ([arr isEqualToArray:self.faveTopics]) {
-        
         text = @"Любимые топики";
-       
+        
     } else if ([arr isEqualToArray:self.friendsTopics]) {
         text = @"Популярное у друзей";
         
@@ -197,7 +197,6 @@
         text = @"Брошенные вызовы";
     } else if ([arr isEqualToArray:self.additionalTopics]){
         text = @"Сыграйте эти темы";
-        
     }
     return text;
     
@@ -214,6 +213,21 @@
 
     } else {
         // NSIndexPath *newIP = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:0];
+        
+//        if([cell isKindOfClass:[QZBChallengeCell class]]){
+//            QZBChallengeCell *challengeCell = (QZBChallengeCell *)cell;
+//            if(!challengeCell.visible){
+//                
+//                self.choosedIndexPath = nil;
+//                [tableView beginUpdates];
+//                [tableView endUpdates];
+//                [self showAlertAboutUnvisibleTopic:challengeCell.topicNameLabel.text];//REDO
+//                
+//                return;
+//            }
+//        }
+        
+       // if()
 
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
@@ -265,8 +279,7 @@
 //    } else if ([arr isEqualToArray:self.challenges]) {
 //        text = @"Брошенные вызовы";
 //    }
-
-    //[text uppercaseString];
+//    [text uppercaseString];
     label.text = [[self textForArray:arr] uppercaseString];
 
     return view;
@@ -330,17 +343,42 @@
     UITableViewCell *cell = [self parentCellForView:sender];
 
     if (cell) {
+        
+//        if([cell isKindOfClass:[QZBChallengeCell class]]){
+//            QZBChallengeCell *challengeCell = (QZBChallengeCell *)cell;
+//            if(!challengeCell.visible){
+//                
+//                self.choosedIndexPath = nil;
+//                [self.topicTableView beginUpdates];
+//                [self.topicTableView endUpdates];
+//                [self showAlertAboutUnvisibleTopic:challengeCell.topicNameLabel.text];//REDO
+//                
+//                return;
+//            }
+//        }
+        
+        
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
 
         NSMutableArray *arr = self.workArray[ip.section];
 
         QZBChallengeDescription *description = arr[ip.row];
 
-        self.challengeDescription = description;
+        //self.challengeDescription = description;
         
         self.choosedIndexPath = nil;
         [self.topicTableView beginUpdates];
         [self.topicTableView endUpdates];
+        
+        
+        if(![description.topic.visible boolValue]){
+             QZBChallengeCell *challengeCell = (QZBChallengeCell *)cell;
+            
+             [self showAlertAboutUnvisibleTopic:challengeCell.topicNameLabel.text];
+            return;
+        }
+        
+        self.challengeDescription = description;
 
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
     }
@@ -381,6 +419,7 @@
         }
 
         //[arr removeObjectAtIndex:ip.row];
+        
 
         [self.mainTableView endUpdates];
 

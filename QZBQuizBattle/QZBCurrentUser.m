@@ -8,6 +8,8 @@
 
 #import "QZBCurrentUser.h"
 #import "QZBServerManager.h"
+#import <Crashlytics/Crashlytics.h>
+
 //#import "QZBUser.h"
 
 @interface QZBCurrentUser ()
@@ -48,6 +50,13 @@
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
 
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
+        
+        [[Crashlytics sharedInstance] setUserIdentifier:[NSString
+                                                         stringWithFormat:@"%@",user.userID]];
+        [[Crashlytics sharedInstance] setUserName:user.name];
+         if(user.email){
+             [[Crashlytics sharedInstance] setUserEmail:user.email];
+         }
 
         if (self.pushToken) {
             [[QZBServerManager sharedManager] POSTAPNsToken:self.pushToken

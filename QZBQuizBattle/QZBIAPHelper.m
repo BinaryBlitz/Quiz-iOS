@@ -207,6 +207,14 @@ NSString *const IAPHelperProductPurchaseFailed = @"IAPHelperProductPurchaseFaile
                                        [self hashedValueForAccountName:identifier]];
 }
 
+//- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue{
+//    NSLog(@"restored");
+//}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
+    NSLog(@"restore fail %@", error);
+}
+
 #pragma mark - crypto
 
 - (NSString *)hashedValueForAccountName:(NSString *)userAccountName {

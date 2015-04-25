@@ -99,7 +99,7 @@ navigation
     cell.achievementPic.layer.cornerRadius = self.cornerRadius;
     cell.achievementPic.layer.masksToBounds = YES;
     if (achiv.isAchieved) {
-        image = [UIImage imageNamed:@"achiv"];
+       // image = [UIImage imageNamed:@"achiv"];
         [cell.achievementPic setImageWithURL:achiv.imageURL];
     } else {
         NSURLRequest *imageRequest =
@@ -127,7 +127,7 @@ navigation
         //        cell.achievementPic.image = [self
         //        grayscaleImagefromImage:cell.achievementPic.image];
 
-        image = [UIImage imageNamed:@"notAchiv"];
+    //    image = [UIImage imageNamed:@"notAchiv"];
     }
 
     //[cell.achievementPic setImage:image];
