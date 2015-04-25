@@ -48,9 +48,6 @@
 
     self.horizontalTabelView.frame = contentRect;
 
-    NSLog(@"width %f  heigth %f", self.bounds.size.width, self.bounds.size.height);
-
-    // self.horizontalTabelView.rowHeight = 100;
 
     [self addSubview:self.horizontalTabelView];
     self.horizontalTabelView.backgroundColor = [UIColor clearColor];
