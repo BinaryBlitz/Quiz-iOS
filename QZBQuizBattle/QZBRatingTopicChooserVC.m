@@ -11,7 +11,7 @@
 #import "QZBGameTopic.h"
 #import "QZBCategory.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
-
+#import <Crashlytics/Crashlytics.h>
 @interface QZBRatingTopicChooserVC () <UITableViewDataSource, UITableViewDelegate>
 
 @end
@@ -27,6 +27,8 @@
     [super viewWillAppear:animated];
     
     NSURL *url = [NSURL URLWithString:self.category.background_url];
+    
+   // [[Crashlytics sharedInstance] crash];//REDO
     
     [self.backgroundImageView setImageWithURL:url];
 }

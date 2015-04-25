@@ -128,8 +128,11 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         self.userBeginingScore = [hostDict[@"points"] integerValue];
         self.userMultiplier = [hostDict[@"multiplier"] integerValue];
         
-        
-        opponent.name = opponentDict[@"name"];
+        if(![opponentDict[@"username"] isEqual:[NSNull null]] && opponentDict[@"username"]){
+            opponent.name = opponentDict[@"username"];
+        }else{
+            opponent.name = opponentDict[@"name"];
+        }
         
         if ( opponentDict[@"id"]) {
             opponent.userID = opponentDict[@"id"];
@@ -146,7 +149,12 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         self.userBeginingScore = [opponentDict[@"points"] integerValue];
         self.userMultiplier = [opponentDict[@"multiplier"] integerValue];
         
-        opponent.name = hostDict[@"name"];
+        if(![hostDict[@"username"] isEqual:[NSNull null]] && hostDict[@"username"]){
+            opponent.name = hostDict[@"username"];
+        }else{
+            opponent.name = hostDict[@"name"];
+        }
+        
         opponent.userID = hostDict[@"id"];
         if (hostDict[@"avatar_url"] && ![hostDict[@"avatar_url"] isEqual:[NSNull null]]) {
             NSString *url = [QZBServerBaseUrl stringByAppendingString:hostDict[@"avatar_url"]];

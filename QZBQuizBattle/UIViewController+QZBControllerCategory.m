@@ -90,6 +90,35 @@
 }
 
 
+- (void)showAlertAboutUnabletoPlay {
+    // QZBAchievement *achievment = self.achivArray[indexPath.row];
+    
+  //  NSDictionary *d = dict[@"badge"];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.backgroundType = Blur;
+    alert.showAnimationType = FadeIn;
+    
+    NSString *descr = @"Вы не можете играть сами с собой!";
+    
+    [alert alertIsDismissed:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           [self setNeedsStatusBarAppearanceUpdate];
+                       });
+    }];
+    // UIImageView *v = [[UIImageView alloc] init];
+
+    
+    [alert showInfo:self.navigationController
+              title:@"Ошибка"
+           subTitle:descr
+   closeButtonTitle:@"ОК"
+           duration:0.0];
+    
+}
+
+
 -(void)showAlertAboutUnvisibleTopic:(NSString *)topicName{
     // NSDictionary *d = dict[@"badge"];
     

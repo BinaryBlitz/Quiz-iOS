@@ -12,23 +12,7 @@
 
 +(void)calculateLevel:(NSInteger *)level levelProgress:(float *)levelProgress fromScore:(NSInteger)score{
     
-//    NSInteger forFirstLevel
-//    NSInteger progressionDiff = 50;
-//    
-//    NSInteger lvl = 0;
-//    NSInteger currScore = 0;
-//    
-//    while (true) {
-//        if(currScore+progressionDiff>score){
-//            break;
-//        }else{
-//            currScore+=progressionDiff;
-//            lvl++;
-//        }
-//    }
-//
-    
-    NSLog(@"score %ld", score);
+   // NSLog(@"score %ld", score);
     
     NSInteger resScore = score;
     NSInteger lvl = 0;
@@ -39,7 +23,6 @@
     while (true) {
         pointsForLevel +=diff;
         if(resScore - pointsForLevel<0){
-            
             *level = lvl;
             *levelProgress = (float)resScore/pointsForLevel;
             
@@ -47,15 +30,8 @@
         }else{
             resScore-=pointsForLevel;
             lvl++;
-            
-            
         }
-        
     }
-    
-//    *level = score/100;
-//    *levelProgress = (score%100)/100.0;
-    
 }
 
 @end

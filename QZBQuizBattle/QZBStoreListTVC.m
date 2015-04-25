@@ -16,6 +16,9 @@
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
+#import <Crashlytics/Crashlytics.h>
+
+
 @interface QZBStoreListTVC ()
 
 @property (strong, nonatomic) NSArray *products;
@@ -41,11 +44,11 @@
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
-    self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(restoreTapped:)];
+//    self.navigationItem.rightBarButtonItem =
+//        [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
+//                                         style:UIBarButtonItemStyleBordered
+//                                        target:self
+//                                        action:@selector(restoreTapped:)];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -89,6 +92,9 @@
                                              selector:@selector(transactionFailed:)
                                                  name:IAPHelperProductPurchaseFailed
                                                object:nil];
+    
+   // [[Crashlytics sharedInstance] crash];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -184,7 +190,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _products.count + 2;
+    return _products.count + 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -193,118 +199,7 @@
         QZBMainBoosterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"boosterCell"];
 
         if (self.twiceBooster && self.tripleBooster && self.fiveTimesBooster) {
-            //            if ([[QZBQuizTopicIAPHelper sharedInstance]
-            //                    productPurchased:self.twiceBooster.productIdentifier]) {
-            //                [cell configButtonPurchased:cell.doubleBoosterButton];
-            //
-            //                int dayCount = [[QZBQuizTopicIAPHelper sharedInstance]
-            //                                daysRemainingOnSubscriptionFromIdentifier:
-            //                                self.twiceBooster.productIdentifier];
-            //
-            //                NSString *labelString = nil;
-            //                if(dayCount>-1){
-            //                    labelString = [self expirationDayCountFromInt:dayCount];
-            //                }else{
-            //                    labelString =
-            //                    [self.priceFormatter stringFromNumber:self.twiceBooster.price];
-            //                }
-            //
-            //                cell.doubleBoosterLabel.text = labelString;
-            //
-            //            } else {
-            //
-            //                cell.doubleBoosterLabel.text =
-            //                [self.priceFormatter stringFromNumber:self.twiceBooster.price];
-            //
-            //
-            //                [cell configButtonNotPurchased:cell.doubleBoosterButton];
-            //
-            //                cell.doubleBoosterButton.tag = 1;
-            //                [cell.doubleBoosterButton addTarget:self
-            //                                             action:@selector(buyTwiceBoosterButtonTapped:)
-            //                                   forControlEvents:UIControlEventTouchUpInside];
-            //            }
-            //
-            //            if ([[QZBQuizTopicIAPHelper sharedInstance]
-            //                    productPurchased:self.tripleBooster.productIdentifier]) {
-            //
-            //                [cell configButtonPurchased:cell.tripleBoosterButton];
-            //
-            //                int dayCount = [[QZBQuizTopicIAPHelper sharedInstance]
-            //                                daysRemainingOnSubscriptionFromIdentifier:
-            //                                self.tripleBooster.productIdentifier];
-            //
-            //
-            //                NSString *labelString = nil;
-            //                if(dayCount>-1){
-            //                    labelString = [self expirationDayCountFromInt:dayCount];
-            //                }else{
-            //                    labelString =
-            //                    [self.priceFormatter stringFromNumber:self.tripleBooster.price];
-            //                }
-            //
-            //                cell.tripleBoosterLabel.text = labelString;
-            //
-            //
-            //
-            //            } else {
-            //
-            //                [cell configButtonNotPurchased:cell.tripleBoosterButton];
-            //
-            //                cell.tripleBoosterLabel.text =
-            //                [self.priceFormatter stringFromNumber:self.tripleBooster.price];
-            //
-            //                cell.tripleBoosterButton.tag = 2;
-            //                [cell.tripleBoosterButton addTarget:self
-            //                                             action:@selector(buyTripleBoosterButtonTapped:)
-            //                                   forControlEvents:UIControlEventTouchUpInside];
-            //            }
-            //
-            //            if ([[QZBQuizTopicIAPHelper sharedInstance]
-            //                 productPurchased:self.fiveTimesBooster.productIdentifier]) {
-            //
-            //
-            //                [cell configButtonPurchased:cell.fiveTimesBoosterButton];
-            //
-            //
-            //                int dayCount = [[QZBQuizTopicIAPHelper sharedInstance]
-            //                                daysRemainingOnSubscriptionFromIdentifier:
-            //                                self.fiveTimesBooster.productIdentifier];
-            //
-            ////                if(dayCount>-1){
-            ////                    cell.fiveTimesBoosterLabel.text = [self
-            ///expirationDayCountFromInt:dayCount];
-            ////                }else{
-            ////                    cell.fiveTimesBoosterLabel.text =
-            ////                    [self.priceFormatter
-            ///stringFromNumber:self.fiveTimesBooster.price];
-            ////                }
-            //
-            //                NSString *labelString = nil;
-            //                if(dayCount>-1){
-            //                    labelString = [self expirationDayCountFromInt:dayCount];
-            //                }else{
-            //                    labelString =
-            //                    [self.priceFormatter
-            //                    stringFromNumber:self.fiveTimesBooster.price];
-            //                }
-            //
-            //                cell.fiveTimesBoosterLabel.text = labelString;
-            //
-            //            } else {
-            //
-            //                cell.fiveTimesBoosterLabel.text =
-            //                [self.priceFormatter stringFromNumber:self.fiveTimesBooster.price];
-            //
-            //                [cell configButtonNotPurchased:cell.fiveTimesBoosterButton];
-            //
-            //                cell.fiveTimesBoosterButton.tag = 3;
-            //                [cell.fiveTimesBoosterButton addTarget:self
-            //                                             action:@selector(buyFiveTimesBoosterButtonTapped:)
-            //                                   forControlEvents:UIControlEventTouchUpInside];
-            //            }
-            //
-            //
+
             [self configureBooserCell:cell
                                 label:cell.doubleBoosterLabel
                                button:cell.doubleBoosterButton
@@ -331,7 +226,7 @@
 
         return descrCell;
 
-    } else {
+    } else if(indexPath.row < [tableView numberOfRowsInSection:0]-1){
         QZBStoreBoosterCell *cell =
             [tableView dequeueReusableCellWithIdentifier:@"topicCell" forIndexPath:indexPath];
 
@@ -358,6 +253,18 @@
         }
 
         return cell;
+    } else{
+        UITableViewCell *cell = [tableView
+                                 dequeueReusableCellWithIdentifier:@"restoreIdentifier"];
+        
+        return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if([cell.reuseIdentifier isEqualToString: @"restoreIdentifier"]){
+        [self restoreTapped:nil];
     }
 }
 
@@ -483,7 +390,7 @@
 }
 
 - (void)restoreTapped:(id)sender {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBQuizTopicIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 - (UIStatusBarStyle)preferredStatusBarStyle {

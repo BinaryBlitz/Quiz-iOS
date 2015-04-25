@@ -12,8 +12,7 @@
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
 #import "QZBOnlineSessionWorker.h"
-
-#define OFFLINE YES
+#import <Crashlytics/Crashlytics.h>
 
 @interface QZBSessionManager ()
 
@@ -97,6 +96,8 @@
     if (_gameSession) {
         return;
     }
+    
+    CLS_LOG(@"sessionid %ld, lobbbyid %@",session.session_id, session.lobbyID);
     
     self.isFinished = NO;
     self.isGoing = YES;

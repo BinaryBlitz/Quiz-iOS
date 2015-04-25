@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBEndGameVC : UIViewController<UITableViewDataSource,
-UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@class QZBChallengeDescriptionWithResults;
+@interface QZBEndGameVC : UITableViewController
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
+//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+
+-(void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription;
 
 @end

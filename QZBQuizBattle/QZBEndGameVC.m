@@ -22,6 +22,10 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBProgressViewController.h"
 #import "QZBFriendsChallengeTVC.h"
+#import "QZBUser.h"
+#import "QZBAnotherUser.h"
+
+#import "QZBChallengeDescriptionWithResults.h"
 
 @interface QZBEndGameVC ()
 
@@ -40,6 +44,8 @@
 @property (assign, nonatomic) BOOL cellInited;
 @property (assign, nonatomic) BOOL isOfflineChallenge;
 @property (assign, nonatomic) BOOL isChallenge;
+@property (assign, nonatomic) BOOL isJustResult;
+@property (assign, nonatomic) BOOL isMainInited;
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
 
 @end
@@ -84,20 +90,39 @@
             [NSURLRequest requestWithURL:url
                              cachePolicy:NSURLRequestReturnCacheDataElseLoad
                          timeoutInterval:60];
+        
+        CGRect r = CGRectMake(0, 0,  CGRectGetWidth([UIScreen mainScreen].bounds),
+                              16*CGRectGetWidth([UIScreen mainScreen].bounds)/9);
+        
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:r];
+        
+        self.tableView.backgroundColor = [UIColor clearColor];
 
-        [self.backgroundImageView setImageWithURLRequest:imageRequest
-                                        placeholderImage:nil
-                                                 success:nil
-                                                 failure:nil];
+        [iv setImageWithURLRequest:imageRequest
+                  placeholderImage:nil
+                           success:nil
+                           failure:nil];
+        
+        //  [self.view addSubview:iv];
+        //  [self.view sendSubviewToBack:iv];
+        
+        self.tableView.backgroundView = iv;
+        
+       // self.tableView.backgroundView =
     }
     // [self.tableView layoutIfNeeded];
 }
+
+
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 
-    [self animateLose];
+    if(!self.isOfflineChallenge){
+        [self animateLose];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -157,6 +182,49 @@
     [[QZBSessionManager sessionManager] closeSession];
 }
 
+-(void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription{
+    
+    self.title = challengeDescription.topic.name;
+    
+    self.firstUserName = challengeDescription.firstUser.name;
+    self.opponentUserName = challengeDescription.opponentUser.name;
+    
+    
+    if (challengeDescription.firstUser.imageURL) {
+        self.firstImageURL = challengeDescription.firstUser.imageURL;
+    }
+    
+    if (challengeDescription.opponentUser.imageURL) {
+        self.opponentImageURL = challengeDescription.opponentUser.imageURL;
+    }
+    
+    self.firstUserScore = challengeDescription.firstResult;
+    self.secondUserScore = challengeDescription.opponentResult;
+    
+    self.sessionResult = [self resultOfSession];
+    
+    self.multiplier = challengeDescription.multiplier;
+    
+    self.topic = challengeDescription.topic;
+    
+    self.beginScore = self.endScore = [challengeDescription.topic.points integerValue];
+    
+    
+}
+
+-(NSString *)resultOfSession{
+    NSString *result = nil;
+    
+    if(self.firstUserScore>self.secondUserScore){
+        result = @"Победа";
+    }else if (self.firstUserScore< self.secondUserScore){
+        result = @"Поражение";
+    } else{
+        result = @"Ничья";
+    }
+    return result;
+}
+
 - (void)achievementGet:(NSNotification *)note {
     [self showAlertAboutAchievmentWithDict:note.object];
 }
@@ -189,13 +257,19 @@ navigation
     static NSString *pointCellIdentifier = @"endGamePointsCell";
     static NSString *resultCellIdentifier = @"endGameResultPointsCell";
     static NSString *progressCellIdentifier = @"endGameProgressCell";
+    
 
     UITableViewCell *cell = nil;
     if (indexPath.row == 0) {
         QZBEndGameMainCell *mainCell =
             [tableView dequeueReusableCellWithIdentifier:mainCellIdentifier];
 
-        [self initMainCell:mainCell];
+        if(!self.isMainInited){
+            self.isMainInited = YES;
+            [self initMainCell:mainCell];
+        }
+    
+        //[self initMainCell:mainCell];
 
         return mainCell;
     } else if (indexPath.row == 1) {
@@ -423,10 +497,10 @@ navigation
     CGRect mainRect = [UIScreen mainScreen].bounds;
 
     CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4,
-                              0.8773 * CGRectGetWidth(mainRect), 1.4 * CGRectGetHeight(mainRect));
+                              0.6 * CGRectGetWidth(mainRect), 1.4 * CGRectGetHeight(mainRect));
 
-    CGRect rRight = CGRectMake(0.51 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
-                               0.49 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect));
+    CGRect rRight = CGRectMake(0.25 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
+                               0.75 * CGRectGetWidth(mainRect), 1.2*CGRectGetHeight(mainRect));
 
     UIImageView *leftImage = [[UIImageView alloc] initWithFrame:rLeft];
     UIImageView *rightImage = [[UIImageView alloc] initWithFrame:rRight];
@@ -441,10 +515,10 @@ navigation
         return;
     }
 
-    [self.backgroundImageView addSubview:rightImage];
-    [self.backgroundImageView sendSubviewToBack:rightImage];
-    [self.backgroundImageView addSubview:leftImage];
-    [self.backgroundImageView sendSubviewToBack:leftImage];
+    [self.tableView.backgroundView addSubview:rightImage];
+    [self.tableView.backgroundView sendSubviewToBack:rightImage];
+    [self.tableView.backgroundView addSubview:leftImage];
+    [self.tableView.backgroundView sendSubviewToBack:leftImage];
 
     [UIView animateWithDuration:0.5
         delay:0.0
@@ -454,8 +528,8 @@ navigation
                 CGRectMake(0, 0, CGRectGetWidth(leftImage.frame), 1.4 * CGRectGetHeight(mainRect));
 
             rightImage.frame =
-                CGRectMake(0.515 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.07,
-                           0.52 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect) * 1.07);
+                CGRectMake(0.25 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
+                           0.75 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect) * 1.2);
         }
         completion:^(BOOL finished){
 
