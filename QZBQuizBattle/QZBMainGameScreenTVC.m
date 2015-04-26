@@ -12,15 +12,19 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import "UIColor+QZBProjectColors.h"
 #import "QZBTopicTableViewCell.h"
-#import "QZBDescriptionCell.h"  //mainDescriptionCell
+#import "QZBDescriptionCell.h"    //mainDescriptionCell
 #import <SVProgressHUD.h>
 #import "QZBChallengeCell.h"
 #import "QZBChallengeDescription.h"
+#import "QZBChallengeDescriptionWithResults.h"
 #import "QZBGameTopic.h"
 #import "QZBProgressViewController.h"
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
 #import "CoreData+MagicalRecord.h"
+#import "QZBResultOfSessionCell.h"
+#import "QZBAnotherUser.h"
+#import "QZBEndGameVC.h"
 
 @interface QZBMainGameScreenTVC ()
 
@@ -29,9 +33,12 @@
 @property (strong, nonatomic) NSArray *featured;
 @property (strong, nonatomic) NSArray *additionalTopics;
 @property (strong, nonatomic) NSMutableArray *challenges;
+@property (strong, nonatomic) NSMutableArray *challenged;
 @property (strong, nonatomic) NSMutableArray *workArray;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) QZBChallengeDescription *challengeDescription;
+@property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResults;
+
 
 @end
 
@@ -97,7 +104,14 @@
 
         self.challengeDescription = nil;
         
-    } else {
+    }else if ([segue.identifier isEqualToString:@"showSessionResult"] &&
+              self.challengeDescriptionWithResults){
+        
+        QZBEndGameVC *destinationVC = segue.destinationViewController;
+        
+        [destinationVC initWithChallengeResult:self.challengeDescriptionWithResults];
+        self.challengeDescriptionWithResults = nil;
+    }else {
         [super prepareForSegue:segue sender:sender];
     }
 }
@@ -130,7 +144,19 @@
 
         return cell;
 
-    } else {
+    }else if([arr isEqualToArray:self.challenged]){
+        QZBResultOfSessionCell *cell = [tableView
+                                        dequeueReusableCellWithIdentifier:@"resultSessionCell"];
+        
+        QZBChallengeDescriptionWithResults *descr = self.challenged[indexPath.row];
+        
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        cell.topicNameLabel.text = descr.topic.name;
+        cell.opponentNameLabel.text =[NSString stringWithFormat:@"%@ (%@)",descr.opponentUser.name, descr.sessionResult];
+        
+        return cell;
+        
+    }else {
         QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
 
         // NSArray *arr = self.workArray[indexPath.section];
@@ -174,6 +200,8 @@
         color = [UIColor lightGreenColor];
     } else if( [arr isEqualToArray:self.additionalTopics]){
         
+    }else if ([arr isEqualToArray:self.challenged]){
+        color = [UIColor strongGreenColor];
     }
 
     return color;
@@ -197,6 +225,8 @@
         text = @"Брошенные вызовы";
     } else if ([arr isEqualToArray:self.additionalTopics]){
         text = @"Сыграйте эти темы";
+    } else if ([arr isEqualToArray:self.challenged]){
+        text = @"Результаты";
     }
     return text;
     
@@ -212,22 +242,7 @@
         return;
 
     } else {
-        // NSIndexPath *newIP = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:0];
-        
-//        if([cell isKindOfClass:[QZBChallengeCell class]]){
-//            QZBChallengeCell *challengeCell = (QZBChallengeCell *)cell;
-//            if(!challengeCell.visible){
-//                
-//                self.choosedIndexPath = nil;
-//                [tableView beginUpdates];
-//                [tableView endUpdates];
-//                [self showAlertAboutUnvisibleTopic:challengeCell.topicNameLabel.text];//REDO
-//                
-//                return;
-//            }
-//        }
-        
-       // if()
+
 
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
@@ -252,7 +267,7 @@
 
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:18];
+    label.font = [UIFont boldSystemFontOfSize:20];
 
     if (section > 0) {
         [view addDropShadowsForView];
@@ -344,20 +359,6 @@
 
     if (cell) {
         
-//        if([cell isKindOfClass:[QZBChallengeCell class]]){
-//            QZBChallengeCell *challengeCell = (QZBChallengeCell *)cell;
-//            if(!challengeCell.visible){
-//                
-//                self.choosedIndexPath = nil;
-//                [self.topicTableView beginUpdates];
-//                [self.topicTableView endUpdates];
-//                [self showAlertAboutUnvisibleTopic:challengeCell.topicNameLabel.text];//REDO
-//                
-//                return;
-//            }
-//        }
-        
-        
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
 
         NSMutableArray *arr = self.workArray[ip.section];
@@ -389,48 +390,103 @@
 
     if (cell) {
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
-
         NSMutableArray *arr = self.workArray[ip.section];
-
         QZBChallengeDescription *description = arr[ip.row];
-
         NSNumber *lobbyNumber = description.lobbyID;
 
-        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
-                       dispatch_get_main_queue(), ^{
-                           [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-                       });
+        [self ignoreInteractions];
         
         self.choosedIndexPath = nil;
 
-        [self.mainTableView beginUpdates];
-
-        [self.mainTableView deleteRowsAtIndexPaths:@[ ip ]
-                                  withRowAnimation:UITableViewRowAnimationRight];
-        [self.challenges removeObjectAtIndex:ip.row];
-
-        if (self.challenges.count == 0) {
-            NSUInteger numInWorkArray = [self.workArray indexOfObject:self.challenges];
-            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:numInWorkArray];
-            [self.mainTableView deleteSections:indexSet
-                              withRowAnimation:UITableViewRowAnimationRight];
-            [self.workArray removeObject:self.challenges];
-        }
-
-        //[arr removeObjectAtIndex:ip.row];
-        
-
-        [self.mainTableView endUpdates];
+        [self deleteRowWithAnimationOnIdexPath:ip
+                                         array:self.challenges];
 
         [[QZBServerManager sharedManager] POSTDeclineChallengeWhithLobbyID:lobbyNumber
-            onSuccess:^{
-
-            }
-            onFailure:^(NSError *error, NSInteger statusCode){
-
-            }];
+            onSuccess:^{}
+            onFailure:^(NSError *error, NSInteger statusCode){}];
     }
+}
+
+- (IBAction)showChallengeResultActrion:(UIButton *)sender {
+    
+    
+    UITableViewCell *cell = [self parentCellForView:sender];
+    
+    if (cell) {
+        
+        NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
+        
+        NSMutableArray *arr = self.workArray[ip.section];
+        
+        QZBChallengeDescriptionWithResults *description = arr[ip.row];
+        
+        //self.challengeDescription = description;
+        
+        self.choosedIndexPath = nil;
+        [self.topicTableView beginUpdates];
+        [self.topicTableView endUpdates];
+        
+        self.challengeDescriptionWithResults = description;
+        
+        [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
+        
+        
+        
+    }
+    
+    
+}
+
+- (IBAction)hideChallengeResultAction:(UIButton *)sender {
+    UITableViewCell *cell = [self parentCellForView:sender];
+    if (cell) {
+        NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
+        NSMutableArray *arr = self.workArray[ip.section];
+        QZBChallengeDescriptionWithResults *description =
+        arr[ip.row];
+        [self ignoreInteractions];
+        
+        self.choosedIndexPath = nil;
+        
+        [self deleteRowWithAnimationOnIdexPath:ip
+                                         array:self.challenged];
+        
+        [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
+                                                   onSuccess:nil
+                                                   onFailure:nil];
+        
+    }
+    
+}
+
+
+-(void)ignoreInteractions{
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                   });
+}
+
+-(void)deleteRowWithAnimationOnIdexPath:(NSIndexPath *)ip array:(NSMutableArray *)arr{
+    
+    [self.mainTableView beginUpdates];
+    
+    [self.mainTableView deleteRowsAtIndexPaths:@[ ip ]
+                              withRowAnimation:UITableViewRowAnimationRight];
+    [arr removeObjectAtIndex:ip.row];
+    
+    if (arr.count == 0) {
+        NSUInteger numInWorkArray = [self.workArray indexOfObject:arr];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:numInWorkArray];
+        [self.mainTableView deleteSections:indexSet
+                          withRowAnimation:UITableViewRowAnimationRight];
+        [self.workArray removeObject:arr];
+    }
+    
+    [self.mainTableView endUpdates];
+    
+    
 }
 
 #pragma mark - reload topics
@@ -459,13 +515,19 @@
         self.featured = resultDict[@"featured_topics"];
 
         NSArray *challArr = resultDict[@"challenges"];
+    
 
         self.challenges = [challArr mutableCopy];
+        self.challenged = [resultDict[@"challenged"] mutableCopy];
 
         [self.workArray removeAllObjects];
 
         if (self.challenges.count > 0) {
             [self.workArray addObject:self.challenges];
+        }
+        
+        if(self.challenged.count > 0){
+            [self.workArray addObject:self.challenged];
         }
 
         if (self.featured.count > 0) {
@@ -483,35 +545,13 @@
         
         
         
-        NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
         
-        if(allTopics && allTopics.count>0){
-            NSInteger length = 0;
-            
-            NSInteger allC = [self allCount];
+        NSArray *additTopics = [self additionalTopics];
         
-            if(allC>=9){
-                length = 3;
-            }else{
-                length = 12-allC;
-            }
-            
-            
-            if(length>allTopics.count){
-                length = allTopics.count;
-            }
-            
-            NSRange r = {.location = 0, .length = length};
+        if(additTopics){
         
-        
-            NSArray *additionalArr = [allTopics subarrayWithRange:r];
-        
-
-        
-            [self.workArray addObject:additionalArr];
-            self.additionalTopics = additionalArr;
-            
-        }else{
+            [self.workArray addObject:additTopics];
+            self.additionalTopics = additTopics;
             
         }
         
@@ -534,6 +574,45 @@
     }];
 
     // self.tabBarItem.badgeValue = nil;
+}
+
+
+-(NSArray *)additionalTopics{
+    NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
+    
+    if(allTopics && allTopics.count>0){
+        NSInteger length = 0;
+        
+        NSInteger allC = [self allCount];
+        
+        if(allC>=9){
+            length = 3;
+        }else{
+            length = 12-allC;
+        }
+        
+        
+        if(length>allTopics.count){
+            length = allTopics.count;
+        }
+        
+        NSRange r = {.location = 0, .length = length};
+        
+        
+        NSArray *additionalArr = [allTopics subarrayWithRange:r];
+        
+        
+        
+      //  [self.workArray addObject:additionalArr];
+      //  self.additionalTopics = additionalArr;
+        
+        return additionalArr;
+        
+    }else{
+        return nil;
+    }
+
+    
 }
 
 -(NSInteger)allCount{

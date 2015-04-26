@@ -21,6 +21,7 @@
 @property(strong, nonatomic) QZBAnotherUser *opponentUser;
 @property(strong, nonatomic) QZBUser *firstUser;
 @property(assign, nonatomic) NSInteger multiplier;
+@property(copy, nonatomic) NSString *sessionResult;
 
 
 
@@ -37,15 +38,17 @@
         NSDictionary *firstDict = resultDict[@"host"];
         NSDictionary *opponentDict = resultDict[@"opponent"];
         
-        self.firstResult = [self pointsFromDict:firstDict];
-        self.opponentResult = [self pointsFromDict:opponentDict];
+        self.firstResult = [resultDict[@"host_points"] integerValue]; //[self pointsFromDict:firstDict];
+        self.opponentResult =  [resultDict[@"opponent_points"] integerValue]; //[self pointsFromDict:opponentDict];
         self.opponentUser = [[QZBAnotherUser alloc] initWithDictionary:opponentDict];
         self.firstUser = [QZBCurrentUser sharedInstance].user;
         self.multiplier = [firstDict[@"multiplier"] integerValue];
         
+        self.sessionResult = [self resultOfSession];
+        
        // NSNumber *topicID = dict[@"topic_id"];
         
-        
+        self.topic.points = firstDict[@"points"];
         
         
         
@@ -55,15 +58,25 @@
 
 }
 
--(NSInteger)pointsFromDict:(NSDictionary *)dict{
-    return [dict[@"points"] integerValue];
+-(NSString *)resultOfSession{
+    NSString *result = nil;
+    
+    if(self.firstResult>self.opponentResult){
+        result = @"Победа";
+    }else if (self.firstResult < self.opponentResult){
+        result = @"Поражение";
+    } else{
+        result = @"Ничья";
+    }
+    return result;
 }
+
 
 //- (instancetype)init
 //{
 //    self = [super init];
 //    if (self) {
-//        <#statements#>
+//
 //    }
 //    return self;
 //}

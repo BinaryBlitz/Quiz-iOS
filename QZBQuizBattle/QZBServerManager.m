@@ -26,13 +26,16 @@
 #import "QZBRequestUser.h"
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
+#import "QZBChallengeDescriptionWithResults.h"
 #import "QZBAchievement.h"
 #import <SVProgressHUD.h>
 #import "AppDelegate.h"
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
-NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедине"
-                                                                                         @"ние";
+NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин"
+                                                                                         @"е" @"н"
+                                                                                               @"и"
+                                                                                               @"е";
 
 @interface QZBServerManager ()
 
@@ -140,19 +143,18 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     for (NSDictionary *dict in categoryRequest) {
         NSString *name = [dict objectForKey:@"name"];
         id category_id = [dict objectForKey:@"id"];
-        
+
         NSString *bannerURL = nil;
         NSString *backgroundURL = nil;
-        
-        if(![dict[@"banner_url"] isEqual:[NSNull null]]){
+
+        if (![dict[@"banner_url"] isEqual:[NSNull null]]) {
             bannerURL = dict[@"banner_url"];
         }
-        
-        if(![dict[@"background_url"] isEqual:[NSNull null]]){
+
+        if (![dict[@"background_url"] isEqual:[NSNull null]]) {
             backgroundURL = dict[@"background_url"];
         }
-        
-        
+
         QZBCategory *existingEntity =
             [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
 
@@ -160,17 +162,16 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             existingEntity = [QZBCategory MR_createEntity];
             existingEntity.category_id = category_id;
             existingEntity.name = name;
-            
-            if(bannerURL){
-            existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
-                
+
+            if (bannerURL) {
+                existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
+
                 [self savePictureFromString:existingEntity.banner_url];
-             
             }
-            if(backgroundURL){
+            if (backgroundURL) {
                 existingEntity.background_url =
-                [QZBServerBaseUrl stringByAppendingString:backgroundURL];
-                
+                    [QZBServerBaseUrl stringByAppendingString:backgroundURL];
+
                 [self savePictureFromString:existingEntity.background_url];
             }
         }
@@ -188,27 +189,19 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             [categ MR_deleteEntity];
         }
     }
-
-    
 }
 
-
--(void)savePictureFromString:(NSString *)urlAsString{
-    if(urlAsString){
-        
+- (void)savePictureFromString:(NSString *)urlAsString {
+    if (urlAsString) {
         NSURL *url = [NSURL URLWithString:urlAsString];
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
-                                                      cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                                  timeoutInterval:60];
-        
+        NSURLRequest *imageRequest =
+            [NSURLRequest requestWithURL:url
+                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                         timeoutInterval:60];
+
         UIImageView *v = [[UIImageView alloc] init];
-        [v setImageWithURLRequest:imageRequest
-                 placeholderImage:nil
-                          success:nil
-                          failure:nil];
-        
+        [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
     }
-    
 }
 
 - (void)updateTopcs:(NSDictionary *)topicsInRequest inCategory:(QZBCategory *)category {
@@ -254,9 +247,9 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {
     QZBGameTopic *exitedTopic =
-    [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
+        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
     QZBCategory *category = nil;
-    
+
     if (exitedTopic) {
         category = exitedTopic.relationToCategory;
     }
@@ -265,7 +258,6 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
     if (![QZBCurrentUser sharedInstance].user.api_key) {
         if (failure) {
             failure(nil, -1);
@@ -286,18 +278,23 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             NSArray *featuredTopicsDicts = responseObject[@"featured_topics"];
 
             NSArray *challengesDicts = responseObject[@"challenges"];
+            NSArray *challengedDicts = responseObject[@"challenged"];
 
             NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
             NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
             NSArray *featuredTopics = [self parseTopicsArray:featuredTopicsDicts];
 
             NSArray *challenges = [self parseChallengesFromArray:challengesDicts];
+            NSArray *challenged = [self parseChallengeResultsFromArray:challengedDicts];
+            
+            
 
             NSDictionary *resultDict = @{
                 @"favorite_topics" : faveTopics,
                 @"friends_favorite_topics" : friendsFaveTopics,
                 @"featured_topics" : featuredTopics,
-                @"challenges" : challenges
+                @"challenges" : challenges,
+                @"challenged" : challenged
             };
 
             //  NSDictionary *resultDict = @{};
@@ -489,8 +486,10 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 // POST /lobbies/challenge
 //
-// Challenges and notifies opponent. You should open a Pusher channel and wait for game-start event
-// once the session was returned. You may also receive a challenge-declined event if the opponent
+// Challenges and notifies opponent. You should open a Pusher channel and wait
+// for game-start event
+// once the session was returned. You may also receive a challenge-declined
+// event if the opponent
 // decided to decline your challenge.
 //
 // opponent_id — opponent
@@ -531,7 +530,8 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 // POST /lobbies/:id/accept_challenge
 //
-// Accepts the challenge and notifies the host about it. The host player will be notified with
+// Accepts the challenge and notifies the host about it. The host player will be
+// notified with
 // game-start event.
 
 - (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
@@ -600,8 +600,31 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }];
 }
 
+
+-(void)DELETELobbiesWithID:(NSNumber *)lobbyID onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"lobbies/%@",lobbyID];
+    
+    
+    [self.requestOperationManager DELETE:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if(success){
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        NSLog(@"%@", error);
+    }];
+}
+
 - (NSArray *)parseChallengesFromArray:(NSArray *)responseObject {
-    NSLog(@"challenges response %@", responseObject);
+    // NSLog(@"challenges response %@", responseObject);
 
     NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
 
@@ -614,6 +637,20 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     NSArray *challengeDescriptions = [NSArray arrayWithArray:challengeDescriptionsMuttable];
 
     return challengeDescriptions;
+}
+
+- (NSArray *)parseChallengeResultsFromArray:(NSArray *)responseObject {
+    NSMutableArray *challengesResultsMuttable = [NSMutableArray array];
+
+    for (NSDictionary *dict in responseObject) {
+        if (![dict[@"results"] isEqual:[NSNull null]] && dict[@"results"]) {
+            QZBChallengeDescriptionWithResults *result =
+                [[QZBChallengeDescriptionWithResults alloc] initWithDictionary:dict];
+
+            [challengesResultsMuttable addObject:result];
+        }
+    }
+    return [NSArray arrayWithArray:challengesResultsMuttable];
 }
 
 #pragma mark - user registration
@@ -634,25 +671,22 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     NSLog(@"hashed %@", hashedPassword);
 
     NSDictionary *params = nil;
-    if(userEmail.length>0){
-  params = @{
-        @"player" :
-            @{@"name" : userName,
-              @"username" : userName,
-              @"email" : userEmail,
-              @"password_digest" : hashedPassword}
-    } ;
-    }else{
+    if (userEmail.length > 0) {
         params = @{
-                   @"player" :
-                       @{@"name" : userName,
-                         @"username" : userName,
-                         @"password_digest" : hashedPassword}
-                   } ;
-
+            @"player" : @{
+                @"name" : userName,
+                @"username" : userName,
+                @"email" : userEmail,
+                @"password_digest" : hashedPassword
+            }
+        };
+    } else {
+        params = @{
+            @"player" :
+                @{@"name" : userName, @"username" : userName, @"password_digest" : hashedPassword}
+        };
     }
-    
-    
+
     [self.requestOperationManager POST:@"players"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -666,43 +700,39 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             QZBUserRegistrationProblem problem = QZBNoProblems;
-            
 
-            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
-            
-            if(![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
-               operation.responseObject[@"username"]){
-                
+            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
+
+            if (![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
+                operation.responseObject[@"username"]) {
                 NSArray *usernameProblems = operation.responseObject[@"username"];
-                //NSString *problem = [usernameProblems firstObject];
+                // NSString *problem = [usernameProblems firstObject];
                 NSLog(@"problem %@", usernameProblems);
                 problem = QZBUserNameProblem;
-            }else if(![operation.responseObject[@"email"] isEqual:[NSNull null]]&&
-                     operation.responseObject[@"email"]){
-                
+            } else if (![operation.responseObject[@"email"] isEqual:[NSNull null]] &&
+                       operation.responseObject[@"email"]) {
                 NSArray *usernameProblems = operation.responseObject[@"email"];
-                //NSString *problem = [usernameProblems firstObject];
+                // NSString *problem = [usernameProblems firstObject];
                 NSLog(@"problem %@", usernameProblems);
                 problem = QZBEmailProblem;
             }
 
             if (failure) {
-                failure(error, operation.response.statusCode,problem);
+                failure(error, operation.response.statusCode, problem);
             }
-          
+
         }];
 }
 
 - (void)POSTLoginUserName:(NSString *)username
-                  password:(NSString *)password
-                 onSuccess:(void (^)(QZBUser *user))success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                 password:(NSString *)password
+                onSuccess:(void (^)(QZBUser *user))success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
- //   NSLog(@"email %@ password %@", email, hashedPassword);
+    //   NSLog(@"email %@ password %@", email, hashedPassword);
 
-    NSDictionary *params = @{ @"username" : username,
-                              @"password_digest" : hashedPassword };
+    NSDictionary *params = @{ @"username" : username, @"password_digest" : hashedPassword };
 
     [self.requestOperationManager POST:@"players/authenticate"
         parameters:params
@@ -719,12 +749,9 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            
-            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
+
+            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
             if (failure) {
-                
-                
                 failure(error, operation.response.statusCode);
             }
 
@@ -749,13 +776,13 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
                 }
             }
         }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error){
-            
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            
-            NSLog(@"vk token failure %@  %@" , error, operation.responseObject);
+
+            NSLog(@"vk token failure %@  %@", error, operation.responseObject);
 
         }];
 }
@@ -797,7 +824,9 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure {
+                         onFailure:(void (^)(NSError *error,
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure {
     NSString *hashedPassword = [self hashPassword:password];
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
@@ -809,7 +838,9 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure {
+                         onFailure:(void (^)(NSError *error,
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure {
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
         @"player" : @{@"username" : userName}
@@ -818,25 +849,23 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
 
--(void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName user:(QZBUser *)user
-                                        onSuccess:(void (^)())success
-                                        onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure{
-    
-    NSDictionary *params = @{
-                             @"token" : user.api_key,
-                             @"player" : @{@"username" : userName}
-                             };
-    
-    
-    
-    
+- (void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName
+                                              user:(QZBUser *)user
+                                         onSuccess:(void (^)())success
+                                         onFailure:
+                                             (void (^)(NSError *error,
+                                                       NSInteger statusCode,
+                                                       QZBUserRegistrationProblem problem))failure {
+    NSDictionary *params = @{ @"token" : user.api_key, @"player" : @{@"username" : userName} };
 
-    [self PATHPlayerDataWithDict:params userID:user.userID onSuccess:success  onFailure:failure];
+    [self PATHPlayerDataWithDict:params userID:user.userID onSuccess:success onFailure:failure];
 }
 
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure {
+                       onFailure:(void (^)(NSError *error,
+                                           NSInteger statusCode,
+                                           QZBUserRegistrationProblem problem))failure {
     NSString *base64str =
         [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
@@ -856,7 +885,8 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     // UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for
+    // In next line, pass 0.0 to use the current device's pixel scaling factor
+    // (and thus account for
     // Retina resolution).
     // Pass 1.0 to force exact pixel size.
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
@@ -866,11 +896,13 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
     return newImage;
 }
 
-- (void)PATHPlayerDataWithDict:(NSDictionary *)params userID:(NSNumber *)userID
+- (void)PATHPlayerDataWithDict:(NSDictionary *)params
+                        userID:(NSNumber *)userID
                      onSuccess:(void (^)())success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure {
-    
-    if(!userID){
+                     onFailure:(void (^)(NSError *error,
+                                         NSInteger statusCode,
+                                         QZBUserRegistrationProblem problem))failure {
+    if (!userID) {
         userID = [QZBCurrentUser sharedInstance].user.userID;
     }
 
@@ -879,31 +911,27 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"pathed response %@", responseObject);
-            
+
             if (success) {
                 success();
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            NSLog(@"response for patch player %@",operation.responseObject);
-            
-            
+
+            NSLog(@"response for patch player %@", operation.responseObject);
+
             QZBUserRegistrationProblem problem = QZBNoProblems;
-            
-            
-            NSLog(@"%@\n responseObject %@", error,operation.responseObject);
-            
-            if(![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
-               operation.responseObject[@"username"]){
-                
+
+            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
+
+            if (![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
+                operation.responseObject[@"username"]) {
                 NSArray *usernameProblems = operation.responseObject[@"username"];
-                //NSString *problem = [usernameProblems firstObject];
+                // NSString *problem = [usernameProblems firstObject];
                 NSLog(@"problem %@", usernameProblems);
                 problem = QZBUserNameProblem;
             }
-            
-            
+
             if (failure) {
                 failure(error, operation.response.statusCode, problem);
             }
@@ -1057,34 +1085,33 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }];
 }
 
--(void)GETReportForUserID:(NSNumber *)userID
-                message:(NSString *)reportMessage
-              onSuccess:(void (^)())success
-              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    
-     NSString *urlString = [NSString stringWithFormat:@"players/%@/report", userID];
-    
-     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                               @"message":reportMessage};
-    
+- (void)GETReportForUserID:(NSNumber *)userID
+                   message:(NSString *)reportMessage
+                 onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSString *urlString = [NSString stringWithFormat:@"players/%@/report", userID];
+
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"message" : reportMessage };
+
     [self.requestOperationManager GET:urlString
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  NSLog(@"report ok");
-                                  
-                                  if(success){
-                                      success();
-                                  }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"report error %@", error);
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"report ok");
+
+            if (success) {
+                success();
+            }
+
         }
-    }];
-    
-    
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"report error %@", error);
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+        }];
 }
 
 #pragma mark - ranking
@@ -1293,12 +1320,14 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             //                },
             //
             //                @{
-            //                    @"identifier" : @"drumih.QZBQuizBattle.twiceBooster",
+            //                    @"identifier" :
+            //                    @"drumih.QZBQuizBattle.twiceBooster",
             //                    @"topic_id" : @0,
             //                    @"purchased" : @0
             //                },
             //                @{
-            //                    @"identifier" : @"drumih.QZBQuizBattle.tripleBooster",
+            //                    @"identifier" :
+            //                    @"drumih.QZBQuizBattle.tripleBooster",
             //                    @"topic_id" : @0,
             //                    @"purchased" : @1
             //                }
