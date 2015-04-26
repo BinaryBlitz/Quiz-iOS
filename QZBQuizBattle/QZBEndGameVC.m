@@ -47,6 +47,7 @@
 @property (assign, nonatomic) BOOL isJustResult;
 @property (assign, nonatomic) BOOL isMainInited;
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
+@property(strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
 @end
 
@@ -65,7 +66,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    [self initSessionResults];
+    if(!self.challengeDescriptionWithResult){
+        [self initSessionResults];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -184,6 +187,8 @@
 
 -(void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription{
     
+    self.challengeDescriptionWithResult = challengeDescription;
+    
     self.title = challengeDescription.topic.name;
     
     self.firstUserName = challengeDescription.firstUser.name;
@@ -198,8 +203,8 @@
         self.opponentImageURL = challengeDescription.opponentUser.imageURL;
     }
     
-    self.firstUserScore = challengeDescription.firstResult;
-    self.secondUserScore = challengeDescription.opponentResult;
+    self.firstUserScore = (NSUInteger)challengeDescription.firstResult;
+    self.secondUserScore = (NSUInteger)challengeDescription.opponentResult;
     
     self.sessionResult = [self resultOfSession];
     
@@ -208,6 +213,14 @@
     self.topic = challengeDescription.topic;
     
     self.beginScore = self.endScore = [challengeDescription.topic.points integerValue];
+    
+    self.opponent = challengeDescription.opponentUser;
+    
+    [[QZBServerManager sharedManager]DELETELobbiesWithID:challengeDescription.lobbyID onSuccess:^{
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
     
     
 }
@@ -398,29 +411,40 @@ navigation
         }
     }
 
-    QZBProgressViewController *progressVC =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
-
-    [progressVC initSessionWithTopic:self.topic user:nil];
+//    QZBProgressViewController *progressVC =
+//        [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+//
+//    [progressVC initSessionWithTopic:self.topic user:nil];
+    if(!destinationVC && !self.opponent){
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+//    NSUInteger objectIndex =
+//    [self.navigationController.viewControllers indexOfObject:destinationVC];
+    
+    QZBProgressViewController *progressVC = [self.storyboard
+                                             instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+    
+    [progressVC initSessionWithTopic:self.topic user:self.opponent];
+    
+    
 
     if (!destinationVC) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSUInteger objectIndex =
+        [self.navigationController.viewControllers indexOfObject:self];
+        [controllers insertObject:progressVC atIndex:objectIndex];
+        
     } else {
         NSUInteger objectIndex =
-            [self.navigationController.viewControllers indexOfObject:destinationVC];
-
-        QZBProgressViewController *progressVC = [self.storyboard
-            instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
-
-        [progressVC initSessionWithTopic:self.topic user:self.opponent];
-
+        [self.navigationController.viewControllers indexOfObject:destinationVC];
         [controllers replaceObjectAtIndex:objectIndex withObject:progressVC];
-
-        [self.navigationController setViewControllers:[NSArray arrayWithArray:controllers]];
-
-        [self.navigationController popToViewController:progressVC animated:YES];
     }
 
+    [self.navigationController setViewControllers:[NSArray arrayWithArray:controllers]];
+    
+    [self.navigationController popToViewController:progressVC animated:YES];
+    
+    
     // self.navigationController.viewControllers
 }
 - (IBAction)chooseAnotherTopic:(id)sender {
