@@ -18,5 +18,9 @@
 @property (weak, nonatomic) IBOutlet QZBPasswordTextField *userNewPasswordAgainTextField;
 @property (weak, nonatomic) IBOutlet UIButton *renewPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *renewNameButton;
+@property (weak, nonatomic) IBOutlet UITableViewCell *middleCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *topCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *exitCell;
+@property (weak, nonatomic) IBOutlet UIView *nameTextFieldBackGroundView;
 
 @end

@@ -51,12 +51,12 @@
 
     UILabel *label = (UILabel *)self.circleView.centralView;
     label.textColor = color;
-    label.text = [NSString stringWithFormat:@"x%ld", multiplier];
+    label.text = [NSString stringWithFormat:@"x%ld", (long)multiplier];
 }
 
 - (void)setScore:(NSUInteger)score {
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", score];
-    self.pointsNameLabel.text = [NSString endOfWordFromNumber:score];  // REDO
+    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)score];
+    self.pointsNameLabel.text = [NSString endOfWordFromNumber:score]; 
 }
 
 //- (NSString *)endOfWordFromNumber:(NSInteger)number {

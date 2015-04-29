@@ -51,7 +51,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     return self;
 }
 
-// redo users
 - (instancetype)initWIthDictionary:(NSDictionary *)dict {
     NSMutableArray *questions = [NSMutableArray array];
     NSArray *arrayOfQuestionDicts = [dict objectForKey:@"game_session_questions"];

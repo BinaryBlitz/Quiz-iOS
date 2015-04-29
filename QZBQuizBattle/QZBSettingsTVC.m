@@ -29,6 +29,12 @@
 @end
 @implementation QZBSettingsTVC
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    [self.middleCell addDropShadowsForView];
+    [self.exitCell addDropShadowsForView];
+    
+}
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
@@ -46,6 +52,8 @@
 
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
     
+    self.nameTextFieldBackGroundView.layer.borderWidth = 1.0;
+    self.nameTextFieldBackGroundView.layer.borderColor =[UIColor colorWithWhite:200.0/255.0 alpha:1.0].CGColor;
     
 
     self.userNewPasswordTextField.delegate = self;
@@ -64,17 +72,9 @@
     self.renewNameButton.enabled = YES;
     self.renewPasswordButton.enabled = YES;
     
+    self.tableView.backgroundColor = [UIColor colorWithWhite:250.0/255.0 alpha:1.0];
     
-    
-    
-//    NSLog(@"user email %@", [[QZBCurrentUser sharedInstance].user.email class]);
-//    if([[QZBCurrentUser sharedInstance].user.email isEqual:[NSNull null]]){
-//        self.userNewPasswordAgainTextField.enabled = NO;
-//        self.userNewPasswordTextField.enabled = NO;
-//        self.userNameTextField.enabled = NO;
-//        self.renewPasswordButton.enabled = NO;
-//    }
-//    
+   // [self.topCell addShadows];
 }
 
 - (IBAction)changePicture:(UIButton *)sender {

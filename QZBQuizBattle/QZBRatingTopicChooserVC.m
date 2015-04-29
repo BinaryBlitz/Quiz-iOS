@@ -28,8 +28,6 @@
     
     NSURL *url = [NSURL URLWithString:self.category.background_url];
     
-   // [[Crashlytics sharedInstance] crash];//REDO
-    
     [self.backgroundImageView setImageWithURL:url];
 }
 

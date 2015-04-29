@@ -31,7 +31,6 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSLog(@"online worker init");
 
         NSNumber *playerID = [QZBCurrentUser sharedInstance].user.userID;
 
@@ -76,7 +75,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
             NSArray *description = @[@"Оппонент отклонил вызов",
             @"Попробуйте сыграть с другим пользователем"];
             
-            NSLog(@"challenge declined");
+         //   NSLog(@"challenge declined");
             [[NSNotificationCenter defaultCenter]
              postNotificationName:QZBPusherChallengeDeclined
              object:description];

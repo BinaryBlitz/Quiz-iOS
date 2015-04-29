@@ -21,7 +21,6 @@
 @property(assign, nonatomic, readonly) BOOL isChallenge;
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 
-
 @property(strong, nonatomic, readonly) NSString *sessionResult;
 @property(assign, nonatomic, readonly) NSInteger multiplier;
 @property (strong, nonatomic, readonly) QZBGameTopic *topic;

@@ -25,6 +25,7 @@ typedef enum {
 } QZBLoginErrors;
 
 - (BOOL)validateEmail:(NSString *)candidate;
+- (BOOL)validateEmailNormal:(NSString *)candidate;
 - (BOOL)validatePassword:(NSString *)candidate;
 - (BOOL)validateUsername:(NSString *)candidate;
 

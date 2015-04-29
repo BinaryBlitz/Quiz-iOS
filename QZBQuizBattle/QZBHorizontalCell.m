@@ -108,11 +108,10 @@
 
         [cell setName:achiv.name picURL:achiv.imageURL];
 
-    } else if([object isKindOfClass:[QZBAnotherUser class]]){  // redo
+    } else if([object isKindOfClass:[QZBAnotherUser class]]){
         
         QZBAnotherUser *user = (QZBAnotherUser *)object;
         
-       // [cell setName:user.name picURLAsString:@"https://pp.vk.me/c320926/v320926839/c6aa/E7Ai5pmMgn4.jpg"];
         [cell setName:user.name picURL:user.imageURL];
     }
 }

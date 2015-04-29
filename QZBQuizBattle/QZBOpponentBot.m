@@ -91,7 +91,6 @@
 
 #pragma mark - auto answer
 - (void)questionDidStartWithNUmber:(NSNotification *)notification {
-    // NSLog(@"notified");
     if ([[notification name] isEqualToString:@"QZBNewQuestionTimeCountingStart"]) {
         if ([notification.object isKindOfClass:[NSNumber class]]) {
             NSLog(@"choosed");

@@ -32,10 +32,8 @@
 #import "AppDelegate.h"
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
-NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин"
-                                                                                         @"е" @"н"
-                                                                                               @"и"
-                                                                                               @"е";
+NSString *const QZBNoInternetConnectionMessage =
+    @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
 @interface QZBServerManager ()
 
@@ -286,8 +284,6 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
 
             NSArray *challenges = [self parseChallengesFromArray:challengesDicts];
             NSArray *challenged = [self parseChallengeResultsFromArray:challengedDicts];
-            
-            
 
             NSDictionary *resultDict = @{
                 @"favorite_topics" : faveTopics,
@@ -470,7 +466,6 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             if (success) {
                 success();
             }
-
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -500,6 +495,13 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
                              inTopic:(QZBGameTopic *)topic
                            onSuccess:(void (^)(QZBSession *session))success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    if(!userID){
+        if(failure){
+            failure(nil, -1);
+        }
+    }
+    
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
         @"opponent_id" : userID,
@@ -600,27 +602,28 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         }];
 }
 
-
--(void)DELETELobbiesWithID:(NSNumber *)lobbyID onSuccess:(void (^)())success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
-    
+- (void)DELETELobbiesWithID:(NSNumber *)lobbyID
+                  onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    
-    NSString *urlAsString = [NSString stringWithFormat:@"lobbies/%@",lobbyID];
-    
-    
-    [self.requestOperationManager DELETE:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        if(success){
-            success();
+
+    NSString *urlAsString = [NSString stringWithFormat:@"lobbies/%@", lobbyID];
+
+    [self.requestOperationManager DELETE:urlAsString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (success) {
+                success();
+            }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
-        }
-        NSLog(@"%@", error);
-    }];
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            NSLog(@"%@", error);
+        }];
 }
 
 - (NSArray *)parseChallengesFromArray:(NSArray *)responseObject {
@@ -821,6 +824,42 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
             NSLog(@"user fail");
         }];
 }
+
+- (void)POSTPasswordResetWithEmail:(NSString *)userEmail
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"email" : userEmail };
+    
+    NSURL *url = [NSURL URLWithString:QZBServerBaseUrl];
+
+    [[[AFHTTPRequestOperationManager alloc] initWithBaseURL:url] POST:@"password_resets"
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            NSLog(@"renew errr %@  response %@", error, operation.responseObject);
+            
+            if(operation.response.statusCode == 200){
+                if(success){
+                    success();
+                }
+            }else{
+            
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+            }
+
+        }];
+}
+
+#pragma mark - user change
 
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
@@ -1349,7 +1388,6 @@ NSString *const QZBNoInternetConnectionMessage = @"Проверьте интер
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"purchases failure %@", error);
 
-            // REDO THIS ITS FOR TEST
             if (failure) {
                 failure(error, operation.response.statusCode);
             }

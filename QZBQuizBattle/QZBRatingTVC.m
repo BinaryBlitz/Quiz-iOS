@@ -120,11 +120,10 @@
     
     [cell setCellWithUser:user];
     
-   // NSURL *url = [NSURL URLWithString:self.urlString];
     if(user.imageURL){
     [cell.userpic setImageWithURL:user.imageURL];
     }else{
-        [cell.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];//redo
+        [cell.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
     
     
