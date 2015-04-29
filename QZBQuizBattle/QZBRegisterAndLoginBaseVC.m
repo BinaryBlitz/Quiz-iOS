@@ -67,49 +67,23 @@
 
 
 
-//- (void)keyboardWillShow:(NSNotification *)aNotification {
-//    NSDictionary *info = [aNotification userInfo];
-//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    
-//    [self.view layoutIfNeeded];
-//    [UIView animateWithDuration:0.3
-//                     animations:^{
-//                         self.bottomSuperViewConstraint.constant = kbSize.height;
-//                         [self.userNameTextField.superview layoutIfNeeded];
-//                         [self.view layoutIfNeeded];
-//                     }];
-//}
-//
-//- (void)keyboardWillHide:(NSNotification *)aNotification {
-//    [self.view layoutIfNeeded];
-//    [UIView animateWithDuration:0.3
-//                     animations:^{
-//                         self.bottomSuperViewConstraint.constant = 0;
-//                         [self.view layoutIfNeeded];
-//                     }];
-//}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before
-navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - validation
 
 - (BOOL)validateEmail:(NSString *)candidate {
-    NSString *emailRegex =
-        @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+//    NSString *emailRegex =
+//        @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
+//    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
 
-    return [emailTest evaluateWithObject:candidate]|| candidate.length == 0;
+    return [self validateEmailNormal:candidate]|| candidate.length == 0;
+}
+
+- (BOOL)validateEmailNormal:(NSString *)candidate {
+    NSString *emailRegex =
+    @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    
+    return [emailTest evaluateWithObject:candidate];
 }
 
 - (BOOL)validatePassword:(NSString *)candidate {

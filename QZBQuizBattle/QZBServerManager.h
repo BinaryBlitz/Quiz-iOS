@@ -112,6 +112,10 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
                   onSuccess:(void (^)(QZBUser *user))success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)POSTPasswordResetWithEmail:(NSString *)userEmail
+                         onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success

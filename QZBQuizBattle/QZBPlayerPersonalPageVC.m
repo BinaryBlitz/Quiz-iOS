@@ -232,7 +232,6 @@ static NSInteger topicsOffset = 7;
     return 7 + increment;
 }
 
-// REDO player pic
 // TODO refactoring
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

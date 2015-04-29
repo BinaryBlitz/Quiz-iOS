@@ -183,6 +183,12 @@
         self.opponent = nil;
     }
     [[QZBSessionManager sessionManager] closeSession];
+    
+//    [[QZBServerManager sharedManager]DELETELobbiesWithID:challengeDescription.lobbyID onSuccess:^{
+//        
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//        
+//    }];
 }
 
 -(void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription{

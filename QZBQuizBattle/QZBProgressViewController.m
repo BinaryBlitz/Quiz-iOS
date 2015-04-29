@@ -280,6 +280,7 @@
 
             }
             onFailure:^(NSError *error, NSInteger statusCode){
+                [self showAlertServerProblem];
 
             }];
     }
@@ -292,6 +293,7 @@
 
             }
             onFailure:^(NSError *error, NSInteger statusCode){
+                [self showAlertServerProblem];
 
             }];
     } else if (!self.isChallenge) {
@@ -327,10 +329,22 @@
 
             }
             onFailure:^(NSError *error, NSInteger statusCode){
-
+                
+                //if(!error && statusCode == -1){
+                    [self showAlertServerProblem];
+              //  }
             }];
     } else {
     }
+}
+
+-(void)showAlertServerProblem{
+    [[[UIAlertView alloc]
+      initWithTitle:@"Ошибка на сервере"
+      message:@"Попробуйте еще раз"
+      delegate:self
+      cancelButtonTitle:@"Ок"
+      otherButtonTitles:nil] show];
 }
 
 - (void)sessionFromLobby:(QZBLobby *)lobby {

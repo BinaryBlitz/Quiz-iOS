@@ -173,7 +173,7 @@
 
 - (void)timeCountingStart {
     if (!self.questionTimer) {
-        self.questionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1  // redo this
+        self.questionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1  
                                                               target:self
                                                             selector:@selector(updateTime:)
                                                             userInfo:nil
@@ -409,6 +409,13 @@
                                                     onFailure:^(NSError *error, NSInteger statusCode){
                                                         
                                                     }];
+        
+//        [[QZBServerManager sharedManager] DELETELobbiesWithID:self.gameSession.lobbyID
+//                                                    onSuccess:^{
+//            @""
+//        } onFailure:^(NSError *error, NSInteger statusCode) {
+//            
+//        }];
     }
     
     

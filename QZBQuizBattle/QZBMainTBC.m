@@ -64,7 +64,6 @@
     [super viewDidAppear:animated];
 
     if (![[QZBCurrentUser sharedInstance] checkUser]) {
-        NSLog(@"exist");
         
         UIView *backgrView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
         backgrView.backgroundColor = [UIColor blackColor];
@@ -84,18 +83,6 @@
         
         //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
     }else {
-        
-        
-//        [[QZBQuizTopicIAPHelper sharedInstance] getTopicIdentifiersFromServerOnSuccess:^{
-//            [[QZBQuizTopicIAPHelper
-//              sharedInstance] requestProductsWithCompletionHandler:^(BOOL success,
-//                                                                     NSArray *products) {
-//            
-//                NSLog(@"store loaded");
-//            }];
-//        } onFailure:^(NSError *error, NSInteger statusCode) {
-//            
-//        }];
         
         UINavigationController *navVC =  self.viewControllers[4];
         

@@ -150,6 +150,9 @@ preparation before navigation
     }
 }
 
+
+
+
 - (void)userAlreadyExist:(QZBUserRegistrationProblem)problem {
     NSString *message = @"";
     switch (problem) {

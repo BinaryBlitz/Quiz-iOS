@@ -33,7 +33,7 @@
     if(user.imageURL){
         [self.userpicImageView setImageWithURL:user.imageURL];
     }else{
-        [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];//redo
+        [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
     
     if(!user.isViewed){
