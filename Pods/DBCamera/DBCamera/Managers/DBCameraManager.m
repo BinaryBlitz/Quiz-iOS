@@ -149,7 +149,6 @@
              //CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
              UIImage *tmp = [image croppedImage:CGRectMake((image.size.height-image.size.width)/2, 0, image.size.width, image.size.width)];
              image = tmp;
-            
              
              CFDictionaryRef metadata = CMCopyDictionaryOfAttachments(NULL, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate);
              NSDictionary *meta = (__bridge NSDictionary *)(metadata);

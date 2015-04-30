@@ -477,6 +477,30 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
+-(void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID onSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@", sessionID];
+    
+    NSDictionary *params = @{@"token" : [QZBCurrentUser sharedInstance].user.api_key, @"game_session": @{ @"offline": @YES }};
+    
+    [self.requestOperationManager PATCH:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"parched offline");
+        
+        if (success) {
+            success();
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ofline patch error");
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+
+    }];
+    
+}
+
 #pragma mark - challenge
 
 // POST /lobbies/challenge

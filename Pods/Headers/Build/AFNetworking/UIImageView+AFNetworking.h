@@ -123,6 +123,8 @@
  */
 @protocol AFImageCache <NSObject>
 
+- (void)clearCachedRequest:(NSURLRequest *)request;
+
 /**
  Returns a cached image for the specififed request, if available.
  
