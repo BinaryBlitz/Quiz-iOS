@@ -88,6 +88,9 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 -(void)DELETELobbiesWithID:(NSNumber *)lobbyID onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID onSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - user registration and login
 
 - (void)POSTRegistrationUser:(NSString *)userName

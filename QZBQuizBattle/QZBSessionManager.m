@@ -167,6 +167,15 @@
     if (self.onlineSessionWorker) {
         [self.onlineSessionWorker closeConnection];
     }
+    
+    [[QZBServerManager sharedManager] PATCHMakeChallengeOfflineWithNumber:@(self.gameSession.session_id)
+                                                                onSuccess:^{
+        
+                                                                    NSLog(@"PATCHED");
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
     self.onlineSessionWorker = nil;
     self.isOfflineChallenge = YES;
 }
