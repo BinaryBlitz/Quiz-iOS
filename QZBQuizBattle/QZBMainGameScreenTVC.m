@@ -224,6 +224,7 @@
     } else if ([arr isEqualToArray:self.challenges]) {
         text = @"Брошенные вызовы";
     } else if ([arr isEqualToArray:self.additionalTopics]){
+        
         text = @"Сыграйте эти темы";
     } else if ([arr isEqualToArray:self.challenged]){
         text = @"Результаты";
@@ -546,7 +547,7 @@
         
         
         
-        NSArray *additTopics = [self additionalTopics];
+        NSArray *additTopics = [self getAlladditionalTopics];
         
         if(additTopics){
         
@@ -577,7 +578,7 @@
 }
 
 
--(NSArray *)additionalTopics{
+-(NSArray *)getAlladditionalTopics{
     NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
     
     if(allTopics && allTopics.count>0){
@@ -601,12 +602,7 @@
         
         NSArray *additionalArr = [allTopics subarrayWithRange:r];
         
-        
-        
-      //  [self.workArray addObject:additionalArr];
-      //  self.additionalTopics = additionalArr;
-        
-        return additionalArr;
+        return [NSArray arrayWithArray:additionalArr];
         
     }else{
         return nil;

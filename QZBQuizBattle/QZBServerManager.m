@@ -683,7 +683,7 @@ NSString *const QZBNoInternetConnectionMessage =
 #pragma mark - user registration
 
 - (NSString *)hashPassword:(NSString *)password {
-    return [password MD5];
+    return password;
 }
 
 - (void)POSTRegistrationUser:(NSString *)userName
@@ -695,7 +695,7 @@ NSString *const QZBNoInternetConnectionMessage =
                                        QZBUserRegistrationProblem problem))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
-    NSLog(@"hashed %@", hashedPassword);
+    //NSLog(@"hashed %@", hashedPassword);
 
     NSDictionary *params = nil;
     if (userEmail.length > 0) {
@@ -704,13 +704,13 @@ NSString *const QZBNoInternetConnectionMessage =
                 @"name" : userName,
                 @"username" : userName,
                 @"email" : userEmail,
-                @"password_digest" : hashedPassword
+                @"password" : hashedPassword
             }
         };
     } else {
         params = @{
             @"player" :
-                @{@"name" : userName, @"username" : userName, @"password_digest" : hashedPassword}
+                @{@"name" : userName, @"username" : userName, @"password" : hashedPassword}
         };
     }
 
@@ -759,7 +759,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
     //   NSLog(@"email %@ password %@", email, hashedPassword);
 
-    NSDictionary *params = @{ @"username" : username, @"password_digest" : hashedPassword };
+    NSDictionary *params = @{ @"username" : username, @"password" : hashedPassword };
 
     [self.requestOperationManager POST:@"players/authenticate"
         parameters:params
@@ -893,7 +893,7 @@ NSString *const QZBNoInternetConnectionMessage =
     NSString *hashedPassword = [self hashPassword:password];
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"player" : @{@"password_digest" : hashedPassword}
+        @"player" : @{@"password" : hashedPassword}
     };
 
     [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
