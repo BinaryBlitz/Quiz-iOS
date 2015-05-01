@@ -38,6 +38,7 @@
 #import "QZBFindFriendsCell.h"
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBReportVC.h"
+#import "QZBMessagerVC.h"
 
 
 //#import "DBCameraViewController.h"
@@ -494,6 +495,8 @@ static NSInteger topicsOffset = 7;
         }
 
         // TODO
+    }else if(buttonIndex == 1){
+        [self performSegueWithIdentifier:@"pushMessager" sender:nil];
     }
 }
 
@@ -550,6 +553,13 @@ static NSInteger topicsOffset = 7;
         QZBReportVC *destVC = (QZBReportVC *)segue.destinationViewController;
 
         [destVC initWithUser:self.user];
+    }else if([segue.identifier isEqualToString:@"pushMessager"]){
+        QZBMessagerVC *destVC = (QZBMessagerVC *)segue.destinationViewController;
+        
+        [destVC initWithUser:self.user];
+        
+       // [destVC initWithUser:self.user userpic:];
+        
     }
 }
 
@@ -622,7 +632,7 @@ static NSInteger topicsOffset = 7;
                       delegate:self
              cancelButtonTitle:@"Отменить"
         destructiveButtonTitle:nil
-             otherButtonTitles:@"Пожаловаться", nil];
+                               otherButtonTitles:@"Пожаловаться",@"Написать сообщение", nil];
 
     [actSheet showInView:self.view];
 }

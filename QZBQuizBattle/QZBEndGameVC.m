@@ -109,9 +109,10 @@
         //  [self.view addSubview:iv];
         //  [self.view sendSubviewToBack:iv];
         
+        //[self.view insertSubview:iv atIndex:0];
+        
         self.tableView.backgroundView = iv;
         
-       // self.tableView.backgroundView =
     }
     // [self.tableView layoutIfNeeded];
 }
@@ -382,8 +383,8 @@ navigation
 
     cell.opponentBV.badgeText =
         [NSString stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
+    
     cell.userBV.badgeText = [NSString stringWithFormat:@"%ld", (unsigned long)self.firstUserScore];
-
     cell.resultOfSessionLabel.text = self.sessionResult;
 
     cell.playAgainButton.exclusiveTouch = YES;

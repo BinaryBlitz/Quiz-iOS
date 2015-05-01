@@ -78,6 +78,7 @@
 		197B4E0A1AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197B4E091AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m */; };
 		197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */; };
 		197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */; };
+		197F2C051AF27F9700C8BC2A /* QZBMessagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */; };
 		1983EE2E1AAC47EF00D59268 /* icon_check.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE2D1AAC47EF00D59268 /* icon_check.png */; };
 		1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE301AAC6DDF00D59268 /* icon_next.png */; };
 		1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE3A1AAC8C1700D59268 /* icon_back_white.png */; };
@@ -277,6 +278,8 @@
 		197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSettingsTVC.h; sourceTree = "<group>"; };
 		197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSettingsTVC.m; sourceTree = "<group>"; };
 		197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		197F2C031AF27F9700C8BC2A /* QZBMessagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMessagerVC.h; sourceTree = "<group>"; };
+		197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMessagerVC.m; sourceTree = "<group>"; };
 		1983EE2D1AAC47EF00D59268 /* icon_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_check.png; sourceTree = "<group>"; };
 		1983EE301AAC6DDF00D59268 /* icon_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_next.png; sourceTree = "<group>"; };
 		1983EE3A1AAC8C1700D59268 /* icon_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back_white.png; sourceTree = "<group>"; };
@@ -735,6 +738,15 @@
 			name = settings;
 			sourceTree = "<group>";
 		};
+		197F2C021AF2779E00C8BC2A /* messager */ = {
+			isa = PBXGroup;
+			children = (
+				197F2C031AF27F9700C8BC2A /* QZBMessagerVC.h */,
+				197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */,
+			);
+			name = messager;
+			sourceTree = "<group>";
+		};
 		198066A81A39DB6500B749BA /* buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -845,6 +857,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				197F2C021AF2779E00C8BC2A /* messager */,
 				197669991A67D057006C2757 /* Registration and login */,
 				19A1276C1AB9DCB3009075AD /* main */,
 				19446A721A9E35CE005BB485 /* store */,
@@ -1215,6 +1228,7 @@
 				195EA0A51AD4338C000C4341 /* QZBAchievementManager.m in Sources */,
 				191E12F81A8CD80400AFB829 /* QZBAnotherUser.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
+				197F2C051AF27F9700C8BC2A /* QZBMessagerVC.m in Sources */,
 				196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
 				19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */,
