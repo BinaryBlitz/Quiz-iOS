@@ -51,7 +51,7 @@
     self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     
     
-    [self.resultOfSessionLabel addShadows];
+    [self.resultOfSessionLabel addShadowsAllWay];
     [self.userNameLabel addShadows];
     [self.opponentNameLabel addShadows];
 }

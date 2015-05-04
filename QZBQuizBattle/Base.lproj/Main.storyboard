@@ -4077,9 +4077,14 @@
                                         <exclude reference="M8b-9Z-ILe"/>
                                         <exclude reference="s6a-kh-2pa"/>
                                         <exclude reference="vqp-9K-tvY"/>
-                                        <exclude reference="euV-qD-AxJ"/>
-                                        <exclude reference="fpa-S7-Z2j"/>
-                                        <exclude reference="lLq-fu-BlX"/>
+                                        <exclude reference="pzf-gY-KP3"/>
+                                        <exclude reference="1kn-iK-9iy"/>
+                                        <exclude reference="1ky-Bo-lkI"/>
+                                        <exclude reference="92B-ll-620"/>
+                                        <exclude reference="tHd-gN-1yB"/>
+                                        <exclude reference="Bf5-R2-crF"/>
+                                        <exclude reference="IOm-30-Om7"/>
+                                        <exclude reference="UHz-fO-cRY"/>
                                         <exclude reference="Efx-Xr-7Qs"/>
                                         <exclude reference="PlX-Qw-SKt"/>
                                         <exclude reference="VeR-2r-cRc"/>
@@ -4087,14 +4092,9 @@
                                         <exclude reference="1Lq-ff-G6D"/>
                                         <exclude reference="e2f-fQ-FJe"/>
                                         <exclude reference="tce-nQ-GDu"/>
-                                        <exclude reference="Bf5-R2-crF"/>
-                                        <exclude reference="IOm-30-Om7"/>
-                                        <exclude reference="UHz-fO-cRY"/>
-                                        <exclude reference="pzf-gY-KP3"/>
-                                        <exclude reference="1kn-iK-9iy"/>
-                                        <exclude reference="1ky-Bo-lkI"/>
-                                        <exclude reference="92B-ll-620"/>
-                                        <exclude reference="tHd-gN-1yB"/>
+                                        <exclude reference="euV-qD-AxJ"/>
+                                        <exclude reference="fpa-S7-Z2j"/>
+                                        <exclude reference="lLq-fu-BlX"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -4114,9 +4114,14 @@
                                         <include reference="M8b-9Z-ILe"/>
                                         <include reference="s6a-kh-2pa"/>
                                         <include reference="vqp-9K-tvY"/>
-                                        <include reference="euV-qD-AxJ"/>
-                                        <include reference="fpa-S7-Z2j"/>
-                                        <include reference="lLq-fu-BlX"/>
+                                        <include reference="pzf-gY-KP3"/>
+                                        <include reference="1kn-iK-9iy"/>
+                                        <include reference="1ky-Bo-lkI"/>
+                                        <include reference="92B-ll-620"/>
+                                        <include reference="tHd-gN-1yB"/>
+                                        <include reference="Bf5-R2-crF"/>
+                                        <include reference="IOm-30-Om7"/>
+                                        <include reference="UHz-fO-cRY"/>
                                         <include reference="Efx-Xr-7Qs"/>
                                         <include reference="PlX-Qw-SKt"/>
                                         <include reference="VeR-2r-cRc"/>
@@ -4124,14 +4129,9 @@
                                         <include reference="1Lq-ff-G6D"/>
                                         <include reference="e2f-fQ-FJe"/>
                                         <include reference="tce-nQ-GDu"/>
-                                        <include reference="Bf5-R2-crF"/>
-                                        <include reference="IOm-30-Om7"/>
-                                        <include reference="UHz-fO-cRY"/>
-                                        <include reference="pzf-gY-KP3"/>
-                                        <include reference="1kn-iK-9iy"/>
-                                        <include reference="1ky-Bo-lkI"/>
-                                        <include reference="92B-ll-620"/>
-                                        <include reference="tHd-gN-1yB"/>
+                                        <include reference="euV-qD-AxJ"/>
+                                        <include reference="fpa-S7-Z2j"/>
+                                        <include reference="lLq-fu-BlX"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -6495,6 +6495,7 @@
                                 <exclude reference="Swe-bH-0GQ"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="C9M-Ik-DY7"/>
                                 <exclude reference="Ta6-CO-u6i"/>
                                 <exclude reference="gWs-Ce-FEC"/>
                                 <exclude reference="lc0-vl-e8J"/>
@@ -6502,7 +6503,6 @@
                                 <exclude reference="W7F-Xa-8ty"/>
                                 <exclude reference="Xq9-p6-PqY"/>
                                 <exclude reference="uGi-CE-6Q9"/>
-                                <exclude reference="C9M-Ik-DY7"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -6511,6 +6511,7 @@
                                 <include reference="Swe-bH-0GQ"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="C9M-Ik-DY7"/>
                                 <include reference="Ta6-CO-u6i"/>
                                 <include reference="gWs-Ce-FEC"/>
                                 <include reference="lc0-vl-e8J"/>
@@ -6518,7 +6519,6 @@
                                 <include reference="W7F-Xa-8ty"/>
                                 <include reference="Xq9-p6-PqY"/>
                                 <include reference="uGi-CE-6Q9"/>
-                                <include reference="C9M-Ik-DY7"/>
                             </mask>
                         </variation>
                     </view>
@@ -7057,13 +7057,11 @@
             </objects>
             <point key="canvasLocation" x="5493" y="-2583.75"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Профиль-->
         <scene sceneID="agQ-1O-VYd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3lk-eO-yz5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="userIcon" id="Qme-HZ-rO0">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-10"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Профиль" image="userIcon" id="Qme-HZ-rO0"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LiQ-NL-C1y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -7078,11 +7076,11 @@
             </objects>
             <point key="canvasLocation" x="3042" y="-1285.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Темы-->
         <scene sceneID="pAq-pB-zic">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W5J-rM-Niv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="listIcon" id="Hgw-D7-LnG"/>
+                    <tabBarItem key="tabBarItem" title="Темы" image="listIcon" id="Hgw-D7-LnG"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jds-Ja-D2O">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -7226,11 +7224,11 @@
             </objects>
             <point key="canvasLocation" x="5493" y="-4051.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Рейтинги-->
         <scene sceneID="IyI-ge-TOk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e6c-er-5lv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="topRateIcon" id="jv1-GN-KAL"/>
+                    <tabBarItem key="tabBarItem" title="Рейтинги" image="topRateIcon" id="jv1-GN-KAL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gi4-hO-2NW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -8731,11 +8729,11 @@
             </objects>
             <point key="canvasLocation" x="3777" y="-4051.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Магазин-->
         <scene sceneID="K6l-G1-yBv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fNL-rx-eLG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="shopIcon" id="iYz-jc-POx"/>
+                    <tabBarItem key="tabBarItem" title="Магазин" image="shopIcon" id="iYz-jc-POx"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jrn-8S-kyT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -9857,6 +9855,7 @@
                                 <exclude reference="wJ8-Mb-caN"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="MWs-yk-Do4"/>
                                 <exclude reference="7aw-Hx-Yk9"/>
                                 <exclude reference="EpT-ZS-oz0"/>
                                 <exclude reference="REl-h0-go0"/>
@@ -9864,7 +9863,6 @@
                                 <exclude reference="8wE-EG-3AF"/>
                                 <exclude reference="M9l-sD-9g6"/>
                                 <exclude reference="pbi-Ld-KIS"/>
-                                <exclude reference="MWs-yk-Do4"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -9873,6 +9871,7 @@
                                 <include reference="wJ8-Mb-caN"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="MWs-yk-Do4"/>
                                 <include reference="7aw-Hx-Yk9"/>
                                 <include reference="EpT-ZS-oz0"/>
                                 <include reference="REl-h0-go0"/>
@@ -9880,7 +9879,6 @@
                                 <include reference="8wE-EG-3AF"/>
                                 <include reference="M9l-sD-9g6"/>
                                 <include reference="pbi-Ld-KIS"/>
-                                <include reference="MWs-yk-Do4"/>
                             </mask>
                         </variation>
                     </view>
@@ -9925,12 +9923,12 @@
         <image name="vkIcon" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1oA-Co-JGY"/>
-        <segue reference="Q6R-nc-Xpj"/>
         <segue reference="13W-Ze-IAd"/>
+        <segue reference="17f-Ir-c5e"/>
+        <segue reference="1oA-Co-JGY"/>
+        <segue reference="gip-Mr-XSi"/>
         <segue reference="qGa-a3-3D7"/>
         <segue reference="zMv-no-kIb"/>
-        <segue reference="TKe-GQ-MWf"/>
         <segue reference="9a1-UP-0yN"/>
     </inferredMetricsTieBreakers>
 </document>
