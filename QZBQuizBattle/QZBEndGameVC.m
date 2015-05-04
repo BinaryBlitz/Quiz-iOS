@@ -524,28 +524,40 @@ navigation
     CGRect mainRect = [UIScreen mainScreen].bounds;
 
     CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4,
-                              0.6 * CGRectGetWidth(mainRect), 1.4 * CGRectGetHeight(mainRect));
+                              0.61 * CGRectGetWidth(mainRect), 1.4 * CGRectGetHeight(mainRect));
 
-    CGRect rRight = CGRectMake(0.25 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
-                               0.75 * CGRectGetWidth(mainRect), 1.2*CGRectGetHeight(mainRect));
+    CGRect rRight = CGRectMake(0.247 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
+                               0.755 * CGRectGetWidth(mainRect), 1.2*CGRectGetHeight(mainRect));
+    
+    CGRect rFlash = CGRectMake(0.25 * CGRectGetWidth(mainRect),
+                               0,
+                               0.42*CGRectGetWidth(mainRect),
+                               0.95*CGRectGetHeight(mainRect));
 
     UIImageView *leftImage = [[UIImageView alloc] initWithFrame:rLeft];
     UIImageView *rightImage = [[UIImageView alloc] initWithFrame:rRight];
+    UIImageView *flashImage = [[UIImageView alloc] initWithFrame:rFlash];
+    flashImage.alpha = 0.0;
+    
+    flashImage.image = [UIImage imageNamed:@"flashWhite"];
 
     if (self.firstUserScore < self.secondUserScore) {
         leftImage.image = [UIImage imageNamed:@"leftRed"];
         rightImage.image = [UIImage imageNamed:@"rightGreen"];
     } else if (self.firstUserScore > self.secondUserScore) {
         leftImage.image = [UIImage imageNamed:@"leftGreen"];
-        rightImage.image = [UIImage imageNamed:@"rightRed"];
+        rightImage.image = [UIImage imageNamed:@"rightRed"];\
     } else {
         return;
     }
 
+    [self.tableView.backgroundView addSubview:flashImage];
+    [self.tableView.backgroundView sendSubviewToBack:flashImage];
     [self.tableView.backgroundView addSubview:rightImage];
     [self.tableView.backgroundView sendSubviewToBack:rightImage];
     [self.tableView.backgroundView addSubview:leftImage];
     [self.tableView.backgroundView sendSubviewToBack:leftImage];
+    
 
     [UIView animateWithDuration:0.5
         delay:0.0
@@ -555,8 +567,10 @@ navigation
                 CGRectMake(0, 0, CGRectGetWidth(leftImage.frame), 1.4 * CGRectGetHeight(mainRect));
 
             rightImage.frame =
-                CGRectMake(0.25 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
-                           0.75 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect) * 1.2);
+                CGRectMake(0.245 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
+                           CGRectGetWidth(rightImage.frame), CGRectGetHeight(mainRect) * 1.2);
+            
+            flashImage.alpha = 1.0;
         }
         completion:^(BOOL finished){
 

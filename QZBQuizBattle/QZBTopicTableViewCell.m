@@ -44,11 +44,11 @@
     }
 
 
-    if (progress > 0 && level > 0) {
+    if (progress > 0 || level > 0) {
         
         self.topicProgressView.centralView = self.centralLabel;
         self.topicProgressView.tintColor = [UIColor blackColor];
-        self.centralLabel.text = [NSString stringWithFormat:@"%ld", level];
+        self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)level];
         self.topicProgressView.progress = progress;
 
     } else {

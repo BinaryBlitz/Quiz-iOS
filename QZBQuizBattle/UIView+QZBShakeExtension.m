@@ -64,6 +64,20 @@
     self.layer.shadowRadius = 2.0;
     self.layer.shadowOpacity = 0.5;
     
+//    self.layer.shouldRasterize = YES;
+//    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+}
+
+-(void)addShadowsAllWay{
+    
+    self.layer.shadowColor = [UIColor grayColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    self.layer.shadowRadius = 3.0;
+    self.layer.shadowOpacity = 0.6;
+    
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    
 }
 
 -(void)addShadowsCategory{

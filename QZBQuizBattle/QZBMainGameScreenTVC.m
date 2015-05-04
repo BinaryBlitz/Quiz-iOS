@@ -85,7 +85,7 @@
 
     // self.workArray = [NSMutableArray array];
 
-    self.title = @"iQuiz";  // REDO
+    self.title = @"1 на 1";  // REDO
 
     [self initStatusbarWithColor:[UIColor blackColor]];
     

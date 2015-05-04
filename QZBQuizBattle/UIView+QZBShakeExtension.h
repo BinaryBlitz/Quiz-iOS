@@ -13,6 +13,7 @@
 - (void)shakeView;
 - (void)addDropShadowsForView;
 - (void)addShadows;
+- (void)addShadowsAllWay;
 
 -(void)addShadowsCategory;
 
