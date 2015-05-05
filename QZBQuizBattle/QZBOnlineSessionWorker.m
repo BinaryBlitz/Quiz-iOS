@@ -14,6 +14,7 @@
 #import "QZBAnswerTextAndID.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
+#import <CocoaLumberjack.h>
 
 NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
 NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
@@ -36,7 +37,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
         NSString *channelName = [NSString stringWithFormat:@"player-session-%@", playerID];
 
-        NSLog(@"channel name %@", channelName);
+        DDLogInfo(@"channel name %@", channelName);
 
         _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
 
@@ -55,7 +56,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
         [channel bindToEventNamed:@"game-start"
                   handleWithBlock:^(PTPusherEvent *channelEvent) {
 
-                      NSLog(@"need start game!!");
+                      DDLogInfo(@"need start game!!");
 
                       if (!self.yetStarted) {
                           self.yetStarted = YES;
@@ -75,7 +76,6 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
             NSArray *description = @[@"Оппонент отклонил вызов",
             @"Попробуйте сыграть с другим пользователем"];
             
-         //   NSLog(@"challenge declined");
             [[NSNotificationCenter defaultCenter]
              postNotificationName:QZBPusherChallengeDeclined
              object:description];
@@ -95,13 +95,13 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
 - (void)dealloc {
     [self closeConnection];
-    NSLog(@"online worker dealloc ");
+    DDLogInfo(@"online worker dealloc ");
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)oppomentAnswered:(NSDictionary *)pusherDict {
-    NSLog(@"%@", pusherDict);
+    DDLogInfo(@"%@", pusherDict);
 
     NSNumber *num = nil;
     NSNumber *time = nil;
@@ -114,12 +114,12 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
     }
 
     if (![num isEqual:[NSNull null]] && ![time isEqual:[NSNull null]]) {
-        NSLog(@"%@  %@", num, time);
+        DDLogInfo(@"%@  %@", num, time);
 
         NSUInteger answerNum = [num unsignedIntegerValue];
         NSUInteger answerTime = [time unsignedIntegerValue];
         NSInteger questID = [pusherDict[@"game_session_question_id"] integerValue];
-        NSLog(@"%ld", (long)questID);
+        DDLogInfo(@"%ld", (long)questID);
 
         if ([QZBSessionManager sessionManager].currentQuestion.questionId == questID) {
             [[QZBSessionManager sessionManager]
@@ -129,7 +129,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
             QZBQuestion *quest = [[QZBSessionManager sessionManager] findQZBQuestionWithID:questID];
 
             if (quest) {
-                NSLog(@"quest %@", quest);
+                DDLogInfo(@"quest %@", quest);
 
                 [[QZBSessionManager sessionManager] opponentAnswerNotInTimeQuestion:quest
                                                                        AnswerNumber:answerNum
@@ -142,7 +142,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel {
     if ([channel isEqual:self.channel]) {
-        NSLog(@"subscribed");
+        DDLogInfo(@"subscribed");
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"subscribedToChanel"
                                                             object:nil];
@@ -174,7 +174,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
 - (void)handleDisconnectionWithError:(NSError *)error {
     
-    NSLog(@"pusher problems");
+    DDLogWarn(@"pusher problems");
     
     NSArray *description = @[@"Ошибка связи",
                              @"Проверьте подключение к интернету"];
@@ -188,7 +188,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
         [Reachability reachabilityWithHostname:self.client.connection.URL.host];
 
     if (error && [error.domain isEqualToString:PTPusherFatalErrorDomain]) {
-        NSLog(@"FATAL PUSHER ERROR, COULD NOT CONNECT! %@", error);
+        DDLogWarn(@"FATAL PUSHER ERROR, COULD NOT CONNECT! %@", error);
     } else {
         if ([reachability isReachable]) {
             // we do have reachability so let's wait for a set delay before trying
@@ -225,11 +225,11 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 }
 
 - (void)closeConnection {
-    NSLog(@"close connection");
+    DDLogInfo(@"close connection");
     [_channel unsubscribe];
     [_client disconnect];
 
-    NSLog(@" client %@  connection %@", _client, _channel);
+    DDLogInfo(@" client %@  connection %@", _client, _channel);
 }
 
 @end

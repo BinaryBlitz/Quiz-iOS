@@ -12,6 +12,7 @@
 #import "QZBUser.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "QZBProduct.h"
+#import <CocoaLumberjack.h>
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 
@@ -45,8 +46,8 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
     self.products = [productIdentifiers mutableCopy];
 
     for (QZBProduct *product in productIdentifiers) {
-        NSLog(@"identifier %@", product.identifier);
-        // NSLog(product.identifier);
+        DDLogInfo(@"identifier %@", product.identifier);
+
                 
         [tmpProducts addObject:product.identifier];
         //[self.productIdentifiers addObject:product.identifier];
@@ -74,7 +75,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 }
 
 - (void)buyProduct:(SKProduct *)product {
-    NSLog(@"Buying %@...", product.productIdentifier);
+    DDLogInfo(@"Buying %@...", product.productIdentifier);
 
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
     NSString *identifier = [QZBCurrentUser sharedInstance].user.name;
@@ -99,13 +100,13 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 
 - (void)productsRequest:(SKProductsRequest *)request
      didReceiveResponse:(SKProductsResponse *)response {
-    NSLog(@"Loaded list of products...");
+    DDLogInfo(@"Loaded list of products...");
     _productsRequest = nil;
 
     NSArray *skProducts = response.products;
-    NSLog(@"sk %@", response.products);
+    DDLogInfo(@"sk %@", response.products);
     for (SKProduct *skProduct in skProducts) {
-        NSLog(@"Found product: %@ %@ %0.2f", skProduct.productIdentifier, skProduct.localizedTitle,
+        DDLogInfo(@"Found product: %@ %@ %0.2f", skProduct.productIdentifier, skProduct.localizedTitle,
               skProduct.price.floatValue);
     }
 
@@ -117,7 +118,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
     
     
     
-    NSLog(@"Failed to load list of products. %@", error);
+    DDLogWarn(@"Failed to load list of products. %@", error);
     _productsRequest = nil;
 
     _completionHandler(NO, nil);
@@ -142,7 +143,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
-    NSLog(@"completeTransaction...");
+    DDLogInfo(@"completeTransaction...");
 
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
 
@@ -150,7 +151,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
-    NSLog(@"restoreTransaction...");
+    DDLogInfo(@"restoreTransaction...");
 
     [self provideContentForProductIdentifier:transaction.originalTransaction.payment
                                                  .productIdentifier];
@@ -158,9 +159,9 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
-    NSLog(@"failedTransaction...");
+    DDLogWarn(@"failedTransaction...");
     if (transaction.error.code != SKErrorPaymentCancelled) {
-        NSLog(@"Transaction error: %@", transaction.error.localizedDescription);
+        DDLogWarn(@"Transaction error: %@", transaction.error.localizedDescription);
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchaseFailed
@@ -172,7 +173,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
-    NSLog(@"%@", productIdentifier);
+    DDLogInfo(@"%@", productIdentifier);
     //
     [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:productIdentifier
         onSuccess:^{
@@ -211,14 +212,14 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue{
     
-    NSLog(@"restored");
+    DDLogInfo(@"restored");
     [[NSNotificationCenter defaultCenter]
      postNotificationName:IAPHelperProductRestoreFinished object:nil];
 
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
-    NSLog(@"restore fail %@", error);
+    DDLogInfo(@"restore fail %@", error);
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:IAPHelperProductRestoreFinished object:nil];
@@ -235,7 +236,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
     // Confirm that the length of the user name is small enough
     // to be recast when calling the hash function.
     if (accountNameLen > UINT32_MAX) {
-        NSLog(@"Account name too long to hash: %@", userAccountName);
+        DDLogInfo(@"Account name too long to hash: %@", userAccountName);
         return nil;
     }
     CC_SHA256(accountName, (CC_LONG)accountNameLen, hashedChars);

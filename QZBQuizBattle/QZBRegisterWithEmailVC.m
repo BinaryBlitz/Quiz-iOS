@@ -30,9 +30,9 @@
     self.emailTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.registrationInProgress = NO;
-    
+
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    
+
     // Do any additional setup after loading the view.
 }
 
@@ -46,11 +46,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (void)keyboardWillShow:(NSNotification *)aNotification {
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
+
     [self.view layoutIfNeeded];
     [UIView animateWithDuration:0.3
                      animations:^{
@@ -118,12 +117,9 @@ preparation before navigation
             email:email
             password:password
             onSuccess:^(QZBUser *user) {
-                NSLog(@"user %@", user.api_key);
                 [[QZBCurrentUser sharedInstance] setUser:user];
 
                 weakSelf.registrationInProgress = NO;
-
-                //[weakSelf performSegueWithIdentifier:@"registrationIsOk" sender:nil];
 
                 [SVProgressHUD dismiss];
                 [self dismissViewControllerAnimated:YES
@@ -131,17 +127,16 @@ preparation before navigation
                                          }];
             }
             onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-                
 
                 if (statusCode == 422) {
                     [SVProgressHUD dismiss];
                     [weakSelf userAlreadyExist:problem];
-                }else{
+                } else {
                     [SVProgressHUD showInfoWithStatus:QZBNoInternetConnectionMessage];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
                                    dispatch_get_main_queue(), ^{
-                        [SVProgressHUD dismiss];
-                    });
+                                       [SVProgressHUD dismiss];
+                                   });
                 }
 
                 weakSelf.registrationInProgress = NO;
@@ -150,31 +145,25 @@ preparation before navigation
     }
 }
 
-
-
-
 - (void)userAlreadyExist:(QZBUserRegistrationProblem)problem {
     NSString *message = @"";
     switch (problem) {
         case QZBUserNameProblem:
-            message = @"Пользователь с таким именем уже существует, введите другое имя";
+            message = @"Пользователь с таким именем уже существует, введите другое "
+                      @"имя";
             [self.userNameTextField becomeFirstResponder];
             break;
         case QZBEmailProblem:
-            message = @"Пользователь с такой почтой уже существует, введите другую почту";
+            message = @"Пользователь с такой почтой уже существует, введите другую "
+                      @"почту";
             [self.emailTextField becomeFirstResponder];
             break;
-            
+
         default:
             break;
     }
-    
-    [TSMessage showNotificationWithTitle:message
-                                    type:TSMessageNotificationTypeError];
 
-    //[self.emailTextField becomeFirstResponder];
-
-    NSLog(@"UserAlredyExist");
+    [TSMessage showNotificationWithTitle:message type:TSMessageNotificationTypeError];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -207,7 +196,5 @@ preparation before navigation
 
     return NO;
 }
-
-//-(void)TextFieldIsNotOK:(UITextField *)textField
 
 @end

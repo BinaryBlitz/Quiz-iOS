@@ -86,7 +86,7 @@
 #pragma mark - actions
 
 - (IBAction)loginAction:(id)sender {
-    NSLog(@"login action");
+
     
     NSString *username = [self.usernameTextField.text copy];
     

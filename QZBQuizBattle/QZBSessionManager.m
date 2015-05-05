@@ -13,6 +13,7 @@
 #import "QZBUser.h"
 #import "QZBOnlineSessionWorker.h"
 #import <Crashlytics/Crashlytics.h>
+#import <CocoaLumberjack.h>
 
 @interface QZBSessionManager ()
 
@@ -70,7 +71,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSLog(@"init");
+        DDLogInfo(@"init");
         _sessionTime = 100;
     }
     return self;
@@ -171,7 +172,7 @@
     [[QZBServerManager sharedManager] PATCHMakeChallengeOfflineWithNumber:@(self.gameSession.session_id)
                                                                 onSuccess:^{
         
-                                                                    NSLog(@"PATCHED");
+                                                                    DDLogInfo(@"PATCHED");
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
     }];
@@ -188,7 +189,7 @@
                                                             userInfo:nil
                                                              repeats:YES];
 
-        NSLog(@"new timer alloc");
+        DDLogInfo(@"new timer alloc");
     }
 }
 
@@ -197,20 +198,19 @@
         self.currentTime++;
 
     } else {
-        NSLog(@"bad timer invalidate");
+        DDLogWarn(@"bad timer invalidate");
         [timer invalidate];
         timer = nil;
     }
-    //  NSLog(@"%lu", (unsigned long)self.currentTime);
     if (self.currentTime < 100) {
-        // NSLog(@"%ld", (unsigned long)self.currentTime);
+
     } else {
         if (self.questionTimer) {
             [self.questionTimer invalidate];
             self.questionTimer = nil;
             [self postNotificationNeedUnshow];
         } else {
-            NSLog(@"session timer problem");
+            DDLogWarn(@"session timer problem");
             [timer invalidate];
             timer = nil;
         }
@@ -228,7 +228,7 @@
     [self timeCountingStart];
 
     if (self.bot) {
-        NSLog(@"new questionStarted");
+        DDLogInfo(@"new questionStarted");
         NSUInteger questNum = [self.gameSession.questions indexOfObject:self.currentQuestion];
 
         NSNumber *questionNumber = [NSNumber numberWithUnsignedInteger:questNum];
@@ -247,20 +247,15 @@
         return;
     }
 
-    NSLog(@"%ld", (long)self.currentTime / 10);
+    DDLogVerbose(@"%ld", (long)self.currentTime / 10);
     self.didFirstUserAnswered = YES;
     [self firstUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime / 10];
 }
 
 //главный метод для второго пользователя
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum {
-    /* if (self.didOpponentUserAnswered) {
-       return;
-     }
 
-     self.didOpponentUserAnswered = YES;*/
-
-    NSLog(@"%ld", (long)self.currentTime / 10);
+    DDLogInfo(@"%ld", (long)self.currentTime / 10);
     [self opponentUserAnswerCurrentQuestinWithAnswerNumber:answerNum time:self.currentTime / 10];
 }
 
@@ -316,8 +311,6 @@
 }
 
 - (void)checkNeedUnshow {
-    // NSLog(@"checking first %d seconf %d", self.didFirstUserAnswered,
-    // self.didOpponentUserAnswered);
     if (self.didFirstUserAnswered && self.didOpponentUserAnswered) {
         if (self.questionTimer != nil) {
             [self.questionTimer invalidate];
@@ -413,7 +406,7 @@
         [[QZBServerManager sharedManager] PATCHCloseSessionID:sessionID
                                                     onSuccess:^{
                                                         //закрывает сессию
-                                                        NSLog(@"CLOSED PERFECTLY!!! %@", sessionID);
+                                                        DDLogInfo(@"CLOSED PERFECTLY!!! %@", sessionID);
                                                     }
                                                     onFailure:^(NSError *error, NSInteger statusCode){
                                                         
@@ -469,7 +462,7 @@
                                    time:(NSUInteger)time {
     BOOL couldAnswer = [self.gameSession.opponentUser couldAnswerAfterTime:question];
 
-    NSLog(couldAnswer ? @"Yes" : @"No");
+    DDLogInfo(couldAnswer ? @"Yes" : @"No");
 
     if (couldAnswer) {
         QZBAnswer *answer = [[QZBAnswer alloc] initWithAnswerNumber:answerNum answerTime:time];

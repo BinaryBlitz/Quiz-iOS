@@ -75,13 +75,6 @@
         
         self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
  
-//        NSString *imagePath = [coder decodeObjectForKey:@"userPic"];
-//        NSLog(@"path %@", imagePath);
-//        if (imagePath) {
-//            self.userPic = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
-//        }else{
-//            self.userPic = [UIImage imageNamed:@"achiv"];
-//        }
     }
     return self;
 }
@@ -134,8 +127,6 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
     
-    NSLog(@"userName %@", self.name);
-    
 }
 
 
@@ -143,28 +134,8 @@
 
     self.isRegistred = YES;
     [self setUserName:username];
-    
-    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    
-   // [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
 }
 
-//-(void)setUserPic:(UIImage *)userPic{
-//    
-//    _userPic = userPic;
-//    NSLog(@"setted %@", [userPic debugDescription]);
-//    
-//    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
-//    
-//    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
-//    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
-//    
-//    // Write image data to user's folder
-//    [imageData writeToFile:imagePath atomically:YES];
-//    
-//    
-//    //todo load to server
-//}
 
 
 -(void)updateUserFromServer{

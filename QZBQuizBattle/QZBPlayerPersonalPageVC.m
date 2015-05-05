@@ -39,6 +39,7 @@
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBReportVC.h"
 #import "QZBMessagerVC.h"
+#import <CocoaLumberjack.h>
 
 
 //#import "DBCameraViewController.h"
@@ -129,7 +130,7 @@ static NSInteger topicsOffset = 7;
     }
     // [self.tableView reloadData];
 
-    NSLog(@"viewWillAppear %@", self.user.name);
+    DDLogInfo(@"viewWillAppear %@", self.user.name);
 
     [self updateBadges];
 }
@@ -166,7 +167,7 @@ static NSInteger topicsOffset = 7;
 
     [self initFriendsWithUser:self.user];
 
-    NSLog(@"user init %@", user);
+    DDLogInfo(@"user init %@", user);
 }
 
 - (void)updateCurentUser:(id<QZBUserProtocol>)user {
@@ -194,7 +195,7 @@ static NSInteger topicsOffset = 7;
             }
 
             // self.user.isFriend = anotherUser.isFriend;
-            NSLog(@" %d", user.isFriend);
+            DDLogInfo(@"is friend %d", user.isFriend);
             [self.tableView reloadData];
             [SVProgressHUD dismiss];
 
@@ -387,7 +388,7 @@ static NSInteger topicsOffset = 7;
 }
 
 - (void)userPressShowAllButton:(NSNotification *)notification {
-    NSLog(@"%@", notification.object);
+    DDLogInfo(@"%@", notification.object);
 
     NSIndexPath *indexPath = (NSIndexPath *)notification.object;
 
@@ -448,7 +449,6 @@ static NSInteger topicsOffset = 7;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"taaped");
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
@@ -485,7 +485,6 @@ static NSInteger topicsOffset = 7;
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%ld", (long)buttonIndex);
 
     if (buttonIndex == 0) {
         // Make user response
@@ -572,7 +571,7 @@ static NSInteger topicsOffset = 7;
 }
 
 - (void)showFriendsTapAction:(id)sender {
-    NSLog(@"tapped gesture");
+   
     [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
 }
 
@@ -643,7 +642,6 @@ static NSInteger topicsOffset = 7;
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
 
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
-        NSLog(@"%ld", (long)self.choosedTopic.topic_id);
 
         [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
     }
@@ -652,7 +650,7 @@ static NSInteger topicsOffset = 7;
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
-        //   NSLog(@"show detail for item at row %d", indexPath.row);
+        
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
 
         if (self.isCurrent) {
@@ -669,7 +667,7 @@ static NSInteger topicsOffset = 7;
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
-        // NSLog(@"show detail for item at row %d", indexPath.row);
+        
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
 
         [self performSegueWithIdentifier:@"showRate" sender:nil];

@@ -14,6 +14,7 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import <SVProgressHUD.h>
 #import "UIViewController+QZBControllerCategory.h"
+#import <CocoaLumberjack.h>
 
 @interface QZBRatingMainVC ()
 
@@ -183,7 +184,7 @@
     self.user = user;
     [self performSegueWithIdentifier:@"showUser" sender:nil];
 
-    NSLog(@"destination user %@", [user name]);
+    DDLogInfo(@"destination user %@", [user name]);
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before
@@ -194,7 +195,7 @@
 
     if ([segue.identifier isEqualToString:@"showUser"]) {
         if ([segue.destinationViewController isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-            NSLog(@"YES");
+            //TEST
         }
 
         QZBPlayerPersonalPageVC *vc = segue.destinationViewController;

@@ -56,7 +56,6 @@
         
         // NSInteger i = 0;
         for (NSDictionary *answDict in answersDicts) {
-            // NSLog(@"%@", answDict);
             
             NSString *textOfAnswer = [answDict objectForKey:@"content"];
             NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];

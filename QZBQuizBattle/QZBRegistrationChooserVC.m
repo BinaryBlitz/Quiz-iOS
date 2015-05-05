@@ -19,7 +19,7 @@ static NSArray *SCOPE = nil;
 
 @interface QZBRegistrationChooserVC ()
 
-@property(strong, nonatomic) QZBUser *user;
+@property (strong, nonatomic) QZBUser *user;
 
 @end
 
@@ -27,7 +27,7 @@ static NSArray *SCOPE = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self setNeedsStatusBarAppearanceUpdate];
 
     self.vkButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -51,31 +51,16 @@ static NSArray *SCOPE = nil;
 - (IBAction)authorize:(id)sender {
     [VKSdk authorize:SCOPE revokeAccess:YES];
 
-    //[self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
-   // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     [VKSdk authorize:SCOPE revokeAccess:YES];
 }
 
 - (void)startWorking {
-    //[self performSegueWithIdentifier:NEXT_CONTROLLER_SEGUE_ID sender:self];
-
-    // NSString *curentUserId =[[VKSdk getAccessToken] userId];
-
-    NSLog(@"all good %@", [[VKSdk getAccessToken] userId]);
-    //    VKRequest * req = [[VKApi users] get];
-    //
-    //    [req executeWithResultBlock:^(VKResponse *response) {
-    //        NSLog(@"user: %@", response.json);
-    //        NSLog(TOKEN_KEY);
-    //    } errorBlock:^(NSError *error) {
-    //
-    //    }];
+    // redo
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([[QZBCurrentUser sharedInstance] checkUser]) {
-        NSLog(@"exist");
         [self dismissViewControllerAnimated:YES
                                  completion:^{
 
@@ -99,36 +84,35 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
-    NSLog(@"vk %@ %@", newToken.accessToken, newToken.expiresIn);
-    
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
 
     [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
         onSuccess:^(QZBUser *user) {
-            
-            if(user.isRegistred){
 
-            [[QZBCurrentUser sharedInstance] setUser:user];
+            if (user.isRegistred) {
+                [[QZBCurrentUser sharedInstance] setUser:user];
 
-            // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
+                // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
 
-            [SVProgressHUD dismiss];
+                [SVProgressHUD dismiss];
 
-            [self dismissViewControllerAnimated:YES
-                                     completion:^{
+                [self dismissViewControllerAnimated:YES
+                                         completion:^{
 
-                                     }];
-            }else{
+                                         }];
+            } else {
                 self.user = user;
                 [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
             }
 
         }
-        onFailure:^(NSError *error, NSInteger statusCode){
-            [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к интернету"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-            });
+        onFailure:^(NSError *error, NSInteger statusCode) {
+            [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к "
+                                               @"интернету"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+                           dispatch_get_main_queue(), ^{
+                               [SVProgressHUD dismiss];
+                           });
 
         }];
 
@@ -144,46 +128,39 @@ static NSArray *SCOPE = nil;
 }
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError {
     //[[[UIAlertView alloc] initWithTitle:nil message:@"Access denied" delegate:nil
-    //cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    // cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 
     [SVProgressHUD dismiss];
-
-    NSLog(@"deny");
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before
-//navigation
+// navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-//  NSLog(@"%@",segue);
-   
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        
-        if ([segue.identifier isEqualToString:@"enterUsernameSegue"]) {
-           UINavigationController *navController = segue.destinationViewController;
-            
-            for(UIViewController *vc in navController.viewControllers){
-                if([vc isKindOfClass:[QZBRegistrationUsernameInput class]]){
-                    QZBRegistrationUsernameInput *destVC = (QZBRegistrationUsernameInput *)vc;
-                    [destVC setUSerWhithoutUsername:self.user];
-                    break;
-                }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+
+    if ([segue.identifier isEqualToString:@"enterUsernameSegue"]) {
+        UINavigationController *navController = segue.destinationViewController;
+
+        for (UIViewController *vc in navController.viewControllers) {
+            if ([vc isKindOfClass:[QZBRegistrationUsernameInput class]]) {
+                QZBRegistrationUsernameInput *destVC = (QZBRegistrationUsernameInput *)vc;
+                [destVC setUSerWhithoutUsername:self.user];
+                break;
             }
-            
-            //[destVC setUSerWhithoutUsername:self.user];
-            
         }
-    
-    
+
+        //[destVC setUSerWhithoutUsername:self.user];
+    }
 }
 
 @end

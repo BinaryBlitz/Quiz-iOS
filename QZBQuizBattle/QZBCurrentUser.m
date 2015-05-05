@@ -9,6 +9,7 @@
 #import "QZBCurrentUser.h"
 #import "QZBServerManager.h"
 #import <Crashlytics/Crashlytics.h>
+#import <CocoaLumberjack.h>
 
 //#import "QZBUser.h"
 
@@ -94,16 +95,10 @@
         return;
     }
 
-    //self.pushToken = pushToken;
-
-    // NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    //
-    // [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
-
     [[NSUserDefaults standardUserDefaults] setObject:pushToken forKey:@"APNStoken"];
     [[NSUserDefaults standardUserDefaults] synchronize];  //?
 
-    NSLog(@"push token setted %@", self.pushToken);
+    DDLogVerbose(@"push token setted %@", self.pushToken);
 }
 
 - (void)userLogOut {

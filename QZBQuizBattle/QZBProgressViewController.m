@@ -21,6 +21,7 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
+#import <CocoaLumberjack.h>
 
 @interface QZBProgressViewController () <UIAlertViewDelegate>
 
@@ -120,7 +121,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    NSLog(@"showed progress VC");
+    DDLogInfo(@"showed progress VC");
     self.tabBarController.tabBar.hidden = YES;
 
     self.setted = NO;
@@ -147,7 +148,7 @@
 
     // [self.client disconnect];
 
-    NSLog(@"progress disapear");
+    DDLogInfo(@"progress disapear");
 
     self.isChallenge = NO;
     self.lobby = nil;
@@ -186,7 +187,7 @@
 - (void)setTopic:(QZBGameTopic *)topic {
     _topic = topic;
 
-    NSLog(@"%@", topic.name);
+    DDLogInfo(@"%@", topic.name);
 
     self.topicLabel.text = topic.name;
 
@@ -205,7 +206,7 @@
 - (void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
     self.topic = topic;
     if (user) {
-        NSLog(@"user exist in progress");
+        DDLogInfo(@"user exist in progress");
         self.user = user;
         //  self.playOfflineButton.alpha = 1.0;
     } else {
@@ -377,13 +378,13 @@
         [timer invalidate];
         timer = nil;
 
-        NSLog(@"problems");
+        DDLogInfo(@"problems");
     }
 }
 
 - (void)tryGetSession {
     _counter--;
-    NSLog(@"%ld", (unsigned long)_counter);
+    DDLogInfo(@"%ld", (unsigned long)_counter);
 
     [[QZBServerManager sharedManager] GETFindGameWithLobby:_lobby
         onSuccess:^(QZBSession *session, id bot) {
@@ -396,7 +397,7 @@
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
 
-            NSLog(@"finding failure");
+            DDLogInfo(@"finding failure");
             [self.navigationController popViewControllerAnimated:YES];
 
         }];
@@ -407,7 +408,7 @@
         self.setted = YES;
 
         if (!self.isCanceled) {
-            NSLog(@"setSession");
+            DDLogInfo(@"setSession");
             [[QZBSessionManager sessionManager] setSession:session];
             if(self.isChallenge || self.user){
                 [[QZBSessionManager sessionManager] setIsChallenge:YES];
@@ -432,7 +433,7 @@
                         dispatch_get_main_queue(), ^{
 
                             if ([self checkCanEnterGame]) {
-                                NSLog(@"after func");
+                                DDLogWarn(@"after func");
 
                                 [[[UIAlertView alloc]
                                         initWithTitle:@"Ошибка на сервере"
@@ -449,14 +450,14 @@
 }
 
 - (void)showGameVC:(NSNotification *)notification {
-    NSLog(@"setted %d online %d entered %d", self.setted, self.isOnline, self.isEntered);
+    DDLogInfo(@"setted %d online %d entered %d", self.setted, self.isOnline, self.isEntered);
 
     if ([self checkCanEnterGame]) {
-        NSLog(@"can enter");
+        DDLogInfo(@"can enter");
         [self enterGame];
     } else {
         if (!self.checkNeedStartTimer) {
-            NSLog(@"timer started");
+            DDLogInfo(@"timer started");
 
             self.needStartCounter = 5;
             self.checkNeedStartTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
@@ -469,11 +470,11 @@
 }
 
 - (void)startGame:(NSTimer *)timer {
-    NSLog(@"enter in start game function");
+    DDLogInfo(@"enter in start game function");
 
     if (self.checkNeedStartTimer && [timer isEqual:self.checkNeedStartTimer]) {
         if ([self checkCanEnterGame]) {
-            NSLog(@"entered");
+            DDLogInfo(@"entered");
 
             [self.checkNeedStartTimer invalidate];
             self.checkNeedStartTimer = nil;
@@ -492,7 +493,7 @@
     }
 
     else {
-        NSLog(@"bad timer invalidate in progress");
+        DDLogWarn(@"bad timer invalidate in progress");
         [timer invalidate];
         timer = nil;
     }

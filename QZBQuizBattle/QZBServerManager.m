@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
 //
 
-#define MR_LOGGING_ENABLED 0
-
 #import "QZBServerManager.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "QZBGameTopic.h"
 #import "QZBLobby.h"
@@ -30,6 +29,14 @@
 #import "QZBAchievement.h"
 #import <SVProgressHUD.h>
 #import "AppDelegate.h"
+//#import "QZBLoggingConfig.h"
+
+//#ifdef DEBUG
+//static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+//#else
+//static const DDLogLevel ddLogLevel = DDLogLevelWarning;
+//#endif
+static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
@@ -78,7 +85,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:@"categories"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, NSArray *responseObject) {
-            NSLog(@"category JSON: %@", responseObject);
+            DDLogInfo(@"category JSON: %@", responseObject);
 
             [self updateCategories:responseObject];
 
@@ -94,7 +101,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+            DDLogInfo(@"Error: %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -112,7 +119,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlAsString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"topic JSON: %@", responseObject);
+            DDLogInfo(@"topic JSON: %@", responseObject);
 
             [self updateTopcs:(NSDictionary *)responseObject inCategory:category];
 
@@ -127,7 +134,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+            DDLogInfo(@"Error: %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -269,7 +276,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"main %@", responseObject);
+            DDLogInfo(@"main %@", responseObject);
 
             NSArray *faveTopicsDicts = responseObject[@"favorite_topics"];
             NSArray *friendsFaveTopicsDicts = responseObject[@"friends_favorite_topics"];
@@ -301,7 +308,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"%@, /n %@", operation, error);
+            DDLogInfo(@"%@, /n %@", operation, error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -349,7 +356,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager POST:@"lobbies"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"lobby: %@  ", responseObject);
+            DDLogInfo(@"lobby: %@  ", responseObject);
 
             QZBLobby *lobby = [[QZBLobby alloc] initWithDict:responseObject];
 
@@ -359,7 +366,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@, /n %@", operation, error);
+            DDLogInfo(@"%@, /n %@", operation, error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -375,13 +382,13 @@ NSString *const QZBNoInternetConnectionMessage =
 
     NSString *URLString = [NSString stringWithFormat:@"lobbies/%ld/find", (long)lobby.lobbyID];
 
-    NSLog(@"%@", URLString);
+    DDLogInfo(@"%@", URLString);
 
     [self.requestOperationManager GET:URLString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"JSON: %@", responseObject);
+            DDLogInfo(@"JSON: %@", responseObject);
 
             if (responseObject) {
                 QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
@@ -399,8 +406,9 @@ NSString *const QZBNoInternetConnectionMessage =
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            
+          
 
-            //  NSLog(@"%@, /n %@", operation, error);
         }];
 }
 
@@ -411,12 +419,12 @@ NSString *const QZBNoInternetConnectionMessage =
 
     NSString *URLString = [NSString stringWithFormat:@"lobbies/%ld/close", (long)lobby.lobbyID];
 
-    NSLog(@"%@", URLString);
+    DDLogInfo(@"%@", URLString);
 
     [self.requestOperationManager PATCH:URLString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"lobby closed");
+            DDLogInfo(@"lobby closed");
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
 
@@ -441,12 +449,12 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"patched");
+            DDLogInfo(@"patched");
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"%@", error);
+            DDLogInfo(@"%@", error);
 
         }];
 }
@@ -461,7 +469,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager PATCH:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"session closed");
+            DDLogInfo(@"session closed");
 
             if (success) {
                 success();
@@ -472,7 +480,7 @@ NSString *const QZBNoInternetConnectionMessage =
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            NSLog(@"session close failure %@", error);
+            DDLogInfo(@"session close failure %@", error);
 
         }];
 }
@@ -484,14 +492,14 @@ NSString *const QZBNoInternetConnectionMessage =
     NSDictionary *params = @{@"token" : [QZBCurrentUser sharedInstance].user.api_key, @"game_session": @{ @"offline": @YES }};
     
     [self.requestOperationManager PATCH:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"parched offline");
+        DDLogInfo(@"parched offline");
         
         if (success) {
             success();
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"ofline patch error");
+        DDLogInfo(@"ofline patch error");
         
         if (failure) {
             failure(error, operation.response.statusCode);
@@ -536,7 +544,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"challenge response %@", responseObject);
+            DDLogInfo(@"challenge response %@", responseObject);
 
             QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
 
@@ -550,7 +558,7 @@ NSString *const QZBNoInternetConnectionMessage =
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            NSLog(@" %@", error);
+            DDLogInfo(@" %@", error);
         }];
 }
 
@@ -570,7 +578,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"accept challenge %@", responseObject);
+            DDLogInfo(@"accept challenge %@", responseObject);
 
             QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
             QZBOpponentBot *opponentBot =
@@ -609,7 +617,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:@"lobbies/challenges"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"challenges response %@", responseObject);
+            DDLogInfo(@"challenges response %@", responseObject);
 
             NSArray *challengeDescriptions = [self parseChallengesFromArray:responseObject];
 
@@ -622,7 +630,7 @@ NSString *const QZBNoInternetConnectionMessage =
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            NSLog(@"%@", error);
+            DDLogInfo(@"%@", error);
         }];
 }
 
@@ -646,12 +654,11 @@ NSString *const QZBNoInternetConnectionMessage =
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            NSLog(@"%@", error);
+            DDLogInfo(@"%@", error);
         }];
 }
 
 - (NSArray *)parseChallengesFromArray:(NSArray *)responseObject {
-    // NSLog(@"challenges response %@", responseObject);
 
     NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
 
@@ -695,8 +702,6 @@ NSString *const QZBNoInternetConnectionMessage =
                                        QZBUserRegistrationProblem problem))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
-    //NSLog(@"hashed %@", hashedPassword);
-
     NSDictionary *params = nil;
     if (userEmail.length > 0) {
         params = @{
@@ -717,7 +722,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager POST:@"players"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"user registration %@", responseObject);
+            DDLogInfo(@"user registration %@", responseObject);
 
             QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
 
@@ -728,19 +733,19 @@ NSString *const QZBNoInternetConnectionMessage =
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             QZBUserRegistrationProblem problem = QZBNoProblems;
 
-            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
+            DDLogInfo(@"%@\n responseObject %@", error, operation.responseObject);
 
             if (![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
                 operation.responseObject[@"username"]) {
                 NSArray *usernameProblems = operation.responseObject[@"username"];
                 // NSString *problem = [usernameProblems firstObject];
-                NSLog(@"problem %@", usernameProblems);
+                DDLogInfo(@"problem %@", usernameProblems);
                 problem = QZBUserNameProblem;
             } else if (![operation.responseObject[@"email"] isEqual:[NSNull null]] &&
                        operation.responseObject[@"email"]) {
                 NSArray *usernameProblems = operation.responseObject[@"email"];
                 // NSString *problem = [usernameProblems firstObject];
-                NSLog(@"problem %@", usernameProblems);
+                DDLogInfo(@"problem %@", usernameProblems);
                 problem = QZBEmailProblem;
             }
 
@@ -757,15 +762,13 @@ NSString *const QZBNoInternetConnectionMessage =
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *hashedPassword = [self hashPassword:password];
 
-    //   NSLog(@"email %@ password %@", email, hashedPassword);
-
     NSDictionary *params = @{ @"username" : username, @"password" : hashedPassword };
 
     [self.requestOperationManager POST:@"players/authenticate"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"login %@", responseObject);
+            DDLogInfo(@"login %@", responseObject);
 
             if (![responseObject objectForKey:@"error"]) {
                 QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
@@ -777,7 +780,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
+            DDLogInfo(@"%@\n responseObject %@", error, operation.responseObject);
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -796,7 +799,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
             if (![responseObject objectForKey:@"error"]) {
                 QZBUser *user = [[QZBUser alloc] initWithDict:responseObject];
-                NSLog(@"user response object %@", responseObject);
+                DDLogInfo(@"user response object %@", responseObject);
 
                 if (success) {
                     success(user);
@@ -809,7 +812,7 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
 
-            NSLog(@"vk token failure %@  %@", error, operation.responseObject);
+            DDLogInfo(@"vk token failure %@  %@", error, operation.responseObject);
 
         }];
 }
@@ -824,7 +827,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"user JSON : %@", responseObject);
+            DDLogInfo(@"user JSON : %@", responseObject);
             QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:responseObject];
             BOOL isFriend = [responseObject[@"is_friend"] boolValue];
             user.isFriend = isFriend;
@@ -845,7 +848,7 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
 
-            NSLog(@"user fail");
+            DDLogInfo(@"user fail");
         }];
 }
 
@@ -867,7 +870,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            NSLog(@"renew errr %@  response %@", error, operation.responseObject);
+            DDLogInfo(@"renew errr %@  response %@", error, operation.responseObject);
             
             if(operation.response.statusCode == 200){
                 if(success){
@@ -973,7 +976,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager PATCH:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"pathed response %@", responseObject);
+            DDLogInfo(@"pathed response %@", responseObject);
 
             if (success) {
                 success();
@@ -981,24 +984,24 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"response for patch player %@", operation.responseObject);
+            DDLogInfo(@"response for patch player %@", operation.responseObject);
 
             QZBUserRegistrationProblem problem = QZBNoProblems;
 
-            NSLog(@"%@\n responseObject %@", error, operation.responseObject);
+            DDLogInfo(@"%@\n responseObject %@", error, operation.responseObject);
 
             if (![operation.responseObject[@"username"] isEqual:[NSNull null]] &&
                 operation.responseObject[@"username"]) {
                 NSArray *usernameProblems = operation.responseObject[@"username"];
                 // NSString *problem = [usernameProblems firstObject];
-                NSLog(@"problem %@", usernameProblems);
+                DDLogInfo(@"problem %@", usernameProblems);
                 problem = QZBUserNameProblem;
             }
 
             if (failure) {
                 failure(error, operation.response.statusCode, problem);
             }
-            NSLog(@"not patched %@", error);
+            DDLogInfo(@"not patched %@", error);
         }];
 }
 
@@ -1007,7 +1010,7 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)POSTFriendWithID:(NSNumber *)userID
                onSuccess:(void (^)())success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSLog(@"user id %@", userID);
+    DDLogInfo(@"user id %@", userID);
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
@@ -1016,7 +1019,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager POST:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"friend add request %@", responseObject);
+            DDLogInfo(@"friend add request %@", responseObject);
             if (success)
                 success();
 
@@ -1026,14 +1029,14 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
 
-            NSLog(@"not added %@", error);
+            DDLogInfo(@"not added %@", error);
         }];
 }
 
 - (void)DELETEUNFriendWithID:(NSNumber *)userID
                    onSuccess:(void (^)())success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSLog(@"user id %@", userID);
+    DDLogInfo(@"user id %@", userID);
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
@@ -1042,7 +1045,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager DELETE:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"deleted %@", responseObject);
+            DDLogInfo(@"deleted %@", responseObject);
             if (success)
                 success();
 
@@ -1052,7 +1055,7 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
 
-            NSLog(@"not added %@", error);
+            DDLogInfo(@"not added %@", error);
         }];
 }
 
@@ -1063,7 +1066,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:@"friendships/requests"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"friends request %@", responseObject);
+            DDLogInfo(@"friends request %@", responseObject);
 
             NSMutableArray *friends = [NSMutableArray array];
 
@@ -1094,7 +1097,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"match all user success %@", responseObject);
+            DDLogInfo(@"match all user success %@", responseObject);
 
             if (success) {
                 success();
@@ -1121,7 +1124,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"all friend %@", responseObject);
+            DDLogInfo(@"all friend %@", responseObject);
 
             NSMutableArray *friends = [NSMutableArray array];
 
@@ -1140,7 +1143,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"friends error %@", error);
+            DDLogInfo(@"friends error %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -1161,7 +1164,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"report ok");
+            DDLogInfo(@"report ok");
 
             if (success) {
                 success();
@@ -1169,7 +1172,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"report error %@", error);
+            DDLogInfo(@"report error %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -1207,13 +1210,13 @@ NSString *const QZBNoInternetConnectionMessage =
         }
     }
 
-    NSLog(@"params ranking %@", params);
+    DDLogInfo(@"params ranking %@", params);
 
     [self.requestOperationManager GET:urlAsString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@" %@ ranking JSON: %@", urlAsString, responseObject);
+            DDLogInfo(@" %@ ranking JSON: %@", urlAsString, responseObject);
 
             NSMutableArray *usersTop = [NSMutableArray array];
             NSMutableArray *usersPlayer = [NSMutableArray array];
@@ -1246,8 +1249,6 @@ NSString *const QZBNoInternetConnectionMessage =
     NSArray *usersPlayerArray = responseObject[@"player_rankings"];
 
     NSInteger playerPosition = [responseObject[@"position"] integerValue];
-
-    // NSLog(@"player ranks %@", usersPlayerArray);
 
     NSInteger position = 1;
     for (NSDictionary *dict in usersTopArray) {
@@ -1288,14 +1289,14 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager POST:@"push_tokens"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"token response %@", responseObject);
+            DDLogInfo(@"token response %@", responseObject);
             if (success) {
                 success();
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"token failure %@", error);
+            DDLogInfo(@"token failure %@", error);
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1316,7 +1317,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"token replace response %@", responseObject);
+            DDLogInfo(@"token replace response %@", responseObject);
             if (success) {
                 success();
             }
@@ -1324,7 +1325,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"token replace failure %@", error);
+            DDLogInfo(@"token replace failure %@", error);
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1341,14 +1342,14 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager DELETE:@"push_tokens/delete"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"token delete response %@", responseObject);
+            DDLogInfo(@"token delete response %@", responseObject);
             if (success) {
                 success();
             }
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"token delete failure %@", error);
+            DDLogInfo(@"token delete failure %@", error);
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1365,36 +1366,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"GET purchases пп %@", responseObject);
-
-            //            @"drumih.QZBQuizBattle.twiceBooster",
-            //            @"drumih.QZBQuizBattle.tripleBooster",
-
-            //            NSArray *response = @[
-            //                @{
-            //                    @"identifier" : @"drumih.iQuiz.specialMath",
-            //                    @"topic_id" : @10,
-            //                    @"purchased" : @0
-            //                },
-            //                @{
-            //                    @"identifier" : @"drumih.iQuiz.specialBiology",
-            //                    @"topic_id" : @1,
-            //                    @"purchased" : @0
-            //                },
-            //
-            //                @{
-            //                    @"identifier" :
-            //                    @"drumih.QZBQuizBattle.twiceBooster",
-            //                    @"topic_id" : @0,
-            //                    @"purchased" : @0
-            //                },
-            //                @{
-            //                    @"identifier" :
-            //                    @"drumih.QZBQuizBattle.tripleBooster",
-            //                    @"topic_id" : @0,
-            //                    @"purchased" : @1
-            //                }
-            //            ];
+            DDLogInfo(@"GET purchases %@", responseObject);
 
             NSMutableArray *purchases = [NSMutableArray array];
             for (NSDictionary *dict in responseObject) {
@@ -1404,13 +1376,13 @@ NSString *const QZBNoInternetConnectionMessage =
 
             NSSet *result = [NSSet setWithArray:purchases];
 
-            NSLog(@" %@", result);
+            DDLogInfo(@" %@", result);
             if (success) {
                 success(result);
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"purchases failure %@", error);
+            DDLogInfo(@"purchases failure %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -1429,7 +1401,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"post purchases OK %@", responseObject);
+            DDLogInfo(@"post purchases OK %@", responseObject);
 
             if (success) {
                 success();
@@ -1438,7 +1410,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@" purchases failure");
+            DDLogInfo(@" purchases failure");
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1459,7 +1431,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"all friend %@", responseObject);
+            DDLogInfo(@"all friend %@", responseObject);
 
             NSMutableArray *friends = [NSMutableArray array];
 
@@ -1476,7 +1448,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"friends error %@", error);
+            DDLogInfo(@"friends error %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);
@@ -1492,23 +1464,13 @@ NSString *const QZBNoInternetConnectionMessage =
     //  NSString *urlString = [NSString stringWithFormat:@"achievements"];
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
-    // NSLog(@"%@",self.requestOperationManager.baseURL);
-
     [self.requestOperationManager GET:@"achievements"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"%@", operation);
+            DDLogInfo(@"%@", operation);
 
-            NSLog(@"achievements %@", responseObject);
-
-            //            NSMutableArray *tmpArr = [NSMutableArray array];
-            //
-            //            for (NSDictionary *dict in responseObject) {
-            //                QZBAchievement *achiev = [[QZBAchievement alloc]
-            //                initWithDictionary:dict];
-            //                [tmpArr addObject:achiev];
-            //            }
+            DDLogInfo(@"achievements %@", responseObject);
 
             NSArray *achievements = [self parseAchievementsFromArray:responseObject];
             if (success) {
@@ -1517,7 +1479,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"achievments error %@", error);
+            DDLogInfo(@"achievments error %@", error);
 
             if (failure) {
                 failure(error, operation.response.statusCode);

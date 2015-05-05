@@ -32,7 +32,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property (assign, nonatomic) NSInteger userBeginingScore;
 @property (assign, nonatomic) NSInteger userMultiplier;
 
-
 @end
 
 @implementation QZBSession
@@ -64,79 +63,35 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     // NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
 
     for (NSDictionary *d in arrayOfQuestionDicts) {
-//        NSDictionary *questDict = [d objectForKey:@"question"];
-//        NSString *questText = [questDict objectForKey:@"content"];
-//        NSInteger questionID = [[d objectForKey:@"id"] integerValue];
-//        NSInteger correctAnswer = -1;
-//        NSArray *answersDicts = [questDict objectForKey:@"answers"];
-//        NSMutableArray *answers = [NSMutableArray array];
-//
-//        // NSInteger i = 0;
-//        for (NSDictionary *answDict in answersDicts) {
-//            // NSLog(@"%@", answDict);
-//
-//            NSString *textOfAnswer = [answDict objectForKey:@"content"];
-//            NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];
-//            QZBAnswerTextAndID *answerWithId =
-//                [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer answerID:answerID];
-//
-//            [answers addObject:answerWithId];
-//            NSNumber *isRight = [answDict objectForKey:@"correct"];
-//            if ([isRight isEqual:@(1)]) {
-//                correctAnswer = answerID;  //[[answDict objectForKey:@"id"] integerValue];
-//            }
-//            //  i++;
-//        }
-//
-//        //перемешивает ответы в массиве(json приходит так, что правильный всегда
-//        //первый
-//        NSUInteger count = [answers count];
-//        for (NSUInteger i = 0; i < count; ++i) {
-//            NSUInteger nElements = count - i;
-//            NSUInteger n = (arc4random() % nElements) + i;
-//            [answers exchangeObjectAtIndex:i withObjectAtIndex:n];
-//        }
-        
         QZBQuestion *question = [[QZBQuestion alloc] initWithDictionary:d];
 
-//        QZBQuestion *question = [[QZBQuestion alloc] initWithTopic:@""
-//                                                          question:questText
-//                                                           answers:answers
-//                                                       rightAnswer:correctAnswer
-//                                                        questionID:questionID];
-
-       // NSLog(@"%ld", (long)questionID);
         [questions addObject:question];
     }
 
-    // NSInteger firsUserId = [[dict objectForKey:@"host_id"] integerValue];
-    // NSInteger opponentUserId = -1;
-
     QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
-
 
     QZBAnotherUser *opponent = nil;
     opponent = [[QZBAnotherUser alloc] init];
-    
+
     NSDictionary *hostDict = dict[@"host"];
     NSDictionary *opponentDict = dict[@"opponent"];
-    
+
     NSNumber *hostID = hostDict[@"id"];
-    
+
     if ([hostID isEqualToNumber:user1.userID]) {
         self.userBeginingScore = [hostDict[@"points"] integerValue];
         self.userMultiplier = [hostDict[@"multiplier"] integerValue];
-        
-        if(![opponentDict[@"username"] isEqual:[NSNull null]] && opponentDict[@"username"]){
+
+        if (![opponentDict[@"username"] isEqual:[NSNull null]] && opponentDict[@"username"]) {
             opponent.name = opponentDict[@"username"];
-        }else{
+        } else {
             opponent.name = opponentDict[@"name"];
         }
-        
-        if ( opponentDict[@"id"]) {
+
+        if (opponentDict[@"id"]) {
             opponent.userID = opponentDict[@"id"];
         }
-        if ( opponentDict[@"avatar_url"] && ![opponentDict[@"avatar_url"] isEqual:[NSNull null]]) {
+        if (opponentDict[@"avatar_url"] && ![opponentDict[@"avatar_url"] isEqual:[NSNull null]]) {
             NSString *url = [QZBServerBaseUrl stringByAppendingString:opponentDict[@"avatar_url"]];
 
             opponent.imageURL = [NSURL URLWithString:url];
@@ -147,13 +102,13 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     } else {
         self.userBeginingScore = [opponentDict[@"points"] integerValue];
         self.userMultiplier = [opponentDict[@"multiplier"] integerValue];
-        
-        if(![hostDict[@"username"] isEqual:[NSNull null]] && hostDict[@"username"]){
+
+        if (![hostDict[@"username"] isEqual:[NSNull null]] && hostDict[@"username"]) {
             opponent.name = hostDict[@"username"];
-        }else{
+        } else {
             opponent.name = hostDict[@"name"];
         }
-        
+
         opponent.userID = hostDict[@"id"];
         if (hostDict[@"avatar_url"] && ![hostDict[@"avatar_url"] isEqual:[NSNull null]]) {
             NSString *url = [QZBServerBaseUrl stringByAppendingString:hostDict[@"avatar_url"]];

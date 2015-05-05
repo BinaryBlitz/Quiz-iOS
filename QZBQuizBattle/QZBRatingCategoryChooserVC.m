@@ -57,7 +57,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         if ([[self.navigationController.viewControllers firstObject] isKindOfClass:[QZBRatingMainVC class]]) {
-            NSLog(@"YES");
             QZBRatingMainVC *mainVC = (QZBRatingMainVC *)[self.navigationController.viewControllers firstObject];
             mainVC.category = nil;
             mainVC.topic = nil;

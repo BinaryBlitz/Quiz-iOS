@@ -23,6 +23,7 @@
 #import "UIButton+QZBButtonCategory.h"
 
 
+
 @interface QZBSettingsTVC () <UIActionSheetDelegate,
                               DBCameraViewControllerDelegate,
                               UITextFieldDelegate>
@@ -48,8 +49,6 @@
     }else{
         [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
-   // NSLog(@"userpic %@", [QZBCurrentUser sharedInstance].user.userPic);
-
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
     
     self.nameTextFieldBackGroundView.layer.borderWidth = 1.0;
@@ -129,7 +128,6 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%ld", buttonIndex);
 
     if (buttonIndex == 0) {
         [self openLibrary];
@@ -222,7 +220,6 @@
 
     [[QZBServerManager sharedManager] PATCHPlayerWithNewUserName:newName
         onSuccess:^{
-            NSLog(@"name updated");
             [TSMessage showNotificationWithTitle:@"Имя обновлено"
                                             type:TSMessageNotificationTypeSuccess];
             [[QZBCurrentUser sharedInstance].user setUserName:newName];
@@ -277,11 +274,10 @@
 - (void)camera:(id)cameraViewController
     didFinishWithImage:(UIImage *)image
           withMetadata:(NSDictionary *)metadata {
-    NSLog(@"delegate work %@", image);
     
     
     [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-        NSLog(@"all good");
+
         
         [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
         self.userPicImageView.image = image;
@@ -292,7 +288,7 @@
         
         
     } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-        NSLog(@"not good");
+
     }];
     
    // self.userPicImageView.image = image;

@@ -36,8 +36,6 @@
             
             NSString *dateAsString = dict[@"expires_at"];
             
-            NSLog(@"date as string %@", dateAsString);
-            
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 
             [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
@@ -47,7 +45,6 @@
             
             self.dayCount = [self daysRemainingOnSubscription];
             
-            NSLog(@"day %d", [self daysRemainingOnSubscription]);
         }else{
             self.dayCount = -1;
         }
@@ -59,8 +56,6 @@
 - (int)daysRemainingOnSubscription {
     //1
     NSDate *expirationDate = self.expiratesDate;
-    
-    NSLog(@" %@", self.expiratesDate);
     
     //2
     NSTimeInterval timeInt = [expirationDate timeIntervalSinceDate:[NSDate date]];

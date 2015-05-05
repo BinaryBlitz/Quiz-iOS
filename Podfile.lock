@@ -20,6 +20,14 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.0.0):
+    - CocoaLumberjack/Default (= 2.0.0)
+    - CocoaLumberjack/Extensions (= 2.0.0)
+  - CocoaLumberjack/Core (2.0.0)
+  - CocoaLumberjack/Default (2.0.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.0.0):
+    - CocoaLumberjack/Default
   - DBCamera (2.3.10):
     - GPUImage (~> 0.1)
   - GPUImage (0.1.6)
@@ -45,6 +53,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CocoaLumberjack
   - DBCamera
   - JSBadgeView
   - JSQMessagesViewController
@@ -58,6 +67,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   HexColors: abfd172e329dab59888614ccba6f216cec59289d

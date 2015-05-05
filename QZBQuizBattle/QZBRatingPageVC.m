@@ -7,9 +7,10 @@
 //
 
 #import "QZBRatingPageVC.h"
-//#import "QZBRatingTVC.h"
 #import "QZBRatingMainVC.h"
 #import "QZBServerManager.h"
+
+#import <CocoaLumberjack.h>
 
 @interface QZBRatingPageVC ()
 
@@ -38,7 +39,7 @@
     right.urlString = @"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg";
     right.tableType = QZBRatingTableWeek;
 
-    NSLog(@"left %@ right %@", left, right);
+    DDLogInfo(@"left %@ right %@", left, right);
     self.ratingTableViewControllers = @[ left, right ];
 
     self.currentTableType = QZBRatingTableAllTime;
@@ -47,7 +48,6 @@
                     animated:NO
                   completion:nil];
 
-    NSLog(@"loaded!");
     self.motionInProgress = NO;
 
     UIPanGestureRecognizer *panGestureRecognizer =
@@ -64,7 +64,7 @@
 }
 
 - (void)panRcognizer:(id)sender {
-    NSLog(@"mooved");
+   
 }
 
 #pragma mark -
@@ -114,7 +114,7 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
     willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    //  NSLog(@"transition start");
+
     self.motionInProgress = YES;
 }
 
@@ -133,7 +133,7 @@
             if ([self.parentViewController isKindOfClass:[QZBRatingMainVC class]]) {
                 [self colorRightButton];
                 self.currentTableType = QZBRatingTableWeek;
-                //  NSLog(@"colored right");
+
             }
 
         } else if ([[self.viewControllers lastObject] isEqual:[self.ratingTableViewControllers firstObject]]) {
@@ -146,7 +146,7 @@
 }
 
 - (void)showLeftVC {
-    NSLog(@"left button pressed");
+    DDLogVerbose(@"left button pressed");
 
     if (!self.motionInProgress) {
         QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
@@ -159,7 +159,7 @@
         self.currentTableType = QZBRatingTableAllTime;
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"expected %ld current %ld", self.expectedType, self.currentTableType);
+            DDLogInfo(@"expected %ld current %ld", self.expectedType, self.currentTableType);
 
             if (self.expectedType != self.currentTableType) {
                 self.currentTableType = QZBRatingTableWeek;
@@ -170,7 +170,7 @@
                                direction:UIPageViewControllerNavigationDirectionReverse
                                 animated:NO
                               completion:^(BOOL finished) {
-                                  NSLog(@"finished %d left canceled", finished);
+                                  DDLogInfo(@"finished %d left canceled", finished);
                               }];
             }
         });
@@ -178,7 +178,7 @@
 }
 
 - (void)showRightVC {
-    NSLog(@"right button pressed");
+    DDLogVerbose(@"right button pressed");
 
     if (!self.motionInProgress) {
         QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
@@ -192,13 +192,13 @@
                        direction:UIPageViewControllerNavigationDirectionForward
                         animated:YES
                       completion:^(BOOL finished) {
-                          NSLog(@"finished %d right", finished);
+                          DDLogInfo(@"finished %d right", finished);
 
                       }];
         self.currentTableType = QZBRatingTableWeek;
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
+            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
             if (self.expectedType != self.currentTableType) {
                 QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
                 self.currentTableType = QZBRatingTableAllTime;
@@ -208,7 +208,7 @@
                                direction:UIPageViewControllerNavigationDirectionReverse
                                 animated:NO
                               completion:^(BOOL finished) {
-                                  NSLog(@"finished %d right canceled", finished);
+                                  DDLogInfo(@"finished %d right canceled", finished);
                               }];
             }
         });
@@ -230,7 +230,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"began");
+    DDLogInfo(@"began");
 }
 
 -(void)setAllTimeRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
