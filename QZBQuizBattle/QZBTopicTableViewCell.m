@@ -55,12 +55,8 @@
         self.topicProgressView.tintColor = [UIColor clearColor];
         self.topicProgressView.centralView = self.icon;
         
-        
         self.icon.image = [UIImage imageNamed:@"downIcon"];
-        
-        
     }
-    // self.topicProgressView.centralView = centralLabel;
 }
 
 
@@ -83,13 +79,7 @@
 -(UIImageView *)icon{
     if(!_icon){
         
-        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25,
-                                                              25)];
-        
-        
-       // _icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"downIcon"]];
-       
-        
+        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     }
     return _icon;
 }
