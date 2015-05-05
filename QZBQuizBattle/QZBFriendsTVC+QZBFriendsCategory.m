@@ -17,7 +17,6 @@
         return;
     }
     
-    NSLog(@"search taped");
     [SVProgressHUD show];
 
     [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text

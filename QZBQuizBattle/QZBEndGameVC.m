@@ -443,7 +443,7 @@ navigation
     for (UIViewController *controller in controllers) {
         if ([controller isKindOfClass:[QZBTopicChooserControllerViewController class]] ||
             [controller isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-            // NSLog(@"%@", [controller class]);
+           
 
             destinationVC = controller;
             break;
@@ -490,7 +490,6 @@ navigation
 
     for (UIViewController *controller in controllers) {
         if ([controller isKindOfClass:VCclass]) {
-            NSLog(@"%@", [controller class]);
 
             destinationVC = controller;
             break;

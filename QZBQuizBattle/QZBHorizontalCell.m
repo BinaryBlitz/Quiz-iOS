@@ -12,6 +12,7 @@
 #import "QZBAchievement.h"
 #import "QZBAnotherUser.h"
 #import "UITableViewCell+QZBCellCategory.h"
+#import <CocoaLumberjack.h>
 
 @interface QZBHorizontalCell ()
 
@@ -126,7 +127,7 @@
     
     NSDictionary *dict = @{@"indexInLocalTable":indexPath,@"indexInGlobalTable": globalIP};
     
-    NSLog(@"row in global %ld , row in local %ld",(long)globalIP.row, (long)indexPath.row);
+    DDLogVerbose(@"row in global %ld , row in local %ld",(long)globalIP.row, (long)indexPath.row);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBUserPressSomethingInHorizontallTV"
                                                         object:dict];

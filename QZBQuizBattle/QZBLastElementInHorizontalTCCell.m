@@ -10,7 +10,6 @@
 #import "QZBHorizontalCell.h"
 #import "UIColor+QZBProjectColors.h"
 
-
 @implementation QZBLastElementInHorizontalTCCell
 
 - (void)awakeFromNib {
@@ -25,17 +24,17 @@
         self.button.titleLabel.font = [UIFont systemFontOfSize:13];
         self.button.layer.cornerRadius = 10.0;
         self.button.clipsToBounds = YES;
-       // [self.button setTitle:@"Показать \nвсех" forState:UIControlStateNormal];
+        // [self.button setTitle:@"Показать \nвсех" forState:UIControlStateNormal];
         self.button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.button.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.button.transform = CGAffineTransformMakeRotation(1.5707963);
         [self.button setFrame:CGRectMake(40, 10, 80, 80)];
         [self addSubview:self.button];
-        
-        
 
-        [self.button addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [self.button addTarget:self
+                        action:@selector(showAll:)
+              forControlEvents:UIControlEventTouchUpInside];
+
         self.contentView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
     }
@@ -53,26 +52,20 @@
 }
 
 - (void)showAll:(UIButton *)sender {
-    
-  //sender superview check
-    
-        //  UITableViewCell *cell = (UITableViewCell *)sender.superview;
-        NSLog(@"%ld",[self getIndexPathCell:self].row);
-        
-        NSIndexPath *ip = [self getIndexPathCell:self];
+    NSIndexPath *ip = [self getIndexPathCell:self];
 
-        [[NSNotificationCenter defaultCenter]
+    [[NSNotificationCenter defaultCenter]
 
-            postNotificationName:@"QZBUserPressShowAllButton"
-                          object:ip];
-    
+        postNotificationName:@"QZBUserPressShowAllButton"
+                      object:ip];
 }
 
 - (NSIndexPath *)getIndexPathCell:(UIView *)view {
     if ([view isKindOfClass:[QZBHorizontalCell class]]) {
         // UITableView *tv = (UITableView *)view.superview;
 
-        NSIndexPath *indexPath = [(UITableView *)view.superview.superview indexPathForCell:(UITableViewCell *)view];
+        NSIndexPath *indexPath =
+            [(UITableView *)view.superview.superview indexPathForCell:(UITableViewCell *)view];
         return indexPath;
 
     } else {
@@ -80,8 +73,7 @@
     }
 }
 
--(void)setButtonTitle:(NSString *)buttonTitle{
-    
+- (void)setButtonTitle:(NSString *)buttonTitle {
     [self.button setTitle:buttonTitle forState:UIControlStateNormal];
 }
 

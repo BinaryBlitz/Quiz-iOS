@@ -99,7 +99,7 @@ navigation
     cell.achievementPic.layer.cornerRadius = self.cornerRadius;
     cell.achievementPic.layer.masksToBounds = YES;
     if (achiv.isAchieved) {
-       // image = [UIImage imageNamed:@"achiv"];
+        // image = [UIImage imageNamed:@"achiv"];
         [cell.achievementPic setImageWithURL:achiv.imageURL];
     } else {
         NSURLRequest *imageRequest =
@@ -117,25 +117,9 @@ navigation
 
                                             }
                                             failure:nil];
-
-        //        [cell.achievementPic  setImageWithURLRequest:imageRequest
-        //                 placeholderImage:[UIImage imageNamed:@"achiv"]
-        //                          success:nil
-        //                          failure:nil];
-
-        //         [cell.achievementPic setImageWithURL:achiv.imageURL];//??
-        //        cell.achievementPic.image = [self
-        //        grayscaleImagefromImage:cell.achievementPic.image];
-
-    //    image = [UIImage imageNamed:@"notAchiv"];
     }
 
-    //[cell.achievementPic setImage:image];
     cell.achievementTitle.text = achiv.name;
-
-    // Configure the cell
-
-    NSLog(@"%ld", (long)indexPath.row);
 
     return cell;
 }
@@ -152,9 +136,6 @@ navigation
 }
 
 - (void)initAchivs {
-    //[UIImage imageNamed:@"achiv"];
-    //[UIImage imageNamed:@"notAchiv"];
-
     [[QZBServerManager sharedManager] GETachievementsForUserID:0
         onSuccess:^(NSArray *achievements) {
             self.achivArray = achievements;

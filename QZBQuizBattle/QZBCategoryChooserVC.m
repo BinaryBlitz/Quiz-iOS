@@ -120,7 +120,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.choosedCategory = self.categories[indexPath.row];
-    // NSLog(@"%ld", (long)self.choosedCategory.category_id);
      [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
 }
 

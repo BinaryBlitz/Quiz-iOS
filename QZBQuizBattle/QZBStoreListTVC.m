@@ -45,12 +45,6 @@
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
-//    self.navigationItem.rightBarButtonItem =
-//        [[UIBarButtonItem alloc] initWithTitle:@"Востановить"
-//                                         style:UIBarButtonItemStyleBordered
-//                                        target:self
-//                                        action:@selector(restoreTapped:)];
-
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
@@ -64,26 +58,21 @@
     [self.tableView addSubview:self.refreshControl];
 
     self.tableView.backgroundColor = [UIColor veryDarkGreyColor];
-    // [self reload];
-    //[self.refreshControl beginRefreshing];
-    //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
 
     self.needRelaod = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    NSLog(@"viewVillAppear");
+    
+    
 
     if (self.needRelaod) {
-      //  [self reload];
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     }
 
     [self.tableView reloadData];
     
-    //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(productPurchased:)
@@ -102,9 +91,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    // self.products = nil;
-    // self.twiceBooster = nil;
-    // self.tripleBooster = nil;
 
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -131,8 +117,7 @@
             [[QZBQuizTopicIAPHelper sharedInstance]
                 requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
                     if (success) {
-                        // NSLog(@"products %@", products);
-
+                
                         NSMutableArray *tmpproducts = [NSMutableArray arrayWithArray:products];
                         SKProduct *productForLocale = [products firstObject];
                         [_priceFormatter setLocale:productForLocale.priceLocale];
@@ -336,7 +321,6 @@
 - (void)buyProduct:(SKProduct *)product {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 
-    NSLog(@"Buying %@...", product.productIdentifier);
     [[QZBQuizTopicIAPHelper sharedInstance] buyProduct:product];
 }
 
@@ -377,16 +361,6 @@
 - (void)productPurchased:(NSNotification *)notification {
     ///  NSString *productIdentifier = notification.object;
     [self.tableView reloadData];
-    //    [_products enumerateObjectsUsingBlock:^(SKProduct *product, NSUInteger idx, BOOL *stop) {
-    //        if ([product.productIdentifier isEqualToString:productIdentifier]) {
-    //            //            [self.tableView
-    //            //                reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:idx+1
-    //            //                inSection:0] ]
-    //            //                      withRowAnimation:UITableViewRowAnimationFade];
-    //            [self.tableView reloadData];
-    //            *stop = YES;
-    //        }
-    //    }];
 
     [SVProgressHUD dismiss];
 }

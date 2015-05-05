@@ -24,6 +24,7 @@
 #import "QZBRegistrationChooserVC.h"
 #import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -36,11 +37,13 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
-    //[QZBQuizIAPHelper sharedInstance];
+    
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelWarning];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelWarning];
 
     [Fabric with:@[CrashlyticsKit]];
 
-    NSLog(@"launch options %@", launchOptions);
+    DDLogInfo(@"launch options %@", launchOptions);
 
     if (IS_OS_8_OR_LATER) {
         [application
@@ -75,43 +78,6 @@
 
     return YES;
 }
-
-//- (void)presentRegistration {
-//    if (![[QZBCurrentUser sharedInstance] checkUser]) {
-//        NSLog(@"exist");
-//
-////        UIView *backgrView = [[UIView alloc]
-////            initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,
-////                                     [[UIScreen mainScreen] bounds].size.height)];
-////        backgrView.backgroundColor = [UIColor blackColor];
-////        backgrView.alpha = 1.0;
-//
-//        // self.window.rootViewController.storyboard
-//        
-//        UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-//        
-//        UINavigationController *navController =
-//        (UINavigationController *)tabController.viewControllers[0];
-//        
-//        QZBRegistrationChooserVC *notificationController =
-//        [navController.storyboard instantiateViewControllerWithIdentifier:@"registrationVC"];
-//        
-//        tabController.selectedIndex = 0;
-//
-//
-////        QZBRegistrationChooserVC *destination = [self.window.rootViewController.storyboard
-////            instantiateViewControllerWithIdentifier:@"registrationVC"];
-//        //[self.view addSubview:backgrView];
-//
-//        [navController pushViewController:notificationController animated:YES];
-////        [navController presentViewController:notificationController
-////                                                     animated:NO
-////                                                   completion:nil];
-////        
-//
-//        //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
-//    }
-//}
 
 
 - (BOOL)application:(UIApplication *)application
@@ -221,7 +187,7 @@
         // abort() causes the application to generate a crash log and terminate. You should not use
         // this function in a
         // shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
 
@@ -256,7 +222,7 @@
             // abort() causes the application to generate a crash log and terminate. You should not
             // use this function in
             // a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
@@ -266,7 +232,7 @@
 
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"My token is: %@", deviceToken);
+    DDLogInfo(@"My token is: %@", deviceToken);
 
     // DataModel *dataModel = chatViewController.dataModel;
     // NSString *oldToken = [dataModel deviceToken];
@@ -276,16 +242,13 @@
         stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-    NSLog(@"My token is: %@", newToken);
 
     [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
 }
 
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"Received notification: %@", userInfo);
-    
-    
+    DDLogInfo(@"Received notification: %@", userInfo);
 
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
@@ -307,29 +270,24 @@
             [self acceptChallengeWithDict:userInfo];
         }
 
-        //  if()
-
         [self setBadgeWithDictionary:userInfo];
     }
-    // [self showFriendRequestScreenWithDictionary:userInfo];
 }
 
 - (void)application:(UIApplication *)application
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"Failed to get token, error: %@", error);
+    DDLogWarn(@"Failed to get token, error: %@", error);
 }
 
 - (void)setBadgeWithDictionary:(NSDictionary *)userInfo {
     NSUInteger vcNum = 0;
 
     if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
-        // [self showFriendRequestScreenWithDictionary:userInfo];
-
         vcNum = 2;
 
     } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
-        // [self acceptChallengeWithDict:userInfo];
         vcNum = 0;
+        
     } else {
         return;
     }
@@ -362,33 +320,9 @@
 }
 
 - (void)acceptChallengeWithDict:(NSDictionary *)dict {
-  //  if (![QZBSessionManager sessionManager].isGoing) {
-        //        {
-        //            action = CHALLENGE;
-        //            aps =     {
-        //                alert = "Foo challenged you.";
-        //            };
-        //            lobby =     {
-        //                id = 421;
-        //            };
-        //        }
-        //
-      //  UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
 
-        
-//        UINavigationController *navController =
-//        (UINavigationController *)tabController.viewControllers[0];
-        
-       // QZBMainGameScreenTVC *mainScreen = navController.viewControllers[0];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen" object:nil];
         
-      //  [mainScreen reloadTopicsData];
-        
-
-      //   tabController.selectedIndex = 0;
-
-      
-   // }
 }
 
 - (void)showAchiewvmentWithDict:(NSDictionary *)dict {

@@ -28,8 +28,6 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 @property (copy, nonatomic, readonly) NSString *baseURL;
 
 
-
-
 + (QZBServerManager *)sharedManager;
 
 - (void)getСategoriesOnSuccess:(void (^)(NSArray *topics))successAF

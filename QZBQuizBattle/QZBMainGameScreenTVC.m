@@ -567,14 +567,11 @@
         UITabBarController *tabController = self.tabBarController;
         UITabBarItem *tabbarItem = tabController.tabBar.items[0];
         tabbarItem.badgeValue = nil;
-      //  NSLog(@"status code %ld", (long)statusCode);
+        
         if (statusCode != -1) {
             [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
         }
-
     }];
-
-    // self.tabBarItem.badgeValue = nil;
 }
 
 

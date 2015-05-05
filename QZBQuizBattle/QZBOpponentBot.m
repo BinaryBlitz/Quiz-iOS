@@ -93,7 +93,7 @@
 - (void)questionDidStartWithNUmber:(NSNotification *)notification {
     if ([[notification name] isEqualToString:@"QZBNewQuestionTimeCountingStart"]) {
         if ([notification.object isKindOfClass:[NSNumber class]]) {
-            NSLog(@"choosed");
+            
 
             NSNumber *num = (NSNumber *)notification.object;
 

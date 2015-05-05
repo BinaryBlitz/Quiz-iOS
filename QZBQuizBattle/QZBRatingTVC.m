@@ -37,9 +37,6 @@
     [super viewWillAppear:animated];
     [self.ratingTableView reloadData];
     
-    //[self.refreshControl beginRefreshing];
-    
-    NSLog(@"it shown %ld", self.tableType);
     if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
         pageVC.expectedType = self.tableType;
@@ -48,7 +45,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    NSLog(@"hided %ld", self.tableType);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -175,7 +171,6 @@
     self.playerRank = playerArray;
 
     [self.ratingTableView reloadData];
-    NSLog(@"%@ \n %@", self.topRank, self.playerRank);
 }
 
 /*

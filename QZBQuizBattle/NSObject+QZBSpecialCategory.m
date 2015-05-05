@@ -12,7 +12,6 @@
 
 +(void)calculateLevel:(NSInteger *)level levelProgress:(float *)levelProgress fromScore:(NSInteger)score{
     
-   // NSLog(@"score %ld", score);
     
     NSInteger resScore = score;
     NSInteger lvl = 0;

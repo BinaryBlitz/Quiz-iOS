@@ -35,7 +35,7 @@
         
         if(![avaURL isEqual:[NSNull null]] && avaURL ){
             NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:avaURL];
-            NSLog(@"ava url %@", urlStr);
+           
             self.imageURL = [NSURL URLWithString:urlStr];
         } else{
             

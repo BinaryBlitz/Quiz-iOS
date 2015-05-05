@@ -20,27 +20,13 @@
 @implementation QZBPlayerInfoCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    
-   // NSLog(@"awake from nib");
-//    self.badgeView = [[JSBadgeView alloc] initWithParentView:self.friendsButton
-//                                                   alignment:JSBadgeViewAlignmentTopRight];
-    
-    //[self addDropShadows];
-   
-    
-    
-    
-    
+
 }
 
 -(void)setBAdgeCount:(NSInteger)count{
     
-    NSLog(@"badge count %ld", (long)count);
+//    NSLog(@"badge count %ld", (long)count);
     if(count <= 0){
-       // self.badgeView.badgeText = @"";
-       // self.badgeView.hidden = YES;
-        
         self.friendsButton.badgeValue = nil;
     } else{
 
@@ -49,16 +35,12 @@
         self.friendsButton.badgeMinSize = 10;
         
         self.friendsButton.badgeValue = [NSString stringWithFormat:@"%ld", (long)count];
-       // self.badgeView.badgeText =  [NSString stringWithFormat:@"%ld", (long)count];
     }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
-    
-    
 }
 
 

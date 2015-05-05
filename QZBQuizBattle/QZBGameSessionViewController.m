@@ -154,8 +154,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     self.backgroundTask =
         [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-            // NSLog(@"Background handler called. Not running background tasks anymore.");
-            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+                [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
             self.backgroundTask = UIBackgroundTaskInvalid;
         }];
 }
@@ -218,8 +217,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     // NSUInteger num = [QZBSessionManager sessionManager].firstUserLastAnswer.answer.answerNum;
     BOOL isTrue = [QZBSessionManager sessionManager].firstUserLastAnswer.isRight;
-
-    // NSLog(@"Answer %ld %d", (unsigned long)num, isTrue);
 
     QZBAnswerButton *button = (QZBAnswerButton *)sender;
 
@@ -492,8 +489,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     QZBQuestionWithUserAnswer *qanda = [QZBSessionManager sessionManager].opponentUserLastAnswer;
 
     QZBQuestion *quest = [[QZBSessionManager sessionManager].askedQuestions lastObject];
-
-    //  NSLog(@"%ld", (unsigned long)quest.rightAnswer);
 
     for (QZBAnswerButton *b in self.answerButtons) {
         b.enabled = NO;

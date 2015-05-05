@@ -43,7 +43,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.userNameTextField becomeFirstResponder];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,7 +144,8 @@ navigation
     }
 }
 - (IBAction)renewPasswordAction:(id)sender {
-    [self showAlertAboutPsswordRenewWithSubtitle:@"Введите почту, чтобы восстановить аккаунт"];
+    [self showAlertAboutPsswordRenewWithSubtitle:@"Введите почту, чтобы восстановить "
+                                                 @"аккаунт"];
 
     [self.userNameTextField resignFirstResponder];
 }
@@ -157,14 +157,12 @@ navigation
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
 
-
     [alert alertIsDismissed:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                        dispatch_get_main_queue(), ^{
                            [self setNeedsStatusBarAppearanceUpdate];
                        });
     }];
-
 
     alert.completeButtonFormatBlock = ^NSDictionary *(void) {
         NSDictionary *formatDict = @{ @"backgroundColor" : [UIColor middleDarkGreyColor] };
@@ -174,8 +172,8 @@ navigation
     self.emailTextField = [alert addTextField:@"Почта"];
 
     [self customizeTextField:self.emailTextField];
-    
-   // __weak typeof(alert) weakAlert = alert;
+
+    // __weak typeof(alert) weakAlert = alert;
 
     [alert addButton:@"Восстановить"
         validationBlock:^BOOL {
@@ -183,13 +181,12 @@ navigation
 
         }
         actionBlock:^{
-            
-            
-          //  [weakAlert hideView];
-            
+
+            //  [weakAlert hideView];
+
             NSString *email = [self.emailTextField.text copy];
             self.emailTextField.text = @"";
-            
+
             [self showAlertWaitingForEmail:email];
 
         }];
@@ -199,85 +196,83 @@ navigation
                 subTitle:subtitle
         closeButtonTitle:@"Отмена"
                 duration:0.0f];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.emailTextField becomeFirstResponder];
-       // [alert.view
-    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [self.emailTextField becomeFirstResponder];
+                       // [alert.view
+                   });
 }
 
--(void)showAlertWaitingForEmail:(NSString *)email{
-    
+- (void)showAlertWaitingForEmail:(NSString *)email {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    
-    
-    [[QZBServerManager sharedManager] POSTPasswordResetWithEmail:email
-                                                            onSuccess:^{
-     
-                                                               // NSLog(@"all good");
-                                                                [self showAlertSucces:email];
-                                                               
-                                                            }
-                                                            onFailure:^(NSError *error, NSInteger statusCode){
-                                                                //if(alert.isVisible){
-                                                                //    [alert hideView];
-                                                                if(statusCode == 404){
-                                                                    [SVProgressHUD dismiss];
-                                                                    
-                                                                    [self showAlertFail:email];
-                                                                }else{
-                                                                    [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
-                                                                }
-                                                           }];
 
-    
-    
-    
-    
+    [[QZBServerManager sharedManager] POSTPasswordResetWithEmail:email
+        onSuccess:^{
+
+            [self showAlertSucces:email];
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
+            // if(alert.isVisible){
+            //    [alert hideView];
+            if (statusCode == 404) {
+                [SVProgressHUD dismiss];
+
+                [self showAlertFail:email];
+            } else {
+                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+            }
+        }];
 }
 
--(void)showAlertFail:(NSString *)email{
+- (void)showAlertFail:(NSString *)email {
     [SVProgressHUD dismiss];
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
-    NSString *subTitle = [NSString stringWithFormat:@"Такая почта не привязана ни к одному из акаунтов, попробуйте ввести другую почту"];
-    
+    NSString *subTitle = [NSString stringWithFormat:@"Такая почта не привязана ни к одному из "
+                                                    @"акаунтов, попробуйте ввести другую почту"];
+
     __block BOOL isShown = NO;
-    
+
     [alert alertIsDismissed:^{
-        if(!isShown){
+        if (!isShown) {
             isShown = YES;
-                           [self showAlertAboutPsswordRenewWithSubtitle:@"Введите почту, чтобы восстановить аккаунт"];
+            [self showAlertAboutPsswordRenewWithSubtitle:
+                      @"Введите почту, чтобы восстановить "
+                      @"аккаунт"];
         }
-        
+
     }];
 
-    //alert.iconTintColor =
-    
-//   alert showError:<#(UIViewController *)#> title:<#(NSString *)#> subTitle:<#(NSString *)#> closeButtonTitle:<#(NSString *)#> duration:<#(NSTimeInterval)#>
-   
+    // alert.iconTintColor =
+
+    //   alert showError:<#(UIViewController *)#> title:<#(NSString *)#> subTitle:<#(NSString *)#>
+    //   closeButtonTitle:<#(NSString *)#> duration:<#(NSTimeInterval)#>
+
     [alert showError:self.navigationController
-                 title:@"Ошибка"
-              subTitle:subTitle
-      closeButtonTitle:@"ОК"
-              duration:3.0];
-    
+                   title:@"Ошибка"
+                subTitle:subTitle
+        closeButtonTitle:@"ОК"
+                duration:3.0];
 }
 
--(void)showAlertSucces:(NSString *)email{
+- (void)showAlertSucces:(NSString *)email {
     [SVProgressHUD dismiss];
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
-    NSString *subTitle = [NSString stringWithFormat:@"Сообщение с ссылкой на востановление пароля успешно отправлено"];
-    
-    [alert showSuccess:self.navigationController
-                 title:@"Успешно"
-              subTitle:subTitle
-      closeButtonTitle:@"ОК"
-              duration:5.0];
-}
+    NSString *subTitle = [NSString
+        stringWithFormat:
+            @"Сообщение с ссылкой на востановление пароля успешно "
+            @"отправлено"];
 
+    [alert showSuccess:self.navigationController
+                   title:@"Успешно"
+                subTitle:subTitle
+        closeButtonTitle:@"ОК"
+                duration:5.0];
+}
 
 #pragma mark - UITextFieldDelegate
 
@@ -294,7 +289,6 @@ navigation
         return [self validateEmailTextField];
 
     } else if ([textField isEqual:self.passwordTextField]) {
-
         if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField]) {
             return NO;
         } else {
@@ -315,9 +309,7 @@ navigation
         [SVProgressHUD resetOffsetFromCenter];
         return NO;
     } else {
-        
-        
-       return YES;
+        return YES;
     }
 }
 
