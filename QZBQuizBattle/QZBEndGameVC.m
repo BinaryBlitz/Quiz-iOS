@@ -47,7 +47,7 @@
 @property (assign, nonatomic) BOOL isJustResult;
 @property (assign, nonatomic) BOOL isMainInited;
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
-@property(strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
+@property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
 @end
 
@@ -66,7 +66,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    if(!self.challengeDescriptionWithResult){
+    if (!self.challengeDescriptionWithResult) {
         [self initSessionResults];
     }
 }
@@ -93,38 +93,31 @@
             [NSURLRequest requestWithURL:url
                              cachePolicy:NSURLRequestReturnCacheDataElseLoad
                          timeoutInterval:60];
-        
-        CGRect r = CGRectMake(0, 0,  CGRectGetWidth([UIScreen mainScreen].bounds),
-                              16*CGRectGetWidth([UIScreen mainScreen].bounds)/9);
-        
+
+        CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
+                              16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
+
         UIImageView *iv = [[UIImageView alloc] initWithFrame:r];
-        
+
         self.tableView.backgroundColor = [UIColor clearColor];
 
-        [iv setImageWithURLRequest:imageRequest
-                  placeholderImage:nil
-                           success:nil
-                           failure:nil];
-        
+        [iv setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
+
         //  [self.view addSubview:iv];
         //  [self.view sendSubviewToBack:iv];
-        
+
         //[self.view insertSubview:iv atIndex:0];
-        
+
         self.tableView.backgroundView = iv;
-        
     }
     // [self.tableView layoutIfNeeded];
 }
-
-
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 
-    if(!self.isOfflineChallenge){
+    if (!self.isOfflineChallenge) {
         [self animateLose];
     }
 }
@@ -184,58 +177,54 @@
         self.opponent = nil;
     }
     [[QZBSessionManager sessionManager] closeSession];
-    
-
 }
 
--(void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription{
-    
+- (void)initWithChallengeResult:(QZBChallengeDescriptionWithResults *)challengeDescription {
     self.challengeDescriptionWithResult = challengeDescription;
-    
+
     self.title = challengeDescription.topic.name;
-    
+
     self.firstUserName = challengeDescription.firstUser.name;
     self.opponentUserName = challengeDescription.opponentUser.name;
-    
-    
+
     if (challengeDescription.firstUser.imageURL) {
         self.firstImageURL = challengeDescription.firstUser.imageURL;
     }
-    
+
     if (challengeDescription.opponentUser.imageURL) {
         self.opponentImageURL = challengeDescription.opponentUser.imageURL;
     }
-    
+
     self.firstUserScore = (NSUInteger)challengeDescription.firstResult;
     self.secondUserScore = (NSUInteger)challengeDescription.opponentResult;
-    
+
     self.sessionResult = [self resultOfSession];
-    
+
     self.multiplier = challengeDescription.multiplier;
-    
+
     self.topic = challengeDescription.topic;
-    
+
     self.beginScore = self.endScore = [challengeDescription.topic.points integerValue];
-    
+
     self.opponent = challengeDescription.opponentUser;
-    
-    [[QZBServerManager sharedManager]DELETELobbiesWithID:challengeDescription.lobbyID onSuccess:^{
-        
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
-    }];
-    
-    
+
+    [[QZBServerManager sharedManager] DELETELobbiesWithID:challengeDescription.lobbyID
+        onSuccess:^{
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
 }
 
--(NSString *)resultOfSession{
+- (NSString *)resultOfSession {
     NSString *result = nil;
-    
-    if(self.firstUserScore>self.secondUserScore){
+
+    if (self.firstUserScore > self.secondUserScore) {
         result = @"Победа";
-    }else if (self.firstUserScore< self.secondUserScore){
+    } else if (self.firstUserScore < self.secondUserScore) {
         result = @"Поражение";
-    } else{
+    } else {
         result = @"Ничья";
     }
     return result;
@@ -273,18 +262,17 @@ navigation
     static NSString *pointCellIdentifier = @"endGamePointsCell";
     static NSString *resultCellIdentifier = @"endGameResultPointsCell";
     static NSString *progressCellIdentifier = @"endGameProgressCell";
-    
 
     UITableViewCell *cell = nil;
     if (indexPath.row == 0) {
         QZBEndGameMainCell *mainCell =
             [tableView dequeueReusableCellWithIdentifier:mainCellIdentifier];
 
-        if(!self.isMainInited){
+        if (!self.isMainInited) {
             self.isMainInited = YES;
             [self initMainCell:mainCell];
         }
-    
+
         //[self initMainCell:mainCell];
 
         return mainCell;
@@ -383,7 +371,7 @@ navigation
 
     cell.opponentBV.badgeText =
         [NSString stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
-    
+
     cell.userBV.badgeText = [NSString stringWithFormat:@"%ld", (unsigned long)self.firstUserScore];
     cell.resultOfSessionLabel.text = self.sessionResult;
 
@@ -414,40 +402,37 @@ navigation
         }
     }
 
-//    QZBProgressViewController *progressVC =
-//        [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
-//
-//    [progressVC initSessionWithTopic:self.topic user:nil];
-    if(!destinationVC && !self.opponent){
+    //    QZBProgressViewController *progressVC =
+    //        [self.storyboard
+    //        instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+    //
+    //    [progressVC initSessionWithTopic:self.topic user:nil];
+    if (!destinationVC && !self.opponent) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
-//    NSUInteger objectIndex =
-//    [self.navigationController.viewControllers indexOfObject:destinationVC];
-    
-    QZBProgressViewController *progressVC = [self.storyboard
-                                             instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
-    
+
+    //    NSUInteger objectIndex =
+    //    [self.navigationController.viewControllers indexOfObject:destinationVC];
+
+    QZBProgressViewController *progressVC =
+        [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+
     [progressVC initSessionWithTopic:self.topic user:self.opponent];
-    
-    
 
     if (!destinationVC) {
-        NSUInteger objectIndex =
-        [self.navigationController.viewControllers indexOfObject:self];
+        NSUInteger objectIndex = [self.navigationController.viewControllers indexOfObject:self];
         [controllers insertObject:progressVC atIndex:objectIndex];
-        
+
     } else {
         NSUInteger objectIndex =
-        [self.navigationController.viewControllers indexOfObject:destinationVC];
+            [self.navigationController.viewControllers indexOfObject:destinationVC];
         [controllers replaceObjectAtIndex:objectIndex withObject:progressVC];
     }
 
     [self.navigationController setViewControllers:[NSArray arrayWithArray:controllers]];
-    
+
     [self.navigationController popToViewController:progressVC animated:YES];
-    
-    
+
     // self.navigationController.viewControllers
 }
 - (IBAction)chooseAnotherTopic:(id)sender {
@@ -482,7 +467,6 @@ navigation
         for (UIViewController *controller in controllers) {
             if ([controller isKindOfClass:[QZBFriendsChallengeTVC class]] ||
                 [controller isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-                // NSLog(@"%@", [controller class]);
 
                 destinationVC = controller;
                 break;
@@ -502,7 +486,6 @@ navigation
 
 - (void)moveToVCWithClass:(__unsafe_unretained Class)VCclass {
     NSArray *controllers = self.navigationController.viewControllers;
-
     UIViewController *destinationVC;
 
     for (UIViewController *controller in controllers) {
@@ -523,22 +506,20 @@ navigation
 - (void)animateLose {
     CGRect mainRect = [UIScreen mainScreen].bounds;
 
-    CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4,
-                              0.61 * CGRectGetWidth(mainRect), 1.4 * CGRectGetHeight(mainRect));
+    CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4, 0.61 * CGRectGetWidth(mainRect),
+                              1.4 * CGRectGetHeight(mainRect));
 
     CGRect rRight = CGRectMake(0.247 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
-                               0.755 * CGRectGetWidth(mainRect), 1.2*CGRectGetHeight(mainRect));
-    
-    CGRect rFlash = CGRectMake(0.25 * CGRectGetWidth(mainRect),
-                               0,
-                               0.42*CGRectGetWidth(mainRect),
-                               0.95*CGRectGetHeight(mainRect));
+                               0.755 * CGRectGetWidth(mainRect), 1.2 * CGRectGetHeight(mainRect));
+
+    CGRect rFlash = CGRectMake(0.25 * CGRectGetWidth(mainRect), 0, 0.42 * CGRectGetWidth(mainRect),
+                               0.95 * CGRectGetHeight(mainRect));
 
     UIImageView *leftImage = [[UIImageView alloc] initWithFrame:rLeft];
     UIImageView *rightImage = [[UIImageView alloc] initWithFrame:rRight];
     UIImageView *flashImage = [[UIImageView alloc] initWithFrame:rFlash];
     flashImage.alpha = 0.0;
-    
+
     flashImage.image = [UIImage imageNamed:@"flashWhite"];
 
     if (self.firstUserScore < self.secondUserScore) {
@@ -546,7 +527,7 @@ navigation
         rightImage.image = [UIImage imageNamed:@"rightGreen"];
     } else if (self.firstUserScore > self.secondUserScore) {
         leftImage.image = [UIImage imageNamed:@"leftGreen"];
-        rightImage.image = [UIImage imageNamed:@"rightRed"];\
+        rightImage.image = [UIImage imageNamed:@"rightRed"];
     } else {
         return;
     }
@@ -557,7 +538,6 @@ navigation
     [self.tableView.backgroundView sendSubviewToBack:rightImage];
     [self.tableView.backgroundView addSubview:leftImage];
     [self.tableView.backgroundView sendSubviewToBack:leftImage];
-    
 
     [UIView animateWithDuration:0.5
         delay:0.0
@@ -569,7 +549,7 @@ navigation
             rightImage.frame =
                 CGRectMake(0.245 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
                            CGRectGetWidth(rightImage.frame), CGRectGetHeight(mainRect) * 1.2);
-            
+
             flashImage.alpha = 1.0;
         }
         completion:^(BOOL finished){

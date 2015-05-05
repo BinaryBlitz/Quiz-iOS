@@ -10,4 +10,5 @@
 
 @interface NSString (QZBStringCategory)
 + (NSString *)endOfWordFromNumber:(NSInteger)number;
++ (NSString *)endOfDayWordFromNumber:(NSInteger)number;
 @end

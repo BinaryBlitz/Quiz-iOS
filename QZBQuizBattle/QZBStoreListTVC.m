@@ -15,6 +15,7 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "NSString+QZBStringCategory.h"
 
 #import <Crashlytics/Crashlytics.h>
 
@@ -180,7 +181,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 200.0;
+        return 270.0;
     } else if (indexPath.row == 1) {
         return 32.0;
     } else {
@@ -313,7 +314,9 @@
 }
 
 - (NSString *)expirationDayCountFromInt:(int)dayCount {
-    return [NSString stringWithFormat:@"Истекает через\n %d дней", dayCount];
+    
+    NSString *day = [NSString endOfDayWordFromNumber:dayCount];
+    return [NSString stringWithFormat:@"Истекает через\n %d %@", dayCount, day];
 }
 
 #pragma mark - actions

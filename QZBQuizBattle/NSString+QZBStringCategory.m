@@ -27,4 +27,15 @@
     }
 }
 
++ (NSString *)endOfDayWordFromNumber:(NSInteger)number{
+    
+    if (number == 1){
+        return @"день";
+    } else if(number >= 2 && number <= 4){
+        return @"дня";
+    }else{
+        return @"дней";
+    }
+}
+
 @end
