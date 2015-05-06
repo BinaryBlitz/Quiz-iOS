@@ -64,7 +64,7 @@
     UIImageView *v = [[UIImageView alloc] init];
     NSString *urlAppend = d[@"icon_url"];
 
-    if (urlAppend) {
+    if (![urlAppend isEqual:[NSNull null]] && urlAppend) {
         NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:urlAppend];
 
         NSURL *imgURl = [NSURL URLWithString:urlAsString];
@@ -78,6 +78,8 @@
                   placeholderImage:[UIImage imageNamed:@"achiv"]
                            success:nil
                            failure:nil];
+    }else{
+        v.image = [UIImage imageNamed:@"achiv"];
     }
 
     [alert showCustom:self.navigationController
@@ -181,5 +183,8 @@
     }
     return nil;
 }
+
+
+
 
 @end

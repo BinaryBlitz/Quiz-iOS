@@ -99,6 +99,7 @@
 		199CD9421A8A803A00FBF820 /* QZBRatingTopicChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */; };
 		199CD9461A8BB11600FBF820 /* QZBAchievementCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9451A8BB11600FBF820 /* QZBAchievementCVC.m */; };
 		199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199CD9491A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m */; };
+		19A0977B1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */; };
 		19A1276F1AB9DCDE009075AD /* QZBMainGameScreenTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */; };
 		19A127731AB9DEC3009075AD /* QZBChallengeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127721AB9DEC3009075AD /* QZBChallengeDescription.m */; };
 		19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127781AB9EA1C009075AD /* QZBChallengeCell.m */; };
@@ -312,6 +313,8 @@
 		199CD9451A8BB11600FBF820 /* QZBAchievementCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchievementCVC.m; sourceTree = "<group>"; };
 		199CD9481A8BB1DA00FBF820 /* QZBAchievementCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAchievementCollectionCell.h; sourceTree = "<group>"; };
 		199CD9491A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchievementCollectionCell.m; sourceTree = "<group>"; };
+		19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QZBValidateCategory.h"; sourceTree = "<group>"; };
+		19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QZBValidateCategory.m"; sourceTree = "<group>"; };
 		19A1276D1AB9DCDE009075AD /* QZBMainGameScreenTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainGameScreenTVC.h; sourceTree = "<group>"; };
 		19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainGameScreenTVC.m; sourceTree = "<group>"; };
 		19A127711AB9DEC3009075AD /* QZBChallengeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBChallengeDescription.h; sourceTree = "<group>"; };
@@ -566,6 +569,8 @@
 				1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */,
 				196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */,
 				196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */,
+				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
+				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -1240,6 +1245,7 @@
 				197F2C051AF27F9700C8BC2A /* QZBMessagerVC.m in Sources */,
 				196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
+				19A0977B1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m in Sources */,
 				19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */,
 				196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */,
 				19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */,

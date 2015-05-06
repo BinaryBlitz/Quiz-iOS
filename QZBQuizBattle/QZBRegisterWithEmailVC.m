@@ -14,6 +14,7 @@
 #import "QZBPasswordTextField.h"
 #import "UIView+QZBShakeExtension.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "UIViewController+QZBValidateCategory.h"
 
 @interface QZBRegisterWithEmailVC () <UITextFieldDelegate>
 
