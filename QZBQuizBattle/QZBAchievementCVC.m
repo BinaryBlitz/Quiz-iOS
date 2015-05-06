@@ -94,13 +94,18 @@ navigation
 
     QZBAchievement *achiv = self.achivArray[indexPath.row];
 
-    UIImage *image = nil;
+  //  UIImage *image = nil;
 
     cell.achievementPic.layer.cornerRadius = self.cornerRadius;
     cell.achievementPic.layer.masksToBounds = YES;
     if (achiv.isAchieved) {
         // image = [UIImage imageNamed:@"achiv"];
-        [cell.achievementPic setImageWithURL:achiv.imageURL];
+        
+        if(achiv.imageURL){
+            [cell.achievementPic setImageWithURL:achiv.imageURL];
+        }else{
+            [cell.achievementPic setImage:[UIImage imageNamed:@"achiv"]];
+        }
     } else {
         NSURLRequest *imageRequest =
             [NSURLRequest requestWithURL:achiv.imageURL
@@ -108,7 +113,7 @@ navigation
                          timeoutInterval:60];
 
         [cell.achievementPic setImageWithURLRequest:imageRequest
-                                   placeholderImage:[UIImage imageNamed:@"achiv"]
+                                   placeholderImage:[UIImage imageNamed:@"notAchiv"]
                                             success:^(NSURLRequest *request,
                                                       NSHTTPURLResponse *response, UIImage *image) {
 

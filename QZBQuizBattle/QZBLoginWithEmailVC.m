@@ -18,6 +18,7 @@
 #import <SVProgressHUD.h>
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 #import "UIColor+QZBProjectColors.h"
+#import "UIViewController+QZBValidateCategory.h"
 
 @interface QZBLoginWithEmailVC () <UITextFieldDelegate>
 
@@ -88,8 +89,7 @@ navigation
 
     if (![self validateTextField:self.userNameTextField]) {
         [self.userNameTextField becomeFirstResponder];
-        // self.emailTextField.backgroundColor = [UIColor redColor];
-        //[self shake:self.emailTextField direction:1 shakes:0];
+
         return;
     } else {
         // self.emailTextField.backgroundColor = [UIColor greenColor];
@@ -97,7 +97,7 @@ navigation
 
     if (![self validateTextField:self.passwordTextField]) {
         [self.passwordTextField becomeFirstResponder];
-        //[self shake:self.passwordTextField direction:1 shakes:0];
+        
         return;
     }
 
@@ -114,8 +114,6 @@ navigation
                 [[QZBCurrentUser sharedInstance] setUser:user];
 
                 weakSelf.loginInProgress = NO;
-
-                // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
 
                 [SVProgressHUD dismiss];
                 [self dismissViewControllerAnimated:YES
@@ -151,7 +149,6 @@ navigation
 }
 
 - (void)showAlertAboutPsswordRenewWithSubtitle:(NSString *)subtitle {
-    // NSDictionary *d = dict[@"badge"];
 
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
@@ -244,11 +241,6 @@ navigation
         }
 
     }];
-
-    // alert.iconTintColor =
-
-    //   alert showError:<#(UIViewController *)#> title:<#(NSString *)#> subTitle:<#(NSString *)#>
-    //   closeButtonTitle:<#(NSString *)#> duration:<#(NSTimeInterval)#>
 
     [alert showError:self.navigationController
                    title:@"Ошибка"

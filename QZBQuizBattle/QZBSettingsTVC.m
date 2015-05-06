@@ -21,6 +21,7 @@
 #import <TSMessages/TSMessage.h>
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+QZBButtonCategory.h"
+#import "UIViewController+QZBValidateCategory.h"
 
 
 
@@ -104,7 +105,8 @@
             return YES;
         }
     } else if ([tf isEqual:self.userNameTextField]) {
-        if ([self checkUserName]) {
+        
+        if ([self validateTextField:self.userNameTextField]) {
             [self updateUserName];
 
             return YES;
@@ -144,19 +146,23 @@
 }
 
 - (BOOL)checkFirstPassword {
-    if (![self.userNewPasswordTextField validate]) {
-        [self.userNewPasswordTextField becomeFirstResponder];
-        [TSMessage showNotificationWithTitle:@"Пароль должен быть длинее 5 "
-                   @"символов" type:TSMessageNotificationTypeWarning];
-
-        self.userNewPasswordAgainTextField.text = @"";
-
-        [self.userNewPasswordTextField shakeView];
-
-        return NO;
-    } else {
-        return YES;
-    }
+//    if (![self.userNewPasswordTextField validate]) {
+//        
+//        
+//        [self.userNewPasswordTextField becomeFirstResponder];
+//        [TSMessage showNotificationWithTitle:@"Пароль должен быть длинее 5 "
+//                   @"символов" type:TSMessageNotificationTypeWarning];
+//
+//        self.userNewPasswordAgainTextField.text = @"";
+//
+//        [self.userNewPasswordTextField shakeView];
+//
+//        return NO;
+//    } else {
+//        return YES;
+//    }
+    
+    return [self validateTextField:self.userNewPasswordTextField];
 }
 
 - (BOOL)checkSecondPassword {
@@ -180,7 +186,7 @@
     }
 }
 - (IBAction)updateNameAction:(id)sender {
-    if([self checkUserName]){
+    if([self validateTextField:self.userNameTextField]){
         [self updateUserName];
     }
     
@@ -204,16 +210,16 @@
         }];
 }
 
-- (BOOL)checkUserName {
-    if (![self.userNameTextField validate]) {
-        [TSMessage
-            showNotificationWithTitle:@"Имя должно быть длинее 1 символа"
-                                 type:TSMessageNotificationTypeWarning];
-        return NO;
-    } else {
-        return YES;
-    }
-}
+//- (BOOL)checkUserName {
+//    if (![self.userNameTextField validate]) {
+//        [TSMessage
+//            showNotificationWithTitle:@"Имя должно быть длинее 1 символа"
+//                                 type:TSMessageNotificationTypeWarning];
+//        return NO;
+//    } else {
+//        return YES;
+//    }
+//}
 
 - (void)updateUserName {
     NSString *newName = [self.userNameTextField.text copy];

@@ -49,7 +49,7 @@ static NSArray *SCOPE = nil;
 }
 
 - (IBAction)authorize:(id)sender {
-    [VKSdk authorize:SCOPE revokeAccess:YES];
+  //  [VKSdk authorize:SCOPE revokeAccess:YES];
 
     [VKSdk authorize:SCOPE revokeAccess:YES];
 }

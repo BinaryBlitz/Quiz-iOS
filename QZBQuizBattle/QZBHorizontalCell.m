@@ -107,13 +107,22 @@
     if ([object isKindOfClass:[QZBAchievement class]]) {
         QZBAchievement *achiv = (QZBAchievement *)object;
 
-        [cell setName:achiv.name picURL:achiv.imageURL];
+        if(achiv.imageURL){
+            [cell setName:achiv.name picURL:achiv.imageURL];
+        }else{
+            
+            [cell setName:achiv.name picture:[UIImage imageNamed:@"achiv"]];
+        }
 
     } else if([object isKindOfClass:[QZBAnotherUser class]]){
         
         QZBAnotherUser *user = (QZBAnotherUser *)object;
         
-        [cell setName:user.name picURL:user.imageURL];
+        if(user.imageURL){
+            [cell setName:user.name picURL:user.imageURL];
+        }else{
+            [cell setName:user.name picture:[UIImage imageNamed:@"userpicStandart"]];
+        }
     }
 }
 
