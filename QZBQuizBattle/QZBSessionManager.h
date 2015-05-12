@@ -18,11 +18,11 @@
 @interface QZBSessionManager : NSObject
 
 @property (assign, nonatomic, readonly) BOOL isGoing;
-@property(assign, nonatomic, readonly) BOOL isChallenge;
+@property (assign, nonatomic, readonly) BOOL isChallenge;
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 
-@property(strong, nonatomic, readonly) NSString *sessionResult;
-@property(assign, nonatomic, readonly) NSInteger multiplier;
+@property (strong, nonatomic, readonly) NSString *sessionResult;
+@property (assign, nonatomic, readonly) NSInteger multiplier;
 @property (strong, nonatomic, readonly) QZBGameTopic *topic;
 
 @property (strong, nonatomic, readonly) QZBQuestion *currentQuestion;
@@ -31,12 +31,12 @@
 @property (assign, nonatomic, readonly) NSUInteger firstUserScore;
 @property (assign, nonatomic, readonly) NSUInteger secondUserScore;
 
-@property(assign, nonatomic, readonly) NSInteger userBeginingScore;
+@property (assign, nonatomic, readonly) NSInteger userBeginingScore;
 
 @property (copy, nonatomic, readonly) NSString *firstUserName;
 @property (copy, nonatomic, readonly) NSString *opponentUserName;
 
-@property(strong, nonatomic, readonly) id<QZBUserProtocol>opponent;
+@property (strong, nonatomic, readonly) id<QZBUserProtocol> opponent;
 
 @property (strong, nonatomic, readonly) NSURL *firstImageURL;
 @property (strong, nonatomic, readonly) NSURL *opponentImageURL;
@@ -52,8 +52,8 @@
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
 - (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker;
--(void)setTopicForSession:(QZBGameTopic *)topic;
--(void)setIsChallenge:(BOOL)isChallenge;
+- (void)setTopicForSession:(QZBGameTopic *)topic;
+- (void)setIsChallenge:(BOOL)isChallenge;
 
 + (instancetype)sessionManager;
 

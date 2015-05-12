@@ -75,6 +75,7 @@ static NSInteger topicsOffset = 7;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
 
+@property (strong, nonatomic) SCLAlertView *alert;
 @end
 
 @implementation QZBPlayerPersonalPageVC
@@ -84,6 +85,8 @@ static NSInteger topicsOffset = 7;
 
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
+    
+    
     self.playerTableView.backgroundColor = [UIColor middleDarkGreyColor];
 
     [self setNeedsStatusBarAppearanceUpdate];
@@ -133,12 +136,24 @@ static NSInteger topicsOffset = 7;
     DDLogInfo(@"viewWillAppear %@", self.user.name);
 
     [self updateBadges];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (self.isCurrent) {
+        self.user = nil;
+    }
+}
+
+
 
 - (void)dealloc {
     self.user = nil;
@@ -211,13 +226,8 @@ static NSInteger topicsOffset = 7;
         }];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
 
-    if (self.isCurrent) {
-        self.user = nil;
-    }
-}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -506,7 +516,9 @@ static NSInteger topicsOffset = 7;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-
+    
+   // [self tryUnshowAlert];
+    
     if ([segue.identifier isEqualToString:@"showAchivements"]) {
         QZBAchievementCVC *destinationVC = segue.destinationViewController;
 
@@ -800,19 +812,23 @@ static NSInteger topicsOffset = 7;
 
 - (void)showAchievement:(QZBAchievement *)achievment {
     // QZBAchievement *achievment = self.achivArray[indexPath.row];
+    
+   
 
     SCLAlertView *alert = [[SCLAlertView alloc] init];
+    self.alert = alert;
     alert.backgroundType = Blur;
     alert.showAnimationType = FadeIn;
     alert.shouldDismissOnTapOutside = YES;
 
     [alert alertIsDismissed:^{
 
+        self.alert = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                        dispatch_get_main_queue(), ^{
                            [self setNeedsStatusBarAppearanceUpdate];
+                           
                        });
-
     }];
 
     UIImageView *v = [[UIImageView alloc] init];
@@ -826,16 +842,36 @@ static NSInteger topicsOffset = 7;
                        success:nil
                        failure:nil];
 
-    // UIImage *img =
+   
 
-    [alert showCustom:self.navigationController
+    
+  [self.alert showCustom:self.navigationController
                    image:v.image
                    color:[UIColor lightBlueColor]
                    title:achievment.name
                 subTitle:achievment.achievementDescription
         closeButtonTitle:@"ОК"
                 duration:0.0f];
+    NSLog(@"alert setted");
+
 }
+
+
+//-(void)tryUnshowAlert{
+//    NSLog(@"try unshow");
+//    DDLogInfo(@"%@", self.alert.isVisible?@"visible":@"not visible");
+//    if(self.alert){
+//        [self.alert hideView];
+//        self.alert = nil;
+//    }
+//    
+//    for(UIView *v in self.navigationController.view.subviews ){
+//        if([v isKindOfClass:[UIImageView class]]){
+//            [v removeFromSuperview];
+//        }
+//    }
+//}
+
 
 - (void)achievementGet:(NSNotification *)note {
     [self showAlertAboutAchievmentWithDict:note.object];

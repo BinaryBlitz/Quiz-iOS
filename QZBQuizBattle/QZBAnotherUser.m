@@ -23,7 +23,7 @@
         if(![dict[@"username"] isEqual:[NSNull null]] && dict[@"username"] ){
             self.name = dict[@"username"];
         }else{
-            self.name = dict[@"name"];
+            self.name = @"";
         }
         
        // self.name = dict[@"name"];

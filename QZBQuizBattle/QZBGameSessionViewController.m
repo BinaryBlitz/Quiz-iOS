@@ -53,6 +53,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         [b setExclusiveTouch:YES];
         b.titleLabel.minimumScaleFactor = 0.5;
         b.titleLabel.adjustsFontSizeToFitWidth = YES;
+        b.titleLabel.lineBreakMode = NSLineBreakByClipping;
         b.titleLabel.numberOfLines = 0;
         CGFloat inset = CGRectGetHeight(b.frame) / 5;
         b.titleEdgeInsets = UIEdgeInsetsMake(inset / 3, inset / 3, inset / 3, inset / 3);
