@@ -38,8 +38,8 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
     
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelError];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelError];
 
     [Fabric with:@[CrashlyticsKit]];
 

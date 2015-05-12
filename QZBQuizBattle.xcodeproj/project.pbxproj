@@ -31,7 +31,6 @@
 		191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12FA1A8CD87700AFB829 /* QZBUserInRating.m */; };
 		19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */; };
 		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
-		192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */; };
 		1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */; };
 		19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */; };
 		19423D7E1A80F8740014B0AD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 19423D7D1A80F8740014B0AD /* Reachability.m */; };
@@ -195,8 +194,6 @@
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
 		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
 		192796761A9A026F00A468E5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
-		192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
 		1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+QZBButtonCategory.h"; sourceTree = "<group>"; };
 		1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+QZBButtonCategory.m"; sourceTree = "<group>"; };
 		19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -555,8 +552,6 @@
 				19D691141A6A91C7008B2AE1 /* NSString+MD5.m */,
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
-				192EFE2E1A83A7910079497C /* NSTimer+Blocks.h */,
-				192EFE2F1A83A7910079497C /* NSTimer+Blocks.m */,
 				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
 				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 				19D8914B1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.h */,
@@ -1279,7 +1274,6 @@
 				199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */,
 				1976699F1A67EEAC006C2757 /* QZBCurrentUser.m in Sources */,
 				197A092E1AE0F8BE00D00993 /* QZBGameTopic.m in Sources */,
-				192EFE301A83A7910079497C /* NSTimer+Blocks.m in Sources */,
 				19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */,
 				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,
 				191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */,

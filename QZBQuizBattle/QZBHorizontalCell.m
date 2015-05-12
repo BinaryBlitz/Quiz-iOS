@@ -100,6 +100,8 @@
     }
 
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    [cell setExclusiveTouch:YES];
     return cell;
 }
 
@@ -129,6 +131,13 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    });
     
     UITableViewCell *cell= [tableView cellForRowAtIndexPath:indexPath];
     

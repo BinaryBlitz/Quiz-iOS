@@ -1072,7 +1072,10 @@ NSString *const QZBNoInternetConnectionMessage =
 
             for (NSDictionary *dict in responseObject) {
                 QZBRequestUser *user = [[QZBRequestUser alloc] initWithDictionary:dict];
-                [friends addObject:user];
+                
+                if(![user.name isEqualToString:@""]){
+                    [friends addObject:user];
+                }
             }
 
             NSArray *result = [NSArray arrayWithArray:friends];

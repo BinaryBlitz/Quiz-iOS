@@ -16,8 +16,9 @@
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "NSString+QZBStringCategory.h"
-
+#import <CocoaLumberjack.h>
 #import <Crashlytics/Crashlytics.h>
+#import "QZBServerManager.h"
 
 
 @interface QZBStoreListTVC ()
@@ -65,10 +66,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    
 
     if (self.needRelaod) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [self reload];//TEST
     }
 
     [self.tableView reloadData];
@@ -152,7 +153,18 @@
                 }];
 
         } onFailure:^(NSError *error, NSInteger statusCode) {
-            [SVProgressHUD dismiss];
+            
+            DDLogInfo(@"status code %ld", statusCode);
+            
+            if(statusCode==0){
+                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+            });
+            
+           // [SVProgressHUD dismiss];
             [self.refreshControl endRefreshing];
             self.reloadInProgress = NO;
 
@@ -296,6 +308,21 @@
                       action:@selector(buyBoosterButtonTapped:)
             forControlEvents:UIControlEventTouchUpInside];
     }
+    
+//    int tag = 0;
+//    if ([product isEqual:self.twiceBooster]) {
+//        tag = 2;
+//    } else if ([product isEqual:self.tripleBooster]) {
+//        tag = 3;
+//    } else if ([product isEqual:self.fiveTimesBooster]) {
+//        tag = 5;
+//    }
+//    
+//    button.tag = tag;
+//    [button addTarget:self
+//               action:@selector(buyBoosterButtonTapped:)
+//     forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (NSString *)expirationDayCountFromInt:(int)dayCount {
