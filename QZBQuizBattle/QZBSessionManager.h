@@ -43,6 +43,7 @@
 
 @property (assign, nonatomic, readonly) NSUInteger roundNumber;
 @property (assign, nonatomic, readonly) BOOL isDoubled;
+@property (assign, nonatomic, readonly) BOOL didFirstUserAnswered;
 @property (assign, nonatomic, readonly) NSUInteger sessionTime;
 
 @property (assign, nonatomic, readonly) QZBQuestionWithUserAnswer *firstUserLastAnswer;

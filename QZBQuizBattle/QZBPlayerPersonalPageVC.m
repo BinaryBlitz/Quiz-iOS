@@ -131,7 +131,6 @@ static NSInteger topicsOffset = 7;
     if (self.isCurrent) {
         [self initFriendsWithUser:self.user];
     }
-    // [self.tableView reloadData];
 
     DDLogInfo(@"viewWillAppear %@", self.user.name);
 
@@ -353,7 +352,8 @@ static NSInteger topicsOffset = 7;
         QZBDescriptionForHorizontalCell *descrForHorizontal =
             [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
 
-        descrForHorizontal.descriptionLabel.text = @"Любимые топики";
+        descrForHorizontal.descriptionLabel.text = @"Любимые темы";
+        
         descrForHorizontal.descriptionLabel.textColor = [UIColor whiteColor];
 
         descrForHorizontal.contentView.backgroundColor = [UIColor veryDarkGreyColor];
@@ -755,7 +755,7 @@ static NSInteger topicsOffset = 7;
             [self.tableView reloadData];
 
             UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
 
             if ([self badgeNumber] > 0) {
                 tabbarItem.badgeValue =
@@ -779,7 +779,7 @@ static NSInteger topicsOffset = 7;
             [self.tableView reloadData];
 
             UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
 
             if ([self badgeNumber] > 0) {
                 tabbarItem.badgeValue =

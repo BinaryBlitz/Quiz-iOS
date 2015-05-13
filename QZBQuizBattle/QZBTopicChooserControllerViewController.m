@@ -20,6 +20,7 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "NSObject+QZBSpecialCategory.h"
 #import "UIColor+QZBProjectColors.h"
+#import <JSQSystemSoundPlayer.h>
 
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
@@ -181,6 +182,8 @@
             self.choosedIndexPath = indexPath;
         }
 
+        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
+                                                     fileExtension:kJSQSystemSoundTypeWAV];//REDO
         [tableView beginUpdates];
         [tableView endUpdates];
 
@@ -192,6 +195,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.choosedIndexPath isEqual:indexPath]) {
+       // [JSQSystemSoundPlayer sha]
         return 130.0f;
     }
     return 74.0f;

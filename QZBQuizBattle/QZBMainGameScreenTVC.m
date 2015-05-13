@@ -97,6 +97,8 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [self.mainTableView beginUpdates];
+    [self.mainTableView endUpdates];
     if ([segue.identifier isEqualToString:@"showPreparingVC"] && self.challengeDescription) {
         QZBProgressViewController *destinationController = segue.destinationViewController;
 
@@ -213,7 +215,7 @@
     
     
     if ([arr isEqualToArray:self.faveTopics]) {
-        text = @"Любимые топики";
+        text = @"Любимые темы";
         
     } else if ([arr isEqualToArray:self.friendsTopics]) {
         text = @"Популярное у друзей";
@@ -559,13 +561,13 @@
 
         [self.mainTableView reloadData];
         UITabBarController *tabController = self.tabBarController;
-        UITabBarItem *tabbarItem = tabController.tabBar.items[0];
+        UITabBarItem *tabbarItem = tabController.tabBar.items[2];
         tabbarItem.badgeValue = nil;
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
         [self.refreshControl endRefreshing];
         UITabBarController *tabController = self.tabBarController;
-        UITabBarItem *tabbarItem = tabController.tabBar.items[0];
+        UITabBarItem *tabbarItem = tabController.tabBar.items[2];
         tabbarItem.badgeValue = nil;
         
         if (statusCode != -1) {

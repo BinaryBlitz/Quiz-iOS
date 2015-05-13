@@ -17,6 +17,7 @@
 #import "QZBRegistrationChooserVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <JSQSystemSoundPlayer.h>
 
 @interface QZBCategoryChooserVC ()
 
@@ -118,6 +119,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
+                                                 fileExtension:kJSQSystemSoundTypeWAV];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.choosedCategory = self.categories[indexPath.row];
      [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];

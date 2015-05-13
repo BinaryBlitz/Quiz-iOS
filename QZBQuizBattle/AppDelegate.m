@@ -283,10 +283,10 @@
     NSUInteger vcNum = 0;
 
     if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
-        vcNum = 2;
+        vcNum = 1;
 
     } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
-        vcNum = 0;
+        vcNum = 2;
         
     } else {
         return;

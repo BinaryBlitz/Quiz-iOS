@@ -21,12 +21,14 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 @class QZBGameTopic;
 @class QZBAnotherUser;
 
-typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
-    QZBUserNameProblem, QZBEmailProblem};
+typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
+    QZBNoProblems,
+    QZBUserNameProblem,
+    QZBEmailProblem
+};
 
 @interface QZBServerManager : NSObject
 @property (copy, nonatomic, readonly) NSString *baseURL;
-
 
 + (QZBServerManager *)sharedManager;
 
@@ -37,8 +39,7 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)GETTopicsForMainOnSuccess:
-(void (^)(NSDictionary *resultDict))success
+- (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic;
@@ -63,7 +64,8 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)PATCHCloseSessionID:(NSNumber *)sessionID onSuccess:(void (^)())success
+- (void)PATCHCloseSessionID:(NSNumber *)sessionID
+                  onSuccess:(void (^)())success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - challenge
@@ -83,11 +85,13 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 - (void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)DELETELobbiesWithID:(NSNumber *)lobbyID onSuccess:(void (^)())success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)DELETELobbiesWithID:(NSNumber *)lobbyID
+                  onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID onSuccess:(void (^)())success
-                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID
+                                  onSuccess:(void (^)())success
+                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - user registration and login
 
@@ -100,10 +104,9 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
                                        QZBUserRegistrationProblem problem))failure;
 
 - (void)POSTLoginUserName:(NSString *)username
-                     password:(NSString *)password
-                    onSuccess:(void (^)(QZBUser *user))success
-                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
+                 password:(NSString *)password
+                onSuccess:(void (^)(QZBUser *user))success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)GETPlayerWithID:(NSNumber *)playerID
               onSuccess:(void (^)(QZBAnotherUser *anotherUser))success
@@ -120,19 +123,28 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 #pragma mark - user update
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure;
+                         onFailure:(void (^)(NSError *error,
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure;
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode,QZBUserRegistrationProblem problem))failure;
+                         onFailure:(void (^)(NSError *error,
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure;
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
-                       onFailure:(void (^)(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem))failure;
+                       onFailure:(void (^)(NSError *error,
+                                           NSInteger statusCode,
+                                           QZBUserRegistrationProblem problem))failure;
 
--(void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName user:(QZBUser *)user
-                                        onSuccess:(void (^)())success
-                                        onFailure:(void (^)(NSError *error, NSInteger statusCode,
-                                                            QZBUserRegistrationProblem problem))failure;
+- (void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName
+                                              user:(QZBUser *)user
+                                         onSuccess:(void (^)())success
+                                         onFailure:
+                                             (void (^)(NSError *error,
+                                                       NSInteger statusCode,
+                                                       QZBUserRegistrationProblem problem))failure;
 
 #pragma mark - friends
 
@@ -153,10 +165,10 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {QZBNoProblems,
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)GETReportForUserID:(NSNumber *)userID
-                  message:(NSString *)reportMessage
-                onSuccess:(void (^)())success
-                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)GETReportForUserID:(NSNumber *)userID
+                   message:(NSString *)reportMessage
+                 onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly

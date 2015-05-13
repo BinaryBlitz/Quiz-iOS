@@ -160,10 +160,7 @@
         QZBRatingPageVC *vc = (QZBRatingPageVC *)self.parentViewController;
         
         [vc showUserPage:user];
-        
     }
-    
-    
 }
 
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray {

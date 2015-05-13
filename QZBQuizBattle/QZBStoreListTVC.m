@@ -221,7 +221,8 @@
         QZBDescriptionForHorizontalCell *descrCell =
             [tableView dequeueReusableCellWithIdentifier:@"descriptionForHorizontal"];
 
-        descrCell.descriptionLabel.text = @"Платные топики";
+        descrCell.descriptionLabel.text = @"Платные темы";
+        descrCell.descriptionLabel.textAlignment = NSTextAlignmentCenter;
         descrCell.descriptionLabel.textColor = [UIColor whiteColor];
         descrCell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
 

@@ -22,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *topCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *exitCell;
 @property (weak, nonatomic) IBOutlet UIView *nameTextFieldBackGroundView;
+@property (weak, nonatomic) IBOutlet UISwitch *soundSwitcher;
+@property (weak, nonatomic) IBOutlet UITableViewCell *soundCell;
 
 @end

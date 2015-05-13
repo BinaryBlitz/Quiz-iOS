@@ -33,10 +33,10 @@
     self.dataSource = self;
 
     QZBRatingTVC *left = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
-    left.urlString = @"https://pp.vk.me/c623927/v623927224/18741/HERAwb-7YGw.jpg";
+   // left.urlString = @"https://pp.vk.me/c623927/v623927224/18741/HERAwb-7YGw.jpg";
     left.tableType = QZBRatingTableAllTime;
     QZBRatingTVC *right = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
-    right.urlString = @"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg";
+  //  right.urlString = @"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg";
     right.tableType = QZBRatingTableWeek;
 
     DDLogInfo(@"left %@ right %@", left, right);

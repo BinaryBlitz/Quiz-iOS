@@ -25,7 +25,7 @@
     [super viewDidAppear:animated];
     
     UITabBarController *tabController = self.tabBarController;
-    UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
     
 
     tabbarItem.badgeValue = nil;
