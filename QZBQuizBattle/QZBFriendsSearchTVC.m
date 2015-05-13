@@ -50,5 +50,13 @@
     
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    [self searchWithSearchBar:searchBar];
+    
+    
+}
+
+
 
 @end

@@ -32,7 +32,7 @@
     
      [self setNeedsStatusBarAppearanceUpdate];
     
-    //barButtonName.title = @"SOME TEXT TO DISPLAY";
+
     NSUInteger size = 18;
     UIFont * font = [UIFont boldSystemFontOfSize:size];
     NSDictionary * attributes = @{NSFontAttributeName: font};
@@ -41,16 +41,7 @@
     
     [self initStatusbarWithColor:[UIColor whiteColor]];
     
-//    [self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
-//    [self.navigationController.navigationBar setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-    
-//    self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-//    [self.navigationController.navigationBar
-//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//
 
-    // self.rightButton.
-    // Do any additional setup after loading the view.
 }
 
 -(void)initWithTopic:(QZBGameTopic *)topic{
@@ -96,12 +87,8 @@
             title = [NSString stringWithFormat:@"%@",self.topic.name];
         }
         
-       // [NSString stringWithFormat:@"%@ >",self.topic.name];
-        
         [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
         
-        //[self.chooseTopicButton setTitle:self.topic.name forState:UIControlStateNormal];
-
         [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
 
     } else if (self.category) {
@@ -113,69 +100,87 @@
 
     } else {
         [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
-
         [self setRatingWithTopicID:0];
     }
     
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-//
-    
 }
 
 - (void)setRatingWithCategoryID:(NSInteger)categoryID {
+    QZBRatingPageVC *pageVC =
+    (QZBRatingPageVC *)[self.childViewControllers firstObject];
+    
+    [self setEmptyArrays];
     [[QZBServerManager sharedManager]
         GETRankingWeekly:NO
               isCategory:YES
                   withID:categoryID
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-
-                   QZBRatingPageVC *pageVC =
-                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+                   
                    [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
-
                }
-               onFailure:nil];
+     onFailure:^(NSError *error, NSInteger statusCode) {
+         
+     }];
 
     [[QZBServerManager sharedManager]
         GETRankingWeekly:YES
               isCategory:YES
                   withID:categoryID
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-                   QZBRatingPageVC *pageVC =
-                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+                  
 
                    [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
 
                }
-               onFailure:nil];
+     onFailure:^(NSError *error, NSInteger statusCode) {
+         
+     }];
+    
+    
 }
 
 - (void)setRatingWithTopicID:(NSInteger)topicID {
+    
+    QZBRatingPageVC *pageVC =
+    (QZBRatingPageVC *)[self.childViewControllers firstObject];
+    [self setEmptyArrays];
+    
     [[QZBServerManager sharedManager]
         GETRankingWeekly:NO
               isCategory:NO
                   withID:topicID
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-                   QZBRatingPageVC *pageVC =
-                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
+                   
                    [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
 
                }
-               onFailure:nil];
+     onFailure:^(NSError *error, NSInteger statusCode) {
+         
+     }];
     [[QZBServerManager sharedManager]
         GETRankingWeekly:YES
               isCategory:NO
                   withID:topicID
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-                   QZBRatingPageVC *pageVC =
-                       (QZBRatingPageVC *)[self.childViewControllers firstObject];
 
                    [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
 
                }
-               onFailure:nil];
+     onFailure:^(NSError *error, NSInteger statusCode) {
+         
+     }];
+}
+
+-(void)setEmptyArrays{
+    QZBRatingPageVC *pageVC =
+    (QZBRatingPageVC *)[self.childViewControllers firstObject];
+    
+    [pageVC setWeekRanksWithTop:[NSArray array] playerArray:[NSArray array]];
+    [pageVC setAllTimeRanksWithTop:[NSArray array] playerArray:[NSArray array]];
+
 }
 
 #pragma mark - Navigation
@@ -190,13 +195,11 @@
 // In a storyboard-based application, you will often want to do a little preparation before
 // navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 
     if ([segue.identifier isEqualToString:@"showUser"]) {
-        if ([segue.destinationViewController isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-            //TEST
-        }
+//        if ([segue.destinationViewController isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
+//            //TEST
+//        }
 
         QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
 

@@ -17,6 +17,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "QZBCategory.h"
 #import "UIView+QZBShakeExtension.h"
+#import <JSQSystemSoundPlayer.h>
 //#import <Crashlytics/Crashlytics.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
@@ -43,6 +44,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     [super viewDidLoad];
 
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"timer"
+                                                    fileExtension:kJSQSystemSoundTypeWAV];
 
     //[[self navigationController] setNavigationBarHidden:YES animated:NO];
     self.backgroundTask = UIBackgroundTaskInvalid;
@@ -148,16 +152,20 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    
     [self prepareQuestion];
     [self showQuestionAndAnswers];
     [self timeCountingStart];
-
+    
     self.backgroundTask =
         [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                 [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
             self.backgroundTask = UIBackgroundTaskInvalid;
         }];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@""];
 }
 
 - (void)dealloc {
@@ -216,12 +224,10 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     [self setScores];
     [self colorFirstUserScoreLabel];
 
-    // NSUInteger num = [QZBSessionManager sessionManager].firstUserLastAnswer.answer.answerNum;
     BOOL isTrue = [QZBSessionManager sessionManager].firstUserLastAnswer.isRight;
 
     QZBAnswerButton *button = (QZBAnswerButton *)sender;
 
-    //[button addTriangleLeft];
     [button addCircleLeft];
 
     UIColor *color;
@@ -232,8 +238,18 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         color = [UIColor transperentLightRedColor];
     }
 
+    [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@"timer"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
+                       if(!isTrue){
+                           [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"wrong"
+                                                                        fileExtension:kJSQSystemSoundTypeWAV];
+                           [[JSQSystemSoundPlayer sharedPlayer] playVibrateSound];
+                           
+                       }else{
+                           [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"correct"
+                                                                        fileExtension:kJSQSystemSoundTypeWAV];
+                       }
 
                        [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                            animations:^{
@@ -265,8 +281,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         }
 
         [[QZBSessionManager sessionManager] closeSession];
-
-        //[self.navigationController popViewControllerAnimated:YES];
 
         UIViewController *destinationVC = nil;
 
@@ -374,7 +388,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                          self.questBackground.alpha = 1.0;
                          self.qestionLabel.alpha = 1.0;
                      }];
-
+//REDO TIME
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        for (UIButton *button in weakSelf.answerButtons) {
@@ -412,6 +426,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     [UIView animateWithDuration:unShowTime
         animations:^{
+            
             weakSelf.qestionLabel.alpha = .0;
             weakSelf.questBackground.alpha = .0;
             weakSelf.opponentScore.textColor = [UIColor whiteColor];
@@ -450,11 +465,24 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                         change:(NSDictionary *)change
                        context:(void *)context {
     if ([keyPath isEqualToString:@"currentTime"]) {
-        [self.progressView setProgress:([[change objectForKey:@"new"] integerValue]) / 100.0
+        
+        int num = [[change objectForKey:@"new"] integerValue] ;
+        
+        [self.progressView setProgress:num/ 100.0
                               animated:YES];
 
         self.timeLabel.text = [NSString
-            stringWithFormat:@"%ld", (long)(10 - [[change objectForKey:@"new"] integerValue] / 10)];
+            stringWithFormat:@"%ld", (long)(10 - num / 10)];
+        
+        //int num = [[change objectForKey:@"new"] integerValue] ;
+     //   NSLog(@"%d", num);
+        if(num == 50 &&
+           ![QZBSessionManager sessionManager].didFirstUserAnswered){
+            
+            
+            [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"timer"
+                                                         fileExtension:kJSQSystemSoundTypeWAV];
+        }
     }
 }
 
@@ -469,8 +497,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
 - (void)unshowQuestion {
     [self setScores];
-
     [self showResultOfQuestion];
+    [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@"timer"];
 
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)),
@@ -523,7 +551,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                 if (b.tag != right) {
                     [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
                         animations:^{
-                            b.backgroundColor = [UIColor transperentLightRedColor];  //??
+                            b.backgroundColor = [UIColor transperentLightRedColor];
                         }
                         completion:^(BOOL finished){
 
@@ -551,39 +579,46 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                     [self setScores];
                     [self UNShowQuestinAndAnswers];
 
-                    if (![QZBSessionManager sessionManager].isOfflineChallenge) {
-                        self.roundLabel.text = (NSString *)notification.object;
-                    } else {
-                        self.roundLabel.text = @"Ждем соперника";
+                    [self.globalTimer invalidate];
+                    self.globalTimer = nil;
+                    
+                    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+                        [[UIApplication sharedApplication]
+                         endBackgroundTask:self.backgroundTask];
+                        self.backgroundTask = UIBackgroundTaskInvalid;
                     }
-
-                    [UIView animateWithDuration:0.3
-                        delay:0.5
-                        options:UIViewAnimationOptionCurveEaseInOut |
-                                UIViewAnimationOptionTransitionNone
-                        animations:^{
-                            weakSelf.roundLabel.alpha = 1.0;
-                        }
-                        completion:^(BOOL finished) {
-
-                            [self.globalTimer invalidate];
-                            self.globalTimer = nil;
-
-                            if (self.backgroundTask != UIBackgroundTaskInvalid) {
-                                [[UIApplication sharedApplication]
-                                    endBackgroundTask:self.backgroundTask];
-                                self.backgroundTask = UIBackgroundTaskInvalid;
-                            }
-
-                            dispatch_after(
-                                dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-                                dispatch_get_main_queue(), ^{
-
-                                    [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
-
-                                });
-
-                        }];
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+                    });
+                    
+//                    [UIView animateWithDuration:0.3
+//                        delay:0.5
+//                        options:UIViewAnimationOptionCurveEaseInOut |
+//                                UIViewAnimationOptionTransitionNone
+//                        animations:^{
+//                          //         weakSelf.roundLabel.alpha = 1.0;
+//                        }
+//                        completion:^(BOOL finished) {
+//
+//                            [self.globalTimer invalidate];
+//                            self.globalTimer = nil;
+//
+//                            if (self.backgroundTask != UIBackgroundTaskInvalid) {
+//                                [[UIApplication sharedApplication]
+//                                    endBackgroundTask:self.backgroundTask];
+//                                self.backgroundTask = UIBackgroundTaskInvalid;
+//                            }
+//
+//                            dispatch_after(
+//                                dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+//                                dispatch_get_main_queue(), ^{
+//
+//                                    [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+//
+//                                });
+//
+//                        }];
                 }
             });
     }

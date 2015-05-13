@@ -138,9 +138,9 @@
                        });
     }];
     
-    NSString *title = [NSString stringWithFormat:@"Топик не куплен!"];
+    NSString *title = [NSString stringWithFormat:@"Тема не куплена!"];
     NSString *subTitle = [NSString
-                          stringWithFormat:@"Перейти в магазин, чтобы купить топик '%@'?",
+                          stringWithFormat:@"Перейти в магазин, чтобы купить тему '%@'?",
                           topicName];
     
     alert.completeButtonFormatBlock = ^NSDictionary*(void){

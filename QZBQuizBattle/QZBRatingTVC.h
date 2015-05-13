@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, QZBRatingTableType) { QZBRatingTableAllTime, QZBRatin
 @interface QZBRatingTVC : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
-@property (copy, nonatomic) NSString *urlString;
+//@property (copy, nonatomic) NSString *urlString;
 @property (assign, nonatomic) QZBRatingTableType tableType;
 
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;

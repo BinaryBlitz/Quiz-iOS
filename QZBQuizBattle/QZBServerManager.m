@@ -36,7 +36,7 @@
 //#else
 //static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 //#endif
-static const DDLogLevel ddLogLevel = DDLogLevelWarning;
+//static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
@@ -1190,6 +1190,8 @@ NSString *const QZBNoInternetConnectionMessage =
                   withID:(NSInteger)ID
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
     if (isWeekly) {
         [urlAsString appendString:@"weekly"];
@@ -1218,6 +1220,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlAsString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
             DDLogInfo(@" %@ ranking JSON: %@", urlAsString, responseObject);
 
@@ -1236,12 +1239,16 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            if ([SVProgressHUD isVisible]) {
-                [SVProgressHUD dismiss];
+            
+            if(operation.response.statusCode == 0){
+                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
             }
+            
         }];
 }
 

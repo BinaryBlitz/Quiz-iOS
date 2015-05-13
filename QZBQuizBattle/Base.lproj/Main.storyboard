@@ -2050,7 +2050,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fft-kZ-o0V">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <state key="normal" title="Выбрать другой топик">
+                                                    <state key="normal" title="Выбрать другую тему">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -6059,12 +6059,75 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="10" id="hxA-G6-pac">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="54" id="hxA-G6-pac">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hxA-G6-pac" id="09o-5T-dWJ">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Звук в игре" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JC-sT-sNS">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                    <color key="textColor" white="0.47999999999999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Myl-jA-VBV">
+                                                    <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="THo-Vf-l7N"/>
+                                                        <constraint firstAttribute="width" constant="49" id="bhA-c0-CKs"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="THo-Vf-l7N"/>
+                                                            <exclude reference="bhA-c0-CKs"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="THo-Vf-l7N"/>
+                                                            <include reference="bhA-c0-CKs"/>
+                                                        </mask>
+                                                    </variation>
+                                                </switch>
+                                            </subviews>
                                             <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="8JC-sT-sNS" firstAttribute="top" secondItem="09o-5T-dWJ" secondAttribute="topMargin" id="Pjy-Mb-kOk"/>
+                                                <constraint firstItem="Myl-jA-VBV" firstAttribute="leading" secondItem="8JC-sT-sNS" secondAttribute="trailing" constant="32" id="baa-DG-jRm"/>
+                                                <constraint firstItem="8JC-sT-sNS" firstAttribute="bottom" secondItem="09o-5T-dWJ" secondAttribute="bottomMargin" id="hVC-KI-Ok9"/>
+                                                <constraint firstAttribute="centerY" secondItem="Myl-jA-VBV" secondAttribute="centerY" id="i3P-yR-iKg"/>
+                                                <constraint firstItem="8JC-sT-sNS" firstAttribute="leading" secondItem="09o-5T-dWJ" secondAttribute="leadingMargin" id="tPf-fL-8sp"/>
+                                                <constraint firstItem="Myl-jA-VBV" firstAttribute="trailing" secondItem="09o-5T-dWJ" secondAttribute="trailingMargin" id="uAI-eW-FOz"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="8JC-sT-sNS"/>
+                                                    <exclude reference="Myl-jA-VBV"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="Pjy-Mb-kOk"/>
+                                                    <exclude reference="hVC-KI-Ok9"/>
+                                                    <exclude reference="tPf-fL-8sp"/>
+                                                    <exclude reference="baa-DG-jRm"/>
+                                                    <exclude reference="i3P-yR-iKg"/>
+                                                    <exclude reference="uAI-eW-FOz"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="8JC-sT-sNS"/>
+                                                    <include reference="Myl-jA-VBV"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="Pjy-Mb-kOk"/>
+                                                    <include reference="hVC-KI-Ok9"/>
+                                                    <include reference="tPf-fL-8sp"/>
+                                                    <include reference="baa-DG-jRm"/>
+                                                    <include reference="i3P-yR-iKg"/>
+                                                    <include reference="uAI-eW-FOz"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
@@ -6145,6 +6208,8 @@
                         <outlet property="nameTextFieldBackGroundView" destination="xKD-s1-Cnp" id="gb7-UC-QiE"/>
                         <outlet property="renewNameButton" destination="arX-pO-sXA" id="kPR-QD-QaM"/>
                         <outlet property="renewPasswordButton" destination="74M-Of-vqS" id="Ofn-2m-j2N"/>
+                        <outlet property="soundCell" destination="hxA-G6-pac" id="SPx-zf-Rfv"/>
+                        <outlet property="soundSwitcher" destination="Myl-jA-VBV" id="G5i-Ew-8Lw"/>
                         <outlet property="topCell" destination="tdG-dX-TeR" id="qf7-Da-7Kc"/>
                         <outlet property="userNameTextField" destination="xv2-Bd-4v2" id="66I-JE-bYV"/>
                         <outlet property="userNewPasswordAgainTextField" destination="KgQ-7L-CgI" id="gRT-dp-YYE"/>
@@ -7230,11 +7295,11 @@
             </objects>
             <point key="canvasLocation" x="5493" y="-4051.5"/>
         </scene>
-        <!--Рейтинги-->
+        <!--Рейтинг-->
         <scene sceneID="IyI-ge-TOk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e6c-er-5lv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Рейтинги" image="topRateIcon" id="jv1-GN-KAL"/>
+                    <tabBarItem key="tabBarItem" title="Рейтинг" image="topRateIcon" id="jv1-GN-KAL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gi4-hO-2NW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -9951,12 +10016,12 @@
         <image name="vkIcon" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qGa-a3-3D7"/>
+        <segue reference="gip-Mr-XSi"/>
         <segue reference="13W-Ze-IAd"/>
+        <segue reference="qGa-a3-3D7"/>
         <segue reference="Q6R-nc-Xpj"/>
-        <segue reference="TKe-GQ-MWf"/>
         <segue reference="zMv-no-kIb"/>
-        <segue reference="1oA-Co-JGY"/>
         <segue reference="9a1-UP-0yN"/>
+        <segue reference="0Hm-fV-GlK"/>
     </inferredMetricsTieBreakers>
 </document>

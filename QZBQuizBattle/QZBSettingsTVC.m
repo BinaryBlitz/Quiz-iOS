@@ -22,6 +22,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+QZBButtonCategory.h"
 #import "UIViewController+QZBValidateCategory.h"
+#import <JSQSystemSoundPlayer.h>
 
 
 
@@ -35,6 +36,7 @@
     [super viewDidLoad];
     [self.middleCell addDropShadowsForView];
     [self.exitCell addDropShadowsForView];
+    [self.soundCell addDropShadowsForView];
     
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,8 +76,18 @@
     
     self.tableView.backgroundColor = [UIColor colorWithWhite:250.0/255.0 alpha:1.0];
     
+    self.soundSwitcher.on = [JSQSystemSoundPlayer sharedPlayer].on;
+    
+    
+    
    // [self.topCell addShadows];
 }
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[JSQSystemSoundPlayer sharedPlayer] toggleSoundPlayerOn:self.soundSwitcher.on];
+}
+
 
 - (IBAction)changePicture:(UIButton *)sender {
     UIActionSheet *actSheet =

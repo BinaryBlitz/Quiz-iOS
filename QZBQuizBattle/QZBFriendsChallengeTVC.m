@@ -37,6 +37,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.choosedUser = [self userAtIndex:indexPath.row];
     if(![self.choosedUser.userID
         isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]){
@@ -83,7 +84,10 @@
     if(searchText.length == 0){
         [super setFriendsOwner:nil andFriends:self.currentFriends];
         
+    }else{
+        [self searchWithSearchBar:searchBar];
     }
+
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
