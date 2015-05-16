@@ -51,8 +51,11 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    
-    [self searchWithSearchBar:searchBar];
+    if(searchText.length!=0){
+        [self searchWithSearchBar:searchBar];
+    }else{
+        [self setFriendsOwner:nil andFriends:nil];
+    }
     
     
 }

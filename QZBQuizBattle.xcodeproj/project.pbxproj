@@ -39,6 +39,7 @@
 		191E46741B03858D0037963F /* switch.wav in Resources */ = {isa = PBXBuildFile; fileRef = 191E466E1B03858D0037963F /* switch.wav */; };
 		191E46751B03858D0037963F /* timer.wav in Resources */ = {isa = PBXBuildFile; fileRef = 191E466F1B03858D0037963F /* timer.wav */; };
 		191E46761B03858D0037963F /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 191E46701B03858D0037963F /* wrong.wav */; };
+		191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */; };
 		19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */; };
 		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
 		1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */; };
@@ -207,6 +208,8 @@
 		191E466E1B03858D0037963F /* switch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = switch.wav; sourceTree = "<group>"; };
 		191E466F1B03858D0037963F /* timer.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = timer.wav; sourceTree = "<group>"; };
 		191E46701B03858D0037963F /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
+		191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+MultiLineAutoSize.h"; sourceTree = "<group>"; };
+		191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+MultiLineAutoSize.m"; sourceTree = "<group>"; };
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
 		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
 		192796761A9A026F00A468E5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -592,6 +595,8 @@
 				196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */,
 				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
 				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
+				191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */,
+				191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -1297,6 +1302,7 @@
 				196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */,
 				19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */,
 				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
+				191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */,
 				1976FBAB1A4B03E40016130B /* QZBTopicChooserControllerViewController.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */,

@@ -442,12 +442,12 @@ static NSInteger topicsOffset = 7;
     }
     
     if(indexPath.row == 1){
-        return 105.0;
+        return 135.0;
     }else
     if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
     } else if (indexPath.row == 2 || indexPath.row == 4 || indexPath.row == 6) {
-        return 32.0f;
+        return 45.0f;
     } else {
         return 74.0f;
     }
@@ -725,12 +725,12 @@ static NSInteger topicsOffset = 7;
         [playerCell.playerUserpic setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
 
-    NSNumber *allAchievementsCount = @([QZBAchievementManager sharedInstance].achievements.count);
+   // NSNumber *allAchievementsCount = @([QZBAchievementManager sharedInstance].achievements.count);
 
     NSNumber *currentAchievementsCount = @(self.achivArray.count);
 
     playerCell.achievementLabel.text =
-        [NSString stringWithFormat:@"%@/%@", currentAchievementsCount, allAchievementsCount];
+        [NSString stringWithFormat:@"%@", currentAchievementsCount];
 
     // cell = playerCell;
 }
