@@ -18,6 +18,7 @@
 #import "QZBCategory.h"
 #import "UIView+QZBShakeExtension.h"
 #import <JSQSystemSoundPlayer.h>
+#import "UILabel+MultiLineAutoSize.h"
 //#import <Crashlytics/Crashlytics.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
@@ -61,6 +62,9 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
         b.titleLabel.numberOfLines = 0;
         CGFloat inset = CGRectGetHeight(b.frame) / 5;
         b.titleEdgeInsets = UIEdgeInsetsMake(inset / 3, inset / 3, inset / 3, inset / 3);
+        [b setTitle:@"" forState:UIControlStateNormal];
+        
+        
 
         // b.titleLabel.lineBreakMode = NSLineBreakByClipping;
     }
@@ -152,7 +156,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self prepareQuestion];
+    //[self prepareQuestion];
     [self showQuestionAndAnswers];
     [self timeCountingStart];
     
@@ -323,10 +327,15 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     }
 
     int i = 0;
-    for (UIButton *b in self.answerButtons) {
+    for (QZBAnswerButton *b in self.answerButtons) {
         QZBAnswerTextAndID *answerAndId = question.answers[i];
 
-        [b setTitle:answerAndId.answerText forState:UIControlStateNormal];
+        //[b setTitle:answerAndId.answerText forState:UIControlStateNormal];
+       // b.answerLabel.text = answerAndId.answerText;
+        //[b.answerLabel adjustFontSizeToFit];
+        [b setAnswerText:answerAndId.answerText];
+        
+        
         b.tag = answerAndId.answerID;
         i++;
     }
