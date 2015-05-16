@@ -89,6 +89,10 @@
 
     [self initStatusbarWithColor:[UIColor blackColor]];
     
+    UITabBarController *tabController = self.tabBarController;
+    UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+    tabbarItem.badgeValue = nil;
+    
    // [self.refreshControl beginRefreshing];
 
     [self reloadTopicsData];
@@ -560,9 +564,9 @@
         
 
         [self.mainTableView reloadData];
-        UITabBarController *tabController = self.tabBarController;
-        UITabBarItem *tabbarItem = tabController.tabBar.items[2];
-        tabbarItem.badgeValue = nil;
+//        UITabBarController *tabController = self.tabBarController;
+//        UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+        
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
         [self.refreshControl endRefreshing];

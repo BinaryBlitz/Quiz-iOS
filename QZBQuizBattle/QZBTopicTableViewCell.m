@@ -79,7 +79,7 @@
 -(UIImageView *)icon{
     if(!_icon){
         
-        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     }
     return _icon;
 }
