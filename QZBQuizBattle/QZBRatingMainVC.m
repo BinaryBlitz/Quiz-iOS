@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 @property (assign, nonatomic) BOOL fromTopics;
+//@property (strong, nonatomic) UIView *buttonBackgroundView;
 
 @end
 
@@ -31,18 +32,20 @@
    // self.fromTopics = NO;
     
      [self setNeedsStatusBarAppearanceUpdate];
-    
 
-    NSUInteger size = 18;
-    UIFont * font = [UIFont boldSystemFontOfSize:size];
-    NSDictionary * attributes = @{NSFontAttributeName: font};
-    [self.leftButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    [self.rightButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.leftButton setExclusiveTouch:YES];
+    [self.rightButton setExclusiveTouch:YES];
     
     [self initStatusbarWithColor:[UIColor whiteColor]];
     
+    [self.rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+   // self.rightButton.titleLabel.textColor = [UIColor lightGreenColor];
+    
 
 }
+
 
 -(void)initWithTopic:(QZBGameTopic *)topic{
     
@@ -67,8 +70,9 @@
     self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"nextIcon"];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
-   
-
+    self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
+    
+    
     
    // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if (self.topic) {
@@ -106,6 +110,17 @@
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    [self.rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//    [self.leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  //  self.leftButton.titleLabel.textColor = [UIColor blackColor];
+    self.buttonBackgroundView;
+    
+    
+    
 }
 
 - (void)setRatingWithCategoryID:(NSInteger)categoryID {
@@ -214,7 +229,7 @@
 }
 
 #pragma mark - page choose
-- (IBAction)leftButtonAction:(UIBarButtonItem *)sender {
+- (IBAction)leftButtonAction:(UIButton *)sender {
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
@@ -222,12 +237,13 @@
                    });
 
     if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
-        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
+        QZBRatingPageVC *pageVC =
+        (QZBRatingPageVC *)[self.childViewControllers firstObject];
         [pageVC showLeftVC];
     }
 }
 
-- (IBAction)rightButtonAction:(UIBarButtonItem *)sender {
+- (IBAction)rightButtonAction:(UIButton *)sender {
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
@@ -240,8 +256,34 @@
     }
 }
 
+
+#pragma mark - lazy init
+
+-(UIView *)buttonBackgroundView{
+    if(!_buttonBackgroundView){
+        
+        CGSize backSize = self.buttonsBackgroundView.frame.size;
+        
+        CGRect r = CGRectMake(1, 1, backSize.width/2.0, backSize.height-2);
+        _buttonBackgroundView = [[UIView alloc] initWithFrame:r];
+        
+        _buttonBackgroundView.layer.cornerRadius = 5.0;
+        _buttonBackgroundView.layer.masksToBounds = YES;
+        _buttonBackgroundView.backgroundColor = [UIColor whiteColor];
+        
+        [_buttonsBackgroundView addSubview:_buttonBackgroundView];
+        [_buttonsBackgroundView sendSubviewToBack:_buttonBackgroundView];
+        
+    }
+    
+    return _buttonBackgroundView;
+}
+
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
+
 
 @end

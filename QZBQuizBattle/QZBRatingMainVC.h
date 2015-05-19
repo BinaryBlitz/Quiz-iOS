@@ -15,8 +15,11 @@
 @interface QZBRatingMainVC : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseTopicButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonsBackgroundView;
+@property (strong, nonatomic) UIView *buttonBackgroundView;
+
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *topic;
 
