@@ -32,11 +32,11 @@
 //#import "QZBLoggingConfig.h"
 
 //#ifdef DEBUG
-//static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+// static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 //#else
-//static const DDLogLevel ddLogLevel = DDLogLevelWarning;
+// static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 //#endif
-//static const DDLogLevel ddLogLevel = DDLogLevelWarning;
+// static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
 NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
@@ -406,8 +406,6 @@ NSString *const QZBNoInternetConnectionMessage =
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
-            
-          
 
         }];
 }
@@ -485,28 +483,35 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
--(void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID onSuccess:(void (^)())success
-                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+- (void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID
+                                  onSuccess:(void (^)())success
+                                  onFailure:
+                                      (void (^)(NSError *error, NSInteger statusCode))failure {
     NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@", sessionID];
-    
-    NSDictionary *params = @{@"token" : [QZBCurrentUser sharedInstance].user.api_key, @"game_session": @{ @"offline": @YES }};
-    
-    [self.requestOperationManager PATCH:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        DDLogInfo(@"parched offline");
-        
-        if (success) {
-            success();
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogInfo(@"ofline patch error");
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
-        }
 
-    }];
-    
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"game_session" : @{@"offline" : @YES}
+    };
+
+    [self.requestOperationManager PATCH:urlString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            DDLogInfo(@"parched offline");
+
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            DDLogInfo(@"ofline patch error");
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
+
+        }];
 }
 
 #pragma mark - challenge
@@ -527,13 +532,12 @@ NSString *const QZBNoInternetConnectionMessage =
                              inTopic:(QZBGameTopic *)topic
                            onSuccess:(void (^)(QZBSession *session))success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
-    if(!userID){
-        if(failure){
+    if (!userID) {
+        if (failure) {
             failure(nil, -1);
         }
     }
-    
+
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
         @"opponent_id" : userID,
@@ -659,7 +663,6 @@ NSString *const QZBNoInternetConnectionMessage =
 }
 
 - (NSArray *)parseChallengesFromArray:(NSArray *)responseObject {
-
     NSMutableArray *challengeDescriptionsMuttable = [NSMutableArray array];
 
     for (NSDictionary *dict in responseObject) {
@@ -714,8 +717,7 @@ NSString *const QZBNoInternetConnectionMessage =
         };
     } else {
         params = @{
-            @"player" :
-                @{@"name" : userName, @"username" : userName, @"password" : hashedPassword}
+            @"player" : @{@"name" : userName, @"username" : userName, @"password" : hashedPassword}
         };
     }
 
@@ -856,7 +858,7 @@ NSString *const QZBNoInternetConnectionMessage =
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"email" : userEmail };
-    
+
     NSURL *url = [NSURL URLWithString:QZBServerBaseUrl];
 
     [[[AFHTTPRequestOperationManager alloc] initWithBaseURL:url] POST:@"password_resets"
@@ -869,18 +871,17 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+
             DDLogInfo(@"renew errr %@  response %@", error, operation.responseObject);
-            
-            if(operation.response.statusCode == 200){
-                if(success){
+
+            if (operation.response.statusCode == 200) {
+                if (success) {
                     success();
                 }
-            }else{
-            
-            if (failure) {
-                failure(error, operation.response.statusCode);
-            }
+            } else {
+                if (failure) {
+                    failure(error, operation.response.statusCode);
+                }
             }
 
         }];
@@ -1072,8 +1073,8 @@ NSString *const QZBNoInternetConnectionMessage =
 
             for (NSDictionary *dict in responseObject) {
                 QZBRequestUser *user = [[QZBRequestUser alloc] initWithDictionary:dict];
-                
-                if(![user.name isEqualToString:@""]){
+
+                if (![user.name isEqualToString:@""]) {
                     [friends addObject:user];
                 }
             }
@@ -1191,28 +1192,27 @@ NSString *const QZBNoInternetConnectionMessage =
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
-    if (isWeekly) {
-        [urlAsString appendString:@"weekly"];
-    } else {
-        [urlAsString appendString:@"general"];
-    }
 
-    if (isCategory) {
-        [urlAsString appendFormat:@"_by_category"];
-    }
+    NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
 
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
     }];
 
+    if (isWeekly) {
+        params[@"weekly"] = @"true";
+    }
+
     if (ID > 0) {
         if (isCategory) {
             params[@"category_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
+            [urlAsString appendString:@"category"];
         } else {
+            [urlAsString appendString:@"topic"];
             params[@"topic_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
         }
+    } else {
+        [urlAsString appendString:@"general"];
     }
 
     DDLogInfo(@"params ranking %@", params);
@@ -1240,15 +1240,15 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            
+
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
-            
-            if(operation.response.statusCode == 0){
+
+            if (operation.response.statusCode == 0) {
                 [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
             }
-            
+
         }];
 }
 

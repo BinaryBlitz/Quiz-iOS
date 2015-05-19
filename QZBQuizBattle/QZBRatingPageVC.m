@@ -31,12 +31,14 @@
 
     self.delegate = self;
     self.dataSource = self;
+    
+    //self.view.tintColor = [UIColor blackColor];
 
     QZBRatingTVC *left = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
-   // left.urlString = @"https://pp.vk.me/c623927/v623927224/18741/HERAwb-7YGw.jpg";
+   
     left.tableType = QZBRatingTableAllTime;
     QZBRatingTVC *right = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBRatingTVC"];
-  //  right.urlString = @"https://pp.vk.me/c622226/v622226864/19979/zuespQW29A4.jpg";
+
     right.tableType = QZBRatingTableWeek;
 
     DDLogInfo(@"left %@ right %@", left, right);
@@ -218,15 +220,34 @@
 - (void)colorRightButton {
     QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
 
-    parentVC.rightButton.tintColor = self.view.tintColor;
-    parentVC.leftButton.tintColor = [UIColor lightGrayColor];
+    [parentVC.leftButton setTitleColor:[UIColor lightGrayColor]
+                              forState:UIControlStateNormal];
+    [parentVC.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //parentVC.leftButton.titleLabel.textColor = [UIColor lightGrayColor];
+    
+    CGSize size = parentVC.buttonsBackgroundView.frame.size;
+    CGRect r = CGRectMake(size.width/2.0, 1, (size.width/2.0)-1, size.height-2);
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        parentVC.buttonBackgroundView.frame = r;
+    }];
 }
 
 - (void)colorLeftButton {
     QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
-
-    parentVC.leftButton.tintColor = self.view.tintColor;
-    parentVC.rightButton.tintColor = [UIColor lightGrayColor];
+  
+   // parentVC.leftButton.titleLabel.textColor   = [UIColor blackColor];
+    [parentVC.leftButton setTitleColor:[UIColor blackColor]
+                              forState:UIControlStateNormal];
+    [parentVC.rightButton setTitleColor:[UIColor lightGrayColor]
+                               forState:UIControlStateNormal];
+    
+    CGSize size = parentVC.buttonsBackgroundView.frame.size;
+    CGRect r = CGRectMake(1, 1, size.width/2.0, size.height-2);
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        parentVC.buttonBackgroundView.frame = r;
+        }];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
