@@ -20,6 +20,7 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 @class QZBCategory;
 @class QZBGameTopic;
 @class QZBAnotherUser;
+@class QZBFriendRequest;
 
 typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
     QZBNoProblems,
@@ -149,8 +150,8 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 #pragma mark - friends
 
 - (void)POSTFriendWithID:(NSNumber *)userID
-               onSuccess:(void (^)())success
-               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+               onSuccess:(void (^)(QZBFriendRequest *friendRequest)) success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure ;
 
 - (void)DELETEUNFriendWithID:(NSNumber *)userID
                    onSuccess:(void (^)())success
@@ -160,7 +161,7 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                         OnSuccess:(void (^)(NSArray *friends))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
+- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *incoming, NSArray *outgoing))success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -169,6 +170,14 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                    message:(NSString *)reportMessage
                  onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
+                             onSuccess:(void (^)())success
+                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)DELETEDeclineFriendRequestWithID:(NSNumber *)reqID
+                               onSuccess:(void (^)())success
+                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly

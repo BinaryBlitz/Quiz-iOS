@@ -12,7 +12,8 @@
 #import "QZBAnotherUser.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBFriendsRequestsTVC.h"
-#import "QZBRequestUser.h"
+#import "QZBFriendRequest.h"
+#import "QZBFriendRequestManager.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import "UIBarButtonItem+Badge.h"
 
@@ -42,18 +43,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    //    [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:self.user.userID
-    //                                                      OnSuccess:^(NSArray *friends) {
-    //                                                          self.friends = friends;
-    //                                                          [self.tableView reloadData];
-    //                                                      }
-    //                                                      onFailure:^(NSError *error, NSInteger
-    //                                                      statusCode){
-    //
-    //                                                      }];
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if([QZBFriendRequestManager sharedInstance].incoming.count == 0){
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+
+    
 }
+
 
 #pragma mark - custom init
 
@@ -98,19 +96,16 @@
 }
 
 - (NSInteger)badgeNumberWithRequestFriends:(NSArray *)arr {
-    NSInteger count = 0;
+    NSInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
     
-    for (QZBRequestUser *user in arr) {
-        if (!user.viewed) {
-            count++;
-        }
-    }
     return count;
 }
 
 
-- (void)setFriendsOwner:(id<QZBUserProtocol>)user friendsRequests:(NSArray *)friendsRequest {
-}
+
+
+//- (void)setFriendsOwner:(id<QZBUserProtocol>)user friendsRequests:(NSArray *)friendsRequest {
+//}
 
 - (void)setFriendsOwner:(id<QZBUserProtocol>)user andFriends:(NSArray *)friends {
     self.user = user;

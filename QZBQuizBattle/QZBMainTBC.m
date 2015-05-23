@@ -14,14 +14,13 @@
 #import "QZBServerManager.h"
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBStoreListTVC.h"
+#import "QZBFriendRequestManager.h"
 
 @interface QZBMainTBC ()
 
 @end
 
 @implementation QZBMainTBC
-
-//-(void)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,23 +34,19 @@
     view.backgroundColor = [UIColor lightBlueColor];
     UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
     [currentWindow addSubview:view];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    //   UIView *backgrView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]
-    //   bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
-    //   backgrView.backgroundColor = [UIColor blackColor];
-    //    backgrView.alpha = 1.0;
-    //   [[[[UIApplication sharedApplication] delegate] window] addSubview:backgrView];
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1* NSEC_PER_SEC)),
-    //    dispatch_get_main_queue(), ^{
-    //        [backgrView removeFromSuperview];
-    //    });
 
     [self setSelectedIndex:2];
     self.tabBar.translucent = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateBadges)
+                                                 name:QZBFriendRequestUpdated object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,20 +92,30 @@
 
         [[QZBAchievementManager sharedInstance] updateAchievements];
         [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
+        [[QZBFriendRequestManager sharedInstance] updateRequests];
 
         [self setSelectedIndex:2];
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before
-navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-*/
+
+#pragma mark - support methods
+
+-(void)updateBadges{
+    
+    UITabBarItem *it = self.tabBar.items[userBar];
+    NSUInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
+    if(count>0){
+    
+        it.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)count];
+    }else{
+        it.badgeValue = nil;
+    }
+}
+
 
 @end
