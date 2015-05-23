@@ -12,6 +12,7 @@
 #import "NSObject+QZBSpecialCategory.h"
 #import "UITableViewCell+QZBCellCategory.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIFont+QZBCustomFont.h"
 
 @interface QZBEndGameProgressCell()
 
@@ -41,7 +42,7 @@
     
     self.centralLabel = [[UILabel alloc] initWithFrame:r];
     
-    self.centralLabel.font = [UIFont boldSystemFontOfSize:40];
+    self.centralLabel.font = [UIFont boldMuseoFontOfSize:40];
     self.centralLabel.textColor = [UIColor whiteColor];
     self.centralLabel.adjustsFontSizeToFitWidth = YES;
     self.centralLabel.textAlignment = NSTextAlignmentCenter;
@@ -136,7 +137,7 @@
    // NSDictionary *atributes = @{};
     
     [attrString addAttribute:NSFontAttributeName
-                  value:[UIFont systemFontOfSize:12.0]
+                  value:[UIFont museoFontOfSize:12.0]
                   range:r];
     
     return attrString;

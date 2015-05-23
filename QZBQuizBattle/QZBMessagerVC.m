@@ -326,16 +326,7 @@ navigation
 #pragma mark - support methods
 
 - (void)initAvatars {
-    //    JSQMessagesAvatarImage *jsqImage = [JSQMessagesAvatarImageFactory
-    //    avatarImageWithUserInitials:@"JSQ"
-    //                                                                                  backgroundColor:[UIColor
-    //                                                                                  colorWithWhite:0.85f
-    //                                                                                  alpha:1.0f]
-    //                                                                                        textColor:[UIColor
-    //                                                                                        colorWithWhite:0.60f
-    //                                                                                        alpha:1.0f]
-    //                                                                                             font:[UIFont systemFontOfSize:14.0f]
-    //                                                                                         diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+   
 
     self.myAvatar = [JSQMessagesAvatarImageFactory
         avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
@@ -344,17 +335,7 @@ navigation
         avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 
-    //    JSQMessagesAvatarImage *cookImage = [JSQMessagesAvatarImageFactory
-    //    avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_cook"]
-    //                                                                                   diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    //
-    //    JSQMessagesAvatarImage *jobsImage = [JSQMessagesAvatarImageFactory
-    //    avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_jobs"]
-    //                                                                                   diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    //
-    //    JSQMessagesAvatarImage *wozImage = [JSQMessagesAvatarImageFactory
-    //    avatarImageWithImage:[UIImage imageNamed:@"demo_avatar_woz"]
-    //                                                                                  diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+
 }
 
 @end

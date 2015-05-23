@@ -71,8 +71,7 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
-    
-    
+
     
    // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if (self.topic) {
@@ -110,18 +109,16 @@
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+  
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-//    [self.rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-//    [self.leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  //  self.leftButton.titleLabel.textColor = [UIColor blackColor];
-    self.buttonBackgroundView;
-    
-    
-    
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    [self createButtonBackgroundView];
+   
 }
+
 
 - (void)setRatingWithCategoryID:(NSInteger)categoryID {
     QZBRatingPageVC *pageVC =
@@ -260,11 +257,18 @@
 #pragma mark - lazy init
 
 -(UIView *)buttonBackgroundView{
+    if(_buttonBackgroundView){
+        [self createButtonBackgroundView];
+    }
+    return _buttonBackgroundView;
+}
+
+-(void)createButtonBackgroundView{
     if(!_buttonBackgroundView){
-        
+        [self.buttonsBackgroundView setNeedsDisplay];
         CGSize backSize = self.buttonsBackgroundView.frame.size;
         
-        CGRect r = CGRectMake(1, 1, backSize.width/2.0, backSize.height-2);
+        CGRect r = CGRectMake(1, 1, backSize.width/2.0, 38);
         _buttonBackgroundView = [[UIView alloc] initWithFrame:r];
         
         _buttonBackgroundView.layer.cornerRadius = 5.0;
@@ -275,8 +279,6 @@
         [_buttonsBackgroundView sendSubviewToBack:_buttonBackgroundView];
         
     }
-    
-    return _buttonBackgroundView;
 }
 
 

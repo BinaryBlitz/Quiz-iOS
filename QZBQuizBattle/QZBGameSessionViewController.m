@@ -19,6 +19,7 @@
 #import "UIView+QZBShakeExtension.h"
 #import <JSQSystemSoundPlayer.h>
 #import "UILabel+MultiLineAutoSize.h"
+#import "UIFont+QZBCustomFont.h"
 //#import <Crashlytics/Crashlytics.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
@@ -111,8 +112,8 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                     alignment:JSBadgeViewAlignmentCenterRight];
 
-    self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
-    self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
+    self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
+    self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
     self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
 

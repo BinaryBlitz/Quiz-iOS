@@ -36,12 +36,22 @@
     [currentWindow addSubview:view];
     
     
+    for (NSString* family in [UIFont familyNames])
+    {
+        NSLog(@"%@", family);
+        
+        for (NSString* name in [UIFont fontNamesForFamilyName: family])
+        {
+            NSLog(@"  %@", name);
+        }
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self setSelectedIndex:2];
+  //  [self setSelectedIndex:2];
     self.tabBar.translucent = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -94,7 +104,7 @@
         [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
-        [self setSelectedIndex:2];
+        //[self setSelectedIndex:2];
     }
 }
 

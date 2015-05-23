@@ -9,6 +9,7 @@
 #import "QZBAnswerButton.h"
 #import "QZBAnswerTriangle.h"
 #import "QZBAnswerCircle.h"
+#import "UIFont+QZBCustomFont.h"
 
 
 const float fontSize = 19.0;
@@ -49,7 +50,7 @@ const float fontSize = 19.0;
     _answerLabel.textAlignment = NSTextAlignmentCenter;
     _answerLabel.numberOfLines = 0;
     _answerLabel.lineBreakMode = NSLineBreakByClipping;
-    _answerLabel.font = [UIFont systemFontOfSize:fontSize];
+    _answerLabel.font = [UIFont museoFontOfSize:fontSize];
     _answerLabel.minimumScaleFactor = 0.5;
     _answerLabel.adjustsFontSizeToFitWidth = YES;
     
@@ -76,13 +77,13 @@ const float fontSize = 19.0;
     int i;
     for(i = 19; i>10;i--){
         CGSize s = [maxLenStr sizeWithAttributes:@{NSFontAttributeName:
-                                                       [UIFont systemFontOfSize:i]}];
+                                                       [UIFont museoFontOfSize:i]}];
         if(s.width<self.answerLabel.frame.size.width-10){
             break;
         }
     }
     
-    self.answerLabel.font = [UIFont systemFontOfSize:i];
+    self.answerLabel.font = [UIFont museoFontOfSize:i];
     self.answerLabel.text = answer;
     [self setNeedsLayout];
     [self layoutIfNeeded];

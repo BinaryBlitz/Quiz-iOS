@@ -224,7 +224,7 @@ NSString *const QZBNoInternetConnectionMessage =
                          timeoutInterval:60];
 
         UIImageView *v = [[UIImageView alloc] init];
-        [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
+       // [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil]; //redo
     }
 }
 

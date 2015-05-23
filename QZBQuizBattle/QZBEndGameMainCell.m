@@ -11,6 +11,7 @@
 #import "UIColor+QZBProjectColors.h"
 #import <QuartzCore/QuartzCore.h> 
 #import "UIView+QZBShakeExtension.h"
+#import "UIFont+QZBCustomFont.h"
 
 @implementation QZBEndGameMainCell
 
@@ -24,8 +25,8 @@
     self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                     alignment:JSBadgeViewAlignmentCenterRight];
 
-    self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
-    self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
+    self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
+    self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
     self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
 }
@@ -45,8 +46,8 @@
     self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                     alignment:JSBadgeViewAlignmentCenterRight];
     
-    self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
-    self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
+    self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
+    self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
     self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     

@@ -58,10 +58,10 @@
                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
                              timeoutInterval:60];
                 
-                [v setImageWithURLRequest:imageRequest
-                         placeholderImage:[UIImage imageNamed:@"achiv"]
-                                  success:nil
-                                  failure:nil];
+//                [v setImageWithURLRequest:imageRequest
+//                         placeholderImage:[UIImage imageNamed:@"achiv"]
+//                                  success:nil
+//                                  failure:nil];
             
             
         }
