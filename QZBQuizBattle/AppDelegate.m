@@ -37,11 +37,11 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
-    
+
     [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
 
-    [Fabric with:@[CrashlyticsKit]];
+    [Fabric with:@[ CrashlyticsKit ]];
 
     DDLogInfo(@"launch options %@", launchOptions);
 
@@ -62,6 +62,8 @@
                                                 UIRemoteNotificationTypeSound)];
     }
 
+     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    tabController.selectedIndex = 2;
     NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
@@ -74,11 +76,10 @@
         }
     }
 
-     // [self presentRegistration];
+    // [self presentRegistration];
 
     return YES;
 }
-
 
 - (BOOL)application:(UIApplication *)application
               openURL:(NSURL *)url
@@ -242,7 +243,6 @@
         stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-
     [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
 }
 
@@ -256,7 +256,6 @@
             [self showFriendRequestScreenWithDictionary:userInfo];
 
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
-            
             [self acceptChallengeWithDict:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
@@ -265,8 +264,7 @@
         if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBAchievmentGet"
                                                                 object:userInfo];
-        }else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
-            
+        } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
             [self acceptChallengeWithDict:userInfo];
         }
 
@@ -287,7 +285,6 @@
 
     } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
         vcNum = 2;
-        
     } else {
         return;
     }
@@ -302,27 +299,45 @@
         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
 
         UINavigationController *navController =
-            (UINavigationController *)tabController.viewControllers[2];
+            (UINavigationController *)tabController.viewControllers[1];
 
         QZBPlayerPersonalPageVC *notificationController =
             (QZBPlayerPersonalPageVC *)[navController.storyboard
                 instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
 
-        tabController.selectedIndex = 2;
+        tabController.selectedIndex = 1;
 
         NSDictionary *player = dict[@"player"];
 
         QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:player];
 
         [notificationController initPlayerPageWithUser:user];
+        [navController popToRootViewControllerAnimated:NO];
         [navController pushViewController:notificationController animated:YES];
     }
 }
 
 - (void)acceptChallengeWithDict:(NSDictionary *)dict {
+    
+    if (![QZBSessionManager sessionManager].isGoing) {
+    
+    UIApplication *application = [UIApplication sharedApplication];
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen" object:nil];
+    UIApplicationState state = application.applicationState;
+    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
         
+         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+        UINavigationController *navController =
+        (UINavigationController *)tabController.viewControllers[2];
+        [navController popToRootViewControllerAnimated:NO];
+        tabController.selectedIndex = 2;
+        
+        
+    }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
+                                                            object:nil];
+    
+    }
 }
 
 - (void)showAchiewvmentWithDict:(NSDictionary *)dict {

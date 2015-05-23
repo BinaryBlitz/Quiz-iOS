@@ -25,6 +25,7 @@
 #import "QZBResultOfSessionCell.h"
 #import "QZBAnotherUser.h"
 #import "QZBEndGameVC.h"
+#import "UIFont+QZBCustomFont.h"
 
 @interface QZBMainGameScreenTVC ()
 
@@ -274,7 +275,7 @@
 
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:20];
+    label.font = [UIFont boldMuseoFontOfSize:20];
 
     if (section > 0) {
         [view addDropShadowsForView];

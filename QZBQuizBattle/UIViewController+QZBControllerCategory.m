@@ -8,11 +8,18 @@
 
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBServerManager.h"
+#import "UIFont+QZBCustomFont.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 @implementation UIViewController (QZBControllerCategory)
 
 - (void)initStatusbarWithColor:(UIColor *)color {
+    
+//    [self.navigationController.navigationBar setTitleTextAttributes:
+//     [NSDictionary dictionaryWithObjectsAndKeys:
+//      [UIFont boldMuseoFontOfSize:21],
+//      NSFontAttributeName, nil]];
+    
     [self setNeedsStatusBarAppearanceUpdate];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
@@ -33,7 +40,7 @@
 
     self.navigationController.navigationBar.translucent = NO;
 
-    UIFont *font = [UIFont boldSystemFontOfSize:20];
+    UIFont *font = [UIFont boldMuseoFontOfSize:20];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [UIColor whiteColor],
         NSFontAttributeName : font

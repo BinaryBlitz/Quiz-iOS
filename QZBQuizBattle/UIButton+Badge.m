@@ -7,6 +7,7 @@
 //
 #import <objc/runtime.h>
 #import "UIButton+Badge.h"
+#import "UIFont+QZBCustomFont.h"
 
 NSString const *UIButton_badgeKey = @"UIButton_badgeKey";
 
@@ -32,7 +33,7 @@ NSString const *UIButton_badgeValueKey = @"UIButton_badgeValueKey";
     // Default design initialization
     self.badgeBGColor   = [UIColor redColor];
     self.badgeTextColor = [UIColor whiteColor];
-    self.badgeFont      = [UIFont systemFontOfSize:12.0];
+    self.badgeFont      = [UIFont museoFontOfSize:12.0];
     self.badgePadding   = 6;
     self.badgeMinSize   = 8;
     self.badgeOriginX   = self.frame.size.width - self.badge.frame.size.width/2;

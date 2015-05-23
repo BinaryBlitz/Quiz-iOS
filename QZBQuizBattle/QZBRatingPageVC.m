@@ -56,6 +56,15 @@
     // Do any additional setup after loading the view.
 }
 
+//-(void)viewDidLayoutSubviews{
+//    
+//    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
+//        QZBRatingMainVC *mv = (QZBRatingMainVC *)self.parentViewController;
+//        [mv createButtonBackgroundView];
+//    }
+//    
+//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

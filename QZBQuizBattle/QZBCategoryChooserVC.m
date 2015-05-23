@@ -25,6 +25,7 @@
 @property (strong, nonatomic) QZBCategory *choosedCategory;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 
+
 @end
 
 @implementation QZBCategoryChooserVC
@@ -107,8 +108,9 @@
                                                   cachePolicy:NSURLRequestReturnCacheDataElseLoad
                                               timeoutInterval:60];
     
+    
     [cell.categoryImageView  setImageWithURLRequest:imageRequest
-                                   placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
+                                   placeholderImage:[UIImage imageNamed:@"placeholderIMG"]
                                             success:nil
                                             failure:nil];
 
@@ -169,5 +171,9 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+
+#pragma mark - lazy init
+
+
 
 @end

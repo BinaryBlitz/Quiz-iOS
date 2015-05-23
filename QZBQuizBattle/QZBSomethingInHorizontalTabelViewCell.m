@@ -8,6 +8,7 @@
 
 #import "QZBSomethingInHorizontalTabelViewCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIFont+QZBCustomFont.h"
 
 @implementation QZBSomethingInHorizontalTabelViewCell
 
@@ -30,7 +31,7 @@
     self.name.textAlignment = NSTextAlignmentCenter;
     self.name.transform = CGAffineTransformMakeRotation(1.5707963);
     self.name.frame = CGRectMake(10, 0, 25, 100);
-    self.name.font = [UIFont systemFontOfSize:12];
+    self.name.font = [UIFont museoFontOfSize:12.0];
     self.name.adjustsFontSizeToFitWidth = YES;
     self.name.numberOfLines = 0;
     self.name.textColor = [UIColor grayColor];

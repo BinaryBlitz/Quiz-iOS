@@ -8,6 +8,7 @@
 
 #import "QZBTopicTableViewCell.h"
 #import "UIColor+QZBProjectColors.h"
+#import "UIFont+QZBCustomFont.h"
 
 @interface QZBTopicTableViewCell()
 
@@ -76,7 +77,7 @@
         _centralLabel.textAlignment = NSTextAlignmentCenter;
         _centralLabel.adjustsFontSizeToFitWidth = YES;
         
-        _centralLabel.font = [UIFont systemFontOfSize:15];
+        _centralLabel.font = [UIFont museoFontOfSize:15];
     }
     return _centralLabel;
 }

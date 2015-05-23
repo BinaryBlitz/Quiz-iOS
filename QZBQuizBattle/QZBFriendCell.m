@@ -9,6 +9,7 @@
 #import "QZBFriendCell.h"
 #import "QZBAnotherUser.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIFont+QZBCustomFont.h"
 @interface QZBFriendCell ()
 
 @property(strong, nonatomic) QZBAnotherUser *user;
@@ -37,9 +38,9 @@
     }
     
     if(!user.isViewed){
-        self.nameLabel.font = [UIFont boldSystemFontOfSize:17.0];
+        self.nameLabel.font = [UIFont boldMuseoFontOfSize:17.0];
     }else{
-        self.nameLabel.font = [UIFont systemFontOfSize:17.0];
+        self.nameLabel.font = [UIFont museoFontOfSize:17.0];
     }
 
 }
