@@ -7,6 +7,7 @@
 //
 
 #import "QZBPlayerPersonalPageVC.h"
+#import <CocoaLumberjack.h>
 #import "QZBServerManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBPlayerInfoCell.h"
@@ -19,7 +20,6 @@
 #import <TSMessages/TSMessage.h>
 #import "QZBFriendsTVC.h"
 #import "QZBAnotherUser.h"
-#import "QZBRequestUser.h"
 #import "QZBCategoryChooserVC.h"
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 #import "UIColor+QZBProjectColors.h"
@@ -39,8 +39,8 @@
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBReportVC.h"
 #import "QZBMessagerVC.h"
-#import <CocoaLumberjack.h>
-
+#import "QZBFriendRequestManager.h"
+#import "QZBFriendRequest.h"
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
@@ -65,9 +65,9 @@ static NSInteger topicsOffset = 7;
 
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
-@property (strong, nonatomic) NSArray *friends;         // QZBAnotherUser
-@property (strong, nonatomic) NSArray *friendRequests;  // QZBAnotherUser
-@property (strong, nonatomic) NSArray *faveTopics;      // QZBGameTopic
+@property (strong, nonatomic) NSArray *friends;  // QZBAnotherUser
+//@property (strong, nonatomic) NSArray *friendRequests;  // QZBAnotherUser
+@property (strong, nonatomic) NSArray *faveTopics;  // QZBGameTopic
 @property (assign, nonatomic) BOOL isCurrent;
 @property (assign, nonatomic) BOOL isFriend;
 
@@ -85,8 +85,7 @@ static NSInteger topicsOffset = 7;
 
     self.playerTableView.delegate = self;
     self.playerTableView.dataSource = self;
-    
-    
+
     self.playerTableView.backgroundColor = [UIColor middleDarkGreyColor];
 
     [self setNeedsStatusBarAppearanceUpdate];
@@ -117,16 +116,25 @@ static NSInteger topicsOffset = 7;
                                              selector:@selector(achievementGet:)
                                                  name:@"QZBAchievmentGet"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateBadges)
+                                                 name:QZBFriendRequestUpdated
+                                               object:nil];
 
     if (!self.user ||
         [self.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
         self.user = [QZBCurrentUser sharedInstance].user;
         [self updateCurentUser:self.user];
         self.isCurrent = YES;
+        [[QZBFriendRequestManager sharedInstance] updateRequests];
 
     } else {
         self.isCurrent = NO;
     }
+    
+    [[QZBFriendRequestManager sharedInstance] updateRequests];
+    
     self.navigationItem.title = self.user.name;
     if (self.isCurrent) {
         [self initFriendsWithUser:self.user];
@@ -135,7 +143,6 @@ static NSInteger topicsOffset = 7;
     DDLogInfo(@"viewWillAppear %@", self.user.name);
 
     [self updateBadges];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -146,13 +153,11 @@ static NSInteger topicsOffset = 7;
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
+
     if (self.isCurrent) {
         self.user = nil;
     }
 }
-
-
 
 - (void)dealloc {
     self.user = nil;
@@ -164,6 +169,7 @@ static NSInteger topicsOffset = 7;
         self.user = [QZBCurrentUser sharedInstance].user;
         self.isCurrent = YES;
         [self updateCurentUser:user];
+        [[QZBFriendRequestManager sharedInstance] updateRequests];
 
     } else {
         self.user = user;
@@ -225,9 +231,6 @@ static NSInteger topicsOffset = 7;
         }];
 }
 
-
-
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -247,7 +250,6 @@ static NSInteger topicsOffset = 7;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     UITableViewCell *cell;
 
     if (indexPath.row == 0) {
@@ -266,7 +268,6 @@ static NSInteger topicsOffset = 7;
         return userStatisticCell;
 
     } else if (indexPath.row == 2) {
-
         QZBDescriptionForHorizontalCell *descrForHorizontal =
             [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
 
@@ -326,7 +327,6 @@ static NSInteger topicsOffset = 7;
 
         [achivCell setAchivArray:self.achivArray];
 
-
         return achivCell;
 
     } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
@@ -334,7 +334,7 @@ static NSInteger topicsOffset = 7;
             if (!self.friends.count == 0) {
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
                 cell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
-                
+
                 return cell;
             } else {
                 QZBDescriptionForHorizontalCell *descrCell =
@@ -353,7 +353,7 @@ static NSInteger topicsOffset = 7;
             [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
 
         descrForHorizontal.descriptionLabel.text = @"Любимые темы";
-        
+
         descrForHorizontal.descriptionLabel.textColor = [UIColor whiteColor];
 
         descrForHorizontal.contentView.backgroundColor = [UIColor veryDarkGreyColor];
@@ -440,11 +440,10 @@ static NSInteger topicsOffset = 7;
     if (indexPath.row == 6 && self.faveTopics.count == 0) {
         return 74.0;
     }
-    
-    if(indexPath.row == 1){
+
+    if (indexPath.row == 1) {
         return 135.0;
-    }else
-    if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
+    } else if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
     } else if (indexPath.row == 2 || indexPath.row == 4 || indexPath.row == 6) {
         return 45.0f;
@@ -459,21 +458,20 @@ static NSInteger topicsOffset = 7;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
+    if ([cell isKindOfClass:[QZBTopicTableViewCell class]]) {
         QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
-        if(!topicCell.visible){
+        if (!topicCell.visible) {
             self.choosedIndexPath = nil;
             [tableView beginUpdates];
             [tableView endUpdates];
-            [self showAlertAboutUnvisibleTopic:topicCell.topicName.text];//REDO
-            
+            [self showAlertAboutUnvisibleTopic:topicCell.topicName.text];  // REDO
+
             return;
         }
     }
-    
-    
+
     NSString *identifier = cell.reuseIdentifier;
 
     if ([identifier isEqualToString:@"searchFriends"]) {
@@ -495,7 +493,6 @@ static NSInteger topicsOffset = 7;
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-
     if (buttonIndex == 0) {
         // Make user response
 
@@ -504,7 +501,7 @@ static NSInteger topicsOffset = 7;
         }
 
         // TODO
-    }else if(buttonIndex == 1){
+    } else if (buttonIndex == 1) {
         [self performSegueWithIdentifier:@"pushMessager" sender:nil];
     }
 }
@@ -516,9 +513,9 @@ static NSInteger topicsOffset = 7;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-   // [self tryUnshowAlert];
-    
+
+    // [self tryUnshowAlert];
+
     if ([segue.identifier isEqualToString:@"showAchivements"]) {
         QZBAchievementCVC *destinationVC = segue.destinationViewController;
 
@@ -529,7 +526,15 @@ static NSInteger topicsOffset = 7;
     else if ([segue.identifier isEqualToString:@"showFriendsList"]) {
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
-        [vc setFriendsOwner:self.user friends:self.friends friendsRequests:self.friendRequests];
+        NSArray *arr = nil;
+        if(self.isCurrent){
+            arr =[NSArray arrayWithArray: [QZBFriendRequestManager sharedInstance].incoming];
+        }
+        
+        
+        [vc setFriendsOwner:self.user
+                    friends:self.friends
+            friendsRequests:arr];
     } else if ([segue.identifier isEqualToString:@"challengeSegue"]) {
         QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
         [destinationVC initWithUser:self.user];
@@ -564,13 +569,12 @@ static NSInteger topicsOffset = 7;
         QZBReportVC *destVC = (QZBReportVC *)segue.destinationViewController;
 
         [destVC initWithUser:self.user];
-    }else if([segue.identifier isEqualToString:@"pushMessager"]){
+    } else if ([segue.identifier isEqualToString:@"pushMessager"]) {
         QZBMessagerVC *destVC = (QZBMessagerVC *)segue.destinationViewController;
-        
+
         [destVC initWithUser:self.user];
-        
-       // [destVC initWithUser:self.user userpic:];
-        
+
+        // [destVC initWithUser:self.user userpic:];
     }
 }
 
@@ -583,7 +587,6 @@ static NSInteger topicsOffset = 7;
 }
 
 - (void)showFriendsTapAction:(id)sender {
-   
     [self performSegueWithIdentifier:@"showFriendsList" sender:nil];
 }
 
@@ -595,44 +598,11 @@ static NSInteger topicsOffset = 7;
     if (self.isCurrent) {
         [self performSegueWithIdentifier:@"showSettings" sender:nil];
     } else {
-        NSNumber *friendID = self.user.userID;
-        if (!self.user.isFriend) {
-            [[QZBServerManager sharedManager] POSTFriendWithID:friendID
-                onSuccess:^{
-
-                    [TSMessage showNotificationInViewController:self
-                                                          title:@"Друг добавлен"
-                                                       subtitle:@""
-                                                           type:TSMessageNotificationTypeSuccess
-                                                       duration:1];
-                    if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
-                        QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
-                        currentUser.isFriend = YES;
-                        [self.tableView reloadData];
-                    }
-
-                }
-                onFailure:^(NSError *error, NSInteger statusCode){
-
-                }];
+        // NSNumber *friendID = self.user.userID;
+        if (self.user.isFriend) {
+            [self deleteFromFriends];
         } else {
-            [[QZBServerManager sharedManager] DELETEUNFriendWithID:friendID
-                onSuccess:^{
-
-                    [TSMessage showNotificationInViewController:self
-                                                          title:@"Друг удален"
-                                                       subtitle:@""
-                                                           type:TSMessageNotificationTypeSuccess
-                                                       duration:1];
-                    if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
-                        QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
-                        currentUser.isFriend = NO;
-                        [self.tableView reloadData];
-                    }
-                }
-                onFailure:^(NSError *error, NSInteger statusCode){
-
-                }];
+            [self noFriendActionChooser];
         }
     }
 }
@@ -643,7 +613,8 @@ static NSInteger topicsOffset = 7;
                       delegate:self
              cancelButtonTitle:@"Отменить"
         destructiveButtonTitle:nil
-                               otherButtonTitles:@"Пожаловаться",@"Написать сообщение", nil];
+             otherButtonTitles:@"Пожаловаться", @"Написать сообщение",
+                               nil];
 
     [actSheet showInView:self.view];
 }
@@ -662,7 +633,7 @@ static NSInteger topicsOffset = 7;
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
-        
+
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
 
         if (self.isCurrent) {
@@ -679,11 +650,122 @@ static NSInteger topicsOffset = 7;
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.playerTableView indexPathForCell:cell];
-        
+
         self.choosedTopic = self.faveTopics[indexPath.row - topicsOffset];
 
         [self performSegueWithIdentifier:@"showRate" sender:nil];
     }
+}
+
+#pragma mark - support methods
+
+- (void)noFriendActionChooser {
+    QZBFriendState state = [[QZBFriendRequestManager sharedInstance] friendStateForUser:self.user];
+
+    switch (state) {
+        case QZBFriendStateOutcomingRequest:
+            [self cancelUserRequest];
+            break;
+        case QZBFriendStateIncomingRequest:
+            [self acceptUserRequest];
+            break;
+        default:
+            [self addFriendRequest];
+            break;
+    }
+}
+
+- (void)deleteFromFriends {
+    [[QZBServerManager sharedManager] DELETEUNFriendWithID:self.user.userID
+        onSuccess:^{
+
+            [TSMessage showNotificationInViewController:self
+                                                  title:@"Друг удален"
+                                               subtitle:@""
+                                                   type:TSMessageNotificationTypeSuccess
+                                               duration:1];
+            if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
+                QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                currentUser.isFriend = NO;
+                [self.tableView reloadData];
+            }
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
+}
+
+- (void)declineUserRequest {
+    [[QZBFriendRequestManager sharedInstance]
+        declineForUser:self.user
+              callback:^(BOOL succes) {
+                  if (succes) {
+                      [TSMessage showNotificationInViewController:self
+                                                            title:@"Заявка отклонена"
+                                                         subtitle:@""
+                                                             type:TSMessageNotificationTypeSuccess
+                                                         duration:1];
+                      if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
+                          QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                          currentUser.isFriend = NO;
+                          [self.tableView reloadData];
+                      }
+                  }
+              }];
+}
+
+- (void)acceptUserRequest {
+    [[QZBFriendRequestManager sharedInstance]
+        acceptForUser:self.user
+             callback:^(BOOL succes) {
+                 if (succes) {
+                     [TSMessage showNotificationInViewController:self
+                                                           title:@"Заявка принята"
+                                                        subtitle:@""
+                                                            type:TSMessageNotificationTypeSuccess
+                                                        duration:1];
+                     if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
+                         QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                         currentUser.isFriend = YES;
+                         [self.tableView reloadData];
+                     }
+                 }
+             }];
+}
+
+- (void)cancelUserRequest {
+    [[QZBFriendRequestManager sharedInstance]
+        cancelForUser:self.user
+             callback:^(BOOL succes) {
+                 if (succes) {
+                     [TSMessage showNotificationInViewController:self
+                                                           title:@"Заявка отменена"
+                                                        subtitle:@""
+                                                            type:TSMessageNotificationTypeSuccess
+                                                        duration:1];
+                     if ([self.user isKindOfClass:[QZBAnotherUser class]]) {
+                         QZBAnotherUser *currentUser = (QZBAnotherUser *)self.user;
+                         currentUser.isFriend = NO;
+                         [self.tableView reloadData];
+                     }
+                 }
+             }];
+}
+
+- (void)addFriendRequest {
+    [[QZBFriendRequestManager sharedInstance]
+        addFriendUser:self.user
+             callback:^(BOOL succes) {
+                 if (succes) {
+                     [TSMessage
+                         showNotificationInViewController:self
+                                                    title:@"Заявка отправлена"
+                                                 subtitle:@""
+                                                     type:TSMessageNotificationTypeSuccess
+                                                 duration:1];
+                     [self.tableView reloadData];
+                 }
+             }];
 }
 
 #pragma mark - init friends and achivs
@@ -705,32 +787,48 @@ static NSInteger topicsOffset = 7;
         buttonTitle = @"Настройки";
         [playerCell.multiUseButton setTitle:@"settings" forState:UIControlStateNormal];
 
-        if (self.friendRequests) {
+        if ([QZBFriendRequestManager sharedInstance].incoming) {
             [playerCell setBAdgeCount:[self badgeNumber]];
         }
     } else {
         if (!self.user.isFriend) {
-            buttonTitle = @"Добавить в друзья";
+            QZBFriendState state =
+                [[QZBFriendRequestManager sharedInstance] friendStateForUser:self.user];
+
+            switch (state) {
+                case QZBFriendStateIncomingRequest:
+                    buttonTitle = @"Принять заявку";
+                    break;
+                case QZBFriendStateNotDefined:
+                    buttonTitle = @"Добавить в друзья";
+                    break;
+                case QZBFriendStateOutcomingRequest:
+                    buttonTitle = @"Отменить заявку";
+                    break;
+                default:
+                    buttonTitle = @"Добавить в друзья";
+                    break;
+            }
+
+            // buttonTitle = @"Добавить в друзья";
         } else {
             buttonTitle = @"Удалить из друзей";
         }
     }
     [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
 
-    
-
-    if(self.user.imageURL){
+    if (self.user.imageURL) {
         [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
-    }else{
+    } else {
         [playerCell.playerUserpic setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
 
-   // NSNumber *allAchievementsCount = @([QZBAchievementManager sharedInstance].achievements.count);
+    // NSNumber *allAchievementsCount = @([QZBAchievementManager
+    // sharedInstance].achievements.count);
 
     NSNumber *currentAchievementsCount = @(self.achivArray.count);
 
-    playerCell.achievementLabel.text =
-        [NSString stringWithFormat:@"%@", currentAchievementsCount];
+    playerCell.achievementLabel.text = [NSString stringWithFormat:@"%@", currentAchievementsCount];
 
     // cell = playerCell;
 }
@@ -748,72 +846,70 @@ static NSInteger topicsOffset = 7;
 
         }];
 
-    if (self.isCurrent) {
-        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends) {
-
-            self.friendRequests = friends;
-            [self.tableView reloadData];
-
-            UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-
-            if ([self badgeNumber] > 0) {
-                tabbarItem.badgeValue =
-                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
-
-            } else {
-                tabbarItem.badgeValue = nil;
-            }
-
-        } onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
+    if (self.isCurrent) {  // REDO
+        //        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends)
+        //        {
+        //
+        //            self.friendRequests = friends;
+        //            [self.tableView reloadData];
+        //
+        //            UITabBarController *tabController = self.tabBarController;
+        //            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+        //
+        //            if ([self badgeNumber] > 0) {
+        //                tabbarItem.badgeValue =
+        //                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
+        //
+        //            } else {
+        //                tabbarItem.badgeValue = nil;
+        //            }
+        //
+        //        } onFailure:^(NSError *error, NSInteger statusCode){
+        //
+        //        }];
     }
 }
 
-- (void)updateBadges {
+- (void)updateBadges {  // REDO
     if (self.isCurrent) {
-        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends) {
-
-            self.friendRequests = friends;
-            [self.tableView reloadData];
-
-            UITabBarController *tabController = self.tabBarController;
-            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-
-            if ([self badgeNumber] > 0) {
-                tabbarItem.badgeValue =
-                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
-
-            } else {
-                tabbarItem.badgeValue = nil;
-            }
-
-        } onFailure:^(NSError *error, NSInteger statusCode){
-
-        }];
+        //        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends)
+        //        {
+        //
+        //            self.friendRequests = friends;
+        //            [self.tableView reloadData];
+        //
+        //            UITabBarController *tabController = self.tabBarController;
+        //            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+        //
+        //            if ([self badgeNumber] > 0) {
+        //                tabbarItem.badgeValue =
+        //                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
+        //
+        //            } else {
+        //                tabbarItem.badgeValue = nil;
+        //            }
+        //
+        //        } onFailure:^(NSError *error, NSInteger statusCode){
+        //
+        //        }];
+        NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
     }
 }
 
 - (NSInteger)badgeNumber {
-    NSInteger count = 0;
+    NSInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
 
-    for (QZBRequestUser *user in self.friendRequests) {
-        if (!user.viewed) {
-            count++;
-        }
-    }
     return count;
 }
 
 #pragma mark - achievment
 
-
-
 - (void)showAchievement:(QZBAchievement *)achievment {
     // QZBAchievement *achievment = self.achivArray[indexPath.row];
-    
-   
 
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     self.alert = alert;
@@ -827,7 +923,7 @@ static NSInteger topicsOffset = 7;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                        dispatch_get_main_queue(), ^{
                            [self setNeedsStatusBarAppearanceUpdate];
-                           
+
                        });
     }];
 
@@ -842,20 +938,15 @@ static NSInteger topicsOffset = 7;
                        success:nil
                        failure:nil];
 
-   
-
-    
-  [self.alert showCustom:self.navigationController
-                   image:v.image
-                   color:[UIColor lightBlueColor]
-                   title:achievment.name
-                subTitle:achievment.achievementDescription
-        closeButtonTitle:@"ОК"
-                duration:0.0f];
+    [self.alert showCustom:self.navigationController
+                     image:v.image
+                     color:[UIColor lightBlueColor]
+                     title:achievment.name
+                  subTitle:achievment.achievementDescription
+          closeButtonTitle:@"ОК"
+                  duration:0.0f];
     NSLog(@"alert setted");
-
 }
-
 
 //-(void)tryUnshowAlert{
 //    NSLog(@"try unshow");
@@ -864,14 +955,13 @@ static NSInteger topicsOffset = 7;
 //        [self.alert hideView];
 //        self.alert = nil;
 //    }
-//    
+//
 //    for(UIView *v in self.navigationController.view.subviews ){
 //        if([v isKindOfClass:[UIImageView class]]){
 //            [v removeFromSuperview];
 //        }
 //    }
 //}
-
 
 - (void)achievementGet:(NSNotification *)note {
     [self showAlertAboutAchievmentWithDict:note.object];

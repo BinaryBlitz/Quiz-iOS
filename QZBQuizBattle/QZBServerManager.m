@@ -22,13 +22,14 @@
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
 #import "TSMessage.h"
-#import "QZBRequestUser.h"
+//#import "QZBRequestUser.h"
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
 #import "QZBChallengeDescriptionWithResults.h"
 #import "QZBAchievement.h"
 #import <SVProgressHUD.h>
 #import "AppDelegate.h"
+#import "QZBFriendRequest.h"
 //#import "QZBLoggingConfig.h"
 
 //#ifdef DEBUG
@@ -152,11 +153,11 @@ NSString *const QZBNoInternetConnectionMessage =
         NSString *bannerURL = nil;
         NSString *backgroundURL = nil;
 
-        if (![dict[@"banner_url"] isEqual:[NSNull null]]) {
+        if (![dict[@"banner_url"] isEqual:[NSNull null]] && dict[@"banner_url"]) {
             bannerURL = dict[@"banner_url"];
         }
 
-        if (![dict[@"background_url"] isEqual:[NSNull null]]) {
+        if (![dict[@"background_url"] isEqual:[NSNull null]] && dict[@"background_url"]) {
             backgroundURL = dict[@"background_url"];
         }
 
@@ -168,22 +169,40 @@ NSString *const QZBNoInternetConnectionMessage =
             existingEntity.category_id = category_id;
             existingEntity.name = name;
 
-            if (bannerURL) {
-                existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
-
-                [self savePictureFromString:existingEntity.banner_url];
-            }
-            if (backgroundURL) {
-                existingEntity.background_url =
-                    [QZBServerBaseUrl stringByAppendingString:backgroundURL];
-
-                [self savePictureFromString:existingEntity.background_url];
-            }
+//            if (bannerURL) {
+//                existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
+//
+//                [self savePictureFromString:existingEntity.banner_url];
+//            }
+//            if (backgroundURL) {
+//                existingEntity.background_url =
+//                    [QZBServerBaseUrl stringByAppendingString:backgroundURL];
+//
+//                [self savePictureFromString:existingEntity.background_url];
+//            }
         }
+        if(backgroundURL &&
+           ![backgroundURL isEqualToString:existingEntity.background_url]){
+            
+                existingEntity.background_url =
+                [QZBServerBaseUrl stringByAppendingString:backgroundURL];
+                
+                [self savePictureFromString:existingEntity.background_url];
+            
+        }//TEST
+        
+        if(bannerURL && ![bannerURL isEqualToString:existingEntity.banner_url]){
+            existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
+            
+            [self savePictureFromString:existingEntity.banner_url];
+        }
+        
         [self updateTopcs:dict inCategory:existingEntity];  // TODO!
 
         [objectsArray addObject:existingEntity];
     }
+    
+    
 
     NSMutableArray *allCategories = [[QZBCategory MR_findAll] mutableCopy];
 
@@ -1009,20 +1028,23 @@ NSString *const QZBNoInternetConnectionMessage =
 #pragma mark - friend
 
 - (void)POSTFriendWithID:(NSNumber *)userID
-               onSuccess:(void (^)())success
+               onSuccess:(void (^)(QZBFriendRequest *friendRequest)) success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     DDLogInfo(@"user id %@", userID);
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"friend_id" : userID };
-    NSString *urlString = @"friendships";
+    NSString *urlString = @"friend_requests";
 
     [self.requestOperationManager POST:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             DDLogInfo(@"friend add request %@", responseObject);
+            
+            QZBFriendRequest *fr = [[QZBFriendRequest alloc] initWithDictionary:responseObject];
+            
             if (success)
-                success();
+                success(fr);
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1039,9 +1061,8 @@ NSString *const QZBNoInternetConnectionMessage =
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     DDLogInfo(@"user id %@", userID);
     NSDictionary *params =
-        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-           @"friend_id" : userID };
-    NSString *urlString = @"friendships/unfriend";
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    NSString *urlString = [NSString stringWithFormat:@"friends/%@", userID];
 
     [self.requestOperationManager DELETE:urlString
         parameters:params
@@ -1060,29 +1081,38 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
-- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *friends))success
+- (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *incoming, NSArray *outgoing))success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
-    [self.requestOperationManager GET:@"friendships/requests"
+    [self.requestOperationManager GET:@"friend_requests"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             DDLogInfo(@"friends request %@", responseObject);
-
-            NSMutableArray *friends = [NSMutableArray array];
-
-            for (NSDictionary *dict in responseObject) {
-                QZBRequestUser *user = [[QZBRequestUser alloc] initWithDictionary:dict];
-
-                if (![user.name isEqualToString:@""]) {
-                    [friends addObject:user];
-                }
+            
+            NSArray *incomingDicts = responseObject[@"incoming"];
+            NSArray *outgoingDicts = responseObject[@"outgoing"];
+            NSMutableArray *incomingRequests = [NSMutableArray array];
+            NSMutableArray *outgoingRequests = [NSMutableArray array];
+            
+            for(NSDictionary *d in incomingDicts){
+                QZBFriendRequest *incomingReq = [[QZBFriendRequest alloc] initWithDictionary:d];
+                [incomingRequests addObject:incomingReq];
             }
+            
+            for(NSDictionary *d in outgoingDicts){
+                QZBFriendRequest *outgoingReq = [[QZBFriendRequest alloc] initWithDictionary:d];
+                [outgoingRequests addObject:outgoingReq];
+            }
+            
 
-            NSArray *result = [NSArray arrayWithArray:friends];
+
+
+            NSArray *incoming = [NSArray arrayWithArray:incomingRequests];
+            NSArray *outgoing = [NSArray arrayWithArray:outgoingRequests];
 
             if (success) {
-                success(result);
+                success(incoming, outgoing);
             }
 
         }
@@ -1182,6 +1212,57 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
         }];
+}
+
+-(void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID onSuccess:(void (^)())success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+    
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key
+        };
+    NSString *urlAsString = [NSString stringWithFormat:@"friend_requests/%@",reqID];
+    
+    [self.requestOperationManager PATCH:urlAsString
+                             parameters:params
+                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    NSLog(@"response object%@", responseObject);
+                                    if(success){
+                                        success();
+                                    }
+                                    
+                                    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+    
+}
+
+-(void)DELETEDeclineFriendRequestWithID:(NSNumber *)reqID onSuccess:(void (^)())success
+                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure{
+ 
+    NSDictionary *params = @{
+                             @"token" : [QZBCurrentUser sharedInstance].user.api_key
+                             };
+    NSString *urlAsString = [NSString stringWithFormat:@"friend_requests/%@",reqID];
+    
+    [self.requestOperationManager DELETE:urlAsString
+                             parameters:params
+                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    NSLog(@"response object %@", responseObject);
+                                    if(success){
+                                        success();
+                                    }
+                                    
+                                    
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    if (failure) {
+                                        failure(error, operation.response.statusCode);
+                                    }
+                                }];
+
+    
 }
 
 #pragma mark - ranking

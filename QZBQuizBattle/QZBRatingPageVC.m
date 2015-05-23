@@ -52,10 +52,6 @@
 
     self.motionInProgress = NO;
 
-    UIPanGestureRecognizer *panGestureRecognizer =
-        [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRcognizer:)];
-
-    [self.view addGestureRecognizer:panGestureRecognizer];
 
     // Do any additional setup after loading the view.
 }
@@ -63,10 +59,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)panRcognizer:(id)sender {
-   
 }
 
 #pragma mark -
@@ -250,17 +242,12 @@
         }];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    DDLogInfo(@"began");
-}
 
 -(void)setAllTimeRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
     
     QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
     
     [leftPage setPlayersRanksWithTop:topArray playerArray:playerArray];
-    
-    
 }
 
 -(void)setWeekRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray{
