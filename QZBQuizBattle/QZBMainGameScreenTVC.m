@@ -172,18 +172,19 @@
 
         cell.backgroundColor = [self colorForSection:indexPath.section];
 
-        NSInteger level = 0;
-        float progress = 0.0;
-
-        [NSObject calculateLevel:&level
-                   levelProgress:&progress
-                       fromScore:[topic.points integerValue]];
-
-        [cell initCircularProgressWithLevel:level
-                                   progress:progress
-                                    visible:[topic.visible boolValue]];
-
-        cell.topicName.text = topic.name;
+//        NSInteger level = 0;
+//        float progress = 0.0;
+//
+//        [NSObject calculateLevel:&level
+//                   levelProgress:&progress
+//                       fromScore:[topic.points integerValue]];
+//
+//        [cell initCircularProgressWithLevel:level
+//                                   progress:progress
+//                                    visible:[topic.visible boolValue]];
+//
+//        cell.topicName.text = topic.name;
+        [cell initWithTopic:topic];
 
         return cell;
     }

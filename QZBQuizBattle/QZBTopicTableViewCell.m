@@ -7,8 +7,13 @@
 //
 
 #import "QZBTopicTableViewCell.h"
+#import "QZBGameTopic.h"
 #import "UIColor+QZBProjectColors.h"
 #import "UIFont+QZBCustomFont.h"
+#import "UIView+QZBShakeExtension.h"
+#import "NSObject+QZBSpecialCategory.h"
+#import "QZBServerManager.h"
+#import "QZBCategory.h"
 
 @interface QZBTopicTableViewCell()
 
@@ -26,12 +31,41 @@
     self.topicProgressView.fillOnTouch = NO;
     self.topicProgressView.tintColor = [UIColor ultralightGreenColor];
     
+    [self.backView addShadowsAllWay];
+    [self.underView addShadowsAllWay];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)initWithTopic:(QZBGameTopic *)topic{
+    
+    NSInteger level = 0;
+    float progress = 0.0;
+    
+    [NSObject calculateLevel:&level
+               levelProgress:&progress
+                   fromScore:[topic.points integerValue]];
+    
+    [self initCircularProgressWithLevel:level
+                               progress:progress
+                                visible:[topic.visible boolValue]];
+    
+    self.topicName.text = topic.name;
+    
+  //  QZBCategory *c = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
+    
+    if(true){//REDO
+     //   NSString *s = [self colorForText:c.name];
+        
+        self.symbolsView.backgroundColor = [self colorForText:@"a"];
+    }
+
+    
 }
 
 -(void)initCircularProgressWithLevel:(NSInteger)level
@@ -63,6 +97,9 @@
     }
 }
 
+-(void)setSymbolsWithText:(NSString *)symbols{
+    self.symbolLabel.text = symbols;
+}
 
 
 -(UILabel *)centralLabel{
@@ -88,6 +125,14 @@
         _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     }
     return _icon;
+}
+
+
+-(UIColor *)colorForText:(NSString *)text{
+    
+    return arc4random()%10>5?[UIColor lightRedColor]:[UIColor lightGreenColor];
+    
+    
 }
 
 

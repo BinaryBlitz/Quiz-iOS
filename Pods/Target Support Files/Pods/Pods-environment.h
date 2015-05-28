@@ -169,6 +169,12 @@
 // Please contact the author.
 // Version: 1.0.9.2.
 
+// iOS-blur
+#define COCOAPODS_POD_AVAILABLE_iOS_blur
+#define COCOAPODS_VERSION_MAJOR_iOS_blur 0
+#define COCOAPODS_VERSION_MINOR_iOS_blur 0
+#define COCOAPODS_VERSION_PATCH_iOS_blur 5
+
 // libPusher
 #define COCOAPODS_POD_AVAILABLE_libPusher
 #define COCOAPODS_VERSION_MAJOR_libPusher 1

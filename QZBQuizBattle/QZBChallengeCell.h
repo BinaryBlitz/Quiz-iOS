@@ -13,6 +13,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *opponentNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *acceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *declineButton;
+
+@property (weak, nonatomic) IBOutlet UIView *underView;
+@property (weak, nonatomic) IBOutlet UIView *backView;
+
+
 //@property (assign, nonatomic) BOOL visible;
 
 @end
