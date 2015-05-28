@@ -7,11 +7,14 @@
 //
 
 #import "QZBResultOfSessionCell.h"
-
+#import "UIView+QZBShakeExtension.h"
 @implementation QZBResultOfSessionCell
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self.backView addShadowsAllWay];
+    [self.underView addShadowsAllWay];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

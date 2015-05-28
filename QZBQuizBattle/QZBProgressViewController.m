@@ -22,6 +22,7 @@
 #import "QZBServerManager.h"
 #import "TSMessage.h"
 #import <CocoaLumberjack.h>
+//#import "FXBlurView.h"
 
 @interface QZBProgressViewController () <UIAlertViewDelegate>
 
@@ -55,6 +56,8 @@
     [self setNeedsStatusBarAppearanceUpdate];
 
     self.playOfflineButton.alpha = 0;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,7 +86,6 @@
     self.topicLabel.text = self.topic.name;
     self.tabBarController.tabBar.hidden = YES;
     
-   // [self initWhiteViewOn:self.backgroundImageView];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelCrossAction:)
@@ -106,13 +108,20 @@
                                              selector:@selector(showAlertViewFromNotification:)
                                                  name:QZBPusherChallengeDeclined
                                                object:nil];
+    
+    //[self initWhiteViewOn:self.backgroundImageView];
 
+}
+
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+   // [self initWhiteViewOn:self.backgroundImageView];
 }
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    [self initWhiteViewOn:self.backgroundImageView];
-    
+ //   [self initWhiteViewOn:self.backgroundImageView];
+ //   [self initBlurEffect];
 }
 
 
@@ -263,7 +272,6 @@
     [self enterGame];
 }
 
-#pragma mark - Navigation
 
 #pragma mark - init session
 
@@ -444,6 +452,8 @@
     }
 }
 
+#pragma mark - enter game
+
 - (void)showGameVC:(NSNotification *)notification {
     DDLogInfo(@"setted %d online %d entered %d", self.setted, self.isOnline, self.isEntered);
 
@@ -511,12 +521,23 @@
 }
 
 -(void)initWhiteViewOn:(UIView *)view{
-    CGRect r = view.bounds;
-    UIView *v = [[UIView alloc] initWithFrame:r];
-    v.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
-    [view addSubview:v];
-    [view sendSubviewToBack:v];
+    CGRect r = [UIScreen mainScreen].bounds;
+    
+    //FXBlurView *vi = [[FXBlurView alloc] initWithFrame:r];
+   // vi.dynamic = YES;
+   // vi.blurRadius = 0.9;
+   // vi.iterations = 12;
+    
+    
+    //[UIColor colorWithWhite:1.0 alpha:0.1];
+    UIView *vi = [[UIView alloc] initWithFrame:r];
+    vi.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+    [view addSubview:vi];
+    [view sendSubviewToBack:vi];
+    
+  //  [view setNeedsDisplay];
 }
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

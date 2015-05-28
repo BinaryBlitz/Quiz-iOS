@@ -7,7 +7,13 @@
 //
 
 #import "QZBChallengeCell.h"
+#import "UIView+QZBShakeExtension.h"
 
 @implementation QZBChallengeCell
+
+-(void)awakeFromNib{
+    [self.backView addShadowsAllWay];
+    [self.underView addShadowsAllWay];
+}
 
 @end
