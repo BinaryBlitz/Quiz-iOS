@@ -24,11 +24,21 @@
 #import "QZBRegistrationChooserVC.h"
 #import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <DDASLLogger.h>
+//#import <CocoaLumberjack/CocoaLumberjack.h>
+
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+#import "DDFileLogger.h"
+
+#import <XMPPFramework/XMPPFramework.h>
+
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@interface AppDelegate ()
+@interface AppDelegate ()<XMPPStreamDelegate>
+
+@property(strong, nonatomic) XMPPStream *stream;
 
 @end
 
@@ -38,12 +48,18 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupAutoMigratingCoreDataStack];
 
-    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
+//    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
+//    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
+    
+    [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
 
     [Fabric with:@[ CrashlyticsKit ]];
+    
+    
+   // [self initMessager];
 
-    DDLogInfo(@"launch options %@", launchOptions);
+ //   DDLogInfo(@"launch options %@", launchOptions);
 
     if (IS_OS_8_OR_LATER) {
         [application
@@ -188,7 +204,7 @@
         // abort() causes the application to generate a crash log and terminate. You should not use
         // this function in a
         // shipping application, although it may be useful during development.
-        DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
+        //DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
 
@@ -223,7 +239,7 @@
             // abort() causes the application to generate a crash log and terminate. You should not
             // use this function in
             // a shipping application, although it may be useful during development.
-            DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
+            //DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
@@ -233,7 +249,7 @@
 
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    DDLogInfo(@"My token is: %@", deviceToken);
+    //DDLogInfo(@"My token is: %@", deviceToken);
 
     // DataModel *dataModel = chatViewController.dataModel;
     // NSString *oldToken = [dataModel deviceToken];
@@ -248,7 +264,7 @@
 
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    DDLogInfo(@"Received notification: %@", userInfo);
+    //DDLogInfo(@"Received notification: %@", userInfo);
 
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
@@ -274,7 +290,7 @@
 
 - (void)application:(UIApplication *)application
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    DDLogWarn(@"Failed to get token, error: %@", error);
+    //DDLogWarn(@"Failed to get token, error: %@", error);
 }
 
 - (void)setBadgeWithDictionary:(NSDictionary *)userInfo {
@@ -350,6 +366,48 @@
         QZBPlayerPersonalPageVC *notificationController = navController.viewControllers[0];
         [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
         tabController.selectedIndex = 2;
+    }
+}
+
+#pragma mark - messager
+
+-(void)initMessager{
+    self.stream = [[XMPPStream alloc] init];
+    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    
+    self.stream.myJID =  [XMPPJID jidWithString:@"andrey@localhost"];
+    self.stream.hostName = @"binaryblitz.ru";
+    
+    //[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+   // stream connectWithTimeout:3000 error:<#(NSError *__autoreleasing *)#>
+    
+    NSError *error = nil;
+    if (![self.stream connectWithTimeout:10 error:&error])
+    {
+        NSLog(@"Oops, I probably forgot something: %@", error);
+    }else{
+        NSLog(@"OOKey %@", self.stream);
+    }
+    
+    [self goOnline];
+}
+
+- (void)goOnline {
+    XMPPPresence *presence = [XMPPPresence presence];
+    [[self stream] sendElement:presence];
+}
+
+- (void)xmppStreamDidConnect:(XMPPStream *)sender
+{
+    NSLog(@"kkkkk");
+    
+     NSError *error = nil;
+    if(![sender authenticateWithPassword:@"123456" error:&error]){
+        NSLog(@"problems %@",error );
+    }else{
+        NSLog(@"okkkk");
     }
 }
 

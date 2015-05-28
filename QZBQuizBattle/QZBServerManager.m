@@ -7,7 +7,7 @@
 //
 
 #import "QZBServerManager.h"
-#import <CocoaLumberjack/CocoaLumberjack.h>
+//#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "QZBGameTopic.h"
 #import "QZBLobby.h"
@@ -31,6 +31,10 @@
 #import "AppDelegate.h"
 #import "QZBFriendRequest.h"
 #import <SDWebImage/SDImageCache.h>
+
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 //#import "QZBLoggingConfig.h"
 
 //#ifdef DEBUG

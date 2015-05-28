@@ -16,9 +16,11 @@
 #import <StoreKit/StoreKit.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "NSString+QZBStringCategory.h"
-#import <CocoaLumberjack.h>
 #import <Crashlytics/Crashlytics.h>
 #import "QZBServerManager.h"
+
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
 @interface QZBStoreListTVC ()

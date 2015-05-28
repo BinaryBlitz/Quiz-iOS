@@ -21,7 +21,8 @@
 @property (strong, nonatomic, readonly) NSString *pushToken;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
 @property (strong, nonatomic) QZBUserStatistic *userStatistics;
-@property(assign, nonatomic, readonly) BOOL isRegistred;
+@property (assign, nonatomic, readonly) BOOL isRegistred;
+@property (strong, nonatomic, readonly) NSString *xmppPassword;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

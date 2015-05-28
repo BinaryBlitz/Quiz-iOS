@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
+
+
 #import "QZBOnlineSessionWorker.h"
 #import <Pusher/Pusher.h>
 #import "QZBSessionManager.h"
@@ -14,8 +16,8 @@
 #import "QZBAnswerTextAndID.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
-#import <CocoaLumberjack.h>
-
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
 NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
@@ -37,7 +39,8 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
         NSString *channelName = [NSString stringWithFormat:@"player-session-%@", playerID];
 
-        DDLogInfo(@"channel name %@", channelName);
+       // DDLogCInfo(<#frmt, ...#>)
+        DDLogCInfo(@"channel name %@", channelName);
 
         _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
 

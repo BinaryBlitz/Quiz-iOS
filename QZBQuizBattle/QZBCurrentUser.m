@@ -9,7 +9,8 @@
 #import "QZBCurrentUser.h"
 #import "QZBServerManager.h"
 #import <Crashlytics/Crashlytics.h>
-#import <CocoaLumberjack.h>
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 //#import "QZBUser.h"
 
