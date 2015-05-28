@@ -63,16 +63,6 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   NSMutableDictionary *channels;
 }
 
-- (id)initWithConnection:(PTPusherConnection *)connection connectAutomatically:(BOOL)connectAutomatically
-{
-  if ((self = [self initWithConnection:connection])) {
-    if (connectAutomatically) {
-      [self connect];
-    }
-  }
-  return self;
-}
-
 - (id)initWithConnection:(PTPusherConnection *)connection
 {
   if (self = [super init]) {
@@ -109,31 +99,23 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
 
 + (id)pusherWithKey:(NSString *)key delegate:(id<PTPusherDelegate>)delegate encrypted:(BOOL)isEncrypted
 {
-  NSURL *serviceURL = PTPusherConnectionURL(kPUSHER_HOST, key, @"libPusher", isEncrypted);
-  PTPusherConnection *connection = [[PTPusherConnection alloc] initWithURL:serviceURL];
-  PTPusher *pusher = [[self alloc] initWithConnection:connection];
-  pusher.delegate = delegate;
-  return pusher;
+  return [self pusherWithKey:(NSString *)key delegate:(id<PTPusherDelegate>)delegate encrypted:(BOOL)isEncrypted cluster:(NSString *) nil];
 }
 
-#pragma mark - Deprecated methods
-
-+ (id)pusherWithKey:(NSString *)key connectAutomatically:(BOOL)connectAutomatically
++ (id)pusherWithKey:(NSString *)key delegate:(id<PTPusherDelegate>)delegate encrypted:(BOOL)isEncrypted cluster:(NSString *) cluster
 {
-  PTPusher *client = [self pusherWithKey:key delegate:nil encrypted:YES];
-  if (connectAutomatically) {
-    [client connect];
-  }
-  return client;
-}
+    NSString * hostURL;
+    if ([cluster length] == 0) {
+        hostURL = kPUSHER_HOST;
+    } else {
+        hostURL = [NSString stringWithFormat:@"ws-%@.pusher.com", cluster];
+    }
 
-+ (id)pusherWithKey:(NSString *)key connectAutomatically:(BOOL)connectAutomatically encrypted:(BOOL)isEncrypted
-{
-  PTPusher *client = [self pusherWithKey:key delegate:nil encrypted:isEncrypted];
-  if (connectAutomatically) {
-    [client connect];
-  }
-  return client;
+    NSURL *serviceURL = PTPusherConnectionURL(hostURL, key, @"libPusher", isEncrypted);
+    PTPusherConnection *connection = [[PTPusherConnection alloc] initWithURL:serviceURL];
+    PTPusher *pusher = [[self alloc] initWithConnection:connection];
+    pusher.delegate = delegate;
+    return pusher;
 }
 
 - (void)dealloc;
@@ -260,15 +242,13 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   }
 }
 
-- (void)unsubscribeFromChannel:(PTPusherChannel *)channel
-{
-  [self __unsubscribeFromChannel:channel];
-}
-
 - (void)subscribeToChannel:(PTPusherChannel *)channel
 {
   [channel authorizeWithCompletionHandler:^(BOOL isAuthorized, NSDictionary *authData, NSError *error) {
     if (isAuthorized && self.connection.isConnected) {
+      if ([self.delegate respondsToSelector:@selector(pusher:authorizationPayloadFromResponseData:)]) {
+        authData = [self.delegate pusher:self authorizationPayloadFromResponseData:authData];
+      }    
       [channel subscribeWithAuthorization:authData];
     }
     else {
@@ -414,22 +394,6 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   
   for (PTPusherChannel *channel in [channels allValues]) {
     [channel handleDisconnect];
-  }
-  
-  if ([self.delegate respondsToSelector:@selector(pusher:connectionDidDisconnect:)]) { // deprecated call
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    NSLog(@"pusher:connectionDidDisconnect: is deprecated and will be removed in 1.6. Use pusher:connection:didDisconnectWithError:willAttemptReconnect: instead.");
-    [self.delegate pusher:self connectionDidDisconnect:connection];
-#pragma clang diagnostic pop
-  }
-
-  if ([self.delegate respondsToSelector:@selector(pusher:connection:didDisconnectWithError:)]) { // deprecated call
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    NSLog(@"pusher:connectionDidDisconnectWithError: is deprecated and will be removed in 1.6. Use pusher:connection:didDisconnectWithError:willAttemptReconnect: instead.");
-    [self.delegate pusher:self connection:connection didDisconnectWithError:error];
-#pragma clang diagnostic pop
   }
   
   BOOL willReconnect = NO;

@@ -30,6 +30,7 @@
 #import <SVProgressHUD.h>
 #import "AppDelegate.h"
 #import "QZBFriendRequest.h"
+#import <SDWebImage/SDImageCache.h>
 //#import "QZBLoggingConfig.h"
 
 //#ifdef DEBUG
@@ -225,6 +226,9 @@ NSString *const QZBNoInternetConnectionMessage =
 
         UIImageView *v = [[UIImageView alloc] init];
        // [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil]; //redo
+        
+        
+        
     }
 }
 
