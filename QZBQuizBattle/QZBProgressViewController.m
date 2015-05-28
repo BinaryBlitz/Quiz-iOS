@@ -82,6 +82,8 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
     self.tabBarController.tabBar.hidden = YES;
+    
+   // [self initWhiteViewOn:self.backgroundImageView];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelCrossAction:)
@@ -104,19 +106,15 @@
                                              selector:@selector(showAlertViewFromNotification:)
                                                  name:QZBPusherChallengeDeclined
                                                object:nil];
-    //  @"QZBChallengeDeclined"
+
 }
 
-//- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {
-//    QZBGameTopic *exitedTopic =
-//        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
-//    QZBCategory *category = nil;
-//
-//    if (exitedTopic) {
-//        category = exitedTopic.relationToCategory;
-//    }
-//    return category;
-//}
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    [self initWhiteViewOn:self.backgroundImageView];
+    
+}
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -134,9 +132,6 @@
 
     self.cancelCrossButton.enabled = YES;
 
-    //    if (self.user) {
-    //        self.playOfflineButton.alpha = 1.0;
-    //    }
 
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
@@ -513,6 +508,14 @@
 
 - (void)didSubscribed:(NSNotification *)notification {
     [self initSession];
+}
+
+-(void)initWhiteViewOn:(UIView *)view{
+    CGRect r = view.bounds;
+    UIView *v = [[UIView alloc] initWithFrame:r];
+    v.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+    [view addSubview:v];
+    [view sendSubviewToBack:v];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

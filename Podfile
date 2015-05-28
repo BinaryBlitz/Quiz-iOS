@@ -1,7 +1,7 @@
 platform :ios, "7.1"
 
 pod "AFNetworking"
-pod 'libPusher', '~> 1.5'
+pod 'libPusher', '~> 1.6'
 pod "VK-ios-sdk"
 pod "TSMessages"
 pod "MagicalRecord"
@@ -12,3 +12,4 @@ pod 'UAProgressView'
 pod 'SCLAlertView-Objective-C'
 pod 'JSQMessagesViewController'
 pod 'CocoaLumberjack'
+pod 'SDWebImage', '~>3.7'

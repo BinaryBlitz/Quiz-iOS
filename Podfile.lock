@@ -36,14 +36,17 @@ PODS:
   - JSQMessagesViewController (7.0.1):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - libPusher (1.5):
-    - libPusher/Core (= 1.5)
-  - libPusher/Core (1.5):
+  - libPusher (1.6):
+    - libPusher/Core (= 1.6)
+  - libPusher/Core (1.6):
     - SocketRocket (= 0.3.1-beta2)
   - MagicalRecord (2.2):
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
   - SCLAlertView-Objective-C (0.5.9)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
   - SocketRocket (0.3.1-beta2)
   - SVProgressHUD (1.1.2)
   - TSMessages (0.9.12):
@@ -57,9 +60,10 @@ DEPENDENCIES:
   - DBCamera
   - JSBadgeView
   - JSQMessagesViewController
-  - libPusher (~> 1.5)
+  - libPusher (~> 1.6)
   - MagicalRecord
   - SCLAlertView-Objective-C
+  - SDWebImage (~> 3.7)
   - SVProgressHUD
   - TSMessages
   - UAProgressView
@@ -74,9 +78,10 @@ SPEC CHECKSUMS:
   JSBadgeView: 08284afc9d0eb60069674e517cac2d37d4319208
   JSQMessagesViewController: 03fba8a3021a3ddc1c91847f180ffe549f2e8cf2
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  libPusher: 7f94e576983a94b4f5d482216410127d006f7143
+  libPusher: f9367ede8f5141e74adc90ba20536cbc3c7b68e1
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   SCLAlertView-Objective-C: 39e9c3a9135603f587ff2890217ed52a58bb0eab
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SocketRocket: 7284ab9370a06c99aba92b2fe3a32aedd0f9a6fa
   SVProgressHUD: 3afb875b9eb23acd1bed9b82495695c68621a8b2
   TSMessages: 2a52642128d7ab15b46930c810b9c9403a2b58f3

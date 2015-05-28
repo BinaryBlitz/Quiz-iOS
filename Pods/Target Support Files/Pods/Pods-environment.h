@@ -126,6 +126,18 @@
 #define COCOAPODS_VERSION_MINOR_SCLAlertView_Objective_C 5
 #define COCOAPODS_VERSION_PATCH_SCLAlertView_Objective_C 9
 
+// SDWebImage
+#define COCOAPODS_POD_AVAILABLE_SDWebImage
+#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+
+// SDWebImage/Core
+#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
+#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD
 #define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
@@ -160,12 +172,12 @@
 // libPusher
 #define COCOAPODS_POD_AVAILABLE_libPusher
 #define COCOAPODS_VERSION_MAJOR_libPusher 1
-#define COCOAPODS_VERSION_MINOR_libPusher 5
+#define COCOAPODS_VERSION_MINOR_libPusher 6
 #define COCOAPODS_VERSION_PATCH_libPusher 0
 
 // libPusher/Core
 #define COCOAPODS_POD_AVAILABLE_libPusher_Core
 #define COCOAPODS_VERSION_MAJOR_libPusher_Core 1
-#define COCOAPODS_VERSION_MINOR_libPusher_Core 5
+#define COCOAPODS_VERSION_MINOR_libPusher_Core 6
 #define COCOAPODS_VERSION_PATCH_libPusher_Core 0
 
