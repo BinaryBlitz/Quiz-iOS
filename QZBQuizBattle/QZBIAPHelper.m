@@ -12,7 +12,8 @@
 #import "QZBUser.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "QZBProduct.h"
-#import <CocoaLumberjack.h>
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 

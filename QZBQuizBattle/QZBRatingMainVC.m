@@ -14,7 +14,8 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import <SVProgressHUD.h>
 #import "UIViewController+QZBControllerCategory.h"
-#import <CocoaLumberjack.h>
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface QZBRatingMainVC ()
 

@@ -10,7 +10,8 @@
 #import "QZBRatingMainVC.h"
 #import "QZBServerManager.h"
 
-#import <CocoaLumberjack.h>
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface QZBRatingPageVC ()
 
@@ -162,7 +163,7 @@
         self.currentTableType = QZBRatingTableAllTime;
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            DDLogInfo(@"expected %ld current %ld", self.expectedType, self.currentTableType);
+            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
 
             if (self.expectedType != self.currentTableType) {
                 self.currentTableType = QZBRatingTableWeek;

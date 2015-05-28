@@ -7,7 +7,6 @@
 //
 
 #import "QZBPlayerPersonalPageVC.h"
-#import <CocoaLumberjack.h>
 #import "QZBServerManager.h"
 #import "QZBCurrentUser.h"
 #import "QZBPlayerInfoCell.h"
@@ -41,6 +40,9 @@
 #import "QZBMessagerVC.h"
 #import "QZBFriendRequestManager.h"
 #import "QZBFriendRequest.h"
+
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"

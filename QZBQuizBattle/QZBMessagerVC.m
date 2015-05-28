@@ -13,6 +13,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "UIColor+QZBProjectColors.h"
 
+#import <XMPPFramework/XMPPFramework.h>
+
 @interface QZBMessagerVC ()
 
 @property (strong, nonatomic) NSMutableArray *messages;
@@ -24,6 +26,8 @@
 @property (strong, nonatomic) JSQMessagesAvatarImage *friendAvatar;
 
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
+
+@property(strong, nonatomic) XMPPStream *stream;
 
 @end
 
@@ -63,11 +67,20 @@
     [super viewWillAppear:animated];
     
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
+    
+    [self initMessager];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.inputToolbar.contentView.textView becomeFirstResponder];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self goOffline];
+    [self.stream removeDelegate:self];
+    [self.stream disconnect];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,13 +91,6 @@
 - (void)initWithUser:(id<QZBUserProtocol>)user {
     self.title = user.name;
     self.friend = user;
-    //    self.myAvatar = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage
-    //    imageNamed:@"userpicStandart"]
-    //                                                               diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    //    self.friendAvatar = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage
-    //    imageNamed:@"userpicStandart"]
-    //                                                                   diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    // [self.inputToolbar.contentView.textView becomeFirstResponder];
     
     [self updateImages];
 }
@@ -164,6 +170,8 @@
                                              senderDisplayName:senderDisplayName
                                                           date:date
                                                           text:text];
+    
+    [self sendMessageWithText:text];
 
     [self.messages addObject:message];
     
@@ -173,7 +181,7 @@
 
     [self finishSendingMessageAnimated:YES];
     
-    [self receiveMessage:text];
+   // [self receiveMessage:text];
 }
 
 -(void)receiveMessage:(NSString *)message{
@@ -321,6 +329,150 @@ navigation
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - server methods
+
+-(void)initMessager{
+    self.stream = [[XMPPStream alloc] init];
+    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+   // self.stream addDelegate:self delegateQueue:DI
+    
+    QZBUser *user = [QZBCurrentUser sharedInstance].user;
+    
+    NSString *userJID = [NSString stringWithFormat:@"id%@@localhost", user.userID];
+    
+    NSLog(@"%@",userJID);
+    
+    self.stream.myJID =  [XMPPJID jidWithString:userJID];
+    self.stream.hostName = @"binaryblitz.ru";
+
+    
+    NSError *error = nil;
+    if (![self.stream connectWithTimeout:10 error:&error])
+    {
+        NSLog(@"Oops, I probably forgot something: %@", error);
+    }else{
+        NSLog(@"OOKey %@", self.stream);
+    }
+    
+   // [self goOnline];
+}
+
+- (void)goOnline {
+    XMPPPresence *presence = [XMPPPresence presence];
+    [[self stream] sendElement:presence];
+}
+
+- (void)goOffline {
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [[self stream] sendElement:presence];
+}
+
+- (void)xmppStreamDidConnect:(XMPPStream *)sender
+{
+    NSLog(@"kkkkk");
+    QZBUser *user = [QZBCurrentUser sharedInstance].user;
+    NSError *error = nil;
+    
+    NSLog(@"password %@",user.xmppPassword);
+    
+    if(![sender authenticateWithPassword:user.xmppPassword error:&error]){
+        NSLog(@"problems %@",error );
+    }else{
+        NSLog(@"okkkk");
+      //  [self goOnline];
+    }
+}
+
+-(void)xmppStreamDidRegister:(XMPPStream *)sender{
+    NSLog(@"registred");
+  //  [self goOnline];
+}
+
+- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
+    NSLog(@"DidAuthenticate");
+    [self goOnline];
+
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error{
+    NSLog(@"DidNOTAuthenticate err %@", error);
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
+    
+    // message received
+    
+    NSLog(@"res");
+    
+    NSString *msg = [[message elementForName:@"body"] stringValue];
+    NSString *from = [[message attributeForName:@"from"] stringValue];
+    
+    NSLog(@"message %@", msg);
+    
+    JSQMessage *mess = [JSQMessage messageWithSenderId:[self.friend.userID stringValue]
+                                          displayName:self.friend.name
+                                                 text:msg];
+    
+    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+    [self.messages addObject:mess];
+    [self finishReceivingMessageAnimated:YES];
+    
+    
+    
+//    NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
+//    [m setObject:msg forKey:@"msg"];
+//    [m setObject:from forKey:@"sender"];
+    
+   // [_messageDelegate newMessageReceived:m];
+   // [m release];
+    
+    
+}
+
+
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
+    
+    // a buddy went offline/online
+    
+    NSLog(@"resencex");
+    
+}
+
+
+-(void)sendMessageWithText:(NSString *)textMessage{
+    
+    NSString *messageStr = textMessage;
+    
+    if([messageStr length] > 0) {
+        
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:messageStr];
+        
+        NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        [message addAttributeWithName:@"type" stringValue:@"chat"];
+        [message addAttributeWithName:@"to" stringValue:toUser];//REDO
+        [message addChild:body];
+        
+        [self.stream sendElement:message];
+        
+       // self.messageField.text = @"";
+        
+//        NSString *m = [NSString stringWithFormat:@"%@:%@", messageStr, @"you"];
+//        
+//        NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
+//        [m setObject:messageStr forKey:@"msg"];
+//        [m setObject:@"you" forKey:@"sender"];
+//        
+//        [messages addObject:m];
+//        [self.tView reloadData];
+//        [m release];
+        
+    }
+    
 }
 
 #pragma mark - support methods

@@ -9,8 +9,4 @@
 #import "QZBLoggingConfig.h"
 
 
-#ifdef DEBUG
-int const ddLogLevel = DDLogLevelVerbose;
-#else
-int const ddLogLevel = DDLogLevelError;
-#endif
+

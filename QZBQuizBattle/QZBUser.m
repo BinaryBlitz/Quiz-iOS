@@ -20,6 +20,7 @@
 //@property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
+@property(strong, nonatomic) NSString *xmppPassword;
 
 @property(assign, nonatomic) BOOL isRegistred;
 
@@ -48,6 +49,8 @@
             self.email = nil;
         }
         self.userID = [dict objectForKey:@"id"];
+        
+        self.xmppPassword = dict[@"xmpp_password"];
        // self.userPic = nil;
         
         self.isFriend = NO;
@@ -72,6 +75,7 @@
         self.api_key = [coder decodeObjectForKey:@"userApiKey"];
         self.userID = [coder decodeObjectForKey:@"user_id"];
         self.isFriend = NO;
+        self.xmppPassword = [coder decodeObjectForKey:@"xmpp_password"];
         
         self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
  
@@ -84,6 +88,7 @@
     [coder encodeObject:self.email forKey:@"userEmail"];
     [coder encodeObject:self.api_key forKey:@"userApiKey"];
     [coder encodeObject:self.userID forKey:@"user_id"];
+    [coder encodeObject:self.xmppPassword forKey:@"xmpp_password"];
     
     if(self.imageURL){
     

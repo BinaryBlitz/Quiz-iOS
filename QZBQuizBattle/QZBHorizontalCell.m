@@ -12,7 +12,8 @@
 #import "QZBAchievement.h"
 #import "QZBAnotherUser.h"
 #import "UITableViewCell+QZBCellCategory.h"
-#import <CocoaLumberjack.h>
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface QZBHorizontalCell ()
 
