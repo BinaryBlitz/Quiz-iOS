@@ -377,19 +377,21 @@ static NSInteger topicsOffset = 7;
             [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
 
         QZBGameTopic *topic = self.faveTopics[indexPath.row - topicsOffset];
+        
+        [topicCell initWithTopic:topic];
 
-        topicCell.topicName.text = topic.name;
-
-        NSInteger level = 0;
-        float progress = 0.0;
-
-        [NSObject calculateLevel:&level
-                   levelProgress:&progress
-                       fromScore:[topic.points integerValue]];
-
-        [topicCell initCircularProgressWithLevel:level
-                                        progress:progress
-                                         visible:[topic.visible boolValue]];
+//        topicCell.topicName.text = topic.name;
+//
+//        NSInteger level = 0;
+//        float progress = 0.0;
+//
+//        [NSObject calculateLevel:&level
+//                   levelProgress:&progress
+//                       fromScore:[topic.points integerValue]];
+//
+//        [topicCell initCircularProgressWithLevel:level
+//                                        progress:progress
+//                                         visible:[topic.visible boolValue]];
 
         topicCell.backgroundColor = [UIColor veryDarkGreyColor];
 

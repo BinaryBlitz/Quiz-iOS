@@ -15,6 +15,7 @@
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBStoreListTVC.h"
 #import "QZBFriendRequestManager.h"
+#import "UIColor+QZBProjectColors.h"
 
 @interface QZBMainTBC ()
 
@@ -52,7 +53,7 @@
     [super viewWillAppear:animated];
 
   //  [self setSelectedIndex:2];
-    self.tabBar.translucent = NO;
+    self.tabBar.translucent = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateBadges)

@@ -43,6 +43,10 @@
     }
 }
 
+-(void)viewDidLayoutSubviews{
+    NSLog(@"rating tvc layout");
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }

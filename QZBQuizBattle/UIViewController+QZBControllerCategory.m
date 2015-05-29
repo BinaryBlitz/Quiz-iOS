@@ -20,6 +20,8 @@
 //      [UIFont boldMuseoFontOfSize:21],
 //      NSFontAttributeName, nil]];
     
+    //color = [UIColor brightRedColor];
+    
     [self setNeedsStatusBarAppearanceUpdate];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
@@ -38,7 +40,7 @@
 
     self.navigationController.navigationBar.barTintColor = color;
 
-    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.translucent = YES;
 
     UIFont *font = [UIFont boldMuseoFontOfSize:20];
     [self.navigationController.navigationBar setTitleTextAttributes:@{

@@ -47,6 +47,7 @@
 		193DEE461B0E2713009CEB50 /* QZBFriendRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */; };
 		19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */; };
 		19423D7E1A80F8740014B0AD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 19423D7D1A80F8740014B0AD /* Reachability.m */; };
+		194258291B18BB86008A3449 /* QZBViewWithLineOnBottom.m in Sources */ = {isa = PBXBuildFile; fileRef = 194258281B18BB86008A3449 /* QZBViewWithLineOnBottom.m */; };
 		1943E8D41AF6549E00129042 /* flashWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 1943E8D31AF6549E00129042 /* flashWhite.png */; };
 		19446A6E1A9E226C005BB485 /* QZBIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */; };
 		19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */; };
@@ -237,6 +238,8 @@
 		19423D7A1A80F5AC0014B0AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		19423D7C1A80F8740014B0AD /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		19423D7D1A80F8740014B0AD /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		194258271B18BB86008A3449 /* QZBViewWithLineOnBottom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBViewWithLineOnBottom.h; sourceTree = "<group>"; };
+		194258281B18BB86008A3449 /* QZBViewWithLineOnBottom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBViewWithLineOnBottom.m; sourceTree = "<group>"; };
 		1943E8D31AF6549E00129042 /* flashWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashWhite.png; sourceTree = "<group>"; };
 		19446A6C1A9E226C005BB485 /* QZBIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBIAPHelper.h; sourceTree = "<group>"; };
 		19446A6D1A9E226C005BB485 /* QZBIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBIAPHelper.m; sourceTree = "<group>"; };
@@ -650,6 +653,15 @@
 			name = categories;
 			sourceTree = "<group>";
 		};
+		194258261B18BB63008A3449 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				194258271B18BB86008A3449 /* QZBViewWithLineOnBottom.h */,
+				194258281B18BB86008A3449 /* QZBViewWithLineOnBottom.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 		19446A6B1A9E224E005BB485 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
@@ -989,6 +1001,7 @@
 		19CB508E1A3C32F000A3CD74 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				194258261B18BB63008A3449 /* views */,
 				19D691181A6E5E5B008B2AE1 /* textFields */,
 				1976FBAC1A4B04B50016130B /* cells */,
 				198066A81A39DB6500B749BA /* buttons */,
@@ -1459,6 +1472,7 @@
 				193DEE411B0E227D009CEB50 /* QZBFriendRequest.m in Sources */,
 				195EA0AB1AD520AA000C4341 /* UIBarButtonItem+Badge.m in Sources */,
 				1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */,
+				194258291B18BB86008A3449 /* QZBViewWithLineOnBottom.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				196472641AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m in Sources */,
 				19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */,

@@ -15,3 +15,4 @@ pod 'CocoaLumberjack','~> 1.6.2'
 pod 'SDWebImage', '~>3.7'
 pod 'iOS-blur'
 pod 'XMPPFramework/Core', podspec: "./XMPPFramework.podspec.json"
+pod 'FSImageViewer', '~> 3.2'

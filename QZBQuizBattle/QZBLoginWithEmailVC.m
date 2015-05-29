@@ -146,6 +146,7 @@ navigation
                                                  @"аккаунт"];
 
     [self.userNameTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
 }
 
 - (void)showAlertAboutPsswordRenewWithSubtitle:(NSString *)subtitle {

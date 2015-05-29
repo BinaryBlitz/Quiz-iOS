@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonsBackgroundView;
 @property (strong, nonatomic) UIView *buttonBackgroundView;
+@property (weak, nonatomic) IBOutlet UIView *sliderView;
 
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *topic;
