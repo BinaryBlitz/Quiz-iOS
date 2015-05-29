@@ -98,6 +98,9 @@
 }
 
 -(void)setSymbolsWithText:(NSString *)symbols{
+    
+    
+    
     self.symbolLabel.text = symbols;
 }
 
@@ -130,10 +133,15 @@
 
 -(UIColor *)colorForText:(NSString *)text{
     
+    
+    
+    
     return arc4random()%10>5?[UIColor lightRedColor]:[UIColor lightGreenColor];
     
     
 }
+
+
 
 
 

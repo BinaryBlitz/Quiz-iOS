@@ -146,16 +146,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
+    
+    
+    [cell initWithTopic:topic];
 
-    NSInteger level = 0;
-    float progress = 0.0;
-
-    [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
-
-    [cell initCircularProgressWithLevel:level progress:progress visible:[topic.visible boolValue]];
-
-    cell.topicName.text = topic.name;
-
+//    NSInteger level = 0;
+//    float progress = 0.0;
+//
+//    [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
+//
+//    [cell initCircularProgressWithLevel:level progress:progress visible:[topic.visible boolValue]];
+//
+//    cell.topicName.text = topic.name;
+//
     return cell;
 }
 

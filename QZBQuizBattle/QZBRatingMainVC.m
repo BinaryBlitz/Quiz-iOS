@@ -36,6 +36,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [self.leftButton setExclusiveTouch:YES];
     [self.rightButton setExclusiveTouch:YES];
+    [self.chooseTopicButton setExclusiveTouch:YES];
     
     [self initStatusbarWithColor:[UIColor whiteColor]];
     
@@ -62,21 +63,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:nil
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(showAnother:)];
-    self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"nextIcon"];
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
-    
-    self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
 
     
-   // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setExclusiveTouch:YES];
+    button.frame = CGRectMake(0,0,20, 20);
+    [button setImage:[UIImage imageNamed:@"nextIcon"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(showAnother:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
+
     if (self.topic) {
-        
         NSString *title = nil;
         
         if(self.fromTopics){
@@ -111,13 +109,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-  
+    //[self createButtonBackgroundView];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.sliderView removeConstraints:self.sliderView.constraints];
+    
 }
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    [self createButtonBackgroundView];
-   
+    //[self createButtonBackgroundView];
+    [self addLineUnderButtons];
+    NSLog(@"main layout");
 }
 
 
@@ -229,7 +235,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #pragma mark - page choose
 - (IBAction)leftButtonAction:(UIButton *)sender {
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                    });
@@ -243,7 +249,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (IBAction)rightButtonAction:(UIButton *)sender {
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)),
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                    });
@@ -254,6 +260,25 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
+#pragma mark - ui init
+
+-(void)addLineUnderButtons{
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+    
+    
+    UIView *destView = self.buttonsBackgroundView.superview;
+    
+    CGRect mainR = [UIScreen mainScreen].bounds;
+    CGRect r = destView.frame;
+    
+    CGPoint beginPoint = CGPointMake(r.size.height+r.origin.x-1, 0);
+    CGPoint endPoint = CGPointMake(r.size.height+r.origin.x-1, mainR.size.width);
+    
+    [path moveToPoint:beginPoint];
+    [path addLineToPoint:endPoint];
+    
+    
+}
 
 #pragma mark - lazy init
 
@@ -268,7 +293,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     if(!_buttonBackgroundView){
         [self.buttonsBackgroundView setNeedsDisplay];
         CGSize backSize = self.buttonsBackgroundView.frame.size;
-        
+        NSLog(@"back size %f", backSize.width/2.0);
         CGRect r = CGRectMake(1, 1, backSize.width/2.0, 38);
         _buttonBackgroundView = [[UIView alloc] initWithFrame:r];
         
@@ -278,7 +303,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         
         [_buttonsBackgroundView addSubview:_buttonBackgroundView];
         [_buttonsBackgroundView sendSubviewToBack:_buttonBackgroundView];
-        
     }
 }
 

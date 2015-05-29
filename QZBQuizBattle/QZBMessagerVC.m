@@ -407,7 +407,7 @@ navigation
     NSLog(@"res");
     
     NSString *msg = [[message elementForName:@"body"] stringValue];
-    NSString *from = [[message attributeForName:@"from"] stringValue];
+ //   NSString *from = [[message attributeForName:@"from"] stringValue];
     
     NSLog(@"message %@", msg);
     

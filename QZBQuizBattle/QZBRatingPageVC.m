@@ -66,6 +66,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //    
 //}
 
+-(void)viewDidLayoutSubviews{
+    NSLog(@"rating page layout");
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -227,28 +231,28 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [parentVC.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     //parentVC.leftButton.titleLabel.textColor = [UIColor lightGrayColor];
     
-    CGSize size = parentVC.buttonsBackgroundView.frame.size;
-    CGRect r = CGRectMake(size.width/2.0, 1, (size.width/2.0)-1, size.height-2);
+ //   CGSize size = parentVC.buttonsBackgroundView.frame.size;
+   // CGRect r = CGRectMake(size.width/2.0, 1, (size.width/2.0)-1, size.height-2);
     
-    [UIView animateWithDuration:0.1 animations:^{
-        parentVC.buttonBackgroundView.frame = r;
+    [UIView animateWithDuration:0.2 animations:^{
+        parentVC.sliderView.frame = parentVC.rightButton.frame;
     }];
 }
 
 - (void)colorLeftButton {
     QZBRatingMainVC *parentVC = (QZBRatingMainVC *)self.parentViewController;
   
-   // parentVC.leftButton.titleLabel.textColor   = [UIColor blackColor];
+   // parentVC.leftButton.titleLabel.textColor = [UIColor blackColor];
     [parentVC.leftButton setTitleColor:[UIColor blackColor]
                               forState:UIControlStateNormal];
     [parentVC.rightButton setTitleColor:[UIColor lightGrayColor]
                                forState:UIControlStateNormal];
     
-    CGSize size = parentVC.buttonsBackgroundView.frame.size;
-    CGRect r = CGRectMake(1, 1, size.width/2.0, size.height-2);
+    //CGSize size = parentVC.buttonsBackgroundView.frame.size;
+   // CGRect r = CGRectMake(1, 1, size.width/2.0, size.height-2);
     
-    [UIView animateWithDuration:0.1 animations:^{
-        parentVC.buttonBackgroundView.frame = r;
+    [UIView animateWithDuration:0.2 animations:^{
+        parentVC.sliderView.frame = parentVC.leftButton.frame;
         }];
 }
 
