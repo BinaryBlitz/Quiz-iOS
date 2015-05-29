@@ -21,6 +21,7 @@
 
 - (void)awakeFromNib {
 
+    self.playerUserpic.userInteractionEnabled = YES;
 }
 
 -(void)setBAdgeCount:(NSInteger)count{

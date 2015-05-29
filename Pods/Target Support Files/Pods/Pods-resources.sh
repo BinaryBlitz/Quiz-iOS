@@ -62,6 +62,7 @@ install_resource()
                     install_resource "DBCamera/DBCamera/Filters/Nashville.acv"
                     install_resource "DBCamera/DBCamera/Filters/Valencia.acv"
                     install_resource "DBCamera/DBCamera/Filters/Vignette.acv"
+                    install_resource "FSImageViewer/FSImageViewer.bundle"
                     install_resource "GPUImage/framework/Resources/lookup.png"
                     install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
                     install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
