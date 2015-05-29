@@ -40,7 +40,9 @@
 #import "QZBMessagerVC.h"
 #import "QZBFriendRequestManager.h"
 #import "QZBFriendRequest.h"
-
+#import <FSImageViewer.h>
+#import <FSBasicImage.h>
+#import <FSBasicImageSource.h>
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -78,6 +80,8 @@ static NSInteger topicsOffset = 7;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
 
 @property (strong, nonatomic) SCLAlertView *alert;
+
+@property (strong, nonatomic) UITapGestureRecognizer *userPicGestureRecognizer;
 @end
 
 @implementation QZBPlayerPersonalPageVC
@@ -94,6 +98,13 @@ static NSInteger topicsOffset = 7;
 
     [self initStatusbarWithColor:[UIColor blackColor]];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    
+    self.userPicGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                            action:@selector(showUserPicFullScreen:)];
+    
+    self.userPicGestureRecognizer.numberOfTapsRequired = 1;
+    self.userPicGestureRecognizer.numberOfTouchesRequired = 1;
+    self.userPicGestureRecognizer.cancelsTouchesInView = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -257,6 +268,8 @@ static NSInteger topicsOffset = 7;
     if (indexPath.row == 0) {
         QZBPlayerInfoCell *playerCell =
             (QZBPlayerInfoCell *)[tableView dequeueReusableCellWithIdentifier:playerIdentifier];
+        
+        [playerCell.playerUserpic addGestureRecognizer:self.userPicGestureRecognizer];
 
         [self playerCellCustomInit:playerCell];
 
@@ -266,6 +279,8 @@ static NSInteger topicsOffset = 7;
             [tableView dequeueReusableCellWithIdentifier:totalStatisticsIdentifier];
 
         [userStatisticCell setCellWithUser:self.user];
+        
+    
 
         return userStatisticCell;
 
@@ -659,6 +674,20 @@ static NSInteger topicsOffset = 7;
 
         [self performSegueWithIdentifier:@"showRate" sender:nil];
     }
+}
+
+-(void)showUserPicFullScreen:(id)sender{
+    NSLog(@"tapped pic");
+   
+    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:@"Photo 1"];
+    
+    FSBasicImageSource *photoSource = [[FSBasicImageSource alloc] initWithImages:@[firstPhoto]];
+    
+    FSImageViewerViewController *imageViewController = [[FSImageViewerViewController alloc] initWithImageSource:photoSource];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imageViewController];
+    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+    
+    
 }
 
 #pragma mark - support methods

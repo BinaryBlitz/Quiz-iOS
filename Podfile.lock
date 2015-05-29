@@ -29,6 +29,11 @@ PODS:
     - CocoaLumberjack/Core
   - DBCamera (2.3.10):
     - GPUImage (~> 0.1)
+  - EGOCache (2.1.3)
+  - FSImageViewer (3.2):
+    - AFNetworking (~> 2.5)
+    - EGOCache (~> 2.1)
+    - UAProgressView (~> 0.1)
   - GPUImage (0.1.6)
   - HexColors (2.2.1)
   - iOS-blur (0.0.5)
@@ -69,6 +74,7 @@ DEPENDENCIES:
   - AFNetworking
   - CocoaLumberjack (~> 1.6.2)
   - DBCamera
+  - FSImageViewer (~> 3.2)
   - iOS-blur
   - JSBadgeView
   - JSQMessagesViewController
@@ -91,6 +97,8 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 94c582a5bef4bb0f51b6ebf3e1b561d9091a68ba
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
+  EGOCache: f0295dbe041156acabd39021354ad1045ee49e72
+  FSImageViewer: 9106a89800e89a359b02d0c4bb7f7a3ddc1aff71
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   iOS-blur: 8e4a4a2202b881e940869eca0c957808cbdf0a19
