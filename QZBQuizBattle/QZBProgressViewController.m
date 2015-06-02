@@ -306,6 +306,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             inTopic:self.topic
             onSuccess:^(QZBSession *session) {
 
+                [self setFactWithString:session.fact];
+                
                 QZBLobby *lobby =
                     [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
                                               topicID:[self.topic.topic_id integerValue]
@@ -355,6 +357,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)sessionFromLobby:(QZBLobby *)lobby {
     if (lobby && !self.lobby) {
         self.lobby = lobby;
+        
+        [self setFactWithString:lobby.fact];
     } else {
         return;
     }
@@ -429,7 +433,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                 }
             } else {
                 self.isOnline = YES;
-                [[QZBSessionManager sessionManager] setOnlineSessionWorker:self.onlineWorker];
+                [[QZBSessionManager sessionManager] setOnlineSessionWorkerFromOutside:self.onlineWorker];
 
                 if (!self.user && self.isChallenge) {
                     dispatch_after(
@@ -537,6 +541,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [view sendSubviewToBack:vi];
     
   //  [view setNeedsDisplay];
+}
+
+#pragma mark - support method
+
+-(void)setFactWithString:(NSString *)fact{
+    
+    self.factLabel.text = fact;
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        self.factLabel.superview.alpha = 1.0;
+    }];
+    
 }
 
 

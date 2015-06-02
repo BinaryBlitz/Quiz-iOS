@@ -14,6 +14,7 @@
 @property (assign, nonatomic, readonly) NSInteger topicID;
 @property (assign, nonatomic, readonly) NSInteger playerID;
 @property (assign, nonatomic, readonly) NSInteger queryCount;
+@property (copy, nonatomic, readonly) NSString *fact;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 -(instancetype)initWithLobbyID:(NSInteger)lobbyID

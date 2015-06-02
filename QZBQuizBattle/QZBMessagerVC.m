@@ -14,6 +14,10 @@
 #import "UIColor+QZBProjectColors.h"
 
 #import <XMPPFramework/XMPPFramework.h>
+//#import "XMPPCoreDataStorage.h"
+//#import "XMPPMessageArchiving.h"
+//#import "XMPPMessageArchivingCoreDataStorage.h"
+
 
 @interface QZBMessagerVC ()
 
@@ -28,6 +32,11 @@
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
 
 @property(strong, nonatomic) XMPPStream *stream;
+
+//@property(weak, nonatomic) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
+//
+//@property(strong, nonatomic) XMPPMessageArchiving *xmppMessageArchivingModule;
+//@property(strong, nonatomic) XMPPReconnect *xmppReconnect;
 
 @end
 
@@ -58,6 +67,8 @@
     // Do any additional setup after loading the view.
     
     //[self.view setBackgroundColor:[UIColor darkGrayColor]];
+    
+    
     
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -334,8 +345,14 @@ navigation
 #pragma mark - server methods
 
 -(void)initMessager{
+   // NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
+    
     self.stream = [[XMPPStream alloc] init];
     [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+//    xmppReconnect = [[XMPPReconnect alloc]init];
+//    [xmppReconnect activate:self.xmppStream];
+
    // self.stream addDelegate:self delegateQueue:DI
     
     QZBUser *user = [QZBCurrentUser sharedInstance].user;
@@ -349,12 +366,22 @@ navigation
 
     
     NSError *error = nil;
+   // self.stream conn
+    
     if (![self.stream connectWithTimeout:10 error:&error])
     {
         NSLog(@"Oops, I probably forgot something: %@", error);
     }else{
         NSLog(@"OOKey %@", self.stream);
     }
+    
+//    self.xmppMessageArchivingStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+//    self.xmppMessageArchivingModule =  [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:self.xmppMessageArchivingStorage];
+//    
+//    [self.xmppMessageArchivingModule setClientSideMessageArchivingOnly:YES];
+//    
+//    [self.xmppMessageArchivingModule activate:self.stream];
+//    [self.xmppMessageArchivingModule  addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
    // [self goOnline];
 }
@@ -400,9 +427,34 @@ navigation
     NSLog(@"DidNOTAuthenticate err %@", error);
 }
 
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
+    
+//    NSString *presenceType = [presence type]; // online/offline
+//    NSString *myUsername = [[sender myJID] user];
+//    NSString *presenceFromUser = [[presence from] user];
+//    
+//    if (![presenceFromUser isEqualToString:myUsername]) {
+//        
+//        if ([presenceType isEqualToString:@"available"]) {
+//            
+//            [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+//            
+//        } else if ([presenceType isEqualToString:@"unavailable"]) {
+//            
+//            [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+//            
+//        }
+//        
+//    }
+    
+}
+
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
     
     // message received
+    
+
+    //XMPPMessageArchiving *a
     
     NSLog(@"res");
     
@@ -432,13 +484,6 @@ navigation
 }
 
 
-- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
-    
-    // a buddy went offline/online
-    
-    NSLog(@"resencex");
-    
-}
 
 
 -(void)sendMessageWithText:(NSString *)textMessage{
@@ -458,6 +503,9 @@ navigation
         [message addChild:body];
         
         [self.stream sendElement:message];
+        
+        
+       // [self testMessageArchiving];
         
        // self.messageField.text = @"";
         
@@ -487,7 +535,39 @@ navigation
         avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 
-
 }
+
+
+#pragma mark - test methods
+
+
+//-(void)testMessageArchiving{
+//    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+//    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
+//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
+//                                                         inManagedObjectContext:moc];
+//    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+//    [request setEntity:entityDescription];
+//    NSError *error;
+//    NSArray *messages = [moc executeFetchRequest:request error:&error];
+//    
+//    [self print:[[NSMutableArray alloc]initWithArray:messages]];
+//}
+//
+//-(void)print:(NSMutableArray*)messages{
+//    
+//        for (XMPPMessageArchiving_Message_CoreDataObject *message in messages) {
+//            NSLog(@"messageStr param is %@",message.messageStr);
+//            NSXMLElement *element = [[NSXMLElement alloc] initWithXMLString:message.messageStr error:nil];
+//            NSLog(@"to param is %@",[element attributeStringValueForName:@"to"]);
+//            NSLog(@"NSCore object id param is %@",message.objectID);
+//            NSLog(@"bareJid param is %@",message.bareJid);
+//            NSLog(@"bareJidStr param is %@",message.bareJidStr);
+//            NSLog(@"body param is %@",message.body);
+//            NSLog(@"timestamp param is %@",message.timestamp);
+//            NSLog(@"outgoing param is %d",[message.outgoing intValue]);
+//        }
+//    
+//}
 
 @end
