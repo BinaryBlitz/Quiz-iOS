@@ -50,6 +50,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     QZBFriendRequest *friendRequest = [self findIncomingUser:user];
     if(friendRequest){
         [[QZBServerManager sharedManager] PATCHAcceptFriendRequestWithID:friendRequest.requestID onSuccess:^{
+            
             NSLog(@"accepted");
             [self.incoming removeObject:friendRequest];
             if(callback){

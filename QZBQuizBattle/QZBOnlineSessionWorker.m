@@ -97,7 +97,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 }
 
 - (void)dealloc {
-    [self closeConnection];
+  //  [self closeConnection];
     DDLogInfo(@"online worker dealloc ");
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -140,6 +140,8 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
             }
         }
     } else {
+        
+        DDLogError(@"errr");
     }
 }
 

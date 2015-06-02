@@ -31,6 +31,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 @property (strong, nonatomic) NSURL *opponentUserImageURL;
 @property (assign, nonatomic) NSInteger userBeginingScore;
 @property (assign, nonatomic) NSInteger userMultiplier;
+@property (copy, nonatomic) NSString *fact;
 
 @end
 
@@ -60,6 +61,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         self.lobbyID = dict[@"lobby_id"];
     }
 
+    self.fact = dict[@"fact"];
     // NSString *topic = [NSString stringWithFormat:@"%ld", (long)topic_id];
 
     for (NSDictionary *d in arrayOfQuestionDicts) {

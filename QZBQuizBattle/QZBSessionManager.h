@@ -52,7 +52,7 @@
 
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
-- (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker;
+- (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker;
 - (void)setTopicForSession:(QZBGameTopic *)topic;
 - (void)setIsChallenge:(BOOL)isChallenge;
 

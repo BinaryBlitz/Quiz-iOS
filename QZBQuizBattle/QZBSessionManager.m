@@ -154,7 +154,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-- (void)setOnlineSessionWorker:(QZBOnlineSessionWorker *)onlineSessionWorker {
+- (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker {
     if (_onlineSessionWorker && _bot) {
         return;
     } else {
