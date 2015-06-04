@@ -48,32 +48,23 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 0
 
-// CocoaAsyncSocket
-#define COCOAPODS_POD_AVAILABLE_CocoaAsyncSocket
-#define COCOAPODS_VERSION_MAJOR_CocoaAsyncSocket 7
-#define COCOAPODS_VERSION_MINOR_CocoaAsyncSocket 3
-#define COCOAPODS_VERSION_PATCH_CocoaAsyncSocket 5
-
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.6.5.1.
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
 
 // CocoaLumberjack/Core
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.6.5.1.
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 2
 
 // CocoaLumberjack/Extensions
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.6.5.1.
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 2
 
 // DBCamera
 #define COCOAPODS_POD_AVAILABLE_DBCamera
@@ -183,36 +174,6 @@
 // so we were not able to define version macros.
 // Please contact the author.
 // Version: 1.0.9.2.
-
-// XMPPFramework/Authentication
-#define COCOAPODS_POD_AVAILABLE_XMPPFramework_Authentication
-#define COCOAPODS_VERSION_MAJOR_XMPPFramework_Authentication 3
-#define COCOAPODS_VERSION_MINOR_XMPPFramework_Authentication 6
-#define COCOAPODS_VERSION_PATCH_XMPPFramework_Authentication 4
-
-// XMPPFramework/Categories
-#define COCOAPODS_POD_AVAILABLE_XMPPFramework_Categories
-#define COCOAPODS_VERSION_MAJOR_XMPPFramework_Categories 3
-#define COCOAPODS_VERSION_MINOR_XMPPFramework_Categories 6
-#define COCOAPODS_VERSION_PATCH_XMPPFramework_Categories 4
-
-// XMPPFramework/Core
-#define COCOAPODS_POD_AVAILABLE_XMPPFramework_Core
-#define COCOAPODS_VERSION_MAJOR_XMPPFramework_Core 3
-#define COCOAPODS_VERSION_MINOR_XMPPFramework_Core 6
-#define COCOAPODS_VERSION_PATCH_XMPPFramework_Core 4
-
-// XMPPFramework/KissXML
-#define COCOAPODS_POD_AVAILABLE_XMPPFramework_KissXML
-#define COCOAPODS_VERSION_MAJOR_XMPPFramework_KissXML 3
-#define COCOAPODS_VERSION_MINOR_XMPPFramework_KissXML 6
-#define COCOAPODS_VERSION_PATCH_XMPPFramework_KissXML 4
-
-// XMPPFramework/Utilities
-#define COCOAPODS_POD_AVAILABLE_XMPPFramework_Utilities
-#define COCOAPODS_VERSION_MAJOR_XMPPFramework_Utilities 3
-#define COCOAPODS_VERSION_MINOR_XMPPFramework_Utilities 6
-#define COCOAPODS_VERSION_PATCH_XMPPFramework_Utilities 4
 
 // iOS-blur
 #define COCOAPODS_POD_AVAILABLE_iOS_blur

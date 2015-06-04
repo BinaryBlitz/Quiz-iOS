@@ -20,12 +20,10 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CocoaAsyncSocket (7.3.5)
-  - CocoaLumberjack (1.6.5.1):
-    - CocoaLumberjack/Core (= 1.6.5.1)
-    - CocoaLumberjack/Extensions (= 1.6.5.1)
-  - CocoaLumberjack/Core (1.6.5.1)
-  - CocoaLumberjack/Extensions (1.6.5.1):
+  - CocoaLumberjack (1.9.2):
+    - CocoaLumberjack/Extensions (= 1.9.2)
+  - CocoaLumberjack/Core (1.9.2)
+  - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
   - DBCamera (2.3.10):
     - GPUImage (~> 0.1)
@@ -58,21 +56,10 @@ PODS:
     - HexColors
   - UAProgressView (0.1.1)
   - VK-ios-sdk (1.0.9.2)
-  - XMPPFramework/Authentication (3.6.4)
-  - XMPPFramework/Categories (3.6.4)
-  - XMPPFramework/Core (3.6.4):
-    - CocoaAsyncSocket (~> 7.3.1)
-    - CocoaLumberjack (~> 1.6.2)
-    - XMPPFramework/Authentication
-    - XMPPFramework/Categories
-    - XMPPFramework/KissXML
-    - XMPPFramework/Utilities
-  - XMPPFramework/KissXML (3.6.4)
-  - XMPPFramework/Utilities (3.6.4)
 
 DEPENDENCIES:
   - AFNetworking
-  - CocoaLumberjack (~> 1.6.2)
+  - CocoaLumberjack (~> 1.9)
   - DBCamera
   - FSImageViewer (~> 3.2)
   - iOS-blur
@@ -86,16 +73,10 @@ DEPENDENCIES:
   - TSMessages
   - UAProgressView
   - VK-ios-sdk
-  - XMPPFramework/Core (from `./XMPPFramework.podspec.json`)
-
-EXTERNAL SOURCES:
-  XMPPFramework:
-    :podspec: ./XMPPFramework.podspec.json
 
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
-  CocoaAsyncSocket: 94c582a5bef4bb0f51b6ebf3e1b561d9091a68ba
-  CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
+  CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
   EGOCache: f0295dbe041156acabd39021354ad1045ee49e72
   FSImageViewer: 9106a89800e89a359b02d0c4bb7f7a3ddc1aff71
@@ -114,6 +95,5 @@ SPEC CHECKSUMS:
   TSMessages: 2a52642128d7ab15b46930c810b9c9403a2b58f3
   UAProgressView: 9518e321a5d4173f66c225717db873322ec1f070
   VK-ios-sdk: 26c2475927e209e5567f858ad355485bcbc5b972
-  XMPPFramework: 1bc778d05d3c79f0925d2177efe23efae22b3234
 
 COCOAPODS: 0.35.0
