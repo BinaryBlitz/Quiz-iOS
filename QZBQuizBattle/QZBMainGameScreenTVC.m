@@ -171,6 +171,8 @@
         QZBGameTopic *topic = arr[indexPath.row];
 
         cell.backgroundColor = [self colorForSection:indexPath.section];
+        
+       
 
 //        NSInteger level = 0;
 //        float progress = 0.0;

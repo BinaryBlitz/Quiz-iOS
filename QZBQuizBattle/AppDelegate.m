@@ -8,6 +8,8 @@
 
 #define MR_LOGGING_ENABLED 0
 
+
+
 #import "AppDelegate.h"
 #import "VKSdk.h"
 #import <Fabric/Fabric.h>
@@ -31,14 +33,14 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 
-#import <XMPPFramework/XMPPFramework.h>
-
+//#import <XMPPFramework/XMPPFramework.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@interface AppDelegate ()<XMPPStreamDelegate>
+@interface AppDelegate ()
 
-@property(strong, nonatomic) XMPPStream *stream;
+//@property(strong, nonatomic) XMPPStream *stream;
 
 @end
 
@@ -189,6 +191,9 @@
     NSError *error = nil;
     NSString *failureReason =
         @"There was an error creating or loading the application's saved data.";
+    
+
+    
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                    configuration:nil
                                                              URL:storeURL
@@ -204,7 +209,7 @@
         // abort() causes the application to generate a crash log and terminate. You should not use
         // this function in a
         // shipping application, although it may be useful during development.
-        //DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
 
@@ -371,44 +376,44 @@
 
 #pragma mark - messager
 
--(void)initMessager{
-    self.stream = [[XMPPStream alloc] init];
-    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    
-    self.stream.myJID =  [XMPPJID jidWithString:@"andrey@localhost"];
-    self.stream.hostName = @"binaryblitz.ru";
-    
-    //[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-   // stream connectWithTimeout:3000 error:<#(NSError *__autoreleasing *)#>
-    
-    NSError *error = nil;
-    if (![self.stream connectWithTimeout:10 error:&error])
-    {
-        NSLog(@"Oops, I probably forgot something: %@", error);
-    }else{
-        NSLog(@"OOKey %@", self.stream);
-    }
-    
-    [self goOnline];
-}
-
-- (void)goOnline {
-    XMPPPresence *presence = [XMPPPresence presence];
-    [[self stream] sendElement:presence];
-}
-
-- (void)xmppStreamDidConnect:(XMPPStream *)sender
-{
-    NSLog(@"kkkkk");
-    
-     NSError *error = nil;
-    if(![sender authenticateWithPassword:@"123456" error:&error]){
-        NSLog(@"problems %@",error );
-    }else{
-        NSLog(@"okkkk");
-    }
-}
+//-(void)initMessager{
+//    self.stream = [[XMPPStream alloc] init];
+//    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    
+//    
+//    self.stream.myJID =  [XMPPJID jidWithString:@"andrey@localhost"];
+//    self.stream.hostName = @"binaryblitz.ru";
+//    
+//    //[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    
+//   // stream connectWithTimeout:3000 error:<#(NSError *__autoreleasing *)#>
+//    
+//    NSError *error = nil;
+//    if (![self.stream connectWithTimeout:10 error:&error])
+//    {
+//        NSLog(@"Oops, I probably forgot something: %@", error);
+//    }else{
+//        NSLog(@"OOKey %@", self.stream);
+//    }
+//    
+//    [self goOnline];
+//}
+//
+//- (void)goOnline {
+//    XMPPPresence *presence = [XMPPPresence presence];
+//    [[self stream] sendElement:presence];
+//}
+//
+//- (void)xmppStreamDidConnect:(XMPPStream *)sender
+//{
+//    NSLog(@"kkkkk");
+//    
+//     NSError *error = nil;
+//    if(![sender authenticateWithPassword:@"123456" error:&error]){
+//        NSLog(@"problems %@",error );
+//    }else{
+//        NSLog(@"okkkk");
+//    }
+//}
 
 @end

@@ -13,7 +13,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "UIColor+QZBProjectColors.h"
 
-#import <XMPPFramework/XMPPFramework.h>
+//#import <XMPPFramework/XMPPFramework.h>
 //#import "XMPPCoreDataStorage.h"
 //#import "XMPPMessageArchiving.h"
 //#import "XMPPMessageArchivingCoreDataStorage.h"
@@ -31,7 +31,7 @@
 
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
 
-@property(strong, nonatomic) XMPPStream *stream;
+//@property(strong, nonatomic) XMPPStream *stream;
 
 //@property(weak, nonatomic) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
 //
@@ -79,7 +79,7 @@
     
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
     
-    [self initMessager];
+   // [self initMessager];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,9 +89,9 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self goOffline];
-    [self.stream removeDelegate:self];
-    [self.stream disconnect];
+  //  [self goOffline];
+//    [self.stream removeDelegate:self];
+//    [self.stream disconnect];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,7 +182,7 @@
                                                           date:date
                                                           text:text];
     
-    [self sendMessageWithText:text];
+   // [self sendMessageWithText:text];
 
     [self.messages addObject:message];
     
@@ -344,185 +344,185 @@ navigation
 
 #pragma mark - server methods
 
--(void)initMessager{
-   // NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
-    
-    self.stream = [[XMPPStream alloc] init];
-    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-//    xmppReconnect = [[XMPPReconnect alloc]init];
-//    [xmppReconnect activate:self.xmppStream];
-
-   // self.stream addDelegate:self delegateQueue:DI
-    
-    QZBUser *user = [QZBCurrentUser sharedInstance].user;
-    
-    NSString *userJID = [NSString stringWithFormat:@"id%@@localhost", user.userID];
-    
-    NSLog(@"%@",userJID);
-    
-    self.stream.myJID =  [XMPPJID jidWithString:userJID];
-    self.stream.hostName = @"binaryblitz.ru";
-
-    
-    NSError *error = nil;
-   // self.stream conn
-    
-    if (![self.stream connectWithTimeout:10 error:&error])
-    {
-        NSLog(@"Oops, I probably forgot something: %@", error);
-    }else{
-        NSLog(@"OOKey %@", self.stream);
-    }
-    
-//    self.xmppMessageArchivingStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
-//    self.xmppMessageArchivingModule =  [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:self.xmppMessageArchivingStorage];
+//-(void)initMessager{
+//   // NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
 //    
-//    [self.xmppMessageArchivingModule setClientSideMessageArchivingOnly:YES];
+//    self.stream = [[XMPPStream alloc] init];
+//    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
 //    
-//    [self.xmppMessageArchivingModule activate:self.stream];
-//    [self.xmppMessageArchivingModule  addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-   // [self goOnline];
-}
-
-- (void)goOnline {
-    XMPPPresence *presence = [XMPPPresence presence];
-    [[self stream] sendElement:presence];
-}
-
-- (void)goOffline {
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
-    [[self stream] sendElement:presence];
-}
-
-- (void)xmppStreamDidConnect:(XMPPStream *)sender
-{
-    NSLog(@"kkkkk");
-    QZBUser *user = [QZBCurrentUser sharedInstance].user;
-    NSError *error = nil;
-    
-    NSLog(@"password %@",user.xmppPassword);
-    
-    if(![sender authenticateWithPassword:user.xmppPassword error:&error]){
-        NSLog(@"problems %@",error );
-    }else{
-        NSLog(@"okkkk");
-      //  [self goOnline];
-    }
-}
-
--(void)xmppStreamDidRegister:(XMPPStream *)sender{
-    NSLog(@"registred");
-  //  [self goOnline];
-}
-
-- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
-    NSLog(@"DidAuthenticate");
-    [self goOnline];
-
-}
-
-- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error{
-    NSLog(@"DidNOTAuthenticate err %@", error);
-}
-
-- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
-    
-//    NSString *presenceType = [presence type]; // online/offline
-//    NSString *myUsername = [[sender myJID] user];
-//    NSString *presenceFromUser = [[presence from] user];
+////    xmppReconnect = [[XMPPReconnect alloc]init];
+////    [xmppReconnect activate:self.xmppStream];
+//
+//   // self.stream addDelegate:self delegateQueue:DI
 //    
-//    if (![presenceFromUser isEqualToString:myUsername]) {
+//    QZBUser *user = [QZBCurrentUser sharedInstance].user;
+//    
+//    NSString *userJID = [NSString stringWithFormat:@"id%@@localhost", user.userID];
+//    
+//    NSLog(@"%@",userJID);
+//    
+//    self.stream.myJID =  [XMPPJID jidWithString:userJID];
+//    self.stream.hostName = @"binaryblitz.ru";
+//
+//    
+//    NSError *error = nil;
+//   // self.stream conn
+//    
+//    if (![self.stream connectWithTimeout:10 error:&error])
+//    {
+//        NSLog(@"Oops, I probably forgot something: %@", error);
+//    }else{
+//        NSLog(@"OOKey %@", self.stream);
+//    }
+//    
+////    self.xmppMessageArchivingStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+////    self.xmppMessageArchivingModule =  [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:self.xmppMessageArchivingStorage];
+////    
+////    [self.xmppMessageArchivingModule setClientSideMessageArchivingOnly:YES];
+////    
+////    [self.xmppMessageArchivingModule activate:self.stream];
+////    [self.xmppMessageArchivingModule  addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    
+//   // [self goOnline];
+//}
+//
+//- (void)goOnline {
+//    XMPPPresence *presence = [XMPPPresence presence];
+//    [[self stream] sendElement:presence];
+//}
+//
+//- (void)goOffline {
+//    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+//    [[self stream] sendElement:presence];
+//}
+//
+//- (void)xmppStreamDidConnect:(XMPPStream *)sender
+//{
+//    NSLog(@"kkkkk");
+//    QZBUser *user = [QZBCurrentUser sharedInstance].user;
+//    NSError *error = nil;
+//    
+//    NSLog(@"password %@",user.xmppPassword);
+//    
+//    if(![sender authenticateWithPassword:user.xmppPassword error:&error]){
+//        NSLog(@"problems %@",error );
+//    }else{
+//        NSLog(@"okkkk");
+//      //  [self goOnline];
+//    }
+//}
+//
+//-(void)xmppStreamDidRegister:(XMPPStream *)sender{
+//    NSLog(@"registred");
+//  //  [self goOnline];
+//}
+//
+//- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
+//    NSLog(@"DidAuthenticate");
+//    [self goOnline];
+//
+//}
+//
+//- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error{
+//    NSLog(@"DidNOTAuthenticate err %@", error);
+//}
+//
+//- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
+//    
+////    NSString *presenceType = [presence type]; // online/offline
+////    NSString *myUsername = [[sender myJID] user];
+////    NSString *presenceFromUser = [[presence from] user];
+////    
+////    if (![presenceFromUser isEqualToString:myUsername]) {
+////        
+////        if ([presenceType isEqualToString:@"available"]) {
+////            
+////            [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+////            
+////        } else if ([presenceType isEqualToString:@"unavailable"]) {
+////            
+////            [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+////            
+////        }
+////        
+////    }
+//    
+//}
+//
+//- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
+//    
+//    // message received
+//    
+//
+//    //XMPPMessageArchiving *a
+//    
+//    NSLog(@"res");
+//    
+//    NSString *msg = [[message elementForName:@"body"] stringValue];
+// //   NSString *from = [[message attributeForName:@"from"] stringValue];
+//    
+//    NSLog(@"message %@", msg);
+//    
+//    JSQMessage *mess = [JSQMessage messageWithSenderId:[self.friend.userID stringValue]
+//                                          displayName:self.friend.name
+//                                                 text:msg];
+//    
+//    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+//    [self.messages addObject:mess];
+//    [self finishReceivingMessageAnimated:YES];
+//    
+//    
+//    
+////    NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
+////    [m setObject:msg forKey:@"msg"];
+////    [m setObject:from forKey:@"sender"];
+//    
+//   // [_messageDelegate newMessageReceived:m];
+//   // [m release];
+//    
+//    
+//}
+//
+//
+//
+//
+//-(void)sendMessageWithText:(NSString *)textMessage{
+//    
+//    NSString *messageStr = textMessage;
+//    
+//    if([messageStr length] > 0) {
 //        
-//        if ([presenceType isEqualToString:@"available"]) {
-//            
-//            [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
-//            
-//        } else if ([presenceType isEqualToString:@"unavailable"]) {
-//            
-//            [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
-//            
-//        }
+//        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+//        [body setStringValue:messageStr];
+//        
+//        NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
+//        
+//        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+//        [message addAttributeWithName:@"type" stringValue:@"chat"];
+//        [message addAttributeWithName:@"to" stringValue:toUser];//REDO
+//        [message addChild:body];
+//        
+//        [self.stream sendElement:message];
+//        
+//        
+//       // [self testMessageArchiving];
+//        
+//       // self.messageField.text = @"";
+//        
+////        NSString *m = [NSString stringWithFormat:@"%@:%@", messageStr, @"you"];
+////        
+////        NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
+////        [m setObject:messageStr forKey:@"msg"];
+////        [m setObject:@"you" forKey:@"sender"];
+////        
+////        [messages addObject:m];
+////        [self.tView reloadData];
+////        [m release];
 //        
 //    }
-    
-}
-
-- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
-    
-    // message received
-    
-
-    //XMPPMessageArchiving *a
-    
-    NSLog(@"res");
-    
-    NSString *msg = [[message elementForName:@"body"] stringValue];
- //   NSString *from = [[message attributeForName:@"from"] stringValue];
-    
-    NSLog(@"message %@", msg);
-    
-    JSQMessage *mess = [JSQMessage messageWithSenderId:[self.friend.userID stringValue]
-                                          displayName:self.friend.name
-                                                 text:msg];
-    
-    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-    [self.messages addObject:mess];
-    [self finishReceivingMessageAnimated:YES];
-    
-    
-    
-//    NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
-//    [m setObject:msg forKey:@"msg"];
-//    [m setObject:from forKey:@"sender"];
-    
-   // [_messageDelegate newMessageReceived:m];
-   // [m release];
-    
-    
-}
-
-
-
-
--(void)sendMessageWithText:(NSString *)textMessage{
-    
-    NSString *messageStr = textMessage;
-    
-    if([messageStr length] > 0) {
-        
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:messageStr];
-        
-        NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
-        
-        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        [message addAttributeWithName:@"type" stringValue:@"chat"];
-        [message addAttributeWithName:@"to" stringValue:toUser];//REDO
-        [message addChild:body];
-        
-        [self.stream sendElement:message];
-        
-        
-       // [self testMessageArchiving];
-        
-       // self.messageField.text = @"";
-        
-//        NSString *m = [NSString stringWithFormat:@"%@:%@", messageStr, @"you"];
-//        
-//        NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
-//        [m setObject:messageStr forKey:@"msg"];
-//        [m setObject:@"you" forKey:@"sender"];
-//        
-//        [messages addObject:m];
-//        [self.tView reloadData];
-//        [m release];
-        
-    }
-    
-}
-
+//    
+//}
+//
 #pragma mark - support methods
 
 - (void)initAvatars {
