@@ -16,6 +16,7 @@
 #import "QZBStoreListTVC.h"
 #import "QZBFriendRequestManager.h"
 #import "UIColor+QZBProjectColors.h"
+#import "QZBMessagerManager.h"
 
 @interface QZBMainTBC ()
 
@@ -105,6 +106,7 @@
         [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
+        [[QZBMessagerManager sharedInstance] connect];
         //[self setSelectedIndex:2];
     }
 }

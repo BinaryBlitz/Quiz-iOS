@@ -35,7 +35,6 @@ static NSArray *SCOPE = nil;
     self.registrationButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 
     SCOPE = @[ VK_PER_FRIENDS, VK_PER_EMAIL, VK_PER_OFFLINE ];
-    [super viewDidLoad];
 
     [VKSdk initializeWithDelegate:self andAppId:@"4795421"];
     if ([VKSdk wakeUpSession]) {
@@ -60,7 +59,7 @@ static NSArray *SCOPE = nil;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if ([[QZBCurrentUser sharedInstance] checkUser]) {
+    if ([[QZBCurrentUser sharedInstance] checkUser]) {//redo возможно старый код, проверить
         [self dismissViewControllerAnimated:YES
                                  completion:^{
 

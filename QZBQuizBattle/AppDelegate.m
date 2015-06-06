@@ -27,13 +27,14 @@
 #import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
+#import "QZBMessagerManager.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "DDASLLogger.h"
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 
-//#import <XMPPFramework/XMPPFramework.h>
+#import "XMPPFramework.h"
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -48,7 +49,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [MagicalRecord setupAutoMigratingCoreDataStack];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"QZBQuizBattle"];
 
 //    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
 //    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];

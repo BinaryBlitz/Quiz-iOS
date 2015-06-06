@@ -12,6 +12,7 @@
 #import <JSQMessagesViewController/JSQMessages.h>
 #import <AFNetworking/AFNetworking.h>
 #import "UIColor+QZBProjectColors.h"
+#import "QZBMessagerManager.h"
 
 //#import <XMPPFramework/XMPPFramework.h>
 //#import "XMPPCoreDataStorage.h"
@@ -19,7 +20,7 @@
 //#import "XMPPMessageArchivingCoreDataStorage.h"
 
 
-@interface QZBMessagerVC ()
+@interface QZBMessagerVC ()<QZBMessagerManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
@@ -44,8 +45,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [QZBMessagerManager sharedInstance].delegate = self;
 
-    self.senderId = [[QZBCurrentUser sharedInstance].user.userID stringValue];
+   // self.senderId = [[QZBCurrentUser sharedInstance].user.userID stringValue];
+    
+    self.senderId = [[QZBMessagerManager sharedInstance] jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
     self.senderDisplayName = [QZBCurrentUser sharedInstance].user.name;
     // self.showLoadEarlierMessagesHeader = YES;
     self.inputToolbar.contentView.leftBarButtonItem = nil;
@@ -55,7 +60,7 @@
 
     [self initAvatars];
 
-    self.messages = [NSMutableArray array];
+    
 
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
 
@@ -79,12 +84,21 @@
     
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
     
+    
+    self.messages = [[QZBMessagerManager sharedInstance] generateJSQMessagesForUser:self.friend];
+    
+    [self.collectionView reloadData];
+    
+    self.tabBarController.tabBar.hidden = YES;
    // [self initMessager];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.inputToolbar.contentView.textView becomeFirstResponder];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self scrollToBottomAnimated:YES];
+    });
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -92,7 +106,11 @@
   //  [self goOffline];
 //    [self.stream removeDelegate:self];
 //    [self.stream disconnect];
+    
+    self.tabBarController.tabBar.hidden = YES;
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -182,7 +200,9 @@
                                                           date:date
                                                           text:text];
     
-   // [self sendMessageWithText:text];
+    [self sendMessageWithText:text];
+    
+
 
     [self.messages addObject:message];
     
@@ -486,42 +506,11 @@ navigation
 //
 //
 //
-//-(void)sendMessageWithText:(NSString *)textMessage{
-//    
-//    NSString *messageStr = textMessage;
-//    
-//    if([messageStr length] > 0) {
-//        
-//        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-//        [body setStringValue:messageStr];
-//        
-//        NSString *toUser = [NSString stringWithFormat:@"id%@@localhost", self.friend.userID];
-//        
-//        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-//        [message addAttributeWithName:@"type" stringValue:@"chat"];
-//        [message addAttributeWithName:@"to" stringValue:toUser];//REDO
-//        [message addChild:body];
-//        
-//        [self.stream sendElement:message];
-//        
-//        
-//       // [self testMessageArchiving];
-//        
-//       // self.messageField.text = @"";
-//        
-////        NSString *m = [NSString stringWithFormat:@"%@:%@", messageStr, @"you"];
-////        
-////        NSMutableDictionary *m = [[NSMutableDictionary alloc] init];
-////        [m setObject:messageStr forKey:@"msg"];
-////        [m setObject:@"you" forKey:@"sender"];
-////        
-////        [messages addObject:m];
-////        [self.tView reloadData];
-////        [m release];
-//        
-//    }
-//    
-//}
+-(void)sendMessageWithText:(NSString *)textMessage{
+    
+    [[QZBMessagerManager sharedInstance] sendMessage:textMessage toUser:self.friend];
+    
+}
 //
 #pragma mark - support methods
 
@@ -537,6 +526,40 @@ navigation
 
 }
 
+
+#pragma mark - message delegate
+
+//-(void) receivedMessage
+//
+//- (void) myClassDelegateMethod: (QZBMessagerManager *) sender{
+//    
+//    NSLog(@"recieved");
+//    
+//}
+//-(void)didRecieveMessageFrom:(NSString *)bareJid{
+//    NSLog(@"%@", bareJid);
+//    
+//    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance] jidAsStringFromUser:self.friend]]){
+//        
+//    }
+//}
+
+-(void)didRecieveMessageFrom:(NSString *)bareJid text:(NSString *)text{
+    
+    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance] jidAsStringFromUser:self.friend]]){
+        
+        JSQMessage *mess = [JSQMessage messageWithSenderId:bareJid
+                                                                           displayName:self.friend.name
+                                                                                  text:text];
+        
+        [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+        [self.messages addObject:mess];
+        [self finishReceivingMessageAnimated:YES];
+
+        
+    }
+    
+}
 
 #pragma mark - test methods
 

@@ -156,6 +156,8 @@ static NSInteger topicsOffset = 7;
     DDLogInfo(@"viewWillAppear %@", self.user.name);
 
     [self updateBadges];
+    
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
