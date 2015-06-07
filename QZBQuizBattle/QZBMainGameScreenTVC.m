@@ -524,6 +524,7 @@
         self.faveTopics = resultDict[@"favorite_topics"];
         self.friendsTopics = resultDict[@"friends_favorite_topics"];
         self.featured = resultDict[@"featured_topics"];
+        self.additionalTopics = resultDict[@"random_topics"];
 
         NSArray *challArr = resultDict[@"challenges"];
     
@@ -553,23 +554,14 @@
             [self.workArray addObject:self.faveTopics];
         }
         
-        
-        
-        
-        
-        NSArray *additTopics = [self getAlladditionalTopics];
-        
-        if(additTopics){
-        
-            [self.workArray addObject:additTopics];
-            self.additionalTopics = additTopics;
-            
+        if(self.additionalTopics.count>0){
+            [self.workArray addObject:self.additionalTopics];
         }
         
 
         [self.mainTableView reloadData];
-//        UITabBarController *tabController = self.tabBarController;
-//        UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+//  //   //   UITabBarController *tabController = self.tabBarController;
+//  //   //   UITabBarItem *tabbarItem = tabController.tabBar.items[2];
         
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
@@ -585,38 +577,38 @@
 }
 
 
--(NSArray *)getAlladditionalTopics{
-    NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
-    
-    if(allTopics && allTopics.count>0){
-        NSInteger length = 0;
-        
-        NSInteger allC = [self allCount];
-        
-        if(allC>=9){
-            length = 3;
-        }else{
-            length = 12-allC;
-        }
-        
-        
-        if(length>allTopics.count){
-            length = allTopics.count;
-        }
-        
-        NSRange r = {.location = 0, .length = length};
-        
-        
-        NSArray *additionalArr = [allTopics subarrayWithRange:r];
-        
-        return [NSArray arrayWithArray:additionalArr];
-        
-    }else{
-        return nil;
-    }
-
-    
-}
+//-(NSArray *)getAlladditionalTopics{
+//    NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
+//    
+//    if(allTopics && allTopics.count>0){
+//        NSInteger length = 0;
+//        
+//        NSInteger allC = [self allCount];
+//        
+//        if(allC>=9){
+//            length = 3;
+//        }else{
+//            length = 12-allC;
+//        }
+//        
+//        
+//        if(length>allTopics.count){
+//            length = allTopics.count;
+//        }
+//        
+//        NSRange r = {.location = 0, .length = length};
+//        
+//        
+//        NSArray *additionalArr = [allTopics subarrayWithRange:r];
+//        
+//        return [NSArray arrayWithArray:additionalArr];
+//        
+//    }else{
+//        return nil;
+//    }
+//
+//    
+//}
 
 -(NSInteger)allCount{
     NSInteger count = 0;

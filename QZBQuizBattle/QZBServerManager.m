@@ -33,7 +33,7 @@
 #import <SDWebImage/SDImageCache.h>
 
 #import <DDLog.h>
-static const int ddLogLevel = LOG_LEVEL_ERROR;
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 //#import "QZBLoggingConfig.h"
 
@@ -305,16 +305,18 @@ NSString *const QZBNoInternetConnectionMessage =
 
             DDLogInfo(@"main %@", responseObject);
 
-            NSArray *faveTopicsDicts = responseObject[@"favorite_topics"];
-            NSArray *friendsFaveTopicsDicts = responseObject[@"friends_favorite_topics"];
-            NSArray *featuredTopicsDicts = responseObject[@"featured_topics"];
+            NSArray *faveTopicsDicts            = responseObject[@"favorite_topics"];
+            NSArray *friendsFaveTopicsDicts     = responseObject[@"friends_favorite_topics"];
+            NSArray *featuredTopicsDicts        = responseObject[@"featured_topics"];
+            NSArray *randomTopicsDicts          = responseObject[@"random_topics"];
 
-            NSArray *challengesDicts = responseObject[@"challenges"];
-            NSArray *challengedDicts = responseObject[@"challenged"];
+            NSArray *challengesDicts            = responseObject[@"challenges"];
+            NSArray *challengedDicts            = responseObject[@"challenged"];
 
-            NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
-            NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
-            NSArray *featuredTopics = [self parseTopicsArray:featuredTopicsDicts];
+            NSArray *faveTopics                 = [self parseTopicsArray:faveTopicsDicts];
+            NSArray *friendsFaveTopics          = [self parseTopicsArray:friendsFaveTopicsDicts];
+            NSArray *featuredTopics             = [self parseTopicsArray:featuredTopicsDicts];
+            NSArray *randomTopics               = [self parseTopicsArray:randomTopicsDicts];
 
             NSArray *challenges = [self parseChallengesFromArray:challengesDicts];
             NSArray *challenged = [self parseChallengeResultsFromArray:challengedDicts];
@@ -323,6 +325,7 @@ NSString *const QZBNoInternetConnectionMessage =
                 @"favorite_topics" : faveTopics,
                 @"friends_favorite_topics" : friendsFaveTopics,
                 @"featured_topics" : featuredTopics,
+                @"random_topics":randomTopics,
                 @"challenges" : challenges,
                 @"challenged" : challenged
             };

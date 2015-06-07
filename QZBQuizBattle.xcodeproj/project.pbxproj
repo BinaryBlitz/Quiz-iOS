@@ -295,7 +295,6 @@
 		19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */; };
 		19E344581A792DF4000D0EDB /* QZBLobby.m in Sources */ = {isa = PBXBuildFile; fileRef = 19E344571A792DF4000D0EDB /* QZBLobby.m */; };
 		19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 19E3445A1A7A2117000D0EDB /* QZBOnlineSessionWorker.m */; };
-		19F1139A1AF8E62200513D28 /* QZBLoggingConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F113991AF8E62200513D28 /* QZBLoggingConfig.m */; };
 		47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC7A8F9E1287DD166F770A8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -854,8 +853,6 @@
 		19E344571A792DF4000D0EDB /* QZBLobby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLobby.m; sourceTree = "<group>"; };
 		19E344591A7A2117000D0EDB /* QZBOnlineSessionWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBOnlineSessionWorker.h; sourceTree = "<group>"; };
 		19E3445A1A7A2117000D0EDB /* QZBOnlineSessionWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBOnlineSessionWorker.m; sourceTree = "<group>"; };
-		19F113981AF8E62200513D28 /* QZBLoggingConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLoggingConfig.h; sourceTree = "<group>"; };
-		19F113991AF8E62200513D28 /* QZBLoggingConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLoggingConfig.m; sourceTree = "<group>"; };
 		19F1F9781B1E2C1400AB8043 /* QZBQuizBattle 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "QZBQuizBattle 2.xcdatamodel"; sourceTree = "<group>"; };
 		61CB57A856F89614168E9C5A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2892C94F45A4ABC9B49B297 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -955,8 +952,6 @@
 				191559C61A39CDD400462C93 /* main.m */,
 				19423D7C1A80F8740014B0AD /* Reachability.h */,
 				19423D7D1A80F8740014B0AD /* Reachability.m */,
-				19F113981AF8E62200513D28 /* QZBLoggingConfig.h */,
-				19F113991AF8E62200513D28 /* QZBLoggingConfig.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2799,7 +2794,6 @@
 				199666C21B207FE100793610 /* XMPPMUC.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
 				199666FA1B207FE100793610 /* XMPPMessage+XEP_0280.m in Sources */,
-				19F1139A1AF8E62200513D28 /* QZBLoggingConfig.m in Sources */,
 				19DEA8651A860E4500E610DB /* QZBRatingMainVC.m in Sources */,
 				199665951B207B1D00793610 /* XMPPStringPrep.m in Sources */,
 				199666DA1B207FE100793610 /* XMPPDateTimeProfiles.m in Sources */,

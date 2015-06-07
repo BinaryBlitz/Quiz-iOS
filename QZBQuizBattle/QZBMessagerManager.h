@@ -21,6 +21,8 @@
 @interface QZBMessagerManager : NSObject
 
 @property (nonatomic, weak) id <QZBMessagerManagerDelegate> delegate;
+@property(assign, nonatomic, readonly) BOOL isConnected;
+
 
 + (instancetype)sharedInstance;
 

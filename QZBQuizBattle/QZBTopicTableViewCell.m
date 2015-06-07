@@ -29,7 +29,7 @@
     // Initialization code
     self.topicProgressView.lineWidth = 4;
     self.topicProgressView.fillOnTouch = NO;
-    self.topicProgressView.tintColor = [UIColor ultralightGreenColor];
+    self.topicProgressView.tintColor = [UIColor lightGreenColor];
     
     [self.backView addShadowsAllWay];
     [self.underView addShadowsAllWay];
@@ -57,7 +57,7 @@
     
     self.topicName.text = topic.name;
     
-  //  QZBCategory *c = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
+//  //  QZBCategory *c = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
     
     if(true){//REDO
      //   NSString *s = [self colorForText:c.name];
@@ -82,17 +82,13 @@
 
 
     if (progress > 0 || level > 0) {
-        
         self.topicProgressView.centralView = self.centralLabel;
         self.topicProgressView.tintColor = [UIColor lightGreenColor];
         self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)level];
         self.topicProgressView.progress = progress;
-
     } else {
-        
         self.topicProgressView.tintColor = [UIColor clearColor];
         self.topicProgressView.centralView = self.icon;
-        
         self.icon.image = [UIImage imageNamed:@"downIcon"];
     }
 }
@@ -124,7 +120,6 @@
 
 -(UIImageView *)icon{
     if(!_icon){
-        
         _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     }
     return _icon;
@@ -132,13 +127,8 @@
 
 
 -(UIColor *)colorForText:(NSString *)text{
-    
-    
-    
-    
     return arc4random()%10>5?[UIColor lightRedColor]:[UIColor lightGreenColor];
-    
-    
+
 }
 
 

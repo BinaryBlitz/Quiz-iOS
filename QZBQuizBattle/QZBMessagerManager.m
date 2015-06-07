@@ -32,6 +32,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 @property(strong, nonatomic) XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
 @property(strong, nonatomic) XMPPMessageArchiving *messageArchiving;
 
+@property(assign, nonatomic) BOOL isConnected;
+
 @property(strong, nonatomic) NSString *password;
 @property(assign, nonatomic) BOOL isXmppConnected;
 
@@ -675,6 +677,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     return res;
     
+}
+
+#pragma mar - reloading
+
+-(BOOL)isConnected{
+    return self.xmppStream.isConnected;
 }
 
 
