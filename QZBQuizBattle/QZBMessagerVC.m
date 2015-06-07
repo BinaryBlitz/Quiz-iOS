@@ -13,6 +13,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "UIColor+QZBProjectColors.h"
 #import "QZBMessagerManager.h"
+#import <TSMessage.h>
+#import "QZBServerManager.h"
 
 //#import <XMPPFramework/XMPPFramework.h>
 //#import "XMPPCoreDataStorage.h"
@@ -194,6 +196,18 @@
      *  3. Call `finishSendingMessage`
      */
     //[JSQSystemSoundPlayer jsq_playMessageSentSound];
+    
+    if(![QZBMessagerManager sharedInstance].isConnected){
+        NSLog(@"problems!!");
+//        [TSMessage showNotificationWithTitle:@"Невозможно подключиться к серверу"
+//                                    subtitle:QZBNoInternetConnectionMessage
+//                                        type:TSMessageNotificationTypeError];
+        
+        [TSMessage showNotificationInViewController:self.navigationController title:@"Невозможно подключиться к серверу" subtitle:QZBNoInternetConnectionMessage type:TSMessageNotificationTypeError duration:0.0 canBeDismissedByUser:YES];
+        return;
+        
+    }
+    
 
     JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
                                              senderDisplayName:senderDisplayName
