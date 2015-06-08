@@ -21,10 +21,12 @@
 #import "NSObject+QZBSpecialCategory.h"
 #import "UIColor+QZBProjectColors.h"
 #import <JSQSystemSoundPlayer.h>
+#import "UIView+QZBShakeExtension.h"
 
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
+@property(strong, nonatomic) UIView *backView;
 //@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 
 @property (strong, nonatomic) id<QZBUserProtocol> user;
@@ -140,9 +142,9 @@
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     }
 
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
-    backView.backgroundColor = [UIColor clearColor];
-    cell.backgroundView = backView;
+//    UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
+//    backView.backgroundColor = [UIColor clearColor];
+    cell.backgroundView = self.backView;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
@@ -203,6 +205,16 @@
     }
     return 74.0f;
 }
+
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
+//        
+//        QZBTopicTableViewCell *c = (QZBTopicTableViewCell *)cell;
+//        [c.backView addShadowsAllWay];
+//      //  [c.backView layoutSubviews];
+//    }
+//    
+//}
 
 #pragma actions
 
@@ -314,5 +326,15 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark -lazy init
+
+-(UIView *)backView{
+    if(!_backView){
+        _backView = [[UIView alloc] initWithFrame:CGRectZero];
+        _backView.backgroundColor = [UIColor clearColor];
+    }
+    return _backView;
 }
 @end

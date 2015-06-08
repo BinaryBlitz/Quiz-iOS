@@ -9,6 +9,8 @@
 #import "QZBTopicTableViewCell.h"
 #import "QZBGameTopic.h"
 #import "UIColor+QZBProjectColors.h"
+#import "UIColor+QZBColorGenerator.h"
+#import "NSString+QZBStringCategory.h"
 #import "UIFont+QZBCustomFont.h"
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
@@ -25,16 +27,24 @@
 
 @implementation QZBTopicTableViewCell
 
+-(void)drawRect:(CGRect)rect{
+    [super drawRect:rect];
+    [self.backView addShadowsAllWay];
+    [self.underView addShadowsAllWayRasterize];
+}
+
 - (void)awakeFromNib {
     // Initialization code
     self.topicProgressView.lineWidth = 4;
     self.topicProgressView.fillOnTouch = NO;
     self.topicProgressView.tintColor = [UIColor lightGreenColor];
-    
-    [self.backView addShadowsAllWay];
-    [self.underView addShadowsAllWay];
+    self.symbolLabel.adjustsFontSizeToFitWidth = YES;
+    self.symbolLabel.minimumScaleFactor = 0.8;
     
 }
+
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -43,6 +53,16 @@
 }
 
 -(void)initWithTopic:(QZBGameTopic *)topic{
+  //  [self layoutSubviews];
+    //[self.backView addShadowsAllWay];
+    
+   // [self layoutSubviews];
+//    [self setNeedsLayout];
+//    [self layoutIfNeeded];
+//    [self layoutSubviews];
+    [self.layer setNeedsLayout];
+    //[self.backView addShadowsAllWay];
+    
     
     NSInteger level = 0;
     float progress = 0.0;
@@ -59,10 +79,12 @@
     
 //  //  QZBCategory *c = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
     
-    if(true){//REDO
-     //   NSString *s = [self colorForText:c.name];
-        
-        self.symbolsView.backgroundColor = [self colorForText:@"a"];
+    QZBCategory *relationCategory = topic.relationToCategory;
+    
+    if(relationCategory){
+        NSString *firstTwoChar = [NSString firstTwoChars:relationCategory.name];
+        self.symbolsView.backgroundColor = [UIColor colorForString:firstTwoChar];
+        self.symbolLabel.text = firstTwoChar;
     }
 
     
@@ -71,6 +93,8 @@
 -(void)initCircularProgressWithLevel:(NSInteger)level
                             progress:(float)progress
                              visible:(BOOL)visible{
+    
+    
     self.visible = visible;
     
     if(!visible){

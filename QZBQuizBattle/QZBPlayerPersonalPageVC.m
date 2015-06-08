@@ -281,8 +281,6 @@ static NSInteger topicsOffset = 7;
             [tableView dequeueReusableCellWithIdentifier:totalStatisticsIdentifier];
 
         [userStatisticCell setCellWithUser:self.user];
-        
-    
 
         return userStatisticCell;
 
@@ -397,19 +395,6 @@ static NSInteger topicsOffset = 7;
         
         [topicCell initWithTopic:topic];
 
-//        topicCell.topicName.text = topic.name;
-//
-//        NSInteger level = 0;
-//        float progress = 0.0;
-//
-//        [NSObject calculateLevel:&level
-//                   levelProgress:&progress
-//                       fromScore:[topic.points integerValue]];
-//
-//        [topicCell initCircularProgressWithLevel:level
-//                                        progress:progress
-//                                         visible:[topic.visible boolValue]];
-
         topicCell.backgroundColor = [UIColor veryDarkGreyColor];
 
         return topicCell;
@@ -462,7 +447,9 @@ static NSInteger topicsOffset = 7;
         return 74.0;
     }
 
-    if (indexPath.row == 1) {
+    if(indexPath.row == 0){
+        return 155.0;
+    }else if (indexPath.row == 1) {
         return 135.0;
     } else if (indexPath.row < 2 || indexPath.row == 3 || indexPath.row == 5) {
         return 127.0f;
@@ -626,6 +613,15 @@ static NSInteger topicsOffset = 7;
             [self noFriendActionChooser];
         }
     }
+}
+
+-(void)messageAction:(id)sender{
+    if(self.isCurrent){
+        
+    }else{
+        [self performSegueWithIdentifier:@"pushMessager" sender:nil];
+    }
+    
 }
 
 - (void)showActionSheet {
@@ -809,6 +805,8 @@ static NSInteger topicsOffset = 7;
     [playerCell.multiUseButton addTarget:self
                                   action:@selector(multiUseButtonAction:)
                         forControlEvents:UIControlEventTouchUpInside];
+    
+    [playerCell.messageButton addTarget:self action:@selector(messageAction:) forControlEvents:UIControlEventTouchUpInside];
 
     if (self.friends) {
         playerCell.friendsButton.enabled = YES;
@@ -818,6 +816,7 @@ static NSInteger topicsOffset = 7;
     }
 
     NSString *buttonTitle = nil;
+    NSString *messgaeButtonTitle = nil;
     if (self.isCurrent) {
         buttonTitle = @"Настройки";
         [playerCell.multiUseButton setTitle:@"settings" forState:UIControlStateNormal];
@@ -825,7 +824,11 @@ static NSInteger topicsOffset = 7;
         if ([QZBFriendRequestManager sharedInstance].incoming) {
             [playerCell setBAdgeCount:[self badgeNumber]];
         }
+        
+        messgaeButtonTitle = @"Сообщения";
     } else {
+        
+        
         if (!self.user.isFriend) {
             QZBFriendState state =
                 [[QZBFriendRequestManager sharedInstance] friendStateForUser:self.user];
@@ -849,9 +852,11 @@ static NSInteger topicsOffset = 7;
         } else {
             buttonTitle = @"Удалить из друзей";
         }
+        
+        messgaeButtonTitle = @"Написать сообщение";
     }
     [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
-
+    [playerCell.messageButton setTitle:messgaeButtonTitle forState:UIControlStateNormal];
     if (self.user.imageURL) {
         [playerCell.playerUserpic setImageWithURL:self.user.imageURL];
     } else {
@@ -887,7 +892,6 @@ static NSInteger topicsOffset = 7;
         //
         //            self.friendRequests = friends;
         //            [self.tableView reloadData];
-        //
         //            UITabBarController *tabController = self.tabBarController;
         //            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
         //
@@ -907,26 +911,6 @@ static NSInteger topicsOffset = 7;
 
 - (void)updateBadges {  // REDO
     if (self.isCurrent) {
-        //        [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *friends)
-        //        {
-        //
-        //            self.friendRequests = friends;
-        //            [self.tableView reloadData];
-        //
-        //            UITabBarController *tabController = self.tabBarController;
-        //            UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-        //
-        //            if ([self badgeNumber] > 0) {
-        //                tabbarItem.badgeValue =
-        //                    [NSString stringWithFormat:@"%ld", (long)[self badgeNumber]];
-        //
-        //            } else {
-        //                tabbarItem.badgeValue = nil;
-        //            }
-        //
-        //        } onFailure:^(NSError *error, NSInteger statusCode){
-        //
-        //        }];
         NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
         
         [self.tableView beginUpdates];
