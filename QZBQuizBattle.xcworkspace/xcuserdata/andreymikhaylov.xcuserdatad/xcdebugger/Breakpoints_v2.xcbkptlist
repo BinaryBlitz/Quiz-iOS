@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBTopicTableViewCell.m"
-            timestampString = "454505098.957871"
+            timestampString = "455378074.664431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-initCircularProgressWithLevel:progress:visible:"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBTopicTableViewCell.m"
-            timestampString = "454505098.957871"
+            timestampString = "455378074.664431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-awakeFromNib"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "455295253.938402"
+            timestampString = "455366718.756753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1098"
-            endingLineNumber = "1098"
+            startingLineNumber = "1104"
+            endingLineNumber = "1104"
             landmarkName = "-GETFriendsRequestsOnSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBPlayerPersonalPageVC.m"
-            timestampString = "455288828.895878"
+            timestampString = "455387438.168518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "699"
-            endingLineNumber = "699"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
             landmarkName = "-noFriendActionChooser"
             landmarkType = "5">
          </BreakpointContent>
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "455295253.938402"
+            timestampString = "455366718.756753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "-GETTopicsForMainOnSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBFriendRequestManager.m"
-            timestampString = "454772390.942571"
+            timestampString = "455386480.139828"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "-acceptForUser:callback:"
             landmarkType = "5">
          </BreakpointContent>
@@ -474,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBFriendRequestManager.m"
-            timestampString = "454772402.796665"
+            timestampString = "455386480.139828"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "-updateRequests"
             landmarkType = "5">
          </BreakpointContent>
@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/AppDelegate.m"
-            timestampString = "455127277.06765"
+            timestampString = "455366386.546759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "-managedObjectContext"
             landmarkType = "5">
          </BreakpointContent>
@@ -769,6 +769,70 @@
             endingLineNumber = "45"
             landmarkName = "selectedRange"
             landmarkType = "19">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QZBQuizBattle/QZBTopicTableViewCell.m"
+            timestampString = "455377304.000753"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "-drawRect:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QZBQuizBattle/QZBFriendRequestManager.m"
+            timestampString = "455386490.394159"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "-updateRequests"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QZBFriendRequestManager updateRequests]"
+                  moduleName = "QZBQuizBattle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreymikhaylov/Dropbox/developer/QZBQuizIOS/QZBQuizBattle/QZBFriendRequestManager.m"
+                  timestampString = "455386828.211785"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[QZBFriendRequestManager updateRequests]_block_invoke"
+                  moduleName = "QZBQuizBattle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreymikhaylov/Dropbox/developer/QZBQuizIOS/QZBQuizBattle/QZBFriendRequestManager.m"
+                  timestampString = "455386828.21204"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

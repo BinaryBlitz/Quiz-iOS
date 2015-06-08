@@ -174,17 +174,6 @@ NSString *const QZBNoInternetConnectionMessage =
             existingEntity.category_id = category_id;
             existingEntity.name = name;
 
-//            if (bannerURL) {
-//                existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
-//
-//                [self savePictureFromString:existingEntity.banner_url];
-//            }
-//            if (backgroundURL) {
-//                existingEntity.background_url =
-//                    [QZBServerBaseUrl stringByAppendingString:backgroundURL];
-//
-//                [self savePictureFromString:existingEntity.background_url];
-//            }
         }
         if(backgroundURL &&
            ![backgroundURL isEqualToString:existingEntity.background_url]){
@@ -220,7 +209,7 @@ NSString *const QZBNoInternetConnectionMessage =
     }
 }
 
-- (void)savePictureFromString:(NSString *)urlAsString {
+- (void)savePictureFromString:(NSString *)urlAsString {//это не работает сейчас
     if (urlAsString) {
         NSURL *url = [NSURL URLWithString:urlAsString];
         NSURLRequest *imageRequest =
@@ -257,11 +246,12 @@ NSString *const QZBNoInternetConnectionMessage =
             existingEntity.name = name;
             existingEntity.topic_id = topic_id;
 
-            [category addRelationToTopicObject:existingEntity];
+         //   [category addRelationToTopicObject:existingEntity];
         }
 
         existingEntity.points = points;
         existingEntity.visible = visible;
+        [category addRelationToTopicObject:existingEntity];
         [objectsArray addObject:existingEntity];
     }
 
@@ -347,25 +337,41 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
-- (NSArray *)parseTopicsArray:(NSArray *)topics {
-    AppDelegate *app = [[UIApplication sharedApplication] delegate];
 
-    id context = app.managedObjectContext;
+
+- (NSArray *)parseTopicsArray:(NSArray *)topics {
+   // AppDelegate *app = [[UIApplication sharedApplication] delegate];
+
+   // id context = app.managedObjectContext;
 
     NSMutableArray *tmpArr = [NSMutableArray array];
     for (NSDictionary *dict in topics) {
         // QZBGameTopic *topic = [QZBGameTopic MR_createEntity];
 
-        NSEntityDescription *entity =
-            [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
-        QZBGameTopic *topic = (QZBGameTopic *)
-            [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-
-        topic.name = dict[@"name"];
-        topic.topic_id = dict[@"id"];
+//        NSEntityDescription *entity =
+//            [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
+         id topic_id = [dict objectForKey:@"id"];
+        
+        QZBGameTopic *topic  =
+        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
+ //(QZBGameTopic *)
+          //  [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+        
+        if(!topic){
+            topic = [QZBGameTopic MR_createEntity];
+            topic.name = dict[@"name"];
+            topic.topic_id = topic_id;
+        }
         topic.points = dict[@"points"];
         topic.visible = dict[@"visible"];
         [tmpArr addObject:topic];
+        
+        QZBCategory * category = [self tryFindRelatedCategoryToTopic:topic];
+        
+        if(category){
+            [category addRelationToTopicObject:topic];
+        }
+        
     }
 
     NSArray *result = [NSArray arrayWithArray:tmpArr];
@@ -1128,6 +1134,8 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            
             if (failure) {
                 failure(error, operation.response.statusCode);
             }

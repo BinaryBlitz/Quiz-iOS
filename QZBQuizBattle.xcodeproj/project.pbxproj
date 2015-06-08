@@ -80,6 +80,7 @@
 		195EA0B11AD52DE7000C4341 /* QZBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0AE1AD52DE7000C4341 /* QZBCategory.m */; };
 		195FDA851ADA662E000F86F9 /* QZBReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA841ADA662E000F86F9 /* QZBReportVC.m */; };
 		195FDA881ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */; };
+		196099F81B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */; };
 		196472611AD84D9200CAC8F3 /* QZBEndGameProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */; };
 		196472641AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */; };
 		1965879D1AC5879200C58C60 /* QZBVSScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */; };
@@ -279,7 +280,6 @@
 		19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */; };
 		19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */; };
 		19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */; };
-		19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691141A6A91C7008B2AE1 /* NSString+MD5.m */; };
 		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
 		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
 		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
@@ -422,6 +422,8 @@
 		195FDA841ADA662E000F86F9 /* QZBReportVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBReportVC.m; sourceTree = "<group>"; };
 		195FDA861ADA84E8000F86F9 /* QZBRegistrationUsernameInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationUsernameInput.h; sourceTree = "<group>"; };
 		195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationUsernameInput.m; sourceTree = "<group>"; };
+		196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+QZBColorGenerator.h"; sourceTree = "<group>"; };
+		196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+QZBColorGenerator.m"; sourceTree = "<group>"; };
 		1964725F1AD84D9200CAC8F3 /* QZBEndGameProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGameProgressCell.h; sourceTree = "<group>"; };
 		196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGameProgressCell.m; sourceTree = "<group>"; };
 		196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+QZBSpecialCategory.h"; sourceTree = "<group>"; };
@@ -821,8 +823,6 @@
 		19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressViewController.m; sourceTree = "<group>"; };
 		19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsSearchTVC.h; sourceTree = "<group>"; };
 		19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsSearchTVC.m; sourceTree = "<group>"; };
-		19D691131A6A91C7008B2AE1 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		19D691141A6A91C7008B2AE1 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
 		19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEmailTextField.m; sourceTree = "<group>"; };
 		19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QZBShakeExtension.h"; sourceTree = "<group>"; };
@@ -1046,20 +1046,16 @@
 		19407B121AE8E79600A12F20 /* categories */ = {
 			isa = PBXGroup;
 			children = (
-				19D691131A6A91C7008B2AE1 /* NSString+MD5.h */,
-				19D691141A6A91C7008B2AE1 /* NSString+MD5.m */,
+				196099FA1B2454DE00EEB9D6 /* string */,
+				196099F91B2452C400EEB9D6 /* colors */,
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
-				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
-				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 				19D8914B1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.h */,
 				19D8914C1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.m */,
 				196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */,
 				196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */,
 				1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */,
 				1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */,
-				1974BC141AD6D6EC0057E966 /* NSString+QZBStringCategory.h */,
-				1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */,
 				196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */,
 				196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */,
 				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
@@ -1182,6 +1178,33 @@
 				195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		196099F21B24523F00EEB9D6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		196099F91B2452C400EEB9D6 /* colors */ = {
+			isa = PBXGroup;
+			children = (
+				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
+				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
+				196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */,
+				196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */,
+			);
+			name = colors;
+			sourceTree = "<group>";
+		};
+		196099FA1B2454DE00EEB9D6 /* string */ = {
+			isa = PBXGroup;
+			children = (
+				1974BC141AD6D6EC0057E966 /* NSString+QZBStringCategory.h */,
+				1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */,
+			);
+			name = string;
 			sourceTree = "<group>";
 		};
 		196587A11AC5B4E800C58C60 /* user */ = {
@@ -2243,6 +2266,7 @@
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				196099F21B24523F00EEB9D6 /* utils */,
 				199667001B209B8D00793610 /* messanger */,
 				19446A6B1A9E224E005BB485 /* IAP */,
 				1976FBB41A4B11DF0016130B /* serverAPI */,
@@ -2758,6 +2782,7 @@
 				199666A91B207FE100793610 /* XMPPRosterCoreDataStorage.m in Sources */,
 				199665891B207B1D00793610 /* XMPPIQ.m in Sources */,
 				199666C11B207FE100793610 /* XMPPMessage+XEP0045.m in Sources */,
+				196099F81B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m in Sources */,
 				199666F21B207FE100793610 /* XMPPAutoPing.m in Sources */,
 				197A092E1AE0F8BE00D00993 /* QZBGameTopic.m in Sources */,
 				19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */,
@@ -2774,7 +2799,6 @@
 				199665321B207AEF00793610 /* DDXMLNode.m in Sources */,
 				1996658A1B207B1D00793610 /* XMPPJID.m in Sources */,
 				199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */,
-				19D691151A6A91C7008B2AE1 /* NSString+MD5.m in Sources */,
 				199666D31B207FE100793610 /* XMPPIQ+XEP_0060.m in Sources */,
 				199596851AEBD47A00B09EA7 /* QZBResultOfSessionCell.m in Sources */,
 				199062DC1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m in Sources */,

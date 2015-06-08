@@ -22,6 +22,10 @@
 - (void)awakeFromNib {
 
     self.playerUserpic.userInteractionEnabled = YES;
+    
+    self.multiUseButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.multiUseButton.titleLabel.minimumScaleFactor = 0.5;
+    self.multiUseButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
 }
 
 -(void)setBAdgeCount:(NSInteger)count{

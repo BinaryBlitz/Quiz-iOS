@@ -49,6 +49,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"QZBQuizBattle"];
 
 //    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];

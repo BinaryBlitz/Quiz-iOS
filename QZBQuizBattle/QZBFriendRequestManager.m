@@ -30,6 +30,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
 }
 
 -(void)updateRequests{
+    
     [[QZBServerManager sharedManager] GETFriendsRequestsOnSuccess:^(NSArray *incoming, NSArray *outgoing) {
         
         self.incoming = [incoming mutableCopy];
@@ -38,7 +39,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
         [[NSNotificationCenter defaultCenter] postNotificationName:QZBFriendRequestUpdated object:nil];
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
-        
+        NSLog(@"request err %@", error);
     }];
     
 }

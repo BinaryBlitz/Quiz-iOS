@@ -38,4 +38,17 @@
     }
 }
 
+
++(NSString *)firstTwoChars:(NSString *)string{
+    NSString *fullString = string;
+    NSString *prefix = nil;
+    
+    if ([fullString length] >= 2)
+        prefix = [fullString substringToIndex:2];
+    else
+        prefix = fullString;
+    
+    return prefix;
+}
+
 @end
