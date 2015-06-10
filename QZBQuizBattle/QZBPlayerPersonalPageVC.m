@@ -37,13 +37,17 @@
 #import "QZBFindFriendsCell.h"
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBReportVC.h"
-#import "QZBMessagerVC.h"
 #import "QZBFriendRequestManager.h"
 #import "QZBFriendRequest.h"
 #import <FSImageViewer.h>
 #import <FSBasicImage.h>
 #import <FSBasicImageSource.h>
 #import <DDLog.h>
+
+//messager
+#import "QZBMessangerList.h"
+#import "QZBMessagerVC.h"
+
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 //#import "DBCameraViewController.h"
@@ -510,7 +514,9 @@ static NSInteger topicsOffset = 7;
 
         // TODO
     } else if (buttonIndex == 1) {
-        [self performSegueWithIdentifier:@"pushMessager" sender:nil];
+    //    [self performSegueWithIdentifier:@"pushMessager" sender:nil];
+        
+        [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
     }
 }
 
@@ -519,19 +525,12 @@ static NSInteger topicsOffset = 7;
 // In a storyboard-based application, you will often want to do a little
 // preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-
-    // [self tryUnshowAlert];
-
+    
     if ([segue.identifier isEqualToString:@"showAchivements"]) {
         QZBAchievementCVC *destinationVC = segue.destinationViewController;
 
         [destinationVC initAchievmentsWithGettedAchievements:self.achivArray];
-
-    }
-
-    else if ([segue.identifier isEqualToString:@"showFriendsList"]) {
+    } else if ([segue.identifier isEqualToString:@"showFriendsList"]) {
         QZBFriendsTVC *vc = (QZBFriendsTVC *)segue.destinationViewController;
 
         NSArray *arr = nil;
@@ -581,8 +580,11 @@ static NSInteger topicsOffset = 7;
         QZBMessagerVC *destVC = (QZBMessagerVC *)segue.destinationViewController;
 
         [destVC initWithUser:self.user];
-
-        // [destVC initWithUser:self.user userpic:];
+        
+    }else if([segue.identifier isEqualToString:@"showAllMessages"]){
+        QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
+       // [destVC setFriendsOwner:self.user andFriends:self.friends];
+        
     }
 }
 
@@ -617,7 +619,7 @@ static NSInteger topicsOffset = 7;
 
 -(void)messageAction:(id)sender{
     if(self.isCurrent){
-        
+        [self performSegueWithIdentifier:@"showAllMessages" sender:nil];
     }else{
         [self performSegueWithIdentifier:@"pushMessager" sender:nil];
     }
@@ -630,7 +632,7 @@ static NSInteger topicsOffset = 7;
                       delegate:self
              cancelButtonTitle:@"Отменить"
         destructiveButtonTitle:nil
-             otherButtonTitles:@"Пожаловаться", @"Написать сообщение",
+             otherButtonTitles:@"Пожаловаться",
                                nil];
 
     [actSheet showInView:self.view];
@@ -853,7 +855,7 @@ static NSInteger topicsOffset = 7;
             buttonTitle = @"Удалить из друзей";
         }
         
-        messgaeButtonTitle = @"Написать сообщение";
+        messgaeButtonTitle = @"Личное сообщение";
     }
     [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
     [playerCell.messageButton setTitle:messgaeButtonTitle forState:UIControlStateNormal];

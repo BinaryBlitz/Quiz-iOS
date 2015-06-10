@@ -8,6 +8,7 @@
 
 #import "QZBCurrentUser.h"
 #import "QZBServerManager.h"
+#import "QZBMessagerManager.h"
 #import <Crashlytics/Crashlytics.h>
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -111,10 +112,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         [[QZBServerManager sharedManager] DELETEAPNsToken:self.pushToken
             onSuccess:^{
                 
-                
-                
-                //  self.pushToken = nil;
-                //  [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
             }
             onFailure:^(NSError *error, NSInteger statusCode){
 
@@ -124,6 +121,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
     // self.pushToken = nil;
     self.user = nil;
+    [[QZBMessagerManager sharedInstance] teardownStream];
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentUser"];

@@ -10,6 +10,8 @@
 #import "QZBServerManager.h"
 #import "QZBUserStatistic.h"
 #import "QZBAchievement.h"
+#import "QZBUserWorker.h"
+
 
 @implementation QZBAnotherUser
 
@@ -50,6 +52,8 @@
         }else{
             self.isViewed = YES;
         }
+        
+        [QZBUserWorker saveUserInMemory:self];
         
         //NSArray *achievements = dict[@"achievements"];
         

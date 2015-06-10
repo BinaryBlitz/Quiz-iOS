@@ -64,7 +64,6 @@
         button.frame = CGRectMake(0,0,100, 20);
         [button addTarget:self action:@selector(showFriendsRequestsAction:) forControlEvents:UIControlEventTouchUpInside];
         
-
         NSString *requestTitle = @"Заявки";
 
         [button setTitle:requestTitle forState:UIControlStateNormal];
@@ -209,6 +208,12 @@ toIndexPath:(NSIndexPath
     self.user = friendCell.user;
 
     [self performSegueWithIdentifier:@"showUserpage" sender:nil];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 71.0;
+    
 }
 
 #pragma mark - Navigation

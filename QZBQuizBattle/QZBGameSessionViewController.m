@@ -399,7 +399,7 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                          self.qestionLabel.alpha = 1.0;
                      }];
 //REDO TIME
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        for (UIButton *button in weakSelf.answerButtons) {
                            button.backgroundColor = [UIColor transperentBlackColor];

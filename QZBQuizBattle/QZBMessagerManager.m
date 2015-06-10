@@ -1,4 +1,4 @@
-//
+  //
 //  QZBMessagerManager.m
 //  QZBQuizBattle
 //
@@ -11,7 +11,12 @@
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import "XMPPMessageArchivingCoreDataStorage.h"
+#import "XMPPMessageArchivingCoreDataStorage.h"
 #import <JSQMessagesViewController/JSQMessages.h>
+#import "QZBUserWorker.h"
+#import "QZBAnotherUser.h"
+#import "QZBAnotherUserWithLastMessages.h"
+#import "QZBStoredUser.h"
 
 #import <DDASLLogger.h>
 
@@ -20,6 +25,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
 static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
+
 
 @interface QZBMessagerManager()<XMPPStreamDelegate, XMPPRosterDelegate>
 @property(strong, nonatomic) XMPPStream *xmppStream;
@@ -58,7 +64,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 {
     self = [super init];
     if (self) {
-        [self setupStream];
+       // [self setupStream];
     }
     return self;
 }
@@ -121,6 +127,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     self.xmppRoster.autoFetchRoster = YES;
     self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+    
     
     // Setup vCard support
     //
@@ -403,25 +410,57 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     return NO;
 }
 
-- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
-{
+
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message{
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     
     
-    [self testMessageArchiving];
+  //  [self testMessageArchiving];
     
     // A simple example of inbound message handling.
     
-    if ([message isChatMessageWithBody])
-    {
+    if ([message isChatMessageWithBody]) {
+        
+        
         XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[message from]
                                                                  xmppStream:self.xmppStream
                                                        managedObjectContext:[self managedObjectContext_roster]];
         
-        NSString *body = [[message elementForName:@"body"] stringValue];
-        NSString *displayName = [user displayName];
         
-        DDLogCVerbose(@"%@ %@", displayName, body);
+        NSString *body = [[message elementForName:@"body"] stringValue];
+        NSString *username = [[message elementForName:@"senderUsername"] stringValue];
+        
+        NSString *imgURLAsString = [[message elementForName:@"senderUserpicURLAsString"] stringValue];
+        NSString *displayName = [user displayName];
+        NSString *bareJid = user.jidStr;
+        
+        //QZBAnotherUser *userToSave = [[QZBAnotherUser alloc] init];
+        
+        QZBUserWorker *worker = [[QZBUserWorker alloc] init];
+        
+        QZBStoredUser *storedUser = [worker storedUserWithUsername:username
+                                                               jid:bareJid
+                                                          imageURL:imgURLAsString];
+        
+        [worker addOneUnreadedMessage:storedUser];
+        
+//        userToSave.name = username;
+//        userToSave.userID = [worker idFromJidAsString:bareJid];
+//        userToSave.imageURL = [NSURL URLWithString:imgURLAsString];
+        
+        
+       // [QZBUserWorker saveUserInMemory:userToSave];
+        
+        //QZBStoredUser *storedUser = [];
+        
+        DDLogCVerbose(@"%@ %@ %@", username, body, imgURLAsString);
+         DDLogCVerbose(@" user moof %@ %@", displayName, bareJid);
+        
+        if(!user){
+            [_xmppRoster addUser:[message from] withNickname:username];
+        }else{
+            user.displayName = username;
+        }
         
       //  [message from].bare;
         
@@ -435,24 +474,26 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         [self.delegate didRecieveMessageFrom:[message from].bare text:message.body];
         
-        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-        {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-//                                                                message:body
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"Ok"
-//                                                      otherButtonTitles:nil];
-//            [alertView show];
-        }
-        else
-        {
-//            // We are not active, so use a local notification instead
-//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//            localNotification.alertAction = @"Ok";
-//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-//            
-//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-        }
+//        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//        {
+////            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
+////                                                                message:body
+////                                                               delegate:nil
+////                                                      cancelButtonTitle:@"Ok"
+////                                                      otherButtonTitles:nil];
+////            [alertView show];
+//        }
+//        else
+//        {
+////            // We are not active, so use a local notification instead
+////            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+////            localNotification.alertAction = @"Ok";
+////            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
+////            
+////            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//        }
+        
+     //   [self usersInStorage];
     }
 }
 
@@ -485,8 +526,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     
     XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[presence from]
-                                                             xmppStream:self.xmppStream
-                                                   managedObjectContext:[self managedObjectContext_roster]];
+                                                                  xmppStream:self.xmppStream
+                                                        managedObjectContext:[self managedObjectContext_roster]];
     
     NSString *displayName = [user displayName];
     NSString *jidStrBare = [presence fromStr];
@@ -539,7 +580,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 -(void)initCoreDataStorage{
    XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
     
-    XMPPMessageArchiving *xmppMessageArchivingModule = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:xmppMessageArchivingStorage];
+    XMPPMessageArchiving *xmppMessageArchivingModule = [[XMPPMessageArchiving alloc]
+                                                        initWithMessageArchivingStorage:xmppMessageArchivingStorage];
     
     [xmppMessageArchivingModule setClientSideMessageArchivingOnly:YES];
     
@@ -547,6 +589,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [xmppMessageArchivingModule  addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
     self.messageArchiving = xmppMessageArchivingModule;
+    
+    //[self usersInStorage];
 }
 
 
@@ -591,7 +635,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                               [self jidAsStringFromUser:user]];
     
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
-  //  [request setPropertiesToFetch:@[predicate]];
+//  //  [request setPropertiesToFetch:@[predicate]];
     [request setPredicate:predicate];
     [request setEntity:entityDescription];
     NSError *error;
@@ -601,29 +645,128 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 
+-(NSArray *)usersInStorage{
+    
+    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:storage.contactEntityName
+                                                         inManagedObjectContext:moc];
+
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@""];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp"
+                                                                   ascending:NO];
+    //[myArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    [request setSortDescriptors:@[sortDescriptor]];
+ 
+    [request setEntity:entityDescription];
+    NSError *error;
+    NSArray *arr = [moc executeFetchRequest:request error:&error];
+
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    
+    QZBUserWorker *worker = [[QZBUserWorker alloc] init];
+    
+    for (XMPPMessageArchiving_Contact_CoreDataObject *o in arr) {
+        
+        NSLog(@"bare jid %@ last message %@", o.bareJid.bare,o.mostRecentMessageBody);
+        
+        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:o.bareJid
+                                                                      xmppStream:self.xmppStream
+                                                            managedObjectContext:[self managedObjectContext_roster]];
+        
+        NSNumber *n = [worker idFromJidAsString:o.bareJidStr];
+        NSLog(@"username %@ user id %@ lastmessage %@",user.displayName,n,o.mostRecentMessageBody );
+        
+        QZBStoredUser *storageUser = [worker userWithJidAsString:o.bareJidStr];
+        
+        QZBAnotherUser *u = [[QZBAnotherUser alloc] init];
+        
+        if(!user.displayName){
+            continue;
+        }
+        u.name = user.displayName;
+        u.userID = n;
+        
+        if(storageUser && storageUser.imageURLAsString){
+            u.imageURL = [NSURL URLWithString:storageUser.imageURLAsString];
+        
+        }
+        
+        QZBAnotherUserWithLastMessages *userAndMessage = [[QZBAnotherUserWithLastMessages alloc] initWithUser:u lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
+        
+        [tmpArr addObject:userAndMessage];
+    
+//        QZBAnotherUser *user = [worker userFromJid:o.bareJidStr];
+//    
+//        NSLog(@"name %@",user.name);
+    }
+    
+    return [NSArray arrayWithArray:tmpArr];
+}
+
 #pragma mark - messaging
 
 -(void)sendMessage:(NSString *)messageStr toUser:(id<QZBUserProtocol>)user{
-    
-        //NSString *messageStr = message;
-    
         if([messageStr length] > 0) {
-    
-            NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-            [body setStringValue:messageStr];
-    
+            
             NSString *toUser = [self jidAsStringFromUser:user];
+            XMPPJID *toJid = [XMPPJID jidWithString:toUser];
+            
+            
+            XMPPUserCoreDataStorageObject *xmppUser = [self.xmppRosterStorage userForJID:toJid
+                                                                          xmppStream:self.xmppStream
+                                                                managedObjectContext:[self managedObjectContext_roster]];
+            
+            if(!xmppUser){
+                [self addContact:user];
+            }
+            
+            XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:toJid];
+            
+            [message addBody:messageStr];
+            
+            [message addChild:[NSXMLElement elementWithName:@"senderUsername" stringValue:[QZBCurrentUser sharedInstance].user.name]];
+            
+            NSString *picUrlAsString = [QZBCurrentUser sharedInstance].user.imageURL.absoluteString;
+            [message addChild:[NSXMLElement elementWithName:@"senderUserpicURLAsString" stringValue:picUrlAsString]];
+            
+          //  [message addAttributeWithName:@"senderUsername" stringValue:[QZBCurrentUser sharedInstance].user.name];//[NSXMLElement elementWithName:@"username" stringValue:user.name];
     
-            NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-            [message addAttributeWithName:@"type" stringValue:@"chat"];
-            [message addAttributeWithName:@"to" stringValue:toUser];//REDO
-            [message addChild:body];
+//            NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+//            [body setStringValue:messageStr];
+//    
+//         
+//    
+//            NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+//            [message addAttributeWithName:@"type" stringValue:@"chat"];
+//            [message addAttributeWithName:@"to" stringValue:toUser];//REDO
+//            [message addChild:body];
     
             [self.xmppStream sendElement:message];
         }
 }
 
-#pragma mark - delegate
+#pragma mark - add buddy
+
+
+-(void)addContact:(id<QZBUserProtocol>)user{
+
+        XMPPJID *jid = [XMPPJID jidWithString:[self jidAsStringFromUser:user]];
+        if(user.name)
+        {
+            [_xmppRoster addUser:jid withNickname:user.name];
+        }
+        else
+        {
+            [_xmppRoster addUser:jid withNickname:nil];
+        }
+
+}
 
 
 

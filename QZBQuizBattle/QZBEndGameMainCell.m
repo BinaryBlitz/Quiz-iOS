@@ -34,7 +34,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+//// Configure the view for the selected state
 }
 
 -(void)initCell{
@@ -52,7 +52,7 @@
     self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
     
     
-    [self.resultOfSessionLabel addShadowsAllWay];
+    [self.resultOfSessionLabel addShadowsAllWayRasterize];
     [self.userNameLabel addShadows];
     [self.opponentNameLabel addShadows];
 }

@@ -51,7 +51,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"QZBQuizBattle"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"QZBQuizBattle"];
 
 //    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
 //    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];

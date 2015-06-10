@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 //#import "QZBAnotherUser.h"
+#import "QZBUserProtocol.h"
 
 @class QZBAnotherUser;
 @interface QZBFriendCell : UITableViewCell
@@ -16,6 +17,6 @@
 
 @property(strong, nonatomic, readonly) QZBAnotherUser *user;
 
--(void)setCellWithUser:(QZBAnotherUser *)user;
+-(void)setCellWithUser:(id<QZBUserProtocol>)user;
 
 @end

@@ -53,16 +53,7 @@
 }
 
 -(void)initWithTopic:(QZBGameTopic *)topic{
-  //  [self layoutSubviews];
-    //[self.backView addShadowsAllWay];
-    
-   // [self layoutSubviews];
-//    [self setNeedsLayout];
-//    [self layoutIfNeeded];
-//    [self layoutSubviews];
     [self.layer setNeedsLayout];
-    //[self.backView addShadowsAllWay];
-    
     
     NSInteger level = 0;
     float progress = 0.0;
@@ -76,8 +67,6 @@
                                 visible:[topic.visible boolValue]];
     
     self.topicName.text = topic.name;
-    
-//  //  QZBCategory *c = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
     
     QZBCategory *relationCategory = topic.relationToCategory;
     

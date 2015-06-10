@@ -26,6 +26,16 @@
     self.multiUseButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.multiUseButton.titleLabel.minimumScaleFactor = 0.5;
     self.multiUseButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
+    
+    self.messageButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.messageButton.titleLabel.minimumScaleFactor = 0.5;
+    self.messageButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
+    
+    self.messageButton.titleLabel.numberOfLines = 0;
+    CGFloat inset = CGRectGetHeight(self.frame) / 5;
+    self.messageButton.titleEdgeInsets = UIEdgeInsetsMake(inset / 3, inset / 3, inset / 3, inset / 3);
+    
+    
 }
 
 -(void)setBAdgeCount:(NSInteger)count{
