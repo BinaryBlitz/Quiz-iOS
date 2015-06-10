@@ -81,6 +81,11 @@
 		195FDA851ADA662E000F86F9 /* QZBReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA841ADA662E000F86F9 /* QZBReportVC.m */; };
 		195FDA881ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */; };
 		196099F81B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */; };
+		196099FD1B2721C300EEB9D6 /* QZBMessangerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 196099FC1B2721C300EEB9D6 /* QZBMessangerList.m */; };
+		19609A011B272EA500EEB9D6 /* QZBFirstMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19609A001B272EA500EEB9D6 /* QZBFirstMessageCell.m */; };
+		19609A071B28689100EEB9D6 /* QZBUserWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 19609A061B28689100EEB9D6 /* QZBUserWorker.m */; };
+		19609A0A1B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 19609A091B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m */; };
+		19609A0D1B28B5FD00EEB9D6 /* QZBStoredUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 19609A0C1B28B5FD00EEB9D6 /* QZBStoredUser.m */; };
 		196472611AD84D9200CAC8F3 /* QZBEndGameProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */; };
 		196472641AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */; };
 		1965879D1AC5879200C58C60 /* QZBVSScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */; };
@@ -424,6 +429,16 @@
 		195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationUsernameInput.m; sourceTree = "<group>"; };
 		196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+QZBColorGenerator.h"; sourceTree = "<group>"; };
 		196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+QZBColorGenerator.m"; sourceTree = "<group>"; };
+		196099FB1B2721C300EEB9D6 /* QZBMessangerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMessangerList.h; sourceTree = "<group>"; };
+		196099FC1B2721C300EEB9D6 /* QZBMessangerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMessangerList.m; sourceTree = "<group>"; };
+		196099FF1B272EA500EEB9D6 /* QZBFirstMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFirstMessageCell.h; sourceTree = "<group>"; };
+		19609A001B272EA500EEB9D6 /* QZBFirstMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFirstMessageCell.m; sourceTree = "<group>"; };
+		19609A051B28689100EEB9D6 /* QZBUserWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserWorker.h; sourceTree = "<group>"; };
+		19609A061B28689100EEB9D6 /* QZBUserWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserWorker.m; sourceTree = "<group>"; };
+		19609A081B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnotherUserWithLastMessages.h; sourceTree = "<group>"; };
+		19609A091B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnotherUserWithLastMessages.m; sourceTree = "<group>"; };
+		19609A0B1B28B5FD00EEB9D6 /* QZBStoredUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoredUser.h; sourceTree = "<group>"; };
+		19609A0C1B28B5FD00EEB9D6 /* QZBStoredUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoredUser.m; sourceTree = "<group>"; };
 		1964725F1AD84D9200CAC8F3 /* QZBEndGameProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGameProgressCell.h; sourceTree = "<group>"; };
 		196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGameProgressCell.m; sourceTree = "<group>"; };
 		196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+QZBSpecialCategory.h"; sourceTree = "<group>"; };
@@ -1207,6 +1222,15 @@
 			name = string;
 			sourceTree = "<group>";
 		};
+		196099FE1B272E6E00EEB9D6 /* messenger */ = {
+			isa = PBXGroup;
+			children = (
+				196099FF1B272EA500EEB9D6 /* QZBFirstMessageCell.h */,
+				19609A001B272EA500EEB9D6 /* QZBFirstMessageCell.m */,
+			);
+			name = messenger;
+			sourceTree = "<group>";
+		};
 		196587A11AC5B4E800C58C60 /* user */ = {
 			isa = PBXGroup;
 			children = (
@@ -1278,6 +1302,7 @@
 		1976FBAC1A4B04B50016130B /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				196099FE1B272E6E00EEB9D6 /* messenger */,
 				190DE81A1AD66AB90040585A /* game */,
 				196587A41AC5B55500C58C60 /* topics */,
 				196587A31AC5B53A00C58C60 /* iap */,
@@ -1339,6 +1364,8 @@
 			children = (
 				197F2C031AF27F9700C8BC2A /* QZBMessagerVC.h */,
 				197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */,
+				196099FB1B2721C300EEB9D6 /* QZBMessangerList.h */,
+				196099FC1B2721C300EEB9D6 /* QZBMessangerList.m */,
 			);
 			name = messager;
 			sourceTree = "<group>";
@@ -2196,6 +2223,8 @@
 			children = (
 				199667011B209E5500793610 /* QZBMessagerManager.h */,
 				199667021B209E5500793610 /* QZBMessagerManager.m */,
+				19609A081B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.h */,
+				19609A091B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m */,
 			);
 			name = messanger;
 			sourceTree = "<group>";
@@ -2335,6 +2364,10 @@
 				19D891471ABB2DB000251ADF /* achievments */,
 				1965879E1AC58A8E00C58C60 /* QZBUserStatistic.h */,
 				1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */,
+				19609A051B28689100EEB9D6 /* QZBUserWorker.h */,
+				19609A061B28689100EEB9D6 /* QZBUserWorker.m */,
+				19609A0B1B28B5FD00EEB9D6 /* QZBStoredUser.h */,
+				19609A0C1B28B5FD00EEB9D6 /* QZBStoredUser.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2665,6 +2698,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19609A011B272EA500EEB9D6 /* QZBFirstMessageCell.m in Sources */,
 				1976699C1A67D7A1006C2757 /* QZBLoginWithEmailVC.m in Sources */,
 				191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */,
 				199666C61B207FE100793610 /* XMPPvCardCoreDataStorage.m in Sources */,
@@ -2755,6 +2789,7 @@
 				199666A01B207FE100793610 /* XMPPFileTransfer.m in Sources */,
 				19D911361B171178007B4CF2 /* FXBlurView.m in Sources */,
 				191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */,
+				19609A0D1B28B5FD00EEB9D6 /* QZBStoredUser.m in Sources */,
 				199666C51B207FE100793610 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				199666CD1B207FE100793610 /* XMPPvCardTempEmail.m in Sources */,
 				199666B61B207FE100793610 /* XMPPRoom.xcdatamodeld in Sources */,
@@ -2765,7 +2800,9 @@
 				199666D11B207FE100793610 /* NSXMLElement+XEP_0059.m in Sources */,
 				1976FBB71A4B12280016130B /* QZBServerManager.m in Sources */,
 				199666AD1B207FE100793610 /* XMPPUserMemoryStorageObject.m in Sources */,
+				196099FD1B2721C300EEB9D6 /* QZBMessangerList.m in Sources */,
 				199666C01B207FE100793610 /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
+				19609A071B28689100EEB9D6 /* QZBUserWorker.m in Sources */,
 				19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */,
 				199666BA1B207FE100793610 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				199665841B207B1D00793610 /* NSData+XMPP.m in Sources */,
@@ -2789,6 +2826,7 @@
 				199666A81B207FE100793610 /* XMPPRoster.xcdatamodel in Sources */,
 				199666C31B207FE100793610 /* XMPPRoom.m in Sources */,
 				199666BE1B207FE100793610 /* XMPPRoomMemoryStorage.m in Sources */,
+				19609A0A1B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m in Sources */,
 				199665831B207B1D00793610 /* XMPPXOAuth2Google.m in Sources */,
 				199666BF1B207FE100793610 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,

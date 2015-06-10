@@ -206,15 +206,7 @@
     return 74.0f;
 }
 
-//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if([cell isKindOfClass:[QZBTopicTableViewCell class]]){
-//        
-//        QZBTopicTableViewCell *c = (QZBTopicTableViewCell *)cell;
-//        [c.backView addShadowsAllWay];
-//      //  [c.backView layoutSubviews];
-//    }
-//    
-//}
+
 
 #pragma actions
 

@@ -25,7 +25,7 @@
 }
 
 
--(void)setCellWithUser:(QZBAnotherUser *)user{
+-(void)setCellWithUser:(id<QZBUserProtocol>)user{
     
     self.user = user;
     
@@ -36,12 +36,14 @@
     }else{
         [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
+    self.nameLabel.font = [UIFont museoFontOfSize:17.0];
     
-    if(!user.isViewed){
-        self.nameLabel.font = [UIFont boldMuseoFontOfSize:17.0];
-    }else{
-        self.nameLabel.font = [UIFont museoFontOfSize:17.0];
-    }
+    
+//    if(!user.isViewed){
+//        self.nameLabel.font = [UIFont boldMuseoFontOfSize:17.0];
+//    }else{
+//        self.nameLabel.font = [UIFont museoFontOfSize:17.0];
+//    }
 
 }
 

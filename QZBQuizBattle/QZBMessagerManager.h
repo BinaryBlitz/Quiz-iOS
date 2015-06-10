@@ -26,6 +26,9 @@
 
 + (instancetype)sharedInstance;
 
+- (void)setupStream;
+- (void)teardownStream;
+
 - (BOOL)connect;
 
 -(void)sendMessage:(NSString *)messageStr toUser:(id<QZBUserProtocol>)user;
@@ -34,6 +37,8 @@
 
 
 -(NSString *)jidAsStringFromUser:(id<QZBUserProtocol>)user;
+
+-(NSArray *)usersInStorage;
 
 
 

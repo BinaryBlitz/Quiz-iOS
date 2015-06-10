@@ -94,6 +94,7 @@
 
         //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
     } else {
+        
         UINavigationController *navVC = self.viewControllers[4];
 
         QZBStoreListTVC *storeTVC = [navVC.viewControllers firstObject];
@@ -106,6 +107,7 @@
         [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
+        [[QZBMessagerManager sharedInstance] setupStream];
         [[QZBMessagerManager sharedInstance] connect];
         //[self setSelectedIndex:2];
     }
