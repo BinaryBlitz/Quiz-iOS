@@ -8,11 +8,19 @@
 
 #import "QZBFirstMessageCell.h"
 #import "QZBAnotherUserWithLastMessages.h"
+#import <JSBadgeView/JSBadgeView.h>
+
+@interface QZBFirstMessageCell()
+
+@property(strong, nonatomic) JSBadgeView *badgeView;
+
+@end
 
 @implementation QZBFirstMessageCell
 
 -(void)awakeFromNib{
-    
+    self.badgeView = [[JSBadgeView alloc] initWithParentView:self.firstMessageLabel
+                                                   alignment:JSBadgeViewAlignmentCenterRight];
     
 }
 
@@ -21,6 +29,15 @@
     [super setCellWithUser:userAndMessage.user];
     
     self.firstMessageLabel.text = userAndMessage.lastMessage;
+    
+    
+    if(![userAndMessage.unreadedCount isEqualToNumber:@(0)]){
+        self.badgeView.badgeText = [userAndMessage.unreadedCount stringValue];
+    }else{
+        self.badgeView.badgeText = nil;
+    }
+    
+    NSLog(@"%@", userAndMessage.unreadedCount);
     
     
     

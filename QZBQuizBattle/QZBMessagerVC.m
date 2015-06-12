@@ -39,7 +39,7 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
 
 //@property(strong, nonatomic) XMPPStream *stream;
-
+//
 //@property(weak, nonatomic) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
 //
 //@property(strong, nonatomic) XMPPMessageArchiving *xmppMessageArchivingModule;
@@ -91,7 +91,6 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
     [super viewWillAppear:animated];
     
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
-    
     
     self.messages = [[QZBMessagerManager sharedInstance] generateJSQMessagesForUser:self.friend];
     
@@ -452,8 +451,6 @@ navigation
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"taaaped");
-    
     JSQMessage *m = self.messages[indexPath.row];
     if(![m.senderId isEqualToString:self.senderId]){
         [self performSegueWithIdentifier:QZBSegueToUserPageIdentifier sender:nil];
@@ -471,36 +468,7 @@ navigation
     }
 }
 
-#pragma mark - test methods
 
 
-//-(void)testMessageArchiving{
-//    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
-//    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
-//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
-//                                                         inManagedObjectContext:moc];
-//    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-//    [request setEntity:entityDescription];
-//    NSError *error;
-//    NSArray *messages = [moc executeFetchRequest:request error:&error];
-//    
-//    [self print:[[NSMutableArray alloc]initWithArray:messages]];
-//}
-//
-//-(void)print:(NSMutableArray*)messages{
-//    
-//        for (XMPPMessageArchiving_Message_CoreDataObject *message in messages) {
-//            NSLog(@"messageStr param is %@",message.messageStr);
-//            NSXMLElement *element = [[NSXMLElement alloc] initWithXMLString:message.messageStr error:nil];
-//            NSLog(@"to param is %@",[element attributeStringValueForName:@"to"]);
-//            NSLog(@"NSCore object id param is %@",message.objectID);
-//            NSLog(@"bareJid param is %@",message.bareJid);
-//            NSLog(@"bareJidStr param is %@",message.bareJidStr);
-//            NSLog(@"body param is %@",message.body);
-//            NSLog(@"timestamp param is %@",message.timestamp);
-//            NSLog(@"outgoing param is %d",[message.outgoing intValue]);
-//        }
-//    
-//}
 
 @end

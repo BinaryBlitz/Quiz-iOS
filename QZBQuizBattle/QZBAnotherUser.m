@@ -52,8 +52,9 @@
         }else{
             self.isViewed = YES;
         }
+      //  QZBUserWorker *uw = [[QZBUserWorker alloc] init];
         
-        [QZBUserWorker saveUserInMemory:self];
+       // [QZBUserWorker saveUserInMemory:self];
         
         //NSArray *achievements = dict[@"achievements"];
         

@@ -97,22 +97,28 @@
     exitingUser.name = username;
     exitingUser.imageURLAsString = imgUrl;
     
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
+    
     return exitingUser;
     
 }
 
 
-+(void)saveUserInMemory:(id<QZBUserProtocol>)user{
+-(void)saveUserInMemory:(id<QZBUserProtocol>)user{
     
-    QZBStoredUser *exitingUser = [QZBStoredUser MR_findFirstByAttribute:@"userID"
-                                                              withValue:user.userID];
+//    QZBStoredUser *exitingUser = [QZBStoredUser MR_findFirstByAttribute:@"userID"
+//                                                              withValue:user.userID];
+//    
+//    if(!exitingUser){
+//        exitingUser = [QZBStoredUser MR_createEntity];
+//        exitingUser.userID = user.userID;
+//    }
+//    exitingUser.name = user.name;
+//    exitingUser.imageURLAsString = user.imageURL.absoluteString;
     
-    if(!exitingUser){
-        exitingUser = [QZBStoredUser MR_createEntity];
-        exitingUser.userID = user.userID;
-    }
-    exitingUser.name = user.name;
-    exitingUser.imageURLAsString = user.imageURL.absoluteString;
+    [self storedUserWithUsername:user.name userID:user.userID imageURL:user.imageURL.absoluteString];
+    
+
 }
 
 
@@ -127,6 +133,22 @@
     
     user.unreadedCount = @(count);
     
+}
+
+-(id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser{
+
+    QZBAnotherUser *user = [[QZBAnotherUser alloc] init];
+    
+    user.name = storedUser.name;
+    user.userID = storedUser.userID;
+    
+    if(storedUser.imageURLAsString){
+        user.imageURL = [NSURL URLWithString:storedUser.imageURLAsString];
+    }else{
+        user.imageURL = nil;
+    }
+    
+    return user;
 }
 
 

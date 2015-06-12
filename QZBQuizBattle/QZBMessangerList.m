@@ -49,8 +49,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([segue.identifier isEqualToString:@"showMessager"]){
-     
-       // id<QZBUserProtocol> user = [self userAtIndex:<#(NSUInteger)#>]
         QZBMessagerVC *destVC = (QZBMessagerVC *)segue.destinationViewController;
         [destVC initWithUser:self.user];
         
@@ -84,6 +82,8 @@
     
     QZBAnotherUserWithLastMessages *userAndMess = self.listOfUsers[indexPath.row];
     
+    [userAndMess readAllMessages];
+    
     self.user = userAndMess.user;
     
   //  self.user = [self userAtIndex:indexPath.row];
@@ -94,7 +94,6 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return 71.0;
-    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

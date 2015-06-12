@@ -148,6 +148,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Called when the application is about to terminate. Save data if appropriate. See also
     // applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
+    
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
     [self saveContext];
 }
 

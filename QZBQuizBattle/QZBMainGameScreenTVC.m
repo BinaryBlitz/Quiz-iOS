@@ -192,51 +192,51 @@
     }
 }
 
-- (UIColor *)colorForSection:(NSInteger)section {
+- (UIColor *)colorForSection:(NSInteger)section {//test
     UIColor *color = [UIColor veryDarkGreyColor];
 
     NSArray *arr = self.workArray[section];
 
-    if ([arr isEqualToArray:self.faveTopics]) {
+    if (arr == self.faveTopics) {
         color = [UIColor ultralightGreenColor];
         
-    } else if ([arr isEqualToArray:self.friendsTopics]) {
+    } else if (arr == self.friendsTopics) {
         color = [UIColor lightCyanColor];
 
-    } else if ([arr isEqualToArray:self.featured]) {
+    } else if (arr == self.featured) {
         color = [UIColor lightPincColor];
 
-    } else if ([arr isEqualToArray:self.challenges]) {
+    } else if (arr == self.challenges) {
         color = [UIColor lightGreenColor];
-    } else if( [arr isEqualToArray:self.additionalTopics]){
+    } else if( arr == self.additionalTopics){
         
-    }else if ([arr isEqualToArray:self.challenged]){
+    }else if (arr == self.challenged){
         color = [UIColor strongGreenColor];
     }
 
     return color;
 }
 
--(NSString *)textForArray:(NSArray *)arr{
+-(NSString *)textForArray:(NSArray *)arr{//test
 
     NSString *text = @"";
     
     
-    if ([arr isEqualToArray:self.faveTopics]) {
+    if (arr==self.faveTopics) {
         text = @"Любимые темы";
         
-    } else if ([arr isEqualToArray:self.friendsTopics]) {
+    } else if (arr == self.friendsTopics) {
         text = @"Популярное у друзей";
         
-    } else if ([arr isEqualToArray:self.featured]) {
+    } else if (arr ==self.featured) {
         text = @"Популярные темы";
         
-    } else if ([arr isEqualToArray:self.challenges]) {
+    } else if (arr == self.challenges) {
         text = @"Брошенные вызовы";
-    } else if ([arr isEqualToArray:self.additionalTopics]){
+    } else if (arr == self.additionalTopics){
         
         text = @"Сыграйте эти темы";
-    } else if ([arr isEqualToArray:self.challenged]){
+    } else if (arr == self.challenged){
         text = @"Результаты";
     }
     return text;

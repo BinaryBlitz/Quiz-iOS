@@ -679,13 +679,15 @@ static NSInteger topicsOffset = 7;
 -(void)showUserPicFullScreen:(id)sender{
     NSLog(@"tapped pic");
    
-    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:@"Photo 1"];
+    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:nil];
     
     FSBasicImageSource *photoSource = [[FSBasicImageSource alloc] initWithImages:@[firstPhoto]];
     
     FSImageViewerViewController *imageViewController = [[FSImageViewerViewController alloc] initWithImageSource:photoSource];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imageViewController];
-    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+    
+    [self.navigationController pushViewController:imageViewController animated:YES];
+   // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imageViewController];
+    //[self.navigationController presentViewController:navigationController animated:YES completion:nil];
     
     
 }
