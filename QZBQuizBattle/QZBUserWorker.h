@@ -14,10 +14,11 @@
 @interface QZBUserWorker : NSObject
 
 -(id<QZBUserProtocol>)userFromJid:(NSString *)jidAsString;
+-(id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser;
 
 - (QZBStoredUser *)userWithJidAsString:(NSString *)jidAsString;
 
-+ (void)saveUserInMemory:(id<QZBUserProtocol>)user;
+- (void)saveUserInMemory:(id<QZBUserProtocol>)user;
 
 -(NSNumber *)idFromJidAsString:(NSString *)jidAsString;
 

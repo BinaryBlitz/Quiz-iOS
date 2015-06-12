@@ -33,7 +33,7 @@
 #import <SDWebImage/SDImageCache.h>
 
 #import <DDLog.h>
-static const int ddLogLevel = LOG_LEVEL_ERROR;
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 //#import "QZBLoggingConfig.h"
 

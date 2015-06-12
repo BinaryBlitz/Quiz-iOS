@@ -9,12 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "QZBUserProtocol.h"
 @class QZBAnotherUser;
+@class QZBStoredUser;
 @interface QZBAnotherUserWithLastMessages : NSObject
-@property(strong, nonatomic) id<QZBUserProtocol> user;
-@property(strong, nonatomic) NSString *lastMessage;
+@property(strong, nonatomic, readonly) id<QZBUserProtocol> user;
+@property(strong, nonatomic, readonly) NSString *lastMessage;
+@property(strong, nonatomic, readonly) NSNumber *unreadedCount;
 
-- (instancetype)initWithUser:(QZBAnotherUser *)user
-                 lastMessage:(NSString *)message
-              lastMesageDate:(NSDate *)timestamp;
+//- (instancetype)initWithUser:(QZBAnotherUser *)user
+//                 lastMessage:(NSString *)message
+//              lastMesageDate:(NSDate *)timestamp;
+
+- (instancetype)initWithStoredUser:(QZBStoredUser *)user
+                       lastMessage:(NSString *)message
+                    lastMesageDate:(NSDate *)timestamp;
+
+-(void)readAllMessages;
 
 @end

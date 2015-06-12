@@ -43,6 +43,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 @property(strong, nonatomic) NSString *password;
 @property(assign, nonatomic) BOOL isXmppConnected;
 
+@property(strong, nonatomic) QZBUserWorker *userWorker;
+
 @end
 
 @implementation QZBMessagerManager
@@ -65,6 +67,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     self = [super init];
     if (self) {
        // [self setupStream];
+        self.userWorker = [[QZBUserWorker alloc] init];
     }
     return self;
 }
@@ -436,22 +439,20 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         //QZBAnotherUser *userToSave = [[QZBAnotherUser alloc] init];
         
-        QZBUserWorker *worker = [[QZBUserWorker alloc] init];
+       
         
-        QZBStoredUser *storedUser = [worker storedUserWithUsername:username
+        QZBStoredUser *storedUser = [self.userWorker storedUserWithUsername:username
                                                                jid:bareJid
                                                           imageURL:imgURLAsString];
         
-        [worker addOneUnreadedMessage:storedUser];
+        [self.userWorker addOneUnreadedMessage:storedUser];
         
 //        userToSave.name = username;
 //        userToSave.userID = [worker idFromJidAsString:bareJid];
 //        userToSave.imageURL = [NSURL URLWithString:imgURLAsString];
         
         
-       // [QZBUserWorker saveUserInMemory:userToSave];
-        
-        //QZBStoredUser *storedUser = [];
+
         
         DDLogCVerbose(@"%@ %@ %@", username, body, imgURLAsString);
          DDLogCVerbose(@" user moof %@ %@", displayName, bareJid);
@@ -669,37 +670,42 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
     NSMutableArray *tmpArr = [NSMutableArray array];
     
-    QZBUserWorker *worker = [[QZBUserWorker alloc] init];
+  //  QZBUserWorker *worker = [[QZBUserWorker alloc] init];
     
     for (XMPPMessageArchiving_Contact_CoreDataObject *o in arr) {
         
         NSLog(@"bare jid %@ last message %@", o.bareJid.bare,o.mostRecentMessageBody);
         
-        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:o.bareJid
-                                                                      xmppStream:self.xmppStream
-                                                            managedObjectContext:[self managedObjectContext_roster]];
+//        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:o.bareJid
+//                                                                      xmppStream:self.xmppStream
+//                                                            managedObjectContext:[self managedObjectContext_roster]];
         
-        NSNumber *n = [worker idFromJidAsString:o.bareJidStr];
-        NSLog(@"username %@ user id %@ lastmessage %@",user.displayName,n,o.mostRecentMessageBody );
         
-        QZBStoredUser *storageUser = [worker userWithJidAsString:o.bareJidStr];
         
-        QZBAnotherUser *u = [[QZBAnotherUser alloc] init];
+      //  NSNumber *n = [worker idFromJidAsString:o.bareJidStr];
+      //  NSLog(@"username %@ user id %@ lastmessage %@",user.displayName,n,o.mostRecentMessageBody );
         
-        if(!user.displayName){
+        QZBStoredUser *storageUser = [self.userWorker userWithJidAsString:o.bareJidStr];
+        
+        
+     //   QZBAnotherUser *anotherUser = [worker userFromJid:o.bareJidStr];
+        
+        if(!storageUser){
             continue;
         }
-        u.name = user.displayName;
-        u.userID = n;
+//        u.name = user.displayName;
+//        u.userID = n;
+//        
+//        if(storageUser && storageUser.imageURLAsString){
+//            u.imageURL = [NSURL URLWithString:storageUser.imageURLAsString];
+//        
+//        }
         
-        if(storageUser && storageUser.imageURLAsString){
-            u.imageURL = [NSURL URLWithString:storageUser.imageURLAsString];
+        QZBAnotherUserWithLastMessages *uAndM = [[QZBAnotherUserWithLastMessages alloc] initWithStoredUser:storageUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
         
-        }
+//        QZBAnotherUserWithLastMessages *userAndMessage = [[QZBAnotherUserWithLastMessages alloc] initWithUser:anotherUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
         
-        QZBAnotherUserWithLastMessages *userAndMessage = [[QZBAnotherUserWithLastMessages alloc] initWithUser:u lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
-        
-        [tmpArr addObject:userAndMessage];
+        [tmpArr addObject:uAndM];
     
 //        QZBAnotherUser *user = [worker userFromJid:o.bareJidStr];
 //    
@@ -718,13 +724,15 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
             XMPPJID *toJid = [XMPPJID jidWithString:toUser];
             
             
-            XMPPUserCoreDataStorageObject *xmppUser = [self.xmppRosterStorage userForJID:toJid
-                                                                          xmppStream:self.xmppStream
-                                                                managedObjectContext:[self managedObjectContext_roster]];
+//            XMPPUserCoreDataStorageObject *xmppUser = [self.xmppRosterStorage userForJID:toJid
+//                                                                          xmppStream:self.xmppStream
+//                                                                managedObjectContext:[self managedObjectContext_roster]];
+//            
+//            if(!xmppUser){
+//                [self addContact:user];
+//            }
             
-            if(!xmppUser){
-                [self addContact:user];
-            }
+            [self.userWorker saveUserInMemory:user];
             
             XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:toJid];
             
