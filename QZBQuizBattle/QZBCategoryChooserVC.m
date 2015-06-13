@@ -19,6 +19,13 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <JSQSystemSoundPlayer.h>
 
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
+
+
 @interface QZBCategoryChooserVC ()
 
 @property (strong, nonatomic) NSArray *categories;
@@ -98,21 +105,34 @@
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     QZBCategory *category = self.categories[indexPath.row];
-    
-
     cell.categoryLabel.text = category.name;
     NSURL *categoryBannerURL =
     [NSURL URLWithString:category.banner_url];
     
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:categoryBannerURL
-                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                              timeoutInterval:60];
+    DFImageRequestOptions *options = [DFImageRequestOptions new];
+    options.allowsClipping = YES;
+
+    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    
+    DFImageRequest *request = [DFImageRequest requestWithResource:categoryBannerURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
+    
+    cell.categoryImageView.allowsAnimations = YES;
+    cell.categoryImageView.allowsAutoRetries = YES;
+    
+    [cell.categoryImageView prepareForReuse];
+    
+    [cell.categoryImageView setImageWithRequest:request];
     
     
-    [cell.categoryImageView  setImageWithURLRequest:imageRequest
-                                   placeholderImage:[UIImage imageNamed:@"placeholderIMG"]
-                                            success:nil
-                                            failure:nil];
+//    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:categoryBannerURL
+//                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+//                                              timeoutInterval:60];
+//    
+//    
+//    [cell.categoryImageView  setImageWithURLRequest:imageRequest
+//                                   placeholderImage:[UIImage imageNamed:@"placeholderIMG"]
+//                                            success:nil
+//                                            failure:nil];
 
   //  [cell.categoryImageView setImageWithURL:categoryBannerURL];
     return cell;
@@ -141,7 +161,7 @@
 - (void)initCategories {
     //__weak typeof(self) weakSelf = self;
 
-    [[QZBServerManager sharedManager] getСategoriesOnSuccess:^(NSArray *topics) {
+    [[QZBServerManager sharedManager] GETСategoriesOnSuccess:^(NSArray *topics) {
 
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                                ascending:YES];

@@ -38,12 +38,6 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
 
-//@property(strong, nonatomic) XMPPStream *stream;
-//
-//@property(weak, nonatomic) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
-//
-//@property(strong, nonatomic) XMPPMessageArchiving *xmppMessageArchivingModule;
-//@property(strong, nonatomic) XMPPReconnect *xmppReconnect;
 
 @end
 
@@ -62,13 +56,8 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
     self.senderDisplayName = [QZBCurrentUser sharedInstance].user.name;
     // self.showLoadEarlierMessagesHeader = YES;
     self.inputToolbar.contentView.leftBarButtonItem = nil;
-
-    //    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    //    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-
-    [self initAvatars];
-
     
+    [self initAvatars];
 
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
 

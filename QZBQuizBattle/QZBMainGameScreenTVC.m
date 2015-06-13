@@ -26,6 +26,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBEndGameVC.h"
 #import "UIFont+QZBCustomFont.h"
+#import "UIViewController+QZBMessagerCategory.h"
 
 @interface QZBMainGameScreenTVC ()
 
@@ -96,7 +97,14 @@
     
    // [self.refreshControl beginRefreshing];
 
+  //  [self subscribeToMessages];
     [self reloadTopicsData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    //[self unsubscribeFromMessages];
 }
 
 #pragma mark - Navigation

@@ -10,6 +10,14 @@
 #import "QZBServerManager.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
+//dfiimage
+
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
+
 @interface QZBAchievement ()
 
 @property (strong, nonatomic) UIImage *image;
@@ -51,19 +59,21 @@
             self.imageURL = [NSURL URLWithString:urlAsString];
             
             
-            UIImageView *v = [[UIImageView alloc] init];
+            DFImageRequestOptions *options = [DFImageRequestOptions new];
+            //       // options.allowsClipping = YES;
+            options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad ) };
+            options.expirationAge = 60*60*24*10;
+            options.priority = DFImageRequestPriorityLow;
             
-                NSURLRequest *imageRequest =
-                [NSURLRequest requestWithURL:self.imageURL
-                                 cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                             timeoutInterval:60];
-                
-//                [v setImageWithURLRequest:imageRequest
-//                         placeholderImage:[UIImage imageNamed:@"achiv"]
-//                                  success:nil
-//                                  failure:nil];
+            DFImageRequest *request = [DFImageRequest requestWithResource:self.imageURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
             
-            
+            [[DFImageManager sharedManager] requestImageForRequest:request
+                                                        completion:^(UIImage *image, NSDictionary *info) {
+                                                            
+                                                            NSLog(@"achieve message %@",info);
+                                                        }];
+
+   
         }
         
     }

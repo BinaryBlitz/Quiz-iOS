@@ -18,6 +18,8 @@
 #import "UIColor+QZBProjectColors.h"
 #import "QZBMessagerManager.h"
 
+#import "UIViewController+QZBMessagerCategory.h"
+
 @interface QZBMainTBC ()
 
 @end
@@ -104,11 +106,15 @@
         [storeTVC setNeedRelaod:YES];
 
         [[QZBAchievementManager sharedInstance] updateAchievements];
-        [[QZBServerManager sharedManager] getСategoriesOnSuccess:nil onFailure:nil];
+        [[QZBServerManager sharedManager] GETСategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
-        [[QZBMessagerManager sharedInstance] setupStream];
-        [[QZBMessagerManager sharedInstance] connect];
+        if(![[QZBMessagerManager sharedInstance] isConnected]){//REDO
+            [[QZBMessagerManager sharedInstance] setupStream];
+            [[QZBMessagerManager sharedInstance] connect];
+        }
+        [self subscribeToMessages];
+        
         //[self setSelectedIndex:2];
     }
 }
@@ -116,6 +122,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self unsubscribeFromMessages];
 }
 
 #pragma mark - support methods

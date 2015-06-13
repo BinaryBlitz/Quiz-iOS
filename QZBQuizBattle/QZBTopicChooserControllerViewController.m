@@ -23,6 +23,14 @@
 #import <JSQSystemSoundPlayer.h>
 #import "UIView+QZBShakeExtension.h"
 
+//dfiimage
+
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
+
 @interface QZBTopicChooserControllerViewController ()
 @property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
@@ -64,30 +72,37 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    //    self.navigationItem.hidesBackButton = NO;
-    //    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    //
-    //    [self.navigationController.navigationBar
-    //        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    //
-    //    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    //
-    //    [self.navigationController.navigationBar
-    //        setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    //    self.navigationController.navigationBar.translucent = NO;
-
     [self initStatusbarWithColor:[UIColor blackColor]];
 
     NSURL *url = [NSURL URLWithString:self.category.background_url];
+    
+    DFImageRequestOptions *options = [DFImageRequestOptions new];
+    options.allowsClipping = YES;
+    
+    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.expirationAge = 60*60*24*10;
+    
+    DFImageRequest *request = [DFImageRequest requestWithResource:url
+                                                       targetSize:CGSizeZero
+                                                      contentMode:DFImageContentModeAspectFill
+                                                          options:options];
+    
+    self.backgroundImageView.allowsAnimations = YES;
+    self.backgroundImageView.allowsAutoRetries = YES;
+    
+    [self.backgroundImageView prepareForReuse];
+    
+    [self.backgroundImageView setImageWithRequest:request];
+    
 
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
-                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                              timeoutInterval:60];
-
-    [self.backgroundImageView setImageWithURLRequest:imageRequest
-                                    placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
-                                             success:nil
-                                             failure:nil];
+//    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
+//                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+//                                              timeoutInterval:60];
+//
+//    [self.backgroundImageView setImageWithURLRequest:imageRequest
+//                                    placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
+//                                             success:nil
+//                                             failure:nil];
 
     //[self.backgroundImageView setImageWithURL:url];
 
@@ -304,7 +319,7 @@
 
     self.title = category.name;
 
-    [[QZBServerManager sharedManager] getTopicsWithCategory:category
+    [[QZBServerManager sharedManager] GETTopicsWithCategory:category
         onSuccess:^(NSArray *topics) {
             self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
                 sortedArrayUsingDescriptors:@[ sort ]];

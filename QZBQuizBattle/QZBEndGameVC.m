@@ -27,6 +27,14 @@
 
 #import "QZBChallengeDescriptionWithResults.h"
 
+//dfiimage
+
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
+
 @interface QZBEndGameVC ()
 
 @property (copy, nonatomic) NSString *firstUserName;
@@ -89,26 +97,53 @@
     QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
     if (category) {
         NSURL *url = [NSURL URLWithString:category.background_url];
-        NSURLRequest *imageRequest =
-            [NSURLRequest requestWithURL:url
-                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                         timeoutInterval:60];
+//        NSURLRequest *imageRequest =
+//            [NSURLRequest requestWithURL:url
+//                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+//                         timeoutInterval:60];
 
         CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
                               16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
 
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:r];
+       // UIImageView *iv = [[UIImageView alloc] initWithFrame:r];
+        
+        DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
 
         self.tableView.backgroundColor = [UIColor clearColor];
+        
+    
 
-        [iv setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
+        //[iv setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
 
         //  [self.view addSubview:iv];
         //  [self.view sendSubviewToBack:iv];
 
         //[self.view insertSubview:iv atIndex:0];
+        
+        
+        
+        
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+        options.allowsClipping = YES;
+        
+        options.userInfo = @{ DFURLRequestCachePolicyKey :
+                                  @(NSURLRequestReturnCacheDataElseLoad)};
+        //options.expirationAge = 60*60*24*10;
+        
+        DFImageRequest *request = [DFImageRequest requestWithResource:url
+                                                           targetSize:CGSizeZero
+                                                          contentMode:DFImageContentModeAspectFill
+                                                              options:options];
+        
+        dfiIV.allowsAnimations = NO;
+        dfiIV.allowsAutoRetries = YES;
+        
+        [dfiIV prepareForReuse];
+        
+        [dfiIV setImageWithRequest:request];
+        
 
-        self.tableView.backgroundView = iv;
+        self.tableView.backgroundView = dfiIV;
     }
     // [self.tableView layoutIfNeeded];
 }

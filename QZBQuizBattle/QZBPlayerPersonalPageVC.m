@@ -44,9 +44,22 @@
 #import <FSBasicImageSource.h>
 #import <DDLog.h>
 
+
 //messager
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
+#import "QZBMessagerManager.h"
+#import "UIViewController+QZBMessagerCategory.h"
+
+//dfiimage
+
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
+
+
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -79,6 +92,8 @@ static NSInteger topicsOffset = 7;
 @property (assign, nonatomic) BOOL isCurrent;
 @property (assign, nonatomic) BOOL isFriend;
 
+@property(assign, nonatomic) NSInteger unreadedCount;
+
 @property (strong, nonatomic) NSIndexPath *choosedIndexPath;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
@@ -101,7 +116,7 @@ static NSInteger topicsOffset = 7;
     [self setNeedsStatusBarAppearanceUpdate];
 
     [self initStatusbarWithColor:[UIColor blackColor]];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+   // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
     
     self.userPicGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                             action:@selector(showUserPicFullScreen:)];
@@ -118,6 +133,8 @@ static NSInteger topicsOffset = 7;
 
 - (void)viewWillAppear:(BOOL)animate {
     [super viewWillAppear:animate];
+    
+ //   [self subscribeToMessages];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userPressShowAllButton:)
@@ -145,6 +162,7 @@ static NSInteger topicsOffset = 7;
         [self updateCurentUser:self.user];
         self.isCurrent = YES;
         [[QZBFriendRequestManager sharedInstance] updateRequests];
+        self.unreadedCount = [[QZBMessagerManager sharedInstance] countOfUnreaded];
 
     } else {
         self.isCurrent = NO;
@@ -167,6 +185,7 @@ static NSInteger topicsOffset = 7;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
+   // [self unsubscribeFromMessages];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -300,7 +319,7 @@ static NSInteger topicsOffset = 7;
         return descrForHorizontal;
 
     } else if (indexPath.row == 3) {
-        if (self.friends.count == 0) {
+        if (self.friends&&self.friends.count == 0) {//TEST
             if (self.isCurrent) {
                 cell = [tableView dequeueReusableCellWithIdentifier:findFriendsIdentifier];
                 QZBFindFriendsCell *ffCell = (QZBFindFriendsCell *)cell;
@@ -310,16 +329,25 @@ static NSInteger topicsOffset = 7;
                 cell.contentView.backgroundColor = [UIColor friendsLightGreyColor];
                 return cell;
             } else {
-                QZBDescriptionForHorizontalCell *descrForHorizontal =
-                    [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
-                // [descrForHorizontal.shadowView removeFromSuperview];
+//                QZBDescriptionForHorizontalCell *descrForHorizontal =
+//                    [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+//                // [descrForHorizontal.shadowView removeFromSuperview];
+//
+//                descrForHorizontal.shadowView = nil;
+//                descrForHorizontal.descriptionLabel.text = @"";
+////                    @"У игрока еще нет друзей, добавьте его в "
+////                    @"друзья";
+//                return descrForHorizontal;
+//
+//                // cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
+                
+                QZBFriendHorizontalCell *friendsHorizontalCell =
+                [tableView dequeueReusableCellWithIdentifier:friendsIdentifier];
+                
+                [friendsHorizontalCell setFriendArray:self.friends];
+                
+                return friendsHorizontalCell;
 
-                descrForHorizontal.descriptionLabel.text =
-                    @"У игрока еще нет друзей, добавьте его в "
-                    @"друзья";
-                return descrForHorizontal;
-
-                // cell = [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
             }
         } else {
             QZBFriendHorizontalCell *friendsHorizontalCell =
@@ -582,7 +610,7 @@ static NSInteger topicsOffset = 7;
         [destVC initWithUser:self.user];
         
     }else if([segue.identifier isEqualToString:@"showAllMessages"]){
-        QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
+       // QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
        // [destVC setFriendsOwner:self.user andFriends:self.friends];
         
     }
@@ -810,7 +838,8 @@ static NSInteger topicsOffset = 7;
                                   action:@selector(multiUseButtonAction:)
                         forControlEvents:UIControlEventTouchUpInside];
     
-    [playerCell.messageButton addTarget:self action:@selector(messageAction:) forControlEvents:UIControlEventTouchUpInside];
+    [playerCell.messageButton addTarget:self action:@selector(messageAction:)
+                       forControlEvents:UIControlEventTouchUpInside];
 
     if (self.friends) {
         playerCell.friendsButton.enabled = YES;
@@ -830,6 +859,7 @@ static NSInteger topicsOffset = 7;
         }
         
         messgaeButtonTitle = @"Сообщения";
+        [playerCell setMessageBadgeCount:self.unreadedCount];
     } else {
         
         
@@ -872,7 +902,12 @@ static NSInteger topicsOffset = 7;
 
     NSNumber *currentAchievementsCount = @(self.achivArray.count);
 
-    playerCell.achievementLabel.text = [NSString stringWithFormat:@"%@", currentAchievementsCount];
+    if(self.achivArray){
+        playerCell.achievementLabel.text = [NSString stringWithFormat:@"%@",
+                                            currentAchievementsCount];
+    }else{
+        playerCell.achievementLabel.text = @"";
+    }
 
     // cell = playerCell;
 }
@@ -955,6 +990,8 @@ static NSInteger topicsOffset = 7;
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:achievment.imageURL
                                                   cachePolicy:NSURLRequestReturnCacheDataElseLoad
                                               timeoutInterval:60];
+    
+    
 
     [v setImageWithURLRequest:imageRequest
               placeholderImage:[UIImage imageNamed:@"achiv"]

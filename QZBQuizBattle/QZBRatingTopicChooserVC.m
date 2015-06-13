@@ -26,9 +26,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    NSURL *url = [NSURL URLWithString:self.category.background_url];
+  //  NSURL *url = [NSURL URLWithString:self.category.background_url];
     
-    [self.backgroundImageView setImageWithURL:url];
+   // [self.backgroundImageView setImageWithURL:url];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,6 +14,7 @@
 @interface QZBPlayerInfoCell ()
 
 @property(strong, nonatomic) JSBadgeView *badgeView;
+@property(strong, nonatomic) JSBadgeView *messageBadgeView;
 
 @end
 
@@ -21,6 +22,9 @@
 
 - (void)awakeFromNib {
 
+   // CGFloat inset = CGRectGetHeight(self.frame) / 5;//REDO
+    UIEdgeInsets edgeInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    
     self.playerUserpic.userInteractionEnabled = YES;
     
     self.multiUseButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -31,10 +35,13 @@
     self.messageButton.titleLabel.minimumScaleFactor = 0.5;
     self.messageButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
     
-    self.messageButton.titleLabel.numberOfLines = 0;
-    CGFloat inset = CGRectGetHeight(self.frame) / 5;
-    self.messageButton.titleEdgeInsets = UIEdgeInsetsMake(inset / 3, inset / 3, inset / 3, inset / 3);
+    self.messageButton.titleLabel.numberOfLines = 1;
+
+    self.messageButton.titleEdgeInsets = edgeInset;
+    self.multiUseButton.titleEdgeInsets = edgeInset;
     
+    
+    self.achievementLabel.text = @"";
     
 }
 
@@ -53,9 +60,33 @@
     }
 }
 
+-(void)setMessageBadgeCount:(NSInteger)count{
+    if(count <= 0){
+       // self.messageButton.badgeValue = nil;
+        
+        self.messageBadgeView.badgeText = nil;
+    } else{
+        
+        self.messageBadgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)count];
+//        self.friendsButton.badgeOriginX = 3*self.friendsButton.bounds.size.width/4;
+//        self.friendsButton.badgeOriginY = self.friendsButton.bounds.size.height/5;
+//        self.messageButton.badgeMinSize = 10;
+//        
+//        self.messageButton.badgeValue = [NSString stringWithFormat:@"%ld", (long)count];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
+}
+
+-(JSBadgeView *)messageBadgeView{
+    if(!_messageBadgeView){
+        _messageBadgeView = [[JSBadgeView alloc] initWithParentView:self.messageButton
+                                                       alignment:JSBadgeViewAlignmentTopRight];
+    }
+    return _messageBadgeView;
 }
 
 

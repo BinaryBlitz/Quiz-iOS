@@ -9,6 +9,9 @@
 //#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "QZBUserProtocol.h"
+
+UIKIT_EXTERN NSString *const QZBMessageRecievedNotificationIdentifier;
+
 @class JSQMessage;
 @class QZBMessagerManager;             //define class, so protocol can see MyClass
 @protocol QZBMessagerManagerDelegate <NSObject>   //define delegate protocol
@@ -30,6 +33,7 @@
 - (void)teardownStream;
 
 - (BOOL)connect;
+- (void)disconnect;
 
 -(void)sendMessage:(NSString *)messageStr toUser:(id<QZBUserProtocol>)user;
 
@@ -40,6 +44,7 @@
 
 -(NSArray *)usersInStorage;
 
+-(NSInteger)countOfUnreaded;
 
 
 @end

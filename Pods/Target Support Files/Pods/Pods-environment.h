@@ -72,11 +72,65 @@
 #define COCOAPODS_VERSION_MINOR_DBCamera 3
 #define COCOAPODS_VERSION_PATCH_DBCamera 10
 
+// DFImageManager
+#define COCOAPODS_POD_AVAILABLE_DFImageManager
+#define COCOAPODS_VERSION_MAJOR_DFImageManager 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager 2
+
+// DFImageManager/AFNetworking
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_AFNetworking 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_AFNetworking 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_AFNetworking 2
+
+// DFImageManager/AssetsLibrary
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_AssetsLibrary
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_AssetsLibrary 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_AssetsLibrary 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_AssetsLibrary 2
+
+// DFImageManager/Core
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_Core
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_Core 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_Core 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_Core 2
+
+// DFImageManager/GIF
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_GIF
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_GIF 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_GIF 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_GIF 2
+
+// DFImageManager/NSURLSession
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_NSURLSession
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_NSURLSession 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_NSURLSession 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_NSURLSession 2
+
+// DFImageManager/PhotosKit
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_PhotosKit
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_PhotosKit 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_PhotosKit 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_PhotosKit 2
+
+// DFImageManager/UI
+#define COCOAPODS_POD_AVAILABLE_DFImageManager_UI
+#define COCOAPODS_VERSION_MAJOR_DFImageManager_UI 0
+#define COCOAPODS_VERSION_MINOR_DFImageManager_UI 3
+#define COCOAPODS_VERSION_PATCH_DFImageManager_UI 2
+
 // EGOCache
 #define COCOAPODS_POD_AVAILABLE_EGOCache
 #define COCOAPODS_VERSION_MAJOR_EGOCache 2
 #define COCOAPODS_VERSION_MINOR_EGOCache 1
 #define COCOAPODS_VERSION_PATCH_EGOCache 3
+
+// FLAnimatedImage
+#define COCOAPODS_POD_AVAILABLE_FLAnimatedImage
+#define COCOAPODS_VERSION_MAJOR_FLAnimatedImage 1
+#define COCOAPODS_VERSION_MINOR_FLAnimatedImage 0
+#define COCOAPODS_VERSION_PATCH_FLAnimatedImage 8
 
 // FSImageViewer
 #define COCOAPODS_POD_AVAILABLE_FSImageViewer
@@ -132,18 +186,6 @@
 #define COCOAPODS_VERSION_MINOR_SCLAlertView_Objective_C 5
 #define COCOAPODS_VERSION_PATCH_SCLAlertView_Objective_C 9
 
-// SDWebImage
-#define COCOAPODS_POD_AVAILABLE_SDWebImage
-#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
-#define COCOAPODS_VERSION_MINOR_SDWebImage 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
-
-// SDWebImage/Core
-#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
-#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
-#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
-
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD
 #define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
@@ -174,12 +216,6 @@
 // so we were not able to define version macros.
 // Please contact the author.
 // Version: 1.0.9.2.
-
-// iOS-blur
-#define COCOAPODS_POD_AVAILABLE_iOS_blur
-#define COCOAPODS_VERSION_MAJOR_iOS_blur 0
-#define COCOAPODS_VERSION_MINOR_iOS_blur 0
-#define COCOAPODS_VERSION_PATCH_iOS_blur 5
 
 // libPusher
 #define COCOAPODS_POD_AVAILABLE_libPusher

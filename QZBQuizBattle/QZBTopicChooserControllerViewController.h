@@ -11,6 +11,7 @@
 
 @class QZBCategory;
 @class QZBGameTopic;
+@class DFImageView;
 
 @interface QZBTopicChooserControllerViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
@@ -18,7 +19,9 @@
 @property (strong, nonatomic, readonly) NSArray *topics;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet DFImageView *backgroundImageView;
+
 @property (strong, nonatomic) NSIndexPath *choosedIndexPath;
 
 - (void)initTopicsWithCategory:(QZBCategory *)category;
