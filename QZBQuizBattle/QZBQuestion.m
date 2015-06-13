@@ -11,6 +11,15 @@
 #import "QZBServerManager.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
+//image manager
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageCaching.h>
+#import <DFImageCache.h>
+
+
 @interface QZBQuestion ()
 
 @property (nonatomic, copy) NSString *topic;
@@ -84,12 +93,30 @@
         if(imageURLAsString && ![imageURLAsString isEqual:[NSNull null]]){
             
             NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:imageURLAsString];
-            
             NSURL *imgURL = [NSURL URLWithString:urlStr];
             
-            UIImageView *iv = [[UIImageView alloc] init];
+            DFImageRequestOptions *options = [DFImageRequestOptions new];
+            //       // options.allowsClipping = YES;
+            options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad )
+                                  };
             
-            [iv setImageWithURL:imgURL];
+            options.priority = DFImageRequestPriorityHigh;
+            DFImageRequest *request = [DFImageRequest requestWithResource:imgURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
+            
+            [[DFImageManager sharedManager] requestImageForRequest:request
+                                                        completion:^(UIImage *image, NSDictionary *info) {
+                                                            
+                                                            NSLog(@"image info %@",info);
+                                                        }];
+
+            
+            
+            
+            //NSURL *imgURL = [NSURL URLWithString:urlStr];
+            
+           // UIImageView *iv = [[UIImageView alloc] init];
+            
+           // [iv setImageWithURL:imgURL];
             
             self.imageURL = imgURL;
         }else{

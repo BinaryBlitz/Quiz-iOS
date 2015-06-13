@@ -33,10 +33,10 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 
 + (QZBServerManager *)sharedManager;
 
-- (void)getСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
+- (void)GETСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)getTopicsWithCategory:(QZBCategory *)category
+- (void)GETTopicsWithCategory:(QZBCategory *)category
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
@@ -223,5 +223,12 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)GETachievementsForUserID:(NSNumber *)userID
                        onSuccess:(void (^)(NSArray *achievements))success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - messager notifications
+
+-(void)POSTSendNotificationAboutMessage:(NSString *)message
+                           toUserWithID:(NSNumber *)userID
+                              onSuccess:(void (^)())success
+                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 @end

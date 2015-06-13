@@ -32,4 +32,6 @@
                                 imageURL:(NSString *)imgUrl;
 
 
+-(NSArray *)allUsers;
+
 @end

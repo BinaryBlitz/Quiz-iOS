@@ -68,9 +68,6 @@
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     return [f numberFromString:[jidAsString substringToIndex:r.location]];
-    
-   // return [jidAsString substringToIndex:r.location];
-
 }
 
 
@@ -124,6 +121,7 @@
 
 -(void)readAllMessages:(QZBStoredUser *)user{
     user.unreadedCount = 0;
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
 }
 
 -(void)addOneUnreadedMessage:(QZBStoredUser *)user{
@@ -133,6 +131,7 @@
     
     user.unreadedCount = @(count);
     
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
 }
 
 -(id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser{
@@ -142,7 +141,7 @@
     user.name = storedUser.name;
     user.userID = storedUser.userID;
     
-    if(storedUser.imageURLAsString){
+    if(storedUser.imageURLAsString && storedUser.imageURLAsString.length>0){
         user.imageURL = [NSURL URLWithString:storedUser.imageURLAsString];
     }else{
         user.imageURL = nil;
@@ -151,5 +150,9 @@
     return user;
 }
 
+
+-(NSArray *)allUsers{
+    return [QZBStoredUser MR_findAll];
+}
 
 @end

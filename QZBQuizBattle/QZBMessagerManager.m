@@ -17,6 +17,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBAnotherUserWithLastMessages.h"
 #import "QZBStoredUser.h"
+#import "QZBServerManager.h"
 
 #import <DDASLLogger.h>
 
@@ -26,6 +27,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
 
+NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedNotificationIdentifier";
 
 @interface QZBMessagerManager()<XMPPStreamDelegate, XMPPRosterDelegate>
 @property(strong, nonatomic) XMPPStream *xmppStream;
@@ -104,7 +106,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         self.xmppStream.enableBackgroundingOnSocket = YES;
     }
 #endif
-    
+
     // Setup reconnect
     //
     // The XMPPReconnect module monitors for "accidental disconnections" and
@@ -203,6 +205,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)teardownStream
 {
+    
     [self.xmppStream removeDelegate:self];
     [self.xmppRoster removeDelegate:self];
     
@@ -257,6 +260,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)goOffline
 {
+    
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     
     [[self xmppStream] sendElement:presence];
@@ -425,24 +429,24 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     if ([message isChatMessageWithBody]) {
         
         
-        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[message from]
-                                                                 xmppStream:self.xmppStream
-                                                       managedObjectContext:[self managedObjectContext_roster]];
+//        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[message from]
+//                                                                 xmppStream:self.xmppStream
+//                                                       managedObjectContext:[self managedObjectContext_roster]];
         
         
         NSString *body = [[message elementForName:@"body"] stringValue];
         NSString *username = [[message elementForName:@"senderUsername"] stringValue];
         
         NSString *imgURLAsString = [[message elementForName:@"senderUserpicURLAsString"] stringValue];
-        NSString *displayName = [user displayName];
-        NSString *bareJid = user.jidStr;
+       // NSString *displayName = [user displayName];
+      //  NSString *bareJid = user.jidStr;
         
         //QZBAnotherUser *userToSave = [[QZBAnotherUser alloc] init];
         
-       
+        //NSString *bareJ = [message fromStr];
         
         QZBStoredUser *storedUser = [self.userWorker storedUserWithUsername:username
-                                                               jid:bareJid
+                                                               jid:[message fromStr]
                                                           imageURL:imgURLAsString];
         
         [self.userWorker addOneUnreadedMessage:storedUser];
@@ -454,14 +458,14 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
 
         
-        DDLogCVerbose(@"%@ %@ %@", username, body, imgURLAsString);
-         DDLogCVerbose(@" user moof %@ %@", displayName, bareJid);
+//        DDLogCVerbose(@"%@ %@ %@", username, body, imgURLAsString);
+//         DDLogCVerbose(@" user moof %@ %@", displayName, bareJid);
         
-        if(!user){
-            [_xmppRoster addUser:[message from] withNickname:username];
-        }else{
-            user.displayName = username;
-        }
+//        if(!user){
+//            [_xmppRoster addUser:[message from] withNickname:username];
+//        }else{
+//            user.displayName = username;
+//        }
         
       //  [message from].bare;
         
@@ -475,24 +479,27 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         [self.delegate didRecieveMessageFrom:[message from].bare text:message.body];
         
-//        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-//        {
-////            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-////                                                                message:body
-////                                                               delegate:nil
-////                                                      cancelButtonTitle:@"Ok"
-////                                                      otherButtonTitles:nil];
-////            [alertView show];
-//        }
-//        else
-//        {
-////            // We are not active, so use a local notification instead
-////            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-////            localNotification.alertAction = @"Ok";
-////            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-////            
-////            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-//        }
+        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+        {
+            NSDictionary *payload = @{@"username":username,@"message":body};
+            [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
+                                                                object:payload];
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
+//                                                                message:body
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"Ok"
+//                                                      otherButtonTitles:nil];
+//            [alertView show];
+        }
+        else
+        {
+            // We are not active, so use a local notification instead
+//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//            localNotification.alertAction = @"Ok";
+//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
+//            
+//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+        }
         
      //   [self usersInStorage];
     }
@@ -754,6 +761,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 //            [message addAttributeWithName:@"type" stringValue:@"chat"];
 //            [message addAttributeWithName:@"to" stringValue:toUser];//REDO
 //            [message addChild:body];
+            
+            [[QZBServerManager sharedManager] POSTSendNotificationAboutMessage:messageStr toUserWithID:user.userID onSuccess:^{
+                
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                
+            }];
+            
     
             [self.xmppStream sendElement:message];
         }
@@ -828,6 +842,23 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     return res;
     
+}
+
+-(NSInteger)countOfUnreaded{
+    
+  //  NSArray *allUsersWithMessages = [QZBStoredUser ]
+    
+    NSArray *userArray = [self.userWorker allUsers];
+    
+    NSInteger unreadedCount = 0;
+    for(QZBStoredUser *user in userArray){
+        
+        NSLog(@"user %@ user %@ unreaded count %@",user.name, user.userID,user.unreadedCount);
+        if(![user.unreadedCount isEqualToNumber:@(0)]){
+            unreadedCount+=[user.unreadedCount integerValue];
+        }
+    }
+    return unreadedCount;
 }
 
 #pragma mar - reloading

@@ -8,6 +8,7 @@
 
 #import "QZBRatingCategoryChooserVC.h"
 #import "QZBRatingMainVC.h"
+#import "QZBChooseThisCategoryCell.h"
 #import "UIViewController+QZBControllerCategory.h"
 
 @interface QZBRatingCategoryChooserVC ()
@@ -39,7 +40,8 @@
         cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(indexPath.row == 0){
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"allCategory"];
+        QZBChooseThisCategoryCell *cell = [tableView
+                                           dequeueReusableCellWithIdentifier:@"allCategory"];
         
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -75,7 +77,11 @@
     if(indexPath.row == 0){
         return 60.0;
     }else{
-        return [[UIScreen mainScreen] bounds].size.width/3.3;
+        NSIndexPath *newIp = [NSIndexPath indexPathForRow:indexPath.row-1
+                                                inSection:indexPath.section];
+        
+        return [super tableView:tableView heightForRowAtIndexPath:newIp];
+      //  return [[UIScreen mainScreen] bounds].size.width/3.3;
     }
     
 }

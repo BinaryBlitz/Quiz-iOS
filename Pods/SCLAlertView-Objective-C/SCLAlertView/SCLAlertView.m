@@ -1251,4 +1251,9 @@ NSTimer *durationTimer;
     }];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
 @end

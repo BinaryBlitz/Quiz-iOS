@@ -20,6 +20,13 @@
 #import <JSQSystemSoundPlayer.h>
 #import "UILabel+MultiLineAutoSize.h"
 #import "UIFont+QZBCustomFont.h"
+
+//DFImageManager
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+#import <DFImageManager/DFImageView.h>
 //#import <Crashlytics/Crashlytics.h>
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
@@ -97,10 +104,6 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
     [super viewWillAppear:animated];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
 
-    //   self.firstUserScore.hidden = YES;
-    // self.opponentScore.hidden = YES;
-
-    // self.originalPosition = self.questionImageView.frame;
 
     self.firstUserScore.text = @"";
     self.opponentScore.text = @"";
@@ -315,16 +318,27 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
     self.questionImageView.image = nil;
     if (question.imageURL) {
-        // self.questionImageView.frame = self.originalPosition;
-        [self.questionImageView setImageWithURL:question.imageURL];
+        
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+        options.allowsClipping = YES;
+        //    options.progressHandler = ^(double progress){
+        //        // Observe progress
+        //    };
+        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+        options.priority = DFImageRequestPriorityVeryHigh;
+        
+        DFImageRequest *request = [DFImageRequest requestWithResource:question.imageURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
+        
+        self.questionImageView.allowsAnimations = YES;
+        
+        [self.questionImageView prepareForReuse];
+        [self.questionImageView setImageWithRequest:request];
+        
         self.verticalConstraint.constant = [self calculateVerticalConstraints];
         [self.qestionLabel layoutIfNeeded];
     } else {
         self.verticalConstraint.constant = self.questBackground.frame.size.height - 20.0;
-        
         [self.qestionLabel layoutIfNeeded];
-
-
     }
 
     int i = 0;

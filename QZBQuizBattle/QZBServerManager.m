@@ -30,7 +30,13 @@
 #import <SVProgressHUD.h>
 #import "AppDelegate.h"
 #import "QZBFriendRequest.h"
-#import <SDWebImage/SDImageCache.h>
+
+//image manager
+#import <DFImageManager/DFImageManager.h>
+#import <DFImageManager/DFImageRequestOptions.h>
+#import <DFImageManager/DFURLImageFetcher.h>
+#import <DFImageManager/DFImageRequest.h>
+
 
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -84,7 +90,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
 #pragma mark - categories and topics
 
-- (void)getСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
+- (void)GETСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 
@@ -115,7 +121,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
-- (void)getTopicsWithCategory:(QZBCategory *)category
+- (void)GETTopicsWithCategory:(QZBCategory *)category
                     onSuccess:(void (^)(NSArray *topics))successAF
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
@@ -212,14 +218,27 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)savePictureFromString:(NSString *)urlAsString {//это не работает сейчас
     if (urlAsString) {
         NSURL *url = [NSURL URLWithString:urlAsString];
-        NSURLRequest *imageRequest =
-            [NSURLRequest requestWithURL:url
-                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                         timeoutInterval:60];
-
-        UIImageView *v = [[UIImageView alloc] init];
-       // [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil]; //redo
+//        NSURLRequest *imageRequest =
+//            [NSURLRequest requestWithURL:url
+//                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+//                         timeoutInterval:60];
+//
+//        UIImageView *v = [[UIImageView alloc] init];
+//       // [v setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil]; //redo
         
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+//       // options.allowsClipping = YES;
+        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad ) };
+        options.expirationAge = 60*60*24*10;
+        options.priority = DFImageRequestPriorityLow;
+        
+         DFImageRequest *request = [DFImageRequest requestWithResource:url targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
+        
+        [[DFImageManager sharedManager] requestImageForRequest:request
+                                                    completion:^(UIImage *image, NSDictionary *info) {
+                                                        
+                                                        NSLog(@"image info %@",info);
+        }];
         
         
     }
@@ -862,9 +881,11 @@ NSString *const QZBNoInternetConnectionMessage =
 
     NSString *urlString = [NSString stringWithFormat:@"players/%@", playerID];
 
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self.requestOperationManager GET:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             DDLogInfo(@"user JSON : %@", responseObject);
             QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:responseObject];
             BOOL isFriend = [responseObject[@"is_friend"] boolValue];
@@ -882,6 +903,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1607,6 +1629,37 @@ NSString *const QZBNoInternetConnectionMessage =
     }
 
     return [NSArray arrayWithArray:tmpArr];
+}
+
+#pragma mark - messager notifications
+
+-(void)POSTSendNotificationAboutMessage:(NSString *)message
+                           toUserWithID:(NSNumber *)userID
+                              onSuccess:(void (^)())success
+                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"message":message
+                              };
+    
+    NSString *urlString = [NSString stringWithFormat:@"players/%@/notify",userID];
+    [self.requestOperationManager POST:urlString
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                                   NSLog(@"succes");
+        if(success){
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"message error %@",error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+
+    }];
+    
 }
 
 @end
