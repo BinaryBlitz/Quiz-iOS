@@ -25,6 +25,7 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
+  - DateTools (1.5.0)
   - DBCamera (2.3.10):
     - GPUImage (~> 0.1)
   - DFImageManager (0.3.2):
@@ -78,6 +79,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - CocoaLumberjack (~> 1.9)
+  - DateTools
   - DBCamera
   - DFImageManager
   - DFImageManager/AFNetworking
@@ -96,6 +98,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
   CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
+  DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
   DFImageManager: 8d5ed7dc1872606b408687dc48979095319eaeaf
   EGOCache: f0295dbe041156acabd39021354ad1045ee49e72

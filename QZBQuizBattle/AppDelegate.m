@@ -120,6 +120,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame
     // rates. Games should use
     // this method to pause the game.
+    
+   // [[QZBMessagerManager sharedInstance] disconnect];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -142,6 +144,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Restart any tasks that were paused (or not yet started) while the application was inactive.
     // If the application
     // was previously in the background, optionally refresh the user interface.
+    
+   // [[QZBMessagerManager sharedInstance] connect]
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -13,25 +13,26 @@
 
 @interface QZBUserWorker : NSObject
 
--(id<QZBUserProtocol>)userFromJid:(NSString *)jidAsString;
--(id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser;
+- (id<QZBUserProtocol>)userFromJid:(NSString *)jidAsString;
+- (id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser;
 
 - (QZBStoredUser *)userWithJidAsString:(NSString *)jidAsString;
 
 - (void)saveUserInMemory:(id<QZBUserProtocol>)user;
 
--(NSNumber *)idFromJidAsString:(NSString *)jidAsString;
+- (NSNumber *)idFromJidAsString:(NSString *)jidAsString;
 
 
--(void)addOneUnreadedMessage:(QZBStoredUser *)user;
--(void)readAllMessages:(QZBStoredUser *)user;
+- (void)addOneUnreadedMessage:(QZBStoredUser *)user;
+- (void)readAllMessages:(QZBStoredUser *)user;
 
 
--(QZBStoredUser *)storedUserWithUsername:(NSString *)username
+- (QZBStoredUser *)storedUserWithUsername:(NSString *)username
                                      jid:(NSString *)userJid
                                 imageURL:(NSString *)imgUrl;
 
 
--(NSArray *)allUsers;
+- (NSArray *)allUsers;
+- (void)deleteAllUsersInStorage;
 
 @end

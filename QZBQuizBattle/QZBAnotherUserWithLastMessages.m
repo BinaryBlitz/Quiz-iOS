@@ -10,11 +10,14 @@
 #import "QZBAnotherUser.h"
 #import "QZBStoredUser.h"
 #import "QZBUserWorker.h"
+#import <DateTools.h>
 
 @interface QZBAnotherUserWithLastMessages()
 
 @property(strong, nonatomic) NSNumber *unreadedCount;
 @property(strong, nonatomic) QZBStoredUser *storedUser;
+@property(strong, nonatomic) NSDate *lastTimestamp;
+@property(strong, nonatomic) NSString *sinceNow;
 
 @property(strong, nonatomic) id<QZBUserProtocol> user;
 @property(strong, nonatomic) NSString *lastMessage;
@@ -46,6 +49,9 @@
         self.storedUser = user;
         
         self.lastMessage = message;
+        self.lastTimestamp = timestamp;
+        
+        self.sinceNow = [timestamp timeAgoSinceNow];
         
     }
     return self;

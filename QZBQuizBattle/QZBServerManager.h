@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 
 + (QZBServerManager *)sharedManager;
 
-- (void)GETСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
+- (void)GETCategoriesOnSuccess:(void (^)(NSArray *topics))successAF
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)GETTopicsWithCategory:(QZBCategory *)category

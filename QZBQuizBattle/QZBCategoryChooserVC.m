@@ -161,7 +161,7 @@
 - (void)initCategories {
     //__weak typeof(self) weakSelf = self;
 
-    [[QZBServerManager sharedManager] GETСategoriesOnSuccess:^(NSArray *topics) {
+    [[QZBServerManager sharedManager] GETCategoriesOnSuccess:^(NSArray *topics) {
 
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                                ascending:YES];
