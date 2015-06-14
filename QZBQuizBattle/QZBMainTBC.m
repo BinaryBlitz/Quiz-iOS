@@ -106,7 +106,7 @@
         [storeTVC setNeedRelaod:YES];
 
         [[QZBAchievementManager sharedInstance] updateAchievements];
-        [[QZBServerManager sharedManager] GETСategoriesOnSuccess:nil onFailure:nil];
+        [[QZBServerManager sharedManager] GETCategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
         if(![[QZBMessagerManager sharedInstance] isConnected]){//REDO
@@ -132,7 +132,6 @@
     UITabBarItem *it = self.tabBar.items[userBar];
     NSUInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
     if(count>0){
-    
         it.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)count];
     }else{
         it.badgeValue = nil;

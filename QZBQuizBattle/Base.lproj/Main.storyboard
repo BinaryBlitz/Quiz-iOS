@@ -3378,11 +3378,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="USD-Nc-qw6">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="51" id="avB-YY-uIk"/>
+                                                <constraint firstAttribute="width" constant="51" id="avB-YY-uIk">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="108"/>
+                                                </constraint>
                                                 <constraint firstAttribute="height" constant="26" id="oyq-Eg-tYv"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="MuseoSansCyrl-300" family="Museo Sans Cyrl" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -3413,7 +3415,9 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="htR-xr-esC" secondAttribute="bottom" constant="3.5" id="aYZ-QP-6Nf">
                                             <variation key="heightClass=regular-widthClass=compact" constant="-1.5"/>
                                         </constraint>
-                                        <constraint firstItem="USD-Nc-qw6" firstAttribute="leading" secondItem="Lew-0L-f3R" secondAttribute="trailing" constant="8" id="xGg-so-1lb"/>
+                                        <constraint firstItem="USD-Nc-qw6" firstAttribute="leading" secondItem="Lew-0L-f3R" secondAttribute="trailing" constant="8" id="xGg-so-1lb">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="18"/>
+                                        </constraint>
                                         <constraint firstItem="htR-xr-esC" firstAttribute="leading" secondItem="fXI-0b-gel" secondAttribute="leadingMargin" id="yDW-46-vgR"/>
                                     </constraints>
                                     <variation key="default">
@@ -10107,7 +10111,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="Q6R-nc-Xpj"/>
         <segue reference="quX-9l-LFH"/>
-        <segue reference="Ymn-se-41S"/>
+        <segue reference="XnW-Mt-mqX"/>
         <segue reference="TKe-GQ-MWf"/>
         <segue reference="zMv-no-kIb"/>
         <segue reference="qGa-a3-3D7"/>

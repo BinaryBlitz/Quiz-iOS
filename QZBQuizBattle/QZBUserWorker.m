@@ -155,4 +155,13 @@
     return [QZBStoredUser MR_findAll];
 }
 
+-(void)deleteAllUsersInStorage{//QZBStoredUser
+  //  NSArray *storedUsers = [QZBStoredUser MR_findAll];
+    
+    [QZBStoredUser MR_truncateAll];
+    [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
+    
+    
+}
+
 @end

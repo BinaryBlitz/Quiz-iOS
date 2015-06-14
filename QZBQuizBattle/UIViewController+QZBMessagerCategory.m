@@ -26,7 +26,7 @@
     [TSMessage showNotificationInViewController:self
                                           title:title subtitle:messge
                                           image:[UIImage imageNamed:@"messageIcon"]
-                                           type:TSMessageNotificationTypeSuccess
+                                           type:TSMessageNotificationTypeMessage
                                        duration:0.0 callback:^{
                                            [self showMessageList];
     } buttonTitle:nil buttonCallback:nil atPosition:TSMessageNotificationPositionNavBarOverlay canBeDismissedByUser:YES];
@@ -55,6 +55,7 @@
 }
 
 -(void)showMessageList{
+    
     self.tabBarController.selectedIndex = 1;
     
     UINavigationController *nav = self.tabBarController.viewControllers[1];

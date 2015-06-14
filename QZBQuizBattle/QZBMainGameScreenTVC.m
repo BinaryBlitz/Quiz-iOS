@@ -26,7 +26,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBEndGameVC.h"
 #import "UIFont+QZBCustomFont.h"
-#import "UIViewController+QZBMessagerCategory.h"
+//#import "UIViewController+QZBMessagerCategory.h"
 
 @interface QZBMainGameScreenTVC ()
 

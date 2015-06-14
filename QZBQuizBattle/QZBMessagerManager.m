@@ -81,6 +81,10 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
 - (void)setupStream
 {
     
+    if(self.xmppStream){
+        return;
+    }
+    
     NSAssert(self.xmppStream == nil, @"Method setupStream invoked multiple times");
     
     // Setup xmpp stream
@@ -276,7 +280,10 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
         return YES;
     }
     
+//    if([[QZBCurrentUser sharedInstance] checkUser])
     QZBUser *user = [QZBCurrentUser sharedInstance].user;
+    
+    
     //
        // NSString *userJID = [NSString stringWithFormat:@"id%@@localhost", user.userID];
     
@@ -421,61 +428,19 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message{
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     
-    
-  //  [self testMessageArchiving];
-    
-    // A simple example of inbound message handling.
-    
     if ([message isChatMessageWithBody]) {
-        
-        
-//        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[message from]
-//                                                                 xmppStream:self.xmppStream
-//                                                       managedObjectContext:[self managedObjectContext_roster]];
-        
         
         NSString *body = [[message elementForName:@"body"] stringValue];
         NSString *username = [[message elementForName:@"senderUsername"] stringValue];
         
         NSString *imgURLAsString = [[message elementForName:@"senderUserpicURLAsString"] stringValue];
-       // NSString *displayName = [user displayName];
-      //  NSString *bareJid = user.jidStr;
-        
-        //QZBAnotherUser *userToSave = [[QZBAnotherUser alloc] init];
-        
-        //NSString *bareJ = [message fromStr];
+
         
         QZBStoredUser *storedUser = [self.userWorker storedUserWithUsername:username
                                                                jid:[message fromStr]
                                                           imageURL:imgURLAsString];
         
         [self.userWorker addOneUnreadedMessage:storedUser];
-        
-//        userToSave.name = username;
-//        userToSave.userID = [worker idFromJidAsString:bareJid];
-//        userToSave.imageURL = [NSURL URLWithString:imgURLAsString];
-        
-        
-
-        
-//        DDLogCVerbose(@"%@ %@ %@", username, body, imgURLAsString);
-//         DDLogCVerbose(@" user moof %@ %@", displayName, bareJid);
-        
-//        if(!user){
-//            [_xmppRoster addUser:[message from] withNickname:username];
-//        }else{
-//            user.displayName = username;
-//        }
-        
-      //  [message from].bare;
-        
-        //[self.delegate myClassDelegateMethod:self];
-        
-//        JSQMessage *mess = [JSQMessage messageWithSenderId:[message from].bare
-//                                               displayName:user.name
-//                                                      text:message.body];
-
-        
         
         [self.delegate didRecieveMessageFrom:[message from].bare text:message.body];
         
@@ -484,24 +449,11 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
             NSDictionary *payload = @{@"username":username,@"message":body};
             [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
                                                                 object:payload];
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-//                                                                message:body
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"Ok"
-//                                                      otherButtonTitles:nil];
-//            [alertView show];
         }
         else
         {
-            // We are not active, so use a local notification instead
-//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//            localNotification.alertAction = @"Ok";
-//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-//            
-//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+
         }
-        
-     //   [self usersInStorage];
     }
 }
 
@@ -553,21 +505,11 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
     
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
     {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-//                                                            message:body
-//                                                           delegate:nil 
-//                                                  cancelButtonTitle:@"Not implemented"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
+
     }
     else 
     {
-        // We are not active, so use a local notification instead
-//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//        localNotification.alertAction = @"Not implemented";
-//        localNotification.alertBody = body;
-//        
-//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+
     }
     
 }
@@ -602,34 +544,34 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
 }
 
 
--(void)testMessageArchiving{
-    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
-    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
-                                                         inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-    [request setEntity:entityDescription];
-    NSError *error;
-    NSArray *messages = [moc executeFetchRequest:request error:&error];
-    
-    [self print:[[NSMutableArray alloc]initWithArray:messages]];
-}
+//-(void)testMessageArchiving{
+//    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+//    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
+//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
+//                                                         inManagedObjectContext:moc];
+//    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+//    [request setEntity:entityDescription];
+//    NSError *error;
+//    NSArray *messages = [moc executeFetchRequest:request error:&error];
+//    
+//   // [self print:[[NSMutableArray alloc]initWithArray:messages]];
+//}
 
--(void)print:(NSMutableArray*)messages{
-  //  @autoreleasepool {
-        for (XMPPMessageArchiving_Message_CoreDataObject *message in messages) {
-            NSLog(@"messageStr param is %@",message.messageStr);
-            NSXMLElement *element = [[NSXMLElement alloc] initWithXMLString:message.messageStr error:nil];
-            NSLog(@"to param is %@",[element attributeStringValueForName:@"to"]);
-            NSLog(@"NSCore object id param is %@",message.objectID);
-            NSLog(@"bareJid param is %@",message.bareJid);
-            NSLog(@"bareJidStr param is %@",message.bareJidStr);
-            NSLog(@"body param is %@",message.body);
-            NSLog(@"timestamp param is %@",message.timestamp);
-            NSLog(@"outgoing param is %d",[message.outgoing intValue]);
-        }
-  //  }
-}
+//-(void)print:(NSMutableArray*)messages{
+//  //  @autoreleasepool {
+//        for (XMPPMessageArchiving_Message_CoreDataObject *message in messages) {
+//            NSLog(@"messageStr param is %@",message.messageStr);
+//            NSXMLElement *element = [[NSXMLElement alloc] initWithXMLString:message.messageStr error:nil];
+//            NSLog(@"to param is %@",[element attributeStringValueForName:@"to"]);
+//            NSLog(@"NSCore object id param is %@",message.objectID);
+//            NSLog(@"bareJid param is %@",message.bareJid);
+//            NSLog(@"bareJidStr param is %@",message.bareJidStr);
+//            NSLog(@"body param is %@",message.body);
+//            NSLog(@"timestamp param is %@",message.timestamp);
+//            NSLog(@"outgoing param is %d",[message.outgoing intValue]);
+//        }
+//  //  }
+//}
 
 -(NSArray *)messagesFromUser:(id<QZBUserProtocol>)user{
     
@@ -665,8 +607,8 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
     
     //NSPredicate *predicate = [NSPredicate predicateWithFormat:@""];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp"
-                                                                   ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"mostRecentMessageTimestamp" ascending:NO];
     //[myArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     [request setSortDescriptors:@[sortDescriptor]];
@@ -677,46 +619,24 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
 
     NSMutableArray *tmpArr = [NSMutableArray array];
     
-  //  QZBUserWorker *worker = [[QZBUserWorker alloc] init];
-    
     for (XMPPMessageArchiving_Contact_CoreDataObject *o in arr) {
         
         NSLog(@"bare jid %@ last message %@", o.bareJid.bare,o.mostRecentMessageBody);
         
-//        XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:o.bareJid
-//                                                                      xmppStream:self.xmppStream
-//                                                            managedObjectContext:[self managedObjectContext_roster]];
-        
-        
-        
-      //  NSNumber *n = [worker idFromJidAsString:o.bareJidStr];
-      //  NSLog(@"username %@ user id %@ lastmessage %@",user.displayName,n,o.mostRecentMessageBody );
         
         QZBStoredUser *storageUser = [self.userWorker userWithJidAsString:o.bareJidStr];
         
         
-     //   QZBAnotherUser *anotherUser = [worker userFromJid:o.bareJidStr];
-        
         if(!storageUser){
             continue;
         }
-//        u.name = user.displayName;
-//        u.userID = n;
-//        
-//        if(storageUser && storageUser.imageURLAsString){
-//            u.imageURL = [NSURL URLWithString:storageUser.imageURLAsString];
-//        
-//        }
+
         
         QZBAnotherUserWithLastMessages *uAndM = [[QZBAnotherUserWithLastMessages alloc] initWithStoredUser:storageUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
         
-//        QZBAnotherUserWithLastMessages *userAndMessage = [[QZBAnotherUserWithLastMessages alloc] initWithUser:anotherUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
         
         [tmpArr addObject:uAndM];
     
-//        QZBAnotherUser *user = [worker userFromJid:o.bareJidStr];
-//    
-//        NSLog(@"name %@",user.name);
     }
     
     return [NSArray arrayWithArray:tmpArr];
@@ -730,15 +650,6 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
             NSString *toUser = [self jidAsStringFromUser:user];
             XMPPJID *toJid = [XMPPJID jidWithString:toUser];
             
-            
-//            XMPPUserCoreDataStorageObject *xmppUser = [self.xmppRosterStorage userForJID:toJid
-//                                                                          xmppStream:self.xmppStream
-//                                                                managedObjectContext:[self managedObjectContext_roster]];
-//            
-//            if(!xmppUser){
-//                [self addContact:user];
-//            }
-            
             [self.userWorker saveUserInMemory:user];
             
             XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:toJid];
@@ -747,26 +658,17 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
             
             [message addChild:[NSXMLElement elementWithName:@"senderUsername" stringValue:[QZBCurrentUser sharedInstance].user.name]];
             
-            NSString *picUrlAsString = [QZBCurrentUser sharedInstance].user.imageURL.absoluteString;
-            [message addChild:[NSXMLElement elementWithName:@"senderUserpicURLAsString" stringValue:picUrlAsString]];
+            NSString *picUrlAsString =
+            [QZBCurrentUser sharedInstance].user.imageURL.absoluteString;
             
-          //  [message addAttributeWithName:@"senderUsername" stringValue:[QZBCurrentUser sharedInstance].user.name];//[NSXMLElement elementWithName:@"username" stringValue:user.name];
-    
-//            NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-//            [body setStringValue:messageStr];
-//    
-//         
-//    
-//            NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-//            [message addAttributeWithName:@"type" stringValue:@"chat"];
-//            [message addAttributeWithName:@"to" stringValue:toUser];//REDO
-//            [message addChild:body];
+            [message addChild:[NSXMLElement
+                               elementWithName:@"senderUserpicURLAsString"
+                               stringValue:picUrlAsString]];
             
-            [[QZBServerManager sharedManager] POSTSendNotificationAboutMessage:messageStr toUserWithID:user.userID onSuccess:^{
-                
-            } onFailure:^(NSError *error, NSInteger statusCode) {
-                
-            }];
+            [[QZBServerManager sharedManager] POSTSendNotificationAboutMessage:messageStr
+                                                                  toUserWithID:user.userID
+                                                                     onSuccess:nil
+                                                                     onFailure:nil];
             
     
             [self.xmppStream sendElement:message];
@@ -811,16 +713,6 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
     
     for (XMPPMessageArchiving_Message_CoreDataObject *message in messages){
         
-//        NSLog(@"messageStr param is %@",message.messageStr);
-//        NSXMLElement *element = [[NSXMLElement alloc] initWithXMLString:message.messageStr error:nil];
-//        NSLog(@"to param is %@",[element attributeStringValueForName:@"to"]);
-//        NSLog(@"NSCore object id param is %@",message.objectID);
-//        NSLog(@"bareJid param is %@",message.bareJid);
-//        NSLog(@"bareJidStr param is %@",message.bareJidStr);
-//        NSLog(@"body param is %@",message.body);
-//        NSLog(@"timestamp param is %@",message.timestamp);
-//        NSLog(@"outgoing param is %d \n\n\n",[message.outgoing intValue]);
-        
         
         NSString *identificator = nil;
         
@@ -860,6 +752,64 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
     }
     return unreadedCount;
 }
+
+
+-(void)clearHistory{
+    
+    [self.userWorker deleteAllUsersInStorage];
+    
+    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:storage.contactEntityName
+                                                         inManagedObjectContext:moc];
+    
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    
+    [request setEntity:entityDescription];
+    NSError *error;
+    NSArray *arr = [moc executeFetchRequest:request error:&error];
+    
+    for(NSManagedObject *obj in arr){
+        [moc deleteObject:obj];
+    }
+    NSEntityDescription *messageEntityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
+                                                         inManagedObjectContext:moc];
+    
+    NSFetchRequest *messageRequest = [[NSFetchRequest alloc]init];
+    [messageRequest setEntity:messageEntityDescription];
+    error = nil;
+    NSArray *messageArr = [moc executeFetchRequest:messageRequest error:&error];
+    
+    for(NSManagedObject *obj in messageArr){
+        [moc deleteObject:obj];
+    }
+    
+    
+    error = nil;
+    
+    [moc save:&error];
+    
+    
+}
+
+
+
+//- (void)deleteAllEntities:(NSString *)nameEntity
+//{
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:nameEntity];
+//    [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+//    
+//    NSError *error;
+//    NSArray *fetchedObjects = [theContext executeFetchRequest:fetchRequest error:&error];
+//    for (NSManagedObject *object in fetchedObjects)
+//    {
+//        [theContext deleteObject:object];
+//    }
+//    
+//    error = nil;
+//    [theContext save:&error];
+//}
 
 #pragma mar - reloading
 

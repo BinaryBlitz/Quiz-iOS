@@ -30,6 +30,8 @@
     
     self.firstMessageLabel.text = userAndMessage.lastMessage;
     
+    self.timeLabel.text = userAndMessage.sinceNow;
+    
     
     if(![userAndMessage.unreadedCount isEqualToNumber:@(0)]){
         self.badgeView.badgeText = [userAndMessage.unreadedCount stringValue];

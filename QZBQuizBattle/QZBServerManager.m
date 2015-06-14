@@ -90,7 +90,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
 #pragma mark - categories and topics
 
-- (void)GETСategoriesOnSuccess:(void (^)(NSArray *topics))successAF
+- (void)GETCategoriesOnSuccess:(void (^)(NSArray *topics))successAF
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
 

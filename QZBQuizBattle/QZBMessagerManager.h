@@ -46,5 +46,7 @@ UIKIT_EXTERN NSString *const QZBMessageRecievedNotificationIdentifier;
 
 -(NSInteger)countOfUnreaded;
 
+-(void)clearHistory;//dangerous
+
 
 @end

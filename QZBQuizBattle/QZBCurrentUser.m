@@ -121,6 +121,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
     // self.pushToken = nil;
     self.user = nil;
+    [[QZBMessagerManager sharedInstance] clearHistory];
+    [[QZBMessagerManager sharedInstance] disconnect];
     [[QZBMessagerManager sharedInstance] teardownStream];
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
