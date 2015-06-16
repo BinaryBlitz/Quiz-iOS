@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */; };
 		1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */; };
+		1901BA121B3026F6003E2895 /* QZBRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901BA111B3026F6003E2895 /* QZBRoom.m */; };
 		1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */; };
 		190DE8191AD66AA80040585A /* QZBEndGameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 190DE8181AD66AA80040585A /* QZBEndGameVC.m */; };
 		190DE81D1AD66B320040585A /* QZBEndGameMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190DE81C1AD66B320040585A /* QZBEndGameMainCell.m */; };
@@ -320,6 +321,8 @@
 		1901B9AE1A4729A9002FC87C /* QZBAnswerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerButton.m; sourceTree = "<group>"; };
 		1901B9B01A4729BC002FC87C /* QZBAnswerTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswerTriangle.h; sourceTree = "<group>"; };
 		1901B9B11A4729BC002FC87C /* QZBAnswerTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerTriangle.m; sourceTree = "<group>"; };
+		1901BA101B3026F6003E2895 /* QZBRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoom.h; sourceTree = "<group>"; };
+		1901BA111B3026F6003E2895 /* QZBRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoom.m; sourceTree = "<group>"; };
 		1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsRequestsTVC.h; sourceTree = "<group>"; };
 		1906EC0C1AAEF4F6004708AC /* QZBFriendsRequestsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsRequestsTVC.m; sourceTree = "<group>"; };
 		190DE8171AD66AA80040585A /* QZBEndGameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGameVC.h; sourceTree = "<group>"; };
@@ -909,6 +912,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1901BA0F1B3026AD003E2895 /* rooms */ = {
+			isa = PBXGroup;
+			children = (
+				1901BA101B3026F6003E2895 /* QZBRoom.h */,
+				1901BA111B3026F6003E2895 /* QZBRoom.m */,
+			);
+			name = rooms;
+			sourceTree = "<group>";
+		};
+		1901BA131B30354A003E2895 /* rooms */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = rooms;
+			sourceTree = "<group>";
+		};
 		190DE81A1AD66AB90040585A /* game */ = {
 			isa = PBXGroup;
 			children = (
@@ -2321,6 +2340,7 @@
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				1901BA0F1B3026AD003E2895 /* rooms */,
 				196099F21B24523F00EEB9D6 /* utils */,
 				199667001B209B8D00793610 /* messanger */,
 				19446A6B1A9E224E005BB485 /* IAP */,
@@ -2347,6 +2367,7 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1901BA131B30354A003E2895 /* rooms */,
 				197F2C021AF2779E00C8BC2A /* messager */,
 				197669991A67D057006C2757 /* Registration and login */,
 				19A1276C1AB9DCB3009075AD /* main */,
@@ -2770,6 +2791,7 @@
 				198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */,
 				199666F31B207FE100793610 /* XMPPPing.m in Sources */,
 				199666AB1B207FE100793610 /* XMPPResourceMemoryStorageObject.m in Sources */,
+				1901BA121B3026F6003E2895 /* QZBRoom.m in Sources */,
 				195EA0B11AD52DE7000C4341 /* QZBCategory.m in Sources */,
 				199666AA1B207FE100793610 /* XMPPUserCoreDataStorageObject.m in Sources */,
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,

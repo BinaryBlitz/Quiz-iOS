@@ -35,7 +35,9 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
-@interface QZBEndGameVC ()
+NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
+
+@interface QZBEndGameVC ()//<UIGestureRecognizerDelegate>
 
 @property (copy, nonatomic) NSString *firstUserName;
 @property (copy, nonatomic) NSString *opponentUserName;
@@ -57,6 +59,8 @@
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
+//@property(strong, nonatomic) UITapGestureRecognizer *opponentGestureRecognizer;
+
 @end
 
 @implementation QZBEndGameVC
@@ -77,6 +81,18 @@
     if (!self.challengeDescriptionWithResult) {
         [self initSessionResults];
     }
+    
+//    self.opponentGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+//                                                                             action:@selector(showOpponent)];
+//    
+//    _opponentGestureRecognizer.numberOfTapsRequired = 1;
+//    _opponentGestureRecognizer.numberOfTouchesRequired = 1;
+//    _opponentGestureRecognizer.cancelsTouchesInView = NO;
+//    
+//    
+//    self.opponentGestureRecognizer.delegate = self;
+
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,31 +113,13 @@
     QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
     if (category) {
         NSURL *url = [NSURL URLWithString:category.background_url];
-//        NSURLRequest *imageRequest =
-//            [NSURLRequest requestWithURL:url
-//                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-//                         timeoutInterval:60];
 
         CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
                               16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
-
-       // UIImageView *iv = [[UIImageView alloc] initWithFrame:r];
         
         DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
 
         self.tableView.backgroundColor = [UIColor clearColor];
-        
-    
-
-        //[iv setImageWithURLRequest:imageRequest placeholderImage:nil success:nil failure:nil];
-
-        //  [self.view addSubview:iv];
-        //  [self.view sendSubviewToBack:iv];
-
-        //[self.view insertSubview:iv atIndex:0];
-        
-        
-        
         
         DFImageRequestOptions *options = [DFImageRequestOptions new];
         options.allowsClipping = YES;
@@ -161,7 +159,7 @@
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [self.navigationController popToRootViewControllerAnimated:YES];
+   // [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -269,16 +267,23 @@
     [self showAlertAboutAchievmentWithDict:note.object];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before
-navigation
+//navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if([segue.identifier isEqualToString:QZBSegueToOpponentUser] && self.opponent){
+        QZBPlayerPersonalPageVC *destVC =
+        (QZBPlayerPersonalPageVC *)segue.destinationViewController;
+        
+        [destVC initPlayerPageWithUser:self.opponent];
+    }
 }
-*/
+
 
 #pragma mark - UITableViewDataSource
 
@@ -308,7 +313,6 @@ navigation
             [self initMainCell:mainCell];
         }
 
-        //[self initMainCell:mainCell];
 
         return mainCell;
     } else if (indexPath.row == 1) {
@@ -350,15 +354,7 @@ navigation
     }
 }
 
-//- (void)checkVisibilityOfCell:(MyCustomUITableViewCell *)cell inScrollView:(UIScrollView
-//*)aScrollView {
-//    CGRect cellRect = [aScrollView convertRect:cell.frame toView:aScrollView.superview];
-//
-//    if (CGRectContainsRect(aScrollView.frame, cellRect))
-//        [cell notifyCompletelyVisible];
-//    else
-//        [cell notifyNotCompletelyVisible];
-//}
+
 
 - (BOOL)checkVisibilityOfCell:(UITableViewCell *)cell inScrollView:(UIScrollView *)scrollView {
     CGRect cellRect = [scrollView convertRect:cell.frame toView:scrollView.superview];
@@ -403,7 +399,18 @@ navigation
     } else {
         [cell.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
-
+    
+    //UIGestureRecognizer *gestRec = self.opponentGestureRecognizer;
+   
+//    NSLog(@"name %@",self.opponent.name);
+//    cell.opponentImage.userInteractionEnabled = YES;
+//    [cell.opponentNameLabel setUserInteractionEnabled:YES];
+//    [cell.opponentImage addGestureRecognizer:_opponentGestureRecognizer];
+//    [cell.opponentNameLabel addGestureRecognizer:_opponentGestureRecognizer];
+//    [cell.opponentBV addGestureRecognizer:_opponentGestureRecognizer];
+    
+    
+    //`NSLog(@"%@", cell.oppone)
     cell.opponentBV.badgeText =
         [NSString stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
 
@@ -437,17 +444,9 @@ navigation
         }
     }
 
-    //    QZBProgressViewController *progressVC =
-    //        [self.storyboard
-    //        instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
-    //
-    //    [progressVC initSessionWithTopic:self.topic user:nil];
     if (!destinationVC && !self.opponent) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-
-    //    NSUInteger objectIndex =
-    //    [self.navigationController.viewControllers indexOfObject:destinationVC];
 
     QZBProgressViewController *progressVC =
         [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
@@ -537,6 +536,14 @@ navigation
     }
 }
 
+-(void)showOpponent{
+    
+    if(self.opponent)
+        [self performSegueWithIdentifier:QZBSegueToOpponentUser sender:nil];
+    
+}
+
+#pragma mark - animation
 - (void)animateLose {
     CGRect mainRect = [UIScreen mainScreen].bounds;
 
@@ -598,5 +605,32 @@ navigation
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+
+#pragma mark - gesture recognizer
+
+//- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+//
+//    return YES;
+//}
+- (IBAction)showUser:(id)sender {
+    NSLog(@"gg");
+    [self showOpponent];
+}
+
+//- (UITapGestureRecognizer *)opponentGestureRecognizer{
+//    
+//    if(!_opponentGestureRecognizer){
+//        
+//        _opponentGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+//                                                                     action:@selector(showOpponent:)];
+//        
+//         _opponentGestureRecognizer.numberOfTapsRequired = 1;
+//         _opponentGestureRecognizer.numberOfTouchesRequired = 1;
+//         _opponentGestureRecognizer.cancelsTouchesInView = NO;
+//        
+//    }
+//    
+//    return _opponentGestureRecognizer;
+//}
 
 @end
