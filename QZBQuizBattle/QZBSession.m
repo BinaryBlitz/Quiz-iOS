@@ -72,8 +72,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
     QZBUser *user1 = [QZBCurrentUser sharedInstance].user;
 
-    QZBAnotherUser *opponent = nil;
-    opponent = [[QZBAnotherUser alloc] init];
+    QZBAnotherUser *opponent = [[QZBAnotherUser alloc] init];
+    //opponent = [[QZBAnotherUser alloc] init];
 
     NSDictionary *hostDict = dict[@"host"];
     NSDictionary *opponentDict = dict[@"opponent"];

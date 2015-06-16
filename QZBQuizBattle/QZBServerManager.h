@@ -21,6 +21,7 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 @class QZBGameTopic;
 @class QZBAnotherUser;
 @class QZBFriendRequest;
+@class QZBRoom;
 
 typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
     QZBNoProblems,
@@ -230,5 +231,27 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                            toUserWithID:(NSNumber *)userID
                               onSuccess:(void (^)())success
                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - rooms
+
+- (void)GETAllRoomsOnSuccess:(void (^)(NSArray *rooms))success
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTCreateRoomOnSuccess:(void (^)(QZBRoom *room))success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTJoinRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)DELETELeaveRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+
+
+
+
+
+
 
 @end

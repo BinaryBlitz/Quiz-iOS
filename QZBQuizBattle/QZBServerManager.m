@@ -37,6 +37,10 @@
 #import <DFImageManager/DFURLImageFetcher.h>
 #import <DFImageManager/DFImageRequest.h>
 
+//rooms
+
+#import "QZBRoom.h"
+
 
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -1659,7 +1663,111 @@ NSString *const QZBNoInternetConnectionMessage =
         }
 
     }];
+}
+
+#pragma mark - rooms
+
+- (void)GETAllRoomsOnSuccess:(void (^)(NSArray *rooms))success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    [self.requestOperationManager GET:@"api/rooms"
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  NSMutableArray *tmpArr = [NSMutableArray array];
+                                  
+                                  for(NSDictionary *d in responseObject){
+                                      QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
+                                      [tmpArr addObject:room];
+                                      
+                                  }
+                                  
+                                  NSArray *resultArr = [NSArray arrayWithArray:tmpArr];
+                                  if(success){
+                                      success(resultArr);
+                                  }
+                                  
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+}
+
+
+- (void)POSTCreateRoomOnSuccess:(void (^)(QZBRoom *room))success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    [self.requestOperationManager POST:@"/api/rooms"
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                                   QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
+                                   
+                                   if(success){
+                                       success(r);
+                                   }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        
+    }];
+}
+
+- (void)POSTJoinRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"api/rooms/%@/join",roomID];
+    
+    [self.requestOperationManager POST:urlAsString
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                                   //QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
+                                   
+                                   if(success){
+                                       success();
+                                   }
+                                   
+                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   
+                                   if (failure) {
+                                       failure(error, operation.response.statusCode);
+                                   }
+                                   
+                               }];
+    
+}
+
+- (void)DELETELeaveRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"api/rooms/%@/leave",roomID];
+    
+    [self.requestOperationManager DELETE:urlAsString
+                              parameters:params
+                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                     
+                                     DDLogVerbose(@"room %@ deleted",roomID);
+        if(success){
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
 }
 
 @end

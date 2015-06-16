@@ -294,26 +294,8 @@
 
     [view addSubview:label];
 
-   // NSString *text = @"";
     NSArray *arr = self.workArray[section];
 
-//    if ([arr isEqualToArray:self.faveTopics]) {
-//        
-//        if(self.faveTopics.count<=3){
-//        text = @"Любимые топики";
-//        }else{
-//            text = @"Сыграйте эти темы";
-//        }
-//    } else if ([arr isEqualToArray:self.friendsTopics]) {
-//        text = @"Популярное у друзей";
-//
-//    } else if ([arr isEqualToArray:self.featured]) {
-//        text = @"Популярные темы";
-//
-//    } else if ([arr isEqualToArray:self.challenges]) {
-//        text = @"Брошенные вызовы";
-//    }
-//    [text uppercaseString];
     label.text = [[self textForArray:arr] uppercaseString];
 
     return view;
@@ -478,6 +460,11 @@
     
 }
 
+
+-(void)showRoomsList{
+    [self performSegueWithIdentifier:@"showRoomList" sender:nil];
+    
+}
 
 -(void)ignoreInteractions{
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
