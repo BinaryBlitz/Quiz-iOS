@@ -94,19 +94,6 @@
     
     [self.backgroundImageView setImageWithRequest:request];
     
-
-//    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:url
-//                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
-//                                              timeoutInterval:60];
-//
-//    [self.backgroundImageView setImageWithURLRequest:imageRequest
-//                                    placeholderImage:[UIImage imageNamed:@"BG_iPhone_5"]
-//                                             success:nil
-//                                             failure:nil];
-
-    //[self.backgroundImageView setImageWithURL:url];
-
-    // self.navigationController.navigationBar.topItem.title = @"";
 }
 
 #pragma mark - Navigation
@@ -129,7 +116,9 @@
 
         [[QZBServerManager sharedManager] GETAllFriendsOfUserWithID:user.userID
             OnSuccess:^(NSArray *friends) {
-                [destinationVC setFriendsOwner:user andFriends:friends gameTopic:self.choosedTopic];
+                [destinationVC setFriendsOwner:user
+                                    andFriends:friends
+                                     gameTopic:self.choosedTopic];
 
             }
             onFailure:^(NSError *error, NSInteger statusCode){
@@ -157,8 +146,6 @@
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     }
 
-//    UIView *backView = [[UIView alloc] initWithFrame:CGRectZero];
-//    backView.backgroundColor = [UIColor clearColor];
     cell.backgroundView = self.backView;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -166,16 +153,7 @@
     
     
     [cell initWithTopic:topic];
-
-//    NSInteger level = 0;
-//    float progress = 0.0;
-//
-//    [NSObject calculateLevel:&level levelProgress:&progress fromScore:[topic.points integerValue]];
-//
-//    [cell initCircularProgressWithLevel:level progress:progress visible:[topic.visible boolValue]];
-//
-//    cell.topicName.text = topic.name;
-//
+    
     return cell;
 }
 
