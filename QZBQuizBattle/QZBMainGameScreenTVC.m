@@ -60,6 +60,8 @@
                   forControlEvents:UIControlEventValueChanged];
 
     [self.mainTableView addSubview:self.refreshControl];
+    
+    [self addBarButtonRight];
 
    
 
@@ -615,6 +617,17 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - support methods
+
+-(void)addBarButtonRight{
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                  target:self
+                                                  action:@selector(showRoomsList)];
+    
+    
 }
 
 @end

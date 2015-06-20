@@ -1672,9 +1672,12 @@ NSString *const QZBNoInternetConnectionMessage =
     
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
     
-    [self.requestOperationManager GET:@"api/rooms"
+    [self.requestOperationManager GET:@"rooms"
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  
+                                  DDLogCVerbose(@"%@", responseObject);
+                                  
                                   NSMutableArray *tmpArr = [NSMutableArray array];
                                   
                                   for(NSDictionary *d in responseObject){
@@ -1690,19 +1693,58 @@ NSString *const QZBNoInternetConnectionMessage =
                                   
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        DDLogError(@"room list error %@", error);
         if (failure) {
             failure(error, operation.response.statusCode);
         }
     }];
 }
 
-
-- (void)POSTCreateRoomOnSuccess:(void (^)(QZBRoom *room))success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+- (void)GETRoomWithID:(NSNumber *)roomID OnSuccess:(void (^)(QZBRoom *room))success
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
     
-    [self.requestOperationManager POST:@"/api/rooms"
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@",roomID];
+    
+    [self.requestOperationManager GET:urlAsString
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                                  NSMutableArray *tmpArr = [NSMutableArray array];
+//                                  
+//                                  for(NSDictionary *d in responseObject){
+//                                      QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
+//                                      [tmpArr addObject:room];
+//                                      
+//                                  }
+//                                  
+//                                  NSArray *resultArr = [NSArray arrayWithArray:tmpArr];
+                                  
+                                  QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
+                                  if(success){
+                                      success(r);
+                                  }
+                                  
+                                  
+                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  
+                                  DDLogError(@"room list error %@", error);
+                                  if (failure) {
+                                      failure(error, operation.response.statusCode);
+                                  }
+                              }];
+}
+
+
+- (void)POSTCreateRoomWithTopic:(QZBGameTopic *)topic
+                        private:(BOOL)isPrivate
+                      OnSuccess:(void (^)(QZBRoom *room))success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    [self.requestOperationManager POST:@"rooms"
                             parameters:params
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    
@@ -1714,6 +1756,8 @@ NSString *const QZBNoInternetConnectionMessage =
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        DDLogError(@"create room error %@", error);
+        
         if (failure) {
             failure(error, operation.response.statusCode);
         }
@@ -1721,12 +1765,14 @@ NSString *const QZBNoInternetConnectionMessage =
     }];
 }
 
-- (void)POSTJoinRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+- (void)POSTJoinRoomWithID:(NSNumber *)roomID
+                 withTopic:(QZBGameTopic *)topic
+                 onSuccess:(void (^)())success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
     
-    NSString *urlAsString = [NSString stringWithFormat:@"api/rooms/%@/join",roomID];
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/join",roomID];
     
     [self.requestOperationManager POST:urlAsString
                             parameters:params
@@ -1753,7 +1799,7 @@ NSString *const QZBNoInternetConnectionMessage =
     
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
     
-    NSString *urlAsString = [NSString stringWithFormat:@"api/rooms/%@/leave",roomID];
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/leave",roomID];
     
     [self.requestOperationManager DELETE:urlAsString
                               parameters:params

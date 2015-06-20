@@ -237,10 +237,17 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)GETAllRoomsOnSuccess:(void (^)(NSArray *rooms))success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)POSTCreateRoomOnSuccess:(void (^)(QZBRoom *room))success
+- (void)GETRoomWithID:(NSNumber *)roomID OnSuccess:(void (^)(QZBRoom *room))success
+            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTCreateRoomWithTopic:(QZBGameTopic *)topic
+                        private:(BOOL)isPrivate
+                      OnSuccess:(void (^)(QZBRoom *room))success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)POSTJoinRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+- (void)POSTJoinRoomWithID:(NSNumber *)roomID
+                 withTopic:(QZBGameTopic *)topic
+                 onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)DELETELeaveRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success

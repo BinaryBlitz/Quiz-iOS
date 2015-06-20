@@ -195,7 +195,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
              object:productIdentifier];
 
         }];
-    //
+//
 //
 //    [_purchasedProductIdentifiers addObject:productIdentifier];
 //

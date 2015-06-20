@@ -1,5 +1,5 @@
 //
-//  QZBRoom.h
+//  QZBRoomListTVC.h
 //  QZBQuizBattle
 //
 //  Created by Andrey Mikhaylov on 16/06/15.
@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QZBRoom : UITableViewCell
-
-@property(strong, nonatomic, readonly) NSNumber *roomID;
-
-- (instancetype)initWithDictionary:(NSDictionary *)d;
+@interface QZBRoomListTVC : UITableViewController <UISearchBarDelegate>
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

@@ -70,7 +70,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
 
     if (self.needRelaod) {
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+       // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         [self reload];//TEST
     }
 
