@@ -14,6 +14,7 @@
 
 @property(strong, nonatomic) id<QZBUserProtocol> user;
 @property(strong, nonatomic) QZBGameTopic *topic;
+@property(strong, nonatomic) NSNumber *points;
 
 @end
 

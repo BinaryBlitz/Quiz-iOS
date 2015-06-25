@@ -15,6 +15,7 @@
 
 @property(strong, nonatomic, readonly) id<QZBUserProtocol> user;
 @property(strong, nonatomic, readonly) QZBGameTopic *topic;
+@property(strong, nonatomic, readonly) NSNumber *points;
 
 - (instancetype)initWithUser:(id<QZBUserProtocol>)user topic:(QZBGameTopic *)topic;
 

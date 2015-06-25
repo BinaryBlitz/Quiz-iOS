@@ -11,6 +11,9 @@
 @class QZBRoom;
 @interface QZBRoomCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *topicsDescriptionLabel;
 
 - (void)configureCellWithRoom:(QZBRoom *)room;
+
 @end

@@ -11,8 +11,6 @@
 @class QZBRoom;
 @class QZBGameTopic;
 
-
-
 @interface QZBRoomController : UITableViewController
 
 - (void)initWithRoom:(QZBRoom *)room;

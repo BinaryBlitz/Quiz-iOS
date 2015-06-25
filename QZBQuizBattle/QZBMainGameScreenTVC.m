@@ -367,6 +367,11 @@
         NSMutableArray *arr = self.workArray[ip.section];
 
         QZBChallengeDescription *description = arr[ip.row];
+        [arr removeObject:description];
+        [self.mainTableView beginUpdates];
+        [self.mainTableView deleteRowsAtIndexPaths:@[ip]
+                                  withRowAnimation:UITableViewRowAnimationRight];
+        [self.mainTableView endUpdates];
 
         //self.challengeDescription = description;
         

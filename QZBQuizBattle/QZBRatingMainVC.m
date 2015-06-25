@@ -72,7 +72,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [button addTarget:self action:@selector(showAnother:) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
+   // self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
 
     if (self.topic) {
         NSString *title = nil;

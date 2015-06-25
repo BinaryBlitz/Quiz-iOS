@@ -10,6 +10,7 @@
 #import <TSMessage.h>
 #import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
+#import "QZBSessionManager.h"
 
 @implementation UIViewController (QZBMessagerCategory)
 
@@ -23,13 +24,19 @@
 //                                       subtitle:messge
 //                                           type:TSMessageNotificationTypeMessage];
     
+    if(![[QZBSessionManager sessionManager] isGoing]){
+    
     [TSMessage showNotificationInViewController:self
                                           title:title subtitle:messge
                                           image:[UIImage imageNamed:@"messageIcon"]
                                            type:TSMessageNotificationTypeMessage
                                        duration:0.0 callback:^{
-                                           [self showMessageList];
-    } buttonTitle:nil buttonCallback:nil atPosition:TSMessageNotificationPositionNavBarOverlay canBeDismissedByUser:YES];
+                                           [self showMessageList];}
+                                    buttonTitle:nil
+                                 buttonCallback:nil
+                                     atPosition:TSMessageNotificationPositionNavBarOverlay
+                           canBeDismissedByUser:YES];
+    }
     
     
     

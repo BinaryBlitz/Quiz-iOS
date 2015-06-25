@@ -17,6 +17,8 @@
 - (id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser;
 
 - (QZBStoredUser *)userWithJidAsString:(NSString *)jidAsString;
+- (QZBStoredUser *)userWithID:(NSNumber *)userID;
+
 
 - (void)saveUserInMemory:(id<QZBUserProtocol>)user;
 
@@ -25,6 +27,7 @@
 
 - (void)addOneUnreadedMessage:(QZBStoredUser *)user;
 - (void)readAllMessages:(QZBStoredUser *)user;
+- (void)readAllMessagesOfUser:(id<QZBUserProtocol>)user;
 
 
 - (QZBStoredUser *)storedUserWithUsername:(NSString *)username

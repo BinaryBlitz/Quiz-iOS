@@ -92,6 +92,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              selector:@selector(cancelCrossAction:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelCrossAction:)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showGameVC:)

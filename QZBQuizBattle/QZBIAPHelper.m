@@ -195,13 +195,7 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
              object:productIdentifier];
 
         }];
-//
-//
-//    [_purchasedProductIdentifiers addObject:productIdentifier];
-//
-//    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification
-//                                                        object:productIdentifier
-//                                                      userInfo:nil];
+
 }
 
 - (void)restoreCompletedTransactions {

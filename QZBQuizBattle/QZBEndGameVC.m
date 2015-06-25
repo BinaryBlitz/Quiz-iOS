@@ -56,6 +56,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 @property (assign, nonatomic) BOOL isChallenge;
 @property (assign, nonatomic) BOOL isJustResult;
 @property (assign, nonatomic) BOOL isMainInited;
+@property (assign, nonatomic) BOOL isAnimated;
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
@@ -81,22 +82,12 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     if (!self.challengeDescriptionWithResult) {
         [self initSessionResults];
     }
-    
-//    self.opponentGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                             action:@selector(showOpponent)];
-//    
-//    _opponentGestureRecognizer.numberOfTapsRequired = 1;
-//    _opponentGestureRecognizer.numberOfTouchesRequired = 1;
-//    _opponentGestureRecognizer.cancelsTouchesInView = NO;
-//    
-//    
-//    self.opponentGestureRecognizer.delegate = self;
-
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self initStatusbarWithColor:[UIColor blackColor]];
+    
     self.tabBarController.tabBar.hidden = NO;
 
     [self.tabBarController setHidesBottomBarWhenPushed:NO];
@@ -150,7 +141,8 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 
-    if (!self.isOfflineChallenge) {
+    if (!self.isOfflineChallenge && !self.isAnimated) {
+        self.isAnimated = YES;
         [self animateLose];
     }
 }
@@ -158,8 +150,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-   // [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -608,29 +598,11 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
 #pragma mark - gesture recognizer
 
-//- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-//
-//    return YES;
-//}
 - (IBAction)showUser:(id)sender {
     NSLog(@"gg");
     [self showOpponent];
 }
 
-//- (UITapGestureRecognizer *)opponentGestureRecognizer{
-//    
-//    if(!_opponentGestureRecognizer){
-//        
-//        _opponentGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                     action:@selector(showOpponent:)];
-//        
-//         _opponentGestureRecognizer.numberOfTapsRequired = 1;
-//         _opponentGestureRecognizer.numberOfTouchesRequired = 1;
-//         _opponentGestureRecognizer.cancelsTouchesInView = NO;
-//        
-//    }
-//    
-//    return _opponentGestureRecognizer;
-//}
+
 
 @end

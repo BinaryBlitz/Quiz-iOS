@@ -70,7 +70,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
 
     if (self.needRelaod) {
-       // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         [self reload];//TEST
     }
 
@@ -156,7 +156,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
         } onFailure:^(NSError *error, NSInteger statusCode) {
             
-            DDLogInfo(@"status code %ld", statusCode);
+            DDLogInfo(@"status code %ld", (long)statusCode);
             
             if(statusCode==0){
                 [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];

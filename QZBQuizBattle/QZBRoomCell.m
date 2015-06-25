@@ -15,6 +15,10 @@
     
     self.roomIDLabel.text = [NSString stringWithFormat:@"%@",room.roomID];
     
+//    NSMutableString *descr =
+    
+    self.descriptionLabel.text = [room participantsDescription];
+    self.topicsDescriptionLabel.text = [room topicsDescription];
 }
 
 @end

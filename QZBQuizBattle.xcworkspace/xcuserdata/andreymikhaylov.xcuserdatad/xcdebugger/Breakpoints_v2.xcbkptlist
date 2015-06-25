@@ -345,22 +345,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456144828.285654"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1131"
-            endingLineNumber = "1131"
-            landmarkName = "-GETFriendsRequestsOnSuccess:onFailure:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBPlayerPersonalPageVC.m"
             timestampString = "455895955.990906"
             startingColumnNumber = "9223372036854775807"
@@ -425,28 +409,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456144828.285654"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "-GETTopicsForMainOnSuccess:onFailure:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBMainGameScreenTVC.m"
-            timestampString = "456144828.285654"
+            timestampString = "456853893.057546"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
             landmarkName = "-reloadTopicsData"
             landmarkType = "5">
          </BreakpointContent>
@@ -873,22 +841,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBUserWorker.m"
-            timestampString = "455884511.12088"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-addOneUnreadedMessage:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBFirstMessageCell.m"
             timestampString = "455903904.109454"
             startingColumnNumber = "9223372036854775807"
@@ -912,22 +864,6 @@
             startingLineNumber = "65"
             endingLineNumber = "65"
             landmarkName = "-unreadedCount"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456144828.285654"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "-savePictureFromString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -985,38 +921,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBUserWorker.m"
-            timestampString = "455884511.12088"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-idFromJidAsString:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBUserWorker.m"
-            timestampString = "455884495.868332"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "-idFromJidAsString:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBPlayerPersonalPageVC.m"
             timestampString = "455895955.990906"
             startingColumnNumber = "9223372036854775807"
@@ -1050,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/UIViewController+QZBMessagerCategory.m"
-            timestampString = "455973159.128538"
+            timestampString = "456497095.643229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "-showMessageList"
             landmarkType = "5">
          </BreakpointContent>
@@ -1066,11 +970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBEndGameVC.m"
-            timestampString = "455986242.533521"
+            timestampString = "456853398.299194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1082,11 +986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBEndGameVC.m"
-            timestampString = "455986242.533521"
+            timestampString = "456853398.299194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "-initSessionResults"
             landmarkType = "5">
          </BreakpointContent>
@@ -1098,13 +1002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456488746.97052"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "-reloadRooms"
-            landmarkType = "5">
+            startingLineNumber = "15"
+            endingLineNumber = "15">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1146,13 +1048,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456488746.97052"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "-reloadRooms"
-            landmarkType = "5">
+            startingLineNumber = "15"
+            endingLineNumber = "15">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1194,13 +1094,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456488746.97052"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "-reloadRooms"
-            landmarkType = "5">
+            startingLineNumber = "15"
+            endingLineNumber = "15">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1241,28 +1139,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456335078.875131"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1682"
-            endingLineNumber = "1682"
-            landmarkName = "-GETAllRoomsOnSuccess:onFailure:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomTopicChooser.m"
-            timestampString = "456329459.778114"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1274,11 +1156,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomTopicChooser.m"
-            timestampString = "456329459.778114"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1290,44 +1172,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomTopicChooser.m"
-            timestampString = "456329397.743035"
+            timestampString = "456494784.656033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456489173.682102"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1504"
-            endingLineNumber = "1504"
-            landmarkName = "-GETInAppPurchasesOnSuccess:onFailure:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QZBQuizBattle/QZBServerManager.m"
-            timestampString = "456489176.212549"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1522"
-            endingLineNumber = "1522"
-            landmarkName = "-GETInAppPurchasesOnSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -17,6 +17,7 @@
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import "QZBUserWorker.h"
 
 //#import <XMPPFramework/XMPPFramework.h>
 //#import "XMPPCoreDataStorage.h"
@@ -25,8 +26,7 @@
 
 NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 
-
-@interface QZBMessagerVC ()<QZBMessagerManagerDelegate>
+@interface QZBMessagerVC () <QZBMessagerManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
@@ -38,75 +38,84 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 
 @property (strong, nonatomic) id<QZBUserProtocol> friend;
 
-
 @end
 
 @implementation QZBMessagerVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self initStatusbarWithColor:[UIColor blackColor]];
-    
+
     [QZBMessagerManager sharedInstance].delegate = self;
 
-   // self.senderId = [[QZBCurrentUser sharedInstance].user.userID stringValue];
-    
-    self.senderId = [[QZBMessagerManager sharedInstance] jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
+    // self.senderId = [[QZBCurrentUser sharedInstance].user.userID stringValue];
+
+    self.senderId = [[QZBMessagerManager sharedInstance]
+        jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
     self.senderDisplayName = [QZBCurrentUser sharedInstance].user.name;
     // self.showLoadEarlierMessagesHeader = YES;
     self.inputToolbar.contentView.leftBarButtonItem = nil;
-    
+
     [self initAvatars];
 
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
 
-    self.outgoingBubbleImageData = [bubbleFactory
-        outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
-    self.incomingBubbleImageData =
-        [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
+    self.outgoingBubbleImageData =
+        [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    self.incomingBubbleImageData = [bubbleFactory
+        incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
 
     // Do any additional setup after loading the view.
-    
+
     //[self.view setBackgroundColor:[UIColor darkGrayColor]];
-    
-    
-    
+
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
-    
+
     self.messages = [[QZBMessagerManager sharedInstance] generateJSQMessagesForUser:self.friend];
-    
+
     [self.collectionView reloadData];
-    
+
     self.tabBarController.tabBar.hidden = YES;
-   // [self initMessager];
+    // [self initMessager];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.inputToolbar.contentView.textView becomeFirstResponder];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottomAnimated:YES];
-    });
-}
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [self scrollToBottomAnimated:YES];
+                   });
+}\
 
--(void)viewWillDisappear:(BOOL)animated{
+
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-  //  [self goOffline];
-//    [self.stream removeDelegate:self];
-//    [self.stream disconnect];
+    //  [self goOffline];
+    //    [self.stream removeDelegate:self];
+    //    [self.stream disconnect];
     
-    self.tabBarController.tabBar.hidden = YES;
+    
+    
+    QZBUserWorker *userWorker = [[QZBUserWorker alloc] init];
+    
+    QZBStoredUser *storedUser = [userWorker userWithID:self.friend.userID];
+    
+    if(storedUser){
+        [userWorker readAllMessages:storedUser];
+    }
+   
+    
+
+ //   self.tabBarController.tabBar.hidden = YES;
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -116,7 +125,7 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 - (void)initWithUser:(id<QZBUserProtocol>)user {
     self.title = user.name;
     self.friend = user;
-    
+
     [self updateImages];
 }
 
@@ -130,58 +139,56 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 
 - (void)updateImages {
     // NSURL *url = [NSURL URLWithString:self.user.imageURL];
-    
-    if(self.friend.imageURL){
-    NSURLRequest *request = [NSURLRequest requestWithURL:self.friend.imageURL];
 
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    operation.responseSerializer = [AFImageResponseSerializer serializer];
+    if (self.friend.imageURL) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.friend.imageURL];
 
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
-                                               id responseObject) {
+        AFHTTPRequestOperation *operation =
+            [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        operation.responseSerializer = [AFImageResponseSerializer serializer];
 
-        self.friendAvatar = [JSQMessagesAvatarImageFactory
-            avatarImageWithImage:responseObject
-                        diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-        
-        [self.collectionView reloadData];
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
+                                                   id responseObject) {
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            self.friendAvatar = [JSQMessagesAvatarImageFactory
+                avatarImageWithImage:responseObject
+                            diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 
-        NSLog(@"Error: %@", error);
-    }];
-    
-    [operation start];
+            [self.collectionView reloadData];
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"Error: %@", error);
+        }];
+
+        [operation start];
     }
-    
-    if([QZBCurrentUser sharedInstance].user.imageURL){
-    NSURLRequest *requestForMyAva = [NSURLRequest
-                                     requestWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
-    
-    AFHTTPRequestOperation *operationForMyAva = [[AFHTTPRequestOperation alloc]
-                                                 initWithRequest:requestForMyAva];
-    
-    operationForMyAva.responseSerializer = [AFImageResponseSerializer serializer];
-    
-    [operationForMyAva setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
-                                               id responseObject) {
-        
-        self.myAvatar = [JSQMessagesAvatarImageFactory
-                             avatarImageWithImage:responseObject
-                             diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-        [self.collectionView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"Error: %@", error);
-    }];
 
-    
+    if ([QZBCurrentUser sharedInstance].user.imageURL) {
+        NSURLRequest *requestForMyAva =
+            [NSURLRequest requestWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
 
-    [operationForMyAva start];
+        AFHTTPRequestOperation *operationForMyAva =
+            [[AFHTTPRequestOperation alloc] initWithRequest:requestForMyAva];
+
+        operationForMyAva.responseSerializer = [AFImageResponseSerializer serializer];
+
+        [operationForMyAva setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
+                                                           id responseObject) {
+
+            self.myAvatar = [JSQMessagesAvatarImageFactory
+                avatarImageWithImage:responseObject
+                            diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+            [self.collectionView reloadData];
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            NSLog(@"Error: %@", error);
+        }];
+
+        [operationForMyAva start];
     }
 }
-
 
 #pragma mark - JSQMessagesViewController method overrides
 
@@ -198,61 +205,56 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
      *  3. Call `finishSendingMessage`
      */
     //[JSQSystemSoundPlayer jsq_playMessageSentSound];
-    
-    if(![QZBMessagerManager sharedInstance].isConnected){
+
+    if (![QZBMessagerManager sharedInstance].isConnected) {
         NSLog(@"problems!!");
-//        [TSMessage showNotificationWithTitle:@"Невозможно подключиться к серверу"
-//                                    subtitle:QZBNoInternetConnectionMessage
-//                                        type:TSMessageNotificationTypeError];
-        
-        [TSMessage showNotificationInViewController:self.navigationController title:@"Невозможно подключиться к серверу" subtitle:QZBNoInternetConnectionMessage type:TSMessageNotificationTypeError duration:0.0 canBeDismissedByUser:YES];
+        //        [TSMessage showNotificationWithTitle:@"Невозможно подключиться к серверу"
+        //                                    subtitle:QZBNoInternetConnectionMessage
+        //                                        type:TSMessageNotificationTypeError];
+
+        [TSMessage
+            showNotificationInViewController:self.navigationController
+                                       title:@"Невозможно подключиться к "
+                                             @"серверу"
+                                    subtitle:QZBNoInternetConnectionMessage
+                                        type:TSMessageNotificationTypeError
+                                    duration:0.0
+                        canBeDismissedByUser:YES];
         return;
-        
     }
-    
 
     JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
                                              senderDisplayName:senderDisplayName
                                                           date:date
                                                           text:text];
-    
-    [self sendMessageWithText:text];
-    
 
+    [self sendMessageWithText:text];
 
     [self.messages addObject:message];
-    
-    
 
     //  [self.demoData.messages addObject:message];
 
     [self finishSendingMessageAnimated:YES];
-    
-   // [self receiveMessage:text];
+
+    // [self receiveMessage:text];
 }
 
--(void)receiveMessage:(NSString *)message{
-    
-    //JSQMessage *copyMessage = [[self.messages lastObject] copy];
-    
-    
+- (void)receiveMessage:(NSString *)message {
+    // JSQMessage *copyMessage = [[self.messages lastObject] copy];
+
     JSQMessage *copyMessage = [JSQMessage messageWithSenderId:[self.friend.userID stringValue]
                                                   displayName:self.friend.name
                                                          text:message];
-    
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-    [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-    [self.messages addObject:copyMessage];
-    [self finishReceivingMessageAnimated:YES];
-        
-});
-    
-    
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+
+                       [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+                       [self.messages addObject:copyMessage];
+                       [self finishReceivingMessageAnimated:YES];
+
+                   });
 }
-
-
 
 #pragma mark - JSQMessages CollectionView DataSource
 
@@ -380,83 +382,72 @@ navigation
 
 #pragma mark - server methods
 
-
--(void)sendMessageWithText:(NSString *)textMessage{
-    
+- (void)sendMessageWithText:(NSString *)textMessage {
     [[QZBMessagerManager sharedInstance] sendMessage:textMessage toUser:self.friend];
-    
 }
 
 #pragma mark - support methods
 
 - (void)initAvatars {
-   
-
     self.myAvatar = [JSQMessagesAvatarImageFactory
         avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
     self.friendAvatar = [JSQMessagesAvatarImageFactory
         avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-
 }
-
 
 #pragma mark - message delegate
 
 //-(void) receivedMessage
 //
 //- (void) myClassDelegateMethod: (QZBMessagerManager *) sender{
-//    
+//
 //    NSLog(@"recieved");
-//    
+//
 //}
 //-(void)didRecieveMessageFrom:(NSString *)bareJid{
 //    NSLog(@"%@", bareJid);
-//    
-//    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance] jidAsStringFromUser:self.friend]]){
-//        
+//
+//    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance]
+//    jidAsStringFromUser:self.friend]]){
+//
 //    }
 //}
 
--(void)didRecieveMessageFrom:(NSString *)bareJid text:(NSString *)text{
-    
-    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance] jidAsStringFromUser:self.friend]]){
-        
-        JSQMessage *mess = [JSQMessage messageWithSenderId:bareJid
-                                                                           displayName:self.friend.name
-                                                                                  text:text];
-        
+- (void)didRecieveMessageFrom:(NSString *)bareJid text:(NSString *)text {
+    if ([bareJid isEqualToString:[[QZBMessagerManager sharedInstance]
+                                     jidAsStringFromUser:self.friend]]) {
+        JSQMessage *mess =
+            [JSQMessage messageWithSenderId:bareJid displayName:self.friend.name text:text];
+
         [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
         [self.messages addObject:mess];
         [self finishReceivingMessageAnimated:YES];
-
-        
     }
-    
 }
 
 #pragma mark - Responding to collection view tap events
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath{
-    
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView
+ didTapAvatarImageView:(UIImageView *)avatarImageView
+           atIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *m = self.messages[indexPath.row];
-    if(![m.senderId isEqualToString:self.senderId]){
+    if (![m.senderId isEqualToString:self.senderId]) {
         [self performSegueWithIdentifier:QZBSegueToUserPageIdentifier sender:nil];
     }
-    
 }
 
 #pragma mark - Navigation
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:QZBSegueToUserPageIdentifier]){
-        QZBPlayerPersonalPageVC *destVC = (QZBPlayerPersonalPageVC *)segue.destinationViewController;
-        
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:QZBSegueToUserPageIdentifier]) {
+        QZBPlayerPersonalPageVC *destVC =
+            (QZBPlayerPersonalPageVC *)segue.destinationViewController;
+
         [destVC initPlayerPageWithUser:self.friend];
     }
 }
-
 
 
 

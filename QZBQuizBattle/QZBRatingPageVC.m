@@ -66,9 +66,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //    
 //}
 
--(void)viewDidLayoutSubviews{
-    NSLog(@"rating page layout");
-}
+//-(void)viewDidLayoutSubviews{
+//    NSLog(@"rating page layout");
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

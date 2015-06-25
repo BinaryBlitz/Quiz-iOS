@@ -46,13 +46,17 @@
    // [self setFriendsOwner:nil andFriends:[[QZBMessagerManager sharedInstance] usersInStorage]];
 }
 
+//-(void)viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:animated];
+//
+//    
+//}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if([segue.identifier isEqualToString:@"showMessager"]){
         QZBMessagerVC *destVC = (QZBMessagerVC *)segue.destinationViewController;
         [destVC initWithUser:self.user];
-        
-        
     }
 }
 
