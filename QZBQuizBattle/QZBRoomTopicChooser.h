@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
-
 #import "QZBTopicChooserControllerViewController.h"
 
 @interface QZBRoomTopicChooser : QZBTopicChooserControllerViewController

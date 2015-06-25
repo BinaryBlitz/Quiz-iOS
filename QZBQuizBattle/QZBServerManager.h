@@ -254,7 +254,9 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
-
+- (void)DELETEDeleteRoomWithID:(NSNumber *)roomID
+                     onSuccess:(void (^)())success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
 
