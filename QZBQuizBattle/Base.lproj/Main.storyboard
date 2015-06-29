@@ -137,6 +137,7 @@
             <string>MuseoSansCyrl-700</string>
             <string>MuseoSansCyrl-700</string>
             <string>MuseoSansCyrl-700</string>
+            <string>MuseoSansCyrl-700</string>
         </mutableArray>
         <mutableArray key="MuseoSansCyrl_3.otf">
             <string>MuseoSansCyrl-900</string>
@@ -5482,7 +5483,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k8f-e2-Fhq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4281" y="-1227.75"/>
+            <point key="canvasLocation" x="4653" y="-1221.75"/>
         </scene>
         <!--Жалоба-->
         <scene sceneID="mC8-3l-ZvJ">
@@ -11376,8 +11377,11 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="playersCountSegmentControll" destination="w5c-wy-SMF" id="ndc-zS-shb"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="oWV-qA-qU0">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="chooseTopicDescriptionCellIdentifier" rowHeight="65" id="oWV-qA-qU0">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oWV-qA-qU0" id="qZs-Pt-EOV">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -11527,7 +11531,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="topicCell" rowHeight="79" id="S7k-A7-Qww" customClass="QZBTopicTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="topicCell" rowHeight="79" id="S7k-A7-Qww" customClass="QZBTopicTableViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S7k-A7-Qww" id="EzE-oU-BpA">
@@ -11763,6 +11767,136 @@
                                     <outlet property="topicProgressView" destination="ACh-3f-TkT" id="wFH-MQ-XPg"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="passwordOnlyChooserCellIdentifier" rowHeight="77" id="Xkb-tX-6v0" customClass="QZBRoomPasswordOnlyCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xkb-tX-6v0" id="05a-MO-3yR">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ТОЛЬКО С ПАРОЛЕМ:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u20-cT-OwF">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="SFf-0W-FwZ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="20"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="SFf-0W-FwZ"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="SFf-0W-FwZ"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xp7-F6-I7Z">
+                                            <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="49" id="1qe-El-9b1"/>
+                                                <constraint firstAttribute="height" constant="31" id="i2o-Ne-kF3"/>
+                                            </constraints>
+                                            <color key="onTintColor" red="0.12156862745098039" green="0.70980392156862748" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="1qe-El-9b1"/>
+                                                    <exclude reference="i2o-Ne-kF3"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="1qe-El-9b1"/>
+                                                    <include reference="i2o-Ne-kF3"/>
+                                                </mask>
+                                            </variation>
+                                        </switch>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="xp7-F6-I7Z" firstAttribute="top" secondItem="05a-MO-3yR" secondAttribute="topMargin" constant="27" id="UDN-uu-JBX"/>
+                                        <constraint firstItem="u20-cT-OwF" firstAttribute="leading" secondItem="05a-MO-3yR" secondAttribute="leadingMargin" id="VFg-RE-01t"/>
+                                        <constraint firstItem="xp7-F6-I7Z" firstAttribute="trailing" secondItem="05a-MO-3yR" secondAttribute="trailingMargin" id="fSg-LY-CyR"/>
+                                        <constraint firstItem="xp7-F6-I7Z" firstAttribute="leading" secondItem="u20-cT-OwF" secondAttribute="trailing" constant="16" id="oMT-Ur-MXv"/>
+                                        <constraint firstItem="u20-cT-OwF" firstAttribute="top" secondItem="05a-MO-3yR" secondAttribute="topMargin" constant="23" id="weE-Rt-J1W"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="u20-cT-OwF"/>
+                                            <exclude reference="xp7-F6-I7Z"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="VFg-RE-01t"/>
+                                            <exclude reference="weE-Rt-J1W"/>
+                                            <exclude reference="UDN-uu-JBX"/>
+                                            <exclude reference="fSg-LY-CyR"/>
+                                            <exclude reference="oMT-Ur-MXv"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="u20-cT-OwF"/>
+                                            <include reference="xp7-F6-I7Z"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="VFg-RE-01t"/>
+                                            <include reference="weE-Rt-J1W"/>
+                                            <include reference="UDN-uu-JBX"/>
+                                            <include reference="fSg-LY-CyR"/>
+                                            <include reference="oMT-Ur-MXv"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="passwordOnlySwitch" destination="xp7-F6-I7Z" id="a4b-UX-mlq"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="51" id="1qf-jr-ySI" customClass="QZBRoomPasswordInputCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1qf-jr-ySI" id="Qmj-VZ-VzT">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Введите пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-VQ-4ct">
+                                            <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0bn-VQ-4ct" firstAttribute="top" secondItem="Qmj-VZ-VzT" secondAttribute="topMargin" constant="3" id="73X-y4-QHw"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="0bn-VQ-4ct" secondAttribute="bottom" constant="3" id="sEP-Uf-BDJ"/>
+                                        <constraint firstItem="0bn-VQ-4ct" firstAttribute="leading" secondItem="Qmj-VZ-VzT" secondAttribute="leadingMargin" id="sHO-PU-9Hw"/>
+                                        <constraint firstItem="0bn-VQ-4ct" firstAttribute="trailing" secondItem="Qmj-VZ-VzT" secondAttribute="trailingMargin" id="sI3-Vr-uBj"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="0bn-VQ-4ct"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="73X-y4-QHw"/>
+                                            <exclude reference="sEP-Uf-BDJ"/>
+                                            <exclude reference="sHO-PU-9Hw"/>
+                                            <exclude reference="sI3-Vr-uBj"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="0bn-VQ-4ct"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="73X-y4-QHw"/>
+                                            <include reference="sEP-Uf-BDJ"/>
+                                            <include reference="sHO-PU-9Hw"/>
+                                            <include reference="sI3-Vr-uBj"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="posswordInputTextField" destination="0bn-VQ-4ct" id="WPP-1Y-QqY"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -11770,10 +11904,13 @@
                             <outlet property="delegate" destination="Y9J-zC-h2e" id="B61-Q7-ChK"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="gni-60-aR2" kind="show" identifier="showRoomCategoryChooser" id="ynw-iV-cF1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pk6-YA-tpX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2079" y="-1269"/>
+            <point key="canvasLocation" x="3675" y="-1257"/>
         </scene>
     </scenes>
     <resources>
@@ -11791,13 +11928,14 @@
         <image name="vkIcon" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nHr-TI-Liv"/>
-        <segue reference="TKe-GQ-MWf"/>
         <segue reference="zMv-no-kIb"/>
-        <segue reference="qGa-a3-3D7"/>
-        <segue reference="XnW-Mt-mqX"/>
-        <segue reference="17f-Ir-c5e"/>
-        <segue reference="1oA-Co-JGY"/>
+        <segue reference="13W-Ze-IAd"/>
         <segue reference="Lr1-mO-cRZ"/>
+        <segue reference="ynw-iV-cF1"/>
+        <segue reference="Ymn-se-41S"/>
+        <segue reference="Q6R-nc-Xpj"/>
+        <segue reference="TKe-GQ-MWf"/>
+        <segue reference="qGa-a3-3D7"/>
+        <segue reference="1oA-Co-JGY"/>
     </inferredMetricsTieBreakers>
 </document>

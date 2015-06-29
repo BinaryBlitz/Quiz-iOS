@@ -51,6 +51,8 @@
 		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
 		192CDE241B4182B7003992C7 /* QZBCreateRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */; };
 		192CDE281B418DB9003992C7 /* QZBPlayerCountChooserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */; };
+		192CDE2B1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE2A1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m */; };
+		192CDE2E1B419D75003992C7 /* QZBRoomPasswordInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE2D1B419D75003992C7 /* QZBRoomPasswordInputCell.m */; };
 		1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */; };
 		1936E0781B3BFC0F00BE6B16 /* QZBRoomResultTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */; };
 		1936E07B1B3BFED800BE6B16 /* QZBRoomUserResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */; };
@@ -405,6 +407,11 @@
 		192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCreateRoomController.m; sourceTree = "<group>"; };
 		192CDE261B418DB9003992C7 /* QZBPlayerCountChooserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerCountChooserCell.h; sourceTree = "<group>"; };
 		192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerCountChooserCell.m; sourceTree = "<group>"; };
+		192CDE291B419D21003992C7 /* QZBRoomPasswordOnlyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomPasswordOnlyCell.h; sourceTree = "<group>"; };
+		192CDE2A1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomPasswordOnlyCell.m; sourceTree = "<group>"; };
+		192CDE2C1B419D75003992C7 /* QZBRoomPasswordInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomPasswordInputCell.h; sourceTree = "<group>"; };
+		192CDE2D1B419D75003992C7 /* QZBRoomPasswordInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomPasswordInputCell.m; sourceTree = "<group>"; };
+		192CDE2F1B41A28B003992C7 /* QZBSettingTopicProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSettingTopicProtocol.h; sourceTree = "<group>"; };
 		1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+QZBButtonCategory.h"; sourceTree = "<group>"; };
 		1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+QZBButtonCategory.m"; sourceTree = "<group>"; };
 		1936E0761B3BFC0F00BE6B16 /* QZBRoomResultTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomResultTVC.h; sourceTree = "<group>"; };
@@ -976,6 +983,7 @@
 				1901BA1C1B305D00003E2895 /* QZBRoomController.m */,
 				192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */,
 				192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */,
+				192CDE2F1B41A28B003992C7 /* QZBSettingTopicProtocol.h */,
 			);
 			name = rooms;
 			sourceTree = "<group>";
@@ -1155,6 +1163,10 @@
 			children = (
 				192CDE261B418DB9003992C7 /* QZBPlayerCountChooserCell.h */,
 				192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */,
+				192CDE291B419D21003992C7 /* QZBRoomPasswordOnlyCell.h */,
+				192CDE2A1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m */,
+				192CDE2C1B419D75003992C7 /* QZBRoomPasswordInputCell.h */,
+				192CDE2D1B419D75003992C7 /* QZBRoomPasswordInputCell.m */,
 			);
 			name = "create room";
 			sourceTree = "<group>";
@@ -2953,6 +2965,7 @@
 				19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */,
 				199666A01B207FE100793610 /* XMPPFileTransfer.m in Sources */,
 				19D911361B171178007B4CF2 /* FXBlurView.m in Sources */,
+				192CDE2E1B419D75003992C7 /* QZBRoomPasswordInputCell.m in Sources */,
 				191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */,
 				19609A0D1B28B5FD00EEB9D6 /* QZBStoredUser.m in Sources */,
 				199666C51B207FE100793610 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
@@ -3048,6 +3061,7 @@
 				19DEA85C1A85532300E610DB /* QZBRatingTVC.m in Sources */,
 				1901BA201B30646C003E2895 /* QZBUserWithTopic.m in Sources */,
 				199666DE1B207FE100793610 /* NSString+XEP_0106.m in Sources */,
+				192CDE2B1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m in Sources */,
 				1901BA271B306E33003E2895 /* QZBRoomCategoryChooserVC.m in Sources */,
 				199666A41B207FE100793610 /* XMPPProcessOne.m in Sources */,
 				199665251B207AEF00793610 /* GCDAsyncSocket.m in Sources */,

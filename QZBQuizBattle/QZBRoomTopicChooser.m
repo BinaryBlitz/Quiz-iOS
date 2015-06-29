@@ -9,23 +9,32 @@
 #import "QZBRoomTopicChooser.h"
 #import "QZBRoomController.h"
 
+#import "QZBSettingTopicProtocol.h"
+
 @implementation QZBRoomTopicChooser
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *controllers = self.navigationController.viewControllers;
-    QZBRoomController *destinationController = nil;
+    id<QZBSettingTopicProtocol> destinationController = nil;
 
     for (UIViewController *c in controllers) {
-        if ([c isKindOfClass:[QZBRoomController class]]) {
-            destinationController = (QZBRoomController *)c;
+        
+        if([c respondsToSelector:@selector(setUserTopic:)]){
+            destinationController = (id<QZBSettingTopicProtocol>)c;
             break;
         }
+//        if ([c isKindOfClass:[QZBRoomController class]]) {
+//            destinationController = (QZBRoomController *)c;
+//            break;
+//        }
     }
 
     QZBGameTopic *topic = self.topics[indexPath.row];
-    [destinationController setCurrentUserTopic:topic];
+    [destinationController setUserTopic:topic];//setCurrentUserTopic:topic];
 
-    [self.navigationController popToViewController:destinationController animated:YES];
+    UIViewController *destVC = (UIViewController *)destinationController;
+    
+    [self.navigationController popToViewController:destVC animated:YES];
 }
 
 @end
