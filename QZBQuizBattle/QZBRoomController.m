@@ -197,7 +197,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 #pragma mark - setting room
 
-- (void)setCurrentUserTopic:(QZBGameTopic *)topic {
+
+
+- (void)setUserTopic:(QZBGameTopic *)topic {
     // self.selectedTopic = topic;
 
     if (!self.room) {
