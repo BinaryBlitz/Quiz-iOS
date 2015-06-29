@@ -53,7 +53,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#endif
 // static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
-NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
+NSString *const QZBServerBaseUrl = @"http://178.62.216.83";//@"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
@@ -80,7 +80,7 @@ NSString *const QZBNoInternetConnectionMessage =
 - (id)init {
     self = [super init];
     if (self) {
-        NSString *apiPath = [NSString stringWithFormat:@"http://quizapp.binaryblitz.ru/%@", @"api"];
+        NSString *apiPath = [NSString stringWithFormat:@"%@/%@",QZBServerBaseUrl, @"api"];
         self.baseURL = apiPath;
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];
@@ -1695,17 +1695,8 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlAsString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //                                  NSMutableArray *tmpArr = [NSMutableArray array];
-            //
-            //                                  for(NSDictionary *d in responseObject){
-            //                                      QZBRoom *room = [[QZBRoom alloc]
-            //                                      initWithDictionary:d];
-            //                                      [tmpArr addObject:room];
-            //
-            //                                  }
-            //
-            //                                  NSArray *resultArr = [NSArray
-            //                                  arrayWithArray:tmpArr];
+            
+            DDLogCVerbose(@"reload room %@", responseObject);
 
             QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
             if (success) {
@@ -1733,6 +1724,8 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager POST:@"rooms"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            DDLogCVerbose(@"room create %@", responseObject);
 
             QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
 

@@ -17,7 +17,11 @@
 
     self.userPositionLabel.text = [NSString stringWithFormat:@"%@", position];
 
-    self.userPositionLabel.text = [NSString stringWithFormat:@"%@", userWithTopic.points];
+    if(userWithTopic.finished){
+        self.userPointsLabel.text = [NSString stringWithFormat:@"%@", userWithTopic.points];
+    }else{
+        self.userPointsLabel.text = @"Ожидание";
+    }
 
     if (userWithTopic.user.imageURL) {
         [self.userpicImageView setImageWithURL:userWithTopic.user.imageURL];

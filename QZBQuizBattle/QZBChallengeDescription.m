@@ -9,6 +9,7 @@
 #import "QZBChallengeDescription.h"
 #import "QZBGameTopic.h"
 #import "AppDelegate.h"
+#import "QZBTopicWorker.h"
 
 @interface QZBChallengeDescription()
 
@@ -38,25 +39,27 @@
      
         self.userID = dict[@"player_id"];
         
-        AppDelegate *app = [[UIApplication sharedApplication] delegate];
-        
-        id context = app.managedObjectContext;
-
-        NSEntityDescription *entity =
-        [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
-        QZBGameTopic *topic = (QZBGameTopic *)
-        [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-        
-        topic.name = topicDict[@"name"];
-        topic.topic_id = topicDict[@"id"];
-        topic.points = topicDict[@"points"];
-        topic.visible = topicDict[@"visible"];
+//        AppDelegate *app = [[UIApplication sharedApplication] delegate];
+//        
+//        id context = app.managedObjectContext;
+//
+//        NSEntityDescription *entity =
+//        [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
+//        QZBGameTopic *topic = (QZBGameTopic *)
+//        [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+//        
+//        topic.name = topicDict[@"name"];
+//        topic.topic_id = topicDict[@"id"];
+//        topic.points = topicDict[@"points"];
+//        topic.visible = topicDict[@"visible"];
     
         
-        self.topic = topic;
+        self.topic = [QZBTopicWorker parseTopicFromDict:topicDict];//TEST
         
-        self.topicName = topic.name;
-        self.topicID = topic.topic_id;
+       // self.topic = topic;
+        
+        self.topicName = self.topic.name;
+        self.topicID = self.topic.topic_id;
         
     }
     return self;

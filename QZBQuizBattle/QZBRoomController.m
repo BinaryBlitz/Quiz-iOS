@@ -49,6 +49,11 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor blackColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(reloadRoom)
+                  forControlEvents:UIControlEventValueChanged];
     
 
     //  self.usersWithTopics = [NSMutableArray array];
@@ -68,6 +73,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
                                              selector:@selector(leaveOrDeleteRoom)
                                                  name:UIApplicationWillTerminateNotification
                                                object:nil];
+    
     
 }
 
@@ -230,6 +236,20 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     [self.room addUser:uAndT];
     //  [self.usersWithTopics addObject:uAndT];
     [self.tableView reloadData];
+}
+
+
+-(void)reloadRoom{
+    [self.refreshControl beginRefreshing];
+    [[QZBServerManager sharedManager] GETRoomWithID:self.room.roomID OnSuccess:^(QZBRoom *room) {
+        [self.refreshControl endRefreshing];
+        self.room = room;
+        [self.tableView reloadData];
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
 }
 
 #pragma mark - support methods

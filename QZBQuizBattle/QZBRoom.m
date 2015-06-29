@@ -12,6 +12,7 @@
 #import "QZBGameTopic.h"
 #import "CoreData+MagicalRecord.h"
 #import "QZBServerManager.h"
+#import "QZBTopicWorker.h"
 
 @interface QZBRoom ()
 
@@ -29,10 +30,10 @@
     self = [super init];
     if (self) {
         self.roomID = d[@"id"];
-        NSDictionary *userDict = d[@"player"];
-        QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:userDict];
-        QZBGameTopic *topic = [QZBGameTopic MR_findFirst];
-        self.owner = [[QZBUserWithTopic alloc] initWithUser:user topic:topic];
+     //   NSDictionary *userDict = d[@"owner"];
+        //QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:userDict];
+       // QZBGameTopic *topic = [QZBGameTopic MR_findFirst];
+       // self.owner = [self parseUserWithTopicFromDict:userDict]; //[[QZBUserWithTopic alloc] initWithUser:user topic:topic];
         self.participants = [NSMutableArray array];
 
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -42,24 +43,40 @@
 
         self.creationDate = [df dateFromString:d[@"created_at"]];
 
-        self.participants = [self parseParticipants:d[@"participants"]];
+        self.participants = [self parseParticipants:d[@"participations"]];
 
-        [self.participants insertObject:self.owner atIndex:0];
+    //    [self.participants insertObject:self.owner atIndex:0];
     }
     return self;
 }
 
 - (NSMutableArray *)parseParticipants:(NSArray *)participants {
     NSMutableArray *tmpArr = [NSMutableArray array];
+    
     for (NSDictionary *d in participants) {
-        QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:d];
-        QZBGameTopic *topic = [QZBGameTopic MR_findFirst];
-        QZBUserWithTopic *userWithTopic = [[QZBUserWithTopic alloc] initWithUser:user topic:topic];
+        
+       
+        QZBUserWithTopic *userWithTopic = [self parseUserWithTopicFromDict:d];
 
         [tmpArr addObject:userWithTopic];
     }
 
     return tmpArr;
+}
+
+-(QZBUserWithTopic *)parseUserWithTopicFromDict:(NSDictionary *)d{
+    NSDictionary *playerDict = d[@"player"];
+    QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:playerDict];
+    
+    BOOL isAdmin = [playerDict[@"is_admin"] boolValue];
+    
+    QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:d[@"topic"]]; //[QZBGameTopic MR_findFirst];
+    QZBUserWithTopic *userWithTopic = [[QZBUserWithTopic alloc] initWithUser:user topic:topic];
+    
+    userWithTopic.admin = isAdmin;
+
+    return userWithTopic;
+    
 }
 
 - (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
@@ -128,5 +145,24 @@
     }
     return NO;
 }
+
+
+#pragma mark - results
+
+-(NSArray *)resultParticipants{
+    
+    NSSortDescriptor *finishedSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:NO];
+    
+    NSSortDescriptor *pointsDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"points" ascending:NO];
+    
+    //TEST
+    
+    return [self.participants
+            sortedArrayUsingDescriptors:@[finishedSortDescriptor,pointsDescriptor]];
+    
+}
+
+
+
 
 @end

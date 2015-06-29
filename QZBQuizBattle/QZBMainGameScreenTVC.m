@@ -106,6 +106,11 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
+            UITabBarController *tabController = self.tabBarController;
+            UITabBarItem *tabbarItem = tabController.tabBar.items[2];
+    tabbarItem.badgeValue = nil;
+    
+    //[self.tabBarController]
     //[self unsubscribeFromMessages];
 }
 
