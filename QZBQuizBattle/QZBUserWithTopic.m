@@ -15,6 +15,8 @@
 @property(strong, nonatomic) id<QZBUserProtocol> user;
 @property(strong, nonatomic) QZBGameTopic *topic;
 @property(strong, nonatomic) NSNumber *points;
+//@property(assign, nonatomic, getter=isAdmin) BOOL admin;
+//@property(assign, nonatomic, getter = isFinished) BOOL finished;
 
 @end
 
@@ -26,6 +28,9 @@
     if (self) {
         self.user = user;
         self.topic = topic;
+        self.finished = NO;
+        self.points = @(0);
+        
     }
     return self;
 }

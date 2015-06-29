@@ -17,6 +17,7 @@ NSString *const QZBRoomCellIdentifier = @"QZBRoomCellIdentifier";
 
 // segues
 NSString *const QZBShowRoomSegueIdentifier = @"showRoomSegueIdentifier";
+NSString *const QZBRoomCreationSegueIdentifier = @"roomCreationSegueIdentifier";
 
 // title
 
@@ -152,7 +153,7 @@ NSString *const QZBCurrentTitle = @"Комнаты";
     //
     //    }];
     self.choosedRoom = nil;
-    [self performSegueWithIdentifier:QZBShowRoomSegueIdentifier sender:nil];
+    [self performSegueWithIdentifier:QZBRoomCreationSegueIdentifier sender:nil];
 }
 
 //-(void)showCategoryChooser{

@@ -49,9 +49,12 @@
 		191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */; };
 		19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */; };
 		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
+		192CDE241B4182B7003992C7 /* QZBCreateRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */; };
+		192CDE281B418DB9003992C7 /* QZBPlayerCountChooserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */; };
 		1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */; };
 		1936E0781B3BFC0F00BE6B16 /* QZBRoomResultTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */; };
 		1936E07B1B3BFED800BE6B16 /* QZBRoomUserResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */; };
+		1936E07E1B3C24A900BE6B16 /* QZBTopicWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */; };
 		193DEE411B0E227D009CEB50 /* QZBFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */; };
 		193DEE461B0E2713009CEB50 /* QZBFriendRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */; };
 		19416C201B2C7072005D34EA /* QZBChooseThisCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19416C1F1B2C7072005D34EA /* QZBChooseThisCategoryCell.m */; };
@@ -398,12 +401,18 @@
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
 		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
 		192796761A9A026F00A468E5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCreateRoomController.h; sourceTree = "<group>"; };
+		192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCreateRoomController.m; sourceTree = "<group>"; };
+		192CDE261B418DB9003992C7 /* QZBPlayerCountChooserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerCountChooserCell.h; sourceTree = "<group>"; };
+		192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerCountChooserCell.m; sourceTree = "<group>"; };
 		1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+QZBButtonCategory.h"; sourceTree = "<group>"; };
 		1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+QZBButtonCategory.m"; sourceTree = "<group>"; };
 		1936E0761B3BFC0F00BE6B16 /* QZBRoomResultTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomResultTVC.h; sourceTree = "<group>"; };
 		1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomResultTVC.m; sourceTree = "<group>"; };
 		1936E0791B3BFED800BE6B16 /* QZBRoomUserResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomUserResultCell.h; sourceTree = "<group>"; };
 		1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomUserResultCell.m; sourceTree = "<group>"; };
+		1936E07C1B3C24A900BE6B16 /* QZBTopicWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicWorker.h; sourceTree = "<group>"; };
+		1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicWorker.m; sourceTree = "<group>"; };
 		193DEE3F1B0E227D009CEB50 /* QZBFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequest.h; sourceTree = "<group>"; };
 		193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendRequest.m; sourceTree = "<group>"; };
 		193DEE441B0E2713009CEB50 /* QZBFriendRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequestManager.h; sourceTree = "<group>"; };
@@ -965,6 +974,8 @@
 				1901BA151B303732003E2895 /* QZBRoomListTVC.m */,
 				1901BA1B1B305D00003E2895 /* QZBRoomController.h */,
 				1901BA1C1B305D00003E2895 /* QZBRoomController.m */,
+				192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */,
+				192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */,
 			);
 			name = rooms;
 			sourceTree = "<group>";
@@ -972,6 +983,7 @@
 		1901BA171B303920003E2895 /* rooms */ = {
 			isa = PBXGroup;
 			children = (
+				192CDE251B418D56003992C7 /* create room */,
 				1936E0711B3BFB7D00BE6B16 /* result */,
 				1901BA181B30393D003E2895 /* QZBRoomCell.h */,
 				1901BA191B30393D003E2895 /* QZBRoomCell.m */,
@@ -1038,10 +1050,10 @@
 				19CB508E1A3C32F000A3CD74 /* View */,
 				19CB508D1A3C32E700A3CD74 /* model */,
 				191E12E31A8BD3A700AFB829 /* resources */,
+				191559C41A39CDD400462C93 /* Supporting Files */,
 				199820AB1A44A039003AECB9 /* Main.storyboard */,
 				191559D41A39CDD400462C93 /* Images.xcassets */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
-				191559C41A39CDD400462C93 /* Supporting Files */,
 			);
 			path = QZBQuizBattle;
 			sourceTree = "<group>";
@@ -1136,6 +1148,15 @@
 				191E46701B03858D0037963F /* wrong.wav */,
 			);
 			name = sounds;
+			sourceTree = "<group>";
+		};
+		192CDE251B418D56003992C7 /* create room */ = {
+			isa = PBXGroup;
+			children = (
+				192CDE261B418DB9003992C7 /* QZBPlayerCountChooserCell.h */,
+				192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */,
+			);
+			name = "create room";
 			sourceTree = "<group>";
 		};
 		1936E0711B3BFB7D00BE6B16 /* result */ = {
@@ -1454,6 +1475,8 @@
 				195EA0AE1AD52DE7000C4341 /* QZBCategory.m */,
 				197A092C1AE0F8BE00D00993 /* QZBGameTopic.h */,
 				197A092D1AE0F8BE00D00993 /* QZBGameTopic.m */,
+				1936E07C1B3C24A900BE6B16 /* QZBTopicWorker.h */,
+				1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */,
 			);
 			name = topic;
 			sourceTree = "<group>";
@@ -2847,6 +2870,7 @@
 				1936E07B1B3BFED800BE6B16 /* QZBRoomUserResultCell.m in Sources */,
 				19FA44F91B319FB200B5E853 /* QZBRoomTopicChooser.m in Sources */,
 				199666B21B207FE100793610 /* XMPPJabberRPCModule.m in Sources */,
+				192CDE241B4182B7003992C7 /* QZBCreateRoomController.m in Sources */,
 				1976FBAF1A4B04F10016130B /* QZBTopicTableViewCell.m in Sources */,
 				199666FB1B207FE100793610 /* XMPPMessageCarbons.m in Sources */,
 				199665901B207B1D00793610 /* DDList.m in Sources */,
@@ -2973,6 +2997,7 @@
 				1906EC0D1AAEF4F7004708AC /* QZBFriendsRequestsTVC.m in Sources */,
 				199665871B207B1D00793610 /* XMPPConstants.m in Sources */,
 				191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */,
+				192CDE281B418DB9003992C7 /* QZBPlayerCountChooserCell.m in Sources */,
 				199666FF1B207FE100793610 /* NSXMLElement+XEP_0335.m in Sources */,
 				1996658E1B207B1D00793610 /* XMPPPresence.m in Sources */,
 				199665321B207AEF00793610 /* DDXMLNode.m in Sources */,
@@ -3013,6 +3038,7 @@
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
 				19FA44F61B31951600B5E853 /* QZBEnterRoomCell.m in Sources */,
+				1936E07E1B3C24A900BE6B16 /* QZBTopicWorker.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
 				19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */,
 				199666C41B207FE100793610 /* XMPPvCard.xcdatamodeld in Sources */,
