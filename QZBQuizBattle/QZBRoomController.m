@@ -54,6 +54,10 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     [self.refreshControl addTarget:self
                             action:@selector(reloadRoom)
                   forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    
+    
+    self.tableView.tableFooterView = [[UIView alloc] init];
     
 
     //  self.usersWithTopics = [NSMutableArray array];
@@ -195,6 +199,11 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     }
 }
 
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 90.0;
+}
+
 #pragma mark - setting room
 
 
@@ -271,6 +280,8 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     NSNumber *ownerUserID = self.room.owner.user.userID;
 
     return [currentUserID isEqualToNumber:ownerUserID];
+    
+   // // // return YES;
 }
 
 - (QZBRoomState)roomState {
@@ -301,19 +312,19 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 - (NSString *)stringForState:(QZBRoomState)roomState {
     switch (roomState) {
         case QZBRoomStateCanStartGame:
-            return @"Начать игру";
+            return @"НАЧАТЬ ИГРУ";
             break;
         case QZBRoomStateWaitStartGame:
-            return @"Ждем начала игры";
+            return @"ЖДЕМ НАЧАЛА ИГРЫ";
             break;
         case QZBRoomStateChooseAndJoin:
-            return @"Выбрать тему и присоединиться к комнате";
+            return @"+ ЗАНЯТЬ МЕСТО";
             break;
         case QZBRoomStateChooseAndCreate:
-            return @"Выбрать тему и создать комнату";
+            return @"";
             break;
         case QZBRoomStateWaitingPlayers:
-            return @"Ждем игроков";
+            return @"ЖДЕМ ИГРОКОВ";
             break;
         case QZBRoomStateNone:
             return @"";

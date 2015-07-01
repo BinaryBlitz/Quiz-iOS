@@ -38,8 +38,8 @@
     self.topicProgressView.lineWidth = 4;
     self.topicProgressView.fillOnTouch = NO;
     self.topicProgressView.tintColor = [UIColor lightGreenColor];
-    self.symbolLabel.adjustsFontSizeToFitWidth = YES;
-    self.symbolLabel.minimumScaleFactor = 0.8;
+//    self.symbolLabel.adjustsFontSizeToFitWidth = YES;
+//    self.symbolLabel.minimumScaleFactor = 0.5;
     
 }
 
@@ -54,6 +54,9 @@
 
 -(void)initWithTopic:(QZBGameTopic *)topic{
     [self.layer setNeedsLayout];
+    
+    self.symbolLabel.minimumScaleFactor = 0.5;
+    self.symbolLabel.adjustsFontSizeToFitWidth = YES;
     
     NSInteger level = 0;
     float progress = 0.0;

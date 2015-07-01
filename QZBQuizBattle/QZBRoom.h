@@ -19,18 +19,25 @@
 @property(strong, nonatomic, readonly) NSMutableArray *participants;
 @property(strong, nonatomic, readonly) NSDate *creationDate;
 
+@property(strong, nonatomic, readonly) NSNumber *maxUserCount;;
+
 - (instancetype)initWithDictionary:(NSDictionary *)d;
 
 - (BOOL)isContainUser:(id<QZBUserProtocol>)user;
 
 - (void)addUser:(QZBUserWithTopic *)userWithTopic;
 
--(void)removeUser:(QZBUserWithTopic *)userWithTopic;
+- (void)removeUser:(QZBUserWithTopic *)userWithTopic;
 
-- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic;
+- (NSAttributedString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic;
+
+//- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic;
 
 //- (NSString *)descriptionForAllUsers;
 
 - (NSString *)participantsDescription;
 - (NSString *)topicsDescription;
+
+
+
 @end

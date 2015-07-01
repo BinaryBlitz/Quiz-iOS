@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBTopicTableViewCell.m"
-            timestampString = "455548341.711366"
+            timestampString = "457292464.689503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-initCircularProgressWithLevel:progress:visible:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1002,11 +1002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456494784.656033"
+            timestampString = "457371287.962965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15">
+            startingLineNumber = "17"
+            endingLineNumber = "17">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1048,11 +1048,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456494784.656033"
+            timestampString = "457371287.962965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15">
+            startingLineNumber = "17"
+            endingLineNumber = "17">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1094,11 +1094,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomListTVC.m"
-            timestampString = "456494784.656033"
+            timestampString = "457371287.962965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15">
+            startingLineNumber = "17"
+            endingLineNumber = "17">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1204,11 +1204,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoom.m"
-            timestampString = "456928554.352066"
+            timestampString = "457373049.249861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "-parseParticipants:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1220,11 +1220,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoom.m"
-            timestampString = "456928440.19018"
+            timestampString = "457373049.249861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "-parseParticipants:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1242,6 +1242,22 @@
             startingLineNumber = "23"
             endingLineNumber = "23"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QZBQuizBattle/QZBRoomController.m"
+            timestampString = "457436232.016243"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "-isOwner"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
