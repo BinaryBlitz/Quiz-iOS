@@ -110,14 +110,6 @@
                                                         }];
 
             
-            
-            
-            //NSURL *imgURL = [NSURL URLWithString:urlStr];
-            
-           // UIImageView *iv = [[UIImageView alloc] init];
-            
-           // [iv setImageWithURL:imgURL];
-            
             self.imageURL = imgURL;
         }else{
             self.imageURL = nil;
@@ -133,5 +125,8 @@
     }
     return self;
 }
+
+
+
 
 @end

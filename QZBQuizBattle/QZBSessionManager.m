@@ -65,6 +65,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @property (assign, nonatomic) BOOL sessionSetted;
 
+
+@property(assign, nonatomic) BOOL isRoom;
+
 @end
 
 @implementation QZBSessionManager
@@ -99,7 +102,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         return;
     }
     
-    CLS_LOG(@"sessionid %ld, lobbbyid %@",session.session_id, session.lobbyID);
+    CLS_LOG(@"sessionid %ld, lobbbyid %@",(long)session.session_id, session.lobbyID);
     
     self.isFinished = NO;
     self.isGoing = YES;
@@ -135,6 +138,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.opponentUserName = session.opponentUser.user.name;
     
     self.opponent = session.opponentUser.user;
+    
+    self.isRoom = session.isRoom;
 }
 
 -(void)setIsChallenge:(BOOL)isChallenge{
@@ -444,6 +449,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.onlineSessionWorker = nil;
     
   
+    self.isRoom = NO;
+    
     self.sessionSetted = NO;
 }
 

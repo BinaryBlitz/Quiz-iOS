@@ -53,7 +53,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#endif
 // static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
-NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";//@"http://178.62.216.83";//
+NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";  //@"http://178.62.216.83";//
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
@@ -1695,7 +1695,7 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:urlAsString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
+
             DDLogCVerbose(@"reload room %@", responseObject);
 
             QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
@@ -1717,14 +1717,15 @@ NSString *const QZBNoInternetConnectionMessage =
                         private:(BOOL)isPrivate
                       OnSuccess:(void (^)(QZBRoom *room))success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                              @"room"  : @{@"topic_id":topic.topic_id}
-                              };
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"room" : @{@"topic_id" : topic.topic_id}
+    };
 
     [self.requestOperationManager POST:@"rooms"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
+
             DDLogCVerbose(@"room create %@", responseObject);
 
             QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
@@ -1749,8 +1750,9 @@ NSString *const QZBNoInternetConnectionMessage =
                  withTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key ,
-                              @"topic_id" : topic.topic_id};
+    NSDictionary *params =
+        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+           @"topic_id" : topic.topic_id };
 
     NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/join", roomID];
 
@@ -1812,7 +1814,6 @@ NSString *const QZBNoInternetConnectionMessage =
             if (success) {
                 success();
             }
-
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1822,6 +1823,32 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
 
+        }];
+}
+
+- (void)POSTStartRoomWithID:(NSNumber *)roomID
+                  onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/start", roomID];
+
+    [self.requestOperationManager POST:urlAsString
+        parameters:params
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            DDLogCVerbose(@"room started");
+            if (success) {
+                success();
+            }
+
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            DDLogCError(@"startingRoomFailure, err %@", error);
+
+            if (failure) {
+                failure(error, operation.response.statusCode);
+            }
         }];
 }
 

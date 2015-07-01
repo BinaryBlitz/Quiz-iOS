@@ -19,7 +19,7 @@
 @property (nonatomic, assign) NSUInteger currentScore;
 @property (nonatomic, strong) NSMutableArray *userAnswers;  // QZBQuestionWithUserAnswer
 
-- (instancetype)initWithUser:(QZBUser *)user;
+- (instancetype)initWithUser:(id<QZBUserProtocol>)user;
 
 - (BOOL)couldAnswerAfterTime:(QZBQuestion *)question;
 - (QZBQuestionWithUserAnswer *)findQuestionAndAnswerWithQuestion:(QZBQuestion *)question;

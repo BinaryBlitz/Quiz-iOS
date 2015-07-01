@@ -22,19 +22,33 @@
 //    self.topicsDescriptionLabel.text = [room topicsDescription];
     
     
+    
+    
     NSMutableArray *usersWithTopics = room.participants;
     
-    for (int i = 0; i < usersWithTopics.count; i++) {
-        
-        if(i >= usersWithTopics.count){
-            return;
-        }
-        QZBUserWithTopic *userWithTopic = usersWithTopics[i];
-        
+//    for (int i = 0; i < usersWithTopics.count; i++) {
+//        
+//        if(i >= usersWithTopics.count){
+//            return;
+//        }
+//        QZBUserWithTopic *userWithTopic = usersWithTopics[i];
+//        
+//        UILabel *label = self.usersDescriptionsLabels[i];
+//        
+//        label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
+//        
+//    }
+    
+    
+    for(int i = 0; i < 4; i++){
         UILabel *label = self.usersDescriptionsLabels[i];
         
-        label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
-        
+        if(i<usersWithTopics.count){
+            QZBUserWithTopic *userWithTopic = usersWithTopics[i];
+            label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
+        }else{
+            label.attributedText = nil;
+        }
     }
     
     self.usersCountLabel.attributedText = [self usersCountAtrtStringFromRoom:room];
@@ -44,7 +58,7 @@
 
 - (NSAttributedString *)usersCountAtrtStringFromRoom:(QZBRoom *)room {
     NSInteger count = room.participants.count;
-    NSString *currentCount = [NSString stringWithFormat:@"%ld",count];
+    NSString *currentCount = [NSString stringWithFormat:@"%ld",(long)count];
     NSString *maxCountString = [NSString stringWithFormat:@"%@",room.maxUserCount];
     NSMutableAttributedString *slashString = [[NSMutableAttributedString alloc]
                                               initWithString:@"/"];

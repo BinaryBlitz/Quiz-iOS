@@ -8,33 +8,35 @@
 
 #import "QZBRoomWorker.h"
 #import "QZBRoom.h"
+#import "QZBRoomOnlineWorker.h"
 #import "QZBUserWithTopic.h"
 #import "QZBServerManager.h"
 
+@interface QZBRoomWorker ()
+
+@property(strong, nonatomic) QZBRoom *room;
+@property(strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
+
+@end
+
 @implementation QZBRoomWorker
 
-+ (instancetype)sharedInstance {
-    static QZBRoomWorker *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[QZBRoomWorker alloc] init];
-        // Do any other initialisation stuff here
-    });
-    return sharedInstance;
+
+- (instancetype)initWithRoom:(QZBRoom *)room {
+    self = [super init];
+    if (self) {
+        self.room = room;
+    }
+    return self;
 }
 
-//-(void)removeCurrentUserFromRoom:(QZBRoom *)room{
-//    
-//    [QZBServerManager sharedManager] DEL
-//}
+-(void)addRoomOnlineWorker {
+    if(!self.onlineWorker){
+        self.onlineWorker = [[QZBRoomOnlineWorker alloc] initWithRoom:self.room];
+    }
+}
+
+//-(void)nlineWorker:(QZBRoomOnlineWorker *)onlineWorker
 
 
-//-(void)leaveRoom:(QZBRoom *)room{
-//    [QZBServerManager sharedManager] DELETELeaveRoomWithID:room.roomID onSuccess:^{
-//        <#code#>
-//    } onFailure:^(NSError *error, NSInteger statusCode) {
-//        <#code#>
-//    }
-//    
-//}
 @end

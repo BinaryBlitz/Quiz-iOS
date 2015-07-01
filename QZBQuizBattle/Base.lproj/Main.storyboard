@@ -1169,11 +1169,12 @@
                         <outletCollection property="answerButtons" destination="VeJ-SL-fql" id="8nE-hP-8Ok"/>
                         <outletCollection property="answerButtons" destination="rCn-WW-jAi" id="h8C-RN-nE9"/>
                         <segue destination="Ava-zu-dhr" kind="show" identifier="gameEnded" id="9a1-UP-0yN"/>
+                        <segue destination="16B-62-nvp" kind="show" identifier="showRoomResults" id="Uzk-Ay-1g5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6141" y="-3341.25"/>
+            <point key="canvasLocation" x="6348" y="-3305.25"/>
         </scene>
         <!--End GameVC-->
         <scene sceneID="Q3U-KT-4Oq">
@@ -8382,6 +8383,7 @@
                     </tableView>
                     <connections>
                         <segue destination="gni-60-aR2" kind="show" identifier="showRoomCategoryChooser" id="49e-sg-JRM"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="showGameController" id="efK-D3-R2p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vem-PS-C6s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -8585,20 +8587,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IHH-wt-F2b" firstAttribute="bottom" secondItem="VuJ-2O-N6a" secondAttribute="bottomMargin" id="369-n3-nkf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IHH-wt-F2b" secondAttribute="trailing" constant="-16" id="6be-bx-8WB"/>
-                            <constraint firstItem="IHH-wt-F2b" firstAttribute="top" secondItem="VuJ-2O-N6a" secondAttribute="topMargin" id="XDF-ae-tDL"/>
-                            <constraint firstItem="IHH-wt-F2b" firstAttribute="leading" secondItem="VuJ-2O-N6a" secondAttribute="leadingMargin" constant="-16" id="sTA-9O-f3A"/>
+                            <constraint firstAttribute="trailing" secondItem="IHH-wt-F2b" secondAttribute="trailing" id="1MH-LL-Bl0"/>
+                            <constraint firstItem="IHH-wt-F2b" firstAttribute="leading" secondItem="VuJ-2O-N6a" secondAttribute="leading" id="nkm-f9-Exe"/>
+                            <constraint firstItem="IHH-wt-F2b" firstAttribute="top" secondItem="8Sr-5r-XAE" secondAttribute="bottom" id="wqY-nz-JaJ"/>
+                            <constraint firstItem="IHH-wt-F2b" firstAttribute="bottom" secondItem="c3P-Pd-j49" secondAttribute="top" id="yw6-qR-rIv"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="IHH-wt-F2b"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="369-n3-nkf"/>
-                                <exclude reference="6be-bx-8WB"/>
-                                <exclude reference="XDF-ae-tDL"/>
-                                <exclude reference="sTA-9O-f3A"/>
+                                <exclude reference="1MH-LL-Bl0"/>
+                                <exclude reference="nkm-f9-Exe"/>
+                                <exclude reference="wqY-nz-JaJ"/>
+                                <exclude reference="yw6-qR-rIv"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -8606,10 +8608,10 @@
                                 <include reference="IHH-wt-F2b"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="369-n3-nkf"/>
-                                <include reference="6be-bx-8WB"/>
-                                <include reference="XDF-ae-tDL"/>
-                                <include reference="sTA-9O-f3A"/>
+                                <include reference="1MH-LL-Bl0"/>
+                                <include reference="nkm-f9-Exe"/>
+                                <include reference="wqY-nz-JaJ"/>
+                                <include reference="yw6-qR-rIv"/>
                             </mask>
                         </variation>
                     </view>
@@ -8899,13 +8901,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="BKg-vl-rng" firstAttribute="bottom" secondItem="box-BK-Aep" secondAttribute="top" id="1HO-DV-JUo"/>
                             <constraint firstItem="umL-K7-g48" firstAttribute="leading" secondItem="oT8-0h-sbu" secondAttribute="leadingMargin" constant="-25" id="69O-iQ-x8X"/>
                             <constraint firstAttribute="trailingMargin" secondItem="umL-K7-g48" secondAttribute="trailing" constant="-24" id="Bs6-sR-sic"/>
-                            <constraint firstItem="BKg-vl-rng" firstAttribute="top" secondItem="oT8-0h-sbu" secondAttribute="topMargin" id="J8M-I3-gwf"/>
-                            <constraint firstItem="BKg-vl-rng" firstAttribute="leading" secondItem="oT8-0h-sbu" secondAttribute="leadingMargin" constant="-16" id="KmF-ma-Az9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BKg-vl-rng" secondAttribute="trailing" constant="-16" id="WhR-j4-lTY"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="BKg-vl-rng" secondAttribute="bottom" id="ebl-TV-UaS"/>
+                            <constraint firstItem="BKg-vl-rng" firstAttribute="leading" secondItem="oT8-0h-sbu" secondAttribute="leading" id="D3p-kX-0r5"/>
+                            <constraint firstAttribute="trailing" secondItem="BKg-vl-rng" secondAttribute="trailing" id="Np9-qC-XhZ"/>
                             <constraint firstItem="umL-K7-g48" firstAttribute="top" secondItem="SzT-w3-rBZ" secondAttribute="bottom" id="kME-Ux-hxH"/>
+                            <constraint firstItem="BKg-vl-rng" firstAttribute="top" secondItem="umL-K7-g48" secondAttribute="top" id="yZb-V8-aeN"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -8913,13 +8915,13 @@
                                 <exclude reference="BKg-vl-rng"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="1HO-DV-JUo"/>
+                                <exclude reference="D3p-kX-0r5"/>
+                                <exclude reference="Np9-qC-XhZ"/>
+                                <exclude reference="yZb-V8-aeN"/>
                                 <exclude reference="69O-iQ-x8X"/>
                                 <exclude reference="Bs6-sR-sic"/>
                                 <exclude reference="kME-Ux-hxH"/>
-                                <exclude reference="J8M-I3-gwf"/>
-                                <exclude reference="KmF-ma-Az9"/>
-                                <exclude reference="WhR-j4-lTY"/>
-                                <exclude reference="ebl-TV-UaS"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -8928,13 +8930,13 @@
                                 <include reference="BKg-vl-rng"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="1HO-DV-JUo"/>
+                                <include reference="D3p-kX-0r5"/>
+                                <include reference="Np9-qC-XhZ"/>
+                                <include reference="yZb-V8-aeN"/>
                                 <include reference="69O-iQ-x8X"/>
                                 <include reference="Bs6-sR-sic"/>
                                 <include reference="kME-Ux-hxH"/>
-                                <include reference="J8M-I3-gwf"/>
-                                <include reference="KmF-ma-Az9"/>
-                                <include reference="WhR-j4-lTY"/>
-                                <include reference="ebl-TV-UaS"/>
                             </mask>
                         </variation>
                     </view>
@@ -9109,7 +9111,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TPO-t5-PKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7188" y="-1906.5"/>
+            <point key="canvasLocation" x="7188" y="-4024.5"/>
         </scene>
         <!--Категории-->
         <scene sceneID="akW-6X-G0G">
@@ -11983,6 +11985,7 @@
         <segue reference="qGa-a3-3D7"/>
         <segue reference="Q6R-nc-Xpj"/>
         <segue reference="1oA-Co-JGY"/>
-        <segue reference="Lr1-mO-cRZ"/>
+        <segue reference="efK-D3-R2p"/>
+        <segue reference="9a1-UP-0yN"/>
     </inferredMetricsTieBreakers>
 </document>

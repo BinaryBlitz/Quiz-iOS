@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class QZBRoom;
+
 @interface QZBRoomWorker : NSObject
+
+- (instancetype)initWithRoom:(QZBRoom *)room;
+- (void)addRoomOnlineWorker;
 
 @end

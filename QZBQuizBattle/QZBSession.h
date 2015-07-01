@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 
 @interface QZBSession : NSObject
 
-@property (nonatomic, strong, readonly) NSArray *questions;  // QZBQestion
+@property (nonatomic, strong, readonly) NSArray *questions;  // QZBQuestion
 @property (nonatomic, strong, readonly) QZBUserInSession *firstUser;
 @property (nonatomic, strong, readonly) QZBUserInSession *opponentUser;
 @property (strong, nonatomic, readonly) NSNumber *lobbyID;
@@ -31,9 +31,11 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 
 @property (assign, nonatomic, readonly) NSInteger userMultiplier;
 
-- (instancetype)initWithQestions:(NSArray *)qestions
-                           first:(id<QZBUserProtocol> )firstUser
-                    opponentUser:(id<QZBUserProtocol> )opponentUser;
+@property (assign, nonatomic, readonly) BOOL isRoom;
+
+//- (instancetype)initWithQestions:(NSArray *)qestions
+//                           first:(id<QZBUserProtocol> )firstUser
+//                    opponentUser:(id<QZBUserProtocol> )opponentUser;
 
 - (instancetype)initWIthDictionary:(NSDictionary *)dict;
 

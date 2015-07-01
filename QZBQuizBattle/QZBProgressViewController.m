@@ -369,7 +369,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.counter = 7;
 
     if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.8
                                                       target:self
                                                     selector:@selector(tryGetSession:)
                                                     userInfo:nil

@@ -12,7 +12,7 @@
 
 @interface QZBQuestion : NSObject
 
-@property (nonatomic, copy, readonly) NSString *topic;
+//@property (nonatomic, copy, readonly) NSString *topic;
 @property (nonatomic, copy, readonly) NSString *question;
 @property (nonatomic, strong, readonly) NSArray *answers;  // QZBAnswerTextAndID
 @property (nonatomic, assign, readonly) NSUInteger rightAnswer;
