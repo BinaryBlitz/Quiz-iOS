@@ -14,6 +14,7 @@
 #import "QZBServerManager.h"
 #import "QZBTopicWorker.h"
 
+#import "UIFont+QZBCustomFont.h"
 @interface QZBRoom ()
 
 @property (strong, nonatomic) NSNumber *roomID;
@@ -21,6 +22,8 @@
 @property (strong, nonatomic) QZBUserWithTopic *owner;
 @property (strong, nonatomic) NSDate *creationDate;
 @property (strong, nonatomic) NSMutableArray *participants;  // QZBUserWithTopic
+
+@property(strong, nonatomic) NSNumber *maxUserCount;
 
 @end
 
@@ -44,6 +47,17 @@
         self.creationDate = [df dateFromString:d[@"created_at"]];
 
         self.participants = [self parseParticipants:d[@"participations"]];
+        
+        for(QZBUserWithTopic *userWithTopic in self.participants) {
+            
+            if(userWithTopic.isAdmin){
+                self.owner = userWithTopic;
+                break;
+            }
+            
+        }
+        
+        self.maxUserCount = @(5);
 
     //    [self.participants insertObject:self.owner atIndex:0];
     }
@@ -79,13 +93,52 @@
     
 }
 
-- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
-    NSMutableString *res = [NSMutableString string];
+//- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
+//    NSMutableString *res = [NSMutableString string];
+//
+//    [res appendString:userWithTopic.user.name];
+//    [res appendString:@"   "];
+//    [res appendString:userWithTopic.topic.name];
+//    return [NSString stringWithString:res];
+//}
 
-    [res appendString:userWithTopic.user.name];
-    [res appendString:@"   "];
-    [res appendString:userWithTopic.topic.name];
-    return [NSString stringWithString:res];
+-(NSAttributedString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
+    
+    NSString *name = userWithTopic.user.name;
+    
+    NSMutableAttributedString *attributedName = [[NSMutableAttributedString alloc]
+                                                 initWithString:name];
+    NSRange nameRange = NSMakeRange(0, name.length);
+    
+    UIFont *museoFontBig = [UIFont boldMuseoFontOfSize:20];
+    
+    [attributedName addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:nameRange];
+    [attributedName addAttribute:NSFontAttributeName value:museoFontBig range:nameRange];
+    
+    
+    NSString *topicName = [userWithTopic.topic.name
+                                                   stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]]; 
+    NSRange topicNameRange = NSMakeRange(0, topicName.length);
+    UIFont *museoFontSmall = [UIFont museoFontOfSize:12];
+    
+    NSMutableAttributedString *attributedTopicName = [[NSMutableAttributedString alloc] initWithString:topicName];
+    
+    [attributedTopicName addAttribute:NSForegroundColorAttributeName value:[UIColor lightTextColor] range:topicNameRange];
+    [attributedTopicName addAttribute:NSFontAttributeName value:museoFontSmall range:topicNameRange];
+    
+   // NSAttributedString *nextLine = [NSAttributedString alloc] initWithString:<#(NSString *)#>
+    
+    //NSAttributedString *resString = [NSAttributedString at]
+    
+   // NSMutableAttributedString *res = [[NSMutableAttributedString alloc] init];
+    
+    NSAttributedString *nextLineString = [[NSAttributedString alloc] initWithString:@"\n"];
+    
+    [attributedName appendAttributedString:nextLineString];
+    [attributedName appendAttributedString:attributedTopicName];
+    
+    return [[NSAttributedString alloc] initWithAttributedString:attributedName];
+    
 }
 
 - (NSString *)descriptionForAllUsers {

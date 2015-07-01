@@ -12,6 +12,8 @@
 #import "QZBRoomCell.h"
 #import "QZBRoomController.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import "QZBRoom.h"
+
 // cell identifiers
 NSString *const QZBRoomCellIdentifier = @"QZBRoomCellIdentifier";
 
@@ -40,6 +42,8 @@ NSString *const QZBCurrentTitle = @"Комнаты";
     [self.refreshControl addTarget:self
                             action:@selector(reloadRooms)
                   forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.tintColor = [UIColor whiteColor];
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
@@ -47,6 +51,11 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 
     self.title = QZBCurrentTitle;
 
+   //[self reloadRooms];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self reloadRooms];
 }
 
@@ -93,6 +102,17 @@ NSString *const QZBCurrentTitle = @"Комнаты";
     [self performSegueWithIdentifier:QZBShowRoomSegueIdentifier sender:nil];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QZBRoom *r = self.rooms[indexPath.row];
+    const CGFloat shortCellHeight = 70.0;
+    const CGFloat longCellHeight  = 140.0;
+    if(r.participants.count <= 2){
+        return shortCellHeight;
+    }else{
+        return longCellHeight;
+    }
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -102,7 +122,7 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 
     //  NSNumber *number = @([stringToSearch intValue]);
 
-    NSLog(@"num to search %ld", val);
+    NSLog(@"num to search %ld", (long)val);
 
     //
     [[QZBServerManager sharedManager] GETRoomWithID:@(val)

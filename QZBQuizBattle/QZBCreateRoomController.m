@@ -8,126 +8,188 @@
 
 #import "QZBCreateRoomController.h"
 
-//model
+// model
 #import "QZBServerManager.h"
 #import "QZBGameTopic.h"
 
-//cells
+// UI
+#import "UIViewController+QZBControllerCategory.h"
+#import <SVProgressHUD.h>
+
+// cells
 #import "QZBTopicTableViewCell.h"
 #import "QZBPlayerCountChooserCell.h"
 
-//cell identifiers
+// controllers
+#import "QZBRoomController.h"
 
-NSString *const QZBPlayerCountChooserCellIdentifier = @"playerCountChooserCell";
-NSString *const QZBChooseTopicCellIdentifier = @"chooseTopicCellIdentifier";
-NSString *const QZBTopicCellIdentifier = @"topicCell";
+// cell identifiers
+
+NSString *const QZBPlayerCountChooserCellIdentifier     = @"playerCountChooserCell";
+NSString *const QZBChooseTopicCellIdentifier            = @"chooseTopicCellIdentifier";
+NSString *const QZBTopicCellIdentifier                  = @"topicCell";
 NSString *const QZBChooseTopicDescriptionCellIdentifier = @"chooseTopicDescriptionCellIdentifier";
+NSString *const QZBPasswordOnlyChooserCellIdentifier    = @"passwordOnlyChooserCellIdentifier";
+NSString *const QZBPasswordInputCellIdentifier          = @"passwordInputCellIdentifier";
+NSString *const QZBCreateRoomCellIdentifier             = @"createRoomCellIdentifier";
+NSString *const QZBEmptyCellIdentifier                  = @"emptyCellIdentifier";
 
-NSString *const QZBPasswordOnlyChooserCellIdentifier = @"passwordOnlyChooserCellIdentifier";
+// cell heigths
 
-
-//cell heigths
-
-const CGFloat playersCountCellHeight = 132.0;
+const CGFloat playersCountCellHeight            = 132.0;
 const CGFloat topicChooserDescriptionCellHeight = 65.0;
+const CGFloat topicCellHeight                   = 79.0;
+const CGFloat createRoomCellHeight              = 56.0;
 
-const CGFloat topicCellHeight = 79.0;
-
-//segues
+// segues
 
 NSString *const QZBShowRoomCategoryChooserFromCreate = @"showRoomCategoryChooser";
+NSString *const QZBShowCreatedRoomSegueIdentifier    = @"showCreatedRoom";
 
-@interface QZBCreateRoomController()
+// messages
+NSString *const QZBRoomCreatedMessage = @"Комната создана!";
 
-@property(strong, nonatomic) QZBGameTopic *topic;
+@interface QZBCreateRoomController ()
+
+@property (strong, nonatomic) QZBGameTopic *topic;
+@property (assign, nonatomic) BOOL shoulShowPassword;
+
+@property (strong, nonatomic) QZBRoom *room;
 
 @end
 
 @implementation QZBCreateRoomController
 
-
--(void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initStatusbarWithColor:[UIColor blackColor]];
     self.title = @"Создание комнаты";
 }
 
-
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (!self.topic) {
+        return 3;
+    } else {
+        return 5;
+    }
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        QZBPlayerCountChooserCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:QZBPlayerCountChooserCellIdentifier];
+        return cell;
+    } else if (indexPath.row == 1) {
+        UITableViewCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicDescriptionCellIdentifier];
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if(indexPath.row == 0){
-        QZBPlayerCountChooserCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBPlayerCountChooserCellIdentifier];
         return cell;
-    }else if(indexPath.row == 1){
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicDescriptionCellIdentifier];
-        
-        return cell;
-        
-        
-    }else if(indexPath.row == 2){
-        if(self.topic){
-            QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBTopicCellIdentifier];
-            
+
+    } else if (indexPath.row == 2) {
+        if (self.topic) {
+            QZBTopicTableViewCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:QZBTopicCellIdentifier];
+
             [cell initWithTopic:self.topic];
-            
+
             return cell;
-        }else{
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicCellIdentifier];
-            
+        } else {
+            UITableViewCell *cell =
+                [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicCellIdentifier];
+
             return cell;
         }
+    } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 2) {
+        UITableViewCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:QZBEmptyCellIdentifier];
+        return cell;
+
+    } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
+        UITableViewCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:QZBCreateRoomCellIdentifier];
+
+        return cell;
     }
-    else
-    {
+
+    else {
         return nil;
     }
 }
 
 #pragma mark - UITableViewDelegate
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if(indexPath.row == 0 ){
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
         return playersCountCellHeight;
-    }else if(indexPath.row == 1){
+    } else if (indexPath.row == 1) {
         return topicChooserDescriptionCellHeight;
-    } else if(indexPath.row == 2){
+    } else if (indexPath.row == 2) {
         return topicCellHeight;
     }
-    
-    else{
-        return 42;
+
+    else {
+        return 56;
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifier]){
-        //do segue to group chooser
-        
+    if ([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifier] ||
+        [cell.reuseIdentifier isEqualToString:QZBTopicCellIdentifier]) {
+        // do segue to group chooser
+
         [self performSegueWithIdentifier:QZBShowRoomCategoryChooserFromCreate sender:nil];
+    } else if ([cell.reuseIdentifier isEqualToString:QZBCreateRoomCellIdentifier]) {
+        [self createRoom];
     }
-    
 }
 
 #pragma mark - setting topic
 
--(void)setUserTopic:(QZBGameTopic *)topic{
+- (void)setUserTopic:(QZBGameTopic *)topic {
     self.topic = topic;
-    
-    [[QZBServerManager sharedManager] POSTCreateRoomWithTopic:topic private:YES OnSuccess:^(QZBRoom *room) {
-        
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
-    }];
+
     [self.tableView reloadData];
+}
+#pragma mark - room create
+
+- (void)createRoom {
+    if (self.topic) {
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+
+        [[QZBServerManager sharedManager] POSTCreateRoomWithTopic:self.topic
+            private:NO
+            OnSuccess:^(QZBRoom *room) {
+                [SVProgressHUD showSuccessWithStatus:QZBRoomCreatedMessage];
+
+                self.room = room;
+                [self performSegueWithIdentifier:QZBShowCreatedRoomSegueIdentifier sender:nil];
+            }
+            onFailure:^(NSError *error, NSInteger statusCode) {
+                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+            }];
+    }
+}
+
+#pragma mark - ui
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
+#pragma mark - navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:QZBShowCreatedRoomSegueIdentifier]) {
+        QZBRoomController *destVC = (QZBRoomController *)segue.destinationViewController;
+
+        [destVC initWithRoom:self.room];
+
+    }
 }
 
 @end
