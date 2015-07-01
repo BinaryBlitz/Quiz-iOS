@@ -258,6 +258,10 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)POSTStartRoomWithID:(NSNumber *)roomID
+                  onSuccess:(void (^)())success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 
 
 

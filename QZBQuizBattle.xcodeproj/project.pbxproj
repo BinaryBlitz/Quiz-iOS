@@ -58,6 +58,9 @@
 		1936E07B1B3BFED800BE6B16 /* QZBRoomUserResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */; };
 		1936E07E1B3C24A900BE6B16 /* QZBTopicWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */; };
 		193CC9111B42A3F70060B69B /* QZBRoomChooseTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */; };
+		193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */; };
+		193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9171B441EAD0060B69B /* QZBRoomSession.m */; };
+		193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */; };
 		193DEE411B0E227D009CEB50 /* QZBFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */; };
 		193DEE461B0E2713009CEB50 /* QZBFriendRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */; };
 		19416C201B2C7072005D34EA /* QZBChooseThisCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19416C1F1B2C7072005D34EA /* QZBChooseThisCategoryCell.m */; };
@@ -423,6 +426,12 @@
 		1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicWorker.m; sourceTree = "<group>"; };
 		193CC90F1B42A3F60060B69B /* QZBRoomChooseTopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomChooseTopicCell.h; sourceTree = "<group>"; };
 		193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomChooseTopicCell.m; sourceTree = "<group>"; };
+		193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnlineWorker.h; sourceTree = "<group>"; };
+		193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomOnlineWorker.m; sourceTree = "<group>"; };
+		193CC9161B441EAD0060B69B /* QZBRoomSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomSession.h; sourceTree = "<group>"; };
+		193CC9171B441EAD0060B69B /* QZBRoomSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomSession.m; sourceTree = "<group>"; };
+		193CC91A1B4420C80060B69B /* QZBRoomQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomQuestion.h; sourceTree = "<group>"; };
+		193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomQuestion.m; sourceTree = "<group>"; };
 		193DEE3F1B0E227D009CEB50 /* QZBFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequest.h; sourceTree = "<group>"; };
 		193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendRequest.m; sourceTree = "<group>"; };
 		193DEE441B0E2713009CEB50 /* QZBFriendRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequestManager.h; sourceTree = "<group>"; };
@@ -967,10 +976,13 @@
 		1901BA0F1B3026AD003E2895 /* rooms */ = {
 			isa = PBXGroup;
 			children = (
+				193CC9191B441EB20060B69B /* session */,
 				19DC85A01B3AE01F00E20998 /* QZBRoomWorker.h */,
 				19DC85A11B3AE01F00E20998 /* QZBRoomWorker.m */,
 				1901BA101B3026F6003E2895 /* QZBRoom.h */,
 				1901BA111B3026F6003E2895 /* QZBRoom.m */,
+				193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */,
+				193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */,
 			);
 			name = rooms;
 			sourceTree = "<group>";
@@ -1192,6 +1204,17 @@
 				1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */,
 			);
 			name = result;
+			sourceTree = "<group>";
+		};
+		193CC9191B441EB20060B69B /* session */ = {
+			isa = PBXGroup;
+			children = (
+				193CC9161B441EAD0060B69B /* QZBRoomSession.h */,
+				193CC9171B441EAD0060B69B /* QZBRoomSession.m */,
+				193CC91A1B4420C80060B69B /* QZBRoomQuestion.h */,
+				193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */,
+			);
+			name = session;
 			sourceTree = "<group>";
 		};
 		193DEE3E1B0E21B2009CEB50 /* friendRequest */ = {
@@ -3038,6 +3061,7 @@
 				199666AE1B207FE100793610 /* XMPPRoster.m in Sources */,
 				1996658C1B207B1D00793610 /* XMPPModule.m in Sources */,
 				199666B01B207FE100793610 /* XMPPIQ+JabberRPC.m in Sources */,
+				193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				199666C21B207FE100793610 /* XMPPMUC.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
@@ -3047,6 +3071,7 @@
 				199666DA1B207FE100793610 /* XMPPDateTimeProfiles.m in Sources */,
 				1996669F1B207FE100793610 /* XMPPCoreDataStorage.m in Sources */,
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
+				193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */,
 				191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
 				1974BC101AD699970057E966 /* QZBEndGamePointsCell.m in Sources */,
@@ -3105,6 +3130,7 @@
 				199666D81B207FE100793610 /* XMPPRegistration.m in Sources */,
 				1996657F1B207B1D00793610 /* XMPPDigestMD5Authentication.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
+				193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */,
 				196472641AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m in Sources */,
 				1901BA161B303732003E2895 /* QZBRoomListTVC.m in Sources */,
 				199666BC1B207FE100793610 /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,

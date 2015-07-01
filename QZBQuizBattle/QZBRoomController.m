@@ -8,6 +8,7 @@
 
 #import "QZBRoomController.h"
 #import "QZBRoom.h"
+#import "QZBRoomWorker.h"
 #import "QZBGameTopic.h"
 #import "QZBUserWithTopic.h"
 #import "QZBAnotherUser.h"
@@ -19,12 +20,21 @@
 
 #import "QZBServerManager.h"
 
+#import "QZBSessionManager.h"
+
+//room worker
+
+#import "QZBRoomOnlineWorker.h"
+
+
+
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
-NSString *const QZBEnterRoomCellIdentifier = @"enterRoomCellIdentifier";
+NSString *const QZBEnterRoomCellIdentifier  = @"enterRoomCellIdentifier";
 
 // segues
-NSString *const QZBShowRoomCategoryChooser = @"showRoomCategoryChooser";
+NSString *const QZBShowRoomCategoryChooser  = @"showRoomCategoryChooser";
+NSString *const QZBShowGameController       = @"showGameController";
 
 // lastButtonStateEnum
 typedef NS_ENUM(NSInteger, QZBRoomState) {
@@ -39,6 +49,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 @interface QZBRoomController () <UIAlertViewDelegate>
 
 @property (strong, nonatomic) QZBRoom *room;
+
+@property (strong, nonatomic) QZBRoomWorker *roomWorker;
+//@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
 //@property (strong, nonatomic) QZBGameTopic *selectedTopic;
 //@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
 
@@ -81,14 +94,24 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)dealloc {
     [self leaveOrDeleteRoom];
+    
 }
 
 - (void)initWithRoom:(QZBRoom *)room {
     self.room = room;
-
     
+    if([self isOwner]){
+        [self generateRoomWorkerWithRoom:room];
+    }
+
     [self setTitleWithRoom:room];
 }
 
@@ -132,7 +155,23 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     }
 }
 
+- (void)startGame {
+    [[QZBServerManager sharedManager] POSTStartRoomWithID:self.room.roomID onSuccess:^{
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+}
+
+
 #pragma mark - Navigation
+
+
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if([segue.identifier isEqualToString:QZBShowGameController]){
+//        
+//    }
+//}
 
 //-(void)didMoveToParentViewController:(UIViewController *)parent{
 //
@@ -191,9 +230,10 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         QZBRoomState roomState = [self roomState];
 
         if ([self canPressLastButton]){
-
             if(roomState != QZBRoomStateCanStartGame){
                 [self performSegueWithIdentifier:QZBShowRoomCategoryChooser sender:nil];
+            } else {
+                [self startGame];
             }
         }
     }
@@ -211,30 +251,33 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 - (void)setUserTopic:(QZBGameTopic *)topic {
     // self.selectedTopic = topic;
 
-    if (!self.room) {
-        [[QZBServerManager sharedManager] POSTCreateRoomWithTopic:topic
-            private:NO
-            OnSuccess:^(QZBRoom *room) {
-
-                self.room = room;
-                [self setTitleWithRoom:room];
-                [self.tableView reloadData];
-                //[self addUserInRoomWithTopic:topic];
-            }
-            onFailure:^(NSError *error, NSInteger statusCode){
-
-            }];
-
-    } else {
+//    if (!self.room) {
+//        [[QZBServerManager sharedManager] POSTCreateRoomWithTopic:topic
+//            private:NO
+//            OnSuccess:^(QZBRoom *room) {
+//
+//                self.room = room;
+//                [self setTitleWithRoom:room];
+//                [self.tableView reloadData];
+//                //[self addUserInRoomWithTopic:topic];
+//            }
+//            onFailure:^(NSError *error, NSInteger statusCode){
+//
+//            }];
+//
+//    } else {
+    
+    
         [[QZBServerManager sharedManager] POSTJoinRoomWithID:self.room.roomID
             withTopic:topic
             onSuccess:^{
                 [self addUserInRoomWithTopic:topic];
+                [self generateRoomWorkerWithRoom:self.room];
             }
             onFailure:^(NSError *error, NSInteger statusCode){
 
             }];
-    }
+//    }
 }
 
 - (void)addUserInRoomWithTopic:(QZBGameTopic *)topic {
@@ -260,8 +303,31 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
     }];
+}
+
+-(void)generateRoomWorkerWithRoom:(QZBRoom *)room {
+    self.roomWorker = [[QZBRoomWorker alloc] initWithRoom:room];
+
+    [self.roomWorker addRoomOnlineWorker];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showGameController)
+                                                 name:QZBNeedStartRoomGame object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadRoom) name:QZBNewParticipantJoinedRoom object:nil];
+    
+    
     
 }
+
+-(void)showGameController{
+    
+    QZBGameTopic *topic = self.room.owner.topic;
+    
+    [[QZBSessionManager sessionManager] setTopicForSession:topic];
+    [self performSegueWithIdentifier:QZBShowGameController sender:nil];
+}
+
 
 #pragma mark - support methods
 
@@ -292,7 +358,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     if ([self isOwner]) {
         if (!self.room) {
             return QZBRoomStateChooseAndCreate;
-        } else if (self.room.participants.count < 3) {
+        } else if (self.room.participants.count < 2) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateCanStartGame;
@@ -301,7 +367,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         QZBUser *user = [QZBCurrentUser sharedInstance].user;
         if (![self.room isContainUser:user]) {
             return QZBRoomStateChooseAndJoin;
-        } else if (self.room.participants.count < 3) {
+        } else if (self.room.participants.count < 2) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateWaitingPlayers;
@@ -365,7 +431,6 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     }
     
     self.title = title;
-    
 }
 
 #pragma mark - ui

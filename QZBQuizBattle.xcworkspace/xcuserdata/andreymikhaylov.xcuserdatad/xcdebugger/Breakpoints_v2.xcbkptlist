@@ -1252,12 +1252,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QZBQuizBattle/QZBRoomController.m"
-            timestampString = "457436232.016243"
+            timestampString = "457466014.101247"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "-isOwner"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QZBQuizBattle/QZBSettingsTVC.m"
+            timestampString = "457443994.554594"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "-camera:didFinishWithImage:withMetadata:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QZBSettingsTVC camera:didFinishWithImage:withMetadata:]"
+                  moduleName = "QZBQuizBattle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreymikhaylov/Dropbox/developer/QZBQuizIOS/QZBQuizBattle/QZBSettingsTVC.m"
+                  timestampString = "457466014.705842"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "98">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__57-[QZBSettingsTVC camera:didFinishWithImage:withMetadata:]_block_invoke"
+                  moduleName = "QZBQuizBattle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreymikhaylov/Dropbox/developer/QZBQuizIOS/QZBQuizBattle/QZBSettingsTVC.m"
+                  timestampString = "457466014.706891"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QZBQuizBattle/QZBSettingsTVC.m"
+            timestampString = "457443995.274515"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "-camera:didFinishWithImage:withMetadata:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
