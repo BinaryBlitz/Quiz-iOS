@@ -36,6 +36,27 @@
     }
 }
 
+- (void)closeOnlineWorker {
+    [self.onlineWorker closeConnection];
+}
+
+- (void)userWithId:(NSNumber *)userID reachedPoints:(NSNumber *)points {
+    QZBUserWithTopic *userWithTopic = nil;
+    
+    for(QZBUserWithTopic *uandt in self.room.participants) {
+        if([uandt.user.userID isEqualToNumber:userID]){
+            userWithTopic = uandt;
+            break;
+        }
+    }
+    
+    if(userWithTopic){
+        [userWithTopic addReachedPoints:points];
+    }
+    
+    
+}
+
 //-(void)nlineWorker:(QZBRoomOnlineWorker *)onlineWorker
 
 

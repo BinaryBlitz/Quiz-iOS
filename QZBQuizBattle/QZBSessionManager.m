@@ -12,6 +12,7 @@
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
 #import "QZBOnlineSessionWorker.h"
+#import "QZBRoomWorker.h"
 #import <Crashlytics/Crashlytics.h>
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -66,7 +67,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @property (assign, nonatomic) BOOL sessionSetted;
 
 
-@property(assign, nonatomic) BOOL isRoom;
+//@property(assign, nonatomic) BOOL isRoom;
+@property (strong, nonatomic) QZBRoomWorker *roomWorker;
+
 
 @end
 
@@ -139,7 +142,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     self.opponent = session.opponentUser.user;
     
-    self.isRoom = session.isRoom;
+    //self.isRoom = session.isRoom;
 }
 
 -(void)setIsChallenge:(BOOL)isChallenge{
@@ -158,6 +161,28 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         _bot = bot;
     }
 }
+
+//room
+- (void)setRoomWorkerToSessionWorker:(QZBRoomWorker *)roomWorker {
+    self.roomWorker = roomWorker;
+    
+    if (self.onlineSessionWorker) {
+        [self.onlineSessionWorker closeConnection];
+    }
+    self.bot = nil;
+    
+    self.isOfflineChallenge = YES;
+    
+}
+
+-(BOOL)isRoom{
+    if(self.roomWorker){
+        return YES;
+    }else {
+        return NO;
+    }
+}
+//
 
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker {
     if (_onlineSessionWorker && _bot) {
@@ -186,6 +211,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.onlineSessionWorker = nil;
     self.isOfflineChallenge = YES;
 }
+
+
 
 - (void)timeCountingStart {
     if (!self.questionTimer) {
@@ -268,11 +295,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //метод для подсчета очков первого пользователя
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum time:(NSUInteger)time {
     //отправляет данные о ходе пользователя
+    if(!self.roomWorker){
     [[QZBServerManager sharedManager] PATCHSessionQuestionWithID:self.currentQuestion.questionId
                                                           answer:answerNum
                                                             time:time
                                                        onSuccess:nil
                                                        onFailure:nil];
+    } else {
+        
+        [[QZBServerManager sharedManager]
+         PATCHAnswerRoomQuestionWithID:self.currentQuestion.questionId
+         answerID:answerNum
+         time:time
+         onSuccess:nil
+         onFailure:nil];
+    }
 
     [self someAnswerCurrentQuestinUser:self.gameSession.firstUser AnswerNumber:answerNum time:time];
 
@@ -306,6 +343,28 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                         object:self];
     [self checkNeedUnshow];
 }
+//rooms
+
+- (void)oneOfOpponentWithID:(NSNumber *)userID
+     answeredQuestionWithID:(NSNumber *)questionID
+                   answerID:(NSNumber *)answerID
+                   withTime:(NSNumber *)time {
+    
+    if(self.roomWorker){
+        [self.roomWorker userWithId:userID reachedPoints:@(10)];
+    }
+}
+//- (void)oneOfOpponentWithID:(NSNumber *)userID
+//     answeredQuestionWithID:(NSNumber *)questionID
+//                   withTime:(NSNumber *)time {
+//    
+//    
+//    
+//    if(self.roomWorker){
+//        [self.roomWorker userWithId:userID reachedPoints:@(10)];
+//    }
+//    
+//}
 
 //для подсчета очков в сессии для первого или второо
 - (void)someAnswerCurrentQuestinUser:(QZBUserInSession *)user
@@ -446,10 +505,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (self.onlineSessionWorker) {
         [self.onlineSessionWorker closeConnection];
     }
+    
+    
     self.onlineSessionWorker = nil;
     
-  
-    self.isRoom = NO;
+    if(self.roomWorker){
+        [self.roomWorker closeOnlineWorker];
+        self.roomWorker = nil;
+    }
     
     self.sessionSetted = NO;
 }

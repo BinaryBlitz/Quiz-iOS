@@ -21,4 +21,6 @@
 
 - (instancetype)initWithUser:(id<QZBUserProtocol>)user topic:(QZBGameTopic *)topic;
 
+- (void)addReachedPoints:(NSNumber *)points;
+
 @end
