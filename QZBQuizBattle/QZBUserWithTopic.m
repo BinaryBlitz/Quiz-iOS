@@ -28,11 +28,19 @@
     if (self) {
         self.user = user;
         self.topic = topic;
-        self.finished = NO;
+        self.finished = YES;//redo
         self.points = @(0);
         
     }
     return self;
+}
+
+- (void)addReachedPoints:(NSNumber *)points {
+   // self.points+=points;
+    NSInteger currentPoints = [self.points integerValue];
+    NSInteger newPoints = [points integerValue];
+    currentPoints += newPoints;
+    self.points = @(currentPoints);
 }
 
 @end

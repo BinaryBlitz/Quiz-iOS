@@ -94,7 +94,6 @@
     if ([[notification name] isEqualToString:@"QZBNewQuestionTimeCountingStart"]) {
         if ([notification.object isKindOfClass:[NSNumber class]]) {
             
-
             NSNumber *num = (NSNumber *)notification.object;
 
             NSUInteger number = [num unsignedIntegerValue];

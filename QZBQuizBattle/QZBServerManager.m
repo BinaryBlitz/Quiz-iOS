@@ -1852,4 +1852,36 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
+-(void)PATCHAnswerRoomQuestionWithID:(NSInteger) questionID
+                            answerID:(NSInteger) answerID
+                                time:(NSInteger) time
+                           onSuccess:(void (^)())success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure  {
+    
+     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                               
+                               @"room_answer":@{
+                                   @"answer_id":@(answerID),
+                                   @"time":@(time)
+                               }
+                               };
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"room_questions/%@/answer",@(questionID)];
+    
+    
+    [self.requestOperationManager POST:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if(success){
+            success();
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogCError(@"patch answer err %@", error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+}
+
 @end

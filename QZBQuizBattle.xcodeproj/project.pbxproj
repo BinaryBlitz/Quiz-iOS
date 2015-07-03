@@ -297,6 +297,8 @@
 		19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */; };
 		19C0DEBE1AB4A1D1005F27D4 /* QZBProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */; };
 		19C0DEC11AB4B81F005F27D4 /* QZBMainBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C0DEC01AB4B81F005F27D4 /* QZBMainBoosterCell.m */; };
+		19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */; };
+		19C78A401B468EED00B46372 /* QZBRoomUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C78A3F1B468EED00B46372 /* QZBRoomUsersView.m */; };
 		19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50911A3C33B000A3CD74 /* QZBQuestion.m */; };
 		19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50951A3C37BA00A3CD74 /* QZBSession.m */; };
 		19CB50991A3C388000A3CD74 /* QZBUserInSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50981A3C388000A3CD74 /* QZBUserInSession.m */; };
@@ -886,6 +888,9 @@
 		19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProduct.m; sourceTree = "<group>"; };
 		19C0DEBF1AB4B81F005F27D4 /* QZBMainBoosterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainBoosterCell.h; sourceTree = "<group>"; };
 		19C0DEC01AB4B81F005F27D4 /* QZBMainBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainBoosterCell.m; sourceTree = "<group>"; };
+		19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QZBRoomUsersView.xib; sourceTree = "<group>"; };
+		19C78A3E1B468EED00B46372 /* QZBRoomUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomUsersView.h; sourceTree = "<group>"; };
+		19C78A3F1B468EED00B46372 /* QZBRoomUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomUsersView.m; sourceTree = "<group>"; };
 		19CB50901A3C33B000A3CD74 /* QZBQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuestion.h; sourceTree = "<group>"; };
 		19CB50911A3C33B000A3CD74 /* QZBQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuestion.m; sourceTree = "<group>"; };
 		19CB50941A3C37BA00A3CD74 /* QZBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSession.h; sourceTree = "<group>"; };
@@ -1084,6 +1089,7 @@
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				19C78A391B4687B800B46372 /* ui */,
 				19407B121AE8E79600A12F20 /* categories */,
 				195EA0A61AD52093000C4341 /* lib */,
 				191559D61A39CDD400462C93 /* LaunchScreen.xib */,
@@ -1264,6 +1270,8 @@
 			children = (
 				194258271B18BB86008A3449 /* QZBViewWithLineOnBottom.h */,
 				194258281B18BB86008A3449 /* QZBViewWithLineOnBottom.m */,
+				19C78A3E1B468EED00B46372 /* QZBRoomUsersView.h */,
+				19C78A3F1B468EED00B46372 /* QZBRoomUsersView.m */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -2485,6 +2493,14 @@
 			name = animation;
 			sourceTree = "<group>";
 		};
+		19C78A391B4687B800B46372 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		19CB508D1A3C32E700A3CD74 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2811,6 +2827,7 @@
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
 				1944A1891B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf in Resources */,
 				191E46751B03858D0037963F /* timer.wav in Resources */,
+				19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */,
 				191E46711B03858D0037963F /* achievment.wav in Resources */,
 				1955A3F51AAB40870083778A /* icon_register.png in Resources */,
 				191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */,
@@ -3099,6 +3116,7 @@
 				199666A11B207FE100793610 /* XMPPIncomingFileTransfer.m in Sources */,
 				1996658D1B207B1D00793610 /* XMPPParser.m in Sources */,
 				199666CB1B207FE100793610 /* XMPPvCardTempAdrTypes.m in Sources */,
+				19C78A401B468EED00B46372 /* QZBRoomUsersView.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,

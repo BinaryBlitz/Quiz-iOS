@@ -14,12 +14,15 @@
 #import "QZBServerManager.h"
 
 @class QZBOnlineSessionWorker;
+@class QZBRoomWorker;
 
 @interface QZBSessionManager : NSObject
 
 @property (assign, nonatomic, readonly) BOOL isGoing;
 @property (assign, nonatomic, readonly) BOOL isChallenge;
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
+@property (assign, nonatomic, readonly) BOOL isRoom;
+
 
 @property (strong, nonatomic, readonly) NSString *sessionResult;
 @property (assign, nonatomic, readonly) NSInteger multiplier;
@@ -50,6 +53,9 @@
 @property (assign, nonatomic, readonly) QZBQuestionWithUserAnswer *opponentUserLastAnswer;
 @property (strong, nonatomic, readonly) NSMutableArray *askedQuestions;  // QZBQuestion
 
+//room
+@property (strong, nonatomic, readonly) QZBRoomWorker *roomWorker;
+
 - (void)setSession:(QZBSession *)session;
 - (void)setBot:(QZBOpponentBot *)bot;
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker;
@@ -72,4 +78,14 @@
 - (void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
                            AnswerNumber:(NSUInteger)answerNum
                                    time:(NSUInteger)time;
+
+#pragma mark - rooms
+
+- (void)setRoomWorkerToSessionWorker:(QZBRoomWorker *)roomWorker;
+
+- (void)oneOfOpponentWithID:(NSNumber *)userID
+     answeredQuestionWithID:(NSNumber *)questionID
+                   answerID:(NSNumber *)answerID
+                   withTime:(NSNumber *)time;
+
 @end

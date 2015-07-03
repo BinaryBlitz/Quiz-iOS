@@ -32,6 +32,8 @@
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
+NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
+
 @interface QZBGameSessionViewController () <UIAlertViewDelegate>
 
 @property (assign, nonatomic) int time;
@@ -613,7 +615,12 @@ static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
                     }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+                        if([QZBSessionManager sessionManager].isRoom){
+                            [self performSegueWithIdentifier:QZBRoomResultSegueIdentifier sender:nil];
+                        }else{
+                            [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+                        }
+                        
                     });
                     
 //                    [UIView animateWithDuration:0.3

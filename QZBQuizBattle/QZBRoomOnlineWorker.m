@@ -82,6 +82,24 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                           postNotificationName:QZBNewParticipantJoinedRoom
                                         object:nil];
                   }];
+        
+        [channel bindToEventNamed:@"new-answer" handleWithBlock:^(PTPusherEvent *channelEvent) {
+            
+            NSLog(@"channel event %@", channelEvent.data);
+            NSDictionary *d = channelEvent.data;
+            NSNumber *questionID = d[@"room_question_id"];
+            NSNumber *answerID = d[@"answer_id"];
+            NSNumber *time = d[@"time"];
+            NSNumber *playerID = d[@"player_id"];
+            
+            [[QZBSessionManager sessionManager] oneOfOpponentWithID:playerID
+                                             answeredQuestionWithID:questionID
+                                                           answerID:answerID
+                                                           withTime:time];
+           
+            
+            
+        }];
 
         //        [channel bindToEventNamed:@"game-start"
         //                  handleWithBlock:^(PTPusherEvent *channelEvent) {

@@ -325,6 +325,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBGameTopic *topic = self.room.owner.topic;
     
     [[QZBSessionManager sessionManager] setTopicForSession:topic];
+    [[QZBSessionManager sessionManager] setRoomWorkerToSessionWorker:self.roomWorker];
+    
+    self.roomWorker = nil;
     [self performSegueWithIdentifier:QZBShowGameController sender:nil];
 }
 

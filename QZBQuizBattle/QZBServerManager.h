@@ -262,6 +262,11 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                   onSuccess:(void (^)())success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)PATCHAnswerRoomQuestionWithID:(NSInteger) questionID
+                            answerID:(NSInteger) answerID
+                                time:(NSInteger) time
+                           onSuccess:(void (^)())success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
 
