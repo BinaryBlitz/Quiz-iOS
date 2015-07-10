@@ -20,6 +20,7 @@
 #import <JSQSystemSoundPlayer.h>
 #import "UILabel+MultiLineAutoSize.h"
 #import "UIFont+QZBCustomFont.h"
+#import "QZBCurrentUser.h"
 
 //DFImageManager
 #import <DFImageManager/DFImageManager.h>
@@ -28,6 +29,13 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 //#import <Crashlytics/Crashlytics.h>
+
+//rooms
+
+#import "QZBRoomWorker.h"
+#import "QZBRoom.h"
+#import "QZBUserWithTopic.h"
+#import "QZBRoomUsersView.h"
 
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
@@ -46,6 +54,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 @property (strong, nonatomic) JSBadgeView *opponentBV;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraint;
 @property (assign, nonatomic) BOOL isEnded;
+
+@property (strong, nonatomic) QZBRoomUsersView *roomUsersView;
 
 @end
 
@@ -100,6 +110,13 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                                              selector:@selector(opponentMadeChoose:)
                                                  name:@"QZBOpponentUserMadeChoose"
                                                object:nil];
+    
+    if([QZBSessionManager sessionManager].roomWorker){
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(setRoomUsersScores:)
+                                                     name:QZBOneOfUserInRoomGaveAnswer
+                                                   object:nil];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,6 +163,17 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                                                  success:nil
                                                  failure:nil];
     }
+//    if([QZBSessionManager sessionManager].roomWorker){
+//        [self loadRoomView];
+//    }
+    
+    if([QZBSessionManager sessionManager].roomWorker){
+//        [self loadRoomView];
+//        [self setRoomsUsersScoresForUserWithID:@(-1)];
+        self.opponentImage.hidden = YES;
+        self.opponentBV.hidden = YES;
+        self.opponentNameLabel.hidden = YES;
+    }
 }
 
 - (void)initCircularProgress {
@@ -159,6 +187,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     self.progressView.tintColor = [UIColor brightRedColor];
 }
 
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -171,6 +200,12 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                 [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
             self.backgroundTask = UIBackgroundTaskInvalid;
         }];
+    
+    if([QZBSessionManager sessionManager].roomWorker){
+        [self loadRoomView];
+        [self setRoomsUsersScoresForUserWithID:@(-1)];
+    }
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -623,33 +658,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                         
                     });
                     
-//                    [UIView animateWithDuration:0.3
-//                        delay:0.5
-//                        options:UIViewAnimationOptionCurveEaseInOut |
-//                                UIViewAnimationOptionTransitionNone
-//                        animations:^{
-//                          //         weakSelf.roundLabel.alpha = 1.0;
-//                        }
-//                        completion:^(BOOL finished) {
-//
-//                            [self.globalTimer invalidate];
-//                            self.globalTimer = nil;
-//
-//                            if (self.backgroundTask != UIBackgroundTaskInvalid) {
-//                                [[UIApplication sharedApplication]
-//                                    endBackgroundTask:self.backgroundTask];
-//                                self.backgroundTask = UIBackgroundTaskInvalid;
-//                            }
-//
-//                            dispatch_after(
-//                                dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-//                                dispatch_get_main_queue(), ^{
-//
-//                                    [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
-//
-//                                });
-//
-//                        }];
                 }
             });
     }
@@ -751,7 +759,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     } else {
         [self.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
+    
 }
+
 
 #pragma mark - status bar
 
@@ -761,6 +771,112 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - room ui
+
+-(void)loadRoomView{
+    if([QZBSessionManager sessionManager].roomWorker && !self.roomUsersView){
+    UIView *v = [[[NSBundle mainBundle] loadNibNamed:@"QZBRoomUsersView"
+                                               owner:self
+                                             options:nil] objectAtIndex:0];
+    
+        CGRect r = self.userImage.superview.frame;
+        CGRect labelR = self.opponentNameLabel.frame;
+    
+    
+        v.frame = CGRectMake(labelR.origin.x,
+                         0,
+                         labelR.size.width,
+                         r.size.height); // CGRectMake(0, 10, 100, 100);
+          
+        v.alpha = 0.0;
+        [self.userImage.superview addSubview:v];
+        self.roomUsersView = (QZBRoomUsersView *)v;
+        v.backgroundColor = [UIColor clearColor];
+        
+        [UIView animateWithDuration:0.1
+                         animations:^{
+                             v.alpha = 1.0;
+        }];
+        
+        self.opponentImage.alpha = 0.0;
+        self.opponentNameLabel.alpha = 0.0;
+        self.opponentBV.alpha = 0.0;
+    }
+}
+
+-(void)setRoomUsersScores:(NSNotification *)note {
+    
+    if([note.name isEqualToString:QZBOneOfUserInRoomGaveAnswer]) {
+        NSNumber *userID = note.object;
+        
+        [self setRoomsUsersScoresForUserWithID:userID];
+    }
+}
+
+-(void)setRoomsUsersScoresForUserWithID:(NSNumber *)userID{
+    if([QZBSessionManager sessionManager].roomWorker) {
+        QZBRoom *room = [QZBSessionManager sessionManager].roomWorker.room;
+        QZBUser *currentUser = [QZBCurrentUser sharedInstance].user;
+        NSMutableArray *participatiens = [NSMutableArray array];
+        
+        for(QZBUserWithTopic *UWT in room.participants){
+            if(![UWT.user.userID isEqualToNumber:currentUser.userID]){
+                [participatiens addObject:UWT];
+            }
+        }
+        
+        //NSMutableArray *participatiens = room.participants;
+        
+      
+        for(int i = 0; i < self.roomUsersView.nameLabels.count; i++){
+            UILabel *nameLabel = self.roomUsersView.nameLabels[i];
+            UILabel *scoreLabel = self.roomUsersView.usersScores[i];
+            if (i<participatiens.count ) {
+                QZBUserWithTopic *userWithTopic = participatiens[i];
+
+                nameLabel.text = userWithTopic.user.name;
+                scoreLabel.text = userWithTopic.points.stringValue;
+                id<QZBUserProtocol> user = userWithTopic.user;
+                
+                if([userID isEqualToNumber:user.userID]){
+                    [self colorLabel:nameLabel];
+                    [self colorLabel:scoreLabel];
+                }
+                
+                
+            } else {
+                nameLabel.text = @"";
+                scoreLabel.text = @"";
+            }
+        }
+    }
+}
+
+-(void)colorLabel:(UILabel *)label {
+
+    [UIView transitionWithView:label
+                      duration:0.25
+                       options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseInOut
+                    animations:^{
+        label.textColor = [UIColor lightGreenColor];
+    } completion:^(BOOL finished) {
+    }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        [UIView transitionWithView:label
+                          duration:0.1
+                           options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseInOut
+                        animations:^{
+                            label.textColor = [UIColor whiteColor];
+                        } completion:^(BOOL finished) {
+                        }];
+
+        
+
+    });
 }
 
 @end

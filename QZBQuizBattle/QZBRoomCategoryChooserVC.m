@@ -10,4 +10,10 @@
 
 @implementation QZBRoomCategoryChooserVC
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    
+    self.title = @"Категории";
+}
+
 @end

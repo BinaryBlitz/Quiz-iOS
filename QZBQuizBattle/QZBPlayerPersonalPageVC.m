@@ -39,9 +39,9 @@
 #import "QZBReportVC.h"
 #import "QZBFriendRequestManager.h"
 #import "QZBFriendRequest.h"
-#import <FSImageViewer.h>
-#import <FSBasicImage.h>
-#import <FSBasicImageSource.h>
+//#import <FSImageViewer.h>
+//#import <FSBasicImage.h>
+//#import <FSBasicImageSource.h>
 #import <DDLog.h>
 
 
@@ -59,6 +59,8 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
+//image viewer
+#import "QZBImageViewerVC.h"
 
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -79,6 +81,9 @@ static NSString *vsScoreCellIndentifier = @"vsScoreCell";
 static NSString *totalStatisticsIdentifier = @"totalStatistics";
 static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 static NSInteger topicsOffset = 7;
+
+//segues
+NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
 @interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
                                        UITableViewDelegate,
@@ -613,6 +618,10 @@ static NSInteger topicsOffset = 7;
        // QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
        // [destVC setFriendsOwner:self.user andFriends:self.friends];
         
+    }else if ([segue.identifier isEqualToString:QZBShowUserPicViewController]) {
+        QZBImageViewerVC *imageViewController =segue.destinationViewController;
+        
+        [imageViewController configureWithUser:self.user];
     }
 }
 
@@ -707,13 +716,21 @@ static NSInteger topicsOffset = 7;
 -(void)showUserPicFullScreen:(id)sender{
     NSLog(@"tapped pic");
    
-    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:nil];
+//    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:nil];
+//    
+//    FSBasicImageSource *photoSource = [[FSBasicImageSource alloc] initWithImages:@[firstPhoto]];
+//    
+//    FSImageViewerViewController *imageViewController = [[FSImageViewerViewController alloc] initWithImageSource:photoSource];
+//    
+//    imageViewController.sharingDisabled = YES;
     
-    FSBasicImageSource *photoSource = [[FSBasicImageSource alloc] initWithImages:@[firstPhoto]];
+//    QZBImageViewerVC *imageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBImageViewerController"];
+//    
+//    [imageViewController configureWithUser:self.user];
     
-    FSImageViewerViewController *imageViewController = [[FSImageViewerViewController alloc] initWithImageSource:photoSource];
+    [self performSegueWithIdentifier:QZBShowUserPicViewController sender:nil];
     
-    [self.navigationController pushViewController:imageViewController animated:YES];
+    //[self.navigationController pushViewController:imageViewController animated:YES];
    // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imageViewController];
     //[self.navigationController presentViewController:navigationController animated:YES completion:nil];
     

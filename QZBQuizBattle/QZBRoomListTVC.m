@@ -16,6 +16,7 @@
 
 // cell identifiers
 NSString *const QZBRoomCellIdentifier = @"QZBRoomCellIdentifier";
+NSString *const QZBCreateRoomCellIdentifierInRoomList = @"enterRoomCellIdentifier";
 
 // segues
 NSString *const QZBShowRoomSegueIdentifier = @"showRoomSegueIdentifier";
@@ -56,6 +57,14 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+    
+   // [self.navigationController setToolbarHidden:YES animated:YES];
+    //[self reloadRooms];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [self reloadRooms];
 }
 
@@ -77,13 +86,20 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.rooms.count;
+    return self.rooms.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row == 0){
+        UITableViewCell *cell = [tableView
+                                 dequeueReusableCellWithIdentifier:QZBCreateRoomCellIdentifierInRoomList];
+        
+        return cell;
+    }
+    
     QZBRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBRoomCellIdentifier];
-    QZBRoom *room = self.rooms[indexPath.row];
+    QZBRoom *room = self.rooms[indexPath.row-1];
 
     [cell configureCellWithRoom:room];
 
@@ -96,14 +112,23 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    QZBRoom *r = self.rooms[indexPath.row];
+    if(indexPath.row == 0){
+        [self createRoom];
+        return;
+    }
+    
+    QZBRoom *r = self.rooms[indexPath.row-1];
 
     self.choosedRoom = r;
     [self performSegueWithIdentifier:QZBShowRoomSegueIdentifier sender:nil];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    QZBRoom *r = self.rooms[indexPath.row];
+    
+    if(indexPath.row == 0) {
+        return 80;
+    }
+    QZBRoom *r = self.rooms[indexPath.row-1];
     const CGFloat shortCellHeight = 70.0;
     const CGFloat longCellHeight  = 140.0;
     if(r.participants.count <= 2){
@@ -185,9 +210,9 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 
 - (void)addBarButtonRight {
     self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                       target:self
-                                                      action:@selector(createRoom)];
+                                                      action:@selector(reloadRooms)];
 }
 
 @end

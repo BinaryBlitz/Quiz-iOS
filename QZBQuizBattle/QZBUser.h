@@ -30,6 +30,8 @@
 - (void)setUserName:(NSString *)userName;
 -(void)makeUserRegisterWithUserName:(NSString *)username;
 - (void)updateUserFromServer;
+
+-(void)deleteImage;
 //-(void)setAPNsToken:(NSString *)pushToken;
 
 

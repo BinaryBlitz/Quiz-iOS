@@ -9,9 +9,12 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "QZBSession.h"
 #import "QZBOpponentBot.h"
 #import "QZBServerManager.h"
+
+UIKIT_EXTERN NSString *const QZBOneOfUserInRoomGaveAnswer;//test
 
 @class QZBOnlineSessionWorker;
 @class QZBRoomWorker;
@@ -69,7 +72,11 @@
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
                                                     time:(NSUInteger)time;
+
+- (NSNumber *)sessionID;
+
 - (void)removeBotOrOnlineWorker;
+- (void)makeSessionRoomSession;
 - (void)closeSession;
 
 #pragma mark - online methods

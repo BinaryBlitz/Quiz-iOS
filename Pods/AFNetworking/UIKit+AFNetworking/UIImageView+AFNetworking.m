@@ -71,6 +71,7 @@
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     
     UIImage *cachedImage = [[[self class] sharedImageCache] cachedImageForRequest:request];
+    
     if (cachedImage) {
         [[[self class] sharedImageCache] clearCachedRequest:request];
     }
@@ -207,6 +208,7 @@ static inline NSString * AFImageCacheKeyFromURLRequest(NSURLRequest *request) {
 
 - (void)clearCachedRequest:(NSURLRequest *)request {
     if (request) {
+        
         [self removeObjectForKey:AFImageCacheKeyFromURLRequest(request)];
     }
 }

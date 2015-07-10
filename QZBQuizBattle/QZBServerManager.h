@@ -22,6 +22,7 @@ UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 @class QZBAnotherUser;
 @class QZBFriendRequest;
 @class QZBRoom;
+@class QZBRoomSessionResults;
 
 typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
     QZBNoProblems,
@@ -262,13 +263,24 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                   onSuccess:(void (^)())success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)PATCHAnswerRoomQuestionWithID:(NSInteger) questionID
+-(void)POSTAnswerRoomQuestionWithID:(NSInteger) questionID
                             answerID:(NSInteger) answerID
                                 time:(NSInteger) time
                            onSuccess:(void (^)())success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)POSTFinishRoomSessionWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)PATCHParticipationWithID:(NSNumber *)userID
+                         isReady:(BOOL)isReady
+                       onSuccess:(void (^)())success
+                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+- (void)GETResultsOfRoomSessionWithID:(NSNumber *)roomID
+                            onSuccess:(void (^)(QZBRoomSessionResults *sessionResults))success
+                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
 

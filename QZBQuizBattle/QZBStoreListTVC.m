@@ -126,17 +126,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                         [_priceFormatter setLocale:productForLocale.priceLocale];
                         for (SKProduct *product in products) {
                             if ([product.productIdentifier
-                                    isEqualToString:@"drumih.QZBQuizBattle.doubleBoosterTenDays"]) {
+                                    isEqualToString:@"ru.binaryblitz.1vs1.doubleBoosterTenDays"]) {
                                 self.twiceBooster = product;
                                 [tmpproducts removeObject:product];
                             } else if ([product.productIdentifier
                                            isEqualToString:
-                                               @"drumih.QZBQuizBattle.tripleBoosterTenDays"]) {
+                                               @"ru.binaryblitz.1vs1.tripleBoosterTenDays"]) {
                                 self.tripleBooster = product;
                                 [tmpproducts removeObject:product];
                             } else if ([product.productIdentifier
                                            isEqualToString:
-                                               @"drumih.QZBQuizBattle.fiveTimesBoosterTenDays"]) {
+                                               @"ru.binaryblitz.1vs1.fiveTimesBoosterTenDays"]) {
                                 self.fiveTimesBooster = product;
                                 [tmpproducts removeObject:product];
                             }

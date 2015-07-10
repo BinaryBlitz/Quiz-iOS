@@ -207,6 +207,35 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     return result;
 }
 
+
+-(NSUInteger)scoreForQestion:(QZBQuestion *)qestion
+                       answer:(QZBAnswer *)answer {
+    BOOL isRight = [self isAnswerRightForQestion:qestion answer:answer];
+    BOOL isLast = NO;
+    
+    if ([self.questions indexOfObject:qestion] == ([self.questions count] - 1) && !self.isRoom) {
+        isLast = YES;
+    }
+    
+    NSUInteger score = [self scoreIsRightAnswer:isRight isLast:isLast answerTime:answer];
+    
+    return score;
+}
+
+-(QZBQuestion *)questionWithID:(NSInteger)questionID {
+
+    
+    
+    for(QZBQuestion *q in self.questions){
+        
+        if(q.questionId == questionID){
+            return q;
+        }
+    }
+    return nil;
+}
+
+
 //вызывается при ответе пользователем на вопрос
 - (void)gaveAnswerByUser:(QZBUserInSession *)user
               forQestion:(QZBQuestion *)qestion

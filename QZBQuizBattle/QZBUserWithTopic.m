@@ -14,7 +14,7 @@
 
 @property(strong, nonatomic) id<QZBUserProtocol> user;
 @property(strong, nonatomic) QZBGameTopic *topic;
-@property(strong, nonatomic) NSNumber *points;
+//@property(strong, nonatomic) NSNumber *points;
 //@property(assign, nonatomic, getter=isAdmin) BOOL admin;
 //@property(assign, nonatomic, getter = isFinished) BOOL finished;
 
@@ -42,5 +42,12 @@
     currentPoints += newPoints;
     self.points = @(currentPoints);
 }
+
+
+//-(void)setPoints:(NSNumber *)points {
+//    _points = points;
+//}
+
+
 
 @end

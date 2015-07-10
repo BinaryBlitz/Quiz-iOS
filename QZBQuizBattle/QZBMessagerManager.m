@@ -721,9 +721,14 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
         }else{
             identificator = friendIdentificator; //[user.userID stringValue];
         }
-            JSQMessage *mess = [JSQMessage messageWithSenderId:identificator
-                                                   displayName:user.name
-                                                          text:message.body];
+//            JSQMessage *mess = [JSQMessage messageWithSenderId:identificator
+//                                                   displayName:user.name
+//                                                          text:message.body];
+        
+        JSQMessage *mess = [[JSQMessage alloc] initWithSenderId:identificator
+                                              senderDisplayName:user.name
+                                                           date:message.timestamp
+                                                           text:message.body];
     
         [res addObject:mess];
         

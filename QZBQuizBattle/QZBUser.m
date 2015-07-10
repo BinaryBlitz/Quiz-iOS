@@ -173,6 +173,9 @@
     
 }
 
+-(void)deleteImage {
+    self.imageURL = nil;
+}
     
 
 

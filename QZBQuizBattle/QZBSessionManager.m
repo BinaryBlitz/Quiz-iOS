@@ -13,9 +13,12 @@
 #import "QZBUser.h"
 #import "QZBOnlineSessionWorker.h"
 #import "QZBRoomWorker.h"
+#import "QZBRoom.h"
 #import <Crashlytics/Crashlytics.h>
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
+NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
 @interface QZBSessionManager ()
 
@@ -24,6 +27,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @property(assign, nonatomic) BOOL isChallenge;
 @property (assign, nonatomic) BOOL isFinished;
 //если пользователель нажал играть оффлайн когда бросил вызов
+
 
 @property(strong, nonatomic) id<QZBUserProtocol>opponent;
 
@@ -184,6 +188,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 //
 
+- (NSNumber *)sessionID {
+    if(self.gameSession){
+        return @(self.gameSession.session_id);
+    } else {
+        return nil;
+    }
+}
+
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker {
     if (_onlineSessionWorker && _bot) {
         return;
@@ -208,6 +220,16 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         
     }];
     
+    self.onlineSessionWorker = nil;
+    self.isOfflineChallenge = YES;
+}
+
+- (void)makeSessionRoomSession {
+    self.bot = nil;
+    
+    if (self.onlineSessionWorker) {
+        [self.onlineSessionWorker closeConnection];
+    }
     self.onlineSessionWorker = nil;
     self.isOfflineChallenge = YES;
 }
@@ -304,7 +326,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     } else {
         
         [[QZBServerManager sharedManager]
-         PATCHAnswerRoomQuestionWithID:self.currentQuestion.questionId
+         POSTAnswerRoomQuestionWithID:self.currentQuestion.questionId
          answerID:answerNum
          time:time
          onSuccess:nil
@@ -351,9 +373,29 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                    withTime:(NSNumber *)time {
     
     if(self.roomWorker){
-        [self.roomWorker userWithId:userID reachedPoints:@(10)];
+        
+        QZBQuestion *question = [self.gameSession questionWithID:questionID.integerValue];
+        
+        QZBAnswer *answer = [[QZBAnswer alloc] initWithAnswerNumber:answerID.integerValue
+                                                         answerTime:time.integerValue];
+        
+        NSInteger points = 0;
+        
+        if(question){
+            points = [self.gameSession scoreForQestion:question answer:answer];
+        }
+        
+        
+        [self.roomWorker userWithId:userID reachedPoints:@(points)];
+        
+        if(points > 0){
+            [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserInRoomGaveAnswer
+                                                                object:userID];
+
+        }
     }
-}
+    
+   }
 //- (void)oneOfOpponentWithID:(NSNumber *)userID
 //     answeredQuestionWithID:(NSNumber *)questionID
 //                   withTime:(NSNumber *)time {
@@ -467,7 +509,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     NSNumber *sessionID = [NSNumber numberWithInteger:self.gameSession.session_id];
     
-    if (!self.isOfflineChallenge && self.isFinished) {
+    if (!self.isOfflineChallenge && self.isFinished && !self.roomWorker) {
+        
         [[QZBServerManager sharedManager] PATCHCloseSessionID:sessionID
                                                     onSuccess:^{
                                                         //закрывает сессию
@@ -510,7 +553,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.onlineSessionWorker = nil;
     
     if(self.roomWorker){
-        [self.roomWorker closeOnlineWorker];
+        
+        [[QZBServerManager sharedManager] POSTFinishRoomSessionWithID:self.roomWorker.room.roomID
+                                                            onSuccess:nil onFailure:nil];
+        //[self.roomWorker closeOnlineWorker];
         self.roomWorker = nil;
     }
     
@@ -550,5 +596,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         self.secondUserScore = self.gameSession.opponentUser.currentScore;
     }
 }
+
+//- (NSNumber *)pointsForQuestionWithID:(NSNumber *)questionID answerNum:(NSNumber *)answerID {
+//    for (QZBQuestion *quest in self.gameSession.questions){
+//        if()
+//    }
+//}
 
 @end
