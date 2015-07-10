@@ -11,6 +11,7 @@
 #import "QZBUserWithTopic.h"
 #import "QZBRoom.h"
 #import "QZBRoomWorker.h"
+#import "QZBRoomOnlineWorker.h"
 #import "QZBSessionManager.h"
 #import "UIViewController+QZBControllerCategory.h"
 
@@ -37,8 +38,9 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 @interface QZBRoomResultTVC()
 
 //@property(strong, nonatomic) NSMutableArray *usersInResult;
-@property(strong, nonatomic) QZBRoom *room;
-
+//@property(strong, nonatomic) QZBRoom *room;
+@property (strong, nonatomic) QZBRoomWorker *roomWorker;
+@property (strong, nonatomic) NSNumber *roomSessionID;
 
 @end
 
@@ -52,23 +54,50 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     [self configureBackgroundImage];
     [self backButtonInit];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor blackColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(reloadRoom)
+                  forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    
+    
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    QZBRoom *room = [QZBSessionManager sessionManager].roomWorker.room;
+    self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
     
-    [self configureResultWithRoom:room];
-    
+   // [self configureResultWithRoom:self.roomWorker.room];
+    self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
     [[QZBSessionManager sessionManager] closeSession];
+    
+    [self reloadRoom];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(oneOfUsersFinishedRoom:)
+                                                 name:QZBOneUserFinishedGameInRoom
+                                               object:nil];
+    
 }
 
-- (void)configureResultWithRoom:(QZBRoom *)room {
-    self.room = room;
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
-    [self.tableView reloadData];
+    [self.roomWorker closeOnlineWorker];
+    self.roomWorker = nil;
 }
+
+//- (void)configureResultWithRoom:(QZBRoom *)room {
+//    self.room = room;
+//    
+//    [self.tableView reloadData];
+//}
+
 
 #pragma mark - actions
 
@@ -89,13 +118,13 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.room.participants.count;
+    return self.roomWorker.room.participants.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QZBRoomUserResultCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBRoomUserResultCellIdentifier];
     
-    QZBUserWithTopic *userWithTopic = self.room.participants[indexPath.row];
+    QZBUserWithTopic *userWithTopic = self.roomWorker.room.participants[indexPath.row];
     
     NSInteger position = indexPath.row + 1;
     
@@ -143,10 +172,19 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
         
         [dfiIV setImageWithRequest:request];
         
+        UIView *backV = [[UIView alloc] init];
+        backV.backgroundColor = [UIColor blackColor];
+        [backV addSubview:dfiIV];
+        UIView *frontV = [[UIView alloc] initWithFrame:r];
         
-        self.tableView.backgroundView = dfiIV;
+        frontV.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.1];
+        
+        [dfiIV addSubview:frontV];
+        
+        
+        
+        self.tableView.backgroundView = backV;
     }
-    
 }
 
 - (void)backButtonInit {
@@ -159,5 +197,55 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     self.navigationItem.leftBarButtonItem = logoutButton;
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+-(void)reloadRoom {
+//    [self.refreshControl beginRefreshing];
+//    [[QZBServerManager sharedManager] GETRoomWithID:self.roomWorker.room.roomID
+//                                          OnSuccess:^(QZBRoom *room) {
+//        
+//        [self.refreshControl endRefreshing];
+//        self.roomWorker.room = room;
+//                                              
+//                                              [self.tableView reloadData];
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//        [self.refreshControl endRefreshing];
+//        
+//    }];
+//
+    if(self.roomSessionID){
+    [[QZBServerManager sharedManager] GETResultsOfRoomSessionWithID:self.roomSessionID
+                                                          onSuccess:^(QZBRoomSessionResults *sessionResults) {
+                                                              [self.refreshControl endRefreshing];
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        [self.refreshControl endRefreshing];
+    }];
+    }
+    
+}
+
+
+#pragma mark - results
+
+
+-(void)oneOfUsersFinishedRoom:(NSNotification *)note {
+    if(note && [note.name isEqualToString:QZBOneUserFinishedGameInRoom]) {
+//        NSDictionary *d = note.object;
+//        
+//        NSNumber *userID = d[@"player_id"];
+//        NSNumber *points = d[@"points"];
+//        
+//        [self.roomWorker userWithId:userID resultPoints:points];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+       // [self.tableView reloadData];
+    }
+}
+
 
 @end

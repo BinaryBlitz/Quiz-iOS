@@ -40,6 +40,13 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 - (instancetype)initWIthDictionary:(NSDictionary *)dict;
 
 - (void)gaveAnswerByUser:(QZBUserInSession *)user forQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer;
+
+
 - (QZBWinnew)getWinner;
+
+//for rooms
+-(NSUInteger)scoreForQestion:(QZBQuestion *)qestion
+                      answer:(QZBAnswer *)answer;//for rooms
+-(QZBQuestion *)questionWithID:(NSInteger)questionID;
 
 @end

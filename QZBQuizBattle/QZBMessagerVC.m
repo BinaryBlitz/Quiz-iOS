@@ -18,7 +18,7 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBUserWorker.h"
-
+#import <NSDate+DateTools.h>
 //#import <XMPPFramework/XMPPFramework.h>
 //#import "XMPPCoreDataStorage.h"
 //#import "XMPPMessageArchiving.h"
@@ -280,7 +280,7 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 
     return self.incomingBubbleImageData;
 
-    return nil;
+  //  return nil;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -425,6 +425,94 @@ navigation
         [self.messages addObject:mess];
         [self finishReceivingMessageAnimated:YES];
     }
+}
+
+#pragma mark - date
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    /**
+     *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
+     *  The other label text delegate methods should follow a similar pattern.
+     *
+     *  Show a timestamp for every 3rd message
+     */
+    
+    if(self.messages.count == 1){
+        JSQMessage *message = self.messages[indexPath.item];
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    } else if(indexPath.item > 0){
+       // NSDate *firstDate =
+      //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
+        
+        JSQMessage *firstMessage = self.messages[indexPath.item];
+        JSQMessage *secondMessage = self.messages[indexPath.item-1];
+        
+        
+        
+        NSDate *firstDate = firstMessage.date;
+        NSDate *secondDate = secondMessage.date;
+        
+        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
+        
+        if(timeInterval>60 * 10){
+            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
+        }
+        
+    }
+    
+//    if (indexPath.item % 3 == 0) {
+//        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+//        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+//    }
+    
+    return nil;
+}
+
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    /**
+     *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
+     */
+    
+    /**
+     *  This logic should be consistent with what you return from `attributedTextForCellTopLabelAtIndexPath:`
+     *  The other label height delegate methods should follow similarly
+     *
+     *  Show a timestamp for every 3rd message
+     */
+   // if (indexPath.item % 3 == 0) {
+      //  return kJSQMessagesCollectionViewCellLabelHeightDefault;
+  //  }
+    
+   // return 0.0f;
+    
+    
+    if(self.messages.count == 1){
+        JSQMessage *message = self.messages[indexPath.item];
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    } else if(indexPath.item > 0){
+        // NSDate *firstDate =
+        //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
+        
+        JSQMessage *firstMessage = self.messages[indexPath.item];
+        JSQMessage *secondMessage = self.messages[indexPath.item-1];
+        
+        
+        
+        NSDate *firstDate = firstMessage.date;
+        NSDate *secondDate = secondMessage.date;
+        
+        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
+        
+        if(timeInterval>60){
+            return  kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
+        }
+        
+    }
+    
+    return 0.0f;
 }
 
 #pragma mark - Responding to collection view tap events

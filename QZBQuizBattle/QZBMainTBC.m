@@ -71,7 +71,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    if (![[QZBCurrentUser sharedInstance] checkUser]) {
+    if (![[QZBCurrentUser sharedInstance] checkUser]) {//redo
         UIView *backgrView = [[UIView alloc]
             initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,
                                      [[UIScreen mainScreen] bounds].size.height)];

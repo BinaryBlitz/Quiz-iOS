@@ -117,7 +117,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
         
         options.userInfo = @{ DFURLRequestCachePolicyKey :
                                   @(NSURLRequestReturnCacheDataElseLoad)};
-        //options.expirationAge = 60*60*24*10;
         
         DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                            targetSize:CGSizeZero

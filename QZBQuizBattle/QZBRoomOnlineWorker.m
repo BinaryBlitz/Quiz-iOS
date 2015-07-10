@@ -18,8 +18,14 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 
+
+
 NSString *const QZBNeedStartRoomGame = @"NeedStartRoomGame";
 NSString *const QZBNewParticipantJoinedRoom = @"NewParticipantJoinedRoom";
+NSString *const QZBOneOfUserLeftRoom = @"OneOfUserLeftRoom";
+NSString *const QZBOneUserChangedStatus = @"OneUserChangedStatus";
+NSString *const QZBOneUserFinishedGameInRoom = @"OneUserFinishedGameInRoom";
+
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -57,7 +63,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
         self.yetStarted = NO;
 
-        __weak typeof(self) weakSelf = self;
+       // __weak typeof(self) weakSelf = self;
 
         [channel
             bindToEventNamed:@"game-start"
@@ -68,7 +74,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                  QZBSession *session = [[QZBSession alloc] initWIthDictionary:channelEvent.data];
 
                  [[QZBSessionManager sessionManager] setSession:session];
-                 [[QZBSessionManager sessionManager] removeBotOrOnlineWorker];
+                 [[QZBSessionManager sessionManager] makeSessionRoomSession];
 
                  [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedStartRoomGame
                                                                      object:nil];
@@ -100,43 +106,27 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             
             
         }];
-
-        //        [channel bindToEventNamed:@"game-start"
-        //                  handleWithBlock:^(PTPusherEvent *channelEvent) {
-        //
-        //                      DDLogInfo(@"need start game!!");
-        //
-        //                      if (!self.yetStarted) {
-        //                          self.yetStarted = YES;
-        //                          dispatch_after(
-        //                                         dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 *
-        //                                         NSEC_PER_SEC)),
-        //                                         dispatch_get_main_queue(), ^{
-        //                                             [[NSNotificationCenter defaultCenter]
-        //                                              postNotificationName:@"QZBOnlineGameNeedStart"
-        //                                              object:nil];
-        //
-        //                                         });
-        //                      }
-        //
-        //                  }];
-        //        [channel bindToEventNamed:@"challenge-declined" handleWithBlock:^(PTPusherEvent
-        //        *channelEvent) {
-        //
-        //            NSArray *description = @[@"Оппонент отклонил вызов",
-        //                                     @"Попробуйте сыграть с другим пользователем"];
-        //
-        //            [[NSNotificationCenter defaultCenter]
-        //             postNotificationName:QZBPusherChallengeDeclined
-        //             object:description];
-        //        }];
-        //
-        //        [channel bindToEventNamed:@"opponent-answer"
-        //                  handleWithBlock:^(PTPusherEvent *channelEvent) {
-        //
-        //                      [weakSelf oppomentAnswered:channelEvent.data];
-        //
-        //                  }];
+        
+        [channel bindToEventNamed:@"participant-left"
+                  handleWithBlock:^(PTPusherEvent *channelEvent) {
+                      [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserLeftRoom
+                                                                          object:nil];
+            
+        }];
+        
+        [channel bindToEventNamed:@"status-changed" handleWithBlock:^(PTPusherEvent *channelEvent) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneUserChangedStatus
+                                                                object:nil];
+        }];
+        
+        [channel bindToEventNamed:@"player-finished" handleWithBlock:^(PTPusherEvent *channelEvent) {
+            DDLogVerbose(@"player finished game %@",channelEvent.data);
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneUserFinishedGameInRoom
+                                                                object:channelEvent.data];
+        }];
+        
 
         [_client connect];
     }

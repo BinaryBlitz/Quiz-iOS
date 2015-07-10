@@ -11,7 +11,9 @@
 
 UIKIT_EXTERN NSString *const QZBNeedStartRoomGame;
 UIKIT_EXTERN NSString *const QZBNewParticipantJoinedRoom;
-
+UIKIT_EXTERN NSString *const QZBOneOfUserLeftRoom;
+UIKIT_EXTERN NSString *const QZBOneUserChangedStatus;
+UIKIT_EXTERN NSString *const QZBOneUserFinishedGameInRoom;
 @class QZBRoom;
 
 @interface QZBRoomOnlineWorker : NSObject

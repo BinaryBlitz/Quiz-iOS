@@ -12,6 +12,6 @@
 @interface QZBRoomResultTVC : UITableViewController
 
 
-- (void)configureResultWithRoom:(QZBRoom *)room;
+//- (void)configureResultWithRoom:(QZBRoom *)room;
 
 @end

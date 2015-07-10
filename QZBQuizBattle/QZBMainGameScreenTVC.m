@@ -632,10 +632,17 @@
 #pragma mark - support methods
 
 -(void)addBarButtonRight{
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                  target:self
-                                                  action:@selector(showRoomsList)];
+//    self.navigationItem.rightBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+//                                                  target:self
+//                                                  action:@selector(showRoomsList)];
+//    self.navigationItem.rightBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithTitle:@"Комнаты" style:<#(UIBarButtonItemStyle)#> target:<#(id)#> action:<#(SEL)#>]
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Комнаты"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(showRoomsList)];
     
     
 }

@@ -40,6 +40,7 @@
 // rooms
 
 #import "QZBRoom.h"
+#import "QZBRoomSessionResults.h"
 
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -505,7 +506,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            DDLogInfo(@"%@", error);
+            DDLogInfo(@"room path error%@", error);
 
         }];
 }
@@ -1001,7 +1002,7 @@ NSString *const QZBNoInternetConnectionMessage =
 }
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
-    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(100, 100)];
+    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(150, 150)];
     return [UIImageJPEGRepresentation(newImage, 1.0)
         base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
@@ -1810,7 +1811,7 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            DDLogVerbose(@"room %@ deleted", roomID);
+            DDLogVerbose(@"room deleted");
             if (success) {
                 success();
             }
@@ -1852,7 +1853,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
--(void)PATCHAnswerRoomQuestionWithID:(NSInteger) questionID
+-(void)POSTAnswerRoomQuestionWithID:(NSInteger) questionID
                             answerID:(NSInteger) answerID
                                 time:(NSInteger) time
                            onSuccess:(void (^)())success
@@ -1870,18 +1871,117 @@ NSString *const QZBNoInternetConnectionMessage =
     
     
     [self.requestOperationManager POST:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSLog(@"room quest pathed");
         if(success){
             success();
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogCError(@"patch answer err %@", error);
+        DDLogCError(@"post answer err %@ \n response object %@" , error, operation.responseObject);
         
         if (failure) {
             failure(error, operation.response.statusCode);
         }
     }];
+}
+
+-(void)POSTFinishRoomSessionWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/finish", roomID];
+    
+
+    [self.requestOperationManager POST:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        DDLogCVerbose(@"room closed");
+        if(success){
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"room closed error %@", error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+}
+
+-(void)POSTInviteFriendWithID:(NSNumber *)userID
+                 inRoomWithID:(NSNumber *)roomID
+                    onSuccess:(void (^)())success
+                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"player_id":userID};
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/invite", roomID];
+    
+    [self.requestOperationManager POST:urlAsString
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   DDLogCVerbose(@"friend invited");
+                                   if(success){
+                                       success();
+                                   }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"friend invited error %@", error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+}
+
+- (void)PATCHParticipationWithID:(NSNumber *)userID
+                         isReady:(BOOL)isReady
+                       onSuccess:(void (^)())success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"participation": @{
+                                  @"ready": @(isReady)
+                              }};
+    NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", userID];
+    
+    [self.requestOperationManager PATCH:urlAsString parameters:params
+                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    DDLogCVerbose(@"user ready patched");
+                                    
+                                    if(success){
+                                        success();
+                                    }
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    DDLogError(@"user ready error %@", error);
+                                    if (failure) {
+                                        failure(error, operation.response.statusCode);
+                                    }
+                                }];
+}
+
+
+- (void)GETResultsOfRoomSessionWithID:(NSNumber *)roomID
+                           onSuccess:(void (^)(QZBRoomSessionResults *sessionResults))success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlAsString = [NSString stringWithFormat:@"room_sessions/%@", roomID];
+    
+    [self.requestOperationManager GET:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        DDLogVerbose(@"session results %@", responseObject);
+        
+        QZBRoomSessionResults *rsr = [[QZBRoomSessionResults alloc] initWithDictionary:responseObject];
+        
+        if(success){
+            success(rsr);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"room session get error %@", error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+
+    }];
+   
+    
 }
 
 @end

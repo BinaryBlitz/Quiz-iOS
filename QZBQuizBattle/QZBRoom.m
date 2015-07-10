@@ -74,7 +74,11 @@
 
         [tmpArr addObject:userWithTopic];
     }
-
+    
+    NSSortDescriptor *firstSortDescr = [NSSortDescriptor sortDescriptorWithKey:@"userWithTopicID"
+                                                                     ascending:YES];
+    
+    [tmpArr sortUsingDescriptors:@[firstSortDescr]];
     return tmpArr;
 }
 
@@ -83,11 +87,17 @@
     QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:playerDict];
     
     BOOL isAdmin = [playerDict[@"is_admin"] boolValue];
+    BOOL isFinished = [d[@"finished"] boolValue];
+    BOOL isReady = [d[@"ready"] boolValue];
+    NSNumber *userWithTopicID = d[@"id"];
     
-    QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:d[@"topic"]]; //[QZBGameTopic MR_findFirst];
+    QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:d[@"topic"]]; 
     QZBUserWithTopic *userWithTopic = [[QZBUserWithTopic alloc] initWithUser:user topic:topic];
     
-    userWithTopic.admin = isAdmin;
+    userWithTopic.admin     = isAdmin;
+    userWithTopic.finished  = isFinished;
+    userWithTopic.ready     = isReady;
+    userWithTopic.userWithTopicID = userWithTopicID;
 
     return userWithTopic;
     
@@ -197,6 +207,19 @@
         }
     }
     return NO;
+}
+
+- (QZBUserWithTopic *)findUser:(id<QZBUserProtocol>)user {
+   // QZBUserWithTopic *u = nil;
+    
+    for (QZBUserWithTopic *userWithTopic in self.participants) {
+        if ([userWithTopic.user.userID isEqualToNumber:user.userID]) {
+            return userWithTopic;
+        }
+    }
+    return nil;
+
+    
 }
 
 

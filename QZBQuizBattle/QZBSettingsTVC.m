@@ -23,6 +23,7 @@
 #import "UIButton+QZBButtonCategory.h"
 #import "UIViewController+QZBValidateCategory.h"
 #import <JSQSystemSoundPlayer.h>
+#import <SVProgressHUD.h>
 
 
 
@@ -38,6 +39,13 @@
     [self.exitCell addDropShadowsForView];
     [self.soundCell addDropShadowsForView];
     
+    if([QZBCurrentUser sharedInstance].user.imageURL){
+        [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
+    }else{
+        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+    }
+    
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -47,11 +55,11 @@
     [TSMessage setDefaultViewController:self.navigationController];
 
    // self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
-    if([QZBCurrentUser sharedInstance].user.imageURL){
-        [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
-    }else{
-        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-    }
+//    if([QZBCurrentUser sharedInstance].user.imageURL){
+//        [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
+//    }else{
+//        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+//    }
     self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
     
     self.nameTextFieldBackGroundView.layer.borderWidth = 1.0;
@@ -96,7 +104,7 @@
                            cancelButtonTitle:@"Отменить"
                       destructiveButtonTitle:nil
                            otherButtonTitles:@"Выбрать из галереии",
-                                             @"Сфотографировать", nil];
+                                             @"Сфотографировать", @"Удалить фотографию", nil];
 
     [actSheet showInView:self.view];
 }
@@ -145,11 +153,15 @@
 
     if (buttonIndex == 0) {
         [self openLibrary];
-    }
-
-    if (buttonIndex == 1) {
+    }else if (buttonIndex == 1) {
         //[self performSegueWithIdentifier:@"showCamera" sender:nil];
-        [self openCamera];
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+            [self openCamera];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Нет доступа к камере" message:@"Включите доступ к камере в настройках приложения" delegate:nil cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
+        }
+    }else if (buttonIndex == 2) {
+        [self loadDeafaultPicture];
     }
 }
 
@@ -158,22 +170,6 @@
 }
 
 - (BOOL)checkFirstPassword {
-//    if (![self.userNewPasswordTextField validate]) {
-//        
-//        
-//        [self.userNewPasswordTextField becomeFirstResponder];
-//        [TSMessage showNotificationWithTitle:@"Пароль должен быть длинее 5 "
-//                   @"символов" type:TSMessageNotificationTypeWarning];
-//
-//        self.userNewPasswordAgainTextField.text = @"";
-//
-//        [self.userNewPasswordTextField shakeView];
-//
-//        return NO;
-//    } else {
-//        return YES;
-//    }
-    
     return [self validateTextField:self.userNewPasswordTextField];
 }
 
@@ -293,24 +289,9 @@
     didFinishWithImage:(UIImage *)image
           withMetadata:(NSDictionary *)metadata {
     
-    
-    [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-
-        
-        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-        self.userPicImageView.image = image;
-        
-        
-        [[QZBCurrentUser sharedInstance].user updateUserFromServer];
-        
-        
-        
-    } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-
-    }];
-    
+    [self loadNewPic:image];
    // self.userPicImageView.image = image;
-    //[[QZBCurrentUser sharedInstance].user setUserPic:image];
+  //  [[QZBCurrentUser sharedInstance].user setUserPic:image];
 
     [cameraViewController restoreFullScreenMode];
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
@@ -334,6 +315,45 @@
    // [self.navigationController popToRootViewControllerAnimated:NO];
 
     [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
+}
+
+-(void)loadDeafaultPicture {
+    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
+    [self loadNewPic:image];
+
+}
+
+
+-(void)loadNewPic:(UIImage *)image {
+    if(image){
+        
+        UIImage *oldImg = [self.userPicImageView.image copy];
+        [[QZBCurrentUser sharedInstance].user deleteImage];
+        self.userPicImageView.image = image;
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        
+        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
+        //self.userPicImageView.image = nil;
+        [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
+            
+            [SVProgressHUD dismiss];
+            
+            [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser
+                                                          sharedInstance].user.imageURL];
+            // self.userPicImageView.image = image;
+            
+            
+            [[QZBCurrentUser sharedInstance].user updateUserFromServer];
+            self.userPicImageView.image = image;
+            
+            
+        } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
+            
+            [SVProgressHUD showErrorWithStatus:@"Не удалось обновить картинку"];
+            self.userPicImageView.image = oldImg;
+        }];
+    }
+
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle{

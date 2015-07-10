@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfUserInRoomLabel;
 @property (weak, nonatomic) IBOutlet UILabel *topicNameLabel;
 @property (weak, nonatomic) IBOutlet DFImageView *userPicImageView;
+@property (weak, nonatomic) IBOutlet UILabel *isReadyLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *isReadyActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *isReadyBackView;
 
 - (void)configureCellWithUserWithTopic:(QZBUserWithTopic *)userWithTopic;
 

@@ -25,6 +25,8 @@
 
 - (BOOL)isContainUser:(id<QZBUserProtocol>)user;
 
+-(QZBUserWithTopic *)findUser:(id<QZBUserProtocol>)user;
+
 - (void)addUser:(QZBUserWithTopic *)userWithTopic;
 
 - (void)removeUser:(QZBUserWithTopic *)userWithTopic;
