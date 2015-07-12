@@ -43,6 +43,7 @@ NSString *const QZBShowGameController       = @"showGameController";
 //message
 
 NSString *const QZBNoRoomErrMessage = @"Комната была удалена";
+NSString *const QZBStartSessionProblems = @"Что-то пошло не так";
 
 // lastButtonStateEnum
 typedef NS_ENUM(NSInteger, QZBRoomState) {
@@ -62,6 +63,8 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
 
 @property (assign, nonatomic) BOOL isLeaveRoom;
+
+@property (assign, nonatomic) BOOL isStarted;
 //@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
 //@property (strong, nonatomic) QZBGameTopic *selectedTopic;
 //@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
@@ -199,9 +202,16 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 
 - (void)startGame {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBServerManager sharedManager] POSTStartRoomWithID:self.room.roomID onSuccess:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if(!self.isStarted){
+            [SVProgressHUD showErrorWithStatus:QZBStartSessionProblems];
+            }
+        });
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
+        [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
         
     }];
 }
@@ -384,6 +394,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 -(void)showGameController{
     
+    [SVProgressHUD dismiss];
+    self.isStarted = YES;
+    
     QZBGameTopic *topic = self.room.owner.topic;
     
     [[QZBSessionManager sessionManager] setTopicForSession:topic];
@@ -515,15 +528,18 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         
         userInRoomCell.isReadyLabel.hidden = YES;
         userInRoomCell.isReadyActivityIndicator.hidden = NO;
+        [userInRoomCell.isReadyActivityIndicator startAnimating];
         
     [[QZBServerManager sharedManager] PATCHParticipationWithID:userWithTopic.userWithTopicID isReady:isReady onSuccess:^{
         userWithTopic.ready = isReady;
         userInRoomCell.isReadyLabel.hidden = NO;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
+        [userInRoomCell.isReadyActivityIndicator stopAnimating];
         [self.tableView reloadData];
     } onFailure:^(NSError *error, NSInteger statusCode) {
         userInRoomCell.isReadyLabel.hidden = NO;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
+        [userInRoomCell.isReadyActivityIndicator stopAnimating];
         [self.tableView reloadData];
     }];
     }

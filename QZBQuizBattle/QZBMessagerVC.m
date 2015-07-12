@@ -74,7 +74,11 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                                                        object:nil];
 
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
 
@@ -93,7 +97,7 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
                    dispatch_get_main_queue(), ^{
                        [self scrollToBottomAnimated:YES];
                    });
-}\
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -102,6 +106,8 @@ NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
     //    [self.stream removeDelegate:self];
     //    [self.stream disconnect];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
+                                                        object:nil];
     
     
     QZBUserWorker *userWorker = [[QZBUserWorker alloc] init];

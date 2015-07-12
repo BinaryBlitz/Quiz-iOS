@@ -14,6 +14,9 @@ NSInteger const mainBar = 2;
 NSInteger const rateBar = 3;
 NSInteger const storeBar = 4;
 
+UIKIT_EXTERN NSString *const QZBDoNotNeedShowMessagerNotifications;
+
+UIKIT_EXTERN NSString *const QZBNeedShowMessagerNotifications;
 
 @interface QZBMainTBC : UITabBarController
 

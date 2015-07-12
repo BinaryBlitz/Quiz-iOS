@@ -226,7 +226,7 @@
     } else if( arr == self.additionalTopics){
         
     }else if (arr == self.challenged){
-        color = [UIColor strongGreenColor];
+        color = [UIColor challengedColor];//strongGreenColor];
     }
 
     return color;

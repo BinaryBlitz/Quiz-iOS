@@ -94,6 +94,11 @@
     return [UIColor colorWithRed:252.0/255.0 green:86.0/255.0 blue:88.0/255.0 alpha:1.0];
 }
 
++(UIColor *)challengedColor {
+    return [UIColor colorWithRed:99.0/255.0 green:216.0/255.0 blue:156.0/255.0 alpha:1.0];
+
+}
+
 
 
 

@@ -7,10 +7,10 @@
 //
 
 #import "QZBSettingsTVC.h"
-#import "DBCameraViewController.h"
-#import "DBCameraContainerViewController.h"
-#import <DBCamera/DBCameraLibraryViewController.h>
-#import <DBCamera/DBCameraSegueViewController.h>
+//#import "DBCameraViewController.h"
+//#import "DBCameraContainerViewController.h"
+//#import <DBCamera/DBCameraLibraryViewController.h>
+//#import <DBCamera/DBCameraSegueViewController.h>
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import "UIView+QZBShakeExtension.h"
@@ -24,12 +24,11 @@
 #import "UIViewController+QZBValidateCategory.h"
 #import <JSQSystemSoundPlayer.h>
 #import <SVProgressHUD.h>
+#import "UIImageView+QZBImagePickerCategory.h"
 
 
 
-@interface QZBSettingsTVC () <UIActionSheetDelegate,
-                              DBCameraViewControllerDelegate,
-                              UITextFieldDelegate>
+@interface QZBSettingsTVC () <UITextFieldDelegate>
 @end
 @implementation QZBSettingsTVC
 
@@ -149,21 +148,95 @@
     return YES;
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
     if (buttonIndex == 0) {
-        [self openLibrary];
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary]) {
+            [self selectPhoto:nil];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Нет доступа к фотогалерее"
+                                        message:@"Включите доступ к фотогалерее в настройках приложения"
+                                       delegate:nil
+                              cancelButtonTitle:@"Ок"
+                              otherButtonTitles: nil] show];
+        }
     }else if (buttonIndex == 1) {
         //[self performSegueWithIdentifier:@"showCamera" sender:nil];
         if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-            [self openCamera];
+            [self takePhoto:nil];
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Нет доступа к камере" message:@"Включите доступ к камере в настройках приложения" delegate:nil cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
         }
     }else if (buttonIndex == 2) {
-        [self loadDeafaultPicture];
+        [self.userPicImageView loadDeafaultPicture];
     }
 }
+
+
+
+#pragma mark - image picker
+
+
+- (IBAction)takePhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+
+- (IBAction)selectPhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+    
+}
+
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    //self.userPicImageView.image = chosenImage;
+    
+    [self.userPicImageView loadNewPic:chosenImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//
+//    if (buttonIndex == 0) {
+//        [self openLibrary];
+//    }else if (buttonIndex == 1) {
+//        //[self performSegueWithIdentifier:@"showCamera" sender:nil];
+//        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+//            [self openCamera];
+//        } else {
+//            [[[UIAlertView alloc] initWithTitle:@"Нет доступа к камере" message:@"Включите доступ к камере в настройках приложения" delegate:nil cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
+//        }
+//    }else if (buttonIndex == 2) {
+//        [self loadDeafaultPicture];
+//    }
+//}
 
 - (BOOL)checkPasswords {
     return [self checkFirstPassword] && [self checkSecondPassword];
@@ -256,51 +329,51 @@
         }];
 }
 
-- (void)openCamera {
-    DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
+//- (void)openCamera {
+//    DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
+//
+//    [cameraController setForceQuadCrop:YES];
+//
+//    DBCameraContainerViewController *container =
+//        [[DBCameraContainerViewController alloc] initWithDelegate:self];
+//    [container setCameraViewController:cameraController];
+//    [container setFullScreenMode];
+//
+//    UINavigationController *nav =
+//        [[UINavigationController alloc] initWithRootViewController:container];
+//    [nav setNavigationBarHidden:YES];
+//    [self presentViewController:nav animated:YES completion:nil];
+//}
 
-    [cameraController setForceQuadCrop:YES];
+//- (void)openLibrary {
+//    DBCameraLibraryViewController *vc = [[DBCameraLibraryViewController alloc] init];
+//    [vc setDelegate:self];       // DBCameraLibraryViewController must have a
+//                                 // DBCameraViewControllerDelegate object
+//    [vc setForceQuadCrop:YES];   // Optional
+//    [vc setUseCameraSegue:YES];  // Optional
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//    [nav setNavigationBarHidden:YES];
+//    [self presentViewController:nav animated:YES completion:nil];
+//}
 
-    DBCameraContainerViewController *container =
-        [[DBCameraContainerViewController alloc] initWithDelegate:self];
-    [container setCameraViewController:cameraController];
-    [container setFullScreenMode];
-
-    UINavigationController *nav =
-        [[UINavigationController alloc] initWithRootViewController:container];
-    [nav setNavigationBarHidden:YES];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)openLibrary {
-    DBCameraLibraryViewController *vc = [[DBCameraLibraryViewController alloc] init];
-    [vc setDelegate:self];       // DBCameraLibraryViewController must have a
-                                 // DBCameraViewControllerDelegate object
-    [vc setForceQuadCrop:YES];   // Optional
-    [vc setUseCameraSegue:YES];  // Optional
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [nav setNavigationBarHidden:YES];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-#pragma mark - DBCameraViewControllerDelegate
-
-- (void)camera:(id)cameraViewController
-    didFinishWithImage:(UIImage *)image
-          withMetadata:(NSDictionary *)metadata {
-    
-    [self loadNewPic:image];
-   // self.userPicImageView.image = image;
-  //  [[QZBCurrentUser sharedInstance].user setUserPic:image];
-
-    [cameraViewController restoreFullScreenMode];
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)dismissCamera:(id)cameraViewController {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [cameraViewController restoreFullScreenMode];
-}
+//#pragma mark - DBCameraViewControllerDelegate
+//
+//- (void)camera:(id)cameraViewController
+//    didFinishWithImage:(UIImage *)image
+//          withMetadata:(NSDictionary *)metadata {
+//    
+//    [self loadNewPic:image];
+//   // self.userPicImageView.image = image;
+//  //  [[QZBCurrentUser sharedInstance].user setUserPic:image];
+//
+//    [cameraViewController restoreFullScreenMode];
+//    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+//}
+//
+//- (void)dismissCamera:(id)cameraViewController {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    [cameraViewController restoreFullScreenMode];
+//}
 
 #pragma mark - actions
 
@@ -317,44 +390,44 @@
     [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
 }
 
--(void)loadDeafaultPicture {
-    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
-    [self loadNewPic:image];
+//-(void)loadDeafaultPicture {
+//    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
+//    [self loadNewPic:image];
+//
+//}
 
-}
 
-
--(void)loadNewPic:(UIImage *)image {
-    if(image){
-        
-        UIImage *oldImg = [self.userPicImageView.image copy];
-        [[QZBCurrentUser sharedInstance].user deleteImage];
-        self.userPicImageView.image = image;
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-        
-        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-        //self.userPicImageView.image = nil;
-        [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-            
-            [SVProgressHUD dismiss];
-            
-            [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser
-                                                          sharedInstance].user.imageURL];
-            // self.userPicImageView.image = image;
-            
-            
-            [[QZBCurrentUser sharedInstance].user updateUserFromServer];
-            self.userPicImageView.image = image;
-            
-            
-        } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-            
-            [SVProgressHUD showErrorWithStatus:@"Не удалось обновить картинку"];
-            self.userPicImageView.image = oldImg;
-        }];
-    }
-
-}
+//-(void)loadNewPic:(UIImage *)image {
+//    if(image){
+//        
+//        UIImage *oldImg = [self.userPicImageView.image copy];
+//        [[QZBCurrentUser sharedInstance].user deleteImage];
+//        self.userPicImageView.image = image;
+//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+//        
+//        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
+//        //self.userPicImageView.image = nil;
+//        [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
+//            
+//            [SVProgressHUD dismiss];
+//            
+//            [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser
+//                                                          sharedInstance].user.imageURL];
+//            // self.userPicImageView.image = image;
+//            
+//            
+//            [[QZBCurrentUser sharedInstance].user updateUserFromServer];
+//            self.userPicImageView.image = image;
+//            
+//            
+//        } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
+//            
+//            [SVProgressHUD showErrorWithStatus:@"Не удалось обновить картинку"];
+//            self.userPicImageView.image = oldImg;
+//        }];
+//    }
+//
+//}
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;

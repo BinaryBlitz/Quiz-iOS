@@ -990,6 +990,8 @@ NSString *const QZBNoInternetConnectionMessage =
                        onFailure:(void (^)(NSError *error,
                                            NSInteger statusCode,
                                            QZBUserRegistrationProblem problem))failure {
+    
+    
     NSString *base64str =
         [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
