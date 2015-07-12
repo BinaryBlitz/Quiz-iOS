@@ -14,6 +14,7 @@
 #import "QZBRoomOnlineWorker.h"
 #import "QZBSessionManager.h"
 #import "UIViewController+QZBControllerCategory.h"
+#import "UIColor+QZBProjectColors.h"
 
 #import "QZBCategory.h"
 #import "QZBGameTopic.h"
@@ -64,6 +65,12 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     
     self.tableView.tableFooterView = [[UIView alloc] init];
+    
+    CGRect r = [UIScreen mainScreen].bounds;
+    CGRect headerRect = CGRectMake(0, 0, r.size.width, r.size.height/3.0);
+    
+    UIView *header = [[UIView alloc] initWithFrame:headerRect];
+    self.tableView.tableHeaderView = header;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -130,6 +137,24 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     [cell confirureWithUserWithTopic:userWithTopic position:@(position)];
     
+    if(indexPath.row<3 && userWithTopic.finished){
+        UIImage *cupImage = [[UIImage imageNamed:@"cupImage"]
+                             imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIColor *color = [UIColor whiteColor];
+        if(indexPath.row == 0){
+            color = [UIColor goldColor];
+            
+        }else if(indexPath.row == 1){
+            color = [UIColor silverColor];
+        }else if (indexPath.row == 2){
+            color = [UIColor bronzeColor];
+        }
+        cell.cupImageView.tintColor = color;
+        cell.cupImageView.image = cupImage;
+    } else{
+        cell.cupImageView.image = nil;
+    }
+    
     return cell;
     
 }
@@ -174,14 +199,13 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
         
         UIView *backV = [[UIView alloc] init];
         backV.backgroundColor = [UIColor blackColor];
-        [backV addSubview:dfiIV];
+        //[backV addSubview:dfiIV];
         UIView *frontV = [[UIView alloc] initWithFrame:r];
         
-        frontV.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.1];
+        frontV.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.4];
         
-        [dfiIV addSubview:frontV];
-        
-        
+        [backV addSubview:frontV];
+        [backV insertSubview:dfiIV belowSubview:frontV];
         
         self.tableView.backgroundView = backV;
     }

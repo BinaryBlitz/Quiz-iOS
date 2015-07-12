@@ -66,6 +66,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     [self setNeedsStatusBarAppearanceUpdate];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications" object:nil];
+    
     [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"timer"
                                                     fileExtension:kJSQSystemSoundTypeWAV];
 
@@ -211,6 +213,11 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@""];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications" object:nil];
 }
 
 - (void)dealloc {

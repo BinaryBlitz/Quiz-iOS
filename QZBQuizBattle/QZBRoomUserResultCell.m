@@ -13,14 +13,16 @@
 @implementation QZBRoomUserResultCell
 
 - (void)confirureWithUserWithTopic:(QZBUserWithTopic *)userWithTopic position:(NSNumber *)position {
-    self.usernameLabel.text = userWithTopic.user.name;
+    self.usernameLabel.text = [NSString stringWithFormat:@"%@. %@",position, userWithTopic.user.name]; // userWithTopic.user.name;
 
-    self.userPositionLabel.text = [NSString stringWithFormat:@"%@", position];
+   // self.userPositionLabel.text = [NSString stringWithFormat:@"%@", position];
 
     if(userWithTopic.finished){
         self.userPointsLabel.text = [NSString stringWithFormat:@"%@", userWithTopic.points];
+        self.waitingLabel.text = @"";
     }else{
-        self.userPointsLabel.text = @"Ожидание";
+        self.userPointsLabel.text = @"";
+        self.waitingLabel.text = @"Ожидание";
     }
 
     if (userWithTopic.user.imageURL) {

@@ -101,6 +101,11 @@
         NSNumber *points = d[@"points"];
         
         [self userWithId:userID resultPoints:points];
+        
+        NSSortDescriptor *firstSort = [[NSSortDescriptor alloc] initWithKey:@"finished" ascending:NO];
+        NSSortDescriptor *secondSort = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO];
+        
+        [self.room.participants sortUsingDescriptors:@[firstSort,secondSort]];
     //    [self.tableView reloadData];
     }
 }

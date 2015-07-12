@@ -23,6 +23,7 @@
 +(UIColor *)lightButtonColor;
 +(UIColor *)veryDarkGreyColor;
 +(UIColor *)middleDarkGreyColor;
++(UIColor *)challengedColor;
 
 +(UIColor *)transperentBlackColor;
 +(UIColor *)transperentLightGreenColor;

@@ -13,7 +13,7 @@
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
-@interface QZBRatingPageVC ()
+@interface QZBRatingPageVC ()<UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSArray *ratingTableViewControllers;
 @property (assign, nonatomic) BOOL motionInProgress;
@@ -32,6 +32,15 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     self.delegate = self;
     self.dataSource = self;
+    
+    
+    for(UIView *v in self.view.subviews){
+        if([v isKindOfClass:[UIScrollView class]]){
+            UIScrollView *scrollView = (UIScrollView *)v;
+            scrollView.delegate = self;
+            //NSLog(@"finded");
+        }
+    }
     
     //self.view.tintColor = [UIColor blackColor];
 
@@ -279,15 +288,20 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
     
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little
-preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        });
 }
-*/
+
+
 
 @end

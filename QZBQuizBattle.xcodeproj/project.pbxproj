@@ -93,6 +93,7 @@
 		1955A3F51AAB40870083778A /* icon_register.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3F21AAB40870083778A /* icon_register.png */; };
 		1955A3F61AAB40870083778A /* icon_vk.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3F31AAB40870083778A /* icon_vk.png */; };
 		195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */; };
+		195CAC071B512EF600564776 /* UIImageView+QZBImagePickerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */; };
 		195EA0A51AD4338C000C4341 /* QZBAchievementManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0A41AD4338C000C4341 /* QZBAchievementManager.m */; };
 		195EA0AB1AD520AA000C4341 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0A81AD520AA000C4341 /* UIBarButtonItem+Badge.m */; };
 		195EA0AC1AD520AA000C4341 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */; };
@@ -481,6 +482,8 @@
 		1955A3F31AAB40870083778A /* icon_vk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_vk.png; sourceTree = "<group>"; };
 		195A7E3E1A69893B003AC3BA /* QZBRegistrationChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationChooserVC.h; sourceTree = "<group>"; };
 		195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationChooserVC.m; sourceTree = "<group>"; };
+		195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+QZBImagePickerCategory.h"; sourceTree = "<group>"; };
+		195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+QZBImagePickerCategory.m"; sourceTree = "<group>"; };
 		195EA0A31AD4338B000C4341 /* QZBAchievementManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAchievementManager.h; sourceTree = "<group>"; };
 		195EA0A41AD4338C000C4341 /* QZBAchievementManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAchievementManager.m; sourceTree = "<group>"; };
 		195EA0A71AD520AA000C4341 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
@@ -1484,6 +1487,8 @@
 				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
 				1969631F1B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.h */,
 				196963201B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m */,
+				195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */,
+				195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */,
 			);
 			name = viewcontrollers;
 			sourceTree = "<group>";
@@ -3100,6 +3105,7 @@
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
 				193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */,
 				191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */,
+				195CAC071B512EF600564776 /* UIImageView+QZBImagePickerCategory.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
 				1974BC101AD699970057E966 /* QZBEndGamePointsCell.m in Sources */,
 				19416C201B2C7072005D34EA /* QZBChooseThisCategoryCell.m in Sources */,

@@ -20,6 +20,10 @@
 
 #import "UIViewController+QZBMessagerCategory.h"
 
+
+NSString *const QZBDoNotNeedShowMessagerNotifications = @"QZBDoNotNeedShowMessagerNotifications";
+NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifications";
+
 @interface QZBMainTBC ()
 
 @end
@@ -38,6 +42,16 @@
     view.backgroundColor = [UIColor lightBlueColor];
     UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
     [currentWindow addSubview:view];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(subscribeToMessages)
+                                                 name:QZBNeedShowMessagerNotifications
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(unsubscribeFromMessages)
+                                                 name:QZBDoNotNeedShowMessagerNotifications
+                                               object:nil];
+    
     
     
 //    for (NSString* family in [UIFont familyNames])
@@ -115,6 +129,16 @@
         }
         [self subscribeToMessages];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(subscribeToMessages)
+                                                     name:QZBNeedShowMessagerNotifications
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(unsubscribeFromMessages)
+                                                     name:QZBDoNotNeedShowMessagerNotifications
+                                                   object:nil];
+
+        
         //[self setSelectedIndex:2];
     }
 }
@@ -123,6 +147,7 @@
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self unsubscribeFromMessages];
+    
 }
 
 #pragma mark - support methods
@@ -137,6 +162,8 @@
         it.badgeValue = nil;
     }
 }
+
+
 
 
 @end

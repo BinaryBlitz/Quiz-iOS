@@ -8,6 +8,8 @@
 
 #import "QZBRoomCell.h"
 #import "QZBRoom.h"
+#import "QZBUserWithTopic.h"
+#import "QZBGameTopic.h"
 #import "UIFont+QZBCustomFont.h"
 
 @implementation QZBRoomCell
@@ -39,15 +41,24 @@
 //        
 //    }
     
-    
+   // QZBUserWithTopic *userWithTopic = usersWithTopics[0];
     for(int i = 0; i < 4; i++){
-        UILabel *label = self.usersDescriptionsLabels[i];
+       // UILabel *label = self.usersDescriptionsLabels[i];
+        UILabel *nameLabel = self.namesLabels[i];
+        UILabel *topicsLabel = self.topicsNamesLabels[i];
         
-        if(i<usersWithTopics.count){
+        
+        if(i < usersWithTopics.count){
             QZBUserWithTopic *userWithTopic = usersWithTopics[i];
-            label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
-        }else{
-            label.attributedText = nil;
+          //  label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
+            nameLabel.text = userWithTopic.user.name;
+            topicsLabel.text = userWithTopic.topic.name;
+            
+        } else {
+           // label.attributedText = nil;
+            
+            nameLabel.text = nil;
+            topicsLabel.text = nil;
         }
     }
     

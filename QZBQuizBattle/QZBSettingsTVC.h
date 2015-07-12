@@ -11,7 +11,7 @@
 @class QZBPasswordTextField;
 @class QZBUserNameTextField;
 
-@interface QZBSettingsTVC : UITableViewController
+@interface QZBSettingsTVC : UITableViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userPicImageView;
 @property (weak, nonatomic) IBOutlet QZBUserNameTextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet QZBPasswordTextField *userNewPasswordTextField;
