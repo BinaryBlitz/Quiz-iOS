@@ -52,6 +52,10 @@
         }else{
             self.isViewed = YES;
         }
+        
+        if(dict[@"is_online"] && [dict[@"is_online"] isEqual:[NSNull null]]){
+            self.isOnline = [dict[@"is_online"] boolValue];
+        }
       //  QZBUserWorker *uw = [[QZBUserWorker alloc] init];
         
        // [QZBUserWorker saveUserInMemory:self];

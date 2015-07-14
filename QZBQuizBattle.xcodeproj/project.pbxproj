@@ -61,6 +61,8 @@
 		193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */; };
 		193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9171B441EAD0060B69B /* QZBRoomSession.m */; };
 		193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */; };
+		193D39DE1B55770E00301F99 /* UIColor+PAUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 193D39DA1B55770E00301F99 /* UIColor+PAUIColorAdditions.m */; };
+		193D39DF1B55770E00301F99 /* NSString+PANSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 193D39DD1B55770E00301F99 /* NSString+PANSStringAdditions.m */; };
 		193DEE411B0E227D009CEB50 /* QZBFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */; };
 		193DEE461B0E2713009CEB50 /* QZBFriendRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */; };
 		19416C201B2C7072005D34EA /* QZBChooseThisCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19416C1F1B2C7072005D34EA /* QZBChooseThisCategoryCell.m */; };
@@ -111,7 +113,7 @@
 		1965879D1AC5879200C58C60 /* QZBVSScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */; };
 		196587A01AC58A8E00C58C60 /* QZBUserStatistic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */; };
 		196587A71AC5B5C100C58C60 /* QZBStatiscticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */; };
-		196963211B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196963201B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m */; };
+		196963211B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196963201B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m */; };
 		196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */; };
 		196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */; };
 		196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */; };
@@ -437,6 +439,10 @@
 		193CC9171B441EAD0060B69B /* QZBRoomSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomSession.m; sourceTree = "<group>"; };
 		193CC91A1B4420C80060B69B /* QZBRoomQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomQuestion.h; sourceTree = "<group>"; };
 		193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomQuestion.m; sourceTree = "<group>"; };
+		193D39D91B55770E00301F99 /* UIColor+PAUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PAUIColorAdditions.h"; sourceTree = "<group>"; };
+		193D39DA1B55770E00301F99 /* UIColor+PAUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PAUIColorAdditions.m"; sourceTree = "<group>"; };
+		193D39DC1B55770E00301F99 /* NSString+PANSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PANSStringAdditions.h"; sourceTree = "<group>"; };
+		193D39DD1B55770E00301F99 /* NSString+PANSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PANSStringAdditions.m"; sourceTree = "<group>"; };
 		193DEE3F1B0E227D009CEB50 /* QZBFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequest.h; sourceTree = "<group>"; };
 		193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendRequest.m; sourceTree = "<group>"; };
 		193DEE441B0E2713009CEB50 /* QZBFriendRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequestManager.h; sourceTree = "<group>"; };
@@ -518,8 +524,8 @@
 		1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserStatistic.m; sourceTree = "<group>"; };
 		196587A51AC5B5C100C58C60 /* QZBStatiscticCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStatiscticCell.h; sourceTree = "<group>"; };
 		196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStatiscticCell.m; sourceTree = "<group>"; };
-		1969631F1B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QZBMessagerCategory.h"; sourceTree = "<group>"; };
-		196963201B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QZBMessagerCategory.m"; sourceTree = "<group>"; };
+		1969631F1B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+QZBMessagerCategory.h"; sourceTree = "<group>"; };
+		196963201B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+QZBMessagerCategory.m"; sourceTree = "<group>"; };
 		196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionForHorizontalCell.h; sourceTree = "<group>"; };
 		196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionForHorizontalCell.m; sourceTree = "<group>"; };
 		196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+QZBCellCategory.h"; sourceTree = "<group>"; };
@@ -1234,6 +1240,33 @@
 			name = session;
 			sourceTree = "<group>";
 		};
+		193D39D71B55770E00301F99 /* color_gen */ = {
+			isa = PBXGroup;
+			children = (
+				193D39D81B55770E00301F99 /* Color */,
+				193D39DB1B55770E00301F99 /* String */,
+			);
+			path = color_gen;
+			sourceTree = "<group>";
+		};
+		193D39D81B55770E00301F99 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				193D39D91B55770E00301F99 /* UIColor+PAUIColorAdditions.h */,
+				193D39DA1B55770E00301F99 /* UIColor+PAUIColorAdditions.m */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		193D39DB1B55770E00301F99 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				193D39DC1B55770E00301F99 /* NSString+PANSStringAdditions.h */,
+				193D39DD1B55770E00301F99 /* NSString+PANSStringAdditions.m */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
 		193DEE3E1B0E21B2009CEB50 /* friendRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1400,6 +1433,7 @@
 		196099F91B2452C400EEB9D6 /* colors */ = {
 			isa = PBXGroup;
 			children = (
+				193D39D71B55770E00301F99 /* color_gen */,
 				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
 				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 				196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */,
@@ -1485,8 +1519,8 @@
 				19D8914C1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.m */,
 				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
 				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
-				1969631F1B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.h */,
-				196963201B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m */,
+				1969631F1B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.h */,
+				196963201B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m */,
 				195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */,
 				195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */,
 			);
@@ -3043,6 +3077,7 @@
 				199666C01B207FE100793610 /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				19609A071B28689100EEB9D6 /* QZBUserWorker.m in Sources */,
 				19D6912A1A6EA4E8008B2AE1 /* QZBUserNameTextField.m in Sources */,
+				193D39DF1B55770E00301F99 /* NSString+PANSStringAdditions.m in Sources */,
 				199666BA1B207FE100793610 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				199665841B207B1D00793610 /* NSData+XMPP.m in Sources */,
 				191E12EA1A8C9FC700AFB829 /* QZBFriendHorizontalCell.m in Sources */,
@@ -3091,6 +3126,7 @@
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				195FDA851ADA662E000F86F9 /* QZBReportVC.m in Sources */,
 				199666AE1B207FE100793610 /* XMPPRoster.m in Sources */,
+				193D39DE1B55770E00301F99 /* UIColor+PAUIColorAdditions.m in Sources */,
 				1996658C1B207B1D00793610 /* XMPPModule.m in Sources */,
 				199666B01B207FE100793610 /* XMPPIQ+JabberRPC.m in Sources */,
 				193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */,
@@ -3156,7 +3192,7 @@
 				199666E11B207FE100793610 /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				199666CF1B207FE100793610 /* XMPPvCardTempModule.m in Sources */,
 				195EA0AB1AD520AA000C4341 /* UIBarButtonItem+Badge.m in Sources */,
-				196963211B2B2393007DF0E6 /* UIViewController+QZBMessagerCategory.m in Sources */,
+				196963211B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m in Sources */,
 				1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */,
 				199666DF1B207FE100793610 /* XMPPCapabilities.xcdatamodel in Sources */,
 				194258291B18BB86008A3449 /* QZBViewWithLineOnBottom.m in Sources */,

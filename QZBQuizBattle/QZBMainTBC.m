@@ -18,7 +18,7 @@
 #import "UIColor+QZBProjectColors.h"
 #import "QZBMessagerManager.h"
 
-#import "UIViewController+QZBMessagerCategory.h"
+#import "UITabBarController+QZBMessagerCategory.h"
 
 
 NSString *const QZBDoNotNeedShowMessagerNotifications = @"QZBDoNotNeedShowMessagerNotifications";

@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "UIViewController+QZBMessagerCategory.h"
+#import "UITabBarController+QZBMessagerCategory.h"
 #import <TSMessage.h>
 #import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
 #import "QZBSessionManager.h"
 
-@implementation UIViewController (QZBMessagerCategory)
+@implementation UITabBarController (QZBMessagerCategory)
 
 
 -(void)showMessage:(NSString *)messge userName:(NSString *)userName{
@@ -63,14 +63,17 @@
 
 -(void)showMessageList{
     
-    self.tabBarController.selectedIndex = 1;
+    NSLog(@"message");
     
-    UINavigationController *nav = self.tabBarController.viewControllers[1];
+    self.selectedIndex = 1;
+    
+    UINavigationController *nav = self.viewControllers[1];
+    
     [nav popToRootViewControllerAnimated:NO];
     QZBMessangerList *messList = [nav.storyboard
                                   instantiateViewControllerWithIdentifier:@"messagerList"];
     
-    [nav pushViewController:messList animated:NO];
+    [nav pushViewController:messList animated:YES];
     
     
     

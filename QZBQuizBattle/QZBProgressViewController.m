@@ -21,6 +21,7 @@
 #import "QZBGameTopic.h"
 #import "QZBServerManager.h"
 #import "TSMessage.h"
+#import "QZBTopicWorker.h"
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#import "FXBlurView.h"
@@ -59,6 +60,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.playOfflineButton.alpha = 0;
     
     
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +71,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                                                        object:nil];
 
     self.topicLabel.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.topicLabel.layer.shadowOffset = CGSizeMake(2.0, 2.0);
@@ -76,7 +80,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.topicLabel.layer.shadowOpacity = 0.5;
     
     QZBCategory *category =
-        [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:self.topic];
+        [QZBTopicWorker tryFindRelatedCategoryToTopic:self.topic];
     if (category) {
        
         //[self initNavigationBar:topic.relationToCategory.name];
@@ -156,6 +160,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [super viewWillDisappear:animated];
 
     // [self.client disconnect];
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
+                                                         object:nil];
 
     DDLogInfo(@"progress disapear");
 
