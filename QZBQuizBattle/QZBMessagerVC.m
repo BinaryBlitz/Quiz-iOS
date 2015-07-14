@@ -25,6 +25,7 @@
 //#import "XMPPMessageArchivingCoreDataStorage.h"
 
 NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
+const NSTimeInterval QZBMessageTimeInterval = 600;
 
 @interface QZBMessagerVC () <QZBMessagerManagerDelegate>
 
@@ -435,17 +436,11 @@ navigation
 
 #pragma mark - date
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
-    /**
-     *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
-     *  The other label text delegate methods should follow a similar pattern.
-     *
-     *  Show a timestamp for every 3rd message
-     */
-    
-    if(self.messages.count == 1){
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
+attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+    if(self.messages.count > 0 && indexPath.item == 0){
         JSQMessage *message = self.messages[indexPath.item];
+        
         return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
     } else if(indexPath.item > 0){
        // NSDate *firstDate =
@@ -461,7 +456,7 @@ navigation
         
         NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
         
-        if(timeInterval>60 * 10){
+        if(timeInterval> QZBMessageTimeInterval){
             return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
         }
         
@@ -495,8 +490,8 @@ navigation
    // return 0.0f;
     
     
-    if(self.messages.count == 1){
-        JSQMessage *message = self.messages[indexPath.item];
+    if(self.messages.count > 0 && indexPath.item == 0){
+     //   JSQMessage *message = self.messages[indexPath.item];
         return kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
     } else if(indexPath.item > 0){
         // NSDate *firstDate =
@@ -512,7 +507,7 @@ navigation
         
         NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
         
-        if(timeInterval>60){
+        if(timeInterval>QZBMessageTimeInterval){
             return  kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
         }
         

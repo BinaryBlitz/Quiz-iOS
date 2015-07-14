@@ -118,7 +118,8 @@
     [cell setCellWithUser:user];
     
     if(user.imageURL){
-    [cell.userpic setImageWithURL:user.imageURL];
+    [cell.userpic setImageWithURL:user.imageURL
+                 placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
     }else{
         [cell.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
     }

@@ -58,9 +58,6 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    
-   // [self.navigationController setToolbarHidden:YES animated:YES];
-    //[self reloadRooms];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

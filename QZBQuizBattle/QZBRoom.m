@@ -22,6 +22,7 @@
 @property (strong, nonatomic) QZBUserWithTopic *owner;
 @property (strong, nonatomic) NSDate *creationDate;
 @property (strong, nonatomic) NSMutableArray *participants;  // QZBUserWithTopic
+@property (assign, nonatomic) BOOL isFriendOnly;
 
 @property(strong, nonatomic) NSNumber *maxUserCount;
 
@@ -57,7 +58,17 @@
             
         }
         
-        self.maxUserCount = @(5);
+        id usersCount = d[@"size"];
+        
+        if(usersCount && ![usersCount isEqual:[NSNull null]]) {
+            self.maxUserCount = (NSNumber *)usersCount;
+        } else {
+            self.maxUserCount = @(5);
+        }
+        
+        self.isFriendOnly = [d[@"friends_only"] boolValue];
+        
+       // self.maxUserCount = @(4);
 
     //    [self.participants insertObject:self.owner atIndex:0];
     }

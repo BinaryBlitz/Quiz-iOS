@@ -21,6 +21,7 @@
 #import "UILabel+MultiLineAutoSize.h"
 #import "UIFont+QZBCustomFont.h"
 #import "QZBCurrentUser.h"
+#import "QZBTopicWorker.h"
 
 //DFImageManager
 #import <DFImageManager/DFImageManager.h>
@@ -151,7 +152,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
 
-    QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
+    QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:topic];
     if (category) {
         NSURL *url = [NSURL URLWithString:category.background_url];
         NSURLRequest *imageRequest =
@@ -213,6 +214,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@""];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -750,19 +752,24 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 - (void)setNamesAndUserpics {
     self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
+    [self.userNameLabel addShadows];
+    
 
     if ([QZBSessionManager sessionManager].opponentUserName) {
         self.opponentNameLabel.text = [QZBSessionManager sessionManager].opponentUserName;
+        [self.opponentNameLabel addShadows];
     }
 
     if ([QZBSessionManager sessionManager].firstImageURL) {
-        [self.userImage setImageWithURL:[QZBSessionManager sessionManager].firstImageURL];
+        [self.userImage setImageWithURL:[QZBSessionManager sessionManager].firstImageURL
+                       placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
     } else {
         [self.userImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
 
     if ([QZBSessionManager sessionManager].opponentImageURL) {
-        [self.opponentImage setImageWithURL:[QZBSessionManager sessionManager].opponentImageURL];
+        [self.opponentImage setImageWithURL:[QZBSessionManager sessionManager].opponentImageURL
+                           placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
     } else {
         [self.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }

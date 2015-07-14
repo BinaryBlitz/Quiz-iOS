@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic;
+//- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic;
 
 #pragma mark - game
 
@@ -243,6 +243,7 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 
 - (void)POSTCreateRoomWithTopic:(QZBGameTopic *)topic
                         private:(BOOL)isPrivate
+                           size:(NSNumber *)size
                       OnSuccess:(void (^)(QZBRoom *room))success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 

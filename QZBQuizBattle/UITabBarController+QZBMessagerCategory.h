@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (QZBMessagerCategory)
+@interface UITabBarController (QZBMessagerCategory)
 
 -(void)subscribeToMessages;
 -(void)unsubscribeFromMessages;

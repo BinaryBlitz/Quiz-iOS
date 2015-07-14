@@ -112,7 +112,12 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
         if ([hostID isEqualToNumber:user1.userID]) {
             self.userBeginingScore = [hostDict[@"points"] integerValue];
-            self.userMultiplier = [hostDict[@"multiplier"] integerValue];
+            
+            if(![hostDict[@"multiplier"] isEqual:[NSNull null]]){
+                self.userMultiplier = [hostDict[@"multiplier"] integerValue];
+            }else {
+                self.userMultiplier = 1;
+            }
 
             if (![opponentDict[@"username"] isEqual:[NSNull null]] && opponentDict[@"username"]) {
                 opponent.name = opponentDict[@"username"];
@@ -135,7 +140,12 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
         } else {
             self.userBeginingScore = [opponentDict[@"points"] integerValue];
-            self.userMultiplier = [opponentDict[@"multiplier"] integerValue];
+            
+            if(![opponentDict[@"multiplier"] isEqual:[NSNull null]]) {
+                self.userMultiplier = [opponentDict[@"multiplier"] integerValue];
+            } else {
+                self.userMultiplier = 1;
+            }
 
             if (![hostDict[@"username"] isEqual:[NSNull null]] && hostDict[@"username"]) {
                 opponent.name = hostDict[@"username"];

@@ -27,4 +27,6 @@
 
 -(QZBUserStatistic *)userStatistics;
 
+-(BOOL)isOnline;
+
 @end

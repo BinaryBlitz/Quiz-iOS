@@ -22,6 +22,7 @@
 @property(strong, nonatomic) UILabel *centralLabel;
 @property(strong, nonatomic) UIImageView *icon;
 @property(assign, nonatomic) BOOL visible;
+@property(strong, nonatomic) UIColor *mainCellColor;
 
 @end
 
@@ -58,6 +59,32 @@
     self.symbolLabel.minimumScaleFactor = 0.5;
     self.symbolLabel.adjustsFontSizeToFitWidth = YES;
     
+//    NSInteger level = 0;
+//    float progress = 0.0;
+//    
+//    [NSObject calculateLevel:&level
+//               levelProgress:&progress
+//                   fromScore:[topic.points integerValue]];
+//    
+//    [self initCircularProgressWithLevel:level
+//                               progress:progress
+//                                visible:[topic.visible boolValue]];
+    
+    self.topicName.text = topic.name;
+    
+    QZBCategory *relationCategory = topic.relationToCategory;
+    
+    if(relationCategory){
+        NSString *firstTwoChar = [NSString firstTwoChars:relationCategory.name];
+     //   if(!self.mainCellColor) {
+        self.mainCellColor = [UIColor colorForString:relationCategory.name];
+       // }
+        self.symbolsView.backgroundColor = self.mainCellColor;
+        //[UIColor colorForString:firstTwoChar];
+        //self.topicProgressView.tintColor = self.mainCellColor;
+        self.symbolLabel.text = firstTwoChar;
+    }
+    
     NSInteger level = 0;
     float progress = 0.0;
     
@@ -68,25 +95,14 @@
     [self initCircularProgressWithLevel:level
                                progress:progress
                                 visible:[topic.visible boolValue]];
-    
-    self.topicName.text = topic.name;
-    
-    QZBCategory *relationCategory = topic.relationToCategory;
-    
-    if(relationCategory){
-        NSString *firstTwoChar = [NSString firstTwoChars:relationCategory.name];
-        self.symbolsView.backgroundColor = [UIColor colorForString:firstTwoChar];
-        self.symbolLabel.text = firstTwoChar;
-    }
+
 
     
 }
 
--(void)initCircularProgressWithLevel:(NSInteger)level
-                            progress:(float)progress
-                             visible:(BOOL)visible{
-    
-    
+- (void)initCircularProgressWithLevel:(NSInteger)level
+                             progress:(float)progress
+                              visible:(BOOL)visible {
     self.visible = visible;
     
     if(!visible){
@@ -102,6 +118,9 @@
         self.topicProgressView.tintColor = [UIColor lightGreenColor];
         self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)level];
         self.topicProgressView.progress = progress;
+        if(self.mainCellColor){
+            self.topicProgressView.tintColor = self.mainCellColor;
+        }
     } else {
         self.topicProgressView.tintColor = [UIColor clearColor];
         self.topicProgressView.centralView = self.icon;

@@ -19,6 +19,8 @@
 // cells
 #import "QZBTopicTableViewCell.h"
 #import "QZBPlayerCountChooserCell.h"
+#import "QZBRoomPasswordOnlyCell.h"
+
 
 // controllers
 #import "QZBRoomController.h"
@@ -30,7 +32,7 @@ NSString *const QZBChooseTopicCellIdentifier            = @"chooseTopicCellIdent
 NSString *const QZBTopicCellIdentifier                  = @"topicCell";
 NSString *const QZBChooseTopicDescriptionCellIdentifier = @"chooseTopicDescriptionCellIdentifier";
 NSString *const QZBPasswordOnlyChooserCellIdentifier    = @"passwordOnlyChooserCellIdentifier";
-NSString *const QZBPasswordInputCellIdentifier          = @"passwordInputCellIdentifier";
+NSString *const QZBPasswordInputCellIdentifier          = @"friendsOnlyChooserCellIdentifier";
 NSString *const QZBCreateRoomCellIdentifier             = @"createRoomCellIdentifier";
 NSString *const QZBEmptyCellIdentifier                  = @"emptyCellIdentifier";
 
@@ -56,6 +58,9 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
 
 @property (strong, nonatomic) QZBRoom *room;
 
+@property (strong, nonatomic) UISwitch *friendsOnlySwitch;
+@property (strong, nonatomic) UISegmentedControl *usersCountSegmentControl;
+
 @end
 
 @implementation QZBCreateRoomController
@@ -70,9 +75,9 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (!self.topic) {
-        return 3;
+        return 4;
     } else {
-        return 5;
+        return 6;
     }
 }
 
@@ -81,6 +86,7 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
     if (indexPath.row == 0) {
         QZBPlayerCountChooserCell *cell =
             [tableView dequeueReusableCellWithIdentifier:QZBPlayerCountChooserCellIdentifier];
+        self.usersCountSegmentControl = cell.playersCountSegmentControll;
         return cell;
     } else if (indexPath.row == 1) {
         UITableViewCell *cell =
@@ -102,6 +108,14 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
 
             return cell;
         }
+    } else if (indexPath.row == 3) {
+        QZBRoomPasswordOnlyCell *cell = [tableView
+                                         dequeueReusableCellWithIdentifier:QZBPasswordInputCellIdentifier];
+        
+        self.friendsOnlySwitch = cell.passwordOnlySwitch;
+        
+        return cell;
+        
     } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 2) {
         UITableViewCell *cell =
             [tableView dequeueReusableCellWithIdentifier:QZBEmptyCellIdentifier];
@@ -128,9 +142,7 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
         return topicChooserDescriptionCellHeight;
     } else if (indexPath.row == 2) {
         return topicCellHeight;
-    }
-
-    else {
+    } else {
         return 56;
     }
 }
@@ -159,10 +171,15 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
 - (void)createRoom {
     if (self.topic) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        //[SVProgressHUD ]
+        
+        NSNumber *usersCount =  @(self.usersCountSegmentControl.selectedSegmentIndex + 3);
 
+        
         [[QZBServerManager sharedManager] POSTCreateRoomWithTopic:self.topic
-            private:NO
-            OnSuccess:^(QZBRoom *room) {
+                                                          private:self.friendsOnlySwitch.isOn
+                                                             size:usersCount
+                                                        OnSuccess:^(QZBRoom *room) {
                 [SVProgressHUD showSuccessWithStatus:QZBRoomCreatedMessage];
 
                 self.room = room;

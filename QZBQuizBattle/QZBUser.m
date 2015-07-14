@@ -24,6 +24,8 @@
 
 @property(assign, nonatomic) BOOL isRegistred;
 
+@property(assign, nonatomic) BOOL isOnline;
+
 //@property(strong, nonatomic) NSString *pushToken;
 
 @end
@@ -177,6 +179,8 @@
     self.imageURL = nil;
 }
     
-
+-(BOOL)isOnline {
+    return YES;
+}
 
 @end

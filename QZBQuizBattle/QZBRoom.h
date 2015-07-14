@@ -14,12 +14,13 @@
 
 @interface QZBRoom : NSObject
 
-@property(strong, nonatomic, readonly) NSNumber *roomID;
-@property(strong, nonatomic, readonly) QZBUserWithTopic *owner;
-@property(strong, nonatomic, readonly) NSMutableArray *participants;
-@property(strong, nonatomic, readonly) NSDate *creationDate;
+@property (strong, nonatomic, readonly) NSNumber *roomID;
+@property (strong, nonatomic, readonly) QZBUserWithTopic *owner;
+@property (strong, nonatomic, readonly) NSMutableArray *participants;
+@property (strong, nonatomic, readonly) NSDate *creationDate;
 
-@property(strong, nonatomic, readonly) NSNumber *maxUserCount;;
+@property (strong, nonatomic, readonly) NSNumber *maxUserCount;
+@property (assign, nonatomic, readonly) BOOL isFriendOnly;
 
 - (instancetype)initWithDictionary:(NSDictionary *)d;
 

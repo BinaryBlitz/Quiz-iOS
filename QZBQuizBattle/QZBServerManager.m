@@ -22,6 +22,8 @@
 #import "NSString+MD5.h"
 #import "CoreData+MagicalRecord.h"
 #import "TSMessage.h"
+
+
 //#import "QZBRequestUser.h"
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
@@ -41,6 +43,10 @@
 
 #import "QZBRoom.h"
 #import "QZBRoomSessionResults.h"
+
+//topics
+
+#import "QZBTopicWorker.h"
 
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -254,25 +260,28 @@ NSString *const QZBNoInternetConnectionMessage =
     NSMutableArray *objectsArray = [NSMutableArray array];
 
     for (NSDictionary *dict in topics) {
-        NSString *name = [dict objectForKey:@"name"];
-        id topic_id = [dict objectForKey:@"id"];
-        NSNumber *points = [dict objectForKey:@"points"];
-        NSNumber *visible = dict[@"visible"];
-
-        QZBGameTopic *existingEntity =
-            [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
-
-        if (!existingEntity) {
-            existingEntity = [QZBGameTopic MR_createEntity];
-            existingEntity.name = name;
-            existingEntity.topic_id = topic_id;
-
-            //   [category addRelationToTopicObject:existingEntity];
-        }
-
-        existingEntity.points = points;
-        existingEntity.visible = visible;
-        [category addRelationToTopicObject:existingEntity];
+        
+        QZBGameTopic *existingEntity = [QZBTopicWorker parseTopicFromDict:dict inCategory:category];
+        
+//        NSString *name = [dict objectForKey:@"name"];
+//        id topic_id = [dict objectForKey:@"id"];
+//        NSNumber *points = [dict objectForKey:@"points"];
+//        NSNumber *visible = dict[@"visible"];
+//
+//        QZBGameTopic *existingEntity =
+//            [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
+//
+//        if (!existingEntity) {
+//            existingEntity = [QZBGameTopic MR_createEntity];
+//            existingEntity.name = name;
+//            existingEntity.topic_id = topic_id;
+//
+//            //   [category addRelationToTopicObject:existingEntity];
+//        }
+//
+//        existingEntity.points = points;
+//        existingEntity.visible = visible;
+//        [category addRelationToTopicObject:existingEntity];
         [objectsArray addObject:existingEntity];
     }
 
@@ -288,16 +297,16 @@ NSString *const QZBNoInternetConnectionMessage =
     }
 }
 
-- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {
-    QZBGameTopic *exitedTopic =
-        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
-    QZBCategory *category = nil;
-
-    if (exitedTopic) {
-        category = exitedTopic.relationToCategory;
-    }
-    return category;
-}
+//- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {
+//    QZBGameTopic *exitedTopic =
+//        [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic.topic_id];
+//    QZBCategory *category = nil;
+//
+//    if (exitedTopic) {
+//        category = exitedTopic.relationToCategory;
+//    }
+//    return category;
+//}
 
 - (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
@@ -370,26 +379,29 @@ NSString *const QZBNoInternetConnectionMessage =
         //        NSEntityDescription *entity =
         //            [NSEntityDescription entityForName:@"QZBGameTopic"
         //            inManagedObjectContext:context];
-        id topic_id = [dict objectForKey:@"id"];
-
-        QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
-        //(QZBGameTopic *)
-        //  [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-
-        if (!topic) {
-            topic = [QZBGameTopic MR_createEntity];
-            topic.name = dict[@"name"];
-            topic.topic_id = topic_id;
-        }
-        topic.points = dict[@"points"];
-        topic.visible = dict[@"visible"];
+//        id topic_id = [dict objectForKey:@"id"];
+//
+//        QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
+//        //(QZBGameTopic *)
+//        //  [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+//
+//        if (!topic) {
+//            topic = [QZBGameTopic MR_createEntity];
+//            topic.name = dict[@"name"];
+//            topic.topic_id = topic_id;
+//        }
+//        topic.points = dict[@"points"];
+//        topic.visible = dict[@"visible"];
+//        
+        QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:dict];
+        
         [tmpArr addObject:topic];
 
-        QZBCategory *category = [self tryFindRelatedCategoryToTopic:topic];
-
-        if (category) {
-            [category addRelationToTopicObject:topic];
-        }
+//        QZBCategory *category = [self tryFindRelatedCategoryToTopic:topic];
+//
+//        if (category) {
+//            [category addRelationToTopicObject:topic];
+//        }
     }
 
     NSArray *result = [NSArray arrayWithArray:tmpArr];
@@ -1004,7 +1016,7 @@ NSString *const QZBNoInternetConnectionMessage =
 }
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
-    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(150, 150)];
+    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(200, 200)];
     return [UIImageJPEGRepresentation(newImage, 1.0)
         base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
@@ -1671,13 +1683,14 @@ NSString *const QZBNoInternetConnectionMessage =
 
             NSSortDescriptor *sortDescriptor =
                 [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
+            NSSortDescriptor *friendOnlySortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
 
-            NSArray *resultArr = [tmpArr sortedArrayUsingDescriptors:@[ sortDescriptor ]];
+            NSArray *resultArr = [tmpArr sortedArrayUsingDescriptors:@[friendOnlySortDescriptor,
+                                                                       sortDescriptor ]];
 
             if (success) {
                 success(resultArr);
             }
-
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1718,11 +1731,16 @@ NSString *const QZBNoInternetConnectionMessage =
 
 - (void)POSTCreateRoomWithTopic:(QZBGameTopic *)topic
                         private:(BOOL)isPrivate
+                           size:(NSNumber *)size
                       OnSuccess:(void (^)(QZBRoom *room))success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"room" : @{@"topic_id" : topic.topic_id}
+        @"room" : @{@"topic_id" : topic.topic_id,
+                    @"friends_only":@(isPrivate),
+                    @"size":size
+                    }
+        
     };
 
     [self.requestOperationManager POST:@"rooms"

@@ -23,6 +23,7 @@
 @property (strong, nonatomic) QZBUserStatistic *userStatistics;
 @property (assign, nonatomic, readonly) BOOL isRegistred;
 @property (strong, nonatomic, readonly) NSString *xmppPassword;
+@property (assign, nonatomic, readonly) BOOL isOnline;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

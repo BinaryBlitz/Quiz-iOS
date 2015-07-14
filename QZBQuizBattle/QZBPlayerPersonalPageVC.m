@@ -49,7 +49,7 @@
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
 #import "QZBMessagerManager.h"
-#import "UIViewController+QZBMessagerCategory.h"
+//#import "UIViewController+QZBMessagerCategory.h"
 
 //dfiimage
 
@@ -906,6 +906,14 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
         
         messgaeButtonTitle = @"Личное сообщение";
     }
+    
+    if([self.user respondsToSelector:@selector(isOnline)]) {
+        if(self.user.isOnline){
+            playerCell.playerUserpic.layer.borderColor = [UIColor lightBlueColor].CGColor;
+            playerCell.playerUserpic.layer.borderWidth = 1.0;
+        }
+    }
+    
     [playerCell.multiUseButton setTitle:buttonTitle forState:UIControlStateNormal];
     [playerCell.messageButton setTitle:messgaeButtonTitle forState:UIControlStateNormal];
     if (self.user.imageURL) {

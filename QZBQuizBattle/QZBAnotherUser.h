@@ -20,6 +20,7 @@
 @property(strong, nonatomic) NSArray *faveTopics;//QZBGameTopic
 @property(strong, nonatomic) NSArray *achievements;//QZBAchievement
 @property(assign, nonatomic) BOOL isViewed;
+@property(assign, nonatomic) BOOL isOnline;
 
 @property(strong, nonatomic) QZBUserStatistic *userStatistics;
 

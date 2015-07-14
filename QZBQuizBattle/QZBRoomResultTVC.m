@@ -18,6 +18,7 @@
 
 #import "QZBCategory.h"
 #import "QZBGameTopic.h"
+#import "QZBTopicWorker.h"
 
 //controllers
 #import "QZBRoomListTVC.h"
@@ -167,7 +168,7 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
     
-    QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
+    QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:topic];
     if (category) {
         NSURL *url = [NSURL URLWithString:category.background_url];
         

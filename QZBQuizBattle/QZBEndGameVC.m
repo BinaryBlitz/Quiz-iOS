@@ -24,6 +24,7 @@
 #import "QZBFriendsChallengeTVC.h"
 #import "QZBUser.h"
 #import "QZBAnotherUser.h"
+#import "QZBTopicWorker.h"
 
 #import "QZBChallengeDescriptionWithResults.h"
 
@@ -101,8 +102,9 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     QZBGameTopic *topic = self.topic;
 
-    QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
-    if (category) {
+    QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:topic];
+    if (category && !self.isAnimated) {
+        
         NSURL *url = [NSURL URLWithString:category.background_url];
 
         CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
