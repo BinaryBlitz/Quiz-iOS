@@ -84,7 +84,12 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     [[QZBSessionManager sessionManager] closeSession];
     
     [self reloadRoom];
-    
+//    NSInteger count = [self.tableView numberOfRowsInSection:0];
+//    NSIndexPath *ip = [NSIndexPath indexPathForRow:count-1 inSection:0];
+//    
+//    [self.tableView scrollToRowAtIndexPath:ip
+//                          atScrollPosition:UITableViewScrollPositionBottom
+//                                  animated:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(oneOfUsersFinishedRoom:)
