@@ -10,6 +10,7 @@
 #import "QZBRoom.h"
 #import "QZBUserWithTopic.h"
 #import "QZBGameTopic.h"
+#import "UIColor+QZBProjectColors.h"
 #import "UIFont+QZBCustomFont.h"
 
 @implementation QZBRoomCell
@@ -53,6 +54,17 @@
           //  label.attributedText = [room descriptionForUserWithTopic:userWithTopic];
             nameLabel.text = userWithTopic.user.name;
             topicsLabel.text = userWithTopic.topic.name;
+            
+            if([userWithTopic.user respondsToSelector:@selector(isFriend)]){
+                
+                if(userWithTopic.user.isFriend){
+                    nameLabel.textColor = [UIColor ultralightGreenColor];
+                } else {
+                    nameLabel.textColor = [UIColor whiteColor];
+                }
+            } else {
+                nameLabel.textColor = [UIColor whiteColor];
+            }
             
         } else {
            // label.attributedText = nil;

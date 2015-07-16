@@ -12,6 +12,7 @@
 #import "QZBAchievement.h"
 #import "QZBAnotherUser.h"
 #import "UITableViewCell+QZBCellCategory.h"
+#import "UIColor+QZBProjectColors.h"
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -120,6 +121,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     } else if([object isKindOfClass:[QZBAnotherUser class]]){
         
         QZBAnotherUser *user = (QZBAnotherUser *)object;
+        
+        if([user respondsToSelector:@selector(isOnline)]) {
+            
+            if(user.isOnline){
+                cell.picture.layer.borderColor = [UIColor lightBlueColor].CGColor;
+                cell.picture.layer.borderWidth = 2.0;
+            } else {
+                cell.picture.layer.borderColor = [UIColor clearColor].CGColor;
+                cell.picture.layer.borderWidth = 0.0;
+            }
+        }
+
         
         if(user.imageURL){
             [cell setName:user.name picURL:user.imageURL];

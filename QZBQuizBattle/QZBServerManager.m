@@ -414,6 +414,16 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
                  onSuccess:(void (^)(QZBLobby *lobby))success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+   //  xxx
+    
+    
+    if(!topic.topic_id || ![QZBCurrentUser sharedInstance].user.api_key){//TEST its crashes
+        if(failure){
+            failure(nil,0);
+        }
+        return;
+    }
+    
     NSDictionary *params = @{
         @"lobby" : @{@"topic_id" : topic.topic_id},
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
@@ -1638,11 +1648,19 @@ NSString *const QZBNoInternetConnectionMessage =
                             toUserWithID:(NSNumber *)userID
                                onSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params =
-        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-           @"message" : message };
+//    NSDictionary *params =
+//        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+//           @"message" : message };
+    NSDictionary *params = @{
+        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        @"message": @{
+            @"content": message,
+            @"player_id":userID
+        }
+        };
+    
 
-    NSString *urlString = [NSString stringWithFormat:@"players/%@/notify", userID];
+    NSString *urlString = [NSString stringWithFormat:@"messages"];
     [self.requestOperationManager POST:urlString
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -1660,6 +1678,26 @@ NSString *const QZBNoInternetConnectionMessage =
             }
 
         }];
+}
+
+-(void)GETAllMessagesForUserId:(NSNumber *)userID
+                     onSuccess:(void (^)(NSArray *rooms))success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params =
+    @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+       @"player_id" : userID };
+    
+  //  NSString *urlString = [NSString stringWithFormat:@"players/%@/notify", userID];
+    
+    [self.requestOperationManager GET:@"messages"
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    
 }
 
 #pragma mark - rooms
@@ -1740,9 +1778,7 @@ NSString *const QZBNoInternetConnectionMessage =
                     @"friends_only":@(isPrivate),
                     @"size":size
                     }
-        
     };
-
     [self.requestOperationManager POST:@"rooms"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -1754,7 +1790,6 @@ NSString *const QZBNoInternetConnectionMessage =
             if (success) {
                 success(r);
             }
-
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 

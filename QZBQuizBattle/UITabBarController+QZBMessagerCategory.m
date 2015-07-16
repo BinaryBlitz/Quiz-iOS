@@ -59,6 +59,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:QZBMessageRecievedNotificationIdentifier
                                                   object:nil];
+    
+   // [TSMessage  queuedMessages]
+    
+    [TSMessage dismissActiveNotification];
 }
 
 -(void)showMessageList{

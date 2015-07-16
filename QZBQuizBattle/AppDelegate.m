@@ -28,6 +28,7 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
 #import "QZBMessagerManager.h"
+#import "QZBMessangerList.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "DDASLLogger.h"
@@ -94,6 +95,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             [self acceptChallengeWithDict:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
+        } else if([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
+            [self showMessageWithDict:userInfo];
         }
     }
 
@@ -280,7 +283,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    //DDLogInfo(@"Received notification: %@", userInfo);
+    DDLogInfo(@"Received notification: %@", userInfo);
 
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
@@ -383,6 +386,33 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
         tabController.selectedIndex = 2;
     }
+}
+
+-(void)showMessageWithDict:(NSDictionary *)dict {
+//    action = MESSAGE;
+//    aps =     {
+//        alert = fdfdf;
+//    };
+//    message =     {
+//        content = fdfdf;
+//        "created_at" = "2015-07-15T14:45:31.964Z";
+//        "creator_id" = 7;
+//        id = 8;
+//        "player_id" = 64;
+//        "updated_at" = "2015-07-15T14:45:31.964Z";
+//    };
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    tabController.selectedIndex = 1;
+    
+    UINavigationController *nav = tabController.viewControllers[1];
+    
+    [nav popToRootViewControllerAnimated:NO];
+    QZBMessangerList *messList = [nav.storyboard
+                                  instantiateViewControllerWithIdentifier:@"messagerList"];
+    
+    [nav pushViewController:messList animated:YES];
+    
+    
 }
 
 #pragma mark - messager

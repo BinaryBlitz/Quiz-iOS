@@ -20,6 +20,7 @@
 @property (assign, nonatomic, readonly) BOOL isFriend;
 @property (strong, nonatomic, readonly) NSString *pushToken;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
+@property (strong, nonatomic, readonly) NSURL *imageURLBig;
 @property (strong, nonatomic) QZBUserStatistic *userStatistics;
 @property (assign, nonatomic, readonly) BOOL isRegistred;
 @property (strong, nonatomic, readonly) NSString *xmppPassword;
@@ -32,7 +33,7 @@
 -(void)makeUserRegisterWithUserName:(NSString *)username;
 - (void)updateUserFromServer;
 
--(void)deleteImage;
+//-(void)deleteImage;
 //-(void)setAPNsToken:(NSString *)pushToken;
 
 

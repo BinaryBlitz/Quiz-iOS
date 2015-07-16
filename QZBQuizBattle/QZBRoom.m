@@ -100,6 +100,12 @@
     BOOL isAdmin = [playerDict[@"is_admin"] boolValue];
     BOOL isFinished = [d[@"finished"] boolValue];
     BOOL isReady = [d[@"ready"] boolValue];
+    
+    if(playerDict[@"is_friend"] && ![playerDict[@"is_friend"] isEqual:[NSNull null]]){
+        
+        user.isFriend = [playerDict[@"is_friend"] boolValue];
+    }
+    
     NSNumber *userWithTopicID = d[@"id"];
     
     QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:d[@"topic"]]; 

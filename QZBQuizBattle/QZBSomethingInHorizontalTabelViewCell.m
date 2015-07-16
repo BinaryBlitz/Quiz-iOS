@@ -63,7 +63,8 @@
     self.name.text = name;
 
     if(picURL){
-        [self.picture setImageWithURL:picURL];
+        [self.picture setImageWithURL:picURL
+                     placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
     }else{
         [self.picture setImage:[UIImage imageNamed:@"userpicStandart"]];
     }

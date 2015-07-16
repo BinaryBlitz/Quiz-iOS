@@ -20,6 +20,7 @@
 //@property (strong, nonatomic) UIImage *userPic;
 @property(assign, nonatomic) BOOL isFriend;
 @property(strong, nonatomic) NSURL *imageURL;
+@property(strong, nonatomic) NSURL *imageURLBig;
 @property(strong, nonatomic) NSString *xmppPassword;
 
 @property(assign, nonatomic) BOOL isRegistred;
@@ -57,13 +58,23 @@
         
         self.isFriend = NO;
         
-        NSString *urlAppend = dict[@"avatar_url"];
+        NSString *urlAppend = dict[@"avatar_thumb_url"];
         if(![urlAppend isEqual:[NSNull null]]){
             NSString *urlString = [QZBServerBaseUrl stringByAppendingString:urlAppend];
             self.imageURL = [NSURL URLWithString:urlString];
         }else{
             self.imageURL = nil;
         }
+        
+        NSString *urlAppendBig = dict[@"avatar_url"];
+        if(![urlAppendBig isEqual:[NSNull null]]){
+            NSString *urlString = [QZBServerBaseUrl stringByAppendingString:urlAppendBig];
+            self.imageURLBig = [NSURL URLWithString:urlString];
+        }else{
+            self.imageURLBig = nil;
+        }
+        
+        
         
     }
     return self;
@@ -80,6 +91,9 @@
         self.xmppPassword = [coder decodeObjectForKey:@"xmpp_password"];
         
         self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
+        self.imageURLBig = [coder decodeObjectForKey:@"user_image_url_big"];
+        
+        
  
     }
     return self;
@@ -96,6 +110,10 @@
     
         [coder encodeObject:self.imageURL forKey:@"user_image_url"];
     }
+    if(self.imageURLBig) {
+        [coder encodeObject:self.imageURLBig forKey:@"user_image_url_big"];
+    }
+    
     
 //    if(self.pushToken){
 //        [coder encodeObject:self.pushToken forKey:@"pushToken"];
@@ -152,6 +170,13 @@
         BOOL changed = NO;
         if(![self.imageURL isEqual: anotherUser.imageURL]){
             self.imageURL = anotherUser.imageURL;
+            
+            changed = YES;
+            
+        }
+        
+        if(![self.imageURLBig isEqual: anotherUser.imageURLBig]){
+            self.imageURLBig = anotherUser.imageURLBig;
             
             changed = YES;
             

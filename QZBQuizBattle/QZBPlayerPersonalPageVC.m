@@ -260,7 +260,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
             // self.user.isFriend = anotherUser.isFriend;
             DDLogInfo(@"is friend %d", user.isFriend);
             [self.tableView reloadData];
-            [SVProgressHUD dismiss];
+            //[SVProgressHUD dismiss];
 
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
@@ -908,9 +908,13 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     }
     
     if([self.user respondsToSelector:@selector(isOnline)]) {
+        
         if(self.user.isOnline){
             playerCell.playerUserpic.layer.borderColor = [UIColor lightBlueColor].CGColor;
-            playerCell.playerUserpic.layer.borderWidth = 1.0;
+            playerCell.playerUserpic.layer.borderWidth = 2.0;
+        } else {
+            playerCell.playerUserpic.layer.borderColor = [UIColor clearColor].CGColor;
+            playerCell.playerUserpic.layer.borderWidth = 0.0;
         }
     }
     

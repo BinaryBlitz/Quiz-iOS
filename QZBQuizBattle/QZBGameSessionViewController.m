@@ -86,10 +86,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
         CGFloat inset = CGRectGetHeight(b.frame) / 5;
         b.titleEdgeInsets = UIEdgeInsetsMake(inset / 3, inset / 3, inset / 3, inset / 3);
         [b setTitle:@"" forState:UIControlStateNormal];
-        
-        
-
-        // b.titleLabel.lineBreakMode = NSLineBreakByClipping;
     }
     
     
@@ -144,6 +140,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     self.opponentBV.badgeText = @"0";
     self.userBV.badgeText = @"0";
+    
+    [self.timeLabel addShadows];
 
     [self initCircularProgress];
 
