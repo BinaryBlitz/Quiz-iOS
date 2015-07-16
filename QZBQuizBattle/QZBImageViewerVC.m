@@ -24,18 +24,58 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.userPicImageView removeConstraints:self.userPicImageView.constraints];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if(self.user.imageURL){
+    if([self.user respondsToSelector:@selector(imageURLBig)]){
+    
+//    if(self.user.imageURLBig){
+//        [self.userPicImageView setImageWithURL:self.user.imageURLBig];
+//    } else {
+//        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+//    }
+        [self setImageWithUrl:self.user.imageURLBig];
         
-        [self.userPicImageView setImageWithURL:self.user.imageURL];
+    } else {
+//        if(self.user.imageURL){
+//            [self.userPicImageView setImageWithURL:self.user.imageURL];
+//        } else {
+//            [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+//        }
+        
+        [self setImageWithUrl:self.user.imageURL];
+    }
+
+}
+
+-(void)setImageWithUrl:(NSURL *)url {
+    
+    if(url){
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
+                                                cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                            timeoutInterval:60];
+        __weak typeof(self) weakSelf = self;
+    [self.userPicImageView setImageWithURLRequest:urlRequest placeholderImage:[UIImage imageNamed:@"userpicStandart"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        
+//        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+//        CGSize imageSize = image.size;
+//        //CGRect r = CGRectMake(0, 0, screenSize.width, (imageSize.height/imageSize.width)*screenSize.width );
+//        
+//        weakSelf.userPicImageView.frame = CGRectMake(0, 0, 200, 300);
+//        weakSelf.userPicImageView.center = weakSelf.view.center;
+        [weakSelf.userPicImageView setImage:image];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        
+    }];
     } else {
         [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
-
+    
 }
 
 -(void)configureWithUser:(id<QZBUserProtocol>)user {

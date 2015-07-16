@@ -76,8 +76,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                  [[QZBSessionManager sessionManager] setSession:session];
                  [[QZBSessionManager sessionManager] makeSessionRoomSession];
 
+                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     
                  [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedStartRoomGame
                                                                      object:nil];
+                 
+                 });
 
                  NSLog(@"%@", session);
              }];
@@ -163,10 +167,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //}
 
 - (void)handleDisconnectionWithError:(NSError *)error {
-    DDLogWarn(@"pusher problems");
+    DDLogWarn(@"room pusher problems");//REDO
 
-    NSArray *description = @[ @"Ошибка связи", @"Проверьте подключение к "
-                                                          @"интернету" ];
+//    NSArray *description = @[ @"Ошибка связи", @"Проверьте подключение к "
+//                                                          @"интернету" ];
 
     //    [[NSNotificationCenter defaultCenter] postNotificationName:QZBPusherConnectionProblrms
     //

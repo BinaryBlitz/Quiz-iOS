@@ -172,6 +172,7 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     
     if (self.onlineSessionWorker) {
         [self.onlineSessionWorker closeConnection];
+        
     }
     self.bot = nil;
     

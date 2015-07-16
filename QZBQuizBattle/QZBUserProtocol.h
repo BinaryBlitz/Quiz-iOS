@@ -21,6 +21,8 @@
 
 -(NSURL *)imageURL;
 
+-(NSURL *)imageURLBig;
+
 @optional
 
 -(BOOL)isFriend;

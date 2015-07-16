@@ -25,7 +25,19 @@
     
     self.usernameLabel.text = userWithTopic.user.name;
     self.topicNameLabel.text = userWithTopic.topic.name;
-    self.numberOfUserInRoomLabel.text = @"";
+    //self.numberOfUserInRoomLabel.text = @"";
+    if([userWithTopic.user respondsToSelector:@selector(isFriend)]){
+        
+        if(userWithTopic.user.isFriend){
+            self.usernameLabel.textColor = [UIColor ultralightGreenColor];
+        } else {
+            self.usernameLabel.textColor = [UIColor whiteColor];
+        }
+    } else {
+        self.usernameLabel.textColor = [UIColor whiteColor];
+    }
+
+    
     
     self.isReadyActivityIndicator.hidden = YES;
     

@@ -58,6 +58,8 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    
+  //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

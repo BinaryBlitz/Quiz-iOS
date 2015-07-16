@@ -315,6 +315,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
             }
             onFailure:^(NSError *error, NSInteger statusCode){
 
+                
             }];
 }
 

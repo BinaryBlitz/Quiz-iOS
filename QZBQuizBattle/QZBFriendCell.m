@@ -10,6 +10,7 @@
 #import "QZBAnotherUser.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIFont+QZBCustomFont.h"
+#import "UIColor+QZBProjectColors.h"
 @interface QZBFriendCell ()
 
 @property(strong, nonatomic) QZBAnotherUser *user;
@@ -36,6 +37,20 @@
     }else{
         [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
+    
+    if([self.user respondsToSelector:@selector(isOnline)]) {
+        
+        if(self.user.isOnline){
+            self.userpicImageView.layer.borderColor = [UIColor lightBlueColor].CGColor;
+            self.userpicImageView.layer.borderWidth = 2.0;
+        } else {
+            self.userpicImageView.layer.borderColor = [UIColor clearColor].CGColor;
+            self.userpicImageView.layer.borderWidth = 0.0;
+        }
+    }
+    
+    
+    
     self.nameLabel.font = [UIFont museoFontOfSize:17.0];
     
     
