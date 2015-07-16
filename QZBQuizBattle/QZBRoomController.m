@@ -95,6 +95,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     [self initStatusbarWithColor:[UIColor blackColor]];
 
     [self backButtonInit];
+    
+  //  [self.navigationController setToolbarHidden:NO animated:YES];
+    
    // [self reloadRoom];
     
     // self.tabBarController.tabBar.hidden = YES;

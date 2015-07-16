@@ -298,9 +298,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                 [self showAlertServerProblem];
 
             }];
-    }
-
-    else if (!self.user) {
+    } else if (!self.user) {
         [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
             onSuccess:^(QZBLobby *lobby) {
 
