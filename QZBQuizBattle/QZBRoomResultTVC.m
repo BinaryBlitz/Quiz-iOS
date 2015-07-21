@@ -22,6 +22,7 @@
 
 //controllers
 #import "QZBRoomListTVC.h"
+#import "QZBRoomSessionResults.h"
 
 
 //dfiimage
@@ -83,7 +84,7 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
     [[QZBSessionManager sessionManager] closeSession];
     
-    [self reloadRoom];
+    //[self reloadRoom];
 //    NSInteger count = [self.tableView numberOfRowsInSection:0];
 //    NSIndexPath *ip = [NSIndexPath indexPathForRow:count-1 inSection:0];
 //    
@@ -117,15 +118,20 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 -(void)leaveResults{
     
     NSArray *controllers = self.navigationController.viewControllers;
-    UIViewController *destibnationController = nil;
+    UIViewController *destinationController = nil;
     
     for(UIViewController *c in controllers){
         if([c isKindOfClass:[QZBRoomListTVC class]]) {
-            destibnationController = c;
+            destinationController = c;
             break;
         }
     }
-    [self.navigationController popToViewController:destibnationController animated:YES];
+    if(destinationController){
+        [self.navigationController popToViewController:destinationController
+                                              animated:YES];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -208,7 +214,7 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
         //[backV addSubview:dfiIV];
         UIView *frontV = [[UIView alloc] initWithFrame:r];
         
-        frontV.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.4];
+        frontV.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.7];
         
         [backV addSubview:frontV];
         [backV insertSubview:dfiIV belowSubview:frontV];
@@ -247,13 +253,47 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 //    }];
 //
     if(self.roomSessionID){
-    [[QZBServerManager sharedManager] GETResultsOfRoomSessionWithID:self.roomSessionID
-                                                          onSuccess:^(QZBRoomSessionResults *sessionResults) {
-                                                              [self.refreshControl endRefreshing];
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        [self.refreshControl endRefreshing];
-    }];
+        [self.refreshControl beginRefreshing];
+            [[QZBServerManager sharedManager] GETRoomWithID:self.roomWorker.room.roomID
+                                                  OnSuccess:^(QZBRoom *room) {
+                                                      
+            [[QZBServerManager sharedManager] GETResultsOfRoomSessionWithID:self.roomSessionID
+                                      onSuccess:^(QZBRoomSessionResults *sessionResults) {
+                                          
+            for(QZBUserWithTopic *userWithTopic in room.participants) {
+                id<QZBUserProtocol> us = userWithTopic.user;
+                if([sessionResults pointsForUserWithID:us.userID]) {
+                    userWithTopic.points = [sessionResults pointsForUserWithID:us.userID];
+                }
+             }
+                                        
+                                          self.roomWorker.room = room;
+                                          
+                                          [self.roomWorker sortUsers];
+                                          
+                                          [self.tableView reloadData];
+                                                  [self.refreshControl endRefreshing];
+                            } onFailure:^(NSError *error, NSInteger statusCode) {
+                            [self.refreshControl endRefreshing];
+                            }];
+                                                      
+                                                      
+        
+                                                      
+                                                     // [self.tableView reloadData];
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                [self.refreshControl endRefreshing];
+                
+            }];
     }
+    
+//    [[QZBServerManager sharedManager] GETResultsOfRoomSessionWithID:self.roomSessionID
+//                                                          onSuccess:^(QZBRoomSessionResults *sessionResults) {
+//                                                              [self.refreshControl endRefreshing];
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//        [self.refreshControl endRefreshing];
+//    }];
+//    }
     
 }
 

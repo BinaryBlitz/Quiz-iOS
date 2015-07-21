@@ -86,31 +86,49 @@
     //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 
     if (self.reportTextView.text.length > 0) {
+        if(self.user) {
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         [[QZBServerManager sharedManager] GETReportForUserID:self.user.userID
             message:self.reportTextView.text
             onSuccess:^{
 
-                [SVProgressHUD showSuccessWithStatus:@"Жалоба отправлена " @"успеш"
-                                                                                           @"но"];
-
-                [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-                               dispatch_get_main_queue(), ^{
-                                   [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-
-                                   [self.navigationController popViewControllerAnimated:YES];
-                               });
-
+                [self afterSend];
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
                 [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
 
             }];
+        } else {
+            NSLog(@"no user ");
+            [[QZBServerManager sharedManager]
+             POSTReportForDevelopersWithMessage:self.reportTextView.text onSuccess:^{
+                [self afterSend];
+                
+            
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                   [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+            }];
+        }
     } else {
         [SVProgressHUD showErrorWithStatus:@"Пустая жалоба"];
     }
+}
+
+-(void)afterSend {
+    [SVProgressHUD showSuccessWithStatus:@"Жалоба отправлена " @"успеш"
+     @"но"];
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                       
+                       [self.navigationController popViewControllerAnimated:YES];
+                   });
+    
+
+
 }
 
 #pragma mark - UITextViewDelegate

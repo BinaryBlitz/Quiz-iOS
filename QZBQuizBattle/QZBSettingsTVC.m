@@ -22,6 +22,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+QZBButtonCategory.h"
 #import "UIViewController+QZBValidateCategory.h"
+#import "UIViewController+QZBControllerCategory.h"
 #import <JSQSystemSoundPlayer.h>
 #import <SVProgressHUD.h>
 #import "UIImageView+QZBImagePickerCategory.h"
@@ -37,6 +38,8 @@
     [self.middleCell addDropShadowsForView];
     [self.exitCell addDropShadowsForView];
     [self.soundCell addDropShadowsForView];
+    
+    [self initStatusbarWithColor:[UIColor blackColor]];
     
     if([QZBCurrentUser sharedInstance].user.imageURL){
         [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];

@@ -35,5 +35,7 @@
 +(UIColor *)ultralightGreenColor;
 +(UIColor *)lightPincColor;
 
++(UIColor *)roomInvitesColor;
+
 
 @end

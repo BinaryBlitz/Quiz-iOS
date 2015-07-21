@@ -25,6 +25,9 @@
 #import "QZBResultOfSessionCell.h"
 #import "QZBAnotherUser.h"
 #import "QZBEndGameVC.h"
+#import "QZBRoomInvite.h"
+#import "QZBRoom.h"
+#import "QZBRoomController.h"
 #import "UIFont+QZBCustomFont.h"
 //#import "UIViewController+QZBMessagerCategory.h"
 
@@ -36,10 +39,12 @@
 @property (strong, nonatomic) NSArray *additionalTopics;
 @property (strong, nonatomic) NSMutableArray *challenges;
 @property (strong, nonatomic) NSMutableArray *challenged;
+@property (strong, nonatomic) NSMutableArray *roomsIvites;
 @property (strong, nonatomic) NSMutableArray *workArray;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) QZBChallengeDescription *challengeDescription;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResults;
+@property (strong, nonatomic) QZBRoomInvite *roomInvite;
 
 
 @end
@@ -62,8 +67,6 @@
     [self.mainTableView addSubview:self.refreshControl];
     
     [self addBarButtonRight];
-
-   
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadTopicsDataFromNotification:)
@@ -100,6 +103,8 @@
    // [self.refreshControl beginRefreshing];
 
   //  [self subscribeToMessages];
+    
+    
     [self reloadTopicsData];
 }
 
@@ -126,14 +131,20 @@
 
         self.challengeDescription = nil;
         
-    }else if ([segue.identifier isEqualToString:@"showSessionResult"] &&
+    } else if ([segue.identifier isEqualToString:@"showSessionResult"] &&
               self.challengeDescriptionWithResults){
         
         QZBEndGameVC *destinationVC = segue.destinationViewController;
         
         [destinationVC initWithChallengeResult:self.challengeDescriptionWithResults];
         self.challengeDescriptionWithResults = nil;
-    }else {
+    } else if([segue.identifier isEqualToString:@"showRoomFromInvite"]) {
+        QZBRoomController *roomController = (QZBRoomController *)segue.destinationViewController;
+        NSDictionary *roomDict = @{@"id":self.roomInvite.roomID};
+        QZBRoom *room = [[QZBRoom alloc] initWithDictionary:roomDict];
+        [roomController initWithRoom:room];
+        self.roomInvite = nil;
+    } else {
         [super prepareForSegue:segue sender:sender];
     }
 }
@@ -154,7 +165,24 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *arr = self.workArray[indexPath.section];
 
-    if ([arr isEqualToArray:self.challenges]) {
+    if([arr isEqualToArray:self.roomsIvites]){
+        QZBResultOfSessionCell *cell =  [tableView
+                                         dequeueReusableCellWithIdentifier:@"resultSessionCell"];
+        
+        QZBRoomInvite *rI = arr[indexPath.row];
+        
+        
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        cell.topicNameLabel.text = [NSString stringWithFormat:@"Комната %@",rI.roomID];//descr.topic.name;
+        if(rI.name){
+            cell.opponentNameLabel.text =[NSString stringWithFormat:@"От %@", rI.name ];
+        } else {
+            cell.opponentNameLabel.text = @"";
+        }
+        
+        return cell;
+        
+    }else if ([arr isEqualToArray:self.challenges]) {
         QZBChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"challengeCell"];
         cell.backgroundColor = [self colorForSection:indexPath.section];
 
@@ -214,48 +242,42 @@
 
     if (arr == self.faveTopics) {
         color = [UIColor ultralightGreenColor];
-        
     } else if (arr == self.friendsTopics) {
         color = [UIColor lightCyanColor];
-
     } else if (arr == self.featured) {
         color = [UIColor lightPincColor];
-
     } else if (arr == self.challenges) {
         color = [UIColor lightGreenColor];
     } else if( arr == self.additionalTopics){
         
-    }else if (arr == self.challenged){
+    } else if (arr == self.challenged){
         color = [UIColor challengedColor];//strongGreenColor];
+    } else if (arr == self.roomsIvites) {
+        color = [UIColor roomInvitesColor];
     }
 
     return color;
 }
 
 -(NSString *)textForArray:(NSArray *)arr{//test
-
     NSString *text = @"";
-    
     
     if (arr==self.faveTopics) {
         text = @"Любимые темы";
-        
     } else if (arr == self.friendsTopics) {
         text = @"Популярное у друзей";
-        
     } else if (arr ==self.featured) {
         text = @"Популярные темы";
-        
     } else if (arr == self.challenges) {
         text = @"Брошенные вызовы";
     } else if (arr == self.additionalTopics){
-        
         text = @"Сыграйте эти темы";
     } else if (arr == self.challenged){
         text = @"Результаты";
+    } else if (arr == self.roomsIvites) {
+        text = @"Приглашения в комнаты";
     }
     return text;
-    
 }
 
 #pragma mark - UITableViewDelegate
@@ -266,10 +288,7 @@
         [self performSegueWithIdentifier:@"showChallenges" sender:nil];
     } else if ([cell.reuseIdentifier isEqualToString:@"mainDescriptionCell"]) {
         return;
-
     } else {
-
-
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
 }
@@ -419,59 +438,88 @@
             onFailure:^(NSError *error, NSInteger statusCode){}];
     }
 }
-
+//это работает еще и для комнат
 - (IBAction)showChallengeResultActrion:(UIButton *)sender {
-    
-    
     UITableViewCell *cell = [self parentCellForView:sender];
     
     if (cell) {
-        
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
-        
         NSMutableArray *arr = self.workArray[ip.section];
-        
-        QZBChallengeDescriptionWithResults *description = arr[ip.row];
-        
-        //self.challengeDescription = description;
         
         self.choosedIndexPath = nil;
         [self.topicTableView beginUpdates];
         [self.topicTableView endUpdates];
         
-        self.challengeDescriptionWithResults = description;
+        if(arr == self.challenged) {
+            QZBChallengeDescriptionWithResults *description = arr[ip.row];
+            self.challengeDescriptionWithResults = description;
+            
+            [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
+            
+        } else if (arr == self.roomsIvites){
+            QZBRoomInvite *roomInvite = arr[ip.row];
+            self.roomInvite = roomInvite;
+            [self hideRoomIvite:roomInvite];
+            [self performSegueWithIdentifier:@"showRoomFromInvite" sender:nil];
+            
+        }
         
-        [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
+       // QZBChallengeDescriptionWithResults *description = arr[ip.row];
         
+        //self.challengeDescription = description;
+//        
+//        self.choosedIndexPath = nil;
+//        [self.topicTableView beginUpdates];
+//        [self.topicTableView endUpdates];
         
-        
+//        self.challengeDescriptionWithResults = description;
+//        
+//        [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
     }
-    
-    
 }
 
-- (IBAction)hideChallengeResultAction:(UIButton *)sender {
+- (IBAction)hideChallengeResultAction:(UIButton *)sender {//TEST
     UITableViewCell *cell = [self parentCellForView:sender];
     if (cell) {
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
         NSMutableArray *arr = self.workArray[ip.section];
-        QZBChallengeDescriptionWithResults *description =
-        arr[ip.row];
+        self.choosedIndexPath = nil;
+        if(arr == self.challenged) {
+        
+        QZBChallengeDescriptionWithResults *description =  arr[ip.row];
+            
+            [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
+                                                       onSuccess:nil
+                                                       onFailure:nil];
+            [self deleteRowWithAnimationOnIdexPath:ip
+                                             array:self.challenged];
+
+        } else if (arr == self.roomsIvites) {
+            QZBRoomInvite *roomInvite = arr[ip.row];
+            
+            [self hideRoomIvite:roomInvite];
+            [self deleteRowWithAnimationOnIdexPath:ip
+                                             array:self.roomsIvites];
+        }
         [self ignoreInteractions];
         
-        self.choosedIndexPath = nil;
+      //  self.choosedIndexPath = nil;
         
-        [self deleteRowWithAnimationOnIdexPath:ip
-                                         array:self.challenged];
+//        [self deleteRowWithAnimationOnIdexPath:ip
+//                                         array:self.challenged];
         
-        [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
-                                                   onSuccess:nil
-                                                   onFailure:nil];
-        
+//        [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
+//                                                   onSuccess:nil
+//                                                   onFailure:nil];
     }
-    
 }
 
+-(void)hideRoomIvite:(QZBRoomInvite *)roomInvite {
+    
+    [[QZBServerManager sharedManager] DELETEDeleteRoomInviteWithID:roomInvite.roomInviteID
+                                                         onSuccess:nil
+                                                         onFailure:nil];
+}
 
 -(void)showRoomsList{
     [self performSegueWithIdentifier:@"showRoomList" sender:nil];
@@ -538,8 +586,14 @@
 
         self.challenges = [challArr mutableCopy];
         self.challenged = [resultDict[@"challenged"] mutableCopy];
+        
+        self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
 
         [self.workArray removeAllObjects];
+        
+        if(self.roomsIvites.count > 0) {
+            [self.workArray addObject:self.roomsIvites];
+        }
 
         if (self.challenges.count > 0) {
             [self.workArray addObject:self.challenges];
@@ -565,6 +619,8 @@
             [self.workArray addObject:self.additionalTopics];
         }
         
+        
+        
 
         [self.mainTableView reloadData];
 //  //   //   UITabBarController *tabController = self.tabBarController;
@@ -584,38 +640,6 @@
 }
 
 
-//-(NSArray *)getAlladditionalTopics{
-//    NSArray *allTopics = [QZBGameTopic MR_findAllSortedBy:@"points" ascending:YES];
-//    
-//    if(allTopics && allTopics.count>0){
-//        NSInteger length = 0;
-//        
-//        NSInteger allC = [self allCount];
-//        
-//        if(allC>=9){
-//            length = 3;
-//        }else{
-//            length = 12-allC;
-//        }
-//        
-//        
-//        if(length>allTopics.count){
-//            length = allTopics.count;
-//        }
-//        
-//        NSRange r = {.location = 0, .length = length};
-//        
-//        
-//        NSArray *additionalArr = [allTopics subarrayWithRange:r];
-//        
-//        return [NSArray arrayWithArray:additionalArr];
-//        
-//    }else{
-//        return nil;
-//    }
-//
-//    
-//}
 
 -(NSInteger)allCount{
     NSInteger count = 0;
@@ -631,14 +655,7 @@
 
 #pragma mark - support methods
 
--(void)addBarButtonRight{
-//    self.navigationItem.rightBarButtonItem =
-//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-//                                                  target:self
-//                                                  action:@selector(showRoomsList)];
-//    self.navigationItem.rightBarButtonItem =
-//    [[UIBarButtonItem alloc] initWithTitle:@"Комнаты" style:<#(UIBarButtonItemStyle)#> target:<#(id)#> action:<#(SEL)#>]
-    
+-(void)addBarButtonRight {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Комнаты"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self

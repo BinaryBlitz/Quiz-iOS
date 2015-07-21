@@ -220,6 +220,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
 -(NSUInteger)scoreForQestion:(QZBQuestion *)qestion
                        answer:(QZBAnswer *)answer {
+    
+    
     BOOL isRight = [self isAnswerRightForQestion:qestion answer:answer];
     BOOL isLast = NO;
     
@@ -253,7 +255,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
     BOOL isRight = [self isAnswerRightForQestion:qestion answer:answer];
     BOOL isLast = NO;
 
-    if ([self.questions indexOfObject:qestion] == ([self.questions count] - 1)) {
+    if ([self.questions indexOfObject:qestion] == ([self.questions count] - 1) && !self.isRoom) {
         isLast = YES;
     }
 

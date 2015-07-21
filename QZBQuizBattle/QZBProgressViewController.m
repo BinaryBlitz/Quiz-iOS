@@ -23,6 +23,7 @@
 #import "TSMessage.h"
 #import "QZBTopicWorker.h"
 #import <DDLog.h>
+#import <SVIndefiniteAnimatedView.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#import "FXBlurView.h"
 
@@ -59,6 +60,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     self.playOfflineButton.alpha = 0;
     
+//    self.animationView = [[SVIndefiniteAnimatedView alloc] initWithFrame:self.backView.bounds];
+//    self.animationView.strokeThickness = 1.0;
+//    self.animationView.strokeColor = [UIColor redColor];
+//    self.animationView.radius = 60.0;
+//    
+//    [self.backView addSubview:self.animationView];
     
     
 }
@@ -120,6 +127,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     //[self initWhiteViewOn:self.backgroundImageView];
 
+    [self addSpinner];
 }
 
 -(void)viewWillLayoutSubviews{
@@ -129,6 +137,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
+    
+  //  self.animationView.center = self.backView.center;
  //   [self initWhiteViewOn:self.backgroundImageView];
  //   [self initBlurEffect];
 }
@@ -154,6 +164,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
     }
+    
+  //  [self addSpinner];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [self.animationView removeFromSuperview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -373,7 +391,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.counter = 7;
 
     if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.8
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.4
                                                       target:self
                                                     selector:@selector(tryGetSession:)
                                                     userInfo:nil
@@ -549,6 +567,76 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [view sendSubviewToBack:vi];
     
   //  [view setNeedsDisplay];
+}
+
+-(void)addSpinner {
+    
+    
+//    self.animationView = [[SVIndefiniteAnimatedView alloc]
+//                          init];
+//    
+//    
+//    [self.backView addSubview:self.animationView];
+//    
+//    [self.animationView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[animationView]-5-|" options:0 metrics:nil views:@{@"animationView":self.animationView}]];
+//    
+//    [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeLeft|
+//                                      NSLayoutAttributeRight|
+//                                      NSLayoutAttributeTop|
+//                                       NSLayoutAttributeBottom relatedBy: NSLayoutRelationEqual toItem:self.backView attribute:NSLayoutAttributeLeading|
+//                                       NSLayoutAttributeTrailing multiplier:1.0 constant:-8]];
+    
+    
+    //self.backView = [[SVIndefiniteAnimatedView alloc] initWithFrame:self.backView.frame];
+    
+   // CGRectMake(0, 0, 50, 50);
+ //   CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+//    CGRect r = [UIScreen mainScreen].bounds;
+  //  self.animationView = [[SVIndefiniteAnimatedView alloc]
+  //                        initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    self.animationView.strokeThickness = 2.0;
+//    self.animationView.strokeColor = [UIColor redColor];
+//    self.animationView.radius = 25.0;
+    
+ //   self.animationView.alpha = 0.0;
+    
+    //[self.backView addSubview:self.animationView];
+  //  [self.view bringSubviewToFront:self.animationView];
+    //self.backView.backgroundColor = [UIColor clearColor];
+//    self.animationView.center = self.backView.center;
+//    [UIView animateWithDuration:0.1 animations:^{
+//        self.animationView.alpha = 1.0;
+//    }];
+    
+    self.animationView = [[SVIndefiniteAnimatedView alloc]
+                          initWithFrame:CGRectMake(0, 0, 60, 60)];
+    
+    self.animationView.strokeThickness = 2.0;
+    self.animationView.strokeColor = [UIColor redColor];
+    self.animationView.radius = 25.0;
+    
+    [self.backView addSubview:self.animationView];
+    
+    self.animationView.translatesAutoresizingMaskIntoConstraints = NO;
+  
+//    [self.backView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+//    [self.backView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView  attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0f]];
+//    [self.backView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView  attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
+//    [self.backView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView  attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+    UIView *redView  = self.animationView;
+//    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[redView]|"
+//                                                                      options:NSLayoutFormatAlignAllCenterX | NSLayoutFormatAlignAllCenterY
+//                                                                      metrics:nil
+//                                                                        views:NSDictionaryOfVariableBindings(redView)]];
+    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[redView(==60)]-(>=0)-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(redView)]];
+    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[redView(==60)]-(>=0)-|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:NSDictionaryOfVariableBindings(redView)]];
+    
 }
 
 #pragma mark - support method

@@ -24,4 +24,6 @@
 - (void)userWithId:(NSNumber *)userID reachedPoints:(NSNumber *)points;
 -(void)userWithId:(NSNumber *)userID resultPoints:(NSNumber *)points;
 
+-(void)sortUsers;
+
 @end

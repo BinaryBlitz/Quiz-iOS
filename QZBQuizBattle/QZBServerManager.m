@@ -43,6 +43,7 @@
 
 #import "QZBRoom.h"
 #import "QZBRoomSessionResults.h"
+#import "QZBRoomInvite.h"
 
 //topics
 
@@ -332,6 +333,8 @@ NSString *const QZBNoInternetConnectionMessage =
 
             NSArray *challengesDicts = responseObject[@"challenges"];
             NSArray *challengedDicts = responseObject[@"challenged"];
+            
+            NSArray *roomInvitesDicts = responseObject[@"invites"];
 
             NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
             NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
@@ -340,6 +343,10 @@ NSString *const QZBNoInternetConnectionMessage =
 
             NSArray *challenges = [self parseChallengesFromArray:challengesDicts];
             NSArray *challenged = [self parseChallengeResultsFromArray:challengedDicts];
+            
+            NSArray *roomInvites = [self parseRoomInvitesFromArray:roomInvitesDicts];
+            
+            
 
             NSDictionary *resultDict = @{
                 @"favorite_topics" : faveTopics,
@@ -347,7 +354,8 @@ NSString *const QZBNoInternetConnectionMessage =
                 @"featured_topics" : featuredTopics,
                 @"random_topics" : randomTopics,
                 @"challenges" : challenges,
-                @"challenged" : challenged
+                @"challenged" : challenged,
+                @"room_invites" : roomInvites
             };
 
             //  NSDictionary *resultDict = @{};
@@ -764,6 +772,16 @@ NSString *const QZBNoInternetConnectionMessage =
         }
     }
     return [NSArray arrayWithArray:challengesResultsMuttable];
+}
+
+-(NSArray *)parseRoomInvitesFromArray:(NSArray *)responseObject {
+    NSMutableArray *invitesMutable = [NSMutableArray array];
+    for(NSDictionary *dict in responseObject) {
+        QZBRoomInvite *roomInvite = [[QZBRoomInvite alloc] initWithDictionary:dict];
+        
+        [invitesMutable addObject:roomInvite];
+    }
+    return [NSArray arrayWithArray:invitesMutable];
 }
 
 #pragma mark - user registration
@@ -1844,12 +1862,14 @@ NSString *const QZBNoInternetConnectionMessage =
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            DDLogVerbose(@"room %@ leaved", roomID);
+            DDLogVerbose(@"room leaved");
             if (success) {
                 success();
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            DDLogError(@"room leave error %@", error);
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1961,14 +1981,28 @@ NSString *const QZBNoInternetConnectionMessage =
     }];
 }
 
--(void)POSTInviteFriendWithID:(NSNumber *)userID
-                 inRoomWithID:(NSNumber *)roomID
-                    onSuccess:(void (^)())success
-                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+- (void)POSTInviteFriendWithID:(NSNumber *)userID
+                  inRoomWithID:(NSNumber *)roomID
+                     onSuccess:(void (^)())success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                              @"player_id":userID};
-    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/invite", roomID];
+                              @"invite":@{
+                                      
+                                      @"room_id":roomID,
+                                      @"player_id":userID
+                                      
+                                      }};
+//    {
+//        "invite": {
+//            "room_id": "1",
+//            "player_id": "2"
+//        }
+//    }
+    
+    
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"invites"];
     
     [self.requestOperationManager POST:urlAsString
                             parameters:params
@@ -1983,6 +2017,30 @@ NSString *const QZBNoInternetConnectionMessage =
             failure(error, operation.response.statusCode);
         }
     }];
+}
+
+- (void)DELETEDeleteRoomInviteWithID:(NSNumber *)inviteID
+                      onSuccess:(void (^)())success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlAsString = [NSString stringWithFormat:@"invites/%@", inviteID];
+    
+    [self.requestOperationManager DELETE:urlAsString
+                              parameters:params
+                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                     
+                                     DDLogCVerbose(@"room invite deleted");
+                                     if(success){
+                                         success();
+                                     }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"room invite deletion error %@", error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+    
 }
 
 - (void)PATCHParticipationWithID:(NSNumber *)userID
@@ -2035,7 +2093,34 @@ NSString *const QZBNoInternetConnectionMessage =
         }
 
     }];
-   
+}
+
+
+-(void)POSTReportForDevelopersWithMessage:(NSString *)message
+                                onSuccess:(void (^)())success
+                                onFailure:(void (^)(NSError *error,
+                                                    NSInteger statusCode))failure {
+    
+     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                               @"message" : message
+                               };
+    
+    
+    [self.requestOperationManager POST:@"reports" parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   DDLogCVerbose(@"report sended" );
+                                   if(success) {
+                                       success();
+                                   }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"report error %@", error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+    
     
 }
 

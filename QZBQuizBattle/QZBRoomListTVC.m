@@ -23,8 +23,10 @@ NSString *const QZBShowRoomSegueIdentifier = @"showRoomSegueIdentifier";
 NSString *const QZBRoomCreationSegueIdentifier = @"roomCreationSegueIdentifier";
 
 // title
-
 NSString *const QZBCurrentTitle = @"Комнаты";
+
+//messages
+NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 
 @interface QZBRoomListTVC ()
 
@@ -58,13 +60,13 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    
+    [self reloadRooms];
   //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self reloadRooms];
+    //[self reloadRooms];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -157,7 +159,7 @@ NSString *const QZBCurrentTitle = @"Комнаты";
 
         }
         onFailure:^(NSError *error, NSInteger statusCode) {
-            [SVProgressHUD showErrorWithStatus:@"Ничего не найдено"];
+            [SVProgressHUD showErrorWithStatus:QZBNothingFindedMessage];
 
         }];
 }
@@ -213,5 +215,22 @@ NSString *const QZBCurrentTitle = @"Комнаты";
                                                       target:self
                                                       action:@selector(reloadRooms)];
 }
+
+
+//-(void)findRoomWithID:(NSNumber *)roomID {
+//    self.searchBar.text = [NSString stringWithFormat:@"%@", roomID];
+//    [[QZBServerManager sharedManager] GETRoomWithID:roomID
+//                                          OnSuccess:^(QZBRoom *room) {
+//                                              
+//                                              self.rooms = @[ room ];
+//                                              [self.tableView reloadData];
+//                                              
+//                                          }
+//                                          onFailure:^(NSError *error, NSInteger statusCode) {
+//                                              [SVProgressHUD showErrorWithStatus:@"Ничего не найдено"];
+//                                              
+//                                          }];
+//
+//}
 
 @end

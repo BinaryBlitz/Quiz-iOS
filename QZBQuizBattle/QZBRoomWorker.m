@@ -12,6 +12,9 @@
 #import "QZBUserWithTopic.h"
 #import "QZBServerManager.h"
 
+#import <DDLog.h>
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 @interface QZBRoomWorker ()
 
 //@property(strong, nonatomic) QZBRoom *room;
@@ -102,12 +105,35 @@
         
         [self userWithId:userID resultPoints:points];
         
-        NSSortDescriptor *firstSort = [[NSSortDescriptor alloc] initWithKey:@"finished" ascending:NO];
-        NSSortDescriptor *secondSort = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO];
+//        NSSortDescriptor *firstSort = [[NSSortDescriptor alloc] initWithKey:@"finished" ascending:NO];
+//        NSSortDescriptor *secondSort = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO];
+//        
+//        [self.room.participants sortUsingDescriptors:@[firstSort,secondSort]];
         
-        [self.room.participants sortUsingDescriptors:@[firstSort,secondSort]];
+        [self sortUsers];
+        
+        if([self allFinished]){
+          //  [self closeOnlineWorker];
+        }
     //    [self.tableView reloadData];
     }
+}
+
+-(void)sortUsers {
+    NSSortDescriptor *firstSort = [[NSSortDescriptor alloc] initWithKey:@"finished" ascending:NO];
+    NSSortDescriptor *secondSort = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:NO];
+    
+    [self.room.participants sortUsingDescriptors:@[firstSort,secondSort]];
+}
+
+-(BOOL)allFinished {
+    for(QZBUserWithTopic *userWithTopic in self.room.participants){
+        if(userWithTopic.finished == NO) {
+            return NO;
+        }
+    }
+    DDLogCVerbose(@"ALL FINISHED");
+    return YES;
 }
 
 //-(void)nlineWorker:(QZBRoomOnlineWorker *)onlineWorker

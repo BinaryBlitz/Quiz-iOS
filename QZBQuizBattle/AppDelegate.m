@@ -29,6 +29,7 @@
 #import <DDASLLogger.h>
 #import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
+//#import "QZBRoomListTVC.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "DDASLLogger.h"
@@ -97,6 +98,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             [self showAchiewvmentWithDict:userInfo];
         } else if([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
             [self showMessageWithDict:userInfo];
+        } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]){
+            //ROOM_INVITE
+          //  [self showRoomsWithDict:userInfo];
         }
     }
 
@@ -301,6 +305,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                                 object:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
             [self acceptChallengeWithDict:userInfo];
+        } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
+                                                                object:nil];
         }
 
         [self setBadgeWithDictionary:userInfo];
@@ -412,6 +419,33 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     [nav pushViewController:messList animated:YES];
     
+    
+}
+
+
+-(void)showRoomsWithDict:(NSDictionary *)dict {
+    //roomListTWCIdentifier
+//    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+//    //tabController.selectedIndex = 2;
+//    
+//    UINavigationController *nav = tabController.viewControllers[2];
+//    
+//    [nav popToRootViewControllerAnimated:NO];
+//    QZBRoomListTVC *roomsList = [nav.storyboard
+//                                  instantiateViewControllerWithIdentifier:@"roomListTWCIdentifier"];
+//    
+//    NSDictionary *roomDict = dict[@"room"];
+//    NSNumber *roomID = roomDict[@"room_id"];
+//    
+//    //roomsList.searchBar.text = [NSString stringWithFormat:@"%@",roomID];
+//    
+//    [roomsList findRoomWithID:roomID];
+//    
+//    [nav pushViewController:roomsList animated:YES];
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
+                                                            object:nil];
+    }
     
 }
 
