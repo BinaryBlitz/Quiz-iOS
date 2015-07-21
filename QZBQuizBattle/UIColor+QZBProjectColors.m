@@ -96,7 +96,10 @@
 
 +(UIColor *)challengedColor {
     return [UIColor colorWithRed:99.0/255.0 green:216.0/255.0 blue:156.0/255.0 alpha:1.0];
+}
 
++(UIColor *)roomInvitesColor {
+    return [UIColor colorWithRed:21.0/255.0 green:141.0/255.0 blue:238.0/255.0 alpha:1.0];
 }
 
 

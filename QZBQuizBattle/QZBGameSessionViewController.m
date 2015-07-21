@@ -127,6 +127,10 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     self.opponentScore.text = @"";
 
     [self.roundLabel addShadows];
+    if([QZBSessionManager sessionManager].isRoom) {
+        self.opponentImage.superview.backgroundColor = [UIColor colorWithWhite:0.5
+                                                                         alpha:1.0];
+    }
 
     self.userBV = [[JSBadgeView alloc] initWithParentView:self.firstUserScore
                                                 alignment:JSBadgeViewAlignmentCenterLeft];
@@ -147,6 +151,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     [self setNamesAndUserpics];
     self.roundLabel.adjustsFontSizeToFitWidth = YES;
+    self.roundLabel.numberOfLines = 2;
 
     QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
 
@@ -218,6 +223,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//TEST
 }
 
 - (void)dealloc {
@@ -422,9 +428,18 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
 
+    if([QZBSessionManager sessionManager].isDoubled) {
+        
+    }
     NSString *roundAsString = [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
-
+    if([QZBSessionManager sessionManager].isDoubled) {
+        roundAsString = [roundAsString stringByAppendingString:@"\nОчки X2"];
+    }
+    
     self.roundLabel.text = roundAsString;
+    
+    
+    
     self.title = roundAsString;
 
     [UIView animateWithDuration:0.3
@@ -647,17 +662,36 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                     [self setScores];
                     [self UNShowQuestinAndAnswers];
 
-                    [self.globalTimer invalidate];
-                    self.globalTimer = nil;
-                    
-                    if (self.backgroundTask != UIBackgroundTaskInvalid) {
-                        [[UIApplication sharedApplication]
-                         endBackgroundTask:self.backgroundTask];
-                        self.backgroundTask = UIBackgroundTaskInvalid;
-                    }
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.globalTimer invalidate];
+                        self.globalTimer = nil;
+                        
+                        if (self.backgroundTask != UIBackgroundTaskInvalid) {
+                            [[UIApplication sharedApplication]
+                             endBackgroundTask:self.backgroundTask];
+                            self.backgroundTask = UIBackgroundTaskInvalid;
+                        }
+                    });
+//                    [self.globalTimer invalidate];
+//                    self.globalTimer = nil;
+//                    
+//                    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+//                        [[UIApplication sharedApplication]
+//                         endBackgroundTask:self.backgroundTask];
+//                        self.backgroundTask = UIBackgroundTaskInvalid;
+//                    }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        
+                        
+                        
+                        
                         if([QZBSessionManager sessionManager].isRoom){
+                            
+                            [[QZBServerManager sharedManager] POSTFinishRoomSessionWithID:[QZBSessionManager
+                                                                                           sessionManager].roomWorker.room.roomID
+                             
+                                                                                onSuccess:nil onFailure:nil];
                             [self performSegueWithIdentifier:QZBRoomResultSegueIdentifier sender:nil];
                         }else{
                             [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
@@ -882,7 +916,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                           duration:0.1
                            options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseInOut
                         animations:^{
-                            label.textColor = [UIColor whiteColor];
+                            label.textColor = [UIColor blackColor];
                         } completion:^(BOOL finished) {
                         }];
 

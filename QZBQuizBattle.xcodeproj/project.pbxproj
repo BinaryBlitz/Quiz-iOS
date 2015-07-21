@@ -88,12 +88,6 @@
 		1944A1961B10CB050095C600 /* placeholderIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = 1944A1951B10CB050095C600 /* placeholderIMG.png */; };
 		1946058C1AB4977E0023BE0D /* QZBStoreListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */; };
 		194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */; };
-		1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */; };
-		1955A3EE1AAB11000083778A /* BG_iPhone_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */; };
-		1955A3F01AAB3C450083778A /* icon_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3EF1AAB3C450083778A /* icon_cancel.png */; };
-		1955A3F41AAB40870083778A /* icon_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3F11AAB40870083778A /* icon_login.png */; };
-		1955A3F51AAB40870083778A /* icon_register.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3F21AAB40870083778A /* icon_register.png */; };
-		1955A3F61AAB40870083778A /* icon_vk.png in Resources */ = {isa = PBXBuildFile; fileRef = 1955A3F31AAB40870083778A /* icon_vk.png */; };
 		195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */; };
 		195CAC071B512EF600564776 /* UIImageView+QZBImagePickerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */; };
 		195EA0A51AD4338C000C4341 /* QZBAchievementManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 195EA0A41AD4338C000C4341 /* QZBAchievementManager.m */; };
@@ -135,7 +129,6 @@
 		197E47CA1A8F8ED100E43120 /* QZBSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */; };
 		197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */; };
 		197F2C051AF27F9700C8BC2A /* QZBMessagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */; };
-		1983EE2E1AAC47EF00D59268 /* icon_check.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE2D1AAC47EF00D59268 /* icon_check.png */; };
 		1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE301AAC6DDF00D59268 /* icon_next.png */; };
 		1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE3A1AAC8C1700D59268 /* icon_back_white.png */; };
 		198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */; };
@@ -293,6 +286,8 @@
 		19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127781AB9EA1C009075AD /* QZBChallengeCell.m */; };
 		19A1277D1AB9F065009075AD /* QZBMainChallengesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */; };
 		19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */; };
+		19A29C331B57F59500C5F398 /* QZBFriendsChooserRoomsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A29C321B57F59500C5F398 /* QZBFriendsChooserRoomsController.m */; };
+		19A29C361B5826D000C5F398 /* QZBRoomInvite.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A29C351B5826D000C5F398 /* QZBRoomInvite.m */; };
 		19B5E0511A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */; };
 		19B5E0541A71018D00DCD9C3 /* QZBHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0531A71018D00DCD9C3 /* QZBHorizontalCell.m */; };
 		19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B5E0561A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m */; };
@@ -311,6 +306,8 @@
 		19CB50A61A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50A51A3C541400A3CD74 /* QZBQuestionWithUserAnswer.m */; };
 		19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */; };
 		19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */; };
+		19CFA1941B5D856500DC8C43 /* logo-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CFA1931B5D856500DC8C43 /* logo-512.png */; };
+		19CFA1971B5D86ED00DC8C43 /* QZBAboutTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */; };
 		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
 		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
 		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
@@ -480,12 +477,6 @@
 		1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreListTVC.m; sourceTree = "<group>"; };
 		194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+QZBProjectColors.h"; sourceTree = "<group>"; };
 		194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+QZBProjectColors.m"; sourceTree = "<group>"; };
-		1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG_iPhone_5.jpg; sourceTree = "<group>"; };
-		1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BG_iPhone_6.jpg; sourceTree = "<group>"; };
-		1955A3EF1AAB3C450083778A /* icon_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cancel.png; sourceTree = "<group>"; };
-		1955A3F11AAB40870083778A /* icon_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_login.png; sourceTree = "<group>"; };
-		1955A3F21AAB40870083778A /* icon_register.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_register.png; sourceTree = "<group>"; };
-		1955A3F31AAB40870083778A /* icon_vk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_vk.png; sourceTree = "<group>"; };
 		195A7E3E1A69893B003AC3BA /* QZBRegistrationChooserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegistrationChooserVC.h; sourceTree = "<group>"; };
 		195A7E3F1A69893B003AC3BA /* QZBRegistrationChooserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegistrationChooserVC.m; sourceTree = "<group>"; };
 		195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+QZBImagePickerCategory.h"; sourceTree = "<group>"; };
@@ -567,7 +558,6 @@
 		197E47CF1A8FB2B500E43120 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		197F2C031AF27F9700C8BC2A /* QZBMessagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMessagerVC.h; sourceTree = "<group>"; };
 		197F2C041AF27F9700C8BC2A /* QZBMessagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMessagerVC.m; sourceTree = "<group>"; };
-		1983EE2D1AAC47EF00D59268 /* icon_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_check.png; sourceTree = "<group>"; };
 		1983EE301AAC6DDF00D59268 /* icon_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_next.png; sourceTree = "<group>"; };
 		1983EE3A1AAC8C1700D59268 /* icon_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back_white.png; sourceTree = "<group>"; };
 		198C33EF1A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuizTopicIAPHelper.h; sourceTree = "<group>"; };
@@ -885,6 +875,10 @@
 		19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainChallengesCell.m; sourceTree = "<group>"; };
 		19A127811ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QZBFriendsTVC+QZBFriendsCategory.h"; sourceTree = "<group>"; };
 		19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QZBFriendsTVC+QZBFriendsCategory.m"; sourceTree = "<group>"; };
+		19A29C311B57F59500C5F398 /* QZBFriendsChooserRoomsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsChooserRoomsController.h; sourceTree = "<group>"; };
+		19A29C321B57F59500C5F398 /* QZBFriendsChooserRoomsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsChooserRoomsController.m; sourceTree = "<group>"; };
+		19A29C341B5826D000C5F398 /* QZBRoomInvite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomInvite.h; sourceTree = "<group>"; };
+		19A29C351B5826D000C5F398 /* QZBRoomInvite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomInvite.m; sourceTree = "<group>"; };
 		19B5E04F1A70E6AD00DCD9C3 /* QZBPlayerInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBPlayerInfoCell.h; sourceTree = "<group>"; };
 		19B5E0501A70E6AD00DCD9C3 /* QZBPlayerInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBPlayerInfoCell.m; sourceTree = "<group>"; };
 		19B5E0521A71018D00DCD9C3 /* QZBHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBHorizontalCell.h; sourceTree = "<group>"; };
@@ -920,6 +914,9 @@
 		19CB50AC1A3C62E000A3CD74 /* QZBProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBProgressViewController.m; sourceTree = "<group>"; };
 		19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendsSearchTVC.h; sourceTree = "<group>"; };
 		19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsSearchTVC.m; sourceTree = "<group>"; };
+		19CFA1931B5D856500DC8C43 /* logo-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512.png"; sourceTree = "<group>"; };
+		19CFA1951B5D86ED00DC8C43 /* QZBAboutTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAboutTVC.h; sourceTree = "<group>"; };
+		19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAboutTVC.m; sourceTree = "<group>"; };
 		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
 		19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEmailTextField.m; sourceTree = "<group>"; };
 		19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QZBShakeExtension.h"; sourceTree = "<group>"; };
@@ -1003,6 +1000,8 @@
 				1901BA111B3026F6003E2895 /* QZBRoom.m */,
 				193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */,
 				193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */,
+				19A29C341B5826D000C5F398 /* QZBRoomInvite.h */,
+				19A29C351B5826D000C5F398 /* QZBRoomInvite.m */,
 			);
 			name = rooms;
 			sourceTree = "<group>";
@@ -1045,6 +1044,8 @@
 				1901BA261B306E33003E2895 /* QZBRoomCategoryChooserVC.m */,
 				19FA44F71B319FB200B5E853 /* QZBRoomTopicChooser.h */,
 				19FA44F81B319FB200B5E853 /* QZBRoomTopicChooser.m */,
+				19A29C311B57F59500C5F398 /* QZBFriendsChooserRoomsController.h */,
+				19A29C321B57F59500C5F398 /* QZBFriendsChooserRoomsController.m */,
 			);
 			name = categoryChoose;
 			sourceTree = "<group>";
@@ -1138,14 +1139,12 @@
 		191E12E31A8BD3A700AFB829 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				19CFA1931B5D856500DC8C43 /* logo-512.png */,
 				1944A1761B1082740095C600 /* fonts */,
 				191E46681B0279170037963F /* sounds */,
 				19B3746D1AE16673007F05EA /* animation */,
 				19D258D41AD8682C00F15395 /* icons */,
 				1983EE2F1AAC6DC200D59268 /* indicators */,
-				1955A3F71AAB408F0083778A /* login */,
-				1955A3E91AAB0BD30083778A /* BG_iPhone_5.jpg */,
-				1955A3ED1AAB11000083778A /* BG_iPhone_6.jpg */,
 				1944A1951B10CB050095C600 /* placeholderIMG.png */,
 				191E12E61A8BD48500AFB829 /* notAchiv.png */,
 				191E12E41A8BD3CA00AFB829 /* Artboard 1.png */,
@@ -1397,18 +1396,6 @@
 			name = fonts;
 			sourceTree = "<group>";
 		};
-		1955A3F71AAB408F0083778A /* login */ = {
-			isa = PBXGroup;
-			children = (
-				1955A3EF1AAB3C450083778A /* icon_cancel.png */,
-				1983EE2D1AAC47EF00D59268 /* icon_check.png */,
-				1955A3F11AAB40870083778A /* icon_login.png */,
-				1955A3F21AAB40870083778A /* icon_register.png */,
-				1955A3F31AAB40870083778A /* icon_vk.png */,
-			);
-			name = login;
-			sourceTree = "<group>";
-		};
 		195EA0A61AD52093000C4341 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1605,6 +1592,8 @@
 				195FDA841ADA662E000F86F9 /* QZBReportVC.m */,
 				19E62AB11B4FE334001319E4 /* QZBImageViewerVC.h */,
 				19E62AB21B4FE334001319E4 /* QZBImageViewerVC.m */,
+				19CFA1951B5D86ED00DC8C43 /* QZBAboutTVC.h */,
+				19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -2860,7 +2849,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1955A3F01AAB3C450083778A /* icon_cancel.png in Resources */,
 				191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */,
 				1944A1871B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf in Resources */,
 				1944A1841B1098A40095C600 /* MuseoSansCyrl_1.otf in Resources */,
@@ -2869,24 +2857,20 @@
 				199665331B207AEF00793610 /* build-libidn.sh in Resources */,
 				1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */,
 				191E46671B023CD60037963F /* rightRed.png in Resources */,
-				1955A3F61AAB40870083778A /* icon_vk.png in Resources */,
 				1944A1831B1098A40095C600 /* MuseoSansCyrl_0.otf in Resources */,
-				1955A3EE1AAB11000083778A /* BG_iPhone_6.jpg in Resources */,
-				1955A3EA1AAB0BD40083778A /* BG_iPhone_5.jpg in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
 				1944A1891B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf in Resources */,
 				191E46751B03858D0037963F /* timer.wav in Resources */,
 				19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */,
 				191E46711B03858D0037963F /* achievment.wav in Resources */,
-				1955A3F51AAB40870083778A /* icon_register.png in Resources */,
 				191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */,
 				191E46731B03858D0037963F /* folder.wav in Resources */,
 				1944A1881B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
-				1955A3F41AAB40870083778A /* icon_login.png in Resources */,
 				1944A1851B1098A40095C600 /* MuseoSansCyrl_2.otf in Resources */,
 				191E46661B023CD60037963F /* rightGreen.png in Resources */,
 				191E46741B03858D0037963F /* switch.wav in Resources */,
+				19CFA1941B5D856500DC8C43 /* logo-512.png in Resources */,
 				191E46761B03858D0037963F /* wrong.wav in Resources */,
 				191E46721B03858D0037963F /* correct.wav in Resources */,
 				1944A18B1B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf in Resources */,
@@ -2894,7 +2878,6 @@
 				1944A1861B1098A40095C600 /* MuseoSansCyrl_3.otf in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,
 				191E46641B023CD60037963F /* leftGreen.png in Resources */,
-				1983EE2E1AAC47EF00D59268 /* icon_check.png in Resources */,
 				1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */,
 				1944A18A1B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf in Resources */,
 				1943E8D41AF6549E00129042 /* flashWhite.png in Resources */,
@@ -3022,6 +3005,7 @@
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
 				199666F91B207FE100793610 /* XMPPMessage+XEP_0224.m in Sources */,
+				19CFA1971B5D86ED00DC8C43 /* QZBAboutTVC.m in Sources */,
 				199665311B207AEF00793610 /* DDXMLElement.m in Sources */,
 				199666F41B207FE100793610 /* XMPPAutoTime.m in Sources */,
 				199666DB1B207FE100793610 /* XMPPMessage+XEP_0085.m in Sources */,
@@ -3084,6 +3068,7 @@
 				199666F81B207FE100793610 /* XMPPAttentionModule.m in Sources */,
 				199666EC1B207FE100793610 /* XMPPMessage+XEP_0184.m in Sources */,
 				199665921B207B1D00793610 /* RFImageToDataTransformer.m in Sources */,
+				19A29C361B5826D000C5F398 /* QZBRoomInvite.m in Sources */,
 				1996657E1B207B1D00793610 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				199CD9461A8BB11600FBF820 /* QZBAchievementCVC.m in Sources */,
 				19CB50AD1A3C62E000A3CD74 /* QZBProgressViewController.m in Sources */,
@@ -3170,6 +3155,7 @@
 				199666CB1B207FE100793610 /* XMPPvCardTempAdrTypes.m in Sources */,
 				19C78A431B4C0B1D00B46372 /* QZBRoomSessionResults.m in Sources */,
 				19C78A401B468EED00B46372 /* QZBRoomUsersView.m in Sources */,
+				19A29C331B57F59500C5F398 /* QZBFriendsChooserRoomsController.m in Sources */,
 				19CB50961A3C37BA00A3CD74 /* QZBSession.m in Sources */,
 				1901B9AF1A4729A9002FC87C /* QZBAnswerButton.m in Sources */,
 				191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */,

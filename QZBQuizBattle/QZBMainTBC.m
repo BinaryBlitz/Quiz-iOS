@@ -17,6 +17,8 @@
 #import "QZBFriendRequestManager.h"
 #import "UIColor+QZBProjectColors.h"
 #import "QZBMessagerManager.h"
+#import <SVProgressHUD.h>
+
 
 #import "UITabBarController+QZBMessagerCategory.h"
 
@@ -32,6 +34,8 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [SVProgressHUD setForegroundColor:[UIColor brightRedColor]];
 
     [[QZBCurrentUser sharedInstance] checkUser];
 

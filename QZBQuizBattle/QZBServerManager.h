@@ -173,6 +173,11 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                  onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)POSTReportForDevelopersWithMessage:(NSString *)message
+                                onSuccess:(void (^)())success
+                                onFailure:(void (^)(NSError *error,
+                                                    NSInteger statusCode))failure;
+
 - (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
                              onSuccess:(void (^)())success
                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -282,6 +287,16 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)GETResultsOfRoomSessionWithID:(NSNumber *)roomID
                             onSuccess:(void (^)(QZBRoomSessionResults *sessionResults))success
                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTInviteFriendWithID:(NSNumber *)userID
+                  inRoomWithID:(NSNumber *)roomID
+                     onSuccess:(void (^)())success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)DELETEDeleteRoomInviteWithID:(NSNumber *)inviteID
+                           onSuccess:(void (^)())success
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 
 
 

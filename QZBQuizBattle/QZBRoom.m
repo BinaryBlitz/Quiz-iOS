@@ -45,9 +45,13 @@
         df.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         df.locale = [NSLocale systemLocale];
 
-        self.creationDate = [df dateFromString:d[@"created_at"]];
+        if(d[@"created_at"]){
+            self.creationDate = [df dateFromString:d[@"created_at"]];
+        }
 
-        self.participants = [self parseParticipants:d[@"participations"]];
+        if(d[@"participations"]){
+            self.participants = [self parseParticipants:d[@"participations"]];
+        }
         
         for(QZBUserWithTopic *userWithTopic in self.participants) {
             
@@ -65,7 +69,7 @@
         } else {
             self.maxUserCount = @(5);
         }
-        
+        if(d[@"friends_only"])
         self.isFriendOnly = [d[@"friends_only"] boolValue];
         
        // self.maxUserCount = @(4);

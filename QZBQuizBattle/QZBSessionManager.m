@@ -392,7 +392,6 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
         if(points > 0){
             [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserInRoomGaveAnswer
                                                                 object:userID];
-
         }
     }
     
@@ -463,6 +462,14 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
     if (index < [self.gameSession.questions count] - 1) {
         index++;
+        
+        if(!self.isRoom && index == [self.gameSession.questions count] - 1){
+            self.isDoubled = YES;
+        } else {
+            self.isDoubled = NO;
+        }
+        
+        
         self.currentQuestion = [self.gameSession.questions objectAtIndex:index];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUnshowQuestion"
@@ -521,12 +528,12 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
                                                         
                                                     }];
         
-//        [[QZBServerManager sharedManager] DELETELobbiesWithID:self.gameSession.lobbyID
-//                                                    onSuccess:^{
-//            @""
-//        } onFailure:^(NSError *error, NSInteger statusCode) {
-//            
-//        }];
+        [[QZBServerManager sharedManager] DELETELobbiesWithID:self.gameSession.lobbyID
+                                                    onSuccess:^{
+            //@""
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+        }];
     }
     
     
@@ -555,8 +562,8 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     
     if(self.roomWorker){
         
-        [[QZBServerManager sharedManager] POSTFinishRoomSessionWithID:self.roomWorker.room.roomID
-                                                            onSuccess:nil onFailure:nil];
+//        [[QZBServerManager sharedManager] POSTFinishRoomSessionWithID:self.roomWorker.room.roomID
+//                                                            onSuccess:nil onFailure:nil];
         //[self.roomWorker closeOnlineWorker];
         self.roomWorker = nil;
     }

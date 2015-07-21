@@ -22,6 +22,8 @@
 
 #import "QZBSessionManager.h"
 
+#import "QZBFriendsChooserRoomsController.h"
+
 //room worker
 
 #import "QZBRoomOnlineWorker.h"
@@ -30,8 +32,6 @@
 
 #import <SVProgressHUD.h>
 
-
-
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
 NSString *const QZBEnterRoomCellIdentifier  = @"enterRoomCellIdentifier";
@@ -39,6 +39,7 @@ NSString *const QZBEnterRoomCellIdentifier  = @"enterRoomCellIdentifier";
 // segues
 NSString *const QZBShowRoomCategoryChooser  = @"showRoomCategoryChooser";
 NSString *const QZBShowGameController       = @"showGameController";
+NSString *const QZBShowFriendsChooserSegieIdentifier = @"showFriendsChooser";
 
 //message
 
@@ -65,6 +66,12 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 @property (assign, nonatomic) BOOL isLeaveRoom;
 
 @property (assign, nonatomic) BOOL isStarted;
+
+@property(assign, nonatomic) BOOL needRemoveObserver;
+
+@property (strong, nonatomic) UITapGestureRecognizer *isReadyGestureRecognizer;
+
+@property(strong, nonatomic) UIView *bottomView;
 //@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
 //@property (strong, nonatomic) QZBGameTopic *selectedTopic;
 //@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
@@ -75,6 +82,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.hidesBottomBarWhenPushed = YES;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor blackColor];
@@ -86,17 +94,27 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self reloadRoom];
+    
+    //[self.navigationController setToolbarHidden:NO animated:YES];
+    self.isReadyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                         action:@selector(userPressIsReadyButton:)];
+    
+    self.isReadyGestureRecognizer.numberOfTapsRequired = 1;
+    self.isReadyGestureRecognizer.numberOfTouchesRequired = 1;
 
     //  self.usersWithTopics = [NSMutableArray array];
     // [self initStatusbarWithColor:[UIColor blackColor]];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    
     [self initStatusbarWithColor:[UIColor blackColor]];
 
     [self backButtonInit];
     
-  //  [self.navigationController setToolbarHidden:NO animated:YES];
+    //[self.navigationController setToolbarHidden:NO animated:YES];
+   // self.automaticallyAdjustsScrollViewInsets = NO;
     
    // [self reloadRoom];
     
@@ -105,47 +123,67 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
   //  self.tabBarController.tabBar.hidden = YES;
     
    // self.to
-   //  [self.navigationController setToolbarHidden:YES animated:YES];
+    //[self.navigationController setToolbarHidden:YES animated:YES];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(leaveOrDeleteRoom)
-//                                                 name:UIApplicationDidEnterBackgroundNotification
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(leaveOrDeleteRoom)
-//                                                 name:UIApplicationWillTerminateNotification
-//                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(leaveThisRoom)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(leaveThisRoom)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
     
+    //TODO закрытвать экран
+    
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    
+  //  [self.navigationController.view addSubview:self.bottomView];
+    
+    if(self.roomWorker){
+        [self animateUp];
+    }
+   // [self.navigationController setToolbarHidden:NO animated:YES];
     
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-  //  self.tabBarController.tabBar.hidden = NO;
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    [self animateDown];
+   // [self.bottomView removeFromSuperview];
+  //  [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if(self.needRemoveObserver){
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
 }
 
 - (void)dealloc {
     [self leaveOrDeleteRoom];
      self.tabBarController.tabBar.hidden = NO;
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initWithRoom:(QZBRoom *)room {
     self.room = room;
     
-    if([self isOwner]){
+    if ([self isOwner]) {
         [self generateRoomWorkerWithRoom:self.room];
     }
 
     [self setTitleWithRoom:room];
 }
+
+
+
 
 #pragma mark - actions
 
@@ -155,6 +193,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     
     
     if (!self.room ||![self.room isContainUser:user]) {
+        self.needRemoveObserver = YES;
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [[[UIAlertView alloc] initWithTitle:@"Покинуть комнату"
@@ -166,11 +205,13 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 }
 
 - (void)leaveOrDeleteRoom {
+    
     if (self.roomWorker) {
      //   [self.roomWorker closeOnlineWorker];
         
         
         if ([self isOwner]) {
+            
             [[QZBServerManager sharedManager] DELETEDeleteRoomWithID:self.room.roomID
                 onSuccess:^{
 
@@ -187,8 +228,6 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
                 }];
         }
-        
-
     }
 }
 
@@ -199,6 +238,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         self.roomWorker = nil;
         self.room = nil;
         
+        self.needRemoveObserver = YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -220,14 +260,37 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 }
 
 
+-(void)userPressIsReadyButton:(UIGestureRecognizer *)sender {
+    
+    QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
+    
+    [self makeCurrentUserReady:!userWithTopic.isReady];
+ //   NSLog(@"gtfo");
+}
+
+
 #pragma mark - Navigation
 
 
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if([segue.identifier isEqualToString:QZBShowGameController]){
-//        
-//    }
-//}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:QZBShowFriendsChooserSegieIdentifier]){
+        QZBFriendsChooserRoomsController *destinationVC = segue.destinationViewController;
+        QZBUser *user = [QZBCurrentUser sharedInstance].user;
+        NSNumber *roomID = self.room.roomID;
+        [[QZBServerManager sharedManager]
+         GETAllFriendsOfUserWithID:user.userID
+             OnSuccess:^(NSArray *friends) {
+                 QZBUser *user = [QZBCurrentUser sharedInstance].user;
+                 [destinationVC setFriendsOwner:user andFriends:friends inRoomWithID:roomID];
+
+                 
+                                                          }
+                                                          onFailure:^(NSError *error, NSInteger statusCode){
+                                                              
+                                                          }];
+
+    }
+}
 
 //-(void)didMoveToParentViewController:(UIViewController *)parent{
 //
@@ -254,6 +317,13 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
             [tableView dequeueReusableCellWithIdentifier:QZBUserInRoomCellIdentifier];
 
         QZBUserWithTopic *userWithTopic = self.room.participants[indexPath.row];
+        
+        if([userWithTopic.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
+            
+            if(![cell.isReadyBackView.gestureRecognizers containsObject:self.isReadyGestureRecognizer]){
+                [cell.isReadyBackView addGestureRecognizer:self.isReadyGestureRecognizer];
+            }
+        }
 
         [cell configureCellWithUserWithTopic:userWithTopic];
         return cell;
@@ -270,8 +340,13 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self leaveThisRoom];
     }
+}
+
+-(void)leaveThisRoom {
+    self.needRemoveObserver = YES;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDelegate
@@ -305,8 +380,6 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 #pragma mark - setting room
 
-
-
 - (void)setUserTopic:(QZBGameTopic *)topic {
         [[QZBServerManager sharedManager] POSTJoinRoomWithID:self.room.roomID
             withTopic:topic
@@ -335,18 +408,19 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 }
 
 
--(void)reloadRoom{
-    
-    
+- (void)reloadRoom {
     [self.refreshControl beginRefreshing];
-    [[QZBServerManager sharedManager] GETRoomWithID:self.room.roomID OnSuccess:^(QZBRoom *room) {
+    [[QZBServerManager sharedManager] GETRoomWithID:self.room.roomID
+                                          OnSuccess:^(QZBRoom *room) {
+                                              
         [self.refreshControl endRefreshing];
         self.room = room;
-        self.roomWorker.room = self.room;
+        if (self.roomWorker) {
+            self.roomWorker.room = self.room;
+        }
         
         NSLog(@"room %@ roomworker %@",self.room, self.roomWorker.room);
         [self.tableView reloadData];
-        
         
         [SVProgressHUD dismiss];
     } onFailure:^(NSError *error, NSInteger statusCode) {
@@ -356,7 +430,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
             [SVProgressHUD showErrorWithStatus:QZBNoRoomErrMessage];
             [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                         (int64_t)(2.0 * NSEC_PER_SEC)),
+                           dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];
                 [self leaveDeletedRoom];
                 [[UIApplication sharedApplication]
@@ -374,6 +450,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     self.roomWorker = [[QZBRoomWorker alloc] initWithRoom:room];
 
     [self.roomWorker addRoomOnlineWorker];
+    
+   // [self addBarButtonRight];
+    [self animateUp];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showGameController)
@@ -407,6 +486,8 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     [[QZBSessionManager sessionManager] setRoomWorkerToSessionWorker:self.roomWorker];
     
     self.roomWorker = nil;
+    self.needRemoveObserver = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self performSegueWithIdentifier:QZBShowGameController sender:nil];
 }
 
@@ -423,6 +504,10 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     if (!self.room) {
         return YES;
     }
+    
+    if(!self.room.owner) {
+        return NO;
+    }
 
     NSNumber *currentUserID = [QZBCurrentUser sharedInstance].user.userID;
     NSNumber *ownerUserID = self.room.owner.user.userID;
@@ -435,7 +520,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 - (QZBRoomState)roomState {
     //    if([self isOwner] && !self.room){
     //        return @"Выбрать тему и создать комнату";
-    //    }else if (<#expression#>)
+    //    }else if ()
 
     
     QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
@@ -479,7 +564,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
             return @"";
             break;
         case QZBRoomStateIsNotReady:
-            return @"ПОДТВЕРТИЬ ГОТОВНОСТЬ!";
+            return @"ПОДТВЕРТИТЕ ГОТОВНОСТЬ";
         default:
             return @"";
             break;
@@ -521,7 +606,6 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 -(void)makeCurrentUserReady:(BOOL)isReady {
     QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
     
-    
     if(userWithTopic){
         
         NSInteger position = [self.room.participants indexOfObject:userWithTopic];
@@ -534,7 +618,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         userInRoomCell.isReadyActivityIndicator.hidden = NO;
         [userInRoomCell.isReadyActivityIndicator startAnimating];
         
-    [[QZBServerManager sharedManager] PATCHParticipationWithID:userWithTopic.userWithTopicID isReady:isReady onSuccess:^{
+    [[QZBServerManager sharedManager] PATCHParticipationWithID:userWithTopic.userWithTopicID
+                                                       isReady:isReady
+                                                     onSuccess:^{
         userWithTopic.ready = isReady;
         userInRoomCell.isReadyLabel.hidden = NO;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
@@ -552,6 +638,13 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 //-(QZBUserWithTopic *)current
 
+#pragma mark - show friends
+
+-(void)showFriends {
+    [self performSegueWithIdentifier:QZBShowFriendsChooserSegieIdentifier
+                              sender:nil];
+}
+
 #pragma mark - ui
 
 - (void)backButtonInit {
@@ -564,5 +657,96 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
     self.navigationItem.leftBarButtonItem = logoutButton;
 }
+
+- (void)addBarButtonRight {
+    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Друзья"
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:self
+                                                                              action:@selector(showFriends)];
+}
+
+
+-(UIView *)bottomView{
+    if(!_bottomView){
+        
+        CGRect r = [UIScreen mainScreen].bounds;
+        
+        
+        CGRect destRect = CGRectMake(0, r.size.height, r.size.width, 80);
+        
+        UIView *v = [[UIView alloc] initWithFrame:destRect];
+     //   UIColor *firstColor = [UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
+        UIColor *secondColor = [UIColor colorWithRed:254.0/255.0
+                                               green:204/255.0
+                                                blue:81.0/255.0
+                                               alpha:1.0];
+        UIColor *thirdColor = [UIColor colorWithRed:31.0/255.0
+                                              green:181.0/255.0
+                                               blue:215.0/255.0
+                                              alpha:1];
+        v.backgroundColor = thirdColor;//[UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
+        _bottomView = v;
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, r.size.width-10, 80)];
+//        label.font = [UIFont systemFontOfSize:20];
+//        label.textColor = [UIColor whiteColor];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        button.frame = CGRectMake(10, 10, r.size.width - 20, 60);
+        [button setTitle:@"Пригласить друзей!" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        
+        [button setBackgroundColor:secondColor];
+        button.layer.cornerRadius = 2.0;
+        button.layer.shadowOffset = CGSizeMake(0, 2);
+        button.layer.shadowColor = [UIColor blackColor].CGColor;
+        button.layer.shadowOpacity = 0.01;
+        
+        [button addTarget:self action:@selector(showFriends)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        [v addSubview:button];
+//        label.numberOfLines = 2;
+//        label.text = @"Заказ на сумму 0 р.\n(минимум 1500 р.)";
+//        self.orderLabel = label;
+//        self.makeOrderButton = button;
+//        [v addSubview:label];
+        
+        
+        
+    }
+    
+    return _bottomView;
+    
+}
+
+
+-(void)animateUp {
+    CGRect r = [UIScreen mainScreen].bounds;
+    [self.navigationController.view addSubview:self.bottomView];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomView.frame = CGRectMake(0, r.size.height - 80, r.size.width, 80);
+    }];
+}
+
+-(void)animateDown {
+    CGRect r = [UIScreen mainScreen].bounds;
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.bottomView.frame = CGRectMake(0, r.size.height , r.size.width, 80);
+                     } completion:^(BOOL finished) {
+                         [self.bottomView removeFromSuperview];
+                     }];
+}
+
+//-(void)addBottomView {
+//    CGRect r = [UIScreen mainScreen].bounds;
+//    
+//    CGRect destFrame = CGRectMake(0, r.size.height-50, <#CGFloat width#>, <#CGFloat height#>)
+//    UIView *v = [UIView alloc] initWithFrame:<#(CGRect)#>
+//    
+//}
 
 @end
