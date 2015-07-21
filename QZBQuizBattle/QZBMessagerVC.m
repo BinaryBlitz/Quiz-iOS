@@ -132,6 +132,12 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 - (void)initWithUser:(id<QZBUserProtocol>)user {
     self.title = user.name;
     self.friend = user;
+    
+    [[QZBServerManager sharedManager] GETAllMessagesForUserId:user.userID onSuccess:^(NSArray *messages) {
+        
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
 
     [self updateImages];
 }

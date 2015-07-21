@@ -335,6 +335,7 @@ NSString *const QZBNoInternetConnectionMessage =
             NSArray *challengedDicts = responseObject[@"challenged"];
             
             NSArray *roomInvitesDicts = responseObject[@"invites"];
+            NSArray *roomsDicts = responseObject[@"random_rooms"];
 
             NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
             NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
@@ -345,6 +346,7 @@ NSString *const QZBNoInternetConnectionMessage =
             NSArray *challenged = [self parseChallengeResultsFromArray:challengedDicts];
             
             NSArray *roomInvites = [self parseRoomInvitesFromArray:roomInvitesDicts];
+            NSArray *rooms = [self parseRoomsFromArray:roomsDicts];
             
             
 
@@ -355,7 +357,8 @@ NSString *const QZBNoInternetConnectionMessage =
                 @"random_topics" : randomTopics,
                 @"challenges" : challenges,
                 @"challenged" : challenged,
-                @"room_invites" : roomInvites
+                @"room_invites" : roomInvites,
+                @"rooms":rooms
             };
 
             //  NSDictionary *resultDict = @{};
@@ -1699,7 +1702,7 @@ NSString *const QZBNoInternetConnectionMessage =
 }
 
 -(void)GETAllMessagesForUserId:(NSNumber *)userID
-                     onSuccess:(void (^)(NSArray *rooms))success
+                     onSuccess:(void (^)(NSArray *messages))success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params =
     @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
@@ -1710,6 +1713,10 @@ NSString *const QZBNoInternetConnectionMessage =
     [self.requestOperationManager GET:@"messages"
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  
+                                  DDLogCVerbose(@"all nessages %@", responseObject);
+                                  
+                                
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -1730,19 +1737,18 @@ NSString *const QZBNoInternetConnectionMessage =
 
             DDLogCVerbose(@"%@", responseObject);
 
-            NSMutableArray *tmpArr = [NSMutableArray array];
+//            NSMutableArray *tmpArr = [NSMutableArray array];
+//
+//            for (NSDictionary *d in responseObject) {
+//                QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
+//                [tmpArr addObject:room];
+//            }
+//
+//            NSSortDescriptor *sortDescriptor =
+//                [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
+//            NSSortDescriptor *friendOnlySortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
 
-            for (NSDictionary *d in responseObject) {
-                QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
-                [tmpArr addObject:room];
-            }
-
-            NSSortDescriptor *sortDescriptor =
-                [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
-            NSSortDescriptor *friendOnlySortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
-
-            NSArray *resultArr = [tmpArr sortedArrayUsingDescriptors:@[friendOnlySortDescriptor,
-                                                                       sortDescriptor ]];
+            NSArray *resultArr =[self parseRoomsFromArray:responseObject];
 
             if (success) {
                 success(resultArr);
@@ -1755,6 +1761,24 @@ NSString *const QZBNoInternetConnectionMessage =
                 failure(error, operation.response.statusCode);
             }
         }];
+}
+
+-(NSArray *)parseRoomsFromArray:(NSArray *)responseObject {
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    
+    for (NSDictionary *d in responseObject) {
+        QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
+        [tmpArr addObject:room];
+    }
+    
+    NSSortDescriptor *sortDescriptor =
+    [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
+    NSSortDescriptor *friendOnlySortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
+    
+    NSArray *resultArr = [tmpArr sortedArrayUsingDescriptors:@[friendOnlySortDescriptor,
+                                                               sortDescriptor ]];
+    
+    return resultArr;
 }
 
 - (void)GETRoomWithID:(NSNumber *)roomID

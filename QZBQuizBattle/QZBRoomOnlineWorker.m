@@ -161,6 +161,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //- (void)pusher:(PTPusher *)pusher willAuthorizeChannelWithRequest:(NSMutableURLRequest *)request {
 //    [request setValue:@"some-authentication-token"
 //        forHTTPHeaderField:@"X-MyCustom-AuthTokenHeader"];
@@ -219,6 +223,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     DDLogInfo(@"close connection");
     [_channel unsubscribe];
     [_client disconnect];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     DDLogInfo(@" client %@  connection %@", _client, _channel);
 }

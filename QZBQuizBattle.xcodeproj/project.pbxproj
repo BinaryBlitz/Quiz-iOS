@@ -308,6 +308,8 @@
 		19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */; };
 		19CFA1941B5D856500DC8C43 /* logo-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CFA1931B5D856500DC8C43 /* logo-512.png */; };
 		19CFA1971B5D86ED00DC8C43 /* QZBAboutTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */; };
+		19CFA19A1B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */; };
+		19CFA19D1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA19C1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m */; };
 		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
 		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
 		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
@@ -917,6 +919,10 @@
 		19CFA1931B5D856500DC8C43 /* logo-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512.png"; sourceTree = "<group>"; };
 		19CFA1951B5D86ED00DC8C43 /* QZBAboutTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAboutTVC.h; sourceTree = "<group>"; };
 		19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAboutTVC.m; sourceTree = "<group>"; };
+		19CFA1981B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBShowAllRoomsOnMainCell.h; sourceTree = "<group>"; };
+		19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBShowAllRoomsOnMainCell.m; sourceTree = "<group>"; };
+		19CFA19B1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnMainCell.h; sourceTree = "<group>"; };
+		19CFA19C1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomOnMainCell.m; sourceTree = "<group>"; };
 		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
 		19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEmailTextField.m; sourceTree = "<group>"; };
 		19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QZBShakeExtension.h"; sourceTree = "<group>"; };
@@ -2515,6 +2521,10 @@
 				19A1277C1AB9F065009075AD /* QZBMainChallengesCell.m */,
 				199596831AEBD47900B09EA7 /* QZBResultOfSessionCell.h */,
 				199596841AEBD47A00B09EA7 /* QZBResultOfSessionCell.m */,
+				19CFA1981B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.h */,
+				19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */,
+				19CFA19B1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.h */,
+				19CFA19C1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -3046,6 +3056,7 @@
 				19D911361B171178007B4CF2 /* FXBlurView.m in Sources */,
 				192CDE2E1B419D75003992C7 /* QZBRoomPasswordInputCell.m in Sources */,
 				191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */,
+				19CFA19D1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m in Sources */,
 				19609A0D1B28B5FD00EEB9D6 /* QZBStoredUser.m in Sources */,
 				199666C51B207FE100793610 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				199666CD1B207FE100793610 /* XMPPvCardTempEmail.m in Sources */,
@@ -3066,6 +3077,7 @@
 				199665841B207B1D00793610 /* NSData+XMPP.m in Sources */,
 				191E12EA1A8C9FC700AFB829 /* QZBFriendHorizontalCell.m in Sources */,
 				199666F81B207FE100793610 /* XMPPAttentionModule.m in Sources */,
+				19CFA19A1B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m in Sources */,
 				199666EC1B207FE100793610 /* XMPPMessage+XEP_0184.m in Sources */,
 				199665921B207B1D00793610 /* RFImageToDataTransformer.m in Sources */,
 				19A29C361B5826D000C5F398 /* QZBRoomInvite.m in Sources */,

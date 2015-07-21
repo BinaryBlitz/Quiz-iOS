@@ -199,12 +199,24 @@
 
     [res appendString:@"Темы: "];
 
-    for (QZBUserWithTopic *userWithTopic in self.participants) {
+//    for (QZBUserWithTopic *userWithTopic in self.participants) {
+//        NSString *topicName = [userWithTopic.topic.name
+//            stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+//        [res appendString:topicName];
+//        [res appendString:@", "];
+//    }
+    
+    for(int i = 0; i < self.participants.count; i++) {
+        QZBUserWithTopic *userWithTopic = self.participants[i];
         NSString *topicName = [userWithTopic.topic.name
-            stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                               stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
         [res appendString:topicName];
+        
+        if(i<self.participants.count-1)
         [res appendString:@", "];
+        
     }
+    
     return [NSString stringWithString:res];
 }
 
