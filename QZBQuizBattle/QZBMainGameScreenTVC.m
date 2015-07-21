@@ -28,11 +28,13 @@
 #import "QZBRoomInvite.h"
 #import "QZBRoom.h"
 #import "QZBRoomController.h"
+#import "QZBRoomOnMainCell.h"
 #import "UIFont+QZBCustomFont.h"
 //#import "UIViewController+QZBMessagerCategory.h"
 
 @interface QZBMainGameScreenTVC ()
 
+@property (strong, nonatomic) NSArray *roomArray;
 @property (strong, nonatomic) NSArray *faveTopics;
 @property (strong, nonatomic) NSArray *friendsTopics;
 @property (strong, nonatomic) NSArray *featured;
@@ -45,6 +47,7 @@
 @property (strong, nonatomic) QZBChallengeDescription *challengeDescription;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResults;
 @property (strong, nonatomic) QZBRoomInvite *roomInvite;
+@property (strong, nonatomic) QZBRoom *room;
 
 
 @end
@@ -144,7 +147,13 @@
         QZBRoom *room = [[QZBRoom alloc] initWithDictionary:roomDict];
         [roomController initWithRoom:room];
         self.roomInvite = nil;
-    } else {
+    } else if([segue.identifier isEqualToString:@"showRoomFromMain"]){
+      //  QZBRoom *room = self.roomArray
+        QZBRoomController *destinationController = segue.destinationViewController;
+        [destinationController initWithRoom:self.room];
+        self.room = nil;
+        
+    }else {
         [super prepareForSegue:segue sender:sender];
     }
 }
@@ -157,6 +166,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *arr = self.workArray[section];
+    
+    if(arr == self.roomArray){
+        return arr.count + 1;
+    }
 
     return arr.count;
 }
@@ -165,6 +178,32 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *arr = self.workArray[indexPath.section];
 
+    
+    if([arr isEqualToArray:self.roomArray]) {
+        
+        if(indexPath.row < arr.count) {
+            QZBRoomOnMainCell *cell = [tableView dequeueReusableCellWithIdentifier:@"roomsCellOnMainIdentifier"];
+            
+            cell.backgroundColor = [self colorForSection:indexPath.section];
+            
+            QZBRoom *room = arr[indexPath.row];
+            
+            cell.roomUpLabel.text = [room participantsDescription];
+            cell.roomDownLabel.text = [room topicsDescription];
+            
+            
+            return cell;
+            
+            
+        }else {
+        
+        UITableViewCell *cell = [tableView
+                                 dequeueReusableCellWithIdentifier:@"showAllRoomsCellIdentifier"];
+        
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        return cell;
+        }
+    }
     if([arr isEqualToArray:self.roomsIvites]){
         QZBResultOfSessionCell *cell =  [tableView
                                          dequeueReusableCellWithIdentifier:@"resultSessionCell"];
@@ -254,6 +293,8 @@
         color = [UIColor challengedColor];//strongGreenColor];
     } else if (arr == self.roomsIvites) {
         color = [UIColor roomInvitesColor];
+    } else if (arr == self.roomArray) {
+        color = [UIColor roomColor];
     }
 
     return color;
@@ -276,6 +317,8 @@
         text = @"Результаты";
     } else if (arr == self.roomsIvites) {
         text = @"Приглашения в комнаты";
+    } else if (arr == self.roomArray){
+        text = @"Комнаты";
     }
     return text;
 }
@@ -284,7 +327,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell.reuseIdentifier isEqualToString:@"mainChallengeCell"]) {
+    if([cell.reuseIdentifier isEqualToString:@"roomsCellOnMainIdentifier"]) {
+        self.room = self.roomArray[indexPath.row];
+        [self performSegueWithIdentifier:@"showRoomFromMain" sender:nil];
+    }else if([cell.reuseIdentifier isEqualToString:@"showAllRoomsCellIdentifier"]) {
+        [self showRoomsList];
+    } else if ([cell.reuseIdentifier isEqualToString:@"mainChallengeCell"]) {
         [self performSegueWithIdentifier:@"showChallenges" sender:nil];
     } else if ([cell.reuseIdentifier isEqualToString:@"mainDescriptionCell"]) {
         return;
@@ -299,8 +347,20 @@
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if(section == 0) {
+//        return 0.0;
+//    } else {
+//        return 48.0;
+//    }
+//}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     // CGRect rect = CGRectMake(0, 0,CGRectGetWidth(tableView.frame), 48);
+    
+//    if(section==0){
+//        return nil;
+//    }
 
     UIView *view = [[UIView alloc] init];
 
@@ -575,6 +635,8 @@
         //           };
 
         [self.refreshControl endRefreshing];
+        
+        self.roomArray = resultDict[@"rooms"];
 
         self.faveTopics = resultDict[@"favorite_topics"];
         self.friendsTopics = resultDict[@"friends_favorite_topics"];
@@ -590,6 +652,9 @@
         self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
 
         [self.workArray removeAllObjects];
+        if(self.roomArray.count > 0){
+            [self.workArray addObject:self.roomArray];
+        }
         
         if(self.roomsIvites.count > 0) {
             [self.workArray addObject:self.roomsIvites];
@@ -656,10 +721,10 @@
 #pragma mark - support methods
 
 -(void)addBarButtonRight {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Комнаты"
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(showRoomsList)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Комнаты"
+//                                                                              style:UIBarButtonItemStylePlain
+//                                                                             target:self
+//                                                                             action:@selector(showRoomsList)];
     
     
 }

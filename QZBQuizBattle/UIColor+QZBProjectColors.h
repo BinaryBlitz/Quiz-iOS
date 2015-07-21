@@ -37,5 +37,6 @@
 
 +(UIColor *)roomInvitesColor;
 
++ (UIColor *)roomColor;
 
 @end

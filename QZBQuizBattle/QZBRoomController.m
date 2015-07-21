@@ -93,6 +93,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     
     
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 80, 0);
     [self reloadRoom];
     
     //[self.navigationController setToolbarHidden:NO animated:YES];

@@ -17,8 +17,8 @@
 }
 
 -(void)awakeFromNib{
-//    [self.backView addShadowsAllWay];
-//    [self.underView addShadowsAllWayRasterize];
+// //   [self.backView addShadowsAllWay];
+// //   [self.underView addShadowsAllWayRasterize];
 }
 
 @end
