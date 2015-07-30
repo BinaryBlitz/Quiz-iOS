@@ -645,16 +645,15 @@
 
         NSArray *challArr = resultDict[@"challenges"];
     
-
         self.challenges = [challArr mutableCopy];
         self.challenged = [resultDict[@"challenged"] mutableCopy];
         
         self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
 
         [self.workArray removeAllObjects];
-        if(self.roomArray.count > 0){
+       // if(self.roomArray.count > 0){
             [self.workArray addObject:self.roomArray];
-        }
+      //  }
         
         if(self.roomsIvites.count > 0) {
             [self.workArray addObject:self.roomsIvites];

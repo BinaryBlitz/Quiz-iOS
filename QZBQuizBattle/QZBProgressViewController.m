@@ -609,11 +609,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //    }];
     
     self.animationView = [[SVIndefiniteAnimatedView alloc]
-                          initWithFrame:CGRectMake(0, 0, 60, 60)];
+                          initWithFrame:CGRectMake(0, 0, 100, 100)];
     
     self.animationView.strokeThickness = 2.0;
     self.animationView.strokeColor = [UIColor redColor];
-    self.animationView.radius = 25.0;
+    self.animationView.radius = 49.0;
     
     [self.backView addSubview:self.animationView];
     
@@ -628,11 +628,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //                                                                      options:NSLayoutFormatAlignAllCenterX | NSLayoutFormatAlignAllCenterY
 //                                                                      metrics:nil
 //                                                                        views:NSDictionaryOfVariableBindings(redView)]];
-    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[redView(==60)]-(>=0)-|"
+    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[redView(==100)]-(>=0)-|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:NSDictionaryOfVariableBindings(redView)]];
-    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[redView(==60)]-(>=0)-|"
+    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[redView(==100)]-(>=0)-|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:NSDictionaryOfVariableBindings(redView)]];

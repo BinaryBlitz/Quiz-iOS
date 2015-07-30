@@ -348,7 +348,6 @@ NSString *const QZBNoInternetConnectionMessage =
             NSArray *roomInvites = [self parseRoomInvitesFromArray:roomInvitesDicts];
             NSArray *rooms = [self parseRoomsFromArray:roomsDicts];
             
-            
 
             NSDictionary *resultDict = @{
                 @"favorite_topics" : faveTopics,
