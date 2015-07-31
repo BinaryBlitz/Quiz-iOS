@@ -30,6 +30,7 @@
 -(void)closeFinding;
 
 -(void)initSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user;
+-(void)initPlayAgainSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user;
 -(void)initSessionWithDescription:(QZBChallengeDescription *)description;
 @property (weak, nonatomic) IBOutlet UIButton *playOfflineButton;
 
