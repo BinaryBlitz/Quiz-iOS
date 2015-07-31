@@ -701,13 +701,13 @@
         self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
 
         [self.workArray removeAllObjects];
-       // if(self.roomArray.count > 0){
-            [self.workArray addObject:self.roomArray];
-      //  }
-        
-        if(self.roomsIvites.count > 0) {
-            [self.workArray addObject:self.roomsIvites];
-        }
+//       // if(self.roomArray.count > 0){
+//            [self.workArray addObject:self.roomArray];
+//      //  }
+//        
+//        if(self.roomsIvites.count > 0) {
+//            [self.workArray addObject:self.roomsIvites];
+//        }
 
         if (self.challenges.count > 0) {
             [self.workArray addObject:self.challenges];
@@ -715,6 +715,14 @@
         
         if(self.challenged.count > 0){
             [self.workArray addObject:self.challenged];
+        }
+        
+        // if(self.roomArray.count > 0){
+        [self.workArray addObject:self.roomArray];
+        //  }
+        
+        if(self.roomsIvites.count > 0) {
+            [self.workArray addObject:self.roomsIvites];
         }
 
         if (self.featured.count > 0) {

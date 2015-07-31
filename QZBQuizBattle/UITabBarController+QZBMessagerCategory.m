@@ -25,7 +25,7 @@
 //                                       subtitle:messge
 //                                           type:TSMessageNotificationTypeMessage];
     
-    if(![[QZBSessionManager sessionManager] isGoing]){
+    if (![[QZBSessionManager sessionManager] isGoing]) {
     
     [TSMessage showNotificationInViewController:self
                                           title:title subtitle:messge
@@ -38,10 +38,6 @@
                                      atPosition:TSMessageNotificationPositionNavBarOverlay
                            canBeDismissedByUser:YES];
     }
-    
-    
-    
-    
 }
 
 - (void)messageReciever:(NSNotification *)note {
