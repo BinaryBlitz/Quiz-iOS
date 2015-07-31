@@ -28,7 +28,7 @@
 
 #import "QZBChallengeDescriptionWithResults.h"
 
-//dfiimage
+// dfiimage
 
 #import <DFImageManager/DFImageManager.h>
 #import <DFImageManager/DFImageRequestOptions.h>
@@ -38,7 +38,7 @@
 
 NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
-@interface QZBEndGameVC ()//<UIGestureRecognizerDelegate>
+@interface QZBEndGameVC ()  //<UIGestureRecognizerDelegate>
 
 @property (copy, nonatomic) NSString *firstUserName;
 @property (copy, nonatomic) NSString *opponentUserName;
@@ -88,7 +88,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self initStatusbarWithColor:[UIColor blackColor]];
-    
+
     self.tabBarController.tabBar.hidden = NO;
 
     [self.tabBarController setHidesBottomBarWhenPushed:NO];
@@ -104,34 +104,31 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:topic];
     if (category && !self.isAnimated) {
-        
         NSURL *url = [NSURL URLWithString:category.background_url];
 
         CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
                               16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
-        
+
         DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
 
         self.tableView.backgroundColor = [UIColor clearColor];
-        
+
         DFImageRequestOptions *options = [DFImageRequestOptions new];
         options.allowsClipping = YES;
-        
-        options.userInfo = @{ DFURLRequestCachePolicyKey :
-                                  @(NSURLRequestReturnCacheDataElseLoad)};
-        
+
+        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+
         DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                            targetSize:CGSizeZero
                                                           contentMode:DFImageContentModeAspectFill
                                                               options:options];
-        
+
         dfiIV.allowsAnimations = NO;
         dfiIV.allowsAutoRetries = YES;
-        
+
         [dfiIV prepareForReuse];
-        
+
         [dfiIV setImageWithRequest:request];
-        
 
         self.tableView.backgroundView = dfiIV;
     }
@@ -258,23 +255,21 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     [self showAlertAboutAchievmentWithDict:note.object];
 }
 
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before
-//navigation
+// navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    if([segue.identifier isEqualToString:QZBSegueToOpponentUser] && self.opponent){
+
+    if ([segue.identifier isEqualToString:QZBSegueToOpponentUser] && self.opponent) {
         QZBPlayerPersonalPageVC *destVC =
-        (QZBPlayerPersonalPageVC *)segue.destinationViewController;
-        
+            (QZBPlayerPersonalPageVC *)segue.destinationViewController;
+
         [destVC initPlayerPageWithUser:self.opponent];
     }
 }
-
 
 #pragma mark - UITableViewDataSource
 
@@ -303,7 +298,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
             self.isMainInited = YES;
             [self initMainCell:mainCell];
         }
-
 
         return mainCell;
     } else if (indexPath.row == 1) {
@@ -344,8 +338,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
         return 100;
     }
 }
-
-
 
 - (BOOL)checkVisibilityOfCell:(UITableViewCell *)cell inScrollView:(UIScrollView *)scrollView {
     CGRect cellRect = [scrollView convertRect:cell.frame toView:scrollView.superview];
@@ -390,17 +382,16 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     } else {
         [cell.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
-    
-    //UIGestureRecognizer *gestRec = self.opponentGestureRecognizer;
-   
-//    NSLog(@"name %@",self.opponent.name);
-//    cell.opponentImage.userInteractionEnabled = YES;
-//    [cell.opponentNameLabel setUserInteractionEnabled:YES];
-//    [cell.opponentImage addGestureRecognizer:_opponentGestureRecognizer];
-//    [cell.opponentNameLabel addGestureRecognizer:_opponentGestureRecognizer];
-//    [cell.opponentBV addGestureRecognizer:_opponentGestureRecognizer];
-    
-    
+
+    // UIGestureRecognizer *gestRec = self.opponentGestureRecognizer;
+
+    //    NSLog(@"name %@",self.opponent.name);
+    //    cell.opponentImage.userInteractionEnabled = YES;
+    //    [cell.opponentNameLabel setUserInteractionEnabled:YES];
+    //    [cell.opponentImage addGestureRecognizer:_opponentGestureRecognizer];
+    //    [cell.opponentNameLabel addGestureRecognizer:_opponentGestureRecognizer];
+    //    [cell.opponentBV addGestureRecognizer:_opponentGestureRecognizer];
+
     //`NSLog(@"%@", cell.oppone)
     cell.opponentBV.badgeText =
         [NSString stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
@@ -442,7 +433,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     QZBProgressViewController *progressVC =
         [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
 
-    [progressVC initSessionWithTopic:self.topic user:self.opponent];
+    [progressVC initPlayAgainSessionWithTopic:self.topic user:self.opponent];
 
     if (!destinationVC) {
         NSUInteger objectIndex = [self.navigationController.viewControllers indexOfObject:self];
@@ -468,8 +459,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     for (UIViewController *controller in controllers) {
         if ([controller isKindOfClass:[QZBTopicChooserControllerViewController class]] ||
             [controller isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-           
-
             destinationVC = controller;
             break;
         }
@@ -492,7 +481,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
         for (UIViewController *controller in controllers) {
             if ([controller isKindOfClass:[QZBFriendsChallengeTVC class]] ||
                 [controller isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
-
                 destinationVC = controller;
                 break;
             }
@@ -515,7 +503,6 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     for (UIViewController *controller in controllers) {
         if ([controller isKindOfClass:VCclass]) {
-
             destinationVC = controller;
             break;
         }
@@ -527,11 +514,9 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     }
 }
 
--(void)showOpponent{
-    
-    if(self.opponent)
+- (void)showOpponent {
+    if (self.opponent)
         [self performSegueWithIdentifier:QZBSegueToOpponentUser sender:nil];
-    
 }
 
 #pragma mark - animation
@@ -603,7 +588,5 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     NSLog(@"gg");
     [self showOpponent];
 }
-
-
 
 @end

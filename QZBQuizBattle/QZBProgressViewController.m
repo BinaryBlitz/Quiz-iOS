@@ -61,15 +61,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self setNeedsStatusBarAppearanceUpdate];
 
     self.playOfflineButton.alpha = 0;
-    
-//    self.animationView = [[SVIndefiniteAnimatedView alloc] initWithFrame:self.backView.bounds];
-//    self.animationView.strokeThickness = 1.0;
-//    self.animationView.strokeColor = [UIColor redColor];
-//    self.animationView.radius = 60.0;
-//    
-//    [self.backView addSubview:self.animationView];
-    
-    
+
+    //    self.animationView = [[SVIndefiniteAnimatedView alloc]
+    //    initWithFrame:self.backView.bounds];
+    //    self.animationView.strokeThickness = 1.0;
+    //    self.animationView.strokeColor = [UIColor redColor];
+    //    self.animationView.radius = 60.0;
+    //
+    //    [self.backView addSubview:self.animationView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,18 +79,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                      object:nil];
 
     self.topicLabel.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.topicLabel.layer.shadowOffset = CGSizeMake(2.0, 2.0);
     self.topicLabel.layer.shadowRadius = 2.0;
     self.topicLabel.layer.shadowOpacity = 0.5;
-    
-    QZBCategory *category =
-        [QZBTopicWorker tryFindRelatedCategoryToTopic:self.topic];
+
+    QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:self.topic];
     if (category) {
-       
         //[self initNavigationBar:topic.relationToCategory.name];
         [self initScreenWithCategory:category];
     }
@@ -99,7 +97,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.topicLabel.text = self.topic.name;
     self.tabBarController.tabBar.hidden = YES;
-    
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelCrossAction:)
@@ -126,25 +123,24 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              selector:@selector(showAlertViewFromNotification:)
                                                  name:QZBPusherChallengeDeclined
                                                object:nil];
-    
+
     //[self initWhiteViewOn:self.backgroundImageView];
 
     [self addSpinner];
 }
 
--(void)viewWillLayoutSubviews{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-   // [self initWhiteViewOn:self.backgroundImageView];
+    // [self initWhiteViewOn:self.backgroundImageView];
 }
 
--(void)viewDidLayoutSubviews{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-  //  self.animationView.center = self.backView.center;
- //   [self initWhiteViewOn:self.backgroundImageView];
- //   [self initBlurEffect];
-}
 
+    //  self.animationView.center = self.backView.center;
+    //   [self initWhiteViewOn:self.backgroundImageView];
+    //   [self initBlurEffect];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -162,17 +158,16 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     self.cancelCrossButton.enabled = YES;
 
-
     if (!self.onlineWorker) {
         self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
     }
-    
-  //  [self addSpinner];
+
+    //  [self addSpinner];
 }
 
--(void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
+
     [self.animationView removeFromSuperview];
 }
 
@@ -180,8 +175,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [super viewWillDisappear:animated];
 
     // [self.client disconnect];
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
-                                                         object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
+                                                        object:nil];
 
     DDLogInfo(@"progress disapear");
 
@@ -210,12 +205,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                          timeoutInterval:60];
         //   UIImage *image = [[UIImage alloc] init];
 
-        [self.backgroundImageView
-            setImageWithURLRequest:imageRequest
-                  placeholderImage:nil
-                           success:nil
-                           failure:nil];
-       // [self.view sendSubviewToBack:self.backgroundImageView];
+        [self.backgroundImageView setImageWithURLRequest:imageRequest
+                                        placeholderImage:nil
+                                                 success:nil
+                                                 failure:nil];
+        // [self.view sendSubviewToBack:self.backgroundImageView];
     }
 }
 
@@ -227,7 +221,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.topicLabel.text = topic.name;
 
     [[QZBSessionManager sessionManager] setTopicForSession:topic];
-
 }
 
 #pragma mark - custom init
@@ -250,10 +243,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
--(void)initPlayAgainSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
+- (void)initPlayAgainSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
     self.isPlayAgain = YES;
-    
-    [self initPlayAgainSessionWithTopic:topic user:user];
+
+    [self initSessionWithTopic:topic user:user];//initPlayAgainSessionWithTopic:topic user:user];
 }
 
 #pragma mark - Actions
@@ -287,13 +280,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     if ([note.object isKindOfClass:[NSArray class]]) {
         NSArray *description = note.object;
 
-        if(!self.alertShown){
+        if (!self.alertShown) {
             self.alertShown = YES;
-        [[[UIAlertView alloc] initWithTitle:description[0]
-                                    message:description[1]
-                                   delegate:self
-                          cancelButtonTitle:@"Ок"
-                          otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:description[0]
+                                        message:description[1]
+                                       delegate:self
+                              cancelButtonTitle:@"Ок"
+                              otherButtonTitles:nil] show];
         }
     }
 }
@@ -309,7 +302,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self enterGame];
 }
 
-
 #pragma mark - init session
 
 - (void)initSession {
@@ -320,7 +312,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                 [self settitingSession:session bot:bot];
 
             }
-            onFailure:^(NSError *error, NSInteger statusCode){
+            onFailure:^(NSError *error, NSInteger statusCode) {
                 [self showAlertServerProblem];
 
             }];
@@ -331,153 +323,147 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                 [self sessionFromLobby:lobby];
 
             }
-            onFailure:^(NSError *error, NSInteger statusCode){
+            onFailure:^(NSError *error, NSInteger statusCode) {
                 [self showAlertServerProblem];
 
             }];
     } else if (!self.isChallenge) {
-        
-        if(self.isPlayAgain) {
+        if (self.isPlayAgain) {
+            
             [[QZBServerManager sharedManager] GETThrownChallengesOnSuccess:^(NSArray *challenges) {
+                
+                
                 QZBChallengeDescription *destChallDescr = nil;
-                for(QZBChallengeDescription *CD in challenges) {
-                    if([CD.userID isEqual:self.user.userID] && [CD.topicID isEqualToNumber:self.topic.topic_id]){
+                for (QZBChallengeDescription *CD in challenges) {
+                    
+                    NSLog(@"self %@ CD %@", self.topic.topic_id, CD.topicID);
+                    if ([CD.userID isEqual:self.user.userID] &&
+                        [CD.topicID isEqual:self.topic.topic_id]) {
                         destChallDescr = CD;
                         break;
                     }
                 }
-                
-                if(destChallDescr){
+                if (destChallDescr) {
                     [self acceptChallengeWithLobbyNumber:destChallDescr.lobbyID];
                 } else {
                     [self postLobbyChallenge];
                 }
-                
+
             } onFailure:^(NSError *error, NSInteger statusCode) {
                 [self showAlertServerProblem];
             }];
         } else {
             [self postLobbyChallenge];
         }
-        
-//        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
-//            inTopic:self.topic
-//            onSuccess:^(QZBSession *session) {
-//
-//                [self setFactWithString:session.fact];
-//                
-//                QZBLobby *lobby =
-//                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
-//                                              topicID:[self.topic.topic_id integerValue]
-//                                             playerID:[self.user.userID integerValue]
-//                                           queryCount:0];
-//                self.lobby = lobby;
-//
-//                [self settitingSession:session
-//                                   bot:nil];
-//
-//                [UIView animateWithDuration:0.4
-//                    delay:5
-//                    options:UIViewAnimationOptionCurveEaseInOut
-//                    animations:^{
-//
-//                        self.playOfflineButton.alpha = 1.0;
-//
-//                    }
-//                    completion:^(BOOL finished) {
-//
-//                        self.playOfflineButton.enabled = YES;
-//
-//                    }];
-//
-//               // self.playOfflineButton.alpha = 1.0;//??
-//
-//            }
-//            onFailure:^(NSError *error, NSInteger statusCode){
-//                
-//                //if(!error && statusCode == -1){
-//                    [self showAlertServerProblem];
-//              //  }
-//            }];
+
+        //        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
+        //            inTopic:self.topic
+        //            onSuccess:^(QZBSession *session) {
+        //
+        //                [self setFactWithString:session.fact];
+        //
+        //                QZBLobby *lobby =
+        //                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
+        //                                              topicID:[self.topic.topic_id integerValue]
+        //                                             playerID:[self.user.userID integerValue]
+        //                                           queryCount:0];
+        //                self.lobby = lobby;
+        //
+        //                [self settitingSession:session
+        //                                   bot:nil];
+        //
+        //                [UIView animateWithDuration:0.4
+        //                    delay:5
+        //                    options:UIViewAnimationOptionCurveEaseInOut
+        //                    animations:^{
+        //
+        //                        self.playOfflineButton.alpha = 1.0;
+        //
+        //                    }
+        //                    completion:^(BOOL finished) {
+        //
+        //                        self.playOfflineButton.enabled = YES;
+        //
+        //                    }];
+        //
+        //               // self.playOfflineButton.alpha = 1.0;//??
+        //
+        //            }
+        //            onFailure:^(NSError *error, NSInteger statusCode){
+        //
+        //                //if(!error && statusCode == -1){
+        //                    [self showAlertServerProblem];
+        //              //  }
+        //            }];
     } else {
     }
 }
 
--(void)acceptChallengeWithLobbyNumber:(NSNumber *)lobbyID {
-    
+- (void)acceptChallengeWithLobbyNumber:(NSNumber *)lobbyID {
     [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:lobbyID
-                                                            onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
-                                                                
-                                                                [self settitingSession:session bot:bot];
-                                                                
-                                                            }
-                                                            onFailure:^(NSError *error, NSInteger statusCode){
-                                                                [self showAlertServerProblem];
-                                                                
-                                                            }];
+        onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
+
+            [self settitingSession:session bot:bot];
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
+            [self showAlertServerProblem];
+
+        }];
 }
 
-
-
--(void)postLobbyChallenge {
-    
+- (void)postLobbyChallenge {
     [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
-                                                           inTopic:self.topic
-                                                         onSuccess:^(QZBSession *session) {
-                                                             
-                                                             [self setFactWithString:session.fact];
-                                                             
-                                                             QZBLobby *lobby =
-                                                             [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
-                                                                                       topicID:[self.topic.topic_id integerValue]
-                                                                                      playerID:[self.user.userID integerValue]
-                                                                                    queryCount:0];
-                                                             self.lobby = lobby;
-                                                             
-                                                             [self settitingSession:session
-                                                                                bot:nil];
-                                                             
-                                                             [UIView animateWithDuration:0.4
-                                                                                   delay:5
-                                                                                 options:UIViewAnimationOptionCurveEaseInOut
-                                                                              animations:^{
-                                                                                  
-                                                                                  self.playOfflineButton.alpha = 1.0;
-                                                                                  
-                                                                              }
-                                                                              completion:^(BOOL finished) {
-                                                                                  
-                                                                                  self.playOfflineButton.enabled = YES;
-                                                                                  
-                                                                              }];
-                                                             
-                                                             // self.playOfflineButton.alpha = 1.0;//??
-                                                             
-                                                         }
-                                                         onFailure:^(NSError *error, NSInteger statusCode){
-                                                             
-                                                             //if(!error && statusCode == -1){
-                                                             [self showAlertServerProblem];
-                                                             //  }
-                                                         }];
-    
+        inTopic:self.topic
+        onSuccess:^(QZBSession *session) {
+
+            [self setFactWithString:session.fact];
+
+            QZBLobby *lobby = [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
+                                                        topicID:[self.topic.topic_id integerValue]
+                                                       playerID:[self.user.userID integerValue]
+                                                     queryCount:0];
+            self.lobby = lobby;
+
+            [self settitingSession:session bot:nil];
+
+            [UIView animateWithDuration:0.4
+                delay:5
+                options:UIViewAnimationOptionCurveEaseInOut
+                animations:^{
+
+                    self.playOfflineButton.alpha = 1.0;
+
+                }
+                completion:^(BOOL finished) {
+
+                    self.playOfflineButton.enabled = YES;
+
+                }];
+
+            // self.playOfflineButton.alpha = 1.0;//??
+
+        }
+        onFailure:^(NSError *error, NSInteger statusCode) {
+
+            // if(!error && statusCode == -1){
+            [self showAlertServerProblem];
+            //  }
+        }];
 }
 
-
-
--(void)showAlertServerProblem{
-    [[[UIAlertView alloc]
-      initWithTitle:@"Ошибка на сервере"
-      message:@"Попробуйте еще раз"
-      delegate:self
-      cancelButtonTitle:@"Ок"
-      otherButtonTitles:nil] show];
+- (void)showAlertServerProblem {
+    [[[UIAlertView alloc] initWithTitle:@"Ошибка на сервере"
+                                message:@"Попробуйте еще раз"
+                               delegate:self
+                      cancelButtonTitle:@"Ок"
+                      otherButtonTitles:nil] show];
 }
 
 - (void)sessionFromLobby:(QZBLobby *)lobby {
     if (lobby && !self.lobby) {
         self.lobby = lobby;
-        
+
         [self setFactWithString:lobby.fact];
     } else {
         return;
@@ -538,10 +524,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         if (!self.isCanceled) {
             DDLogInfo(@"setSession");
             [[QZBSessionManager sessionManager] setSession:session];
-            if(self.isChallenge || self.user){
+            if (self.isChallenge || self.user) {
                 [[QZBSessionManager sessionManager] setIsChallenge:YES];
             }
-            
 
             if ([bot isKindOfClass:[QZBOpponentBot class]]) {
                 [[QZBSessionManager sessionManager] setBot:(QZBOpponentBot *)bot];
@@ -553,7 +538,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                 }
             } else {
                 self.isOnline = YES;
-                [[QZBSessionManager sessionManager] setOnlineSessionWorkerFromOutside:self.onlineWorker];
+                [[QZBSessionManager sessionManager]
+                    setOnlineSessionWorkerFromOutside:self.onlineWorker];
 
                 if (!self.user && self.isChallenge) {
                     dispatch_after(
@@ -645,71 +631,67 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self initSession];
 }
 
--(void)initWhiteViewOn:(UIView *)view{
+- (void)initWhiteViewOn:(UIView *)view {
     CGRect r = [UIScreen mainScreen].bounds;
-    
-    //FXBlurView *vi = [[FXBlurView alloc] initWithFrame:r];
-   // vi.dynamic = YES;
-   // vi.blurRadius = 0.9;
-   // vi.iterations = 12;
-    
-    
+
+    // FXBlurView *vi = [[FXBlurView alloc] initWithFrame:r];
+    // vi.dynamic = YES;
+    // vi.blurRadius = 0.9;
+    // vi.iterations = 12;
+
     //[UIColor colorWithWhite:1.0 alpha:0.1];
     UIView *vi = [[UIView alloc] initWithFrame:r];
     vi.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
     [view addSubview:vi];
     [view sendSubviewToBack:vi];
-    
-  //  [view setNeedsDisplay];
+
+    //  [view setNeedsDisplay];
 }
 
--(void)addSpinner {
+- (void)addSpinner {
+    self.animationView =
+        [[SVIndefiniteAnimatedView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
 
-    
-    self.animationView = [[SVIndefiniteAnimatedView alloc]
-                          initWithFrame:CGRectMake(0, 0, 100, 100)];
-    
     self.animationView.strokeThickness = 2.0;
     self.animationView.strokeColor = [UIColor redColor];
     self.animationView.radius = 48.0;
-    
+
     [self.backView addSubview:self.animationView];
-    
+
     self.animationView.translatesAutoresizingMaskIntoConstraints = NO;
-  
 
-    UIView *redView  = self.animationView;
+    UIView *redView = self.animationView;
 
-    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[redView(==100)]-(>=0)-|"
-                                                                      options:0
-                                                                      metrics:nil
-                                                                        views:NSDictionaryOfVariableBindings(redView)]];
-    [self.backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[redView(==100)]-(>=0)-|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:NSDictionaryOfVariableBindings(redView)]];
-    
-    
-//        self.backView.strokeThickness = 2.0;
-//        self.backView.strokeColor = [UIColor redColor];
-//        self.backView.radius = 47.0;
-    
-//        [self.backView willMoveToSuperview:self.backView.superview];
-    
+    [self.backView
+        addConstraints:[NSLayoutConstraint
+                           constraintsWithVisualFormat:@"H:|-(>=0)-[redView(==100)]-(>=0)-|"
+                                               options:0
+                                               metrics:nil
+                                                 views:NSDictionaryOfVariableBindings(redView)]];
+    [self.backView
+        addConstraints:[NSLayoutConstraint
+                           constraintsWithVisualFormat:@"V:|-(>=0)-[redView(==100)]-(>=0)-|"
+                                               options:0
+                                               metrics:nil
+                                                 views:NSDictionaryOfVariableBindings(redView)]];
+
+    //        self.backView.strokeThickness = 2.0;
+    //        self.backView.strokeColor = [UIColor redColor];
+    //        self.backView.radius = 47.0;
+
+    //        [self.backView willMoveToSuperview:self.backView.superview];
 }
 
 #pragma mark - support method
 
--(void)setFactWithString:(NSString *)fact{
-    
+- (void)setFactWithString:(NSString *)fact {
     self.factLabel.text = fact;
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        self.factLabel.superview.alpha = 1.0;
-    }];
-    
-}
 
+    [UIView animateWithDuration:0.4
+                     animations:^{
+                         self.factLabel.superview.alpha = 1.0;
+                     }];
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
