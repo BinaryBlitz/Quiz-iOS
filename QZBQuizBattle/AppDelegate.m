@@ -308,6 +308,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]){
             [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                                 object:nil];
+        } else if ([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
+            
+            [self showMessageNotificationWithDictInActiveApp:userInfo];
+            
         }
 
         [self setBadgeWithDictionary:userInfo];
@@ -446,6 +450,22 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                             object:nil];
     }
+    
+}
+
+-(void)showMessageNotificationWithDictInActiveApp:(NSDictionary *)userInfo {
+
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+    {
+        NSDictionary *d = userInfo[@"message"];
+        NSDictionary *p = userInfo[@"player"];
+        NSString *username = p[@"username"]; //userInfo[@""];
+        NSString *body = d[@"content"];
+        NSDictionary *payload = @{@"username":username,@"message":body};
+        [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
+                                                            object:payload];
+    }
+    
     
 }
 

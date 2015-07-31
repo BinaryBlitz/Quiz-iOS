@@ -446,9 +446,9 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
         
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
         {
-            NSDictionary *payload = @{@"username":username,@"message":body};
-            [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
-                                                                object:payload];
+//            NSDictionary *payload = @{@"username":username,@"message":body};
+//            [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
+//                                                                object:payload];
         }
         else
         {

@@ -43,6 +43,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @property (strong, nonatomic) NSNumber *lobbyNumber;  // for accept challenges
 @property (assign, nonatomic) BOOL alertShown;
 
+@property (assign, nonatomic) BOOL isPlayAgain;
+
 //@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное
 //управление
 //показывается уведомление об ошибках на сервере
@@ -246,6 +248,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         //  self.playOfflineButton.alpha = 0;
         self.playOfflineButton.enabled = NO;
     }
+}
+
+-(void)initPlayAgainSessionWithTopic:(QZBGameTopic *)topic user:(id<QZBUserProtocol>)user {
+    self.isPlayAgain = YES;
+    
+    [self initPlayAgainSessionWithTopic:topic user:user];
 }
 
 #pragma mark - Actions
@@ -600,7 +608,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //        self.backView.strokeColor = [UIColor redColor];
 //        self.backView.radius = 47.0;
     
-        //[self.backView willMoveToSuperview:self.backView.superview];
+//        [self.backView willMoveToSuperview:self.backView.superview];
     
 }
 
