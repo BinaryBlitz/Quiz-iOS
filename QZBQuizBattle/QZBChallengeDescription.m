@@ -56,10 +56,12 @@
         
         self.topic = [QZBTopicWorker parseTopicFromDict:topicDict];//TEST
         
+        
+        
        // self.topic = topic;
         
         self.topicName = self.topic.name;
-        self.topicID = self.topic.topic_id;
+        self.topicID = dict[@"topic_id"];
         
     }
     return self;

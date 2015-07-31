@@ -82,7 +82,7 @@
         topic.topic_id = topic_id;
     }
     topic.points = dict[@"points"];
-    topic.visible = dict[@"visible"];
+    topic.visible = @(![dict[@"paid"] boolValue]);
     
     return topic;
     

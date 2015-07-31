@@ -1037,20 +1037,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     NSLog(@"alert setted");
 }
 
-//-(void)tryUnshowAlert{
-//    NSLog(@"try unshow");
-//    DDLogInfo(@"%@", self.alert.isVisible?@"visible":@"not visible");
-//    if(self.alert){
-//        [self.alert hideView];
-//        self.alert = nil;
-//    }
-//
-//    for(UIView *v in self.navigationController.view.subviews ){
-//        if([v isKindOfClass:[UIImageView class]]){
-//            [v removeFromSuperview];
-//        }
-//    }
-//}
+
 
 - (void)achievementGet:(NSNotification *)note {
     [self showAlertAboutAchievmentWithDict:note.object];
