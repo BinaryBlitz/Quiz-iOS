@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;
 @property (weak, nonatomic) IBOutlet UILabel *factLabel;
 @property (assign, nonatomic) BOOL isChallenge;//for subclasses
-@property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet SVIndefiniteAnimatedView *backView;
 @property (strong, nonatomic) SVIndefiniteAnimatedView *animationView;
 
 - (void)settitingSession:(QZBSession *)session bot:(id)bot;

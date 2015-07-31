@@ -167,21 +167,32 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *arr = self.workArray[section];
     
-    if(arr == self.roomArray){
-        return arr.count + 1;
+    if (arr == self.roomArray) {
+        return arr.count + 2;
     }
 
-    return arr.count;
+    return arr.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
+        
+        QZBDescriptionCell *cell = [tableView
+                                    dequeueReusableCellWithIdentifier:@"mainDescriptionCell"];
+        
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        
+        return cell;
+        
+    }
+    
     NSArray *arr = self.workArray[indexPath.section];
 
-    
-    if([arr isEqualToArray:self.roomArray]) {
+    if ([arr isEqualToArray:self.roomArray]) {
         
-        if(indexPath.row < arr.count) {
+        if (indexPath.row < arr.count) {
             QZBRoomOnMainCell *cell = [tableView dequeueReusableCellWithIdentifier:@"roomsCellOnMainIdentifier"];
             
             cell.backgroundColor = [self colorForSection:indexPath.section];
@@ -195,7 +206,7 @@
             return cell;
             
             
-        }else {
+        } else {
         
         UITableViewCell *cell = [tableView
                                  dequeueReusableCellWithIdentifier:@"showAllRoomsCellIdentifier"];
@@ -203,8 +214,7 @@
         cell.backgroundColor = [self colorForSection:indexPath.section];
         return cell;
         }
-    }
-    if([arr isEqualToArray:self.roomsIvites]){
+    } if([arr isEqualToArray:self.roomsIvites]){
         QZBResultOfSessionCell *cell =  [tableView
                                          dequeueReusableCellWithIdentifier:@"resultSessionCell"];
         
@@ -343,24 +353,32 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#(NSString *)#>
+     if([self isLastCellForIndexPath:indexPath]){
+         return 10.0;
+     }
 
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    if(section == 0) {
-//        return 0.0;
-//    } else {
-//        return 48.0;
-//    }
-//}
+
+-(BOOL)isLastCellForIndexPath:(NSIndexPath *)indexPath {
+ //   NSArray *arr = self.workArray[indexPath.section];
+    
+ //   NSLog(@"section %ld row %ld", indexPath.section, indexPath.row);
+    
+  NSInteger count = [self tableView:self.mainTableView numberOfRowsInSection:indexPath.section];
+
+    if(indexPath.row == count - 1) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+}
+
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    // CGRect rect = CGRectMake(0, 0,CGRectGetWidth(tableView.frame), 48);
-    
-//    if(section==0){
-//        return nil;
-//    }
 
     UIView *view = [[UIView alloc] init];
 
@@ -386,6 +404,38 @@
 
     return view;
 }
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    // CGRect rect = CGRectMake(0, 0,CGRectGetWidth(tableView.frame), 48);
+//    
+//    //    if(section==0){
+//    //        return nil;
+//    //    }
+//    
+//    UIView *view = [[UIView alloc] init];
+//    
+//    view.backgroundColor = [self colorForSection:section];
+//    
+//    CGRect rect = CGRectMake(0, 7, CGRectGetWidth(tableView.frame), 42);
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:rect];
+//    
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.textColor = [UIColor whiteColor];
+//    label.font = [UIFont boldMuseoFontOfSize:20];
+//    
+//    if (section > 0) {
+//        [view addDropShadowsForView];
+//    }
+//    
+//    [view addSubview:label];
+//    
+//    NSArray *arr = self.workArray[section];
+//    
+//    label.text = [[self textForArray:arr] uppercaseString];
+//    
+//    return view;
+//}
+
 
 
 
@@ -682,9 +732,6 @@
         if(self.additionalTopics.count>0){
             [self.workArray addObject:self.additionalTopics];
         }
-        
-        
-        
 
         [self.mainTableView reloadData];
 //  //   //   UITabBarController *tabController = self.tabBarController;
