@@ -336,48 +336,134 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
             }];
     } else if (!self.isChallenge) {
-        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
-            inTopic:self.topic
-            onSuccess:^(QZBSession *session) {
-
-                [self setFactWithString:session.fact];
-                
-                QZBLobby *lobby =
-                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
-                                              topicID:[self.topic.topic_id integerValue]
-                                             playerID:[self.user.userID integerValue]
-                                           queryCount:0];
-                self.lobby = lobby;
-
-                [self settitingSession:session
-                                   bot:nil];
-
-                [UIView animateWithDuration:0.4
-                    delay:5
-                    options:UIViewAnimationOptionCurveEaseInOut
-                    animations:^{
-
-                        self.playOfflineButton.alpha = 1.0;
-
+        
+        if(self.isPlayAgain) {
+            [[QZBServerManager sharedManager] GETThrownChallengesOnSuccess:^(NSArray *challenges) {
+                QZBChallengeDescription *destChallDescr = nil;
+                for(QZBChallengeDescription *CD in challenges) {
+                    if([CD.userID isEqual:self.user.userID] && [CD.topicID isEqualToNumber:self.topic.topic_id]){
+                        destChallDescr = CD;
+                        break;
                     }
-                    completion:^(BOOL finished) {
-
-                        self.playOfflineButton.enabled = YES;
-
-                    }];
-
-               // self.playOfflineButton.alpha = 1.0;//??
-
-            }
-            onFailure:^(NSError *error, NSInteger statusCode){
+                }
                 
-                //if(!error && statusCode == -1){
-                    [self showAlertServerProblem];
-              //  }
+                if(destChallDescr){
+                    [self acceptChallengeWithLobbyNumber:destChallDescr.lobbyID];
+                } else {
+                    [self postLobbyChallenge];
+                }
+                
+            } onFailure:^(NSError *error, NSInteger statusCode) {
+                [self showAlertServerProblem];
             }];
+        } else {
+            [self postLobbyChallenge];
+        }
+        
+//        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
+//            inTopic:self.topic
+//            onSuccess:^(QZBSession *session) {
+//
+//                [self setFactWithString:session.fact];
+//                
+//                QZBLobby *lobby =
+//                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
+//                                              topicID:[self.topic.topic_id integerValue]
+//                                             playerID:[self.user.userID integerValue]
+//                                           queryCount:0];
+//                self.lobby = lobby;
+//
+//                [self settitingSession:session
+//                                   bot:nil];
+//
+//                [UIView animateWithDuration:0.4
+//                    delay:5
+//                    options:UIViewAnimationOptionCurveEaseInOut
+//                    animations:^{
+//
+//                        self.playOfflineButton.alpha = 1.0;
+//
+//                    }
+//                    completion:^(BOOL finished) {
+//
+//                        self.playOfflineButton.enabled = YES;
+//
+//                    }];
+//
+//               // self.playOfflineButton.alpha = 1.0;//??
+//
+//            }
+//            onFailure:^(NSError *error, NSInteger statusCode){
+//                
+//                //if(!error && statusCode == -1){
+//                    [self showAlertServerProblem];
+//              //  }
+//            }];
     } else {
     }
 }
+
+-(void)acceptChallengeWithLobbyNumber:(NSNumber *)lobbyID {
+    
+    [[QZBServerManager sharedManager] POSTAcceptChallengeWhithLobbyID:lobbyID
+                                                            onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
+                                                                
+                                                                [self settitingSession:session bot:bot];
+                                                                
+                                                            }
+                                                            onFailure:^(NSError *error, NSInteger statusCode){
+                                                                [self showAlertServerProblem];
+                                                                
+                                                            }];
+}
+
+
+
+-(void)postLobbyChallenge {
+    
+    [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
+                                                           inTopic:self.topic
+                                                         onSuccess:^(QZBSession *session) {
+                                                             
+                                                             [self setFactWithString:session.fact];
+                                                             
+                                                             QZBLobby *lobby =
+                                                             [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
+                                                                                       topicID:[self.topic.topic_id integerValue]
+                                                                                      playerID:[self.user.userID integerValue]
+                                                                                    queryCount:0];
+                                                             self.lobby = lobby;
+                                                             
+                                                             [self settitingSession:session
+                                                                                bot:nil];
+                                                             
+                                                             [UIView animateWithDuration:0.4
+                                                                                   delay:5
+                                                                                 options:UIViewAnimationOptionCurveEaseInOut
+                                                                              animations:^{
+                                                                                  
+                                                                                  self.playOfflineButton.alpha = 1.0;
+                                                                                  
+                                                                              }
+                                                                              completion:^(BOOL finished) {
+                                                                                  
+                                                                                  self.playOfflineButton.enabled = YES;
+                                                                                  
+                                                                              }];
+                                                             
+                                                             // self.playOfflineButton.alpha = 1.0;//??
+                                                             
+                                                         }
+                                                         onFailure:^(NSError *error, NSInteger statusCode){
+                                                             
+                                                             //if(!error && statusCode == -1){
+                                                             [self showAlertServerProblem];
+                                                             //  }
+                                                         }];
+    
+}
+
+
 
 -(void)showAlertServerProblem{
     [[[UIAlertView alloc]
