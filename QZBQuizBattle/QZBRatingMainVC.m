@@ -44,7 +44,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self.leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
    // self.rightButton.titleLabel.textColor = [UIColor lightGreenColor];
-    
+
+    [self.sliderView removeConstraints:self.sliderView.constraints];
+    self.sliderView.translatesAutoresizingMaskIntoConstraints = NO;
 
 }
 
@@ -115,7 +117,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.sliderView removeConstraints:self.sliderView.constraints];
+ //   [self.sliderView removeConstraints:self.sliderView.constraints];
     
 }
 
@@ -123,7 +125,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [super viewDidLayoutSubviews];
     //[self createButtonBackgroundView];
     [self addLineUnderButtons];
-    NSLog(@"main layout");
+  //  NSLog(@"main layout");
 }
 
 

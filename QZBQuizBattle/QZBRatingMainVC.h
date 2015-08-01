@@ -21,6 +21,11 @@
 @property (strong, nonatomic) UIView *buttonBackgroundView;
 @property (weak, nonatomic) IBOutlet UIView *sliderView;
 
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftSliderConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightSliderConstraint;
+
+
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *topic;
 
