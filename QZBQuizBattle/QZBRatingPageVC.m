@@ -66,18 +66,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Do any additional setup after loading the view.
 }
 
-//-(void)viewDidLayoutSubviews{
+//-(void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
 //    
-//    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
-//        QZBRatingMainVC *mv = (QZBRatingMainVC *)self.parentViewController;
-//        [mv createButtonBackgroundView];
-//    }
-//    
+////    if(self.currentTableType == QZBRatingTableWeek) {
+////        [self colorRightButton];
+////    }
 //}
 
-//-(void)viewDidLayoutSubviews{
-//    NSLog(@"rating page layout");
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -243,8 +239,45 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
  //   CGSize size = parentVC.buttonsBackgroundView.frame.size;
    // CGRect r = CGRectMake(size.width/2.0, 1, (size.width/2.0)-1, size.height-2);
     
+   // [parentVC.sliderView removeConstraints:parentVC.sliderView.constraints];
+    
+    
+//    UIView *slider = parentVC.sliderView;
+//    UIView *rightBTN = parentVC.rightButton;
+//    UIView *leftBTN = parentVC.leftButton;
+//    slider.translatesAutoresizingMaskIntoConstraints = NO;
+//    
+//    [slider.superview removeConstraints:slider.superview.constraints];
+//    
+//    [slider.superview
+//     addConstraints:[NSLayoutConstraint
+//                     constraintsWithVisualFormat:@"H:|[leftBTN][rightBTN][slider][rightBTN]"
+//                     options:0
+//                     metrics:nil
+//                     views:NSDictionaryOfVariableBindings(slider,rightBTN,leftBTN)]];
+//    [slider
+//     addConstraints:[NSLayoutConstraint
+//                     constraintsWithVisualFormat:@"V:|[slider]|"
+//                     options:0
+//                     metrics:nil
+//                     views:NSDictionaryOfVariableBindings(slider)]];
+    
+//    NSLayoutConstraint *constrLeft = [parentVC.horizontalSliderConstraints firstObject];
+//    
+//  //  parentVC.sliderView.superview.frame.size.width;
+//    
+//    constrLeft.constant = parentVC.sliderView.superview.frame.size.width;
+    
+    parentVC.leftSliderConstraint.constant = parentVC.rightButton.frame.size.width+8;
+    parentVC.rightSliderConstraint.constant = -parentVC.rightButton.frame.size.width - 8;
+
+    
     [UIView animateWithDuration:0.2 animations:^{
-        parentVC.sliderView.frame = parentVC.rightButton.frame;
+        [parentVC.sliderView layoutIfNeeded];
+       // parentVC.sliderView.frame = parentVC.rightButton.frame;
+      //  [parentVC.sliderView layoutIfNeeded];
+    } completion:^(BOOL finished) {
+         //[parentVC.sliderView layoutIfNeeded];
     }];
 }
 
@@ -259,9 +292,15 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     //CGSize size = parentVC.buttonsBackgroundView.frame.size;
    // CGRect r = CGRectMake(1, 1, size.width/2.0, size.height-2);
+    parentVC.leftSliderConstraint.constant = 1;
+    parentVC.rightSliderConstraint.constant = 0;
     
     [UIView animateWithDuration:0.2 animations:^{
-        parentVC.sliderView.frame = parentVC.leftButton.frame;
+        [parentVC.sliderView layoutIfNeeded];
+         //   parentVC.sliderView.frame = parentVC.leftButton.frame;
+     //   [parentVC.sliderView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+           //  [parentVC.sliderView layoutIfNeeded];
         }];
 }
 
