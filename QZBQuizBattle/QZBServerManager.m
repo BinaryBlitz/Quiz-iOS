@@ -60,7 +60,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#endif
 // static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
-NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";  //@"http://178.62.216.83";//
+NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
@@ -87,7 +87,7 @@ NSString *const QZBNoInternetConnectionMessage =
 - (id)init {
     self = [super init];
     if (self) {
-        NSString *apiPath = [NSString stringWithFormat:@"http://quizapp.binaryblitz.ru/%@", @"api"];
+        NSString *apiPath = [NSString stringWithFormat:@"%@/%@"/*@"http://quizapp.binaryblitz.ru/%@"*/,QZBServerBaseUrl, @"api"];
         self.baseURL = apiPath;
         //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
         NSURL *url = [NSURL URLWithString:apiPath];

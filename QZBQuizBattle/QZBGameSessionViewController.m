@@ -128,8 +128,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     [self.roundLabel addShadows];
     if([QZBSessionManager sessionManager].isRoom) {
-        self.opponentImage.superview.backgroundColor = [UIColor colorWithWhite:0.5
-                                                                         alpha:1.0];
+        
+        self.userNameLabel.superview.backgroundColor = [UIColor colorWithWhite:0.8
+                                                                         alpha:0.5];
     }
 
     self.userBV = [[JSBadgeView alloc] initWithParentView:self.firstUserScore

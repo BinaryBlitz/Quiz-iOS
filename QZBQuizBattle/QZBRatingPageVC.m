@@ -235,38 +235,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                               forState:UIControlStateNormal];
     [parentVC.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     //parentVC.leftButton.titleLabel.textColor = [UIColor lightGrayColor];
-    
- //   CGSize size = parentVC.buttonsBackgroundView.frame.size;
-   // CGRect r = CGRectMake(size.width/2.0, 1, (size.width/2.0)-1, size.height-2);
-    
-   // [parentVC.sliderView removeConstraints:parentVC.sliderView.constraints];
-    
-    
-//    UIView *slider = parentVC.sliderView;
-//    UIView *rightBTN = parentVC.rightButton;
-//    UIView *leftBTN = parentVC.leftButton;
-//    slider.translatesAutoresizingMaskIntoConstraints = NO;
-//    
-//    [slider.superview removeConstraints:slider.superview.constraints];
-//    
-//    [slider.superview
-//     addConstraints:[NSLayoutConstraint
-//                     constraintsWithVisualFormat:@"H:|[leftBTN][rightBTN][slider][rightBTN]"
-//                     options:0
-//                     metrics:nil
-//                     views:NSDictionaryOfVariableBindings(slider,rightBTN,leftBTN)]];
-//    [slider
-//     addConstraints:[NSLayoutConstraint
-//                     constraintsWithVisualFormat:@"V:|[slider]|"
-//                     options:0
-//                     metrics:nil
-//                     views:NSDictionaryOfVariableBindings(slider)]];
-    
-//    NSLayoutConstraint *constrLeft = [parentVC.horizontalSliderConstraints firstObject];
-//    
-//  //  parentVC.sliderView.superview.frame.size.width;
-//    
-//    constrLeft.constant = parentVC.sliderView.superview.frame.size.width;
+
     
     parentVC.leftSliderConstraint.constant = parentVC.rightButton.frame.size.width+8;
     parentVC.rightSliderConstraint.constant = -parentVC.rightButton.frame.size.width - 8;
@@ -289,18 +258,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                               forState:UIControlStateNormal];
     [parentVC.rightButton setTitleColor:[UIColor lightGrayColor]
                                forState:UIControlStateNormal];
-    
-    //CGSize size = parentVC.buttonsBackgroundView.frame.size;
-   // CGRect r = CGRectMake(1, 1, size.width/2.0, size.height-2);
+
     parentVC.leftSliderConstraint.constant = 1;
     parentVC.rightSliderConstraint.constant = 0;
     
     [UIView animateWithDuration:0.2 animations:^{
         [parentVC.sliderView layoutIfNeeded];
-         //   parentVC.sliderView.frame = parentVC.leftButton.frame;
-     //   [parentVC.sliderView layoutIfNeeded];
+  
         } completion:^(BOOL finished) {
-           //  [parentVC.sliderView layoutIfNeeded];
         }];
 }
 

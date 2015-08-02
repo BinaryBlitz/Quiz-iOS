@@ -11,6 +11,6 @@
 @interface QZBStoreListTVC : UITableViewController
 
 - (void)reload;
--(void)setNeedRelaod:(BOOL)needRelaod;
+- (void)setNeedRelaod:(BOOL)needRelaod;
 
 @end

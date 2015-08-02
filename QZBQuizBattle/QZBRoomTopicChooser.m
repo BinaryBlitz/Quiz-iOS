@@ -9,11 +9,22 @@
 #import "QZBRoomTopicChooser.h"
 #import "QZBRoomController.h"
 
+#import "QZBTopicTableViewCell.h"
+
 #import "QZBSettingTopicProtocol.h"
 
 @implementation QZBRoomTopicChooser
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    QZBTopicTableViewCell *cell = (QZBTopicTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    if(!cell.visible) {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+        return;
+    }
+    
+    
     NSArray *controllers = self.navigationController.viewControllers;
     id<QZBSettingTopicProtocol> destinationController = nil;
 

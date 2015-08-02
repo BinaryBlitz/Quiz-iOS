@@ -190,7 +190,7 @@
     
     NSArray *arr = self.workArray[indexPath.section];
 
-    if ([arr isEqualToArray:self.roomArray]) {
+    if (arr == self.roomArray) {
         
         if (indexPath.row < arr.count) {
             QZBRoomOnMainCell *cell = [tableView dequeueReusableCellWithIdentifier:@"roomsCellOnMainIdentifier"];
@@ -214,7 +214,7 @@
         cell.backgroundColor = [self colorForSection:indexPath.section];
         return cell;
         }
-    } if([arr isEqualToArray:self.roomsIvites]){
+    } if(arr == self.roomsIvites){
         QZBResultOfSessionCell *cell =  [tableView
                                          dequeueReusableCellWithIdentifier:@"resultSessionCell"];
         
@@ -231,7 +231,7 @@
         
         return cell;
         
-    }else if ([arr isEqualToArray:self.challenges]) {
+    }else if (arr == self.challenges) {
         QZBChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"challengeCell"];
         cell.backgroundColor = [self colorForSection:indexPath.section];
 
@@ -243,7 +243,7 @@
 
         return cell;
 
-    }else if([arr isEqualToArray:self.challenged]){
+    }else if(arr == self.challenged){
         QZBResultOfSessionCell *cell = [tableView
                                         dequeueReusableCellWithIdentifier:@"resultSessionCell"];
         
@@ -313,7 +313,7 @@
 -(NSString *)textForArray:(NSArray *)arr{//test
     NSString *text = @"";
     
-    if (arr==self.faveTopics) {
+    if (arr == self.faveTopics) {
         text = @"Любимые темы";
     } else if (arr == self.friendsTopics) {
         text = @"Популярное у друзей";
@@ -688,26 +688,50 @@
         
         self.roomArray = resultDict[@"rooms"];
 
-        self.faveTopics = resultDict[@"favorite_topics"];
-        self.friendsTopics = resultDict[@"friends_favorite_topics"];
-        self.featured = resultDict[@"featured_topics"];
-        self.additionalTopics = resultDict[@"random_topics"];
-
-        NSArray *challArr = resultDict[@"challenges"];
-    
-        self.challenges = [challArr mutableCopy];
-        self.challenged = [resultDict[@"challenged"] mutableCopy];
+        if ([resultDict[@"favorite_topics"] count] > 0) {
+            self.faveTopics = resultDict[@"favorite_topics"];
+        } else {
+            self.faveTopics = nil;
+        }
         
-        self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
+        if([resultDict[@"friends_favorite_topics"] count] > 0){
+            self.friendsTopics = resultDict[@"friends_favorite_topics"];
+        } else {
+            self.friendsTopics = nil;
+        }
+        
+        if([resultDict[@"featured_topics"] count] > 0) {
+            self.featured = resultDict[@"featured_topics"];
+        } else {
+            self.featured = nil;
+        }
+        
+        if([resultDict[@"random_topics"] count] > 0) {
+            self.additionalTopics = resultDict[@"random_topics"];
+        } else {
+            self.additionalTopics = nil;
+        }
+        
+        if([resultDict[@"challenges"] count] > 0){
+            self.challenges = [resultDict[@"challenges"] mutableCopy];
+        } else {
+            self.challenges = nil;
+        }
+        
+        if([resultDict[@"challenged"] count] > 0) {
+            self.challenged = [resultDict[@"challenged"] mutableCopy];
+        } else {
+            self.challenged = nil;
+        }
+        
+        if([resultDict[@"room_invites"] count] > 0){
+            self.roomsIvites = [resultDict[@"room_invites"] mutableCopy];
+        } else {
+            self.roomsIvites = nil;
+        }
 
         [self.workArray removeAllObjects];
-//       // if(self.roomArray.count > 0){
-//            [self.workArray addObject:self.roomArray];
-//      //  }
-//        
-//        if(self.roomsIvites.count > 0) {
-//            [self.workArray addObject:self.roomsIvites];
-//        }
+
 
         if (self.challenges.count > 0) {
             [self.workArray addObject:self.challenges];
@@ -717,13 +741,11 @@
             [self.workArray addObject:self.challenged];
         }
         
-        // if(self.roomArray.count > 0){
-        [self.workArray addObject:self.roomArray];
-        //  }
-        
         if(self.roomsIvites.count > 0) {
             [self.workArray addObject:self.roomsIvites];
         }
+       
+        [self.workArray addObject:self.roomArray];
 
         if (self.featured.count > 0) {
             [self.workArray addObject:self.featured];
