@@ -429,23 +429,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(void)showRoomsWithDict:(NSDictionary *)dict {
     //roomListTWCIdentifier
-//    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-//    //tabController.selectedIndex = 2;
-//    
-//    UINavigationController *nav = tabController.viewControllers[2];
-//    
-//    [nav popToRootViewControllerAnimated:NO];
-//    QZBRoomListTVC *roomsList = [nav.storyboard
-//                                  instantiateViewControllerWithIdentifier:@"roomListTWCIdentifier"];
-//    
-//    NSDictionary *roomDict = dict[@"room"];
-//    NSNumber *roomID = roomDict[@"room_id"];
-//    
-//    //roomsList.searchBar.text = [NSString stringWithFormat:@"%@",roomID];
-//    
-//    [roomsList findRoomWithID:roomID];
-//    
-//    [nav pushViewController:roomsList animated:YES];
+
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                             object:nil];
@@ -469,46 +453,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
 }
 
-#pragma mark - messager
 
-//-(void)initMessager{
-//    self.stream = [[XMPPStream alloc] init];
-//    [self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-//    
-//    
-//    self.stream.myJID =  [XMPPJID jidWithString:@"andrey@localhost"];
-//    self.stream.hostName = @"binaryblitz.ru";
-//    
-//    //[self.stream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-//    
-//   // stream connectWithTimeout:3000 error:<#(NSError *__autoreleasing *)#>
-//    
-//    NSError *error = nil;
-//    if (![self.stream connectWithTimeout:10 error:&error])
-//    {
-//        NSLog(@"Oops, I probably forgot something: %@", error);
-//    }else{
-//        NSLog(@"OOKey %@", self.stream);
-//    }
-//    
-//    [self goOnline];
-//}
-//
-//- (void)goOnline {
-//    XMPPPresence *presence = [XMPPPresence presence];
-//    [[self stream] sendElement:presence];
-//}
-//
-//- (void)xmppStreamDidConnect:(XMPPStream *)sender
-//{
-//    NSLog(@"kkkkk");
-//    
-//     NSError *error = nil;
-//    if(![sender authenticateWithPassword:@"123456" error:&error]){
-//        NSLog(@"problems %@",error );
-//    }else{
-//        NSLog(@"okkkk");
-//    }
-//}
 
 @end
