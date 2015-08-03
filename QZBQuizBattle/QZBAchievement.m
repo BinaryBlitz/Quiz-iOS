@@ -70,7 +70,7 @@
             [[DFImageManager sharedManager] requestImageForRequest:request
                                                         completion:^(UIImage *image, NSDictionary *info) {
                                                             
-                                                            NSLog(@"achieve message %@",info);
+                                                         //   NSLog(@"achieve message %@",info);
                                                         }];
 
    

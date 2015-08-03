@@ -385,7 +385,16 @@
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
-        [self.navigationController popToRootViewControllerAnimated:NO];
+      //  [self.navigationController popToRootViewControllerAnimated:NO];
+        
+        NSArray *controllers = self.tabBarController.viewControllers;
+        
+        for(id controller in controllers) {
+            if([controller isKindOfClass:[UINavigationController class]]) {
+                UINavigationController *c = (UINavigationController *)controller;
+                [c popToRootViewControllerAnimated:NO];
+            }
+        }
     });
     
    // [self.navigationController popToRootViewControllerAnimated:NO];

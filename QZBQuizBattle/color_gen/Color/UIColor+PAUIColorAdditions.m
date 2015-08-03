@@ -31,7 +31,7 @@ typedef struct PATwoNSUIntegers {
 
 + (instancetype)colorWithString:(NSString *)string
                   andBrightness:(CGFloat)brightness {
-  NSLog(@"STRING: %@", string);
+ // NSLog(@"STRING: %@", string);
   return [self colorWithHash:(NSUInteger)string.FNVhash brightness:brightness];
 }
 

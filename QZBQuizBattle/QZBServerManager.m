@@ -60,7 +60,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#endif
 // static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
-NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
+NSString *const QZBServerBaseUrl = @"http://188.166.14.118";//@"http://quizapp.binaryblitz.ru";
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
@@ -262,25 +262,6 @@ NSString *const QZBNoInternetConnectionMessage =
     for (NSDictionary *dict in topics) {
         QZBGameTopic *existingEntity = [QZBTopicWorker parseTopicFromDict:dict inCategory:category];
 
-        //        NSString *name = [dict objectForKey:@"name"];
-        //        id topic_id = [dict objectForKey:@"id"];
-        //        NSNumber *points = [dict objectForKey:@"points"];
-        //        NSNumber *visible = dict[@"visible"];
-        //
-        //        QZBGameTopic *existingEntity =
-        //            [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
-        //
-        //        if (!existingEntity) {
-        //            existingEntity = [QZBGameTopic MR_createEntity];
-        //            existingEntity.name = name;
-        //            existingEntity.topic_id = topic_id;
-        //
-        //            //   [category addRelationToTopicObject:existingEntity];
-        //        }
-        //
-        //        existingEntity.points = points;
-        //        existingEntity.visible = visible;
-        //        [category addRelationToTopicObject:existingEntity];
         [objectsArray addObject:existingEntity];
     }
 
@@ -381,36 +362,9 @@ NSString *const QZBNoInternetConnectionMessage =
 
     NSMutableArray *tmpArr = [NSMutableArray array];
     for (NSDictionary *dict in topics) {
-        // QZBGameTopic *topic = [QZBGameTopic MR_createEntity];
-
-        //        NSEntityDescription *entity =
-        //            [NSEntityDescription entityForName:@"QZBGameTopic"
-        //            inManagedObjectContext:context];
-        //        id topic_id = [dict objectForKey:@"id"];
-        //
-        //        QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id"
-        //        withValue:topic_id];
-        //        //(QZBGameTopic *)
-        //        //  [[NSManagedObject alloc] initWithEntity:entity
-        //        insertIntoManagedObjectContext:nil];
-        //
-        //        if (!topic) {
-        //            topic = [QZBGameTopic MR_createEntity];
-        //            topic.name = dict[@"name"];
-        //            topic.topic_id = topic_id;
-        //        }
-        //        topic.points = dict[@"points"];
-        //        topic.visible = dict[@"visible"];
-        //
         QZBGameTopic *topic = [QZBTopicWorker parseTopicFromDict:dict];
 
         [tmpArr addObject:topic];
-
-        //        QZBCategory *category = [self tryFindRelatedCategoryToTopic:topic];
-        //
-        //        if (category) {
-        //            [category addRelationToTopicObject:topic];
-        //        }
     }
 
     NSArray *result = [NSArray arrayWithArray:tmpArr];
@@ -803,7 +757,6 @@ NSString *const QZBNoInternetConnectionMessage =
     if (userEmail.length > 0) {
         params = @{
             @"player" : @{
-                @"name" : userName,
                 @"username" : userName,
                 @"email" : userEmail,
                 @"password" : hashedPassword
@@ -811,7 +764,7 @@ NSString *const QZBNoInternetConnectionMessage =
         };
     } else {
         params = @{
-            @"player" : @{@"name" : userName, @"username" : userName, @"password" : hashedPassword}
+            @"player" : @{ @"username" : userName, @"password" : hashedPassword}
         };
     }
 
