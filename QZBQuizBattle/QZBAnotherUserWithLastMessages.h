@@ -10,6 +10,7 @@
 #import "QZBUserProtocol.h"
 @class QZBAnotherUser;
 @class QZBStoredUser;
+@class LYRConversation;
 @interface QZBAnotherUserWithLastMessages : NSObject
 @property(strong, nonatomic, readonly) id<QZBUserProtocol> user;
 @property(strong, nonatomic, readonly) NSString *lastMessage;
@@ -22,10 +23,12 @@
 //                 lastMessage:(NSString *)message
 //              lastMesageDate:(NSDate *)timestamp;
 
-- (instancetype)initWithStoredUser:(QZBStoredUser *)user
-                       lastMessage:(NSString *)message
-                    lastMesageDate:(NSDate *)timestamp;
+//- (instancetype)initWithStoredUser:(QZBStoredUser *)user
+//                       lastMessage:(NSString *)message
+//                    lastMesageDate:(NSDate *)timestamp;
+//
+//-(void)readAllMessages;
 
--(void)readAllMessages;
+- (instancetype)initWithConversation:(LYRConversation *)conversation;
 
 @end

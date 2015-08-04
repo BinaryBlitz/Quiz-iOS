@@ -51,7 +51,7 @@
         }else{
             self.email = nil;
         }
-        self.userID = [dict objectForKey:@"id"];
+        self.userID = @([[dict objectForKey:@"id"] integerValue]);
         
         self.xmppPassword = dict[@"xmpp_password"];
        // self.userPic = nil;

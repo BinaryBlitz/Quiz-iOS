@@ -19,6 +19,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @property (strong, nonatomic) QZBUser *user;
 @property (strong, nonatomic) NSString *pushToken;
+@property (strong, nonatomic) NSData *pushTokenData;
 //@property(strong, nonatomic) NSString *
 @property(assign, nonatomic) BOOL pushTokenNew;
 
@@ -73,7 +74,15 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-- (void)setAPNsToken:(NSString *)pushToken {
+- (void)setAPNsToken:(NSData *)pushTokenData {
+
+    self.pushTokenData = pushTokenData;
+    NSString *pushToken = [pushTokenData description];
+    pushToken = [pushToken
+                stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    pushToken = [pushToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    
     if (!self.pushToken) {
         self.pushToken = pushToken;
         if (self.user) {

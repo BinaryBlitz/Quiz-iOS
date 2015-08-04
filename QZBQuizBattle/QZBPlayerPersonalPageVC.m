@@ -48,7 +48,8 @@
 //messager
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
-#import "QZBMessagerManager.h"
+#import "QZBLayerMessagerManager.h"
+//#import "QZBMessagerManager.h"
 //#import "UIViewController+QZBMessagerCategory.h"
 
 //dfiimage
@@ -167,7 +168,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
         [self updateCurentUser:self.user];
         self.isCurrent = YES;
         [[QZBFriendRequestManager sharedInstance] updateRequests];
-        self.unreadedCount = [[QZBMessagerManager sharedInstance] countOfUnreaded];
+        self.unreadedCount = [[QZBLayerMessagerManager sharedInstance] unreadedCount]; //[[QZBMessagerManager sharedInstance] countOfUnreaded];
 
     } else {
         self.isCurrent = NO;
