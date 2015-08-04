@@ -8,12 +8,17 @@
 
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
-#import "QZBMessagerManager.h"
+//#import "QZBMessagerManager.h"
+
+#import "QZBLayerMessagerManager.h"
+
 #import "QZBFirstMessageCell.h"
 #import "QZBAnotherUserWithLastMessages.h"
 #import "UIViewController+QZBControllerCategory.h"
 
-@interface QZBMessangerList()<QZBMessagerManagerDelegate>
+#import <LayerKit/LayerKit.h>
+
+@interface QZBMessangerList()
 
 @property(strong, nonatomic) id<QZBUserProtocol> user;
 @property(strong, nonatomic) NSArray *listOfUsers;
@@ -35,7 +40,12 @@
     
      self.tabBarController.tabBar.hidden = NO;
     
-    [QZBMessagerManager sharedInstance].delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadMessages)
+                                                 name:LYRClientObjectsDidChangeNotification
+                                               object:nil];
+    
+  //  [QZBMessagerManager sharedInstance].delegate = self;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
                                                         object:nil];
@@ -54,6 +64,8 @@
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                         object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     
 }
@@ -92,7 +104,7 @@
     
     QZBAnotherUserWithLastMessages *userAndMess = self.listOfUsers[indexPath.row];
     
-    [userAndMess readAllMessages];
+   // [userAndMess readAllMessages];
     
     self.user = userAndMess.user;
     
@@ -120,7 +132,14 @@
 }
 
 -(void)reloadMessages{
-    self.listOfUsers = [[QZBMessagerManager sharedInstance] usersInStorage];
+    
+//    NSArray *conversations = [[QZBLayerMessagerManager sharedInstance] conversations];
+//    
+//    for(LYRConversation *conv in conversations) {
+//        NSLog(@" %@", conv);
+//    }
+    
+    self.listOfUsers = [[QZBLayerMessagerManager sharedInstance] conversations];//[[QZBMessagerManager sharedInstance] usersInStorage];
     
     [self.tableView reloadData];
 }

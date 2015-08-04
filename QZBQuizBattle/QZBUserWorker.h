@@ -10,6 +10,8 @@
 #import "QZBUserProtocol.h"
 
 @class QZBStoredUser;
+@class LYRConversation;
+@class QZBAnotherUser;
 
 @interface QZBUserWorker : NSObject
 
@@ -37,5 +39,10 @@
 
 - (NSArray *)allUsers;
 - (void)deleteAllUsersInStorage;
+
+
++ (QZBAnotherUser *)userFromConversation:(LYRConversation *)conversation;
++ (void)saveUser:(id<QZBUserProtocol>)user inConversation:(LYRConversation *)conversation;
+
 
 @end

@@ -18,7 +18,7 @@
 
 -(void)showMessage:(NSString *)messge userName:(NSString *)userName{
     
-    NSString *title = [NSString stringWithFormat:@"От: %@",userName];
+   // NSString *title = [NSString stringWithFormat:@"От: %@",userName];
     
     
 //    [TSMessage showNotificationInViewController:self title:title
@@ -28,7 +28,7 @@
     if (![[QZBSessionManager sessionManager] isGoing]) {
     
     [TSMessage showNotificationInViewController:self
-                                          title:title subtitle:messge
+                                          title:messge subtitle:nil
                                           image:[UIImage imageNamed:@"messageIcon"]
                                            type:TSMessageNotificationTypeMessage
                                        duration:0.0 callback:^{

@@ -23,11 +23,14 @@
     self = [super init];
     if (self) {
         
-        if(dict[@"username"]) {
-            self.name = dict[@"username"];
-        } else {
-            self.name = nil;
-        }
+//        if(dict[@"username"]) {
+//            self.name = dict[@"username"];
+//        } else {
+//            self.name = nil;
+//        }
+        
+        NSDictionary *creator = dict[@"creator"];
+        self.name = creator[@"username"];
         
         //self.name = @"redo";
         self.roomID = dict[@"room_id"];

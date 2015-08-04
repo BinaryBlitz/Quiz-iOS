@@ -632,10 +632,10 @@ NSString *const QZBMessageRecievedNotificationIdentifier = @"QZBMessageRecievedN
         }
 
         
-        QZBAnotherUserWithLastMessages *uAndM = [[QZBAnotherUserWithLastMessages alloc] initWithStoredUser:storageUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
+       // QZBAnotherUserWithLastMessages *uAndM = [[QZBAnotherUserWithLastMessages alloc] initWithStoredUser:storageUser lastMessage:o.mostRecentMessageBody lastMesageDate:o.mostRecentMessageTimestamp];
         
         
-        [tmpArr addObject:uAndM];
+      //  [tmpArr addObject:uAndM];
     
     }
     

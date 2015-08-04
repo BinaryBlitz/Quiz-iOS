@@ -132,6 +132,7 @@
 		1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE301AAC6DDF00D59268 /* icon_next.png */; };
 		1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE3A1AAC8C1700D59268 /* icon_back_white.png */; };
 		198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */; };
+		198CB9851B6F8AC4007E5B4A /* QZBLayerMessagerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 198CB9841B6F8AC4007E5B4A /* QZBLayerMessagerManager.m */; };
 		199062DC1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */; };
 		199596601AE97D3300B09EA7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1995965E1AE97D3300B09EA7 /* Crashlytics.framework */; };
 		199596611AE97D3300B09EA7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1995965F1AE97D3300B09EA7 /* Fabric.framework */; };
@@ -564,6 +565,8 @@
 		1983EE3A1AAC8C1700D59268 /* icon_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back_white.png; sourceTree = "<group>"; };
 		198C33EF1A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuizTopicIAPHelper.h; sourceTree = "<group>"; };
 		198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBQuizTopicIAPHelper.m; sourceTree = "<group>"; };
+		198CB9831B6F8AC4007E5B4A /* QZBLayerMessagerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLayerMessagerManager.h; sourceTree = "<group>"; };
+		198CB9841B6F8AC4007E5B4A /* QZBLayerMessagerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLayerMessagerManager.m; sourceTree = "<group>"; };
 		198E09651AA1E584006A08BB /* QZBUserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserProtocol.h; sourceTree = "<group>"; };
 		199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingSeperatorCell.h; sourceTree = "<group>"; };
 		199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingSeperatorCell.m; sourceTree = "<group>"; };
@@ -2470,6 +2473,8 @@
 				199667021B209E5500793610 /* QZBMessagerManager.m */,
 				19609A081B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.h */,
 				19609A091B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.m */,
+				198CB9831B6F8AC4007E5B4A /* QZBLayerMessagerManager.h */,
+				198CB9841B6F8AC4007E5B4A /* QZBLayerMessagerManager.m */,
 			);
 			name = messanger;
 			sourceTree = "<group>";
@@ -3106,6 +3111,7 @@
 				192CDE281B418DB9003992C7 /* QZBPlayerCountChooserCell.m in Sources */,
 				199666FF1B207FE100793610 /* NSXMLElement+XEP_0335.m in Sources */,
 				1996658E1B207B1D00793610 /* XMPPPresence.m in Sources */,
+				198CB9851B6F8AC4007E5B4A /* QZBLayerMessagerManager.m in Sources */,
 				199665321B207AEF00793610 /* DDXMLNode.m in Sources */,
 				1996658A1B207B1D00793610 /* XMPPJID.m in Sources */,
 				199CD94A1A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m in Sources */,

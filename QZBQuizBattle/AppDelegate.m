@@ -8,8 +8,6 @@
 
 #define MR_LOGGING_ENABLED 0
 
-
-
 #import "AppDelegate.h"
 #import "VKSdk.h"
 #import <Fabric/Fabric.h>
@@ -29,6 +27,8 @@
 #import <DDASLLogger.h>
 #import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
+
+#import <LayerKit/LayerKit.h>
 //#import "QZBRoomListTVC.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
@@ -43,7 +43,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface AppDelegate ()
 
-//@property(strong, nonatomic) XMPPStream *stream;
+@property (nonatomic) LYRClient *layerClient;
 
 @end
 
@@ -51,22 +51,19 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"QZBQuizBattle"];
 
-//    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
-//    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
-    
+    //    [DDLog addLogger:[DDASLLogger sharedInstance] withLevel:DDLogLevelInfo];
+    //    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DDLogLevelInfo];
+
     [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
 
     [Fabric with:@[ CrashlyticsKit ]];
-    
-    
-   // [self initMessager];
 
- //   DDLogInfo(@"launch options %@", launchOptions);
+    // [self initMessager];
+
+    //   DDLogInfo(@"launch options %@", launchOptions);
 
     if (IS_OS_8_OR_LATER) {
         [application
@@ -85,7 +82,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                 UIRemoteNotificationTypeSound)];
     }
 
-     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     tabController.selectedIndex = 2;
     NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
@@ -96,11 +93,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             [self acceptChallengeWithDict:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
             [self showAchiewvmentWithDict:userInfo];
-        } else if([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
+        } /*else if ([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
             [self showMessageWithDict:userInfo];
-        } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]){
-            //ROOM_INVITE
-          //  [self showRoomsWithDict:userInfo];
+        }*/ else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
+            // ROOM_INVITE
+            //  [self showRoomsWithDict:userInfo];
+        } else if (userInfo[@"layer"]&& ![userInfo[@"layer"] isEqual:[NSNull null]]) {
+            [self showMessageWithDict:userInfo];
         }
     }
 
@@ -110,9 +109,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (BOOL)application:(UIApplication *)application
-              openURL:(NSURL *)url
-    sourceApplication:(NSString *)sourceApplication
-           annotation:(id)annotation {
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
     [VKSdk processOpenURL:url fromApplication:sourceApplication];
 
     return YES;
@@ -127,8 +126,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame
     // rates. Games should use
     // this method to pause the game.
-    
-   // [[QZBMessagerManager sharedInstance] disconnect];
+
+    // [[QZBMessagerManager sharedInstance] disconnect];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -151,8 +150,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Restart any tasks that were paused (or not yet started) while the application was inactive.
     // If the application
     // was previously in the background, optionally refresh the user interface.
-    
-   // [[QZBMessagerManager sharedInstance] connect]
+
+    // [[QZBMessagerManager sharedInstance] connect]
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -161,7 +160,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Saves changes in the application's managed object context before the application terminates.
     [[QZBMessagerManager sharedInstance] disconnect];
     [[QZBMessagerManager sharedInstance] teardownStream];
-    
+
     [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
     [self saveContext];
 }
@@ -209,9 +208,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSError *error = nil;
     NSString *failureReason =
         @"There was an error creating or loading the application's saved data.";
-    
 
-    
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                    configuration:nil
                                                              URL:storeURL
@@ -262,7 +259,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             // abort() causes the application to generate a crash log and terminate. You should not
             // use this function in
             // a shipping application, although it may be useful during development.
-            //DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
+            // DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
@@ -272,17 +269,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    //DDLogInfo(@"My token is: %@", deviceToken);
+    // DDLogInfo(@"My token is: %@", deviceToken);
 
     // DataModel *dataModel = chatViewController.dataModel;
     // NSString *oldToken = [dataModel deviceToken];
 
-    NSString *newToken = [deviceToken description];
-    newToken = [newToken
-        stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    NSString *newToken = [deviceToken description];
+//    newToken = [newToken
+//        stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+//    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-    [[QZBCurrentUser sharedInstance] setAPNsToken:newToken];
+    [[QZBCurrentUser sharedInstance] setAPNsToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application
@@ -305,13 +302,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                                 object:userInfo];
         } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
             [self acceptChallengeWithDict:userInfo];
-        } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]){
+        } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                                 object:nil];
-        } else if ([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
-            
+        } else if (userInfo[@"layer"]&& ![userInfo[@"layer"] isEqual:[NSNull null]]) {
             [self showMessageNotificationWithDictInActiveApp:userInfo];
-            
         }
 
         [self setBadgeWithDictionary:userInfo];
@@ -320,7 +315,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)application:(UIApplication *)application
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    //DDLogWarn(@"Failed to get token, error: %@", error);
+    // DDLogWarn(@"Failed to get token, error: %@", error);
 }
 
 - (void)setBadgeWithDictionary:(NSDictionary *)userInfo {
@@ -364,25 +359,20 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (void)acceptChallengeWithDict:(NSDictionary *)dict {
-    
     if (![QZBSessionManager sessionManager].isGoing) {
-    
-    UIApplication *application = [UIApplication sharedApplication];
+        UIApplication *application = [UIApplication sharedApplication];
 
-    UIApplicationState state = application.applicationState;
-    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
-        
-         UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-        UINavigationController *navController =
-        (UINavigationController *)tabController.viewControllers[2];
-        [navController popToRootViewControllerAnimated:NO];
-        tabController.selectedIndex = 2;
-        
-        
-    }
+        UIApplicationState state = application.applicationState;
+        if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
+            UITabBarController *tabController =
+                (UITabBarController *)self.window.rootViewController;
+            UINavigationController *navController =
+                (UINavigationController *)tabController.viewControllers[2];
+            [navController popToRootViewControllerAnimated:NO];
+            tabController.selectedIndex = 2;
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                             object:nil];
-    
     }
 }
 
@@ -399,60 +389,226 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
--(void)showMessageWithDict:(NSDictionary *)dict {
-//    action = MESSAGE;
-//    aps =     {
-//        alert = fdfdf;
-//    };
-//    message =     {
-//        content = fdfdf;
-//        "created_at" = "2015-07-15T14:45:31.964Z";
-//        "creator_id" = 7;
-//        id = 8;
-//        "player_id" = 64;
-//        "updated_at" = "2015-07-15T14:45:31.964Z";
-//    };
+- (void)showMessageWithDict:(NSDictionary *)dict {
+    //    action = MESSAGE;
+    //    aps =     {
+    //        alert = fdfdf;
+    //    };
+    //    message =     {
+    //        content = fdfdf;
+    //        "created_at" = "2015-07-15T14:45:31.964Z";
+    //        "creator_id" = 7;
+    //        id = 8;
+    //        "player_id" = 64;
+    //        "updated_at" = "2015-07-15T14:45:31.964Z";
+    //    };
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     tabController.selectedIndex = 1;
-    
+
     UINavigationController *nav = tabController.viewControllers[1];
-    
+
     [nav popToRootViewControllerAnimated:NO];
-    QZBMessangerList *messList = [nav.storyboard
-                                  instantiateViewControllerWithIdentifier:@"messagerList"];
-    
+    QZBMessangerList *messList =
+        [nav.storyboard instantiateViewControllerWithIdentifier:@"messagerList"];
+
     [nav pushViewController:messList animated:YES];
-    
-    
 }
 
+- (void)showRoomsWithDict:(NSDictionary *)dict {
+    // roomListTWCIdentifier
 
--(void)showRoomsWithDict:(NSDictionary *)dict {
-    //roomListTWCIdentifier
-
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                             object:nil];
     }
-    
 }
 
--(void)showMessageNotificationWithDictInActiveApp:(NSDictionary *)userInfo {
-
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-    {
-        NSDictionary *d = userInfo[@"message"];
-        NSDictionary *p = userInfo[@"player"];
-        NSString *username = p[@"username"]; //userInfo[@""];
-        NSString *body = d[@"content"];
-        NSDictionary *payload = @{@"username":username,@"message":body};
-        [[NSNotificationCenter defaultCenter] postNotificationName:QZBMessageRecievedNotificationIdentifier
-                                                            object:payload];
+- (void)showMessageNotificationWithDictInActiveApp:(NSDictionary *)userInfo {
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        NSDictionary *d = userInfo[@"aps"];
+        NSString *body = d[@"alert"];
+//        NSDictionary *p = userInfo[@"player"];
+//        NSString *username = p[@"username"];  // userInfo[@""];
+//        NSString *body = d[@"content"];
+//        
+//        body = userInfo[]
+        NSDictionary *payload = @{ @"username" : @"", @"message" : body };
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:QZBMessageRecievedNotificationIdentifier
+                          object:payload];
     }
-    
-    
 }
 
+#pragma mark - layer messager
 
+- (void)connectLayer {
+    NSURL *appID =
+        [NSURL URLWithString:@"layer:///apps/staging/cadc0b56-39cc-11e5-a089-fdeb71057991"];
+    self.layerClient = [LYRClient clientWithAppID:appID];
+    [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"Failed to connect to Layer: %@", error);
+        } else {
+            // For the purposes of this Quick Start project, let's authenticate as a user named
+            // 'Device'.  Alternatively, you can authenticate as a user named 'Simulator' if you're
+            // running on a Simulator.
+            NSString *userIDString = @"Device";
+            // Once connected, authenticate user.
+            // Check Authenticate step for authenticateLayerWithUserID source
+            [self authenticateLayerWithUserID:userIDString
+                                   completion:^(BOOL success, NSError *error) {
+                                       if (!success) {
+                                           NSLog(
+                                               @"Failed Authenticating Layer Client with error:%@",
+                                               error);
+                                       }
+                                   }];
+        }
+    }];
+}
+
+- (void)authenticateLayerWithUserID:(NSString *)userID
+                         completion:(void (^)(BOOL success, NSError *error))completion {
+    // Check to see if the layerClient is already authenticated.
+    if (self.layerClient.authenticatedUserID) {
+        // If the layerClient is authenticated with the requested userID, complete the
+        // authentication process.
+        if ([self.layerClient.authenticatedUserID isEqualToString:userID]) {
+            NSLog(@"Layer Authenticated as User %@", self.layerClient.authenticatedUserID);
+            if (completion)
+                completion(YES, nil);
+            return;
+        } else {
+            // If the authenticated userID is different, then deauthenticate the current client and
+            // re-authenticate with the new userID.
+            [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+                if (!error) {
+                    [self authenticationTokenWithUserId:userID
+                                             completion:^(BOOL success, NSError *error) {
+                                                 if (completion) {
+                                                     completion(success, error);
+                                                 }
+                                             }];
+                } else {
+                    if (completion) {
+                        completion(NO, error);
+                    }
+                }
+            }];
+        }
+    } else {
+        // If the layerClient isn't already authenticated, then authenticate.
+        [self authenticationTokenWithUserId:userID
+                                 completion:^(BOOL success, NSError *error) {
+                                     if (completion) {
+                                         completion(success, error);
+                                     }
+                                 }];
+    }
+}
+
+- (void)authenticationTokenWithUserId:(NSString *)userID
+                           completion:(void (^)(BOOL success, NSError *error))completion {
+    /*
+     * 1. Request an authentication Nonce from Layer
+     */
+    [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
+        if (!nonce) {
+            if (completion) {
+                completion(NO, error);
+            }
+            return;
+        }
+
+        /*
+         * 2. Acquire identity Token from Layer Identity Service
+         */
+        [self
+            requestIdentityTokenForUserID:userID
+                                    appID:[self.layerClient.appID absoluteString]
+                                    nonce:nonce
+                               completion:^(NSString *identityToken, NSError *error) {
+                                   if (!identityToken) {
+                                       if (completion) {
+                                           completion(NO, error);
+                                       }
+                                       return;
+                                   }
+
+                                   /*
+                                    * 3. Submit identity token to Layer for validation
+                                    */
+                                   [self.layerClient
+                                       authenticateWithIdentityToken:
+                                           identityToken completion:^(NSString *authenticatedUserID,
+                                                                      NSError *error) {
+                                           if (authenticatedUserID) {
+                                               if (completion) {
+                                                   completion(YES, nil);
+                                               }
+                                               NSLog(@"Layer Authenticated as User: %@",
+                                                     authenticatedUserID);
+                                           } else {
+                                               completion(NO, error);
+                                           }
+                                       }];
+                               }];
+    }];
+}
+
+- (void)requestIdentityTokenForUserID:(NSString *)userID
+                                appID:(NSString *)appID
+                                nonce:(NSString *)nonce
+                           completion:
+                               (void (^)(NSString *identityToken, NSError *error))completion {
+    NSParameterAssert(userID);
+    NSParameterAssert(appID);
+    NSParameterAssert(nonce);
+    NSParameterAssert(completion);
+
+    NSURL *identityTokenURL =
+        [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+    NSDictionary *parameters = @{ @"app_id" : appID, @"user_id" : userID, @"nonce" : nonce };
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+    request.HTTPBody = requestBody;
+
+    NSURLSessionConfiguration *sessionConfiguration =
+        [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+    [[session dataTaskWithRequest:request
+                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                    if (error) {
+                        completion(nil, error);
+                        return;
+                    }
+
+                    // Deserialize the response
+                    NSDictionary *responseObject =
+                        [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                    if (![responseObject valueForKey:@"error"]) {
+                        NSString *identityToken = responseObject[@"identity_token"];
+                        completion(identityToken, nil);
+                    } else {
+                        NSString *domain = @"layer-identity-provider.herokuapp.com";
+                        NSInteger code = [responseObject[@"status"] integerValue];
+                        NSDictionary *userInfo = @{
+                            NSLocalizedDescriptionKey :
+                                @"Layer Identity Provider Returned an Error.",
+                            NSLocalizedRecoverySuggestionErrorKey :
+                                @"There may be a problem with your APPID."
+                        };
+
+                        NSError *error =
+                            [[NSError alloc] initWithDomain:domain code:code userInfo:userInfo];
+                        completion(nil, error);
+                    }
+
+                }] resume];
+}
 
 @end

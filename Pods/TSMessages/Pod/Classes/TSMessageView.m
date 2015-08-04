@@ -96,7 +96,7 @@ static NSMutableDictionary *_notificationDesign;
 - (CGFloat)padding
 {
     // Adds 10 padding to to cover navigation bar
-    return self.messagePosition == TSMessageNotificationPositionNavBarOverlay ? TSMessageViewMinimumPadding /*+ 10.0f */: TSMessageViewMinimumPadding;//TEST
+    return self.messagePosition == TSMessageNotificationPositionNavBarOverlay ? TSMessageViewMinimumPadding + 10.0f : TSMessageViewMinimumPadding;
 }
 
 - (id)initWithTitle:(NSString *)title

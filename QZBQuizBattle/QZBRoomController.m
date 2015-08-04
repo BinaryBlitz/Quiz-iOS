@@ -31,6 +31,7 @@
 //ui
 
 #import <SVProgressHUD.h>
+#import "UIFont+QZBCustomFont.h"
 
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
@@ -316,16 +317,15 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     if (indexPath.row < [tableView numberOfRowsInSection:0] - 1) {
         QZBUserInRoomCell *cell =
             [tableView dequeueReusableCellWithIdentifier:QZBUserInRoomCellIdentifier];
-
+        
         QZBUserWithTopic *userWithTopic = self.room.participants[indexPath.row];
         
         if([userWithTopic.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
-            
-            if(![cell.isReadyBackView.gestureRecognizers containsObject:self.isReadyGestureRecognizer]){
+            if(![cell.isReadyBackView.gestureRecognizers
+                 containsObject:self.isReadyGestureRecognizer]){
                 [cell.isReadyBackView addGestureRecognizer:self.isReadyGestureRecognizer];
             }
         }
-
         [cell configureCellWithUserWithTopic:userWithTopic];
         return cell;
     } else {
@@ -677,13 +677,13 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         
         UIView *v = [[UIView alloc] initWithFrame:destRect];
      //   UIColor *firstColor = [UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
-        UIColor *secondColor = [UIColor colorWithRed:254.0/255.0
-                                               green:204/255.0
-                                                blue:81.0/255.0
-                                               alpha:1.0];
-        UIColor *thirdColor = [UIColor colorWithRed:31.0/255.0
-                                              green:181.0/255.0
-                                               blue:215.0/255.0
+//        UIColor *secondColor = [UIColor colorWithRed:254.0/255.0
+//                                               green:204/255.0
+//                                                blue:81.0/255.0
+//                                               alpha:1.0];
+        UIColor *thirdColor = [UIColor colorWithRed:22.0/255.0
+                                              green:131.0/255.0
+                                               blue:199.0/255.0
                                               alpha:1];
         v.backgroundColor = thirdColor;//[UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
         _bottomView = v;
@@ -695,9 +695,9 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         button.frame = CGRectMake(10, 10, r.size.width - 20, 60);
         [button setTitle:@"Пригласить друзей!" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        button.titleLabel.font = [UIFont boldMuseoFontOfSize:22];//boldSystemFontOfSize:20];
         
-        [button setBackgroundColor:secondColor];
+        [button setBackgroundColor:thirdColor];
         button.layer.cornerRadius = 2.0;
         button.layer.shadowOffset = CGSizeMake(0, 2);
         button.layer.shadowColor = [UIColor blackColor].CGColor;

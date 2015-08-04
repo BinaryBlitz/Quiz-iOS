@@ -49,18 +49,14 @@ PODS:
     - DFImageManager/Core
   - DFImageManager/UI (0.3.2):
     - DFImageManager/Core
-  - EGOCache (2.1.3)
   - FLAnimatedImage (1.0.8)
-  - FSImageViewer (3.2):
-    - AFNetworking (~> 2.5)
-    - EGOCache (~> 2.1)
-    - UAProgressView (~> 0.1)
   - GPUImage (0.1.6)
   - HexColors (2.2.1)
   - JSBadgeView (1.3.2)
   - JSQMessagesViewController (7.0.1):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - LayerKit (0.15.0)
   - libPusher (1.6):
     - libPusher/Core (= 1.6)
   - libPusher/Core (1.6):
@@ -72,7 +68,7 @@ PODS:
   - SocketRocket (0.3.1-beta2)
   - SVProgressHUD (1.1.2)
   - TSMessages (0.9.12):
-    - HexColors
+    - HexColors (~> 2.2.0)
   - UAProgressView (0.1.1)
   - VK-ios-sdk (1.0.9.2)
 
@@ -84,9 +80,9 @@ DEPENDENCIES:
   - DFImageManager
   - DFImageManager/AFNetworking
   - DFImageManager/GIF
-  - FSImageViewer (~> 3.2)
   - JSBadgeView
   - JSQMessagesViewController
+  - LayerKit
   - libPusher (~> 1.6)
   - MagicalRecord
   - SCLAlertView-Objective-C
@@ -101,20 +97,19 @@ SPEC CHECKSUMS:
   DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
   DFImageManager: 8d5ed7dc1872606b408687dc48979095319eaeaf
-  EGOCache: f0295dbe041156acabd39021354ad1045ee49e72
   FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
-  FSImageViewer: 9106a89800e89a359b02d0c4bb7f7a3ddc1aff71
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   JSBadgeView: 08284afc9d0eb60069674e517cac2d37d4319208
   JSQMessagesViewController: 03fba8a3021a3ddc1c91847f180ffe549f2e8cf2
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  LayerKit: ac8c5c227a06e2ea5e042303b80e931a8ffe3568
   libPusher: f9367ede8f5141e74adc90ba20536cbc3c7b68e1
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   SCLAlertView-Objective-C: 39e9c3a9135603f587ff2890217ed52a58bb0eab
   SocketRocket: 7284ab9370a06c99aba92b2fe3a32aedd0f9a6fa
   SVProgressHUD: 3afb875b9eb23acd1bed9b82495695c68621a8b2
-  TSMessages: 2a52642128d7ab15b46930c810b9c9403a2b58f3
+  TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
   UAProgressView: 9518e321a5d4173f66c225717db873322ec1f070
   VK-ios-sdk: 26c2475927e209e5567f858ad355485bcbc5b972
 
