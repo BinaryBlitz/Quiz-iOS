@@ -9,7 +9,6 @@
 #import "UITabBarController+QZBMessagerCategory.h"
 #import <TSMessage.h>
 #import <TSMessageView.h>
-#import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
 #import "QZBSessionManager.h"
 
@@ -41,7 +40,7 @@
 }
 
 - (void)messageReciever:(NSNotification *)note {
-    if([note.name isEqualToString:QZBMessageRecievedNotificationIdentifier]){
+    if([note.name isEqualToString:@"QZBMessageRecievedNotificationIdentifier"]){
         NSDictionary *payload = note.object;
         
         [self showMessage:payload[@"message"] userName:payload[@"username"]];
@@ -49,12 +48,12 @@
 }
 
 - (void)subscribeToMessages{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReciever:) name:QZBMessageRecievedNotificationIdentifier object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReciever:) name:@"QZBMessageRecievedNotificationIdentifier" object:nil];
 }
 
 -(void)unsubscribeFromMessages{
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:QZBMessageRecievedNotificationIdentifier
+                                                    name:@"QZBMessageRecievedNotificationIdentifier"
                                                   object:nil];
     
    // [TSMessage  queuedMessages]

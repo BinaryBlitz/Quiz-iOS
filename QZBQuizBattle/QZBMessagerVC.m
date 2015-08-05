@@ -12,7 +12,6 @@
 #import <JSQMessagesViewController/JSQMessages.h>
 #import <AFNetworking/AFNetworking.h>
 #import "UIColor+QZBProjectColors.h"
-//#import "QZBMessagerManager.h"
 #import <TSMessage.h>
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
@@ -24,10 +23,6 @@
 #import "QZBLayerMessagerManager.h"
 
 
-//#import <XMPPFramework/XMPPFramework.h>
-//#import "XMPPCoreDataStorage.h"
-//#import "XMPPMessageArchiving.h"
-//#import "XMPPMessageArchivingCoreDataStorage.h"
 
 NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 const NSTimeInterval QZBMessageTimeInterval = 600;
@@ -58,11 +53,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
-   // [QZBMessagerManager sharedInstance].delegate = self;
+  
 
-    // self.senderId = [[QZBCurrentUser sharedInstance].user.userID stringValue];
-
-    self.senderId =  [QZBCurrentUser sharedInstance].user.userID.stringValue;// [[QZBMessagerManager sharedInstance]
+    self.senderId =  [QZBCurrentUser sharedInstance].user.userID.stringValue;
       //  jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
     self.senderDisplayName = [QZBCurrentUser sharedInstance].user.userID.stringValue;
     // self.showLoadEarlierMessagesHeader = YES;
@@ -95,7 +88,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
 
-  //  self.messages = [[QZBMessagerManager sharedInstance] generateJSQMessagesForUser:self.friend];
+ 
 
     [self.collectionView reloadData];
 
@@ -118,25 +111,11 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //  [self goOffline];
-    //    [self.stream removeDelegate:self];
-    //    [self.stream disconnect];
+
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                         object:nil];
     
-    
-//    QZBUserWorker *userWorker = [[QZBUserWorker alloc] init];
-    
-//    QZBStoredUser *storedUser = [userWorker userWithID:self.friend.userID];
-    
-//    if(storedUser){
-//        [userWorker readAllMessages:storedUser];
-//    }
-   
-    
-
- //   self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -149,24 +128,10 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     self.friend = user;
     
     [self setupLayerNotificationObservers];
-   // [self fetchLayerConversation];
-    
-//    [[QZBServerManager sharedManager] GETAllMessagesForUserId:user.userID onSuccess:^(NSArray *messages) {
-//        
-//    } onFailure:^(NSError *error, NSInteger statusCode) {
-//        
-//    }];
 
     [self updateImages];
 }
 
-//- (void)initWithUser:(id<QZBUserProtocol>)user userpic:(UIImage *)image {
-//    [self initWithUser:user];
-//
-//    self.friendAvatar = [JSQMessagesAvatarImageFactory
-//        avatarImageWithImage:image
-//                    diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-//}
 
 - (void)updateImages {
     // NSURL *url = [NSURL URLWithString:self.user.imageURL];
@@ -228,72 +193,19 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
-    /**
-     *  Sending a message. Your implementation of this method should do *at least* the following:
-     *
-     *  1. Play sound (optional)
-     *  2. Add new id<JSQMessageData> object to your data source
-     *  3. Call `finishSendingMessage`
-     */
-    //[JSQSystemSoundPlayer jsq_playMessageSentSound];
 
-//    if (![QZBMessagerManager sharedInstance].isConnected) {
-//        NSLog(@"problems!!");
-//        //        [TSMessage showNotificationWithTitle:@"Невозможно подключиться к серверу"
-//        //                                    subtitle:QZBNoInternetConnectionMessage
-//        //                                        type:TSMessageNotificationTypeError];
-//
-//        [TSMessage
-//            showNotificationInViewController:self.navigationController
-//                                       title:@"Невозможно подключиться к "
-//                                             @"серверу"
-//                                    subtitle:QZBNoInternetConnectionMessage
-//                                        type:TSMessageNotificationTypeError
-//                                    duration:0.0
-//                        canBeDismissedByUser:YES];
-//        return;
-//    }
-
-//    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-//                                             senderDisplayName:senderDisplayName
-//                                                          date:date
-//                                                          text:text];
 
     [self sendMessage:text];
-    
-//    - (void)didReceiveLayerObjectsDidChangeNotification:(NSNotification *)notification;
-//    {
-//        // Get nav bar colors from conversation metadata
-//        [self setNavbarColorFromConversationMetadata:self.conversation.metadata];
+
         [self fetchLayerConversation];
-  //  }
-    //[self sendMessageWithText:text];
 
-   // [self.messages addObject:message];
-
-    //  [self.demoData.messages addObject:message];
 
     [self finishSendingMessageAnimated:YES];
 
-    // [self receiveMessage:text];
+
 }
 
-//- (void)receiveMessage:(NSString *)message {
-//    // JSQMessage *copyMessage = [[self.messages lastObject] copy];
-//
-//    JSQMessage *copyMessage = [JSQMessage messageWithSenderId:[self.friend.userID stringValue]
-//                                                  displayName:self.friend.name
-//                                                         text:message];
-//
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)),
-//                   dispatch_get_main_queue(), ^{
-//
-//                       [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-//                    //   [self.messages addObject:copyMessage];
-//                       [self finishReceivingMessageAnimated:YES];
-//
-//                   });
-//}
+
 
 #pragma mark - JSQMessages CollectionView DataSource
 
@@ -432,9 +344,7 @@ navigation
 
 #pragma mark - server methods
 
-//- (void)sendMessageWithText:(NSString *)textMessage {
-//    [[QZBMessagerManager sharedInstance] sendMessage:textMessage toUser:self.friend];
-//}
+
 
 #pragma mark - support methods
 
@@ -447,35 +357,6 @@ navigation
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 }
 
-#pragma mark - message delegate
-
-//-(void) receivedMessage
-//
-//- (void) myClassDelegateMethod: (QZBMessagerManager *) sender{
-//
-//    NSLog(@"recieved");
-//
-//}
-//-(void)didRecieveMessageFrom:(NSString *)bareJid{
-//    NSLog(@"%@", bareJid);
-//
-//    if([bareJid isEqualToString:[[QZBMessagerManager sharedInstance]
-//    jidAsStringFromUser:self.friend]]){
-//
-//    }
-//}
-
-//- (void)didRecieveMessageFrom:(NSString *)bareJid text:(NSString *)text {
-//    if ([bareJid isEqualToString:[[QZBMessagerManager sharedInstance]
-//                                     jidAsStringFromUser:self.friend]]) {
-//        JSQMessage *mess =
-//            [JSQMessage messageWithSenderId:bareJid displayName:self.friend.name text:text];
-//
-//        [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-//        //[self.messages addObject:mess];
-//        [self finishReceivingMessageAnimated:YES];
-//    }
-//}
 
 #pragma mark - date
 

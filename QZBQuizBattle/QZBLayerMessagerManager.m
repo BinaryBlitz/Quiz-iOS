@@ -511,4 +511,11 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3a
     
 }
 
+-(void)logOut {
+    [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+        
+    }];
+    
+}
+
 @end

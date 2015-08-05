@@ -16,7 +16,7 @@
 #import "QZBStoreListTVC.h"
 #import "QZBFriendRequestManager.h"
 #import "UIColor+QZBProjectColors.h"
-#import "QZBMessagerManager.h"
+
 #import <SVProgressHUD.h>
 #import "QZBLayerMessagerManager.h"
 
@@ -128,11 +128,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
         [[QZBServerManager sharedManager] GETCategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
-//        if(![[QZBMessagerManager sharedInstance] isConnected]){//REDO
-//            [[QZBMessagerManager sharedInstance] setupStream];
-//            [[QZBMessagerManager sharedInstance] connect];
-//        }
-//
         
         [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
             NSLog(@"done mof %@", error);

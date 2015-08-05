@@ -8,7 +8,7 @@
 
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
-//#import "QZBMessagerManager.h"
+
 
 #import "QZBLayerMessagerManager.h"
 
@@ -139,7 +139,7 @@
 //        NSLog(@" %@", conv);
 //    }
     
-    self.listOfUsers = [[QZBLayerMessagerManager sharedInstance] conversations];//[[QZBMessagerManager sharedInstance] usersInStorage];
+    self.listOfUsers = [[QZBLayerMessagerManager sharedInstance] conversations];
     
     [self.tableView reloadData];
 }

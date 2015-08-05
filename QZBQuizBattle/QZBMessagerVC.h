@@ -8,7 +8,7 @@
 
 #import "JSQMessagesViewController.h"
 #import "QZBUserProtocol.h"
-//#import <XMPPFramework.h>
+
 
 @interface QZBMessagerVC : JSQMessagesViewController //<XMPPStreamDelegate>
 
