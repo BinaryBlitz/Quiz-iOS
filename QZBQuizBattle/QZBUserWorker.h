@@ -9,36 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "QZBUserProtocol.h"
 
-@class QZBStoredUser;
+//@class QZBStoredUser;
 @class LYRConversation;
 @class QZBAnotherUser;
 
 @interface QZBUserWorker : NSObject
 
-- (id<QZBUserProtocol>)userFromJid:(NSString *)jidAsString;
-- (id<QZBUserProtocol>)userFromStoredUser:(QZBStoredUser *)storedUser;
-
-- (QZBStoredUser *)userWithJidAsString:(NSString *)jidAsString;
-- (QZBStoredUser *)userWithID:(NSNumber *)userID;
-
-
-- (void)saveUserInMemory:(id<QZBUserProtocol>)user;
-
-- (NSNumber *)idFromJidAsString:(NSString *)jidAsString;
-
-
-- (void)addOneUnreadedMessage:(QZBStoredUser *)user;
-- (void)readAllMessages:(QZBStoredUser *)user;
-- (void)readAllMessagesOfUser:(id<QZBUserProtocol>)user;
-
-
-- (QZBStoredUser *)storedUserWithUsername:(NSString *)username
-                                     jid:(NSString *)userJid
-                                imageURL:(NSString *)imgUrl;
-
-
-- (NSArray *)allUsers;
-- (void)deleteAllUsersInStorage;
 
 
 + (QZBAnotherUser *)userFromConversation:(LYRConversation *)conversation;

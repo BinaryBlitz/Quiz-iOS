@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E26a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="QZBCategory" representedClassName="QZBCategory" syncable="YES">
         <attribute name="background" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="background_url" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,15 +16,8 @@
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="relationToCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QZBCategory" inverseName="relationToTopic" inverseEntity="QZBCategory" syncable="YES"/>
     </entity>
-    <entity name="QZBStoredUser" representedClassName="QZBStoredUser" syncable="YES">
-        <attribute name="imageURLAsString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="unreadedCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-    </entity>
     <elements>
         <element name="QZBCategory" positionX="2403" positionY="-153" width="128" height="150"/>
         <element name="QZBGameTopic" positionX="2635" positionY="-153" width="128" height="120"/>
-        <element name="QZBStoredUser" positionX="2410" positionY="63" width="128" height="103"/>
     </elements>
 </model>

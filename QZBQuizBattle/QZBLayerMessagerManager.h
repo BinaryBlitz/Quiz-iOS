@@ -22,4 +22,6 @@
 
 -(NSArray *)conversations;
 
+-(void)logOut;
+
 @end

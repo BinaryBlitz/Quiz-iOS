@@ -25,7 +25,7 @@
 #import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
-#import "QZBMessagerManager.h"
+//#import "QZBMessagerManager.h"
 #import "QZBMessangerList.h"
 
 #import <LayerKit/LayerKit.h>
@@ -36,7 +36,6 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 
-#import "XMPPFramework.h"
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -127,7 +126,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // rates. Games should use
     // this method to pause the game.
 
-    // [[QZBMessagerManager sharedInstance] disconnect];
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -151,15 +150,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // If the application
     // was previously in the background, optionally refresh the user interface.
 
-    // [[QZBMessagerManager sharedInstance] connect]
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also
     // applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [[QZBMessagerManager sharedInstance] disconnect];
-    [[QZBMessagerManager sharedInstance] teardownStream];
+ 
 
     [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
     [self saveContext];
@@ -434,7 +431,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //        body = userInfo[]
         NSDictionary *payload = @{ @"username" : @"", @"message" : body };
         [[NSNotificationCenter defaultCenter]
-            postNotificationName:QZBMessageRecievedNotificationIdentifier
+            postNotificationName:@"QZBMessageRecievedNotificationIdentifier"
                           object:payload];
     }
 }

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "QZBUserProtocol.h"
 @class QZBAnotherUser;
-@class QZBStoredUser;
+//@class QZBStoredUser;
 @class LYRConversation;
 @interface QZBAnotherUserWithLastMessages : NSObject
 @property(strong, nonatomic, readonly) id<QZBUserProtocol> user;
