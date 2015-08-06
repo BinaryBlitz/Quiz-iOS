@@ -13,6 +13,8 @@
 UIKIT_EXTERN NSString *const QZBServerBaseUrl;
 UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 
+//NSString *const QZBPusherPublicKey = @"3335176afe7e37cd28c2";
+
 @class QZBSession;
 @class QZBLobby;
 @class QZBOpponentBot;
@@ -233,14 +235,17 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 
 #pragma mark - messager notifications
 
--(void)POSTSendNotificationAboutMessage:(NSString *)message
-                           toUserWithID:(NSNumber *)userID
-                              onSuccess:(void (^)())success
-                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+//-(void)POSTSendNotificationAboutMessage:(NSString *)message
+//                           toUserWithID:(NSNumber *)userID
+//                              onSuccess:(void (^)())success
+//                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+//
+//-(void)GETAllMessagesForUserId:(NSNumber *)userID
+//                     onSuccess:(void (^)(NSArray *messages))success
+//                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)GETAllMessagesForUserId:(NSNumber *)userID
-                     onSuccess:(void (^)(NSArray *messages))success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+-(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce onSuccess:(void (^)(NSString *token))success
+                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rooms
 
