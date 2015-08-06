@@ -1613,57 +1613,82 @@ NSString *const QZBNoInternetConnectionMessage =
 
 #pragma mark - messager notifications
 
-- (void)POSTSendNotificationAboutMessage:(NSString *)message
-                            toUserWithID:(NSNumber *)userID
-                               onSuccess:(void (^)())success
-                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    //    NSDictionary *params =
-    //        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-    //           @"message" : message };
-    NSDictionary *params = @{
-        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"message" : @{@"content" : message, @"player_id" : userID}
-    };
+//- (void)POSTSendNotificationAboutMessage:(NSString *)message
+//                            toUserWithID:(NSNumber *)userID
+//                               onSuccess:(void (^)())success
+//                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+//    //    NSDictionary *params =
+//    //        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+//    //           @"message" : message };
+//    NSDictionary *params = @{
+//        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+//        @"message" : @{@"content" : message, @"player_id" : userID}
+//    };
+//
+//    NSString *urlString = [NSString stringWithFormat:@"messages"];
+//    [self.requestOperationManager POST:urlString
+//        parameters:params
+//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//            NSLog(@"succes");
+//            if (success) {
+//                success();
+//            }
+//        }
+//        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//
+//            NSLog(@"message error %@", error);
+//            if (failure) {
+//                failure(error, operation.response.statusCode);
+//            }
+//
+//        }];
+//}
+//
+//- (void)GETAllMessagesForUserId:(NSNumber *)userID
+//                      onSuccess:(void (^)(NSArray *messages))success
+//                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+//    NSDictionary *params =
+//        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+//           @"player_id" : userID };
+//
+//    //  NSString *urlString = [NSString stringWithFormat:@"players/%@/notify", userID];
+//
+//    [self.requestOperationManager GET:@"messages"
+//        parameters:params
+//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//            DDLogCVerbose(@"all nessages %@", responseObject);
+//
+//        }
+//        failure:^(AFHTTPRequestOperation *operation, NSError *error){
+//
+//        }];
+//}
 
-    NSString *urlString = [NSString stringWithFormat:@"messages"];
-    [self.requestOperationManager POST:urlString
-        parameters:params
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+-(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce onSuccess:(void (^)(NSString *token))success
+                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                               @"nonce": nonce
+                               };
+    
+    [self.requestOperationManager POST:@"players/authenticate_layer"
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSLog(@"succes");
-            if (success) {
-                success();
-            }
+        NSLog(@"layer auth %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        DDLogError(@"layer responce %@ identy err %@ status %ld",operation, error, operation.response.statusCode);
+        //operation.response
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
         }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            NSLog(@"message error %@", error);
-            if (failure) {
-                failure(error, operation.response.statusCode);
-            }
-
-        }];
-}
-
-- (void)GETAllMessagesForUserId:(NSNumber *)userID
-                      onSuccess:(void (^)(NSArray *messages))success
-                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params =
-        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-           @"player_id" : userID };
-
-    //  NSString *urlString = [NSString stringWithFormat:@"players/%@/notify", userID];
-
-    [self.requestOperationManager GET:@"messages"
-        parameters:params
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-            DDLogCVerbose(@"all nessages %@", responseObject);
-
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error){
-
-        }];
+    }];
+    
 }
 
 #pragma mark - rooms

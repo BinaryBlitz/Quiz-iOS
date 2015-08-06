@@ -1,10 +1,4 @@
-//
-//  AppDelegate.m
-//  QuickStart
-//
-//  Created by Abir Majumdar on 12/3/14.
-//  Copyright (c) 2014 Layer, Inc. All rights reserved.
-//
+
 
 #import "QZBLayerMessagerManager.h"
 #import <LayerKit/LayerKit.h>
@@ -13,13 +7,15 @@
 #import "QZBAnotherUserWithLastMessages.h"
 #import "QZBUserWorker.h"
 
+#import "QZBServerManager.h"
+
 //#import "LQSViewController.h"
 //#import "LQSAppDelegate.h"
 
 /**
  Layer App ID from developer.layer.com
  */
-static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3abd-11e5-ab9e-fdeb3a067534";
+static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3ba1-11e5-81a5-2d4d7f0072d6";
 
 //#if TARGET_IPHONE_SIMULATOR
 //// If on simulator set the user ID to Simulator and participant to Device
@@ -55,8 +51,10 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3a
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // [self setupStream];
-       // self.userWorker = [[QZBLayerMessagerManager alloc] init];
+        NSURL *appID = [NSURL URLWithString:LQSLayerAppIDString];
+        self.layerClient = [LYRClient clientWithAppID:appID];
+        self.layerClient.delegate = self;
+
     }
     return self;
 }
@@ -73,9 +71,9 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3a
       //  [self showFirstTimeMessage];
         
         // Initializes a LYRClient object
-        NSURL *appID = [NSURL URLWithString:LQSLayerAppIDString];
-        self.layerClient = [LYRClient clientWithAppID:appID];
-        self.layerClient.delegate = self;
+//        NSURL *appID = [NSURL URLWithString:LQSLayerAppIDString];
+//        self.layerClient = [LYRClient clientWithAppID:appID];
+//        self.layerClient.delegate = self;
         //self.layerClient.autodownloadMIMETypes = [NSSet setWithObjects:@"image/png", nil];
         // Connect to Layer
         // See "Quick Start - Connect" for more details
@@ -232,6 +230,7 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3a
      * 1. Request an authentication Nonce from Layer
      */
     [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
+        NSLog(@"nonce %@", nonce);
         if (!nonce) {
             if (completion) {
                 completion(NO, error);
@@ -273,6 +272,14 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/9111946c-3a
     NSParameterAssert(appID);
     NSParameterAssert(nonce);
     NSParameterAssert(completion);
+    
+    
+    [[QZBServerManager sharedManager] POSTAuthenticateLayerWithNonce:nonce onSuccess:^(NSString *token) {
+           
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
     
     NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];

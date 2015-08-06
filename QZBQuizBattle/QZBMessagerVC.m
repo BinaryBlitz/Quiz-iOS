@@ -194,13 +194,22 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
 
-
-    [self sendMessage:text];
-
+    if([QZBLayerMessagerManager sharedInstance].layerClient.isConnected){
+        [self sendMessage:text];
         [self fetchLayerConversation];
-
-
-    [self finishSendingMessageAnimated:YES];
+        [self finishSendingMessageAnimated:YES];
+        
+    } else {
+        if([QZBLayerMessagerManager sharedInstance].layerClient.isConnecting) {
+        [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
+                                    subtitle:@"Попробуйте позже"
+                                        type:TSMessageNotificationTypeError];
+        } else {
+            [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
+                                        subtitle:@"Проверьте интернет соединение"
+                                            type:TSMessageNotificationTypeError];
+        }
+    }
 
 
 }
@@ -362,29 +371,24 @@ navigation
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
-//    if(self.messages.count > 0 && indexPath.item == 0){
-//        JSQMessage *message = self.messages[indexPath.item];
-//        
-//        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-//    } else if(indexPath.item > 0){
-//       // NSDate *firstDate =
-//      //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
-//        
-//        JSQMessage *firstMessage = self.messages[indexPath.item];
-//        JSQMessage *secondMessage = self.messages[indexPath.item-1];
-//        
-//        
-//        
-//        NSDate *firstDate = firstMessage.date;
-//        NSDate *secondDate = secondMessage.date;
-//        
-//        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
-//        
-//        if(timeInterval> QZBMessageTimeInterval){
-//            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
-//        }
-//        
-//    }
+    if(self.queryController.count > 0 && indexPath.item == 0){
+       // JSQMessage *message = self.messages[indexPath.item];
+         NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];
+        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
+    } else if(indexPath.item > 0){
+       // NSDate *firstDate =
+      //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
+         NSIndexPath *nip = [NSIndexPath indexPathForItem:indexPath.item -1 inSection:indexPath.section];
+        NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];//firstMessage.date;
+        NSDate *secondDate = [[self.queryController objectAtIndexPath:nip] sentAt];//secondMessage.date;
+        
+        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
+        
+        if(timeInterval> QZBMessageTimeInterval){
+            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
+        }
+        
+    }
     
 //    if (indexPath.item % 3 == 0) {
 //        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
@@ -395,7 +399,8 @@ attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
+heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
     /**
      *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
@@ -414,28 +419,30 @@ attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
    // return 0.0f;
     
     
-//    if(self.messages.count > 0 && indexPath.item == 0){
-//     //   JSQMessage *message = self.messages[indexPath.item];
-//        return kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-//    } else if(indexPath.item > 0){
-//        // NSDate *firstDate =
-//        //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
-//        
-//        JSQMessage *firstMessage = self.messages[indexPath.item];
-//        JSQMessage *secondMessage = self.messages[indexPath.item-1];
-//        
-//        
-//        
-//        NSDate *firstDate = firstMessage.date;
-//        NSDate *secondDate = secondMessage.date;
-//        
-//        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
-//        
-//        if(timeInterval>QZBMessageTimeInterval){
-//            return  kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
-//        }
-//        
-//    }
+    if(self.queryController.count > 0 && indexPath.item == 0){
+     //   JSQMessage *message = self.messages[indexPath.item];
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    } else if(indexPath.item > 0){
+        // NSDate *firstDate =
+        //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
+        
+        
+        //JSQMessage *firstMessage = [self messageAtIndexPath:indexPath];// self.messages[indexPath.item];
+        NSIndexPath *nip = [NSIndexPath indexPathForItem:indexPath.item -1 inSection:indexPath.section];
+       // JSQMessage *secondMessage = [self messageAtIndexPath:nip];//self.messages[indexPath.item-1];
+        
+        
+        
+        NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];//firstMessage.date;
+        NSDate *secondDate = [[self.queryController objectAtIndexPath:nip] sentAt];//secondMessage.date;
+        
+        NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
+        
+        if(timeInterval>QZBMessageTimeInterval){
+            return  kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
+        }
+        
+    }
     
     return 0.0f;
 }

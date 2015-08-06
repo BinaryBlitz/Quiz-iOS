@@ -51,7 +51,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         // DDLogCInfo(<#frmt, ...#>)
         DDLogCInfo(@"room channel name %@", channelName);
 
-        _client = [PTPusher pusherWithKey:@"d982e4517caa41cf637c" delegate:self encrypted:YES];
+        _client = [PTPusher pusherWithKey:@"3335176afe7e37cd28c2" delegate:self encrypted:YES];
 
         _client.reconnectDelay = 1;
 

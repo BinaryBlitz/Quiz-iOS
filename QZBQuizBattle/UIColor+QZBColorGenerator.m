@@ -54,7 +54,7 @@
 //            break;
 //    }
     
-    UIColor *color = [UIColor colorDarkWithString:string];
+    UIColor *color = [UIColor colorLightWithString:string];
     
     return color;
 }
