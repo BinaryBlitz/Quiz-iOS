@@ -29,7 +29,7 @@
 
 #pragma mark - Navigation
 
--(void)viewDidLoad{
+-(void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Сообщения";
     [self initStatusbarWithColor:[UIColor blackColor]];

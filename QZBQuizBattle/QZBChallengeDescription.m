@@ -39,19 +39,6 @@
      
         self.userID = dict[@"player_id"];
         
-//        AppDelegate *app = [[UIApplication sharedApplication] delegate];
-//        
-//        id context = app.managedObjectContext;
-//
-//        NSEntityDescription *entity =
-//        [NSEntityDescription entityForName:@"QZBGameTopic" inManagedObjectContext:context];
-//        QZBGameTopic *topic = (QZBGameTopic *)
-//        [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-//        
-//        topic.name = topicDict[@"name"];
-//        topic.topic_id = topicDict[@"id"];
-//        topic.points = topicDict[@"points"];
-//        topic.visible = topicDict[@"visible"];
     
         
         self.topic = [QZBTopicWorker parseTopicFromDict:topicDict];//TEST

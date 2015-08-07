@@ -18,6 +18,4 @@
 @property (weak, nonatomic) IBOutlet UIView *backView;
 
 
-//@property (assign, nonatomic) BOOL visible;
-
 @end

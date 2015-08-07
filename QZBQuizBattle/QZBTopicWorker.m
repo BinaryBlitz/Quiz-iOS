@@ -15,19 +15,6 @@
 @implementation QZBTopicWorker
 
 + (QZBGameTopic *)parseTopicFromDict:(NSDictionary *)dict {
-//    id topic_id = [dict objectForKey:@"id"];
-//    
-//    QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
-//    //(QZBGameTopic *)
-//    //  [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-//    
-//    if (!topic) {
-//        topic = [QZBGameTopic MR_createEntity];
-//        topic.name = dict[@"name"];
-//        topic.topic_id = topic_id;
-//    }
-//    topic.points = dict[@"points"];
-//    topic.visible = dict[@"visible"];
     
     QZBGameTopic *topic = [[self class] parseTopicWithoutRelationFromDict:dict];
     
@@ -43,19 +30,6 @@
 
 + (QZBGameTopic *)parseTopicFromDict:(NSDictionary *)dict inCategory:(QZBCategory *)category {
     
-//    id topic_id = [dict objectForKey:@"id"];
-//    
-//    QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id" withValue:topic_id];
-//    //(QZBGameTopic *)
-//    //  [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-//    
-//    if (!topic) {
-//        topic = [QZBGameTopic MR_createEntity];
-//        topic.name = dict[@"name"];
-//        topic.topic_id = topic_id;
-//    }
-//    topic.points = dict[@"points"];
-//    topic.visible = dict[@"visible"];
     QZBGameTopic *topic = [[self class] parseTopicWithoutRelationFromDict:dict];
     
   //  QZBCategory *category = [[QZBServerManager sharedManager] tryFindRelatedCategoryToTopic:topic];
@@ -82,7 +56,7 @@
         topic.topic_id = topic_id;
     }
     topic.points = dict[@"points"];
-    topic.visible = @(![dict[@"paid"] boolValue]);
+    topic.visible = @([dict[@"available"] boolValue]);
     
     return topic;
     
