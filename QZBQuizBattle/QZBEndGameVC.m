@@ -36,6 +36,9 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
+// sounds
+#import <JSQSystemSoundPlayer.h>
+
 NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
 @interface QZBEndGameVC ()  //<UIGestureRecognizerDelegate>
@@ -141,13 +144,15 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     if (!self.isOfflineChallenge && !self.isAnimated) {
         self.isAnimated = YES;
-        [self animateLose];
+        [self playResultsSounds];
+        [self animateResults];
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -520,7 +525,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 }
 
 #pragma mark - animation
-- (void)animateLose {
+- (void)animateResults {
     CGRect mainRect = [UIScreen mainScreen].bounds;
 
     CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4, 0.61 * CGRectGetWidth(mainRect),
@@ -572,6 +577,15 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
         completion:^(BOOL finished){
 
         }];
+}
+
+-(void)playResultsSounds{
+    [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
+    if(self.firstUserScore < self.secondUserScore) {
+        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
+    } else if(self.firstUserScore > self.secondUserScore) {
+        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
+    }
 }
 
 - (BOOL)hidesBottomBarWhenPushed {

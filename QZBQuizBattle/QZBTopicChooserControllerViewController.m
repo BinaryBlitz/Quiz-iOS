@@ -180,8 +180,8 @@
             self.choosedIndexPath = indexPath;
         }
 
-        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
-                                                     fileExtension:kJSQSystemSoundTypeWAV];//REDO
+//        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
+//                                                     fileExtension:kJSQSystemSoundTypeWAV];//REDO
         [tableView beginUpdates];
         [tableView endUpdates];
 

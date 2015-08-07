@@ -38,6 +38,8 @@
 #import "QZBUserWithTopic.h"
 #import "QZBRoomUsersView.h"
 
+@import AVFoundation;
+
 static float QZB_TIME_OF_COLORING_SCORE_LABEL = 1.5;
 static float QZB_TIME_OF_COLORING_BUTTONS = 0.5;
 
@@ -58,19 +60,23 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 @property (strong, nonatomic) QZBRoomUsersView *roomUsersView;
 
+@property (strong, nonatomic) AVAudioPlayer *soundPlayer;
+
 @end
 
 @implementation QZBGameSessionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setNeedsStatusBarAppearanceUpdate];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications" object:nil];
     
     [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"timer"
                                                     fileExtension:kJSQSystemSoundTypeWAV];
+//    [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"melody1"
+//                                                    fileExtension:kJSQSystemSoundTypeAIF];
 
     //[[self navigationController] setNavigationBarHidden:YES animated:NO];
     self.backgroundTask = UIBackgroundTaskInvalid;
@@ -207,6 +213,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                 [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
             self.backgroundTask = UIBackgroundTaskInvalid;
         }];
+   
+    [self playGameSound];
     
     if([QZBSessionManager sessionManager].roomWorker){
         [self loadRoomView];
@@ -215,9 +223,37 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 }
 
+-(void)playGameSound {
+//    [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"melodyshort" fileExtension:kJSQSystemSoundTypeWAV completion:^{
+//        [weakSelf playGameSound];
+//    }];
+    
+    if([JSQSystemSoundPlayer sharedPlayer].on){
+    
+    NSString *soundFilePath = [NSString stringWithFormat:@"%@/melody.wav",
+                               [[NSBundle mainBundle] resourcePath]];
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    NSError *error;
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
+                                                                   error:&error];
+        
+        self.soundPlayer = player;
+        
+        player.numberOfLoops = -1; //Infinite
+        [player prepareToPlay];
+        [player play];
+    }
+    
+   
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[JSQSystemSoundPlayer sharedPlayer] stopSoundWithFilename:@""];
+    [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
+    
+    if(self.soundPlayer) {
+        [self.soundPlayer stop];
+    }
     
 }
 
