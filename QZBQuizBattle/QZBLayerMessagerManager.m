@@ -15,7 +15,7 @@
 /**
  Layer App ID from developer.layer.com
  */
-static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3ba1-11e5-81a5-2d4d7f0072d6";
+static NSString *const LQSLayerAppIDString = @"layer:///apps/production/7523431a-3ba1-11e5-85e6-2d4d7f0072d6";
 
 //#if TARGET_IPHONE_SIMULATOR
 //// If on simulator set the user ID to Simulator and participant to Device
@@ -274,53 +274,66 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3b
     NSParameterAssert(completion);
     
     
-    [[QZBServerManager sharedManager] POSTAuthenticateLayerWithNonce:nonce onSuccess:^(NSString *token) {
-           
-    } onFailure:^(NSError *error, NSInteger statusCode) {
-        
+//    [[QZBServerManager sharedManager] POSTAuthenticateLayerWithNonce:nonce onSuccess:^(NSString *token) {
+//           
+//    } onFailure:^(NSError *error, NSInteger statusCode) {
+//        
+//    }];
+    
+    [[QZBServerManager sharedManager] POSTAuthenticateLayerWithNonce:nonce
+                                                            callback:^(NSString *token, NSError *error) {
+                                                                if (error) {
+                                                                    
+                                                                    completion(nil, error);
+                                                                    return;
+                                                                }
+                                                                
+                                                                if(!error){
+                                                                    completion(token, nil);
+                                                                }
     }];
     
     
-    NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    NSDictionary *parameters = @{ @"app_id": appID, @"user_id": userID, @"nonce": nonce };
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
-    request.HTTPBody = requestBody;
-    
-    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            completion(nil, error);
-            return;
-        }
-        
-        // Deserialize the response
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if(![responseObject valueForKey:@"error"])
-        {
-            NSString *identityToken = responseObject[@"identity_token"];
-            completion(identityToken, nil);
-        }
-        else
-        {
-            NSString *domain = @"layer-identity-provider.herokuapp.com";
-            NSInteger code = [responseObject[@"status"] integerValue];
-            NSDictionary *userInfo =
-            @{
-              NSLocalizedDescriptionKey: @"Layer Identity Provider Returned an Error.",
-              NSLocalizedRecoverySuggestionErrorKey: @"There may be a problem with your APPID."
-              };
-            
-            NSError *error = [[NSError alloc] initWithDomain:domain code:code userInfo:userInfo];
-            completion(nil, error);
-        }
-        
-    }] resume];
+//    NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    
+//    NSDictionary *parameters = @{ @"app_id": appID, @"user_id": userID, @"nonce": nonce };
+//    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+//    request.HTTPBody = requestBody;
+//    
+//    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+//    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        if (error) {
+//            completion(nil, error);
+//            return;
+//        }
+//        
+//        // Deserialize the response
+//        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//        if(![responseObject valueForKey:@"error"])
+//        {
+//            NSString *identityToken = responseObject[@"identity_token"];
+//            completion(identityToken, nil);
+//        }
+//        else
+//        {
+//            NSString *domain = @"layer-identity-provider.herokuapp.com";
+//            NSInteger code = [responseObject[@"status"] integerValue];
+//            NSDictionary *userInfo =
+//            @{
+//              NSLocalizedDescriptionKey: @"Layer Identity Provider Returned an Error.",
+//              NSLocalizedRecoverySuggestionErrorKey: @"There may be a problem with your APPID."
+//              };
+//            
+//            NSError *error = [[NSError alloc] initWithDomain:domain code:code userInfo:userInfo];
+//            completion(nil, error);
+//        }
+//        
+//    }] resume];
 }
 
 #pragma - mark LYRClientDelegate Delegate Methods
@@ -486,6 +499,8 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3b
     
     
     
+    
+    
   //  NSSortDescriptor *firstDescriptot = [NSSortDescriptor alloc] initWithKey:@"" ascending:<#(BOOL)#>
     //NSPredicate *firstPred = [NSPredicate ]
   //  LYRConversation *lastPredicate = [LYRPredicate predicateWithProperty:@"" predicateOperator:<#(LYRPredicateOperator)#> value:<#(id)#>]
@@ -495,8 +510,10 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3b
         [[QZBAnotherUserWithLastMessages alloc] initWithConversation:c]; //[QZBUserWorker userFromConversation:c];
         [arr addObject:userWithLastMessage];
     }
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"lastTimestamp" ascending:NO];
+   // arr = [arr sortedArrayUsingDescriptors:@[sort]];
     
-    return [NSArray arrayWithArray:arr];
+    return [arr sortedArrayUsingDescriptors:@[sort]];
 }
 
 -(NSInteger)unreadedCount {

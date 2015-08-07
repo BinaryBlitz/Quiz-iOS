@@ -244,8 +244,8 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 //                     onSuccess:(void (^)(NSArray *messages))success
 //                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce onSuccess:(void (^)(NSString *token))success
-                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+-(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce
+                             callback:(void (^)(NSString *token, NSError *error))callback;
 
 #pragma mark - rooms
 

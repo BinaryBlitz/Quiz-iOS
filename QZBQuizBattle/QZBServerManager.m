@@ -1666,8 +1666,8 @@ NSString *const QZBNoInternetConnectionMessage =
 //        }];
 //}
 
--(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce onSuccess:(void (^)(NSString *token))success
-                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+-(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce
+                             callback:(void (^)(NSString *token, NSError *error))callback {
     
      NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
                                @"nonce": nonce
@@ -1678,13 +1678,20 @@ NSString *const QZBNoInternetConnectionMessage =
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         NSLog(@"layer auth %@", responseObject);
+                                   NSString *token = responseObject[@"token"];
+                                   if(callback) {
+                                       callback(token, nil);
+                                   }
+                                   
+                                   
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         
         DDLogError(@"layer responce %@ identy err %@ status %ld",operation, error, operation.response.statusCode);
         //operation.response
         
-        if (failure) {
-            failure(error, operation.response.statusCode);
+        if (callback) {
+            callback(nil,error);
         }
 
     }];

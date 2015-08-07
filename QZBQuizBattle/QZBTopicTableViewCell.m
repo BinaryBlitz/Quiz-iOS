@@ -59,17 +59,6 @@
     self.symbolLabel.minimumScaleFactor = 0.5;
     self.symbolLabel.adjustsFontSizeToFitWidth = YES;
     
-//    NSInteger level = 0;
-//    float progress = 0.0;
-//    
-//    [NSObject calculateLevel:&level
-//               levelProgress:&progress
-//                   fromScore:[topic.points integerValue]];
-//    
-//    [self initCircularProgressWithLevel:level
-//                               progress:progress
-//                                visible:[topic.visible boolValue]];
-    
     self.topicName.text = topic.name;
     
     QZBCategory *relationCategory = topic.relationToCategory;
