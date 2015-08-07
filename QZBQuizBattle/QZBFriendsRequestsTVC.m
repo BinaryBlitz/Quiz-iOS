@@ -84,6 +84,10 @@
                     [c.acceptButton setTitle:@"Принято"
                                     forState:UIControlStateDisabled];
                    
+                } else {
+                    [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
+                                                subtitle:nil
+                                                    type:TSMessageNotificationTypeError];
                 }
             }];
         }
@@ -122,6 +126,11 @@
                     [self setFriendsOwner:nil andFriends:[QZBFriendRequestManager sharedInstance].incoming];
                     
                     
+                } else {
+                    [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
+                                                subtitle:nil
+                                                    type:TSMessageNotificationTypeError];
+
                 }
             }];
         }
