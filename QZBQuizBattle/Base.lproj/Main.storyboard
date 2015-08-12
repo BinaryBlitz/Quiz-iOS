@@ -7199,17 +7199,17 @@
                                                     <exclude reference="q1y-Kc-TY7"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="APg-Wk-D5K"/>
-                                                    <exclude reference="JlI-c9-yZn"/>
-                                                    <exclude reference="l9p-Po-hOP"/>
-                                                    <exclude reference="ggP-bk-tS6"/>
-                                                    <exclude reference="y7x-Bs-5Fd"/>
                                                     <exclude reference="8w9-9M-icp"/>
                                                     <exclude reference="aEQ-dZ-Kz4"/>
                                                     <exclude reference="xxs-1O-wc3"/>
+                                                    <exclude reference="ggP-bk-tS6"/>
+                                                    <exclude reference="y7x-Bs-5Fd"/>
                                                     <exclude reference="Bbu-Ge-IMF"/>
                                                     <exclude reference="Pei-Gu-Zfx"/>
                                                     <exclude reference="Wlc-6J-2Lv"/>
+                                                    <exclude reference="APg-Wk-D5K"/>
+                                                    <exclude reference="JlI-c9-yZn"/>
+                                                    <exclude reference="l9p-Po-hOP"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -7220,17 +7220,17 @@
                                                     <include reference="q1y-Kc-TY7"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="APg-Wk-D5K"/>
-                                                    <include reference="JlI-c9-yZn"/>
-                                                    <include reference="l9p-Po-hOP"/>
-                                                    <include reference="ggP-bk-tS6"/>
-                                                    <include reference="y7x-Bs-5Fd"/>
                                                     <include reference="8w9-9M-icp"/>
                                                     <include reference="aEQ-dZ-Kz4"/>
                                                     <include reference="xxs-1O-wc3"/>
+                                                    <include reference="ggP-bk-tS6"/>
+                                                    <include reference="y7x-Bs-5Fd"/>
                                                     <include reference="Bbu-Ge-IMF"/>
                                                     <include reference="Pei-Gu-Zfx"/>
                                                     <include reference="Wlc-6J-2Lv"/>
+                                                    <include reference="APg-Wk-D5K"/>
+                                                    <include reference="JlI-c9-yZn"/>
+                                                    <include reference="l9p-Po-hOP"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

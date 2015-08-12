@@ -33,6 +33,11 @@
     [super viewDidLoad];
     self.title = @"Сообщения";
     [self initStatusbarWithColor:[UIColor blackColor]];
+    if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
+            
+        }];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{

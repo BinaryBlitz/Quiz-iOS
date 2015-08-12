@@ -123,7 +123,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             onFailure:^(NSError *error, NSInteger statusCode){ }];
     }
     
-    [[QZBLayerMessagerManager sharedInstance] logOut];
+   // [[QZBLayerMessagerManager sharedInstance] logOut];
 
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
     // self.pushToken = nil;

@@ -27,6 +27,8 @@
 #import <SVProgressHUD.h>
 #import "UIImageView+QZBImagePickerCategory.h"
 
+#import "QZBLayerMessagerManager.h"
+
 
 
 @interface QZBSettingsTVC () <UITextFieldDelegate>
@@ -381,6 +383,11 @@
 #pragma mark - actions
 
 - (IBAction)logOutAction:(UIButton *)sender {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [[QZBLayerMessagerManager sharedInstance] logOutWithCompletion:^(BOOL success, NSError *error) {
+        [SVProgressHUD dismiss];
+        if(success) {
+    
     [[QZBCurrentUser sharedInstance] userLogOut];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -400,6 +407,13 @@
    // [self.navigationController popToRootViewControllerAnimated:NO];
 
     [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
+        } else {
+            [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
+                                        subtitle:nil
+                                            type:TSMessageNotificationTypeError];
+        }
+        }];
+    
 }
 
 //-(void)loadDeafaultPicture {
