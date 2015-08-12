@@ -58,6 +58,8 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
+const NSInteger QZBMinimumPlayersCountInRoom = 3;
+
 @interface QZBRoomController () <UIAlertViewDelegate>
 
 @property (strong, nonatomic) QZBRoom *room;
@@ -418,6 +420,11 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
         self.room = room;
         if (self.roomWorker) {
             self.roomWorker.room = self.room;
+        } else {
+            QZBUser *u = [QZBCurrentUser sharedInstance].user;
+            if([self.room isContainUser:u]){
+                [self generateRoomWorkerWithRoom:room];
+            }
         }
         
         NSLog(@"room %@ roomworker %@",self.room, self.roomWorker.room);
@@ -528,7 +535,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     if ([self isOwner]) {
         if (userWithTopic && !userWithTopic.isReady){
             return QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < 2) {
+        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateCanStartGame;
@@ -539,7 +546,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
             return QZBRoomStateChooseAndJoin;
         } else if (userWithTopic && !userWithTopic.isReady){
             return  QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < 2) {
+        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateWaitingPlayers;

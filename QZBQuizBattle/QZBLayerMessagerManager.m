@@ -542,4 +542,12 @@ static NSString *const LQSLayerAppIDString = @"layer:///apps/production/7523431a
     
 }
 
+-(void)logOutWithCompletion:(void (^)(BOOL success, NSError *error))completion {
+    
+    [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+        if(completion){
+            completion(success,error);
+        }
+    }];
+}
 @end

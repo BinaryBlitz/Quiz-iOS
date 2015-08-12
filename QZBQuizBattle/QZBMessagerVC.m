@@ -75,6 +75,13 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     //[self.view setBackgroundColor:[UIColor darkGrayColor]];
     
     self.layerClient = [QZBLayerMessagerManager sharedInstance].layerClient;
+    
+    if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
+            
+        }];
+    }
+
 
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -517,10 +524,10 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
    
     NSString *identifier = nil;
     
-    if([self.friend.userID isKindOfClass:[NSNumber class]]){
-        identifier = self.friend.userID.stringValue;
+    if([self.friend.userID isKindOfClass:[NSString class]]){
+        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
     } else {
-        identifier = (NSString *)self.friend.userID;
+        identifier = self.friend.userID.stringValue;
     }
     
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
@@ -533,6 +540,9 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     
     if (conversations.count <= 0) {
         NSError *conv_error = nil;
+        if(!self.layerClient.authenticatedUserID){
+            return;
+        }
         self.conversation = [self.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ identifier,self.layerClient.authenticatedUserID ]]
                                                                       options:nil
                                                                         error:&conv_error];

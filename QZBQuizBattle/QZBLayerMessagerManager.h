@@ -24,4 +24,6 @@
 
 -(void)logOut;
 
+-(void)logOutWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+
 @end
