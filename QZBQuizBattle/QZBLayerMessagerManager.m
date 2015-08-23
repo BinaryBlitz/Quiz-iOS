@@ -15,7 +15,12 @@
 /**
  Layer App ID from developer.layer.com
  */
+
+#ifdef QZB_PRODUCTION
 static NSString *const LQSLayerAppIDString = @"layer:///apps/production/7523431a-3ba1-11e5-85e6-2d4d7f0072d6";
+#else
+static NSString *const LQSLayerAppIDString = @"layer:///apps/staging/75233f64-3ba1-11e5-81a5-2d4d7f0072d6";
+#endif
 
 //#if TARGET_IPHONE_SIMULATOR
 //// If on simulator set the user ID to Simulator and participant to Device

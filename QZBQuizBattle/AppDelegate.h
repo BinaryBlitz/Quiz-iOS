@@ -15,6 +15,9 @@
                    blue:((float)(rgbValue & 0xFF)) / 255.0                     \
                   alpha:1.0]
 
+
+#define QZB_PRODUCTION 1
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
