@@ -12,8 +12,9 @@
 
 UIKIT_EXTERN NSString *const QZBServerBaseUrl;
 UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
+UIKIT_EXTERN NSString *const QZBPusherKey;
 
-//NSString *const QZBPusherPublicKey = @"3335176afe7e37cd28c2";
+
 
 @class QZBSession;
 @class QZBLobby;

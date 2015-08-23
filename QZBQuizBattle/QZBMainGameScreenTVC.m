@@ -593,10 +593,12 @@
     if (cell) {
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
         NSMutableArray *arr = self.workArray[ip.section];
+        
+        
         self.choosedIndexPath = nil;
         if(arr == self.challenged) {
         
-        QZBChallengeDescriptionWithResults *description =  arr[ip.row];
+        QZBChallengeDescriptionWithResults *description = arr[ip.row];
             
             [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
                                                        onSuccess:nil
@@ -653,11 +655,11 @@
     [arr removeObjectAtIndex:ip.row];
     
     if (arr.count == 0) {
-        NSUInteger numInWorkArray = [self.workArray indexOfObject:arr];
+        NSUInteger numInWorkArray = ip.section;//[self.workArray indexOfObject:arr];
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:numInWorkArray];
         [self.mainTableView deleteSections:indexSet
                           withRowAnimation:UITableViewRowAnimationRight];
-        [self.workArray removeObject:arr];
+        [self.workArray removeObjectAtIndex:ip.section];
     }
     
     [self.mainTableView endUpdates];

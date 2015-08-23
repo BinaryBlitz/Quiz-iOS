@@ -17,6 +17,7 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "Reachability.h"
 #import <DDLog.h>
+#import "QZBServerManager.h"
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 NSString *const QZBPusherConnectionProblrms = @"QZBPusherConnectionProblrms";
 NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
@@ -42,7 +43,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
        // DDLogCInfo(<#frmt, ...#>)
         DDLogCInfo(@"channel name %@", channelName);
 
-        _client = [PTPusher pusherWithKey:@"3335176afe7e37cd28c2" delegate:self encrypted:YES];
+        _client = [PTPusher pusherWithKey:QZBPusherKey delegate:self encrypted:YES];
 
         _client.reconnectDelay = 1;
 

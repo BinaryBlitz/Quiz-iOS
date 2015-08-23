@@ -7,6 +7,7 @@
 //
 
 #import "QZBServerManager.h"
+#import "AppDelegate.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "QZBGameTopic.h"
@@ -60,7 +61,16 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //#endif
 // static const DDLogLevel ddLogLevel = DDLogLevelWarning;
 
-NSString *const QZBServerBaseUrl = @"http://188.166.14.118";//@"http://quizapp.binaryblitz.ru";
+//#define PRODUCTION 0
+
+#if QZB_PRODUCTION
+NSString *const QZBServerBaseUrl = @"http://188.166.14.118";
+NSString *const QZBPusherKey = @"3335176afe7e37cd28c2";
+#else
+NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
+NSString *const QZBPusherKey = @"d982e4517caa41cf637c";
+#endif
+
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 

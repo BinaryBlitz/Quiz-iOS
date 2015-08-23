@@ -18,6 +18,8 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 
+#import "QZBServerManager.h"
+
 
 
 NSString *const QZBNeedStartRoomGame = @"NeedStartRoomGame";
@@ -51,7 +53,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         // DDLogCInfo(<#frmt, ...#>)
         DDLogCInfo(@"room channel name %@", channelName);
 
-        _client = [PTPusher pusherWithKey:@"3335176afe7e37cd28c2" delegate:self encrypted:YES];
+        _client = [PTPusher pusherWithKey:QZBPusherKey delegate:self encrypted:YES];
 
         _client.reconnectDelay = 1;
 
