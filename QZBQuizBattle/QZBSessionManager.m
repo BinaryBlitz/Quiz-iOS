@@ -389,13 +389,18 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
         
         [self.roomWorker userWithId:userID reachedPoints:@(points)];
         
+        
+        NSMutableDictionary *payload = [@{@"userID":userID,
+                                         @"correct":@(NO)} mutableCopy];
         if(points > 0){
-            [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserInRoomGaveAnswer
-                                                                object:userID];
+            payload[@"correct"] = @(YES);
         }
-    }
-    
-   }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserInRoomGaveAnswer
+                                                            object:[NSDictionary dictionaryWithDictionary:payload]];
+
+    }    
+}
 //- (void)oneOfOpponentWithID:(NSNumber *)userID
 //     answeredQuestionWithID:(NSNumber *)questionID
 //                   withTime:(NSNumber *)time {

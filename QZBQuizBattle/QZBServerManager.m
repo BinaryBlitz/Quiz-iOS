@@ -50,8 +50,11 @@
 #import "QZBTopicWorker.h"
 
 #import <DDLog.h>
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-
+#if QZB_PRODUCTION
+static const int ddLogLevel = LOG_LEVEL_ERROR;
+#else
+static const int ddLogLevel = LOG_LEVEL_VERBOSE ;
+#endif
 //#import "QZBLoggingConfig.h"
 
 //#ifdef DEBUG
@@ -245,7 +248,7 @@ NSString *const QZBNoInternetConnectionMessage =
         DFImageRequestOptions *options = [DFImageRequestOptions new];
         //       // options.allowsClipping = YES;
         options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
-        options.expirationAge = 60 * 60 * 24 * 10;
+        options.expirationAge = 60 * 60 * 24 * 10 * 60;
         options.priority = DFImageRequestPriorityLow;
 
         DFImageRequest *request = [DFImageRequest requestWithResource:url
