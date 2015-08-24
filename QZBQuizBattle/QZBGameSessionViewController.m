@@ -218,7 +218,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     
     if([QZBSessionManager sessionManager].roomWorker){
         [self loadRoomView];
-        [self setRoomsUsersScoresForUserWithID:@(-1)];
+        [self setRoomsUsersScoresForUserWithID:@(-1) isCorrect:NO];
     }
 
 }
@@ -892,13 +892,17 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 -(void)setRoomUsersScores:(NSNotification *)note {
     
     if([note.name isEqualToString:QZBOneOfUserInRoomGaveAnswer]) {
-        NSNumber *userID = note.object;
         
-        [self setRoomsUsersScoresForUserWithID:userID];
+        
+        NSDictionary *payload = note.object;
+         NSNumber *userID = payload[@"userID"];
+        BOOL isCorrect = [payload[@"correct"] boolValue];
+        
+        [self setRoomsUsersScoresForUserWithID:userID isCorrect:isCorrect];
     }
 }
 
--(void)setRoomsUsersScoresForUserWithID:(NSNumber *)userID{
+-(void)setRoomsUsersScoresForUserWithID:(NSNumber *)userID isCorrect:(BOOL)correct{
     if([QZBSessionManager sessionManager].roomWorker) {
         QZBRoom *room = [QZBSessionManager sessionManager].roomWorker.room;
         QZBUser *currentUser = [QZBCurrentUser sharedInstance].user;
@@ -909,9 +913,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                 [participatiens addObject:UWT];
             }
         }
-        
-        //NSMutableArray *participatiens = room.participants;
-        
       
         for(int i = 0; i < self.roomUsersView.nameLabels.count; i++){
             UILabel *nameLabel = self.roomUsersView.nameLabels[i];
@@ -924,8 +925,13 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                 id<QZBUserProtocol> user = userWithTopic.user;
                 
                 if([userID isEqualToNumber:user.userID]){
-                    [self colorLabel:nameLabel];
-                    [self colorLabel:scoreLabel];
+                    UIColor *color = [UIColor lightGreenColor];
+                    if(!correct){
+                        color = [UIColor lightRedColor];
+                    }
+                    [self colorLabel:nameLabel color:color];
+                    [self colorLabel:scoreLabel color:color];
+                    
                 }
                 
                 
@@ -937,13 +943,16 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     }
 }
 
--(void)colorLabel:(UILabel *)label {
+
+
+
+-(void)colorLabel:(UILabel *)label color:(UIColor *)color {
 
     [UIView transitionWithView:label
                       duration:0.25
                        options:UIViewAnimationOptionTransitionCrossDissolve|UIViewAnimationOptionCurveEaseInOut
                     animations:^{
-        label.textColor = [UIColor lightGreenColor];
+        label.textColor = color;
     } completion:^(BOOL finished) {
     }];
     

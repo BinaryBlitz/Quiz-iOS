@@ -129,6 +129,11 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     self.userPicGestureRecognizer.numberOfTapsRequired = 1;
     self.userPicGestureRecognizer.numberOfTouchesRequired = 1;
     self.userPicGestureRecognizer.cancelsTouchesInView = NO;
+    
+//    [self.tabBarController.tabBar setHidden:NO];
+//    
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.tableView.contentInset = UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,6 +188,13 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     DDLogInfo(@"viewWillAppear %@", self.user.name);
 
     [self updateBadges];
+    
+ //   self.tabBarController.tabBar.hidden = NO;
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     self.tabBarController.tabBar.hidden = NO;
 }

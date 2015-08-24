@@ -117,17 +117,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 
     [self backButtonInit];
     
-    //[self.navigationController setToolbarHidden:NO animated:YES];
-   // self.automaticallyAdjustsScrollViewInsets = NO;
-    
-   // [self reloadRoom];
-    
-    // self.tabBarController.tabBar.hidden = YES;
-  //  [self.navigationController setToolbarHidden:NO animated:YES];
-  //  self.tabBarController.tabBar.hidden = YES;
-    
-   // self.to
-    //[self.navigationController setToolbarHidden:YES animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                                                        object:nil];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(leaveThisRoom)
@@ -159,6 +151,10 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self animateDown];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
+                                                        object:nil];
+
    // [self.bottomView removeFromSuperview];
   //  [self.navigationController setToolbarHidden:YES animated:YES];
 }
