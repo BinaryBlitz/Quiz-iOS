@@ -33,6 +33,8 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
+#import <UAAppReviewManager.h>
+
 
 
 //cell identifiers
@@ -54,7 +56,7 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     [super viewDidLoad];
     [self initStatusbarWithColor:[UIColor blackColor]];
     self.title = @"Результаты";
-    
+    [UAAppReviewManager userDidSignificantEvent:YES];
     [self configureBackgroundImage];
     [self backButtonInit];
     
@@ -96,6 +98,13 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
                                              selector:@selector(oneOfUsersFinishedRoom:)
                                                  name:QZBOneUserFinishedGameInRoom
                                                object:nil];
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+  //  [UAAppReviewManager showPromptIfNecessary];
     
 }
 

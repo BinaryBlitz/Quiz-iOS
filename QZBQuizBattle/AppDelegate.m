@@ -36,6 +36,8 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 
+#import <UAAppReviewManager.h>
+
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -57,6 +59,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
+    
+    [UAAppReviewManager setAppID:@"1017347211"];
+    [UAAppReviewManager setSignificantEventsUntilPrompt:7];
+    [UAAppReviewManager setDaysUntilPrompt:4];
+    [UAAppReviewManager setAppName:@"\"1 на 1\""];
+    [UAAppReviewManager setCancelButtonTitle:@"Не нравится"];
+    [UAAppReviewManager setDebug:NO];
 
     [Fabric with:@[ CrashlyticsKit ]];
 

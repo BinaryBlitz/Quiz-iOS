@@ -39,6 +39,8 @@
 // sounds
 #import <JSQSystemSoundPlayer.h>
 
+#import <UAAppReviewManager.h>
+
 @import AVFoundation;
 
 NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
@@ -86,6 +88,8 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+  //  [UAAppReviewManager userDidSignificantEvent:YES];
     
     if (!self.challengeDescriptionWithResult) {
         [self initSessionResults];
@@ -146,10 +150,13 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 
+    
     if (!self.isOfflineChallenge && !self.isAnimated) {
         self.isAnimated = YES;
         [self playResultsSounds];
         [self animateResults];
+       // [UAAppReviewManager showPromptIfNecessary];
+         [UAAppReviewManager userDidSignificantEvent:YES];
     }
 }
 
