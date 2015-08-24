@@ -127,8 +127,6 @@
 		1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1983EE3A1AAC8C1700D59268 /* icon_back_white.png */; };
 		1989C6B91B749B8E001ECF3A /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1989C6B81B749B8E001ECF3A /* wrong.wav */; };
 		1989C6BB1B749BA0001ECF3A /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1989C6BA1B749BA0001ECF3A /* correct.wav */; };
-		1989C6BE1B74A01B001ECF3A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1989C6BC1B74A01B001ECF3A /* lose.wav */; };
-		1989C6BF1B74A01B001ECF3A /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1989C6BD1B74A01B001ECF3A /* win.wav */; };
 		1989C6C71B74BB5A001ECF3A /* melody.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1989C6C61B74BB5A001ECF3A /* melody.wav */; };
 		1989C6CB1B74C87F001ECF3A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1989C6CA1B74C87F001ECF3A /* AVFoundation.framework */; };
 		198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */; };
@@ -174,6 +172,8 @@
 		19CFA1971B5D86ED00DC8C43 /* QZBAboutTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA1961B5D86ED00DC8C43 /* QZBAboutTVC.m */; };
 		19CFA19A1B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */; };
 		19CFA19D1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CFA19C1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m */; };
+		19D282C61B8B5E99007213F9 /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 19D282C41B8B5E99007213F9 /* lose.wav */; };
+		19D282C71B8B5E99007213F9 /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 19D282C51B8B5E99007213F9 /* win.wav */; };
 		19D6911B1A6E5EB7008B2AE1 /* QZBEmailTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */; };
 		19D691211A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */; };
 		19D691241A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D691231A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.m */; };
@@ -421,8 +421,6 @@
 		1983EE3A1AAC8C1700D59268 /* icon_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back_white.png; sourceTree = "<group>"; };
 		1989C6B81B749B8E001ECF3A /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
 		1989C6BA1B749BA0001ECF3A /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
-		1989C6BC1B74A01B001ECF3A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
-		1989C6BD1B74A01B001ECF3A /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
 		1989C6C61B74BB5A001ECF3A /* melody.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = melody.wav; sourceTree = "<group>"; };
 		1989C6CA1B74C87F001ECF3A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		198C33EF1A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuizTopicIAPHelper.h; sourceTree = "<group>"; };
@@ -511,6 +509,8 @@
 		19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBShowAllRoomsOnMainCell.m; sourceTree = "<group>"; };
 		19CFA19B1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnMainCell.h; sourceTree = "<group>"; };
 		19CFA19C1B5E8CDF00DC8C43 /* QZBRoomOnMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomOnMainCell.m; sourceTree = "<group>"; };
+		19D282C41B8B5E99007213F9 /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
+		19D282C51B8B5E99007213F9 /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
 		19D691191A6E5EB7008B2AE1 /* QZBEmailTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEmailTextField.h; sourceTree = "<group>"; };
 		19D6911A1A6E5EB7008B2AE1 /* QZBEmailTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEmailTextField.m; sourceTree = "<group>"; };
 		19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+QZBShakeExtension.h"; sourceTree = "<group>"; };
@@ -773,9 +773,9 @@
 		191E46681B0279170037963F /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				19D282C41B8B5E99007213F9 /* lose.wav */,
+				19D282C51B8B5E99007213F9 /* win.wav */,
 				1989C6C61B74BB5A001ECF3A /* melody.wav */,
-				1989C6BC1B74A01B001ECF3A /* lose.wav */,
-				1989C6BD1B74A01B001ECF3A /* win.wav */,
 				1989C6BA1B749BA0001ECF3A /* correct.wav */,
 				1989C6B81B749B8E001ECF3A /* wrong.wav */,
 				191E466F1B03858D0037963F /* timer.wav */,
@@ -1616,12 +1616,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				191E12E71A8BD48500AFB829 /* notAchiv.png in Resources */,
+				19D282C71B8B5E99007213F9 /* win.wav in Resources */,
 				1944A1871B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf in Resources */,
 				1944A1841B1098A40095C600 /* MuseoSansCyrl_1.otf in Resources */,
 				191E46651B023CD60037963F /* leftRed.png in Resources */,
 				1944A1961B10CB050095C600 /* placeholderIMG.png in Resources */,
 				1983EE311AAC6DDF00D59268 /* icon_next.png in Resources */,
-				1989C6BF1B74A01B001ECF3A /* win.wav in Resources */,
 				191E46671B023CD60037963F /* rightRed.png in Resources */,
 				1944A1831B1098A40095C600 /* MuseoSansCyrl_0.otf in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
@@ -1631,12 +1631,12 @@
 				19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */,
 				191E12E51A8BD3CA00AFB829 /* Artboard 1.png in Resources */,
 				1944A1881B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf in Resources */,
+				19D282C61B8B5E99007213F9 /* lose.wav in Resources */,
 				1989C6B91B749B8E001ECF3A /* wrong.wav in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
 				1944A1851B1098A40095C600 /* MuseoSansCyrl_2.otf in Resources */,
 				191E46661B023CD60037963F /* rightGreen.png in Resources */,
 				19CFA1941B5D856500DC8C43 /* logo-512.png in Resources */,
-				1989C6BE1B74A01B001ECF3A /* lose.wav in Resources */,
 				1944A18B1B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf in Resources */,
 				1944A18C1B1098A40095C600 /* MuseoSansCyrl.otf in Resources */,
 				1944A1861B1098A40095C600 /* MuseoSansCyrl_3.otf in Resources */,

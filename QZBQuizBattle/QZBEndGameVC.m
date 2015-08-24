@@ -39,6 +39,8 @@
 // sounds
 #import <JSQSystemSoundPlayer.h>
 
+@import AVFoundation;
+
 NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
 @interface QZBEndGameVC ()  //<UIGestureRecognizerDelegate>
@@ -64,6 +66,8 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
+@property (strong, nonatomic) AVAudioPlayer *soundPlayer;
+
 //@property(strong, nonatomic) UITapGestureRecognizer *opponentGestureRecognizer;
 
 @end
@@ -82,7 +86,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
+    
     if (!self.challengeDescriptionWithResult) {
         [self initSessionResults];
     }
@@ -153,6 +157,10 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
+    if(self.soundPlayer) {
+        [self.soundPlayer stop];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -580,12 +588,34 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 }
 
 -(void)playResultsSounds{
+    if([JSQSystemSoundPlayer sharedPlayer].on){
     [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
     if(self.firstUserScore < self.secondUserScore) {
-        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
+//        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
+        [self playWithName:@"lose"];
+        
     } else if(self.firstUserScore > self.secondUserScore) {
-        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
+//        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
+        [self playWithName:@"win"];
     }
+        
+        
+    }
+}
+
+-(void)playWithName:(NSString *)name {
+    NSString *soundFilePath = [NSString stringWithFormat:@"%@/%@.wav",
+                               [[NSBundle mainBundle] resourcePath],name];
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    NSError *error;
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
+                                                                   error:&error];
+    
+    self.soundPlayer = player;
+    
+    player.numberOfLoops = 0; 
+    [player prepareToPlay];
+    [player play];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {

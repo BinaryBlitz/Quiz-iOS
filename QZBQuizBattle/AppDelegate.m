@@ -222,7 +222,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         // this function in a
         // shipping application, although it may be useful during development.
         DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+       // abort();
     }
 
     return _persistentStoreCoordinator;
