@@ -204,6 +204,12 @@
 #define COCOAPODS_VERSION_MINOR_TSMessages 9
 #define COCOAPODS_VERSION_PATCH_TSMessages 12
 
+// UAAppReviewManager
+#define COCOAPODS_POD_AVAILABLE_UAAppReviewManager
+#define COCOAPODS_VERSION_MAJOR_UAAppReviewManager 0
+#define COCOAPODS_VERSION_MINOR_UAAppReviewManager 2
+#define COCOAPODS_VERSION_PATCH_UAAppReviewManager 6
+
 // UAProgressView
 #define COCOAPODS_POD_AVAILABLE_UAProgressView
 #define COCOAPODS_VERSION_MAJOR_UAProgressView 0
