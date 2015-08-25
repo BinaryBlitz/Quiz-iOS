@@ -124,14 +124,16 @@ NSString *const QZBNoInternetConnectionMessage =
 
             [self updateCategories:responseObject];
 
+            //REDO problems
             [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil
                                                        completion:^(BOOL success, NSError *error) {
-                                                           if (success) {
+                                                           
+                                                          // if (success) {
                                                                if (successAF) {
-                                                                   successAF(
-                                                                       [QZBCategory MR_findAll]);
+                                                                   
+                                                                   successAF([QZBCategory MR_findAll]);
                                                                }
-                                                           }
+                                                           //}
                                                        }];
 
         }

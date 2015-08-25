@@ -32,6 +32,8 @@
 @property (strong, nonatomic) QZBCategory *choosedCategory;
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 
+@property(strong, nonatomic) UIRefreshControl *refreshControl;
+
 
 @end
 
@@ -46,6 +48,18 @@
 
     self.mainTableView.delegate = self;
     self.mainTableView.dataSource = self;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(initCategories) forControlEvents:UIControlEventValueChanged];
+    
+    [self.mainTableView addSubview:self.refreshControl];
+    [self.mainTableView sendSubviewToBack:self.refreshControl];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    
+//    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+//    tableViewController.tableView = self.mainTableView;
+//    
+//    tableViewController.refreshControl = self.refreshControl;
     
      NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                             ascending:YES];
@@ -160,8 +174,12 @@
 
 - (void)initCategories {
     //__weak typeof(self) weakSelf = self;
+    
+   // [self.refreshControl beginRefreshing];
 
     [[QZBServerManager sharedManager] GETCategoriesOnSuccess:^(NSArray *topics) {
+        
+        [self.refreshControl endRefreshing];
 
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                                ascending:YES];
@@ -172,6 +190,8 @@
         [self.mainTableView reloadData];
 
     } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+        [self.refreshControl endRefreshing];
 
         if (statusCode == 401) {
             [[QZBCurrentUser sharedInstance] userLogOut];

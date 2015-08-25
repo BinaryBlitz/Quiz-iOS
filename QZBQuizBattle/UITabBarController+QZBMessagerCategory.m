@@ -29,7 +29,7 @@
     [TSMessage showNotificationInViewController:self
                                           title:messge subtitle:nil
                                           image:[UIImage imageNamed:@"messageIcon"]
-                                           type:TSMessageNotificationTypeMessage
+                                           type:TSMessageNotificationTypeSuccess
                                        duration:0.0 callback:^{
                                            [self showMessageList];}
                                     buttonTitle:nil

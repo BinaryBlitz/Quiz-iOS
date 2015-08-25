@@ -108,6 +108,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 
     [[NSUserDefaults standardUserDefaults] setObject:pushToken forKey:@"APNStoken"];
+   // [[NSUserDefaults standardUserDefaults] setObject:pushTokenData forKey:@"APNStokenData"];
     [[NSUserDefaults standardUserDefaults] synchronize];  //?
 
     DDLogVerbose(@"push token setted %@", self.pushToken);
