@@ -432,12 +432,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)showMessageNotificationWithDictInActiveApp:(NSDictionary *)userInfo {
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         NSDictionary *d = userInfo[@"aps"];
-        NSString *body = d[@"alert"];
+        NSString *body = @"Новое сообщение";
+        if(d[@"alert"] && ![d[@"alert"] isEqual:[NSNull null]] && ![d[@"alert"] isEqual:@""]){
+            body = d[@"alert"];
+        }
 //        NSDictionary *p = userInfo[@"player"];
 //        NSString *username = p[@"username"];  // userInfo[@""];
 //        NSString *body = d[@"content"];
 //        
 //        body = userInfo[]
+        
+        
         NSDictionary *payload = @{ @"username" : @"", @"message" : body };
         [[NSNotificationCenter defaultCenter]
             postNotificationName:@"QZBMessageRecievedNotificationIdentifier"
