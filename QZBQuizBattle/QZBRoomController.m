@@ -345,7 +345,22 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 
 -(void)leaveThisRoom {
     self.needRemoveObserver = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+    NSArray *arr = self.navigationController.viewControllers;
+    UIViewController *destVC = nil;
+    for(int i = 0;i<arr.count;i++){
+        UIViewController *c = arr[i];
+        if([c isKindOfClass:[self class]]){
+            destVC = arr[i-1];
+            break;
+        }
+    }
+    if(destVC){
+        [self.navigationController popToViewController:destVC animated:YES];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+    
 }
 
 #pragma mark - UITableViewDelegate
