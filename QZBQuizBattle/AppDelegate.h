@@ -16,7 +16,7 @@
                   alpha:1.0]
 
 
-#define QZB_PRODUCTION 1
+#define QZB_PRODUCTION 0
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

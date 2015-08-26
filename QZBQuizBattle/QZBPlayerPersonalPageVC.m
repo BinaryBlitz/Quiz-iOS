@@ -1039,7 +1039,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
                        success:nil
                        failure:nil];
 
-    [self.alert showCustom:self.navigationController
+    [self.alert showCustom:self.tabBarController
                      image:v.image
                      color:[UIColor lightBlueColor]
                      title:achievment.name
