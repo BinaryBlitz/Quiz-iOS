@@ -91,7 +91,7 @@
         v.image = [UIImage imageNamed:@"achiv"];
     }
 
-    [alert showCustom:self.navigationController
+    [alert showCustom:self.tabBarController
                    image:v.image
                    color:[UIColor lightBlueColor]
                    title:name
