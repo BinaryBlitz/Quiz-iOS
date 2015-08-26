@@ -63,6 +63,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
          }
 
         if (self.pushToken) {
+            
             [[QZBServerManager sharedManager] POSTAPNsToken:self.pushToken
                 onSuccess:^{
 
@@ -84,6 +85,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     
     if (!self.pushToken) {
+        
         self.pushToken = pushToken;
         DDLogVerbose(@"push token %@", pushToken);
         if (self.user) {
