@@ -45,6 +45,7 @@ NSString *const QZBShowFriendsChooserSegieIdentifier = @"showFriendsChooser";
 //message
 
 NSString *const QZBNoRoomErrMessage = @"Комната была удалена";
+NSString *const QZBNoPlacesInRoom = @"Все места в комнате заняты";
 NSString *const QZBStartSessionProblems = @"Что-то пошло не так";
 
 // lastButtonStateEnum
@@ -229,6 +230,22 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
                 }];
         }
     }
+}
+
+-(void)leaveRoomWithMessage:(NSString *)message {
+    [SVProgressHUD showErrorWithStatus:message];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(2.0 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [SVProgressHUD dismiss];
+                       [self leaveDeletedRoom];
+                       [[UIApplication sharedApplication]
+                        endIgnoringInteractionEvents];
+                       //   [self.navigationController popViewControllerAnimated:YES];
+                       
+                   });
 }
 
 -(void)leaveDeletedRoom {
@@ -446,19 +463,24 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
         [self.refreshControl endRefreshing];
         
         if(statusCode == 404){
-            [SVProgressHUD showErrorWithStatus:QZBNoRoomErrMessage];
-            [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+//            [SVProgressHUD showErrorWithStatus:QZBNoRoomErrMessage];
+//            [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+//            
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+//                                         (int64_t)(2.0 * NSEC_PER_SEC)),
+//                           dispatch_get_main_queue(), ^{
+//                [SVProgressHUD dismiss];
+//                [self leaveDeletedRoom];
+//                [[UIApplication sharedApplication]
+//                 endIgnoringInteractionEvents];
+//             //   [self.navigationController popViewControllerAnimated:YES];
+//                
+//            });
+            [self leaveRoomWithMessage:QZBNoRoomErrMessage];
+        } else if (statusCode == 403) {
+            [self leaveRoomWithMessage:QZBNoPlacesInRoom];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                         (int64_t)(2.0 * NSEC_PER_SEC)),
-                           dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                [self leaveDeletedRoom];
-                [[UIApplication sharedApplication]
-                 endIgnoringInteractionEvents];
-             //   [self.navigationController popViewControllerAnimated:YES];
-                
-            });
+            
         }
        // [SVProgressHUD dismiss];
         
@@ -690,8 +712,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
         
         CGRect r = [UIScreen mainScreen].bounds;
         
-        
-        CGRect destRect = CGRectMake(0, r.size.height, r.size.width, 80);
+        CGSize navRect = self.navigationController.view.frame.size;
+        CGRect destRect = CGRectMake(0, r.size.height - 80, r.size.width, 80);
         
         UIView *v = [[UIView alloc] initWithFrame:destRect];
      //   UIColor *firstColor = [UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
@@ -726,14 +748,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
         
         
         [v addSubview:button];
-//        label.numberOfLines = 2;
-//        label.text = @"Заказ на сумму 0 р.\n(минимум 1500 р.)";
-//        self.orderLabel = label;
-//        self.makeOrderButton = button;
-//        [v addSubview:label];
-        
-        
-        
     }
     
     return _bottomView;
@@ -742,11 +756,12 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 
 
 -(void)animateUp {
-    CGRect r = [UIScreen mainScreen].bounds;
-    [self.navigationController.view addSubview:self.bottomView];
+    CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
+    [self.view addSubview:self.bottomView];
+    [self.view bringSubviewToFront:self.bottomView];
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.bottomView.frame = CGRectMake(0, r.size.height - 80, r.size.width, 80);
+                         self.bottomView.frame = CGRectMake(0, r.size.height - 160, r.size.width, 80);
     }];
 }
 
