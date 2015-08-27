@@ -436,6 +436,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         if(d[@"alert"] && ![d[@"alert"] isEqual:[NSNull null]] && ![d[@"alert"] isEqual:@""]){
             body = d[@"alert"];
         } else {
+            return;
             NSLog(@"EMPTY");
         }
 //        NSDictionary *p = userInfo[@"player"];
