@@ -422,6 +422,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
             }
             onFailure:^(NSError *error, NSInteger statusCode){
 
+                if(statusCode == 403) {
+                    [self leaveRoomWithMessage:QZBNoPlacesInRoom];
+                }
                 
             }];
 }
@@ -477,11 +480,12 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 //                
 //            });
             [self leaveRoomWithMessage:QZBNoRoomErrMessage];
-        } else if (statusCode == 403) {
-            [self leaveRoomWithMessage:QZBNoPlacesInRoom];
-            
-            
         }
+//        } else if (statusCode == 403) {
+//            [self leaveRoomWithMessage:QZBNoPlacesInRoom];
+//            
+//            
+//        }
        // [SVProgressHUD dismiss];
         
     }];
@@ -712,8 +716,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
         
         CGRect r = [UIScreen mainScreen].bounds;
         
-        CGSize navRect = self.navigationController.view.frame.size;
-        CGRect destRect = CGRectMake(0, r.size.height - 80, r.size.width, 80);
+        //CGSize navRect = self.navigationController.view.frame.size;
+        CGRect destRect = CGRectMake(0, r.size.height, r.size.width, 80);
         
         UIView *v = [[UIView alloc] initWithFrame:destRect];
      //   UIColor *firstColor = [UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
@@ -754,6 +758,17 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
     
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(_bottomView){
+    CGRect frame = self.bottomView.frame;
+    frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height - self.bottomView.frame.size.height;
+    self.bottomView.frame = frame;
+    
+    [self.view bringSubviewToFront:self.bottomView];
+    }
+    
+}
+
 
 -(void)animateUp {
     CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
@@ -761,7 +776,10 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
     [self.view bringSubviewToFront:self.bottomView];
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.bottomView.frame = CGRectMake(0, r.size.height - 160, r.size.width, 80);
+                         self.bottomView.frame = CGRectMake(0,
+                                                            self.tableView.contentOffset.y + self.tableView.frame.size.height - self.bottomView.frame.size.height,
+                                                            r.size.width,
+                                                            80);
     }];
 }
 
