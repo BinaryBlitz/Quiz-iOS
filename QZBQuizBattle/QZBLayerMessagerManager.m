@@ -8,6 +8,7 @@
 #import "QZBUserWorker.h"
 
 #import "QZBServerManager.h"
+#import "AppDelegate.h"
 
 //#import "LQSViewController.h"
 //#import "LQSAppDelegate.h"
