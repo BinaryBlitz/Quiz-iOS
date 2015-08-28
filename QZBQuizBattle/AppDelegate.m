@@ -4,7 +4,7 @@
 //
 //  Created by Andrey Mikhaylov on 11/12/14.
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//build 1.0.14
+//build 1.0.1 19
 
 #define MR_LOGGING_ENABLED 0
 
