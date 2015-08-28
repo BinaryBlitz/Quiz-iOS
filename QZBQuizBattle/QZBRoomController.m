@@ -609,7 +609,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
             return @"";
             break;
         case QZBRoomStateIsNotReady:
-            return @"ПОДТВЕРТИТЕ ГОТОВНОСТЬ";
+            return @"ПОДТВЕРДИТЕ ГОТОВНОСТЬ";
         default:
             return @"";
             break;

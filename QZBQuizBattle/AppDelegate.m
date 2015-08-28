@@ -437,7 +437,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             body = d[@"alert"];
         } else {
             return;
-            NSLog(@"EMPTY");
+     //       NSLog(@"EMPTY");
         }
 //        NSDictionary *p = userInfo[@"player"];
 //        NSString *username = p[@"username"];  // userInfo[@""];
