@@ -53,6 +53,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
+   // self.automaticallyScrollsToMostRecentMessage = YES;
+    
+  //  self.inputToolbar.contentView.textView.delegate = self;
   
 
     self.senderId =  [QZBCurrentUser sharedInstance].user.userID.stringValue;
@@ -95,11 +98,15 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
 
- 
-
     [self.collectionView reloadData];
 
     self.tabBarController.tabBar.hidden = YES;
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(didReceiveTypingIndicator:)
+//                                                 name:LYRConversationDidReceiveTypingIndicatorNotification
+//                                               object:nil];
+    
     // [self initMessager];
 }
 
@@ -119,6 +126,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
+ //   [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                         object:nil];
@@ -207,15 +215,15 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
         [self finishSendingMessageAnimated:YES];
         
     } else {
-        if([QZBLayerMessagerManager sharedInstance].layerClient.isConnecting) {
-        [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
+     //   if([QZBLayerMessagerManager sharedInstance].layerClient.isConnecting) {
+        [TSMessage showNotificationWithTitle:@"Подключение к серверу"
                                     subtitle:@"Попробуйте позже"
                                         type:TSMessageNotificationTypeError];
-        } else {
-            [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
-                                        subtitle:@"Проверьте интернет соединение"
-                                            type:TSMessageNotificationTypeError];
-        }
+//        } else {
+//            [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
+//                                        subtitle:@"Проверьте интернет соединение"
+//                                            type:TSMessageNotificationTypeError];
+//        }
     }
 
 
@@ -522,14 +530,14 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     // For more information about Querying, check out https://developer.layer.com/docs/integration/ios#querying
     
    
-    NSString *identifier = nil;
+    NSString *identifier =  [self opponentIdentifier];//nil;
     
-    if([self.friend.userID isKindOfClass:[NSString class]]){
-        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
-    } else {
-        identifier = self.friend.userID.stringValue;
-    }
-    
+//    if([self.friend.userID isKindOfClass:[NSString class]]){
+//        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
+//    } else {
+//        identifier = self.friend.userID.stringValue;
+//    }
+//    
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
     query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsEqualTo
                                                     value:@[ identifier]];
@@ -715,6 +723,75 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
+//- (void)didReceiveTypingIndicator:(NSNotification *)notification
+//{
+//    NSString *participantID = notification.userInfo[LYRTypingIndicatorParticipantUserInfoKey];
+//    LYRTypingIndicator typingIndicator = [notification.userInfo[LYRTypingIndicatorValueUserInfoKey] unsignedIntegerValue];
+//    NSString *opponentIdentifier = [self opponentIdentifier];
+//    if (typingIndicator == LYRTypingDidBegin && [participantID isEqualToString:opponentIdentifier]) {
+//        NSLog(@"Typing Started");
+//        self.showTypingIndicator = YES;
+//    }
+//    else {
+//        NSLog(@"Typing Stopped");
+//        self.showTypingIndicator = NO;
+//    }
+//}
+
+
+-(NSString *)opponentIdentifier {
+    NSString *identifier = nil;
+    
+    if([self.friend.userID isKindOfClass:[NSString class]]){
+        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
+    } else {
+        identifier = self.friend.userID.stringValue;
+    }
+    
+    return identifier;
+}
+
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    // For more information about Typing Indicators, check out https://developer.layer.com/docs/integration/ios#typing-indicator
+//    
+//    // Sends a typing indicator event to the given conversation.
+//    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+//   // [self moveViewUpToShowKeyboard:YES];
+//}
+//
+//- (void)textViewDidEndEditing:(UITextView *)textView
+//{
+//    // Sends a typing indicator event to the given conversation.
+//    [self.conversation sendTypingIndicator:LYRTypingDidFinish];
+//}
+//
+//- (void)textViewDidBeginEditing:(UITextView *)textView{
+//    
+//     [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+//}
+//- (void)textViewDidEndEditing:(UITextView *)textView{
+//    [self.conversation sendTypingIndicator:LYRTypingDidFinish];
+//}
+//
+//- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+//    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+//    return YES;
+//   // return [super textViewShouldBeginEditing:textView];
+//}
+//- (BOOL)textViewShouldEndEditing:(UITextView *)textView{
+//    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+//    return YES;
+//  //  return [super textViewShouldBeginEditing:textView];
+//}
+
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
+//    return YES;
+//}
+//- (void)textViewDidChange:(UITextView *)textView {
+//    [self.conversation sendTypingIndicator:LYRTypingDidFinish];
+//}
 
 
 @end

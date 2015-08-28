@@ -49,7 +49,12 @@
     
     self.numberInRating.text = [NSString stringWithFormat:@"%ld", (long)user.position];
     
-    self.score.text = [NSString stringWithFormat:@"%ld", (long)user.points];
+    NSString *points = [NSString stringWithFormat:@"%ld", (long)user.points];
+    if(user.points > 100000){
+        NSInteger newPoints = user.points / 1000;
+        points = [NSString stringWithFormat:@"%ldк", (long)newPoints];
+    }
+    self.score.text = points;//[NSString stringWithFormat:@"%ld", (long)user.points];
     
   //  NSURL *url = [NSURL URLWithString:self.urlString];
     
