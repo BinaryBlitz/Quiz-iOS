@@ -91,6 +91,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                  name:IAPHelperProductRestoreFinished
                                                object:nil];
     
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:@"ru.binaryblitz.1vs1.fiveTimesBoosterTenDays" onSuccess:^{
+//            NSLog(@"OK");
+//        } onFailure:^(NSError *error, NSInteger statusCode) {
+//            NSLog(@"noooooooooooo");
+//        }];
+//    });
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

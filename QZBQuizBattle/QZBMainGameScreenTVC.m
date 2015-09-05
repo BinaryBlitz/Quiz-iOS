@@ -445,6 +445,11 @@
     UITableViewCell *cell = [self parentCellForView:sender];
 
     if (cell) {
+
+        if(![self checkCanPlayTopic:cell]){
+            return;
+        }
+        
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
 
         NSArray *arr = self.workArray[ip.section];
@@ -460,6 +465,11 @@
     UITableViewCell *cell = [self parentCellForView:sender];
 
     if (cell) {
+        
+        if(![self checkCanPlayTopic:cell]){
+            return;
+        }
+        
         NSIndexPath *ip = [self.mainTableView indexPathForCell:cell];
 
         NSArray *arr = self.workArray[ip.section];
@@ -667,6 +677,24 @@
     
 }
 
+-(BOOL)checkCanPlayTopic:(UITableViewCell *)cell {
+    if ([cell isKindOfClass:[QZBTopicTableViewCell class]]) {
+        QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+        if (!topicCell.visible) {
+            self.choosedIndexPath = nil;
+            [self.mainTableView beginUpdates];
+            [self.mainTableView endUpdates];
+            [self showAlertAboutUnvisibleTopic:topicCell.topicName.text];  // REDO
+            
+            return NO;
+        } else {
+            return YES;
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - reload topics
 
 - (void)reloadTopicsDataFromNotification:(NSNotification *)note {
@@ -677,7 +705,7 @@
 
 - (void)reloadTopicsData {
     
-    
+
     [[QZBServerManager sharedManager] GETTopicsForMainOnSuccess:^(NSDictionary *resultDict) {
 
         //         @{@"favorite_topics":faveTopics,

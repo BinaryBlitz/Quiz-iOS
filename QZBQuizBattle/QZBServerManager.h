@@ -171,6 +171,26 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+//- (void)GETReportForUserID:(NSNumber *)userID
+//                   message:(NSString *)reportMessage
+//                 onSuccess:(void (^)())success
+//                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+//
+//-(void)POSTReportForDevelopersWithMessage:(NSString *)message
+//                                onSuccess:(void (^)())success
+//                                onFailure:(void (^)(NSError *error,
+//                                                    NSInteger statusCode))failure;
+
+- (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
+                             onSuccess:(void (^)())success
+                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)DELETEDeclineFriendRequestWithID:(NSNumber *)reqID
+                               onSuccess:(void (^)())success
+                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - report
+
 - (void)GETReportForUserID:(NSNumber *)userID
                    message:(NSString *)reportMessage
                  onSuccess:(void (^)())success
@@ -180,14 +200,11 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                                 onSuccess:(void (^)())success
                                 onFailure:(void (^)(NSError *error,
                                                     NSInteger statusCode))failure;
+-(void)POSTReportForQuestionWithID:(NSInteger)questionID
+                           message:(NSString *)message onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
-                             onSuccess:(void (^)())success
-                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)DELETEDeclineFriendRequestWithID:(NSNumber *)reqID
-                               onSuccess:(void (^)())success
-                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly

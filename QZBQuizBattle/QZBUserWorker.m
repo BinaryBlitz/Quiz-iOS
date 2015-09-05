@@ -17,8 +17,6 @@
 
 @implementation QZBUserWorker
 
-
-
 + (QZBAnotherUser *)userFromConversation:(LYRConversation *)conversation {
     NSDictionary *dict = nil; //conversation.metadata;
     NSNumber *usID = [QZBCurrentUser sharedInstance].user.userID;

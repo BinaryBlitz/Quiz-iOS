@@ -505,7 +505,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            DDLogInfo(@"room path error%@", error);
+            DDLogInfo(@"path error%@", error);
 
         }];
 }
@@ -1301,6 +1301,38 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
+#pragma mark - report
+
+-(void)POSTReportForQuestionWithID:(NSInteger)questionID
+                           message:(NSString *)message onSuccess:(void (^)())success
+                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+    NSString *urlAsString = [NSString stringWithFormat:@"questions/%@/report", @(questionID)];
+    
+    [self.requestOperationManager POST:urlAsString
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation,
+                                         id responseObject) {
+                                   
+        DDLogInfo(@"report posted %@", responseObject);
+                                   if(success) {
+                                       success();
+                                   }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        DDLogError(@"report post error %@",error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        
+    }];
+
+    
+    
+}
+
 #pragma mark - ranking
 
 - (void)GETRankingWeekly:(BOOL)isWeekly
@@ -1406,6 +1438,7 @@ NSString *const QZBNoInternetConnectionMessage =
     if (!token) {
         return;
     }
+    DDLogInfo(@"device token %@", token);
 
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
@@ -1520,6 +1553,7 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)POSTInAppPurchaseIdentifier:(NSString *)identifier
                           onSuccess:(void (^)())success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"identifier" : identifier };
@@ -1537,7 +1571,7 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-            DDLogInfo(@" purchases failure");
+            DDLogError(@" purchases failure");
             if (failure) {
                 failure(error, operation.response.statusCode);
             }
@@ -1702,7 +1736,7 @@ NSString *const QZBNoInternetConnectionMessage =
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         
-        DDLogError(@"layer responce %@ identy err %@ status %ld",operation, error, operation.response.statusCode);
+        DDLogError(@"layer responce %@ identy err %@ status %ld",operation, error, (long)operation.response.statusCode);
         //operation.response
         
         if (callback) {
