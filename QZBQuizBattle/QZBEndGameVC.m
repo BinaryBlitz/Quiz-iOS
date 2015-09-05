@@ -26,6 +26,8 @@
 #import "QZBAnotherUser.h"
 #import "QZBTopicWorker.h"
 
+#import "QZBQuestionReportTVC.h"
+
 #import "QZBChallengeDescriptionWithResults.h"
 
 // dfiimage
@@ -44,6 +46,7 @@
 @import AVFoundation;
 
 NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
+NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportIdentifier";
 
 @interface QZBEndGameVC ()  //<UIGestureRecognizerDelegate>
 
@@ -68,6 +71,9 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 @property (strong, nonatomic) id<QZBUserProtocol> opponent;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
+
+@property(strong, nonatomic) NSArray *questions;//QZBQuestion
+
 @property (strong, nonatomic) AVAudioPlayer *soundPlayer;
 
 //@property(strong, nonatomic) UITapGestureRecognizer *opponentGestureRecognizer;
@@ -85,9 +91,13 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     [self.navigationItem setHidesBackButton:YES animated:NO];
 
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    [self.tabBarController setHidesBottomBarWhenPushed:NO];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    [self addBarButtonRight];
     
   //  [UAAppReviewManager userDidSignificantEvent:YES];
     
@@ -148,7 +158,7 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+   // self.tabBarController.tabBar.hidden = NO;
 
     
     if (!self.isOfflineChallenge && !self.isAnimated) {
@@ -217,6 +227,13 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     } else {
         self.opponent = nil;
     }
+    self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
+    
+    //TEST
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
+//    });
+    
     [[QZBSessionManager sessionManager] closeSession];
 }
 
@@ -288,6 +305,9 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
             (QZBPlayerPersonalPageVC *)segue.destinationViewController;
 
         [destVC initPlayerPageWithUser:self.opponent];
+    } else if ([segue.identifier isEqualToString:QZBSegueToQuestionsReportIdentifier]) {
+        QZBQuestionReportTVC *destVC = segue.destinationViewController;
+        [destVC configureWithQuestions:self.questions topic:self.topic];
     }
 }
 
@@ -633,11 +653,27 @@ NSString *const QZBSegueToOpponentUser = @"showOpponentFromEndGame";
     return UIStatusBarStyleLightContent;
 }
 
+#pragma mark - report
+-(void)addBarButtonRight {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(showReportScreen)];
+}
+
+-(void)showReportScreen {
+    [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
+}
+
+
+
 #pragma mark - gesture recognizer
 
 - (IBAction)showUser:(id)sender {
     NSLog(@"gg");
     [self showOpponent];
 }
+
+
 
 @end
