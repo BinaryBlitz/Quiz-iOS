@@ -197,6 +197,11 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     }
 }
 
+-(NSArray *)sessionQuestions {
+    
+    return self.gameSession.questions;
+}
+
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker {
     if (_onlineSessionWorker && _bot) {
         return;
@@ -216,7 +221,7 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     [[QZBServerManager sharedManager] PATCHMakeChallengeOfflineWithNumber:@(self.gameSession.session_id)
                                                                 onSuccess:^{
         
-                                                                    DDLogInfo(@"PATCHED");
+       DDLogInfo(@"PATCHED");
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
     }];

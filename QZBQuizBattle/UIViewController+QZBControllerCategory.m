@@ -121,7 +121,7 @@
     // UIImageView *v = [[UIImageView alloc] init];
 
     
-    [alert showInfo:self.navigationController
+    [alert showInfo:self.tabBarController
               title:@"Ошибка"
            subTitle:descr
    closeButtonTitle:@"ОК"
@@ -162,7 +162,7 @@
     }];
     
     
-    [alert showInfo:self.navigationController
+    [alert showInfo:self.tabBarController
               title:title subTitle:subTitle
    closeButtonTitle:@"Нет" duration:0.0f];
     
