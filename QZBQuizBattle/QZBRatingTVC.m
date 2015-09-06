@@ -28,6 +28,7 @@
     [super viewDidLoad];
 
     self.view.multipleTouchEnabled = NO;
+//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.ratingTableView.delegate = self;
     self.ratingTableView.dataSource = self;
@@ -56,6 +57,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+//    if(self.topRank.count == 0 && self.playerRank.count == 0) {
+//        return 1;
+//    }
+    
     NSInteger result = 0;
 
     if (self.topRank) {
@@ -74,6 +80,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if(self.topRank.count == 0 && self.playerRank.count == 0){
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
+//        return cell;
+//    }
+    
     UITableViewCell *resultCell = nil;
 
     if (indexPath.row == [self.topRank count] && [self shouldShowSeperator]) {

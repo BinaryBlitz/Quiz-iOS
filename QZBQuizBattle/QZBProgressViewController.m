@@ -146,7 +146,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [super viewDidAppear:animated];
 
     DDLogInfo(@"showed progress VC");
-    self.tabBarController.tabBar.hidden = YES;
+  //  self.tabBarController.tabBar.hidden = YES;
 
     self.setted = NO;
     self.isCanceled = NO;

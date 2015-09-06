@@ -71,6 +71,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     
     [self setNeedsStatusBarAppearanceUpdate];
     
+   // self.tabBarController.hidesBottomBarWhenPushed = NO;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications" object:nil];
     
     [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"timer"
@@ -207,6 +209,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     //[self prepareQuestion];
     [self showQuestionAndAnswers];
     [self timeCountingStart];
+    
+    self.tabBarController.tabBar.hidden = YES;
     
     self.backgroundTask =
         [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
@@ -717,7 +721,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 //                         endBackgroundTask:self.backgroundTask];
 //                        self.backgroundTask = UIBackgroundTaskInvalid;
 //                    }
-                    
+                    self.closeButton.enabled = NO;
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
                         
@@ -731,7 +735,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                                                                                 onSuccess:nil onFailure:nil];
                             [self performSegueWithIdentifier:QZBRoomResultSegueIdentifier sender:nil];
                         }else{
-                            [weakSelf performSegueWithIdentifier:@"gameEnded" sender:nil];
+                            [self performSegueWithIdentifier:@"gameEnded" sender:nil];
                         }
                         
                     });
