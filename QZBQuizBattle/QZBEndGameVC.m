@@ -97,8 +97,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self addBarButtonRight];
-    
   //  [UAAppReviewManager userDidSignificantEvent:YES];
     
     if (!self.challengeDescriptionWithResult) {
@@ -158,7 +156,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-   // self.tabBarController.tabBar.hidden = NO;
+    self.tabBarController.tabBar.hidden = NO;
 
     
     if (!self.isOfflineChallenge && !self.isAnimated) {
@@ -233,7 +231,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
 //    });
-    
+    [self addBarButtonRight];
     [[QZBSessionManager sessionManager] closeSession];
 }
 

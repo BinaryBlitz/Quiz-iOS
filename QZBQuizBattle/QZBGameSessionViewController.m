@@ -210,6 +210,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     [self showQuestionAndAnswers];
     [self timeCountingStart];
     
+    self.tabBarController.tabBar.hidden = YES;
+    
     self.backgroundTask =
         [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                 [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];

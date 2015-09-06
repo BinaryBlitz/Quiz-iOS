@@ -161,10 +161,17 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 
 #pragma mark - support methods
 
--(void)updateBadges{
+-(void)updateBadges {
     
     UITabBarItem *it = self.tabBar.items[userBar];
     NSUInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
+    
+    NSUInteger messageCount = [[QZBLayerMessagerManager sharedInstance] unreadedCount];
+
+    if(messageCount >0){
+        count += messageCount;
+    }
+        
     if(count>0){
         it.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)count];
     }else{

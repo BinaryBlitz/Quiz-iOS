@@ -25,6 +25,8 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
+#import <SVProgressHUD.h>
+
 #import <TSMessages/TSMessage.h>
 
 #import "UIViewController+QZBControllerCategory.h"
@@ -94,6 +96,11 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
     //    self.tableView.contentInset =
     //    UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+     self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -308,31 +315,47 @@ navigation
 #pragma mark - action
 
 - (IBAction)makeReport:(UIButton *)sender {
-    UITableViewCell *cell = [self parentCellForView:sender];
+   QZBQuestionReportButtonCell *cell = (QZBQuestionReportButtonCell *)[self parentCellForView:sender];
     if (cell) {
+      
         NSIndexPath *ip = [self.tableView indexPathForCell:cell];
 
         QZBQuestion *q = self.questions[ip.section];
-
+//        cell.reportButton.enabled = NO;
+//        [cell.reportButton setTitle:@"" forState:UIControlStateDisabled];
+//        cell.reportActivityIndicator.hidden = NO;
+//        [cell.reportActivityIndicator startAnimating];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        
         [[QZBServerManager sharedManager] POSTReportForQuestionWithID:q.questionId
             message:@"report"
             onSuccess:^{
-                [TSMessage showNotificationWithTitle:QZBReportSendedMessage
-                                                type:TSMessageNotificationTypeSuccess];
+                [SVProgressHUD showSuccessWithStatus:QZBReportSendedMessage];
+//                [TSMessage showNotificationWithTitle:QZBReportSendedMessage
+//                                                type:TSMessageNotificationTypeSuccess];
+//                [cell.reportActivityIndicator stopAnimating];
+//                cell.reportActivityIndicator.hidden = YES;
+//                [cell.reportButton setTitle:@"Отправлено" forState:UIControlStateDisabled];
+                
 
             }
             onFailure:^(NSError *error, NSInteger statusCode) {
+                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+//                cell.reportButton.enabled = YES;
+//                [cell.reportButton setTitle:@"Пожаловаться" forState:UIControlStateNormal];
+//                [cell.reportActivityIndicator stopAnimating];
+//                cell.reportActivityIndicator.hidden = YES;
 
-//                [TSMessage showNotificationWithTitle:QZBReportSendedMessage
+//                [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
 //                                                type:TSMessageNotificationTypeSuccess];
                 // TEST
-
-                            [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
-                                                            type:TSMessageNotificationTypeError];
+//
+//                            [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
+//                                                            type:TSMessageNotificationTypeError];
 
             }];
 
-        NSLog(@"num %ld", q.questionId);
+        NSLog(@"num %ld", (long)q.questionId);
     }
 }
 
