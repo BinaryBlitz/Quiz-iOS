@@ -39,11 +39,12 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    UITabBarController *tabController = self.tabBarController;
-    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+//    UITabBarController *tabController = self.tabBarController;
+//    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
     
 
-    tabbarItem.badgeValue = nil;
+    
+    //tabbarItem.badgeValue = nil;
     
 
 }
@@ -68,6 +69,8 @@
     
     if(cell){
         if([cell isKindOfClass:[QZBFriendRequestCell class]]){
+            
+            
             NSLog(@"YES");
             QZBFriendRequestCell *c = (QZBFriendRequestCell *)cell;
             
@@ -83,6 +86,8 @@
                     c.declineButton.enabled = YES;
                     [c.acceptButton setTitle:@"Принято"
                                     forState:UIControlStateDisabled];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
+                                                                        object:nil];
                    
                 } else {
                     [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
@@ -125,6 +130,8 @@
                     
                     [self setFriendsOwner:nil andFriends:[QZBFriendRequestManager sharedInstance].incoming];
                     
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
+                                                                        object:nil];
                     
                 } else {
                     [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
