@@ -664,6 +664,7 @@ NSString *const QZBNoInternetConnectionMessage =
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            DDLogCError(@"didnt canceled %@",error);
         }];
 }
 

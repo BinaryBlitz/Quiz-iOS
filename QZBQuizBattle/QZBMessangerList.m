@@ -61,6 +61,9 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
+                                                        object:nil];
+    
    // [self setFriendsOwner:nil andFriends:[[QZBMessagerManager sharedInstance] usersInStorage]];
 }
 
