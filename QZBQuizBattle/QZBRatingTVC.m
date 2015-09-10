@@ -15,6 +15,14 @@
 #import "QZBUser.h"
 #import "UIColor+QZBProjectColors.h"
 
+#import <DFImageManager/DFImageManagerKit.h>
+#import <DFImageManagerKit+UI.h>
+//#import <DFImageManager/DFImageManager.h>
+//#import <DFImageManager/DFImageRequestOptions.h>
+//#import <DFImageManager/DFURLImageFetcher.h>
+//#import <DFImageManager/DFImageRequest.h>
+//#import <DFImageManager/DFImageView.h>
+
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSArray *topRank;     // QZBUserInRating
@@ -28,7 +36,7 @@
     [super viewDidLoad];
 
     self.view.multipleTouchEnabled = NO;
-//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    //    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.ratingTableView.delegate = self;
     self.ratingTableView.dataSource = self;
@@ -37,13 +45,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.ratingTableView reloadData];
-    
+
     if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
         pageVC.expectedType = self.tableType;
     }
 }
-
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -57,11 +64,10 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-//    if(self.topRank.count == 0 && self.playerRank.count == 0) {
-//        return 1;
-//    }
-    
+    //    if(self.topRank.count == 0 && self.playerRank.count == 0) {
+    //        return 1;
+    //    }
+
     NSInteger result = 0;
 
     if (self.topRank) {
@@ -71,7 +77,7 @@
     if (self.playerRank) {
         result += [self.playerRank count];
     }
-    if([self shouldShowSeperator]){
+    if ([self shouldShowSeperator]) {
         result++;
     }
 
@@ -80,11 +86,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if(self.topRank.count == 0 && self.playerRank.count == 0){
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
-//        return cell;
-//    }
-    
+    //    if(self.topRank.count == 0 && self.playerRank.count == 0){
+    //        UITableViewCell *cell = [tableView
+    //        dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
+    //        return cell;
+    //    }
+
     UITableViewCell *resultCell = nil;
 
     if (indexPath.row == [self.topRank count] && [self shouldShowSeperator]) {
@@ -93,26 +100,26 @@
         QZBRatingTVCell *cell =
             (QZBRatingTVCell *)[tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
         QZBUserInRating *user = nil;
-        
-        if(indexPath.row==0 || indexPath.row == 1 || indexPath.row == 2){
+
+        if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
             cell.myMedalView.alpha = 1.0;
-            if(indexPath.row == 0){
+            if (indexPath.row == 0) {
                 cell.myMedalView.backgroundColor = [UIColor goldColor];
-            }else if(indexPath.row == 1){
+            } else if (indexPath.row == 1) {
                 cell.myMedalView.backgroundColor = [UIColor silverColor];
-            }else if(indexPath.row == 2){
+            } else if (indexPath.row == 2) {
                 cell.myMedalView.backgroundColor = [UIColor bronzeColor];
             }
-        }else{
+        } else {
             cell.myMedalView.backgroundColor = [UIColor clearColor];
         }
 
         if (indexPath.row < [self.topRank count]) {
             user = self.topRank[indexPath.row];
         } else {
-            if([self shouldShowSeperator]){
-                user = self.playerRank[indexPath.row - [self.topRank count]-1];
-            }else{
+            if ([self shouldShowSeperator]) {
+                user = self.playerRank[indexPath.row - [self.topRank count] - 1];
+            } else {
                 user = self.playerRank[indexPath.row - [self.topRank count]];
             }
         }
@@ -123,55 +130,91 @@
     return resultCell;
 }
 
-
--(void)setCell:(QZBRatingTVCell *)cell user:(QZBUserInRating *)user{
-    
+- (void)setCell:(QZBRatingTVCell *)cell user:(QZBUserInRating *)user {
     [cell setCellWithUser:user];
-    
-    if(user.imageURL){
-    [cell.userpic setImageWithURL:user.imageURL
-                 placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
-    }else{
-        [cell.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
+
+
+}
+
+- (void)tableView:(UITableView *)tableView
+    didEndDisplayingCell:(UITableViewCell *)cell
+       forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
+        //        QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+        //        c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
     }
-    
-    
+}
+
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
+        QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+        QZBUserInRating *user = c.user;
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+        options.allowsClipping = YES;
+
+        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+
+        DFImageRequest *request = [DFImageRequest requestWithResource:user.imageURL
+                                                           targetSize:CGSizeZero
+                                                          contentMode:DFImageContentModeAspectFill
+                                                              options:options];
+
+        if (user.imageURL) {
+            [[DFImageManager sharedManager]
+                requestImageForRequest:request
+                            completion:^(UIImage *image, NSDictionary *info) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    UITableViewCell *cel =
+                                        [tableView cellForRowAtIndexPath:indexPath];
+                                    if (cel && [cel isKindOfClass:[QZBRatingTVCell class]]) {
+                                        QZBRatingTVCell *c = (QZBRatingTVCell *)cel;
+                                        c.userpic.image = image;
+                                    }
+                                });
+
+
+                            }];
+        } else {
+            [c.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
+        }
+
+        //  [self setCell:cell user:user indexPath:indexPath tableView:tableView];
+    }
 }
 //-(void)setUserCell:(QZBRatingTVCell *)cell
 
--(BOOL)shouldShowSeperator{
-    
-    if(self.playerRank){
+- (BOOL)shouldShowSeperator {
+    if (self.playerRank) {
         QZBUserInRating *user = [self.playerRank firstObject];
-        if(user.position <= 21){
+        if (user.position <= 21) {
             return NO;
         }
     }
-    if(!self.topRank || !self.playerRank){
+    if (!self.topRank || !self.playerRank) {
         return NO;
     }
     return YES;
-    
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    if(![cell isKindOfClass:[QZBRatingTVCell class]]){
+
+    if (![cell isKindOfClass:[QZBRatingTVCell class]]) {
         return;
     }
-    
-    if([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]){
-        
+
+    if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingTVCell *userCell = (QZBRatingTVCell *)cell;
         QZBUserInRating *user = userCell.user;
-        
+
         QZBRatingPageVC *vc = (QZBRatingPageVC *)self.parentViewController;
-        
+
         [vc showUserPage:user];
     }
 }

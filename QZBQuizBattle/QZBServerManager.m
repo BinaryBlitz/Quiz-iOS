@@ -44,10 +44,13 @@
 #import "QZBRoom.h"
 #import "QZBRoomSessionResults.h"
 #import "QZBRoomInvite.h"
+#import "QZBComment.h"
 
 // topics
 
 #import "QZBTopicWorker.h"
+
+#import <LoremIpsum/LoremIpsum.h>
 
 #import <DDLog.h>
 #if QZB_PRODUCTION
@@ -1307,10 +1310,13 @@ NSString *const QZBNoInternetConnectionMessage =
 -(void)POSTReportForQuestionWithID:(NSInteger)questionID
                            message:(NSString *)message onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    NSString *urlAsString = [NSString stringWithFormat:@"questions/%@/report", @(questionID)];
     
-    [self.requestOperationManager POST:urlAsString
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"question_id":@(questionID)
+                              };
+ //   NSString *urlAsString = [NSString stringWithFormat:@"reports/%@/report", @(questionID)];
+    
+    [self.requestOperationManager POST:@"reports"
                             parameters:params
                                success:^(AFHTTPRequestOperation *operation,
                                          id responseObject) {
@@ -1329,9 +1335,31 @@ NSString *const QZBNoInternetConnectionMessage =
         }
         
     }];
+}
 
+- (void)POSTReportForDevelopersWithMessage:(NSString *)message
+                                 onSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params =
+    @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+       @"message" : message };
     
-    
+    [self.requestOperationManager POST:@"reports"
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   DDLogCVerbose(@"report sended");
+                                   if (success) {
+                                       success();
+                                   }
+                                   
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   DDLogError(@"report error %@", error);
+                                   
+                                   if (failure) {
+                                       failure(error, operation.response.statusCode);
+                                   }
+                               }];
 }
 
 #pragma mark - ranking
@@ -2145,29 +2173,79 @@ NSString *const QZBNoInternetConnectionMessage =
         }];
 }
 
-- (void)POSTReportForDevelopersWithMessage:(NSString *)message
-                                 onSuccess:(void (^)())success
-                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params =
-        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-           @"message" : message };
+-(void)DELETEBanParticipationWithID:(NSNumber *)participationID onSuccess:(void (^)())succes
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *params = @{
+                             @"token" : [QZBCurrentUser sharedInstance].user.api_key
+                             };
+    NSString *urlAsString = [NSString stringWithFormat:@"participations/%@",participationID];
+    
+    [self.requestOperationManager DELETE:urlAsString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        DDLogCInfo(@"participation deleted ");
+        if(succes){
+            succes();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogCError(@"deletion error %@", error);
+        if(failure){
+             failure(error, operation.response.statusCode);
+        }
+    }];
 
-    [self.requestOperationManager POST:@"reports"
-        parameters:params
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            DDLogCVerbose(@"report sended");
-            if (success) {
+}
+
+
+-(void)GETChatForRoomWithID:(NSNumber *)roomID
+                  onSuccess:(void (^)(NSArray *messages))success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    [[[self class] sharedManager] GETAllFriendsOfUserWithID:[QZBCurrentUser sharedInstance].user.userID
+                                                  OnSuccess:^(NSArray *friends) {
+    
+                                                      NSMutableArray *comments = [NSMutableArray array];
+                                                      for(QZBAnotherUser *user in friends) {
+                                                           NSInteger words = (arc4random() % 40)+1;
+                                                          QZBComment *comment = [QZBComment new];
+                                                          comment.username = user.name;
+                                                          comment.owner = user;
+                                                          comment.text = [LoremIpsum wordsWithNumber:words];
+                                                          comment.timestamp = [LoremIpsum date];
+                                                          [comments addObject:comment];
+                                                      }
+                                                      if(success) {
+                                                          success([NSArray arrayWithArray:comments]);
+                                                      }
+                                                      
+    
+                                                  } onFailure:^(NSError *error, NSInteger statusCode) {
+    
+                                                      DDLogError(@"message error %@", error);
+                                                      
+                                                      if (failure) {
+                                                          failure(error, statusCode);
+                                                      }
+                                                  }];
+    
+}
+
+-(void)POSTSendMessage:(NSString *)message
+          inRoomWithID:(NSNumber *)roomID
+             onSuccess:(void (^)())success
+             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        int rand = arc4random()%100;
+        if(rand<80){
+            if(success){
                 success();
             }
-
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            DDLogError(@"report error %@", error);
-
-            if (failure) {
-                failure(error, operation.response.statusCode);
+        } else {
+            if(failure){
+                failure(nil,500);
             }
-        }];
+        }
+    });
+    
 }
 
 @end

@@ -324,6 +324,18 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                            onSuccess:(void (^)())success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+-(void)DELETEBanParticipationWithID:(NSNumber *)participationID
+                          onSuccess:(void (^)())succes
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+-(void)GETChatForRoomWithID:(NSNumber *)roomID
+                  onSuccess:(void (^)(NSArray *messages))success
+                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+-(void)POSTSendMessage:(NSString *)message
+          inRoomWithID:(NSNumber *)roomID
+             onSuccess:(void (^)())success
+             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
 

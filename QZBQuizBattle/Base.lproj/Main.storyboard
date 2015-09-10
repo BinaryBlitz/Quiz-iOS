@@ -1380,7 +1380,8 @@
                                                             <exclude reference="Huh-84-fMB"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="0.0" y="49" width="288" height="1"/>
                                                         <mask key="constraints">
                                                             <include reference="Huh-84-fMB"/>
                                                         </mask>
@@ -1393,6 +1394,9 @@
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="58" width="272" height="34"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="chooseAnotherTopic:" destination="Ava-zu-dhr" eventType="touchUpInside" id="cTg-Os-RFI"/>
                                                     </connections>
@@ -1404,6 +1408,9 @@
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="8" width="272" height="33"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="playAgainAction:" destination="Ava-zu-dhr" eventType="touchUpInside" id="zgG-RW-bZw"/>
                                                     </connections>
@@ -1455,7 +1462,8 @@
                                                     <exclude reference="y3u-on-yTH"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="56" y="226" width="288" height="101"/>
                                                 <mask key="subviews">
                                                     <include reference="4Zv-IN-8x0"/>
                                                     <include reference="Fft-kZ-o0V"/>
@@ -7882,6 +7890,24 @@
             </objects>
             <point key="canvasLocation" x="3714" y="-1833.75"/>
         </scene>
+        <!--Room Comment Controller-->
+        <scene sceneID="fdr-0I-CZp">
+            <objects>
+                <viewController id="6Ey-pp-ALX" customClass="QZBRoomCommentController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ncs-dc-puk"/>
+                        <viewControllerLayoutGuide type="bottom" id="97J-eu-ckE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="trC-6t-ate">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rkS-Qf-oFx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4662" y="-2523"/>
+        </scene>
         <!--Rating MainVC-->
         <scene sceneID="qkn-yo-yrm">
             <objects>
@@ -9248,11 +9274,12 @@
                         <segue destination="gni-60-aR2" kind="show" identifier="showRoomCategoryChooser" id="49e-sg-JRM"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="showGameController" id="efK-D3-R2p"/>
                         <segue destination="Fz7-DU-KlG" kind="show" identifier="showFriendsChooser" id="RYA-u4-3eK"/>
+                        <segue destination="6Ey-pp-ALX" kind="show" identifier="showChatFromRoomController" id="PTt-DU-Ngs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vem-PS-C6s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4716" y="-2070.75"/>
+            <point key="canvasLocation" x="4653" y="-1841.25"/>
         </scene>
         <!--Room Category ChooserVC-->
         <scene sceneID="i3o-gQ-6bq">
@@ -10443,12 +10470,12 @@
                                                     <exclude reference="G5J-0t-vCb"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="B9N-ii-cq3"/>
+                                                    <exclude reference="zDp-jv-55y"/>
                                                     <exclude reference="BcR-1k-qkR"/>
                                                     <exclude reference="S5N-uF-fJ9"/>
                                                     <exclude reference="VA3-9M-sL9"/>
                                                     <exclude reference="lK1-5V-Fy7"/>
-                                                    <exclude reference="B9N-ii-cq3"/>
-                                                    <exclude reference="zDp-jv-55y"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -10457,12 +10484,12 @@
                                                     <include reference="G5J-0t-vCb"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="B9N-ii-cq3"/>
+                                                    <include reference="zDp-jv-55y"/>
                                                     <include reference="BcR-1k-qkR"/>
                                                     <include reference="S5N-uF-fJ9"/>
                                                     <include reference="VA3-9M-sL9"/>
                                                     <include reference="lK1-5V-Fy7"/>
-                                                    <include reference="B9N-ii-cq3"/>
-                                                    <include reference="zDp-jv-55y"/>
                                                 </mask>
                                             </variation>
                                         </view>
