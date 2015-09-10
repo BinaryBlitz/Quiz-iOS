@@ -10,6 +10,7 @@
 #import "QZBUserInRating.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
+#import "UIFont+QZBCustomFont.h"
 
 @interface QZBRatingTVCell()
 
@@ -37,7 +38,7 @@
     if ([user.userID isEqual:[QZBCurrentUser sharedInstance].user.userID ]) {
         NSMutableAttributedString *atrName =
         [[NSMutableAttributedString alloc] initWithString:user.name];
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:18.0];
+        UIFont *font = [UIFont museoFontOfSize:18];
         [atrName addAttribute:NSFontAttributeName
                         value:font
                         range:NSMakeRange(0, [atrName length])];
