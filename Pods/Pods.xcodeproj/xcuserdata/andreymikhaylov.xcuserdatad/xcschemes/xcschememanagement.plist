@@ -2,134 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>Pods-AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-CocoaLumberjack.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-DBCamera.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-DFImageManager.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-DateTools.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-FLAnimatedImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-GPUImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-HexColors.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-JSBadgeView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-JSQMessagesViewController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-JSQSystemSoundPlayer.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-LayerKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-LoremIpsum.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-MagicalRecord.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SCLAlertView-Objective-C.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SVProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SlackTextViewController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SocketRocket.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-TSMessages.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-UAAppReviewManager.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-UAProgressView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-VK-ios-sdk.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-libPusher.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>UAAppReviewManager-iOS.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>0298F11FE8334E907EC33A5D</key>
@@ -138,6 +10,11 @@
 			<true/>
 		</dict>
 		<key>067EA10B5238A65D928F0AAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>08D22C5055BB6FF5BE7AAC8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,7 +29,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>170E2B8950A52ADEE0DBC97A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>185DB9D75DD3E1FEF2E985B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B2C49B06B57F93146E7097C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1BEDBD3D82B88DA654D47A4A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1CD66B2E80E0182CBC8BE6A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>220C22E0CE3AAFC795E22CA3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>231901FAA2E63F41C34CF3CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>23285B3E4721016340E599E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -167,12 +79,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>50CF777977765EEEBB6721CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>51D12DB010E6C652738C9416</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>54A4E5B4E8B08709BC9E998B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>55C4585268D472EB196CD32A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5705833109149E445E1FBDF9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -188,6 +115,11 @@
 			<true/>
 		</dict>
 		<key>7311A36E1D6E466C154B7F86</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88AD8E00EBC271F63709E720</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -212,6 +144,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9999D7BB93B336D4A371534D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A6A54C5AA08496E9C142659B</key>
 		<dict>
 			<key>primary</key>
@@ -222,7 +159,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B0A7A7BA83C087FC8B5247C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BB1C21E10F0323CB908C845C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C2900A2E3B0646B384F5F5CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C85F3E7BC6603F42D82A2D26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC4ED64D882D19AB48C75882</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D40AB57398860AE8982564DA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -237,7 +199,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E0170EF8C7BDEB2C22ACA361</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E7D0442E7D7B3CCBF3699934</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E84103E27E46AE03DD310CD4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E866A21AA104DCB1E3DBC716</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F0D39C4B9574A145EDAA4484</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F381A824B8F34AC27A59A33A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
