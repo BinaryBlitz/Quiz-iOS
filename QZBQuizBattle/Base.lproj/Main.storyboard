@@ -8606,7 +8606,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activitiIndicatorCellIdentifier" id="UG1-RN-zd3">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activitiIndicatorCellIdentifier" id="UG1-RN-zd3" customClass="QZBReloadingCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UG1-RN-zd3" id="LDN-Ah-nZk">
@@ -8639,6 +8639,9 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="activityIndicator" destination="nCf-dP-xOx" id="gRe-1r-3fI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

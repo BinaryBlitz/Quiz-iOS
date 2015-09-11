@@ -30,6 +30,8 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 
 @interface QZBMainTBC ()
 
+@property (assign, nonatomic) BOOL isAsked;
+
 @end
 
 @implementation QZBMainTBC
@@ -138,6 +140,10 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
         
         [self subscribeToMessages];
         
+        if(!self.isAsked){
+            [self checkUpdate];
+        }
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(subscribeToMessages)
                                                      name:QZBNeedShowMessagerNotifications
@@ -179,6 +185,52 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
     }
 }
 
+
+-(void)checkUpdate {
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+    
+    NSString *version = infoDictionary[@"CFBundleShortVersionString"];
+  //  NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
+    
+    
+    [[QZBServerManager sharedManager] GETCompareVersion:version onSuccess:^(QZBUpdateType updateType, NSString *message) {
+        self.isAsked = YES;
+        if(updateType != QZBUpdateTypeNone){
+            [self showAlertVersionUpdateWithType:updateType message:message];
+        }
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+    
+    }];
+}
+
+-(void)showAlertVersionUpdateWithType:(QZBUpdateType)type message:(NSString *)message {
+    switch (type) {
+        case QZBUpdateTypeMajor:
+            [self showMajorUpdateWithMessage:message];
+            break;
+        case QZBUpdateTypeMinor:
+            [self showMinorUpdateWithMessage:message];
+            break;
+        case QZBUpdateTypeBugfix:
+            [self showBugFixWithMessage:message];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)showMajorUpdateWithMessage:(NSString *)message {
+    
+}
+
+-(void)showMinorUpdateWithMessage:(NSString *)message {
+    
+}
+
+-(void)showBugFixWithMessage:(NSString *)message {
+    
+}
 
 
 

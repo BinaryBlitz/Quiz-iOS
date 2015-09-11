@@ -38,7 +38,7 @@
     if ([user.userID isEqual:[QZBCurrentUser sharedInstance].user.userID ]) {
         NSMutableAttributedString *atrName =
         [[NSMutableAttributedString alloc] initWithString:user.name];
-        UIFont *font = [UIFont museoFontOfSize:18];
+        UIFont *font = [UIFont boldMuseoFontOfSize:18];
         [atrName addAttribute:NSFontAttributeName
                         value:font
                         range:NSMakeRange(0, [atrName length])];

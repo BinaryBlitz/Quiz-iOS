@@ -109,6 +109,7 @@
 		196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */; };
 		196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */; };
 		196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */; };
+		196F9AF51BA1FFF2001AF551 /* QZBReloadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196F9AF41BA1FFF2001AF551 /* QZBReloadingCell.m */; };
 		1974BC101AD699970057E966 /* QZBEndGamePointsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BC0F1AD699970057E966 /* QZBEndGamePointsCell.m */; };
 		1974BC131AD6B0800057E966 /* QZBEndGameResultScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BC121AD6B0800057E966 /* QZBEndGameResultScoreCell.m */; };
 		1974BC161AD6D6EC0057E966 /* NSString+QZBStringCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */; };
@@ -400,6 +401,8 @@
 		196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+QZBCellCategory.m"; sourceTree = "<group>"; };
 		196EA35C1AD4000200AAF94E /* QZBFindFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFindFriendsCell.h; sourceTree = "<group>"; };
 		196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFindFriendsCell.m; sourceTree = "<group>"; };
+		196F9AF31BA1FFF2001AF551 /* QZBReloadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBReloadingCell.h; sourceTree = "<group>"; };
+		196F9AF41BA1FFF2001AF551 /* QZBReloadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBReloadingCell.m; sourceTree = "<group>"; };
 		1974BC0E1AD699970057E966 /* QZBEndGamePointsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGamePointsCell.h; sourceTree = "<group>"; };
 		1974BC0F1AD699970057E966 /* QZBEndGamePointsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGamePointsCell.m; sourceTree = "<group>"; };
 		1974BC111AD6B0800057E966 /* QZBEndGameResultScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGameResultScoreCell.h; sourceTree = "<group>"; };
@@ -1108,6 +1111,8 @@
 				19DEA8611A8561E600E610DB /* QZBRatingTVCell.m */,
 				199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */,
 				199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */,
+				196F9AF31BA1FFF2001AF551 /* QZBReloadingCell.h */,
+				196F9AF41BA1FFF2001AF551 /* QZBReloadingCell.m */,
 			);
 			name = rating;
 			sourceTree = "<group>";
@@ -1903,6 +1908,7 @@
 				190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */,
 				191559D01A39CDD400462C93 /* QZBGameSessionViewController.m in Sources */,
 				19B5E05D1A73CB0D00DCD9C3 /* QZBFriendsTVC.m in Sources */,
+				196F9AF51BA1FFF2001AF551 /* QZBReloadingCell.m in Sources */,
 				19FA44F61B31951600B5E853 /* QZBEnterRoomCell.m in Sources */,
 				1936E07E1B3C24A900BE6B16 /* QZBTopicWorker.m in Sources */,
 				19DFF3421A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m in Sources */,
