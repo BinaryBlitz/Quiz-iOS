@@ -8649,9 +8649,6 @@
                             <outlet property="delegate" destination="BHC-2K-rGu" id="oTt-Sn-r30"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="ratingTableView" destination="hVA-t9-ioU" id="SfI-1x-MCd"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDy-pP-MhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
