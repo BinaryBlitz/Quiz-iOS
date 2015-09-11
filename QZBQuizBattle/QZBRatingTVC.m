@@ -8,6 +8,7 @@
 
 #import "QZBRatingTVC.h"
 #import "QZBRatingTVCell.h"
+#import "QZBReloadingCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "QZBRatingPageVC.h"
 #import "QZBUserInRating.h"
@@ -38,13 +39,13 @@
     self.view.multipleTouchEnabled = NO;
     //    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
-    self.ratingTableView.delegate = self;
-    self.ratingTableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.ratingTableView reloadData];
+    //[self.ratingTableView reloadData];
 
     if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
@@ -64,9 +65,9 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //    if(self.topRank.count == 0 && self.playerRank.count == 0) {
-    //        return 1;
-    //    }
+        if(self.topRank.count == 0 && self.playerRank.count == 0) {
+            return 1;
+        }
 
     NSInteger result = 0;
 
@@ -86,11 +87,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    if(self.topRank.count == 0 && self.playerRank.count == 0){
-    //        UITableViewCell *cell = [tableView
-    //        dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
-    //        return cell;
-    //    }
+        if(self.topRank.count == 0 && self.playerRank.count == 0){
+            QZBReloadingCell *cell = [tableView
+            dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
+            [cell.activityIndicator startAnimating];
+            return cell;
+        }
 
     UITableViewCell *resultCell = nil;
 
@@ -132,16 +134,17 @@
 
 - (void)setCell:(QZBRatingTVCell *)cell user:(QZBUserInRating *)user {
     [cell setCellWithUser:user];
-
-
 }
 
 - (void)tableView:(UITableView *)tableView
     didEndDisplayingCell:(UITableViewCell *)cell
        forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
-        //        QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
-        //        c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
+//                QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+//                c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
+    } else if ([cell isKindOfClass:[QZBReloadingCell class]]){
+        QZBReloadingCell *c = (QZBReloadingCell *)cell;
+        [c.activityIndicator stopAnimating];
     }
 }
 
@@ -222,8 +225,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray {
     self.topRank = topArray;
     self.playerRank = playerArray;
+    
+    if(self.topRank.count == 0 && self.playerRank.count == 0){
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    } else {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
 
-    [self.ratingTableView reloadData];
+    [self.tableView reloadData];
 }
 
 /*

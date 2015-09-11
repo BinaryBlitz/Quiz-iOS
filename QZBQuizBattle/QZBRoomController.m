@@ -516,7 +516,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 
     [self.roomWorker addRoomOnlineWorker];
     
-    [self addBarButtonRight];
+   // [self addBarButtonRight];
     [self animateUp];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
