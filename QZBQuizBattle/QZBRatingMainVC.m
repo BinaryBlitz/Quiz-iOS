@@ -47,6 +47,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [self.sliderView removeConstraints:self.sliderView.constraints];
     self.sliderView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    
 
 }
 
@@ -66,6 +68,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadRatingTableViews)
+                                                 name:QZBNeedReloadRatingTableView object:nil];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setExclusiveTouch:YES];
@@ -76,37 +81,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
    // self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
 
-    if (self.topic) {
-        NSString *title = nil;
-        
-        if(self.fromTopics){
-            title = self.topic.name;
-            self.chooseTopicButton.enabled = NO;
-            
-             self.navigationItem.rightBarButtonItem = nil;
-        }else{
-            
-           // self.navigationItem.rightBarButtonItem = nil;
-
-            title = [NSString stringWithFormat:@"%@",self.topic.name];
-        }
-        
-        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
-        
-        [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
-
-    } else if (self.category) {
-        NSString *title = [NSString stringWithFormat:@"%@",self.category.name ];
-        
-        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
-
-        [self setRatingWithCategoryID:[self.category.category_id integerValue]];
-
-    } else {
-        [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
-        [self setRatingWithTopicID:0];
-    }
-    
+    [self reloadRatingTableViews];
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -115,10 +90,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 }
 
+
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
  //   [self.sliderView removeConstraints:self.sliderView.constraints];
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -202,6 +184,39 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [pageVC setWeekRanksWithTop:[NSArray array] playerArray:[NSArray array]];
     [pageVC setAllTimeRanksWithTop:[NSArray array] playerArray:[NSArray array]];
 
+}
+
+-(void)reloadRatingTableViews {
+    if (self.topic) {
+        NSString *title = nil;
+        
+        if(self.fromTopics){
+            title = self.topic.name;
+            self.chooseTopicButton.enabled = NO;
+            
+            self.navigationItem.rightBarButtonItem = nil;
+        }else{
+            
+            // self.navigationItem.rightBarButtonItem = nil;
+            
+            title = [NSString stringWithFormat:@"%@",self.topic.name];
+        }
+        
+        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
+        
+        [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
+        
+    } else if (self.category) {
+        NSString *title = [NSString stringWithFormat:@"%@",self.category.name ];
+        
+        [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
+        
+        [self setRatingWithCategoryID:[self.category.category_id integerValue]];
+        
+    } else {
+        [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
+        [self setRatingWithTopicID:0];
+    }
 }
 
 #pragma mark - Navigation

@@ -81,19 +81,32 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
     
     UIView *header = [[UIView alloc] initWithFrame:headerRect];
     self.tableView.tableHeaderView = header;
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
     self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
     
-   // [self configureResultWithRoom:self.roomWorker.room];
+    // [self configureResultWithRoom:self.roomWorker.room];
     self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
     self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
     self.topic = [QZBSessionManager sessionManager].topic;
     [[QZBSessionManager sessionManager] closeSession];
     [self addBarButtonRight];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(oneOfUsersFinishedRoom:)
+                                                 name:QZBOneUserFinishedGameInRoom
+                                               object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+//    self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
+//    
+//   // [self configureResultWithRoom:self.roomWorker.room];
+//    self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
+//    self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
+//    self.topic = [QZBSessionManager sessionManager].topic;
+//    [[QZBSessionManager sessionManager] closeSession];
+//    [self addBarButtonRight];
     
     //[self reloadRoom];
 //    NSInteger count = [self.tableView numberOfRowsInSection:0];
@@ -103,10 +116,10 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
 //                          atScrollPosition:UITableViewScrollPositionBottom
 //                                  animated:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(oneOfUsersFinishedRoom:)
-                                                 name:QZBOneUserFinishedGameInRoom
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(oneOfUsersFinishedRoom:)
+//                                                 name:QZBOneUserFinishedGameInRoom
+//                                               object:nil];
     
 }
 

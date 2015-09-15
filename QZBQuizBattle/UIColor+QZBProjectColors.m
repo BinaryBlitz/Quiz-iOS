@@ -103,6 +103,11 @@
 
 }
 
++ (UIColor *)sandColor {
+    return [UIColor colorWithRed:242.0/255.0 green:232.0/255.0 blue:182.0/255.0 alpha:1.0];
+}
+
+
 
 
 

@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 @property (assign, nonatomic, readonly) NSInteger userBeginingScore;
 @property (copy, nonatomic, readonly) NSString *fact;
 
+
 @property (assign, nonatomic, readonly) NSInteger userMultiplier;
 
 @property (assign, nonatomic, readonly) BOOL isRoom;
