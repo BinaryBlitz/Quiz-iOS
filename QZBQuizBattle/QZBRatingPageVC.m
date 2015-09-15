@@ -171,22 +171,22 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                       completion:nil];
         self.currentTableType = QZBRatingTableAllTime;
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
-
-            if (self.expectedType != self.currentTableType) {
-                self.currentTableType = QZBRatingTableWeek;
-                self.expectedType = QZBRatingTableWeek;
-                [self colorRightButton];
-                QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
-                [self setViewControllers:@[ rightPage ]
-                               direction:UIPageViewControllerNavigationDirectionReverse
-                                animated:NO
-                              completion:^(BOOL finished) {
-                                  DDLogInfo(@"finished %d left canceled", finished);
-                              }];
-            }
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
+//
+////            if (self.expectedType != self.currentTableType) {
+////                self.currentTableType = QZBRatingTableWeek;
+////                self.expectedType = QZBRatingTableWeek;
+////                [self colorRightButton];
+////                QZBRatingTVC *rightPage = [self.ratingTableViewControllers lastObject];
+////                [self setViewControllers:@[ rightPage ]
+////                               direction:UIPageViewControllerNavigationDirectionReverse
+////                                animated:NO
+////                              completion:^(BOOL finished) {
+////                                  DDLogInfo(@"finished %d left canceled", finished);
+////                              }];
+////            }
+//        });
     }
 }
 
@@ -210,21 +210,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                       }];
         self.currentTableType = QZBRatingTableWeek;
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
-            if (self.expectedType != self.currentTableType) {
-                QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
-                self.currentTableType = QZBRatingTableAllTime;
-                self.currentTableType = QZBRatingTableAllTime;
-                [self colorLeftButton];
-                [self setViewControllers:@[ leftPage ]
-                               direction:UIPageViewControllerNavigationDirectionReverse
-                                animated:NO
-                              completion:^(BOOL finished) {
-                                  DDLogInfo(@"finished %d right canceled", finished);
-                              }];
-            }
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            DDLogInfo(@"expected %ld current %ld", (long)self.expectedType, (long)self.currentTableType);
+//            if (self.expectedType != self.currentTableType) {
+//                QZBRatingTVC *leftPage = [self.ratingTableViewControllers firstObject];
+//                self.currentTableType = QZBRatingTableAllTime;
+//                self.currentTableType = QZBRatingTableAllTime;
+//                [self colorLeftButton];
+//                [self setViewControllers:@[ leftPage ]
+//                               direction:UIPageViewControllerNavigationDirectionReverse
+//                                animated:NO
+//                              completion:^(BOOL finished) {
+//                                  DDLogInfo(@"finished %d right canceled", finished);
+//                              }];
+//            }
+//        });
     }
 }
 
