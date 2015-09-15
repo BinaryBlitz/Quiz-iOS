@@ -24,6 +24,7 @@
 +(UIColor *)veryDarkGreyColor;
 +(UIColor *)middleDarkGreyColor;
 +(UIColor *)challengedColor;
++(UIColor *)sandColor;
 
 +(UIColor *)transperentBlackColor;
 +(UIColor *)transperentLightGreenColor;

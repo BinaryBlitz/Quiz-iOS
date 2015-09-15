@@ -20,6 +20,9 @@
 		190DE8191AD66AA80040585A /* QZBEndGameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 190DE8181AD66AA80040585A /* QZBEndGameVC.m */; };
 		190DE81D1AD66B320040585A /* QZBEndGameMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 190DE81C1AD66B320040585A /* QZBEndGameMainCell.m */; };
 		190F8BC11A41C91F00B9E27F /* QZBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */; };
+		191137F21BA5A086000115B0 /* QZBNewQuestionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 191137F11BA5A086000115B0 /* QZBNewQuestionController.m */; };
+		191137F61BA5AB1B000115B0 /* QZBNewQuestionInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */; };
+		191137F91BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191137F81BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m */; };
 		191559C71A39CDD400462C93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C61A39CDD400462C93 /* main.m */; };
 		191559CA1A39CDD400462C93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 191559C91A39CDD400462C93 /* AppDelegate.m */; };
 		191559CD1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */; };
@@ -243,6 +246,12 @@
 		190DE81C1AD66B320040585A /* QZBEndGameMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGameMainCell.m; sourceTree = "<group>"; };
 		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSessionManager.h; sourceTree = "<group>"; };
 		190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBSessionManager.m; sourceTree = "<group>"; };
+		191137F01BA5A086000115B0 /* QZBNewQuestionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionController.h; sourceTree = "<group>"; };
+		191137F11BA5A086000115B0 /* QZBNewQuestionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionController.m; sourceTree = "<group>"; };
+		191137F41BA5AB1B000115B0 /* QZBNewQuestionInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionInputCell.h; sourceTree = "<group>"; };
+		191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionInputCell.m; sourceTree = "<group>"; };
+		191137F71BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionAnswerCell.h; sourceTree = "<group>"; };
+		191137F81BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionAnswerCell.m; sourceTree = "<group>"; };
 		191559C11A39CDD400462C93 /* QZBQuizBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QZBQuizBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559C51A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559C61A39CDD400462C93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -686,6 +695,26 @@
 				196472601AD84D9200CAC8F3 /* QZBEndGameProgressCell.m */,
 			);
 			name = game;
+			sourceTree = "<group>";
+		};
+		191137EF1BA59F85000115B0 /* newQuestions */ = {
+			isa = PBXGroup;
+			children = (
+				191137F01BA5A086000115B0 /* QZBNewQuestionController.h */,
+				191137F11BA5A086000115B0 /* QZBNewQuestionController.m */,
+			);
+			name = newQuestions;
+			sourceTree = "<group>";
+		};
+		191137F31BA5AABC000115B0 /* newQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				191137F41BA5AB1B000115B0 /* QZBNewQuestionInputCell.h */,
+				191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */,
+				191137F71BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.h */,
+				191137F81BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m */,
+			);
+			name = newQuestion;
 			sourceTree = "<group>";
 		};
 		191559B81A39CDD400462C93 = {
@@ -1174,6 +1203,7 @@
 		1976FBAC1A4B04B50016130B /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				191137F31BA5AABC000115B0 /* newQuestion */,
 				193ED1401B908A4900582758 /* question report */,
 				1901BA171B303920003E2895 /* rooms */,
 				196099FE1B272E6E00EEB9D6 /* messenger */,
@@ -1304,6 +1334,7 @@
 		19A1276C1AB9DCB3009075AD /* main */ = {
 			isa = PBXGroup;
 			children = (
+				191137EF1BA59F85000115B0 /* newQuestions */,
 				19A1276D1AB9DCDE009075AD /* QZBMainGameScreenTVC.h */,
 				19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */,
 			);
@@ -1901,6 +1932,8 @@
 				191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */,
 				195CAC071B512EF600564776 /* UIImageView+QZBImagePickerCategory.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
+				191137F61BA5AB1B000115B0 /* QZBNewQuestionInputCell.m in Sources */,
+				191137F91BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m in Sources */,
 				1974BC101AD699970057E966 /* QZBEndGamePointsCell.m in Sources */,
 				19416C201B2C7072005D34EA /* QZBChooseThisCategoryCell.m in Sources */,
 				193DEE461B0E2713009CEB50 /* QZBFriendRequestManager.m in Sources */,
@@ -1933,6 +1966,7 @@
 				19E62AB31B4FE334001319E4 /* QZBImageViewerVC.m in Sources */,
 				195EA0AB1AD520AA000C4341 /* UIBarButtonItem+Badge.m in Sources */,
 				196963211B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m in Sources */,
+				191137F21BA5A086000115B0 /* QZBNewQuestionController.m in Sources */,
 				1936D7361AD42C12007B6368 /* UIButton+QZBButtonCategory.m in Sources */,
 				194258291B18BB86008A3449 /* QZBViewWithLineOnBottom.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,

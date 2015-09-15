@@ -18,6 +18,7 @@
 @property (nonatomic, assign, readonly) NSUInteger rightAnswer;
 @property (assign, nonatomic, readonly) NSInteger questionId;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
+@property (assign, nonatomic, readonly) NSInteger questionIDForReport;
 
 - (instancetype)initWithTopic:(NSString *)topic
                      question:(NSString *)question
