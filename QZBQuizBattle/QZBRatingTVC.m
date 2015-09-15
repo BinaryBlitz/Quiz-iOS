@@ -18,6 +18,8 @@
 
 #import <DFImageManager/DFImageManagerKit.h>
 #import <DFImageManagerKit+UI.h>
+
+NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
 //#import <DFImageManager/DFImageManager.h>
 //#import <DFImageManager/DFImageRequestOptions.h>
 //#import <DFImageManager/DFURLImageFetcher.h>
@@ -37,7 +39,12 @@
     [super viewDidLoad];
 
     self.view.multipleTouchEnabled = NO;
-    //    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(reloadThisTable)
+                  forControlEvents:UIControlEventValueChanged];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -65,6 +72,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if([self.refreshControl isRefreshing]) {
+        return 0;
+    }
+    
+    if(!self.topRank && !self.playerRank){
+        return 0;
+    }
         if(self.topRank.count == 0 && self.playerRank.count == 0) {
             return 1;
         }
@@ -226,13 +241,25 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     self.topRank = topArray;
     self.playerRank = playerArray;
     
+    if(!playerArray && !topArray) {
+        [self.refreshControl endRefreshing];
+    }
+    
     if(self.topRank.count == 0 && self.playerRank.count == 0){
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     } else {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [self.refreshControl endRefreshing];
     }
 
     [self.tableView reloadData];
+}
+
+-(void)reloadThisTable {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedReloadRatingTableView
+                                                        object:@(self.tableType)];
+    
 }
 
 /*

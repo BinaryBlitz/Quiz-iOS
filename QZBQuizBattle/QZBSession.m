@@ -64,7 +64,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         
         NSArray *arrayOfQuestionDicts = nil;
         
-        
+
         
         if(dict[@"game_session_questions"] && ![dict[@"game_session_questions"] isEqual:[NSNull null]]){
             arrayOfQuestionDicts = dict[@"game_session_questions"];

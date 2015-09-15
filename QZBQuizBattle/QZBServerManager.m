@@ -325,6 +325,7 @@ NSString *const QZBNoInternetConnectionMessage =
             DDLogInfo(@"main %@", responseObject);
 
             NSArray *faveTopicsDicts = responseObject[@"favorite_topics"];
+            NSArray *recentTopicsDicts = responseObject[@"recent_topics"];
             NSArray *friendsFaveTopicsDicts = responseObject[@"friends_favorite_topics"];
             NSArray *featuredTopicsDicts = responseObject[@"featured_topics"];
             NSArray *randomTopicsDicts = responseObject[@"random_topics"];
@@ -336,6 +337,7 @@ NSString *const QZBNoInternetConnectionMessage =
             NSArray *roomsDicts = responseObject[@"random_rooms"];
 
             NSArray *faveTopics = [self parseTopicsArray:faveTopicsDicts];
+            NSArray *recentTopics = [self parseTopicsArray:recentTopicsDicts];
             NSArray *friendsFaveTopics = [self parseTopicsArray:friendsFaveTopicsDicts];
             NSArray *featuredTopics = [self parseTopicsArray:featuredTopicsDicts];
             NSArray *randomTopics = [self parseTopicsArray:randomTopicsDicts];
@@ -348,6 +350,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
             NSDictionary *resultDict = @{
                 @"favorite_topics" : faveTopics,
+                @"recent_topics":recentTopics,
                 @"friends_favorite_topics" : friendsFaveTopics,
                 @"featured_topics" : featuredTopics,
                 @"random_topics" : randomTopics,
@@ -1320,7 +1323,8 @@ NSString *const QZBNoInternetConnectionMessage =
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-        @"question_id" : @(questionID)
+        @"question_id" : @(questionID),
+        @"message":@"message"
     };
     //   NSString *urlAsString = [NSString stringWithFormat:@"reports/%@/report", @(questionID)];
 
@@ -1414,6 +1418,14 @@ NSString *const QZBNoInternetConnectionMessage =
             NSMutableArray *usersPlayer = [NSMutableArray array];
 
             [self parseRatingDict:responseObject toTopArray:usersTop playerRating:usersPlayer];
+            
+            if(usersTop.count == 0){
+                usersTop = nil;
+            }
+            
+            if(usersPlayer.count == 0){
+                usersPlayer = nil;
+            }
 
             if (success) {
                 success(usersTop, usersPlayer);
@@ -2238,7 +2250,7 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)POSTSendMessage:(NSString *)message
            inRoomWithID:(NSNumber *)roomID
               onSuccess:(void (^)())success
-              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        int rand = arc4random() % 100;
@@ -2258,7 +2270,7 @@ NSString *const QZBNoInternetConnectionMessage =
 
 - (void)GETCompareVersion:(NSString *)version
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
-                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        if (success) {
@@ -2267,5 +2279,24 @@ NSString *const QZBNoInternetConnectionMessage =
 
                    });
 }
+
+#pragma mark - new_questions
+
+-(void)POSTNewQuestionWithText:(NSString *)text
+                       answers:(NSArray *)answers
+                   rightAnswer:(NSString *)rightAnswer
+                     onSuccess:(void (^)())success
+                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if(success){
+            success();
+        }
+    });
+    
+    
+    
+}
+
 
 @end

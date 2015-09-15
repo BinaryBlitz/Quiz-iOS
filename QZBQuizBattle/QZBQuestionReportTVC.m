@@ -63,6 +63,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
     self.imageHeight = [UIScreen mainScreen].bounds.size.width * 9.0 / 16.0;
 
     [self initStatusbarWithColor:[UIColor blackColor]];
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
 
     self.title = @"Вопросы";
 
@@ -90,9 +91,10 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configureBackgroundImage];
-    self.tabBarController.tabBar.hidden = NO;
+ //   self.tabBarController.hidesBottomBarWhenPushed = YES;
+   // self.tabBarController.tabBar.hidden = NO;
 
-    [self.tabBarController setHidesBottomBarWhenPushed:NO];
+    //[self.tabBarController setHidesBottomBarWhenPushed:NO];
 
     //    self.tableView.contentInset =
     //    UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
@@ -100,7 +102,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-     self.tabBarController.tabBar.hidden = NO;
+ //    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -321,13 +323,16 @@ navigation
         NSIndexPath *ip = [self.tableView indexPathForCell:cell];
 
         QZBQuestion *q = self.questions[ip.section];
+        if(!q.questionIDForReport){
+            return;
+        }
 //        cell.reportButton.enabled = NO;
 //        [cell.reportButton setTitle:@"" forState:UIControlStateDisabled];
 //        cell.reportActivityIndicator.hidden = NO;
 //        [cell.reportActivityIndicator startAnimating];
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         
-        [[QZBServerManager sharedManager] POSTReportForQuestionWithID:q.questionId
+        [[QZBServerManager sharedManager] POSTReportForQuestionWithID:q.questionIDForReport
             message:@"report"
             onSuccess:^{
                 [SVProgressHUD showSuccessWithStatus:QZBReportSendedMessage];
@@ -355,7 +360,7 @@ navigation
 
             }];
 
-        NSLog(@"num %ld", (long)q.questionId);
+        NSLog(@"num %ld", (long)q.questionIDForReport);
     }
 }
 
