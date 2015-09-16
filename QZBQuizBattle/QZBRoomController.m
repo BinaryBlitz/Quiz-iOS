@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 3;
+const NSInteger QZBMinimumPlayersCountInRoom = 2;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 
