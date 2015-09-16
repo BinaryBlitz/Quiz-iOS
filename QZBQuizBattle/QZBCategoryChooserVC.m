@@ -125,6 +125,7 @@
     
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.allowsClipping = YES;
+    options.expirationAge = 60*60*24*20;
 
     options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
     
