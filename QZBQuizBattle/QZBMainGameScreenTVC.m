@@ -42,6 +42,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 @property (strong, nonatomic) NSArray *friendsTopics;
 @property (strong, nonatomic) NSArray *featured;
 @property (strong, nonatomic) NSArray *recent;
+@property (strong, nonatomic) NSArray *questionFakeArray;
 @property (strong, nonatomic) NSArray *additionalTopics;
 @property (strong, nonatomic) NSMutableArray *challenges;
 @property (strong, nonatomic) NSMutableArray *challenged;
@@ -72,7 +73,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
     [self.mainTableView addSubview:self.refreshControl];
 
-    [self addBarButtonRight];
+   // [self addBarButtonRight];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadTopicsDataFromNotification:)
@@ -209,7 +210,14 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
             return cell;
         }
     }
-    if (arr == self.roomsIvites) {
+    
+    if(arr == self.questionFakeArray){
+        UITableViewCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:@"showAddNewQuestionSegueIdentifier"];
+        
+        cell.backgroundColor = [self colorForSection:indexPath.section];
+        return cell;
+    }else if (arr == self.roomsIvites) {
         QZBResultOfSessionCell *cell =
             [tableView dequeueReusableCellWithIdentifier:@"resultSessionCell"];
 
@@ -292,6 +300,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     } else if (arr == self.challenges) {
         color = [UIColor lightGreenColor];
     } else if (arr == self.additionalTopics) {
+        color = [UIColor darkCyanColor];
     } else if (arr == self.challenged) {
         color = [UIColor challengedColor];  // strongGreenColor];
     } else if (arr == self.roomsIvites) {
@@ -299,7 +308,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     } else if (arr == self.roomArray) {
         color = [UIColor roomColor];
     } else if (arr == self.recent){
-        color = [UIColor sandColor];
+        color = [UIColor purpleSwagColor];
     }
 
     return color;
@@ -326,6 +335,8 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         text = @"Комнаты";
     } else if(arr == self.recent){
         text = @"Новые темы";
+    } else if (arr == self.questionFakeArray) {
+        text = @"Новый вопрос";
     }
     return text;
 }
@@ -343,7 +354,9 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         [self performSegueWithIdentifier:@"showChallenges" sender:nil];
     } else if ([cell.reuseIdentifier isEqualToString:@"mainDescriptionCell"]) {
         return;
-    } else {
+    } else if ([cell.reuseIdentifier isEqualToString:@"showAddNewQuestionSegueIdentifier"]){
+        [self showNewQuestionController];
+    }else {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
 }
@@ -689,6 +702,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         [self.refreshControl endRefreshing];
 
         self.roomArray = resultDict[@"rooms"];
+        self.questionFakeArray = @[@"fake"];
 
         if ([resultDict[@"favorite_topics"] count] > 0) {
             self.faveTopics = resultDict[@"favorite_topics"];
@@ -773,6 +787,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         if (self.additionalTopics.count > 0) {
             [self.workArray addObject:self.additionalTopics];
         }
+        [self.workArray addObject:self.questionFakeArray];
 
         [self.mainTableView reloadData];
         //  //   //   UITabBarController *tabController = self.tabBarController;
@@ -806,7 +821,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
 - (void)addBarButtonRight {
     self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Комнаты"
+        [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
                                          style:UIBarButtonItemStylePlain
                                         target:self
                                         action:@selector(showNewQuestionController)];
