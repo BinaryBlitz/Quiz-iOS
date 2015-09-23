@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKImageParameters.h
+../../../VK-ios-sdk/library/Source/Image/VKImageParameters.h

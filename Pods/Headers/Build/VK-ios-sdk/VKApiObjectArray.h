@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/models/VKApiObjectArray.h
+../../../VK-ios-sdk/library/Source/API/models/VKApiObjectArray.h

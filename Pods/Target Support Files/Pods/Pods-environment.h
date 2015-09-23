@@ -230,10 +230,9 @@
 
 // VK-ios-sdk
 #define COCOAPODS_POD_AVAILABLE_VK_ios_sdk
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.0.9.2.
+#define COCOAPODS_VERSION_MAJOR_VK_ios_sdk 1
+#define COCOAPODS_VERSION_MINOR_VK_ios_sdk 2
+#define COCOAPODS_VERSION_PATCH_VK_ios_sdk 2
 
 // libPusher
 #define COCOAPODS_POD_AVAILABLE_libPusher
