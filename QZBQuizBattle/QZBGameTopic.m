@@ -2,7 +2,7 @@
 //  QZBGameTopic.m
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 17/04/15.
+//  Created by Andrey Mikhaylov on 22/09/15.
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @dynamic points;
 @dynamic topic_id;
 @dynamic visible;
+@dynamic paid;
 @dynamic relationToCategory;
 
 @end

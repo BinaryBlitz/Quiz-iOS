@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 #import "QZBProgressViewController.h"
 #import "QZBTopicTableViewCell.h"
 #import "QZBGameTopic.h"
@@ -31,8 +31,8 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
 
-@interface QZBTopicChooserControllerViewController ()
-@property (strong, nonatomic) NSArray *topics;
+@interface QZBTopicChooserController ()
+//@property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
 @property(strong, nonatomic) UIView *backView;
 //@property (strong, nonatomic) QZBGameTopic *choosedTopic;
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation QZBTopicChooserControllerViewController
+@implementation QZBTopicChooserController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,7 +73,13 @@
     [super viewWillAppear:animated];
 
     [self initStatusbarWithColor:[UIColor blackColor]];
+    
+    if(self.category){
+        [self configureBackgroundImage];
+    }
+}
 
+-(void)configureBackgroundImage{
     NSURL *url = [NSURL URLWithString:self.category.background_url];
     
     DFImageRequestOptions *options = [DFImageRequestOptions new];
@@ -93,7 +99,6 @@
     [self.backgroundImageView prepareForReuse];
     
     [self.backgroundImageView setImageWithRequest:request];
-    
 }
 
 #pragma mark - Navigation
