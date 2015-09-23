@@ -1488,7 +1488,7 @@
 			isa = PBXGroup;
 			children = (
 				19A127701AB9DE9C009075AD /* challenge */,
-				19CB50A71A3C567A00A3CD74 /* qestion */,
+				19CB50A71A3C567A00A3CD74 /* question */,
 				19E344561A792DF4000D0EDB /* QZBLobby.h */,
 				19E344571A792DF4000D0EDB /* QZBLobby.m */,
 				19CB50941A3C37BA00A3CD74 /* QZBSession.h */,
@@ -1520,7 +1520,7 @@
 			name = User;
 			sourceTree = "<group>";
 		};
-		19CB50A71A3C567A00A3CD74 /* qestion */ = {
+		19CB50A71A3C567A00A3CD74 /* question */ = {
 			isa = PBXGroup;
 			children = (
 				19CB50901A3C33B000A3CD74 /* QZBQuestion.h */,
@@ -1532,7 +1532,7 @@
 				1974BED21A4C81C600E63D6B /* QZBAnswerTextAndID.h */,
 				1974BED31A4C81C600E63D6B /* QZBAnswerTextAndID.m */,
 			);
-			name = qestion;
+			name = question;
 			sourceTree = "<group>";
 		};
 		19CECFB11AB099EA002F9224 /* friends */ = {
