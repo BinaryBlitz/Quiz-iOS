@@ -155,8 +155,8 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
     didEndDisplayingCell:(UITableViewCell *)cell
        forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
-//                QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
-//                c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
+                QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+                c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
     } else if ([cell isKindOfClass:[QZBReloadingCell class]]){
         QZBReloadingCell *c = (QZBReloadingCell *)cell;
         [c.activityIndicator stopAnimating];

@@ -16,6 +16,8 @@
 #import "QZBFriendRequestManager.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import "UIBarButtonItem+Badge.h"
+#import <DFImageManager/DFImageManagerKit.h>
+#import <DFImageManagerKit+UI.h>
 
 @interface QZBFriendsTVC ()
 
@@ -147,6 +149,51 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([cell isKindOfClass:[QZBFriendCell class]]) {
+        QZBFriendCell *c = (QZBFriendCell *)cell;
+        QZBAnotherUser *user = self.friends[indexPath.row];
+        
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+        options.allowsClipping = YES;
+        
+        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+        
+        DFImageRequest *request = [DFImageRequest requestWithResource:user.imageURL
+                                                           targetSize:CGSizeZero
+                                                          contentMode:DFImageContentModeAspectFill
+                                                              options:options];
+        if (user.imageURL) {
+            [[DFImageManager sharedManager]
+             requestImageForRequest:request
+             completion:^(UIImage *image, NSDictionary *info) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     UITableViewCell *cel =
+                     [tableView cellForRowAtIndexPath:indexPath];
+                     if (cel && [cel isKindOfClass:[QZBFriendCell class]]) {
+                         QZBFriendCell *c = (QZBFriendCell *)cel;
+                         c.userpicImageView.image = image;
+                     }
+                 });
+                 
+                 
+             }];
+        } else {
+            [c.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView
+didEndDisplayingCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[QZBFriendCell class]]) {
+                        QZBFriendCell *c = (QZBFriendCell *)cell;
+                        c.userpicImageView.image = [UIImage imageNamed:@"userpicStandart"];
+    }
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath
