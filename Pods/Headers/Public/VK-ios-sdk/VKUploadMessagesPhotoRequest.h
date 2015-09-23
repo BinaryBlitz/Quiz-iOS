@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKUploadMessagesPhotoRequest.h
+../../../VK-ios-sdk/library/Source/API/upload/VKUploadMessagesPhotoRequest.h

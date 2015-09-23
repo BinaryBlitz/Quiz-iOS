@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKActivity.h
+../../../VK-ios-sdk/library/Source/Views/VKActivity.h
