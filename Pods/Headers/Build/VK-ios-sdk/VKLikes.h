@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/models/VKLikes.h
+../../../VK-ios-sdk/library/Source/API/models/VKLikes.h

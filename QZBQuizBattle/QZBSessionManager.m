@@ -197,6 +197,11 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     }
 }
 
+-(NSArray *)sessionQuestions {
+    
+    return self.gameSession.questions;
+}
+
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker {
     if (_onlineSessionWorker && _bot) {
         return;
@@ -216,7 +221,7 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     [[QZBServerManager sharedManager] PATCHMakeChallengeOfflineWithNumber:@(self.gameSession.session_id)
                                                                 onSuccess:^{
         
-                                                                    DDLogInfo(@"PATCHED");
+       DDLogInfo(@"PATCHED");
     } onFailure:^(NSError *error, NSInteger statusCode) {
         
     }];
@@ -461,8 +466,10 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
     self.opponentUserLastAnswer = [self.gameSession.opponentUser.userAnswers lastObject];
 
     self.roundNumber = index + 2;
+    if(self.currentQuestion){//TEST
 
     [self.askedQuestions addObject:self.currentQuestion];
+    }
     //добавляет уже заданый вопрос в список заданых вопросов
 
     if (index < [self.gameSession.questions count] - 1) {

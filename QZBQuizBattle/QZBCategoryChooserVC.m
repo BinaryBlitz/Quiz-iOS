@@ -11,7 +11,7 @@
 #import "QZBServerManager.h"
 #import "QZBCategory.h"
 #import "QZBCategoryTableViewCell.h"
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import "QZBRegistrationChooserVC.h"
@@ -96,7 +96,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"showTopicsSegue"]) {
-        QZBTopicChooserControllerViewController *destination = segue.destinationViewController;
+        QZBTopicChooserController *destination = segue.destinationViewController;
         if(self.user){
             [destination initWithChallengeUser:self.user category:self.choosedCategory];
         }else{
@@ -125,6 +125,7 @@
     
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.allowsClipping = YES;
+    options.expirationAge = 60*60*24*20;
 
     options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
     

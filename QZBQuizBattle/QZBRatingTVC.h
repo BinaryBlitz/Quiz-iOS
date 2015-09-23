@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+UIKIT_EXTERN NSString *const QZBNeedReloadRatingTableView;
+
 typedef NS_ENUM(NSInteger, QZBRatingTableType) { QZBRatingTableAllTime, QZBRatingTableWeek };
 
 @interface QZBRatingTVC : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
+//@property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
 //@property (copy, nonatomic) NSString *urlString;
 @property (assign, nonatomic) QZBRatingTableType tableType;
 

@@ -27,6 +27,7 @@
 //room worker
 
 #import "QZBRoomOnlineWorker.h"
+#import "QZBRoomCommentController.h"
 
 //ui
 
@@ -41,6 +42,7 @@ NSString *const QZBEnterRoomCellIdentifier  = @"enterRoomCellIdentifier";
 NSString *const QZBShowRoomCategoryChooser  = @"showRoomCategoryChooser";
 NSString *const QZBShowGameController       = @"showGameController";
 NSString *const QZBShowFriendsChooserSegieIdentifier = @"showFriendsChooser";
+static NSString *const QZBShowChatFromRoomController = @"showChatFromRoomController";
 
 //message
 
@@ -59,7 +61,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 3;
+const NSInteger QZBMinimumPlayersCountInRoom = 2;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 
@@ -76,6 +78,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
 @property (strong, nonatomic) UITapGestureRecognizer *isReadyGestureRecognizer;
 
 @property(strong, nonatomic) UIView *bottomView;
+
+@property (strong, nonatomic) NSAttributedString *stringWithCross;
+@property (strong, nonatomic) NSAttributedString *stringWithCrown;
 //@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
 //@property (strong, nonatomic) QZBGameTopic *selectedTopic;
 //@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
@@ -99,6 +104,11 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 80, 0);
     [self reloadRoom];
+    
+    UIImage *crossImage = [[UIImage imageNamed:@"cancelCross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = crossImage;
+    self.stringWithCross = [NSAttributedString attributedStringWithAttachment:attachment];
     
     //[self.navigationController setToolbarHidden:NO animated:YES];
     self.isReadyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -306,6 +316,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
                                                               
                                                           }];
 
+    } else if ([segue.identifier isEqualToString:QZBShowChatFromRoomController]) {
+        QZBRoomCommentController *destVC = (QZBRoomCommentController *)segue.destinationViewController;
+        [destVC configureWithRoomID:self.room.roomID];
     }
 }
 
@@ -342,6 +355,13 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
             }
         }
         [cell configureCellWithUserWithTopic:userWithTopic];
+        if(userWithTopic.admin){
+            NSString *tmp = [NSString stringWithFormat:@"%@ ",cell.usernameLabel.text];
+            NSMutableAttributedString *str = [[NSMutableAttributedString alloc]
+                                              initWithString:tmp];
+            [str appendAttributedString:self.stringWithCrown];
+            cell.usernameLabel.attributedText = str;
+        }
         return cell;
     } else {
         QZBEnterRoomCell *cell =
@@ -536,6 +556,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
     [self performSegueWithIdentifier:QZBShowGameController sender:nil];
 }
 
+-(void)showChat {
+    [self performSegueWithIdentifier:QZBShowChatFromRoomController sender:nil];
+}
 
 #pragma mark - support methods
 
@@ -703,12 +726,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
     self.navigationItem.leftBarButtonItem = logoutButton;
 }
 
-- (void)addBarButtonRight {
-    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"Друзья"
-                                                                               style:UIBarButtonItemStylePlain
-                                                                              target:self
-                                                                              action:@selector(showFriends)];
-}
+
 
 
 -(UIView *)bottomView{
@@ -791,6 +809,41 @@ const NSInteger QZBMinimumPlayersCountInRoom = 3;
                      } completion:^(BOOL finished) {
                          [self.bottomView removeFromSuperview];
                      }];
+}
+
+
+-(void)addBarButtonRight {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0,0,100, 20);
+    [button addTarget:self action:@selector(showChat) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString *requestTitle = @"Чат";
+    
+    [button setTitle:requestTitle forState:UIControlStateNormal];
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithCustomView:button];
+
+}
+
+
+#pragma mark - lazy
+
+-(NSAttributedString *)stringWithCrown {
+    if(!_stringWithCrown) {
+        UIImage *crossImage = [UIImage imageNamed:@"crownIcon"];
+                               
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = crossImage;
+        
+        NSMutableAttributedString *begStr = [[NSAttributedString
+                                             attributedStringWithAttachment:attachment] mutableCopy];
+        
+        [begStr addAttribute:NSForegroundColorAttributeName value:[UIColor goldColor] range:NSMakeRange(0,1)];
+        _stringWithCrown = [[NSAttributedString alloc] initWithAttributedString:begStr];
+    }
+    return _stringWithCrown;
 }
 
 //-(void)addBottomView {

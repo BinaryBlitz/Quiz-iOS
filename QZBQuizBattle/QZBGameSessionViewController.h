@@ -37,6 +37,7 @@
 //@property (weak, nonatomic) IBOutlet UIView *opponentScoreView;
 
 @property (weak, nonatomic) IBOutlet UAProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 
 //@property (weak, nonatomic) IBOutlet UACircularProgressView *circularProgress;
 

@@ -74,6 +74,7 @@ UIKIT_EXTERN NSString *const QZBOneOfUserInRoomGaveAnswer;//test
                                                     time:(NSUInteger)time;
 
 - (NSNumber *)sessionID;
+- (NSArray *)sessionQuestions;
 
 - (void)removeBotOrOnlineWorker;
 - (void)makeSessionRoomSession;

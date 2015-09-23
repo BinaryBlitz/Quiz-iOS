@@ -57,6 +57,10 @@
     }
     topic.points = dict[@"points"];
     topic.visible = @([dict[@"available"] boolValue]);
+    if(dict[@"paid"] && ![dict[@"paid"] isEqual:[NSNull null]]) {
+        topic.paid = @([dict[@"paid"] boolValue]);
+    }
+    
     
     return topic;
     

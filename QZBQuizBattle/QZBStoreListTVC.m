@@ -18,9 +18,14 @@
 #import "NSString+QZBStringCategory.h"
 #import <Crashlytics/Crashlytics.h>
 #import "QZBServerManager.h"
+#import <CoreData+MagicalRecord.h>
+#import "QZBGameTopic.h"
+
 
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
+NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegueIdentifier";
 
 
 @interface QZBStoreListTVC ()
@@ -34,6 +39,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @property (strong, nonatomic) SKProduct *fiveTimesBooster;
 @property (assign, nonatomic) BOOL needRelaod;
 @property (assign, nonatomic) BOOL reloadInProgress;
+
+@property (strong, nonatomic) NSArray *paidTopics;
 
 @end
 
@@ -63,6 +70,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.tableView.backgroundColor = [UIColor veryDarkGreyColor];
 
     self.needRelaod = YES;
+    
+    [self addBarButtonRight];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,6 +99,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              selector:@selector(transactionFailed:)
                                                  name:IAPHelperProductRestoreFinished
                                                object:nil];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:@"ru.binaryblitz.1vs1.fiveTimesBoosterTenDays" onSuccess:^{
+//            NSLog(@"OK");
+//        } onFailure:^(NSError *error, NSInteger statusCode) {
+//            NSLog(@"noooooooooooo");
+//        }];
+//    });
     
 }
 
@@ -181,10 +198,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return 270.0;
-    } else if (indexPath.row == 1) {
-        return 32.0;
-    } else {
-        return 72.0;
+    }
+    else if (indexPath.row == 1) {
+        return 186.0;
+    }
+    else {
+        return 70.0;
     }
 }
 
@@ -193,7 +212,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _products.count + 3;
+    return _products.count + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -219,35 +238,45 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
         return cell;
 
-    } else if (indexPath.row == 1) {
-        QZBDescriptionForHorizontalCell *descrCell =
-            [tableView dequeueReusableCellWithIdentifier:@"descriptionForHorizontal"];
-
-        descrCell.descriptionLabel.text = @"Платные темы";
-        descrCell.descriptionLabel.textAlignment = NSTextAlignmentCenter;
-        descrCell.descriptionLabel.textColor = [UIColor whiteColor];
-        descrCell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
-
-        return descrCell;
-
-    } else if(indexPath.row < [tableView numberOfRowsInSection:0]-1){
+    } else
+//        if (indexPath.row == 1) {
+//        QZBDescriptionForHorizontalCell *descrCell =
+//            [tableView dequeueReusableCellWithIdentifier:@"descriptionForHorizontal"];
+//
+//        descrCell.descriptionLabel.text = @"Платные темы";
+//        descrCell.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+//        descrCell.descriptionLabel.textColor = [UIColor whiteColor];
+//        descrCell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
+//
+//        return descrCell;
+//
+//    } else
+        if(indexPath.row < [tableView numberOfRowsInSection:0]-1){
         QZBStoreBoosterCell *cell =
             [tableView dequeueReusableCellWithIdentifier:@"topicCell" forIndexPath:indexPath];
+            cell.purchaseButton.layer.cornerRadius = 5.0;
+            cell.purchaseButton.layer.masksToBounds = YES;
 
         cell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
 
-        SKProduct *product = (SKProduct *)self.products[indexPath.row - 2];
+        SKProduct *product = (SKProduct *)self.products[indexPath.row - 1];
         cell.IAPName.text = product.localizedTitle;
 
         [self.priceFormatter setLocale:product.priceLocale];
 
         if ([[QZBQuizTopicIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
             [cell.purchaseButton setTitle:@"Куплено" forState:UIControlStateNormal];
+            cell.purchaseButton.backgroundColor = [UIColor lightGrayColor];
             cell.purchaseButton.enabled = NO;
 
         } else {
-            [cell.purchaseButton setTitle:[self.priceFormatter stringFromNumber:product.price]
-                                 forState:UIControlStateNormal];
+//            [cell.purchaseButton setTitle:[self.priceFormatter stringFromNumber:product.price]
+//                                 forState:UIControlStateNormal];
+          //  [cell.purchaseButton ]
+            cell.allTopicPurchaseDescriptionLabel.text = [NSString
+                                                          stringWithFormat:@"Более %@ тем за %@",
+                                                          self.paidCount,
+                                                          [self.priceFormatter stringFromNumber:product.price]];
             cell.purchaseButton.enabled = YES;
 
             cell.purchaseButton.tag = indexPath.row;
@@ -360,7 +389,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
         // UIButton *buyButton = (UIButton *)sender;
-        SKProduct *product = _products[indexPath.row - 2];
+        SKProduct *product = _products[indexPath.row - 1];
 
         [self buyProduct:product];
     }
@@ -403,8 +432,41 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBQuizTopicIAPHelper sharedInstance] restoreCompletedTransactions];
 }
+
+
+- (IBAction)showAllPaidTopicsAction:(UIButton *)sender {
+    [self showAllPaidTopics];
+}
+
+-(void)showAllPaidTopics {
+    [self performSegueWithIdentifier:QZBShowAllPaidTopicsSegueIdentifier sender:nil];
+}
+
+- (void)addBarButtonRight {
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(showAllPaidTopics)];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - lazy
+
+-(NSNumber *)paidCount {
+    //REDO
+    return @(self.paidTopics.count-1);
+}
+
+-(NSArray *)paidTopics {
+    if(!_paidTopics){
+        _paidTopics = [QZBGameTopic MR_findByAttribute:@"paid" withValue:@(YES)];
+    }
+    
+    return _paidTopics;
 }
 
 @end

@@ -23,6 +23,7 @@
 //controllers
 #import "QZBRoomListTVC.h"
 #import "QZBRoomSessionResults.h"
+#import "QZBQuestionReportTVC.h"
 
 
 //dfiimage
@@ -40,12 +41,17 @@
 //cell identifiers
 NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier";
 
+//segue identifiers
+NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIdentifier";
+
 @interface QZBRoomResultTVC()
 
 //@property(strong, nonatomic) NSMutableArray *usersInResult;
 //@property(strong, nonatomic) QZBRoom *room;
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
 @property (strong, nonatomic) NSNumber *roomSessionID;
+@property (strong, nonatomic) NSArray *questions;
+@property (strong, nonatomic) QZBGameTopic *topic;
 
 @end
 
@@ -75,16 +81,32 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     
     UIView *header = [[UIView alloc] initWithFrame:headerRect];
     self.tableView.tableHeaderView = header;
+    self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
+    
+    // [self configureResultWithRoom:self.roomWorker.room];
+    self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
+    self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
+    self.topic = [QZBSessionManager sessionManager].topic;
+    [[QZBSessionManager sessionManager] closeSession];
+    [self addBarButtonRight];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(oneOfUsersFinishedRoom:)
+                                                 name:QZBOneUserFinishedGameInRoom
+                                               object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
-    
-   // [self configureResultWithRoom:self.roomWorker.room];
-    self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
-    [[QZBSessionManager sessionManager] closeSession];
+//    self.roomWorker = [QZBSessionManager sessionManager].roomWorker;
+//    
+//   // [self configureResultWithRoom:self.roomWorker.room];
+//    self.roomSessionID = [[QZBSessionManager sessionManager] sessionID];
+//    self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
+//    self.topic = [QZBSessionManager sessionManager].topic;
+//    [[QZBSessionManager sessionManager] closeSession];
+//    [self addBarButtonRight];
     
     //[self reloadRoom];
 //    NSInteger count = [self.tableView numberOfRowsInSection:0];
@@ -94,10 +116,10 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 //                          atScrollPosition:UITableViewScrollPositionBottom
 //                                  animated:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(oneOfUsersFinishedRoom:)
-                                                 name:QZBOneUserFinishedGameInRoom
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(oneOfUsersFinishedRoom:)
+//                                                 name:QZBOneUserFinishedGameInRoom
+//                                               object:nil];
     
 }
 
@@ -111,6 +133,12 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+//    [self.roomWorker closeOnlineWorker];
+//    self.roomWorker = nil;
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.roomWorker closeOnlineWorker];
     self.roomWorker = nil;
 }
@@ -120,6 +148,15 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
 //    
 //    [self.tableView reloadData];
 //}
+
+#pragma mark - navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:QZBShowQuestionsFromRoomIdentifier]) {
+        QZBQuestionReportTVC *destVC = segue.destinationViewController;
+        [destVC configureWithQuestions:self.questions topic:self.topic];
+    }
+}
 
 
 #pragma mark - actions
@@ -326,5 +363,16 @@ NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier
     }
 }
 
+
+-(void)addBarButtonRight {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(showReportScreen)];
+}
+
+-(void)showReportScreen {
+    [self performSegueWithIdentifier:QZBShowQuestionsFromRoomIdentifier sender:nil];
+}
 
 @end

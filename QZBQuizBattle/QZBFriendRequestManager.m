@@ -54,7 +54,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
             
             NSLog(@"accepted");
             [self.incoming removeObject:friendRequest];
-            if(callback){
+                       if(callback){
                 callback(YES);
             }
             

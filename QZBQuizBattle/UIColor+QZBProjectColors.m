@@ -103,6 +103,19 @@
 
 }
 
++ (UIColor *)sandColor {
+    return [UIColor colorWithRed:242.0/255.0 green:232.0/255.0 blue:182.0/255.0 alpha:1.0];
+}
+
+
++ (UIColor *)purpleSwagColor {
+    return [UIColor colorWithRed:104.0/255.0 green:8.0/255.0 blue:131.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)darkCyanColor {
+    return [UIColor colorWithRed:59.0/255.0 green:104.0/255.0 blue:106.0/255.0 alpha:1.0];
+}
+
 
 
 

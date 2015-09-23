@@ -28,6 +28,7 @@
 @property (nonatomic, assign) NSUInteger rightAnswer;
 @property (assign, nonatomic) NSInteger questionId;
 @property (strong, nonatomic) NSURL *imageURL;
+@property (assign, nonatomic) NSInteger questionIDForReport;
 
 @end
 
@@ -59,6 +60,10 @@
         NSString *questText = [questDict objectForKey:@"content"];
         
         NSInteger questionID = [[dict objectForKey:@"id"] integerValue];
+        if([questDict objectForKey:@"id"]){
+            self.questionIDForReport = [[questDict objectForKey:@"id"] integerValue];
+        }
+        
         NSInteger correctAnswer = -1;
         NSArray *answersDicts = [questDict objectForKey:@"answers"];
         NSMutableArray *answers = [NSMutableArray array];
@@ -106,7 +111,7 @@
             [[DFImageManager sharedManager] requestImageForRequest:request
                                                         completion:^(UIImage *image, NSDictionary *info) {
                                                             
-                                                            NSLog(@"image info %@",info);
+                                                         //   NSLog(@"image info %@",info);
                                                         }];
 
             

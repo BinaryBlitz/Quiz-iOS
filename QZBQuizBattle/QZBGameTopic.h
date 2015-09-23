@@ -2,7 +2,7 @@
 //  QZBGameTopic.h
 //  QZBQuizBattle
 //
-//  Created by Andrey Mikhaylov on 17/04/15.
+//  Created by Andrey Mikhaylov on 22/09/15.
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * points;
 @property (nonatomic, retain) NSNumber * topic_id;
 @property (nonatomic, retain) NSNumber * visible;
+@property (nonatomic, retain) NSNumber * paid;
 @property (nonatomic, retain) QZBCategory *relationToCategory;
 
 @end

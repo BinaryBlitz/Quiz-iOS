@@ -584,6 +584,9 @@ static NSString *const LQSLayerAppIDString =
     NSError *error = nil;
     NSUInteger unreadMessageCount = [self.layerClient countForQuery:query error:&error];
 
+    if(error){
+        return 0;
+    }
     return unreadMessageCount;
 }
 

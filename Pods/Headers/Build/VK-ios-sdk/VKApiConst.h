@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKApiConst.h
+../../../VK-ios-sdk/library/Source/API/methods/VKApiConst.h

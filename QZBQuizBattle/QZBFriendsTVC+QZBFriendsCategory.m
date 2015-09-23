@@ -13,7 +13,7 @@
 @implementation QZBFriendsTVC (QZBFriendsCategory)
 
 - (void)searchWithSearchBar:(UISearchBar *)searchBar {
-    if(searchBar.text.length > 30){
+    if(searchBar.text.length > 30 || searchBar.text.length < 2){
         return;
     }
 
