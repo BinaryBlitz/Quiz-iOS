@@ -21,6 +21,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @property (strong, nonatomic) id<QZBUserProtocol> user;
 @property (assign, nonatomic) BOOL fromTopics;
+
+@property (assign, nonatomic) BOOL isLoaded;
 //@property (strong, nonatomic) UIView *buttonBackgroundView;
 
 @end
@@ -81,7 +83,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
    // self.rightButton.titleLabel.textColor = [UIColor lightGrayColor];
 
+    
+    if(!self.isLoaded) {
+        self.isLoaded = YES;
     [self reloadRatingTableViews];
+    }
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
