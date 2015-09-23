@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 2;
+const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 
@@ -149,14 +149,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    
-  //  [self.navigationController.view addSubview:self.bottomView];
-    
     if(self.roomWorker){
         [self animateUp];
     }
-   // [self.navigationController setToolbarHidden:NO animated:YES];
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -165,9 +160,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                         object:nil];
-
-   // [self.bottomView removeFromSuperview];
-  //  [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
