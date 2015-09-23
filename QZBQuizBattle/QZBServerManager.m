@@ -130,15 +130,23 @@ NSString *const QZBNoInternetConnectionMessage =
             [self updateCategories:responseObject];
 
             // REDO problems
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil
-                                                       completion:^(BOOL success, NSError *error) {
-
-                                                           // if (success) {
-                                                           if (successAF) {
-                                                               successAF([QZBCategory MR_findAll]);
-                                                           }
-                                                           //}
-                                                       }];
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                
+            } completion:^(BOOL success, NSError *error) {
+                
+                if (successAF) {
+                    successAF([QZBCategory MR_findAll]);
+                }
+            }];
+//            [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil
+//                                                       completion:^(BOOL success, NSError *error) {
+//
+//                                                           // if (success) {
+//                                                           if (successAF) {
+//                                                               successAF([QZBCategory MR_findAll]);
+//                                                           }
+//                                                           //}
+//                                                       }];
 
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -266,7 +274,7 @@ NSString *const QZBNoInternetConnectionMessage =
             requestImageForRequest:request
                         completion:^(UIImage *image, NSDictionary *info) {
 
-                            NSLog(@"image info %@", info);
+                           // NSLog(@"image info %@", info);
                         }];
     }
 }
@@ -1605,6 +1613,12 @@ NSString *const QZBNoInternetConnectionMessage =
 - (void)POSTInAppPurchaseIdentifier:(NSString *)identifier
                           onSuccess:(void (^)())success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    if(!identifier){
+        if(failure){
+            failure(nil,-1);
+        }
+    }
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
            @"identifier" : identifier };
@@ -2282,18 +2296,37 @@ NSString *const QZBNoInternetConnectionMessage =
 
 #pragma mark - new_questions
 
--(void)POSTNewQuestionWithText:(NSString *)text
-                       answers:(NSArray *)answers
-                   rightAnswer:(NSString *)rightAnswer
+- (void)POSTNewQuestionWithText:(NSString *)text
+                        answers:(NSArray *)answers
+                       topicID:(NSNumber *)topicID
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if(success){
-            success();
-        }
-    });
+    if(!text || !answers || !topicID) {
+        failure(nil,-1);
+    }
     
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"proposal":@{@"content": text,
+                                           @"topic_id": topicID,
+                                           @"answers": answers}
+                              };
+    [self.requestOperationManager POST:@"proposals.json" parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   DDLogCInfo(@"new quest ok %@",responseObject);
+                                   if(success){
+                                       success();
+                                   }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        DDLogError(@"new quest problems err %@", error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+    
+   
     
     
 }

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
 //
 
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 
-@interface QZBRatingTopicChooserVC : QZBTopicChooserControllerViewController
+@interface QZBRatingTopicChooserVC : QZBTopicChooserController
 //@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end

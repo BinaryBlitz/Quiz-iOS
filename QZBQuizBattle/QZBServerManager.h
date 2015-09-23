@@ -354,10 +354,9 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 
 #pragma mark - new_questions
 
--(void)POSTNewQuestionWithText:(NSString *)text
-                       answers:(NSArray *)answers
-                   rightAnswer:(NSString *)rightAnswer
-                     onSuccess:(void (^)())success
-                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
+- (void)POSTNewQuestionWithText:(NSString *)text
+                        answers:(NSArray *)answers
+                        topicID:(NSNumber *)topicID
+                      onSuccess:(void (^)())success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 @end
