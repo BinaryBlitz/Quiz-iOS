@@ -18,7 +18,7 @@
 #import <JSBadgeView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "QZBCategory.h"
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBProgressViewController.h"
 #import "QZBFriendsChallengeTVC.h"
@@ -231,7 +231,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
 //    });
-    [self addBarButtonRight];
+    //[self addBarButtonRight];
     [[QZBSessionManager sessionManager] closeSession];
 }
 
@@ -369,7 +369,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 360;
+        return 390;
     } else if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
         return 150;
     } else {
@@ -495,7 +495,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     UIViewController *destinationVC;
 
     for (UIViewController *controller in controllers) {
-        if ([controller isKindOfClass:[QZBTopicChooserControllerViewController class]] ||
+        if ([controller isKindOfClass:[QZBTopicChooserController class]] ||
             [controller isKindOfClass:[QZBPlayerPersonalPageVC class]]) {
             destinationVC = controller;
             break;
@@ -507,6 +507,9 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     } else {
         [self.navigationController popToViewController:destinationVC animated:YES];
     }
+}
+- (IBAction)showQuestionReport:(UIButton *)sender {
+    [self showReportScreen];
 }
 
 - (void)moveToPlayerChooseVC {

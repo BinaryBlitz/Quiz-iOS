@@ -111,7 +111,7 @@
             [[DFImageManager sharedManager] requestImageForRequest:request
                                                         completion:^(UIImage *image, NSDictionary *info) {
                                                             
-                                                            NSLog(@"image info %@",info);
+                                                         //   NSLog(@"image info %@",info);
                                                         }];
 
             

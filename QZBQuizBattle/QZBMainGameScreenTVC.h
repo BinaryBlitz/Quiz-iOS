@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 
-@interface QZBMainGameScreenTVC : QZBTopicChooserControllerViewController
+@interface QZBMainGameScreenTVC : QZBTopicChooserController
 @property (strong, nonatomic) IBOutlet UITableView *mainTableView;
 -(void)reloadTopicsData;
 

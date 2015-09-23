@@ -10,7 +10,7 @@
 #import "QZBSession.h"
 #import "QZBSessionManager.h"
 #import "QZBAnswerButton.h"
-#import "QZBTopicChooserControllerViewController.h"
+#import "QZBTopicChooserController.h"
 #import "UIColor+QZBProjectColors.h"
 #import <JSBadgeView/JSBadgeView.h>
 #import <UAProgressView.h>
@@ -384,7 +384,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
         UIViewController *destinationVC = nil;
 
         for (UIViewController *vc in self.navigationController.viewControllers) {
-            if ([vc isKindOfClass:[QZBTopicChooserControllerViewController class]]) {
+            if ([vc isKindOfClass:[QZBTopicChooserController class]]) {
                 destinationVC = vc;
                 break;
             }
