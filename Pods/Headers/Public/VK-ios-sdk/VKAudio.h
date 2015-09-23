@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/models/VKAudio.h
+../../../VK-ios-sdk/library/Source/API/models/VKAudio.h

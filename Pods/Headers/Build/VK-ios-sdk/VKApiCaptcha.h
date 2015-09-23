@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKApiCaptcha.h
+../../../VK-ios-sdk/library/Source/API/methods/VKApiCaptcha.h

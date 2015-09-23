@@ -73,7 +73,7 @@ PODS:
     - HexColors (~> 2.2.0)
   - UAAppReviewManager (0.2.6)
   - UAProgressView (0.1.1)
-  - VK-ios-sdk (1.0.9.2)
+  - VK-ios-sdk (1.2.2)
 
 DEPENDENCIES:
   - AFNetworking
@@ -120,6 +120,6 @@ SPEC CHECKSUMS:
   TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
   UAAppReviewManager: 334bdb0085c3f80c7b696f33edc53667eda548e6
   UAProgressView: 9518e321a5d4173f66c225717db873322ec1f070
-  VK-ios-sdk: 26c2475927e209e5567f858ad355485bcbc5b972
+  VK-ios-sdk: f4b7df0d4e277e06d60fef6dc472be4260eeda6d
 
 COCOAPODS: 0.35.0

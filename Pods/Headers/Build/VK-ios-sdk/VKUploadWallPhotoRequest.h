@@ -1,1 +1,1 @@
-../../../VK-ios-sdk/sdk/Source/VKUploadWallPhotoRequest.h
+../../../VK-ios-sdk/library/Source/API/upload/VKUploadWallPhotoRequest.h
