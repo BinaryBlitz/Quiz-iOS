@@ -22,6 +22,8 @@
 #import "UIFont+QZBCustomFont.h"
 #import "QZBCurrentUser.h"
 #import "QZBTopicWorker.h"
+#import "QZBGameTopic.h"
+
 
 //DFImageManager
 #import <DFImageManager/DFImageManager.h>
@@ -159,8 +161,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     [self initCircularProgress];
 
     [self setNamesAndUserpics];
-    self.roundLabel.adjustsFontSizeToFitWidth = YES;
-    self.roundLabel.numberOfLines = 2;
+//    self.roundLabel.adjustsFontSizeToFitWidth = YES;
+//    self.roundLabel.numberOfLines = 2;
 
     QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
 
@@ -469,19 +471,19 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
     NSUInteger roundNum = [QZBSessionManager sessionManager].roundNumber;
 
-    if([QZBSessionManager sessionManager].isDoubled) {
-        
-    }
+  
     NSString *roundAsString = [NSString stringWithFormat:@"Раунд %ld", (unsigned long)roundNum];
+    self.title = roundAsString;
     if([QZBSessionManager sessionManager].isDoubled) {
         roundAsString = [roundAsString stringByAppendingString:@"\nОчки X2"];
     }
-    
+    QZBGameTopic *topic = [QZBSessionManager sessionManager].currentQuestion.topic;
+    if(topic && [QZBSessionManager sessionManager].isRoom) {
+        NSString *stringToAppend = [NSString stringWithFormat:@"\n%@",topic.name];
+        roundAsString = [roundAsString stringByAppendingString:stringToAppend];
+    }
     self.roundLabel.text = roundAsString;
-    
-    
-    
-    self.title = roundAsString;
+    //self.title = roundAsString;
 
     [UIView animateWithDuration:0.3
         delay:0
@@ -590,7 +592,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                        context:(void *)context {
     if ([keyPath isEqualToString:@"currentTime"]) {
         
-        int num = [[change objectForKey:@"new"] integerValue] ;
+        NSInteger num = [[change objectForKey:@"new"] integerValue] ;
         
         [self.progressView setProgress:num/ 100.0
                               animated:YES];

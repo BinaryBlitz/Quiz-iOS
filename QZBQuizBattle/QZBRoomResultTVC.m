@@ -155,7 +155,6 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
         UIColor *color = [UIColor whiteColor];
         if (indexPath.row == 0) {
             color = [UIColor goldColor];
-
         } else if (indexPath.row == 1) {
             color = [UIColor silverColor];
         } else if (indexPath.row == 2) {

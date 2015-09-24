@@ -9,7 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class QZBGameTopic;
 @interface QZBQuestion : NSObject
 
 //@property (nonatomic, copy, readonly) NSString *topic;
@@ -19,6 +19,8 @@
 @property (assign, nonatomic, readonly) NSInteger questionId;
 @property (strong, nonatomic, readonly) NSURL *imageURL;
 @property (assign, nonatomic, readonly) NSInteger questionIDForReport;
+
+@property (strong, nonatomic, readonly) QZBGameTopic *topic;
 
 - (instancetype)initWithTopic:(NSString *)topic
                      question:(NSString *)question
