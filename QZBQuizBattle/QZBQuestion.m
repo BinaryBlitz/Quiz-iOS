@@ -18,17 +18,20 @@
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageCaching.h>
 #import <DFImageCache.h>
+#import "QZBGameTopic.h"
+#import <CoreData+MagicalRecord.h>
 
 
 @interface QZBQuestion ()
 
-@property (nonatomic, copy) NSString *topic;
+//@property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) NSString *question;
 @property (nonatomic, strong) NSArray *answers;
 @property (nonatomic, assign) NSUInteger rightAnswer;
 @property (assign, nonatomic) NSInteger questionId;
 @property (strong, nonatomic) NSURL *imageURL;
 @property (assign, nonatomic) NSInteger questionIDForReport;
+@property (strong, nonatomic) QZBGameTopic *topic;
 
 @end
 
@@ -41,7 +44,7 @@
                    questionID:(NSInteger)questionID {
     self = [super init];
     if (self) {
-        self.topic = topic;
+      //  self.topic = topic;
         self.question = question;
         self.answers = answers;
         self.rightAnswer = rightAnswer;
@@ -62,6 +65,15 @@
         NSInteger questionID = [[dict objectForKey:@"id"] integerValue];
         if([questDict objectForKey:@"id"]){
             self.questionIDForReport = [[questDict objectForKey:@"id"] integerValue];
+        }
+        
+        
+        if(questDict[@"topic_id"] && ![questDict[@"topic_id"] isEqual:[NSNull null]]) {
+            QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id"
+                                                              withValue:questDict[@"topic_id"]];
+            if(topic){
+                self.topic = topic;
+            }
         }
         
         NSInteger correctAnswer = -1;
@@ -130,6 +142,8 @@
     }
     return self;
 }
+
+
 
 
 
