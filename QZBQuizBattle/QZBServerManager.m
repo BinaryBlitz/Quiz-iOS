@@ -720,6 +720,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
+            DDLogVerbose(@"lobby deleted");
             if (success) {
                 success();
             }
