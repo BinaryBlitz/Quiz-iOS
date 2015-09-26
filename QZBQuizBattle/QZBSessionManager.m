@@ -537,15 +537,18 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
                                                         DDLogInfo(@"CLOSED PERFECTLY!!! %@", sessionID);
                                                     }
                                                     onFailure:^(NSError *error, NSInteger statusCode){
-                                                        
+                                                        DDLogError(@"didnt closed");
                                                     }];
-        
+        if(self.gameSession.lobbyID){
         [[QZBServerManager sharedManager] DELETELobbiesWithID:self.gameSession.lobbyID
                                                     onSuccess:^{
             //@""
+                                                        
+                                                        
         } onFailure:^(NSError *error, NSInteger statusCode) {
             
         }];
+        }
     }
     
     
