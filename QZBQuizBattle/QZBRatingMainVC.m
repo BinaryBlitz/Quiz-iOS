@@ -335,6 +335,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     return UIStatusBarStyleLightContent;
 }
 
+#pragma mark - lazy 
+
+-(void)setTopic:(QZBGameTopic *)topic {
+    self.isLoaded = NO;
+    _topic = topic;
+}
+
+-(void)setCategory:(QZBCategory *)category {
+    self.isLoaded = NO;
+    _category = category;
+}
+
 
 
 @end

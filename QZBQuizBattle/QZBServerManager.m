@@ -80,6 +80,8 @@ NSString *const QZBPusherKey = @"d982e4517caa41cf637c";
 NSString *const QZBNoInternetConnectionMessage =
     @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 
+NSString *const QZBiTunesIdentifier = @"1017347211";
+
 @interface QZBServerManager ()
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
@@ -2288,7 +2290,7 @@ NSString *const QZBNoInternetConnectionMessage =
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        if (success) {
-                           success(QZBUpdateTypeMajor, @"ОБНОВИСЬ!!!");
+                           success(QZBUpdateTypeMinor, @"ОБНОВИСЬ!!!");
                        }
 
                    });

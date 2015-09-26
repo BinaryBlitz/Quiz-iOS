@@ -21,6 +21,8 @@
 #import <LayerKit/LayerKit.h>
 #import "QZBLayerMessagerManager.h"
 
+#import <SCLAlertView-Objective-C/SCLAlertView.h>
+
 
 #import "UITabBarController+QZBMessagerCategory.h"
 
@@ -31,6 +33,8 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 @interface QZBMainTBC ()
 
 @property (assign, nonatomic) BOOL isAsked;
+
+@property (strong, nonatomic) UIView *viewTest;
 
 @end
 
@@ -222,16 +226,42 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 
 -(void)showMajorUpdateWithMessage:(NSString *)message {
     
+    [self showWithCompletionButton:nil];
+    
+    
 }
 
 -(void)showMinorUpdateWithMessage:(NSString *)message {
-    
+    [self showWithCompletionButton:@"Отмена"];
 }
 
 -(void)showBugFixWithMessage:(NSString *)message {
     
 }
 
+-(void)showWithCompletionButton:(NSString *)buttonTitle {
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    alert.backgroundType = Blur;
+    alert.showAnimationType = FadeIn;
+    
+    NSString *title = [NSString stringWithFormat:@"Вышло обновление"];
+    NSString *subTitle = [NSString
+                          stringWithFormat:@"Вым необходимо обновить программу"];
+    
+    
+    [alert addButton:@"Обновить" actionBlock:^{
+        NSLog(@"gg");
+        NSString *iTunesLink = [NSString stringWithFormat:@"itms://itunes.apple.com/us/app/apple-store/id%@?mt=8", QZBiTunesIdentifier];
+      
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    }];
+    
+    
+    [alert showInfo:self
+              title:title subTitle:subTitle
+   closeButtonTitle:buttonTitle duration:0.0f];
 
+}
 
 @end

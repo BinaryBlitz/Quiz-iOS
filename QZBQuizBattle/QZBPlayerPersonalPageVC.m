@@ -997,9 +997,11 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     if (self.isCurrent) {
         NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
         
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
+//        [self.tableView beginUpdates];
+//        [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationNone];
+//        [self.tableView endUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[ip]
+             withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

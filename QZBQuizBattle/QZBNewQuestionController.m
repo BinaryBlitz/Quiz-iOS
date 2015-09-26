@@ -241,16 +241,16 @@ static NSInteger answerOffset = 2;
     [tf becomeFirstResponder];
     [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
     
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:ip
-                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
-    
-    if(cell && [cell isKindOfClass:[QZBNewQuestionInputCell class]]){
-        QZBNewQuestionInputCell *c = (QZBNewQuestionInputCell *)cell;
-        [c.inputTextView shakeView];
-        [c.inputTextView becomeFirstResponder];
-    }
+//    NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:ip
+//                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
+//    
+//    if(cell && [cell isKindOfClass:[QZBNewQuestionInputCell class]]){
+//        QZBNewQuestionInputCell *c = (QZBNewQuestionInputCell *)cell;
+//        [c.inputTextView shakeView];
+//        [c.inputTextView becomeFirstResponder];
+//    }
 }
 
 -(NSIndexPath *)indexPathForAnswerIndex:(NSInteger)answerIndex {
@@ -277,6 +277,7 @@ static NSInteger answerOffset = 2;
 - (void)clearAllFields {
     self.question = nil;
     self.answers = nil;
+    self.topic = nil;
     [self.tableView reloadData];
     //    self.inputTextView.text = @"";
     //    for (UITextField *tf in self.answersTextFields) {
@@ -344,17 +345,24 @@ navigation
         if (![self isQuestionFilled]) {
             return NO;
         }
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        if(cell && [cell isKindOfClass:[QZBNewQuestionAnswerCell class]]) {
+            QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
+            [c.answerTextField becomeFirstResponder];
+        }
+        
         // [textView resignFirstResponder];
      //   UITextField *tf = [self.answersTextFields firstObject];
 
       //  [tf becomeFirstResponder];
         return NO;
     }
-    self.question = textView.text;
+    self.question = [textView.text stringByReplacingCharactersInRange:range withString:text];
 
     NSLog(@"%@", self.question);
     return YES;
 }
+
 //
 #pragma mark - UITextFieldDelegate
 
@@ -362,18 +370,19 @@ navigation
 shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string {
   //  NSLog(@"%ld",(long)textField.tag);
-    self.answers[textField.tag] = textField.text;
+    self.answers[textField.tag] = [textField.text stringByReplacingCharactersInRange:range
+                                                                          withString:string];
 //    for(NSString *s in self.answers){
 //        NSLog(@"%ld %@",(long)textField.tag, s);
 //    }
     return YES;
 }
 //
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    if (textField.text.length == 0) {
-//        [self markAnswer:textField];
-//        return NO;
-//    }
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.text.length == 0) {
+        [self markAnswer:textField];
+        return NO;
+    }
 //
 //    NSInteger index = [self.answersTextFields indexOfObject:textField];
 //    if (index != 3) {
@@ -383,7 +392,26 @@ replacementString:(NSString *)string {
 //        [self submitQuestion];
 //    }
 //    return YES;
-//}
+    
+    UITableViewCell *cell = [self parentCellForView:textField];
+    
+    if(cell){
+      //  QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
+        NSIndexPath *ip = [self.tableView indexPathForCell:cell];
+        if(ip.row < 5){
+            NSIndexPath *newIP = [NSIndexPath indexPathForRow:ip.row+1 inSection:0];
+            UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:newIP];
+            if(newCell && [newCell isKindOfClass:[QZBNewQuestionAnswerCell class]]){
+                QZBNewQuestionAnswerCell *newC = (QZBNewQuestionAnswerCell *)newCell;
+                [newC.answerTextField becomeFirstResponder];
+            }
+        }
+    }
+    
+    return YES;
+}
+
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

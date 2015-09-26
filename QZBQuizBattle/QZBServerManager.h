@@ -13,6 +13,7 @@
 UIKIT_EXTERN NSString *const QZBServerBaseUrl;
 UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 UIKIT_EXTERN NSString *const QZBPusherKey;
+UIKIT_EXTERN NSString *const QZBiTunesIdentifier;
 
 @class QZBSession;
 @class QZBLobby;

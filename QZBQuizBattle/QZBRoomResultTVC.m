@@ -24,6 +24,7 @@
 #import "QZBRoomListTVC.h"
 #import "QZBRoomSessionResults.h"
 #import "QZBQuestionReportTVC.h"
+#import "QZBStoreListTVC.h"
 
 // dfiimage
 
@@ -37,11 +38,19 @@
 
 #import "UIFont+QZBCustomFont.h"
 
+//alert
+
+#import <SCLAlertView-Objective-C/SCLAlertView.h>
+
 // cell identifiers
 NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier";
 
 // segue identifiers
 NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIdentifier";
+
+// storybordIdentifier
+
+static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
 @interface QZBRoomResultTVC ()
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
@@ -50,6 +59,8 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
 @property (strong, nonatomic) QZBGameTopic *topic;
 
 @property (strong, nonatomic) UIView *bottomView;
+
+@property (assign, nonatomic) BOOL isPaidChecked;
 @end
 
 @implementation QZBRoomResultTVC
@@ -96,6 +107,13 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
     [super viewDidAppear:animated];
 
     [self animateUp];
+    if (!self.isPaidChecked){
+        self.isPaidChecked = YES;
+        QZBGameTopic *topic = [self findPaidTopic];
+        if(topic){
+            [self showAlertAboutPaidTopic:topic];
+        }
+    }
 }
 
 - (void)dealloc {
@@ -227,9 +245,6 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
     self.navigationItem.leftBarButtonItem = logoutButton;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
 
 - (void)reloadRoom {
     if (self.roomSessionID) {
@@ -345,4 +360,53 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
                      }];
 }
 
+#pragma mark - paid topics
+
+-(QZBGameTopic *)findPaidTopic {
+    for(QZBQuestion *question in self.questions) {
+        if(question.topic){
+            if([question.topic.paid isEqualToNumber:@(YES)] &&
+               [question.topic.visible isEqualToNumber:@(NO)]){
+                return question.topic;
+            }
+        }
+    }
+    return nil;
+}
+
+-(void)showAlertAboutPaidTopic:(QZBGameTopic *)topic {
+        // NSDictionary *d = dict[@"badge"];
+        
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        alert.backgroundType = Blur;
+        alert.showAnimationType = FadeIn;
+    
+        NSString *title = [NSString stringWithFormat:@"Понравилась тема?"];
+        NSString *subTitle = [NSString
+                              stringWithFormat:@"Тема '%@' платная. Купить?",
+                              topic.name];
+        
+        alert.completeButtonFormatBlock = ^NSDictionary*(void){
+            NSDictionary *formatDict = @{@"backgroundColor":[UIColor middleDarkGreyColor]};
+            return formatDict;
+        };
+        
+        [alert addButton:@"Да" actionBlock:^{
+            self.tabBarController.selectedIndex = 4;
+            
+//            QZBStoreListTVC *store = (QZBStoreListTVC *)[self.storyboard instantiateViewControllerWithIdentifier:QZBStoreStorybordID];
+//            [self.navigationController pushViewController:store animated:YES];
+        }];
+    
+        
+        
+        [alert showInfo:self.tabBarController
+                  title:title subTitle:subTitle
+       closeButtonTitle:@"Нет" duration:0.0f];
+    
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 @end
