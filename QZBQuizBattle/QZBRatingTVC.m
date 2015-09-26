@@ -169,17 +169,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
         QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
         QZBUserInRating *user = c.user;
-        DFImageRequestOptions *options = [DFImageRequestOptions new];
-        options.allowsClipping = YES;
-
-        options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
-
-        DFImageRequest *request = [DFImageRequest requestWithResource:user.imageURL
-                                                           targetSize:CGSizeZero
-                                                          contentMode:DFImageContentModeAspectFill
-                                                              options:options];
-
+       
         if (user.imageURL) {
+            DFImageRequest *request = [self requestFromURL:user.imageURL];
+        
             [[DFImageManager sharedManager]
                 requestImageForRequest:request
                             completion:^(UIImage *image, NSDictionary *info) {
@@ -200,6 +193,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
         //  [self setCell:cell user:user indexPath:indexPath tableView:tableView];
     }
+}
+
+-(DFImageRequest *)requestFromURL:(NSURL *)imageURL {
+    DFImageRequestOptions *options = [DFImageRequestOptions new];
+    options.allowsClipping = YES;
+    
+    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.priority = NSOperationQueuePriorityHigh;
+    
+    DFImageRequest *request = [DFImageRequest requestWithResource:imageURL
+                                                       targetSize:CGSizeZero
+                                                      contentMode:DFImageContentModeAspectFill
+                                                          options:options];
+    return request;
+
 }
 //-(void)setUserCell:(QZBRatingTVCell *)cell
 
@@ -250,16 +258,41 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     } else {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [self.refreshControl endRefreshing];
+        if(self.topRank.count > 0) {
+            [self preheatFromUserArray:self.topRank];
+        }
+        if(self.playerRank.count > 0){
+            [self preheatFromUserArray:self.playerRank];
+        }
+        
     }
 
     [self.tableView reloadData];
 }
+
+
 
 -(void)reloadThisTable {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedReloadRatingTableView
                                                         object:@(self.tableType)];
     
+}
+
+#pragma mark - preheat
+
+-(void)preheatFromUserArray:(NSArray *)arr {
+    NSMutableArray *tmpArr = [NSMutableArray array];
+    for(QZBUserInRating *userInRating in arr) {
+        if(userInRating.imageURL){
+            DFImageRequest *req = [self requestFromURL:userInRating.imageURL];
+            [tmpArr addObject:req];
+        }
+    }
+    if(tmpArr.count > 0) {
+        [[DFImageManager sharedManager]
+         startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
+    }
 }
 
 /*

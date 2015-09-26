@@ -191,7 +191,13 @@
 
 - (NSString *)participantsDescription {
     NSInteger count = self.participants.count;
-    return [NSString stringWithFormat:@"Количество игроков: %ld", (long)count];
+    NSString *participantsDescription =
+    [NSString stringWithFormat:@"Количество игроков: %ld", (long)count];
+    if(self.maxUserCount){
+        NSString *appendString = [NSString stringWithFormat:@" из %@",self.maxUserCount];
+        participantsDescription = [participantsDescription stringByAppendingString:appendString];
+    }
+    return participantsDescription; //[NSString stringWithFormat:@"Количество игроков: %ld/%@", (long)count];
 }
 
 - (NSString *)topicsDescription {
