@@ -618,14 +618,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         }
         [self ignoreInteractions];
 
-        //  self.choosedIndexPath = nil;
-
-        //        [self deleteRowWithAnimationOnIdexPath:ip
-        //                                         array:self.challenged];
-
-        //        [[QZBServerManager sharedManager]DELETELobbiesWithID:description.lobbyID
-        //                                                   onSuccess:nil
-        //                                                   onFailure:nil];
     }
 }
 
