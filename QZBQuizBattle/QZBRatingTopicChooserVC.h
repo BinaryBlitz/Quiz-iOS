@@ -9,6 +9,5 @@
 #import "QZBTopicChooserController.h"
 
 @interface QZBRatingTopicChooserVC : QZBTopicChooserController
-//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end
