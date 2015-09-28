@@ -1389,6 +1389,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
+              forFriends:(BOOL)isFriends
                   withID:(NSInteger)ID
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
