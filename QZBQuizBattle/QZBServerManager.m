@@ -2213,74 +2213,74 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)DELETEBanParticipationWithID:(NSNumber *)participationID
                            onSuccess:(void (^)())succes
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-    NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", participationID];
-
-    [self.requestOperationManager DELETE:urlAsString
-        parameters:params
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            DDLogCInfo(@"participation deleted ");
-            if (succes) {
-                succes();
-            }
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            DDLogCError(@"deletion error %@", error);
-            if (failure) {
-                failure(error, operation.response.statusCode);
-            }
-        }];
+//    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
+//    NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", participationID];
+//
+//    [self.requestOperationManager DELETE:urlAsString
+//        parameters:params
+//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            DDLogCInfo(@"participation deleted ");
+//            if (succes) {
+//                succes();
+//            }
+//        }
+//        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            DDLogCError(@"deletion error %@", error);
+//            if (failure) {
+//                failure(error, operation.response.statusCode);
+//            }
+//        }];
 }
 
 - (void)GETChatForRoomWithID:(NSNumber *)roomID
                    onSuccess:(void (^)(NSArray *messages))success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    [[[self class] sharedManager]
-        GETAllFriendsOfUserWithID:[QZBCurrentUser sharedInstance].user.userID
-        OnSuccess:^(NSArray *friends) {
-
-            NSMutableArray *comments = [NSMutableArray array];
-            for (QZBAnotherUser *user in friends) {
-                NSInteger words = (arc4random() % 40) + 1;
-                QZBComment *comment = [QZBComment new];
-                comment.username = user.name;
-                comment.owner = user;
-                comment.text = [LoremIpsum wordsWithNumber:words];
-                comment.timestamp = [LoremIpsum date];
-                [comments addObject:comment];
-            }
-            if (success) {
-                success([NSArray arrayWithArray:comments]);
-            }
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode) {
-
-            DDLogError(@"message error %@", error);
-
-            if (failure) {
-                failure(error, statusCode);
-            }
-        }];
+//    [[[self class] sharedManager]
+//        GETAllFriendsOfUserWithID:[QZBCurrentUser sharedInstance].user.userID
+//        OnSuccess:^(NSArray *friends) {
+//
+//            NSMutableArray *comments = [NSMutableArray array];
+//            for (QZBAnotherUser *user in friends) {
+//                NSInteger words = (arc4random() % 40) + 1;
+//                QZBComment *comment = [QZBComment new];
+//                comment.username = user.name;
+//                comment.owner = user;
+//                comment.text = [LoremIpsum wordsWithNumber:words];
+//                comment.timestamp = [LoremIpsum date];
+//                [comments addObject:comment];
+//            }
+//            if (success) {
+//                success([NSArray arrayWithArray:comments]);
+//            }
+//
+//        }
+//        onFailure:^(NSError *error, NSInteger statusCode) {
+//
+//            DDLogError(@"message error %@", error);
+//
+//            if (failure) {
+//                failure(error, statusCode);
+//            }
+//        }];
 }
 
 - (void)POSTSendMessage:(NSString *)message
            inRoomWithID:(NSNumber *)roomID
               onSuccess:(void (^)())success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                       int rand = arc4random() % 100;
-                       if (rand < 80) {
-                           if (success) {
-                               success();
-                           }
-                       } else {
-                           if (failure) {
-                               failure(nil, 500);
-                           }
-                       }
-                   });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+//                   dispatch_get_main_queue(), ^{
+//                       int rand = arc4random() % 100;
+//                       if (rand < 80) {
+//                           if (success) {
+//                               success();
+//                           }
+//                       } else {
+//                           if (failure) {
+//                               failure(nil, 500);
+//                           }
+//                       }
+//                   });
 }
 
 #pragma mark - support
@@ -2288,13 +2288,41 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)GETCompareVersion:(NSString *)version
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                       if (success) {
-                           success(QZBUpdateTypeMinor, @"ОБНОВИСЬ!!!");
-                       }
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"version":version};
+    
+    [self.requestOperationManager GET:@"players/version" parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //{ needs_update: true, major: true }
+                                  DDLogInfo(@"version response %@", responseObject);
+                                  QZBUpdateType updateType = QZBUpdateTypeNone;
+                                  NSString *message = nil;
+                                  if(responseObject[@"message"] && ![responseObject[@"message"] isEqual:[NSNull null]]){
+                                      message = responseObject[@"message"];
+                                  }
+                                  BOOL needUpdate = [responseObject[@"needs_update"] boolValue];
+                                  BOOL isMajor = [responseObject[@"major"] boolValue];
+                                  if(needUpdate) {
+                                  if( isMajor){
+                                      updateType = QZBUpdateTypeMajor;
+                                  } else {
+                                      updateType = QZBUpdateTypeMinor;
+                                  }
+                                  }
+                                  
+                                  if (success) {
+                                      success(updateType, message);
+                                  }
+                                  
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"new quest problems err %@", error);
+        
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
 
-                   });
+    }];
 }
 
 #pragma mark - new_questions
