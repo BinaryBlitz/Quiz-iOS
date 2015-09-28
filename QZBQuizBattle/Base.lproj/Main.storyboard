@@ -11,8 +11,6 @@
         <mutableArray key="MuseoSansCyrl_0.otf">
             <string>MuseoSansCyrl-300</string>
             <string>MuseoSansCyrl-300</string>
-            <string>MuseoSansCyrl-300</string>
-            <string>MuseoSansCyrl-300</string>
         </mutableArray>
         <mutableArray key="MuseoSansCyrl_1.otf">
             <string>MuseoSansCyrl-500</string>
@@ -596,8 +594,8 @@
                                                 <exclude reference="1sx-1s-pF5"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="8" y="221" width="366.5" height="204"/>
+                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                            <rect key="frame" x="8" y="221" width="366" height="204"/>
                                             <mask key="constraints">
                                                 <include reference="1sx-1s-pF5"/>
                                             </mask>
@@ -8030,63 +8028,26 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dT2-fG-AcG">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSA-hN-R7u">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74k-b0-hQB">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" name="MuseoSansCyrl-300" family="Museo Sans Cyrl" pointSize="18"/>
-                                                <state key="normal" title="За все время">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="leftButtonAction:" destination="Pad-5T-GT9" eventType="touchUpInside" id="sia-ce-w11"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JFr-WP-zMY">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" name="MuseoSansCyrl-300" family="Museo Sans Cyrl" pointSize="18"/>
-                                                <state key="normal" title="За неделю">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="rightButtonAction:" destination="Pad-5T-GT9" eventType="touchUpInside" id="r9G-Pk-kKw"/>
-                                                </connections>
-                                            </button>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pVR-RI-Rt1">
+                                                <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                                                <segments>
+                                                    <segment title="Все время"/>
+                                                    <segment title="Неделя"/>
+                                                    <segment title="Друзья"/>
+                                                </segments>
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="JFr-WP-zMY" firstAttribute="leading" secondItem="74k-b0-hQB" secondAttribute="trailing" constant="8" id="1gi-7R-hng"/>
-                                            <constraint firstItem="74k-b0-hQB" firstAttribute="width" secondItem="JFr-WP-zMY" secondAttribute="width" id="3Tc-tp-U3Z"/>
-                                            <constraint firstItem="74k-b0-hQB" firstAttribute="trailing" secondItem="SSA-hN-R7u" secondAttribute="trailing" id="3cd-fm-Fyo"/>
-                                            <constraint firstItem="74k-b0-hQB" firstAttribute="top" secondItem="dT2-fG-AcG" secondAttribute="top" constant="-1" id="CHo-CV-6Be">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                                            <constraint firstAttribute="trailing" secondItem="pVR-RI-Rt1" secondAttribute="trailing" constant="8" id="IiQ-rt-T5f">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                             </constraint>
-                                            <constraint firstItem="JFr-WP-zMY" firstAttribute="top" secondItem="dT2-fG-AcG" secondAttribute="top" constant="1" id="Cp6-Mw-M7j"/>
-                                            <constraint firstAttribute="bottom" secondItem="JFr-WP-zMY" secondAttribute="bottom" constant="1" id="FMC-Zt-gyJ"/>
-                                            <constraint firstAttribute="bottom" secondItem="SSA-hN-R7u" secondAttribute="bottom" constant="1" id="NBY-4f-RFC"/>
-                                            <constraint firstItem="74k-b0-hQB" firstAttribute="leading" secondItem="dT2-fG-AcG" secondAttribute="leading" id="Tpn-TE-ecu">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                                            <constraint firstAttribute="bottom" secondItem="pVR-RI-Rt1" secondAttribute="bottom" constant="6" id="cy0-nx-Lfw"/>
+                                            <constraint firstItem="pVR-RI-Rt1" firstAttribute="top" secondItem="dT2-fG-AcG" secondAttribute="top" constant="6" id="ezd-wy-bnB"/>
+                                            <constraint firstItem="pVR-RI-Rt1" firstAttribute="leading" secondItem="dT2-fG-AcG" secondAttribute="leading" constant="8" id="ias-hr-uEb">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                             </constraint>
-                                            <constraint firstAttribute="trailing" secondItem="JFr-WP-zMY" secondAttribute="trailing" id="c82-14-9SJ">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="1"/>
-                                            </constraint>
-                                            <constraint firstItem="SSA-hN-R7u" firstAttribute="leading" secondItem="dT2-fG-AcG" secondAttribute="leading" constant="1" id="tvt-J9-AO2"/>
-                                            <constraint firstAttribute="bottom" secondItem="74k-b0-hQB" secondAttribute="bottom" constant="1" id="vyP-U7-AmE"/>
-                                            <constraint firstItem="SSA-hN-R7u" firstAttribute="top" secondItem="dT2-fG-AcG" secondAttribute="top" constant="1" id="zzR-C1-fog"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -8096,44 +8057,24 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="subviews">
-                                                <exclude reference="SSA-hN-R7u"/>
-                                                <exclude reference="74k-b0-hQB"/>
-                                                <exclude reference="JFr-WP-zMY"/>
+                                                <exclude reference="pVR-RI-Rt1"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <exclude reference="3Tc-tp-U3Z"/>
-                                                <exclude reference="3cd-fm-Fyo"/>
-                                                <exclude reference="CHo-CV-6Be"/>
-                                                <exclude reference="Tpn-TE-ecu"/>
-                                                <exclude reference="vyP-U7-AmE"/>
-                                                <exclude reference="1gi-7R-hng"/>
-                                                <exclude reference="Cp6-Mw-M7j"/>
-                                                <exclude reference="FMC-Zt-gyJ"/>
-                                                <exclude reference="c82-14-9SJ"/>
-                                                <exclude reference="NBY-4f-RFC"/>
-                                                <exclude reference="tvt-J9-AO2"/>
-                                                <exclude reference="zzR-C1-fog"/>
+                                                <exclude reference="IiQ-rt-T5f"/>
+                                                <exclude reference="cy0-nx-Lfw"/>
+                                                <exclude reference="ezd-wy-bnB"/>
+                                                <exclude reference="ias-hr-uEb"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="subviews">
-                                                <include reference="SSA-hN-R7u"/>
-                                                <include reference="74k-b0-hQB"/>
-                                                <include reference="JFr-WP-zMY"/>
+                                                <include reference="pVR-RI-Rt1"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <include reference="3Tc-tp-U3Z"/>
-                                                <include reference="3cd-fm-Fyo"/>
-                                                <include reference="CHo-CV-6Be"/>
-                                                <include reference="Tpn-TE-ecu"/>
-                                                <include reference="vyP-U7-AmE"/>
-                                                <include reference="1gi-7R-hng"/>
-                                                <include reference="Cp6-Mw-M7j"/>
-                                                <include reference="FMC-Zt-gyJ"/>
-                                                <include reference="c82-14-9SJ"/>
-                                                <include reference="NBY-4f-RFC"/>
-                                                <include reference="tvt-J9-AO2"/>
-                                                <include reference="zzR-C1-fog"/>
+                                                <include reference="IiQ-rt-T5f"/>
+                                                <include reference="cy0-nx-Lfw"/>
+                                                <include reference="ezd-wy-bnB"/>
+                                                <include reference="ias-hr-uEb"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -8142,8 +8083,12 @@
                                 <constraints>
                                     <constraint firstItem="dT2-fG-AcG" firstAttribute="top" secondItem="wP3-r4-x0V" secondAttribute="top" constant="6" id="5dZ-s2-BO6"/>
                                     <constraint firstAttribute="bottom" secondItem="dT2-fG-AcG" secondAttribute="bottom" constant="6" id="6jY-QX-vzy"/>
-                                    <constraint firstItem="dT2-fG-AcG" firstAttribute="leading" secondItem="wP3-r4-x0V" secondAttribute="leading" constant="20" id="H4J-Wk-Zgt"/>
-                                    <constraint firstAttribute="trailing" secondItem="dT2-fG-AcG" secondAttribute="trailing" constant="20" id="miH-ji-8h1"/>
+                                    <constraint firstItem="dT2-fG-AcG" firstAttribute="leading" secondItem="wP3-r4-x0V" secondAttribute="leading" constant="20" id="H4J-Wk-Zgt">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                    </constraint>
+                                    <constraint firstAttribute="trailing" secondItem="dT2-fG-AcG" secondAttribute="trailing" constant="20" id="miH-ji-8h1">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                    </constraint>
                                     <constraint firstAttribute="height" constant="52" id="pvK-ky-7O2"/>
                                 </constraints>
                                 <variation key="default">
@@ -8240,11 +8185,7 @@
                     <connections>
                         <outlet property="buttonsBackgroundView" destination="dT2-fG-AcG" id="gMJ-6T-LM5"/>
                         <outlet property="chooseTopicButton" destination="SOr-fc-Dc8" id="w33-Tf-OoC"/>
-                        <outlet property="leftButton" destination="74k-b0-hQB" id="KCk-ZR-URP"/>
-                        <outlet property="leftSliderConstraint" destination="tvt-J9-AO2" id="4iK-J1-MzO"/>
-                        <outlet property="rightButton" destination="JFr-WP-zMY" id="ib2-x9-yQC"/>
-                        <outlet property="rightSliderConstraint" destination="3cd-fm-Fyo" id="q11-em-vln"/>
-                        <outlet property="sliderView" destination="SSA-hN-R7u" id="AVR-Vz-gU5"/>
+                        <outlet property="typeChooserSegmentControl" destination="pVR-RI-Rt1" id="KZ2-S4-f7s"/>
                         <segue destination="xaT-h4-8Ye" kind="show" identifier="showUser" id="pjt-Me-d24"/>
                     </connections>
                 </viewController>
@@ -15485,6 +15426,7 @@
         <image name="vkIcon" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+<<<<<<< HEAD
         <segue reference="LYm-7Y-ok6"/>
         <segue reference="NZS-cc-4y0"/>
         <segue reference="efK-D3-R2p"/>
@@ -15493,10 +15435,24 @@
         <segue reference="LQq-7s-Qnr"/>
         <segue reference="eMg-QT-55k"/>
         <segue reference="qXV-Rh-se5"/>
+=======
+        <segue reference="1oA-Co-JGY"/>
+        <segue reference="Q6R-nc-Xpj"/>
+        <segue reference="pjt-Me-d24"/>
+>>>>>>> friend rating added(dummie)
         <segue reference="TKe-GQ-MWf"/>
         <segue reference="qGa-a3-3D7"/>
         <segue reference="Q6R-nc-Xpj"/>
         <segue reference="Ymn-se-41S"/>
         <segue reference="zMv-no-kIb"/>
+<<<<<<< HEAD
+=======
+        <segue reference="Ymn-se-41S"/>
+        <segue reference="eMg-QT-55k"/>
+        <segue reference="9a1-UP-0yN"/>
+        <segue reference="efK-D3-R2p"/>
+        <segue reference="LYm-7Y-ok6"/>
+        <segue reference="px3-m4-fSs"/>
+>>>>>>> friend rating added(dummie)
     </inferredMetricsTieBreakers>
 </document>

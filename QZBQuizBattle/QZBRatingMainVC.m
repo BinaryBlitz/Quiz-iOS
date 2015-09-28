@@ -32,26 +32,17 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.multipleTouchEnabled = NO;
-   // self.fromTopics = NO;
     
-     [self setNeedsStatusBarAppearanceUpdate];
-
-    [self.leftButton setExclusiveTouch:YES];
-    [self.rightButton setExclusiveTouch:YES];
+    [self setNeedsStatusBarAppearanceUpdate];
+    self.typeChooserSegmentControl.exclusiveTouch = YES;
     [self.chooseTopicButton setExclusiveTouch:YES];
-    
     [self initStatusbarWithColor:[UIColor whiteColor]];
-    
-    [self.rightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [self.leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-   // self.rightButton.titleLabel.textColor = [UIColor lightGreenColor];
 
-    [self.sliderView removeConstraints:self.sliderView.constraints];
-    self.sliderView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    
-
+    self.typeChooserSegmentControl.exclusiveTouch = YES;
+    [self.typeChooserSegmentControl addTarget:self
+                                       action:@selector(typeChangedAction:)
+                             forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -141,8 +132,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                   withID:categoryID
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
                   
-
                    [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
+                   [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];
 
                }
      onFailure:^(NSError *error, NSInteger statusCode) {
@@ -177,7 +168,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
 
                    [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
-
+                   //[pageVC setFriendsRanksWithTop:playerArray:topRanking playerArray:playerRanking];
+                   [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];//REDO
                }
      onFailure:^(NSError *error, NSInteger statusCode) {
          
@@ -190,6 +182,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     [pageVC setWeekRanksWithTop:[NSArray array] playerArray:[NSArray array]];
     [pageVC setAllTimeRanksWithTop:[NSArray array] playerArray:[NSArray array]];
+    [pageVC setFriendsRanksWithTop:[NSArray array] playerArray:[NSArray array]];
 
 }
 
@@ -282,6 +275,38 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         QZBRatingPageVC *pageVC = (QZBRatingPageVC *)[self.childViewControllers firstObject];
         [pageVC showRightVC];
     }
+}
+
+-(void)typeChangedAction:(UISegmentedControl *)sender {
+    [self ignoreIteractions];
+    
+     if ([[self.childViewControllers firstObject] isKindOfClass:[QZBRatingPageVC class]]) {
+         QZBRatingPageVC *pvc = [self.childViewControllers firstObject];
+         
+         switch (sender.selectedSegmentIndex) {
+             case 0:
+                 [pvc showLeftVC];
+                 break;
+             case 1:
+                 [pvc showCenterVC];
+                 break;
+             case 2:
+                 [pvc showRightVC];
+                 break;
+                 
+             default:
+                 break;
+         }
+   
+     }
+}
+
+-(void)ignoreIteractions {
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                   });
 }
 
 #pragma mark - ui init
