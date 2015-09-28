@@ -226,20 +226,20 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 
 -(void)showMajorUpdateWithMessage:(NSString *)message {
     
-    [self showWithCompletionButton:nil];
+    [self showWithCompletionButton:nil message:message];
     
     
 }
 
 -(void)showMinorUpdateWithMessage:(NSString *)message {
-    [self showWithCompletionButton:@"Отмена"];
+    [self showWithCompletionButton:@"Отмена" message:message];
 }
 
 -(void)showBugFixWithMessage:(NSString *)message {
     
 }
 
--(void)showWithCompletionButton:(NSString *)buttonTitle {
+-(void)showWithCompletionButton:(NSString *)buttonTitle message:(NSString *)message{
     
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     alert.backgroundType = Blur;
@@ -247,13 +247,14 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
     
     NSString *title = [NSString stringWithFormat:@"Вышло обновление"];
     NSString *subTitle = [NSString
-                          stringWithFormat:@"Вым необходимо обновить программу"];
-    
+                          stringWithFormat:@"Вым необходимо обновить программу!"];
+    if(message) {
+        NSString *messageStringToAppend = [NSString stringWithFormat:@"Сообщение: %@",message];
+        subTitle = [subTitle stringByAppendingString:messageStringToAppend];
+    }
     
     [alert addButton:@"Обновить" actionBlock:^{
-        NSLog(@"gg");
         NSString *iTunesLink = [NSString stringWithFormat:@"itms://itunes.apple.com/us/app/apple-store/id%@?mt=8", QZBiTunesIdentifier];
-      
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
     }];
     
