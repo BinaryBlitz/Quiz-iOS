@@ -218,6 +218,7 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
+              forFriends:(BOOL)isFriends
                   withID:(NSInteger)ID
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
