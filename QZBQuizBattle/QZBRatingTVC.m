@@ -39,8 +39,7 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
     [super viewDidLoad];
 
     self.view.multipleTouchEnabled = NO;
-    
-    
+
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(reloadThisTable)
@@ -50,46 +49,29 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
     self.tableView.dataSource = self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //[self.ratingTableView reloadData];
-//
-//    if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
-//        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
-//        pageVC.expectedType = self.tableType;
-//    }
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if([self.refreshControl isRefreshing]) {
+    if ([self.refreshControl isRefreshing]) {
         return 0;
     }
-    
-    if(!self.topRank && !self.playerRank){
+
+    if (!self.topRank && !self.playerRank) {
         return 0;
     }
-        if(self.topRank.count == 0 && self.playerRank.count == 0) {
-            return 1;
-        }
+    if (self.topRank.count == 0 && self.playerRank.count == 0) {
+        return 1;
+    }
 
     NSInteger result = 0;
 
     if (self.topRank) {
         result += [self.topRank count];
     }
-
     if (self.playerRank) {
         result += [self.playerRank count];
     }
@@ -102,12 +84,12 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-        if(self.topRank.count == 0 && self.playerRank.count == 0){
-            QZBReloadingCell *cell = [tableView
-            dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
-            [cell.activityIndicator startAnimating];
-            return cell;
-        }
+    if (self.topRank.count == 0 && self.playerRank.count == 0) {
+        QZBReloadingCell *cell =
+            [tableView dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
+        [cell.activityIndicator startAnimating];
+        return cell;
+    }
 
     UITableViewCell *resultCell = nil;
 
@@ -155,9 +137,9 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
     didEndDisplayingCell:(UITableViewCell *)cell
        forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
-                QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
-                c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
-    } else if ([cell isKindOfClass:[QZBReloadingCell class]]){
+        QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+        c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
+    } else if ([cell isKindOfClass:[QZBReloadingCell class]]) {
         QZBReloadingCell *c = (QZBReloadingCell *)cell;
         [c.activityIndicator stopAnimating];
     }
@@ -169,10 +151,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
         QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
         QZBUserInRating *user = c.user;
-       
+
         if (user.imageURL) {
             DFImageRequest *request = [self requestFromURL:user.imageURL];
-        
+
             [[DFImageManager sharedManager]
                 requestImageForRequest:request
                             completion:^(UIImage *image, NSDictionary *info) {
@@ -185,7 +167,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                     }
                                 });
 
-
                             }];
         } else {
             [c.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
@@ -195,19 +176,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
--(DFImageRequest *)requestFromURL:(NSURL *)imageURL {
+- (DFImageRequest *)requestFromURL:(NSURL *)imageURL {
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.allowsClipping = YES;
-    
+
     options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
     options.priority = NSOperationQueuePriorityHigh;
-    
+
     DFImageRequest *request = [DFImageRequest requestWithResource:imageURL
                                                        targetSize:CGSizeZero
                                                       contentMode:DFImageContentModeAspectFill
                                                           options:options];
     return request;
-
 }
 //-(void)setUserCell:(QZBRatingTVCell *)cell
 
@@ -248,50 +228,45 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray {
     self.topRank = topArray;
     self.playerRank = playerArray;
-    
-    if(!playerArray && !topArray) {
+
+    if (!playerArray && !topArray) {
         [self.refreshControl endRefreshing];
     }
-    
-    if(self.topRank.count == 0 && self.playerRank.count == 0){
+
+    if (self.topRank.count == 0 && self.playerRank.count == 0) {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     } else {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [self.refreshControl endRefreshing];
-        if(self.topRank.count > 0) {
+        if (self.topRank.count > 0) {
             [self preheatFromUserArray:self.topRank];
         }
-        if(self.playerRank.count > 0){
+        if (self.playerRank.count > 0) {
             [self preheatFromUserArray:self.playerRank];
         }
-        
     }
 
     [self.tableView reloadData];
 }
 
-
-
--(void)reloadThisTable {
-    
+- (void)reloadThisTable {
     [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedReloadRatingTableView
                                                         object:@(self.tableType)];
-    
 }
 
 #pragma mark - preheat
 
--(void)preheatFromUserArray:(NSArray *)arr {
+- (void)preheatFromUserArray:(NSArray *)arr {
     NSMutableArray *tmpArr = [NSMutableArray array];
-    for(QZBUserInRating *userInRating in arr) {
-        if(userInRating.imageURL){
+    for (QZBUserInRating *userInRating in arr) {
+        if (userInRating.imageURL) {
             DFImageRequest *req = [self requestFromURL:userInRating.imageURL];
             [tmpArr addObject:req];
         }
     }
-    if(tmpArr.count > 0) {
+    if (tmpArr.count > 0) {
         [[DFImageManager sharedManager]
-         startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
+            startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
     }
 }
 

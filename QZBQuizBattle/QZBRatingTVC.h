@@ -10,12 +10,14 @@
 
 UIKIT_EXTERN NSString *const QZBNeedReloadRatingTableView;
 
-typedef NS_ENUM(NSInteger, QZBRatingTableType) { QZBRatingTableAllTime, QZBRatingTableWeek, QZBRatingTableFriends};
+typedef NS_ENUM(NSInteger, QZBRatingTableType) {
+    QZBRatingTableAllTime,
+    QZBRatingTableWeek,
+    QZBRatingTableFriends
+};
 
 @interface QZBRatingTVC : UITableViewController
 
-//@property (strong, nonatomic) IBOutlet UITableView *ratingTableView;
-//@property (copy, nonatomic) NSString *urlString;
 @property (assign, nonatomic) QZBRatingTableType tableType;
 
 - (void)setPlayersRanksWithTop:(NSArray *)topArray playerArray:(NSArray *)playerArray;
