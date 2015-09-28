@@ -14,6 +14,7 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import <SVProgressHUD.h>
 #import "UIViewController+QZBControllerCategory.h"
+#import "UIFont+QZBCustomFont.h"
 #import <DDLog.h>
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -42,6 +43,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self.typeChooserSegmentControl addTarget:self
                                        action:@selector(typeChangedAction:)
                              forControlEvents:UIControlEventValueChanged];
+
+    UIFont *font = [UIFont boldMuseoFontOfSize:14.0f];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+    [self.typeChooserSegmentControl setTitleTextAttributes:attributes
+                                                  forState:UIControlStateNormal];
 }
 
 - (void)initWithTopic:(QZBGameTopic *)topic {
@@ -93,6 +99,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self setEmptyArrays];
     [[QZBServerManager sharedManager] GETRankingWeekly:NO
         isCategory:YES
+        forFriends:NO
         withID:categoryID
         onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
 
@@ -104,12 +111,21 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [[QZBServerManager sharedManager] GETRankingWeekly:YES
         isCategory:YES
+        forFriends:NO
         withID:categoryID
         onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-
             [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
-            [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
 
+        }];
+
+    [[QZBServerManager sharedManager] GETRankingWeekly:NO
+        isCategory:YES
+        forFriends:YES
+        withID:categoryID
+        onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+            [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];
         }
         onFailure:^(NSError *error, NSInteger statusCode){
 
@@ -122,21 +138,31 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [[QZBServerManager sharedManager] GETRankingWeekly:NO
         isCategory:NO
+        forFriends:NO
         withID:topicID
         onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
-
             [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
-            [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];  // REDO
-
         }
         onFailure:^(NSError *error, NSInteger statusCode){
 
         }];
+
     [[QZBServerManager sharedManager] GETRankingWeekly:YES
         isCategory:NO
+        forFriends:NO
         withID:topicID
         onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
             [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
+        }
+        onFailure:^(NSError *error, NSInteger statusCode){
+
+        }];
+    [[QZBServerManager sharedManager] GETRankingWeekly:NO
+        isCategory:NO
+        forFriends:YES
+        withID:topicID
+        onSuccess:^(NSArray *topRanking, NSArray *playerRanking) {
+            [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking]; 
         }
         onFailure:^(NSError *error, NSInteger statusCode){
 
