@@ -15,15 +15,16 @@
 @interface QZBRatingMainVC : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseTopicButton;
-@property (weak, nonatomic) IBOutlet UIButton *leftButton;
-@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+//@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+//@property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonsBackgroundView;
 @property (strong, nonatomic) UIView *buttonBackgroundView;
-@property (weak, nonatomic) IBOutlet UIView *sliderView;
+//@property (weak, nonatomic) IBOutlet UIView *sliderView;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *typeChooserSegmentControl;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftSliderConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightSliderConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftSliderConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightSliderConstraint;
 
 
 @property (strong, nonatomic) QZBCategory *category;

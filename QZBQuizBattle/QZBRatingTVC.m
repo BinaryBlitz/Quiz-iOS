@@ -53,11 +53,11 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     //[self.ratingTableView reloadData];
-
-    if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
-        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
-        pageVC.expectedType = self.tableType;
-    }
+//
+//    if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
+//        QZBRatingPageVC *pageVC = (QZBRatingPageVC *)self.parentViewController;
+//        pageVC.expectedType = self.tableType;
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
