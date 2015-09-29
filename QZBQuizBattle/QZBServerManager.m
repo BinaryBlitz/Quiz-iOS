@@ -133,9 +133,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
             // REDO problems
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                
+
             } completion:^(BOOL success, NSError *error) {
-                
+
                 if (successAF) {
                     successAF([QZBCategory MR_findAll]);
                 }
@@ -1430,11 +1430,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
             NSMutableArray *usersPlayer = [NSMutableArray array];
 
             [self parseRatingDict:responseObject toTopArray:usersTop playerRating:usersPlayer];
-            
+
             if(usersTop.count == 0){
                 usersTop = nil;
             }
-            
+
             if(usersPlayer.count == 0){
                 usersPlayer = nil;
             }
@@ -1617,7 +1617,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)POSTInAppPurchaseIdentifier:(NSString *)identifier
                           onSuccess:(void (^)())success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-    
+
     if(!identifier){
         if(failure){
             failure(nil,-1);
@@ -2289,10 +2289,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)GETCompareVersion:(NSString *)version
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-    
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
                               @"version":version};
-    
+
     [self.requestOperationManager GET:@"players/version" parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //{ update_available: true, major: true }
@@ -2302,8 +2301,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                   if(responseObject[@"message"] && ![responseObject[@"message"] isEqual:[NSNull null]]){
                                       message = responseObject[@"message"];
                                   }
-                                 
-                                 
+
+
                                   BOOL needUpdate = [responseObject[@"update_available"] boolValue];
                                   BOOL isMajor = [responseObject[@"major"] boolValue];
                                   if(needUpdate) {
@@ -2313,14 +2312,14 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                       updateType = QZBUpdateTypeMinor;
                                   }
                                   }
-                                  
+
                                   if (success) {
                                       success(updateType, message);
                                   }
-                                  
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DDLogError(@"new quest problems err %@", error);
-        
+
         if (failure) {
             failure(error, operation.response.statusCode);
         }
@@ -2335,11 +2334,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                        topicID:(NSNumber *)topicID
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-    
+
     if(!text || !answers || !topicID) {
         failure(nil,-1);
     }
-    
+
     NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
                               @"proposal":@{@"content": text,
                                            @"topic_id": topicID,
@@ -2352,17 +2351,17 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                        success();
                                    }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+
         DDLogError(@"new quest problems err %@", error);
-        
+
         if (failure) {
             failure(error, operation.response.statusCode);
         }
     }];
-    
-   
-    
-    
+
+
+
+
 }
 
 
