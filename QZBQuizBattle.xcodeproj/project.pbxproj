@@ -45,6 +45,8 @@
 		191E46671B023CD60037963F /* rightRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 191E46631B023CD60037963F /* rightRed.png */; };
 		191E46791B04A4160037963F /* UILabel+MultiLineAutoSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */; };
 		19229BC11ABD5AD500BCB0CD /* QZBDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */; };
+		192311C71BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */; settings = {ASSET_TAGS = (); }; };
+		192311CA1BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */; settings = {ASSET_TAGS = (); }; };
 		192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192796761A9A026F00A468E5 /* StoreKit.framework */; };
 		192CDE241B4182B7003992C7 /* QZBCreateRoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */; };
 		192CDE281B418DB9003992C7 /* QZBPlayerCountChooserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192CDE271B418DB9003992C7 /* QZBPlayerCountChooserCell.m */; };
@@ -290,6 +292,9 @@
 		191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+MultiLineAutoSize.m"; sourceTree = "<group>"; };
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
 		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
+		192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QZBRoomFakeKeyboard.xib; sourceTree = "<group>"; };
+		192311C81BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomFakeKeyboard.h; sourceTree = "<group>"; };
+		192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomFakeKeyboard.m; sourceTree = "<group>"; };
 		192796761A9A026F00A468E5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCreateRoomController.h; sourceTree = "<group>"; };
 		192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCreateRoomController.m; sourceTree = "<group>"; };
@@ -1414,6 +1419,8 @@
 			children = (
 				19AB8E041B9DDAA3004329F8 /* QZBCommentTextView.h */,
 				19AB8E051B9DDAA3004329F8 /* QZBCommentTextView.m */,
+				192311C81BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.h */,
+				192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */,
 			);
 			name = rooms;
 			sourceTree = "<group>";
@@ -1434,6 +1441,7 @@
 			isa = PBXGroup;
 			children = (
 				19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */,
+				192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -1775,6 +1783,7 @@
 				1944A1861B1098A40095C600 /* MuseoSansCyrl_3.otf in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,
 				191E46641B023CD60037963F /* leftGreen.png in Resources */,
+				192311C71BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib in Resources */,
 				1983EE3B1AAC8C1700D59268 /* icon_back_white.png in Resources */,
 				1944A18A1B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf in Resources */,
 				1989C6C71B74BB5A001ECF3A /* melody.wav in Resources */,
@@ -1889,6 +1898,7 @@
 				191559C71A39CDD400462C93 /* main.m in Sources */,
 				19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */,
 				1901BA231B3067E7003E2895 /* QZBUserInRoomCell.m in Sources */,
+				192311CA1BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m in Sources */,
 				19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */,
 				197B4E0A1AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m in Sources */,
 				190DE81D1AD66B320040585A /* QZBEndGameMainCell.m in Sources */,
