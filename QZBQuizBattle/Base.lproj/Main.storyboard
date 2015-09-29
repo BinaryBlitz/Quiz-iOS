@@ -596,8 +596,8 @@
                                                 <exclude reference="1sx-1s-pF5"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="8" y="221" width="366" height="204"/>
+                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                            <rect key="frame" x="8" y="221" width="366.5" height="204"/>
                                             <mask key="constraints">
                                                 <include reference="1sx-1s-pF5"/>
                                             </mask>
@@ -15485,18 +15485,18 @@
         <image name="vkIcon" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Ymn-se-41S"/>
         <segue reference="LQq-7s-Qnr"/>
         <segue reference="9a1-UP-0yN"/>
         <segue reference="efK-D3-R2p"/>
         <segue reference="LYm-7Y-ok6"/>
-        <segue reference="px3-m4-fSs"/>
+        <segue reference="49e-sg-JRM"/>
         <segue reference="eMg-QT-55k"/>
-        <segue reference="TKe-GQ-MWf"/>
-        <segue reference="Ymn-se-41S"/>
         <segue reference="Q6R-nc-Xpj"/>
         <segue reference="qGa-a3-3D7"/>
         <segue reference="qXV-Rh-se5"/>
         <segue reference="zMv-no-kIb"/>
+        <segue reference="TKe-GQ-MWf"/>
         <segue reference="1oA-Co-JGY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -33,6 +33,7 @@
 
 #import <SVProgressHUD.h>
 #import "UIFont+QZBCustomFont.h"
+#import "QZBRoomFakeKeyboard.h"
 
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
@@ -84,6 +85,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 //@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
 //@property (strong, nonatomic) QZBGameTopic *selectedTopic;
 //@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
+
+@property (strong, nonatomic) UIView *fakeKeyboard;
 
 @end
 
@@ -152,6 +155,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     if(self.roomWorker){
         [self animateUp];
     }
+    
+  //  [self messageTest];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -507,8 +513,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     self.roomWorker = [[QZBRoomWorker alloc] initWithRoom:room];
 
     [self.roomWorker addRoomOnlineWorker];
-    
-   // [self addBarButtonRight];
+    [self addBarButtonRight];
     [self animateUp];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -774,7 +779,15 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height - self.bottomView.frame.size.height;
     self.bottomView.frame = frame;
     
-    [self.view bringSubviewToFront:self.bottomView];
+    //[self.view bringSubviewToFront:self.bottomView];
+    }
+    
+    if(_fakeKeyboard) {
+        CGRect frame = self.fakeKeyboard.frame;
+        frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height - self.fakeKeyboard.frame.size.height;
+        self.fakeKeyboard.frame = frame;
+        
+        [self.view bringSubviewToFront:self.fakeKeyboard];
     }
     
 }
@@ -807,7 +820,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 -(void)addBarButtonRight {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0,0,100, 20);
-    [button addTarget:self action:@selector(showChat) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(keyboardShowAction) forControlEvents:UIControlEventTouchUpInside];
+    
     
     NSString *requestTitle = @"Чат";
     
@@ -837,6 +851,146 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     }
     return _stringWithCrown;
 }
+
+-(UIView *)fakeKeyboard {
+    if(!_fakeKeyboard) {
+        QZBRoomFakeKeyboard *v = (QZBRoomFakeKeyboard *)[[[NSBundle mainBundle] loadNibNamed:@"QZBRoomFakeKeyboard"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:0];
+        
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        
+        v.frame = CGRectMake(0, size.height, size.width, size.height/2.5);
+        
+        for(UIButton *button in v.phrasesButtons) {
+            [button addTarget:self
+                       action:@selector(fakeKeyboardAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        _fakeKeyboard = v;
+        
+    }
+    
+    return _fakeKeyboard;
+}
+
+-(void)keyboardShowAction {
+    if([self.view.subviews containsObject:_fakeKeyboard]){
+        [self animateKeyboardDown];
+    } else {
+        [self animateKeyboardUp];
+    }
+}
+
+- (void)animateKeyboardUp {
+  //  CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
+    [self.view addSubview:self.fakeKeyboard];
+    [self.view bringSubviewToFront:self.fakeKeyboard];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         
+                         CGRect frame = self.fakeKeyboard.frame;
+                         frame.origin.y = self.tableView.contentOffset.y +
+                         self.tableView.frame.size.height -
+                         self.fakeKeyboard.frame.size.height;
+                         self.fakeKeyboard.frame = frame;
+                         
+                         [self.view bringSubviewToFront:self.fakeKeyboard];
+
+//                         self.fakeKeyboard.frame = CGRectMake(0,
+//                                                              r.size.height - r.size.height/2.5,
+//                                                              r.size.width,
+//                                                              r.size.height/2.5);
+                     }];
+
+}
+-(void)animateKeyboardDown {
+    CGRect r = [UIScreen mainScreen].bounds;
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.fakeKeyboard.frame = CGRectMake(0,
+                                                              r.size.height,
+                                                              r.size.width,
+                                                              r.size.height/2.5);
+                     } completion:^(BOOL finished) {
+                         [self.fakeKeyboard removeFromSuperview];
+                     }];
+}
+
+
+#pragma mark - messages
+
+-(void)userWithID:(NSNumber *)userID say:(NSString *)message {
+    NSInteger index = -1;
+    
+    for (int i = 0; i<self.room.participants.count;i++){
+        QZBUserWithTopic *userWithTopic = self.room.participants[i];
+        if([userWithTopic.user.userID isEqualToNumber:userID]) {
+            index = i;
+            break;
+        }
+    }
+    if(index == -1){
+        return;
+    }
+    
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
+    QZBUserInRoomCell *cell = (QZBUserInRoomCell *)[self.tableView cellForRowAtIndexPath:ip];
+    if(!cell){
+        return;
+    }
+    
+    CGRect r = cell.contentView.frame;
+    
+    UIView *v = [[UIView alloc] initWithFrame:r];
+    
+    v.backgroundColor = [UIColor transperentBlackColor];
+    v.alpha = 0;
+    CGFloat offset = 50.0;
+    CGRect lableR = CGRectMake(offset, 0, CGRectGetWidth(r) - offset, CGRectGetHeight(r));
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:lableR];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont museoFontOfSize:18];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.numberOfLines = 3;
+    label.text = message;
+    
+    [v addSubview:label];
+    
+    [cell.contentView addSubview:v];
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        v.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        if(finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.4
+                             animations:^{
+                                 v.alpha = 0.4;
+            } completion:^(BOOL finished) {
+                
+                [v removeFromSuperview];
+            }];
+        });
+        }
+    }];
+}
+
+
+-(void)messageTestWithMessage:(NSString *)message {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self userWithID:[QZBCurrentUser sharedInstance].user.userID say:message];
+    });
+}
+
+-(void)fakeKeyboardAction:(UIButton *)sender {
+    
+    [self messageTestWithMessage:sender.titleLabel.text];
+}
+
+
 
 //-(void)addBottomView {
 //    CGRect r = [UIScreen mainScreen].bounds;
