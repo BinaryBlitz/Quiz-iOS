@@ -147,8 +147,8 @@
 // JSBadgeView
 #define COCOAPODS_POD_AVAILABLE_JSBadgeView
 #define COCOAPODS_VERSION_MAJOR_JSBadgeView 1
-#define COCOAPODS_VERSION_MINOR_JSBadgeView 3
-#define COCOAPODS_VERSION_PATCH_JSBadgeView 2
+#define COCOAPODS_VERSION_MINOR_JSBadgeView 4
+#define COCOAPODS_VERSION_PATCH_JSBadgeView 1
 
 // JSQMessagesViewController
 #define COCOAPODS_POD_AVAILABLE_JSQMessagesViewController
