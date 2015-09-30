@@ -82,9 +82,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 @property (strong, nonatomic) NSAttributedString *stringWithCross;
 @property (strong, nonatomic) NSAttributedString *stringWithCrown;
-//@property (strong, nonatomic) QZBRoomOnlineWorker *onlineWorker;
-//@property (strong, nonatomic) QZBGameTopic *selectedTopic;
-//@property (strong, nonatomic) QZBUserWithTopic *currentUserWithTopic;
+
+@property (assign, nonatomic) UIEdgeInsets edgeInset;
 
 @property (strong, nonatomic) UIView *fakeKeyboard;
 
@@ -105,7 +104,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 80, 0);
+    self.tableView.contentInset = self.edgeInset;
     [self reloadRoom];
     
     UIImage *crossImage = [[UIImage imageNamed:@"cancelCross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -120,8 +119,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     self.isReadyGestureRecognizer.numberOfTapsRequired = 1;
     self.isReadyGestureRecognizer.numberOfTouchesRequired = 1;
 
-    //  self.usersWithTopics = [NSMutableArray array];
-    // [self initStatusbarWithColor:[UIColor blackColor]];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -155,9 +153,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     if(self.roomWorker){
         [self animateUp];
     }
-    
-  //  [self messageTest];
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -191,6 +186,10 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     [self setTitleWithRoom:room];
 }
 
+//-(void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//    self.tableView.contentInset = self.edgeInset;
+//}
 
 
 
@@ -198,10 +197,8 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 - (void)leaveCurrentRoom {
     QZBUser *user = [QZBCurrentUser sharedInstance].user;
-    
-    
-    
-    if (!self.room ||![self.room isContainUser:user]) {
+
+    if (!self.room || ![self.room isContainUser:user]) {
         self.needRemoveObserver = YES;
         [self.navigationController popViewControllerAnimated:YES];
     } else {
@@ -290,7 +287,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
     
     [self makeCurrentUserReady:!userWithTopic.isReady];
- //   NSLog(@"gtfo");
+ 
 }
 
 
@@ -320,21 +317,12 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     }
 }
 
-//-(void)didMoveToParentViewController:(UIViewController *)parent{
-//
-//
-//    NSLog(@"popped");
-//
-//}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSInteger count = self.room.participants.count;
-    // if(self.shouldShowEnterRoomCell){
-    count++;
-    //}
+    NSInteger count = self.room.participants.count + 1;
+
     return count;
 }
 
@@ -344,7 +332,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
         QZBUserInRoomCell *cell =
             [tableView dequeueReusableCellWithIdentifier:QZBUserInRoomCellIdentifier];
         
-        QZBUserWithTopic *userWithTopic = self.room.participants[indexPath.row];
+        QZBUserWithTopic *userWithTopic = self.room.participants[indexPath.row]; //redo
         
         if([userWithTopic.user.userID isEqualToNumber:[QZBCurrentUser sharedInstance].user.userID]) {
             if(![cell.isReadyBackView.gestureRecognizers
@@ -433,13 +421,12 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
         [[QZBServerManager sharedManager] POSTJoinRoomWithID:self.room.roomID
             withTopic:topic
             onSuccess:^{
-              //  [self addUserInRoomWithTopic:topic];
+
                 [self generateRoomWorkerWithRoom:self.room];
                 [self reloadRoom];
                 [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
             }
             onFailure:^(NSError *error, NSInteger statusCode){
-
                 if(statusCode == 403) {
                     [self leaveRoomWithMessage:QZBNoPlacesInRoom];
                 }
@@ -484,28 +471,9 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
         [self.refreshControl endRefreshing];
         
         if(statusCode == 404){
-//            [SVProgressHUD showErrorWithStatus:QZBNoRoomErrMessage];
-//            [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-//            
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-//                                         (int64_t)(2.0 * NSEC_PER_SEC)),
-//                           dispatch_get_main_queue(), ^{
-//                [SVProgressHUD dismiss];
-//                [self leaveDeletedRoom];
-//                [[UIApplication sharedApplication]
-//                 endIgnoringInteractionEvents];
-//             //   [self.navigationController popViewControllerAnimated:YES];
-//                
-//            });
+
             [self leaveRoomWithMessage:QZBNoRoomErrMessage];
         }
-//        } else if (statusCode == 403) {
-//            [self leaveRoomWithMessage:QZBNoPlacesInRoom];
-//            
-//            
-//        }
-       // [SVProgressHUD dismiss];
-        
     }];
 }
 
@@ -735,20 +703,14 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
         CGRect destRect = CGRectMake(0, r.size.height, r.size.width, 80);
         
         UIView *v = [[UIView alloc] initWithFrame:destRect];
-     //   UIColor *firstColor = [UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
-//        UIColor *secondColor = [UIColor colorWithRed:254.0/255.0
-//                                               green:204/255.0
-//                                                blue:81.0/255.0
-//                                               alpha:1.0];
+
         UIColor *thirdColor = [UIColor colorWithRed:22.0/255.0
                                               green:131.0/255.0
                                                blue:199.0/255.0
                                               alpha:1];
-        v.backgroundColor = thirdColor;//[UIColor colorWithRed:31.0/255.0 green:181.0/255.0 blue:215.0/255.0 alpha:1];
+        v.backgroundColor = thirdColor;
         _bottomView = v;
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, r.size.width-10, 80)];
-//        label.font = [UIFont systemFontOfSize:20];
-//        label.textColor = [UIColor whiteColor];
+
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         button.frame = CGRectMake(10, 10, r.size.width - 20, 60);
@@ -819,18 +781,19 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 -(void)addBarButtonRight {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0,0,100, 20);
+    button.frame = CGRectMake(0,0,20, 20);
     [button addTarget:self action:@selector(keyboardShowAction) forControlEvents:UIControlEventTouchUpInside];
+
+  //  NSString *requestTitle = @"Чат";
     
+   // [button setTitle:requestTitle forState:UIControlStateNormal];
+    UIImage *messageIcon = [UIImage imageNamed:@"messageIcon"];
+    [button setBackgroundImage:messageIcon forState:UIControlStateNormal];
     
-    NSString *requestTitle = @"Чат";
-    
-    [button setTitle:requestTitle forState:UIControlStateNormal];
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithCustomView:button];
-
 }
 
 
@@ -860,21 +823,35 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
         
         CGSize size = [UIScreen mainScreen].bounds.size;
         
-        v.frame = CGRectMake(0, size.height, size.width, size.height/2.5);
+        v.frame = CGRectMake(0, size.height, size.width, size.height/3.9);
+        v.backgroundColor = [UIColor darkGrayColor];
         
         for(UIButton *button in v.phrasesButtons) {
+            button.tintColor = [UIColor whiteColor];
             [button addTarget:self
                        action:@selector(fakeKeyboardAction:)
              forControlEvents:UIControlEventTouchUpInside];
         }
-        
+        [v.closeButton addTarget:self
+                          action:@selector(keyboardShowAction)
+                forControlEvents:UIControlEventTouchUpInside];
+        v.closeButton.imageView.tintColor = [UIColor whiteColor];
+        UIImage *cancelCross =  [[UIImage imageNamed:@"cancelCross"]
+                                 imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [v.closeButton setImage:cancelCross forState:UIControlStateNormal];
         _fakeKeyboard = v;
-        
     }
-    
     return _fakeKeyboard;
 }
 
+-(UIEdgeInsets)edgeInset {
+    UIEdgeInsets general = self.tableView.contentInset;
+    
+    return  UIEdgeInsetsMake(general.top, 0, 80, 0);
+}
+
+
+#pragma mark - fake keyboard actions
 -(void)keyboardShowAction {
     if([self.view.subviews containsObject:_fakeKeyboard]){
         [self animateKeyboardDown];
@@ -885,6 +862,11 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 - (void)animateKeyboardUp {
   //  CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
+    UIEdgeInsets general = self.tableView.contentInset;
+    self.tableView.contentInset = UIEdgeInsetsMake(general.top,
+                                                   0,
+                                                   self.fakeKeyboard.frame.size.height,
+                                                   0);
     [self.view addSubview:self.fakeKeyboard];
     [self.view bringSubviewToFront:self.fakeKeyboard];
     [UIView animateWithDuration:0.3
@@ -898,23 +880,20 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
                          
                          [self.view bringSubviewToFront:self.fakeKeyboard];
 
-//                         self.fakeKeyboard.frame = CGRectMake(0,
-//                                                              r.size.height - r.size.height/2.5,
-//                                                              r.size.width,
-//                                                              r.size.height/2.5);
                      }];
 
 }
 -(void)animateKeyboardDown {
-    CGRect r = [UIScreen mainScreen].bounds;
+    self.tableView.contentInset = self.edgeInset;
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.fakeKeyboard.frame = CGRectMake(0,
-                                                              r.size.height,
-                                                              r.size.width,
-                                                              r.size.height/2.5);
+                         CGRect frame = self.fakeKeyboard.frame;
+                         frame.origin.y = self.tableView.contentOffset.y +
+                         self.tableView.frame.size.height;
+                         self.fakeKeyboard.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.fakeKeyboard removeFromSuperview];
+                         self.tableView.contentInset = self.edgeInset;
                      }];
 }
 
@@ -942,19 +921,26 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     }
     
     CGRect r = cell.contentView.frame;
+    r.origin.x = r.size.width;
+    r.size.width = r.size.width - cell.isReadyBackView.frame.origin.x; //r.size.width/2.0;
     
     UIView *v = [[UIView alloc] initWithFrame:r];
-    
-    v.backgroundColor = [UIColor transperentBlackColor];
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = v.bounds;
+//    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
+//    [gradient setStartPoint:CGPointMake(0,0.5)];
+//    [gradient setEndPoint:CGPointMake(1,0.5)];
+//    [v.layer insertSublayer:gradient atIndex:0];
+    v.backgroundColor = [UIColor veryDarkGreyColor];
     v.alpha = 0;
-    CGFloat offset = 50.0;
-    CGRect lableR = CGRectMake(offset, 0, CGRectGetWidth(r) - offset, CGRectGetHeight(r));
+    CGFloat offset = 20.0;
+    CGRect lableR = CGRectMake(0, 0, CGRectGetWidth(r) - offset, CGRectGetHeight(r));
     
     UILabel *label = [[UILabel alloc] initWithFrame:lableR];
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont museoFontOfSize:18];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.numberOfLines = 3;
+    label.textAlignment = NSTextAlignmentRight;
+    label.numberOfLines = 1;
     label.text = message;
     
     [v addSubview:label];
@@ -963,12 +949,18 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     
     [UIView animateWithDuration:0.4 animations:^{
         v.alpha = 1.0;
+        CGRect newR = CGRectMake(cell.contentView.frame.size.width - r.size.width,
+                                 0,
+                                 r.size.width,
+                                 r.size.height);
+        v.frame = newR;
     } completion:^(BOOL finished) {
         if(finished) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.4
                              animations:^{
                                  v.alpha = 0.4;
+                                 v.frame = r;
             } completion:^(BOOL finished) {
                 
                 [v removeFromSuperview];
@@ -990,14 +982,5 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     [self messageTestWithMessage:sender.titleLabel.text];
 }
 
-
-
-//-(void)addBottomView {
-//    CGRect r = [UIScreen mainScreen].bounds;
-//    
-//    CGRect destFrame = CGRectMake(0, r.size.height-50, <#CGFloat width#>, <#CGFloat height#>)
-//    UIView *v = [UIView alloc] initWithFrame:<#(CGRect)#>
-//    
-//}
 
 @end
