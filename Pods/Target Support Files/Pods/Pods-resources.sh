@@ -135,6 +135,7 @@ install_resource()
                     install_resource "TSMessages/Pod/Assets/NotificationButtonBackground@2x.png"
                     install_resource "TSMessages/Pod/Assets/TSMessagesDefaultDesign.json"
                     install_resource "VK-ios-sdk/VKSdkResources.bundle"
+                    install_resource "${BUILT_PRODUCTS_DIR}/JSBadgeView.bundle"
                     install_resource "${BUILT_PRODUCTS_DIR}/UAAppReviewManager-iOS.bundle"
           
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
