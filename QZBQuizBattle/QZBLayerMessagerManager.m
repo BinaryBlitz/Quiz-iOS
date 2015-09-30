@@ -5,6 +5,7 @@
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"
 #import "QZBAnotherUserWithLastMessages.h"
+#import "QZBAnotherUser.h"
 #import "QZBUserWorker.h"
 
 #import "QZBServerManager.h"
@@ -41,6 +42,7 @@ static NSString *const LQSLayerAppIDString =
 @interface QZBLayerMessagerManager () <LYRClientDelegate>
 
 @property (nonatomic) LYRClient *layerClient;
+@property (assign, nonatomic) BOOL isReloaded;
 
 @end
 
@@ -99,6 +101,10 @@ static NSString *const LQSLayerAppIDString =
             //[QZBCurrentUser sharedInstance].user.userID;
             [self authenticateLayerWithUserID:identifier
                                    completion:^(BOOL success, NSError *error) {
+                                       if(success) {
+                                           
+                                           [[[self class] sharedInstance] updateConversations];
+                                       }
 
                                        NSData *token =
                                            [QZBCurrentUser sharedInstance].pushTokenData;
@@ -240,6 +246,8 @@ static NSString *const LQSLayerAppIDString =
                          completion:(void (^)(BOOL success, NSError *error))completion {
     if (self.layerClient.authenticatedUserID) {
         NSLog(@"Layer Authenticated as User %@", self.layerClient.authenticatedUserID);
+        
+        
         if (completion)
             completion(YES, nil);
         return;
@@ -530,25 +538,9 @@ static NSString *const LQSLayerAppIDString =
 #pragma mark - fetch all conversations
 
 - (NSArray *)conversations {
-    //    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-    //
-    //    NSError *error = nil;
-    //    NSOrderedSet *conversations = [self.client executeQuery:query error:&error];
-    //    if (conversations) {
-    //        NSLog(@"%tu conversations", conversations.count);
-    //    } else {
-    //        NSLog(@"Query failed with error %@", error);
-    //    }
-    //
+
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-
     NSArray *res = [[self.layerClient executeQuery:query error:nil] array];
-
-    //  NSSortDescriptor *firstDescriptot = [NSSortDescriptor alloc] initWithKey:@""
-    //  ascending:<#(BOOL)#>
-    // NSPredicate *firstPred = [NSPredicate ]
-    //  LYRConversation *lastPredicate = [LYRPredicate predicateWithProperty:@""
-    //  predicateOperator:<#(LYRPredicateOperator)#> value:<#(id)#>]
     NSMutableArray *arr = [NSMutableArray array];
     for (LYRConversation *c in res) {
         QZBAnotherUserWithLastMessages *userWithLastMessage =
@@ -557,15 +549,34 @@ static NSString *const LQSLayerAppIDString =
         [arr addObject:userWithLastMessage];
     }
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"lastTimestamp" ascending:NO];
-    // arr = [arr sortedArrayUsingDescriptors:@[sort]];
 
     return [arr sortedArrayUsingDescriptors:@[ sort ]];
 }
 
+- (void)updateConversations {
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
+    NSArray *res = [[self.layerClient executeQuery:query error:nil] array];
+    QZBUser *user = [QZBCurrentUser sharedInstance].user;
+    for (LYRConversation *c in res) {
+        QZBAnotherUserWithLastMessages *userWithLastMessage =
+        [[QZBAnotherUserWithLastMessages alloc]
+         initWithConversation:c];
+        
+        [[QZBServerManager sharedManager] GETPlayerWithID:userWithLastMessage.user.userID
+                                                onSuccess:^(QZBAnotherUser *anotherUser) {
+                                                    [QZBUserWorker saveUser:anotherUser inConversation:c];
+                                                    [QZBUserWorker saveUser:user inConversation:c];
+        } onFailure:^(NSError *error, NSInteger statusCode) {
+            
+        }];
+    }
+}
+
+
+
 - (NSInteger)unreadedCount {
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
 
-    // Messages must be unread
     LYRPredicate *unreadPredicate =
         [LYRPredicate predicateWithProperty:@"isUnread"
                           predicateOperator:LYRPredicateOperatorIsEqualTo
@@ -588,6 +599,44 @@ static NSString *const LQSLayerAppIDString =
         return 0;
     }
     return unreadMessageCount;
+}
+
+- (void)deleteConversationLocalyForUser:(QZBAnotherUserWithLastMessages *)user {
+    NSString *identifier = nil;
+    
+    if([user.user.userID isKindOfClass:[NSString class]]){
+        identifier = (NSString *)user.user.userID;//self.friend.userID.stringValue;
+    } else {
+        identifier = user.user.userID.stringValue;
+    }
+    
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsEqualTo
+                                                    value:@[ identifier]];
+    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+    
+    NSError *error;
+    NSOrderedSet *conversations = [self.layerClient executeQuery:query error:&error];
+    
+    if (conversations.count <= 0) {
+        return;
+    }
+    
+    if (!error) {
+        NSLog(@"%tu conversations with participants %@", conversations.count, @[ identifier ]);
+    } else {
+        NSLog(@"Query failed with error %@", error);
+        return;
+    }
+    
+    // Retrieve the last conversation
+    if (conversations.count) {
+        LYRConversation *conversation = [conversations lastObject];
+        NSError *error = nil;
+        [conversation delete:LYRDeletionModeLocal error:&error];
+       
+    }
+
 }
 
 - (void)logOut {
