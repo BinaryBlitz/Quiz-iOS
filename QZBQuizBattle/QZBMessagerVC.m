@@ -532,12 +532,6 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
    
     NSString *identifier =  [self opponentIdentifier];//nil;
     
-//    if([self.friend.userID isKindOfClass:[NSString class]]){
-//        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
-//    } else {
-//        identifier = self.friend.userID.stringValue;
-//    }
-//    
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
     query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsEqualTo
                                                     value:@[ identifier]];
@@ -556,9 +550,6 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
                                                                         error:&conv_error];
         [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
         [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user inConversation:self.conversation];
-
-        
-      //  [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
         
         if (!self.conversation) {
             NSLog(@"New Conversation creation failed: %@", conv_error);
@@ -582,12 +573,6 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
             [self setupQueryController];
         }
     }
-    
-//    if(self.conversation) {
-//        [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
-//        [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user inConversation:self.conversation];
-//    }
-    
 }
 
 

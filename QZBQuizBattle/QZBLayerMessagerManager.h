@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class LYRClient;
+@class QZBAnotherUserWithLastMessages;
 
 @interface QZBLayerMessagerManager : NSObject
 
@@ -21,6 +22,10 @@
 -(NSInteger)unreadedCount;
 
 -(NSArray *)conversations;
+
+- (void)updateConversations;
+
+- (void)deleteConversationLocalyForUser:(QZBAnotherUserWithLastMessages *)user;
 
 -(void)logOut;
 
