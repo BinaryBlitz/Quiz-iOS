@@ -784,9 +784,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     button.frame = CGRectMake(0,0,20, 20);
     [button addTarget:self action:@selector(keyboardShowAction) forControlEvents:UIControlEventTouchUpInside];
 
-  //  NSString *requestTitle = @"Чат";
-    
-   // [button setTitle:requestTitle forState:UIControlStateNormal];
     UIImage *messageIcon = [UIImage imageNamed:@"messageIcon"];
     [button setBackgroundImage:messageIcon forState:UIControlStateNormal];
     

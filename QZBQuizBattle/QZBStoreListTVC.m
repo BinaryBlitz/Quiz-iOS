@@ -71,7 +71,7 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
 
     self.needRelaod = YES;
     
-    [self addBarButtonRight];
+   // [self addBarButtonRight];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
