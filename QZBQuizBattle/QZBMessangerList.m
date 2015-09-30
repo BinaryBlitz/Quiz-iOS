@@ -21,7 +21,8 @@
 @interface QZBMessangerList()
 
 @property(strong, nonatomic) id<QZBUserProtocol> user;
-@property(strong, nonatomic) NSArray *listOfUsers;
+@property(strong, nonatomic) NSMutableArray *listOfUsers;
+//@property (assign ,nonatomic) BOOL isRe;
 
 @end
 
@@ -32,6 +33,7 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Сообщения";
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self initStatusbarWithColor:[UIColor blackColor]];
     if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
         [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
@@ -130,6 +132,23 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        QZBAnotherUserWithLastMessages *userWithLastMessage = self.listOfUsers[indexPath.row];
+        [[QZBLayerMessagerManager sharedInstance]
+         deleteConversationLocalyForUser:userWithLastMessage];
+        [self.listOfUsers removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
 
 #pragma mark - message delegate
 
@@ -147,8 +166,12 @@
 //        NSLog(@" %@", conv);
 //    }
     
-    self.listOfUsers = [[QZBLayerMessagerManager sharedInstance] conversations];
+    self.listOfUsers = [[[QZBLayerMessagerManager sharedInstance] conversations] mutableCopy];
+    
+    
     
     [self.tableView reloadData];
 }
+
+
 @end

@@ -9,6 +9,7 @@
 #import "QZBFirstMessageCell.h"
 #import "QZBAnotherUserWithLastMessages.h"
 #import <JSBadgeView/JSBadgeView.h>
+#import <UIImageView+AFNetworking.h>
 
 @interface QZBFirstMessageCell()
 
@@ -41,7 +42,13 @@
     
     NSLog(@"%@", userAndMessage.unreadedCount);
     
-    
+        if(userAndMessage.user.imageURL){
+            [self.userpicImageView setImageWithURL:userAndMessage.user.imageURL
+                                  placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
+        }else{
+            [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+        }
+
     
 }
 

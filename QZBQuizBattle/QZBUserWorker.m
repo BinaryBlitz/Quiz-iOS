@@ -35,9 +35,6 @@
     }
     
     QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
-   // NSDictionary *dict =
-    
-   // user.userID = conversatio
     
     return user;
     
