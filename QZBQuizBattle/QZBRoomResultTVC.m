@@ -262,6 +262,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
                                     [sessionResults pointsForUserWithID:us.userID];
                             }
                         }
+                        
 
                         self.roomWorker.room = room;
 

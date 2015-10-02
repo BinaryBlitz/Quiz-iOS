@@ -34,6 +34,7 @@
 #import <SVProgressHUD.h>
 #import "UIFont+QZBCustomFont.h"
 #import "QZBRoomFakeKeyboard.h"
+#import <TSMessage.h>
 
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
@@ -64,6 +65,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 const NSInteger QZBMinimumPlayersCountInRoom = 3;//REDO
 const NSInteger QZBMaxLeaveTime = 20;
+const NSInteger QZBMaxRedyTime = 5;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 @property (strong, nonatomic) QZBRoom *room;
@@ -83,6 +85,8 @@ const NSInteger QZBMaxLeaveTime = 20;
 @property (strong, nonatomic) NSTimer *globalTimer;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (assign, nonatomic) NSInteger maxTime;
+@property (strong, nonatomic) NSTimer *readyTimer;
+@property (assign, nonatomic) NSInteger readyTime;
 @end
 
 @implementation QZBRoomController
@@ -449,16 +453,21 @@ const NSInteger QZBMaxLeaveTime = 20;
                                           OnSuccess:^(QZBRoom *room) {
                                               
         [self.refreshControl endRefreshing];
-        self.room = room;
+        
         if (self.roomWorker) {
-            self.roomWorker.room = self.room;
+            if(room.participants.count != self.room.participants.count && [self roomIsFull:room]) {
+                [self postLocalNotificationWithText:@"Комната заполнилась, возвращайтесь в игру"];
+            }
+            self.roomWorker.room = room;
         } else {
             QZBUser *u = [QZBCurrentUser sharedInstance].user;
-            if([self.room isContainUser:u]){
+            if([room isContainUser:u]){
                 [self generateRoomWorkerWithRoom:room];
             }
         }
         
+        self.room = room;
+                                              
         NSLog(@"room %@ roomworker %@",self.room, self.roomWorker.room);
         [self.tableView reloadData];
         
@@ -551,7 +560,7 @@ const NSInteger QZBMaxLeaveTime = 20;
     if ([self isOwner]) {
         if (userWithTopic && !userWithTopic.isReady){
             return QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom || [self checkAllReady]) {
+        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom || ![self checkAllReady]) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateCanStartGame;
@@ -571,11 +580,13 @@ const NSInteger QZBMaxLeaveTime = 20;
 }
 
 -(BOOL)checkAllReady {
+    return YES;//redo
     for(QZBUserWithTopic *userWithTopic in self.room.participants) {
         if(!userWithTopic.ready) {
             return NO;
         }
     }
+    
     return YES;
 }
 
@@ -1004,13 +1015,13 @@ const NSInteger QZBMaxLeaveTime = 20;
 }
 
 - (void)updateTime:(NSTimer *)timer {
-    self.time++;
-    
     if(timer != self.globalTimer) {
         [timer invalidate];
         timer = nil;
         return;
     }
+    self.time++;
+    
     if(self.time == QZBMaxLeaveTime - 5) {
         [self postLocalNotificationWithText:@"Вернитесь в игру!"];//redo text
     }
@@ -1030,11 +1041,11 @@ const NSInteger QZBMaxLeaveTime = 20;
 }
 
 -(void)userBackFromBackgound {
-    [self invalidateTimer];
+    [self invalidateGlobalTimer];
     [self accentReadyButtons];
 }
 
-- (void)invalidateTimer {
+- (void)invalidateGlobalTimer {
     [self.globalTimer invalidate];
     self.globalTimer = nil;
     self.time = 0;
@@ -1062,6 +1073,48 @@ const NSInteger QZBMaxLeaveTime = 20;
         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
     
+}
+
+-(void)startCountingUntilLeave {
+    self.readyTime = 0;
+    self.readyTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                        target:self
+                                                      selector:@selector(updateReadyTime:)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    [TSMessage showNotificationWithTitle:@"Подтвердите готовность!"
+                                    type:TSMessageNotificationTypeWarning];
+}
+
+-(void)updateReadyTime:(NSTimer *)timer {
+    if(timer != self.readyTimer) {
+        [timer invalidate];
+        timer = nil;
+        return;
+    }
+    
+    self.readyTime++;
+    
+    if (self.readyTime < QZBMaxRedyTime) {
+
+        [TSMessage showNotificationWithTitle:@"Подтвердите готовность!"
+                                        type:TSMessageNotificationTypeWarning];
+    } else {
+        [self leaveThisRoom];
+        [self invalidateGlobalTimer];
+    }
+}
+
+-(void)invalidateRedyTimer {
+    [self.readyTimer invalidate];
+    self.readyTimer = nil;
+    self.readyTime = 0;
+    
+   // [self endBackgroundTask];
+}
+
+-(BOOL)roomIsFull:(QZBRoom *)room {
+    return room.participants.count == [room.maxUserCount integerValue];
 }
 
 
