@@ -47,6 +47,8 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 50)];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

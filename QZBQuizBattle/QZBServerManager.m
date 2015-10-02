@@ -13,6 +13,7 @@
 #import "QZBGameTopic.h"
 #import "QZBLobby.h"
 #import "QZBSession.h"
+#import "QZBUserWorker.h"
 #import "QZBCategory.h"
 #import "QZBOpponentBot.h"
 #import "QZBOnlineSessionWorker.h"
@@ -130,26 +131,25 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
             DDLogInfo(@"category JSON: %@", responseObject);
 
             [self updateCategories:responseObject];
+<<<<<<< HEAD
 
             // REDO problems
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
 
             } completion:^(BOOL success, NSError *error) {
 
+=======
+            
+            [[NSManagedObjectContext  MR_defaultContext]
+            MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            
+>>>>>>> rating server api changed
                 if (successAF) {
                     successAF([QZBCategory MR_findAll]);
                 }
             }];
-//            [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil
-//                                                       completion:^(BOOL success, NSError *error) {
-//
-//                                                           // if (success) {
-//                                                           if (successAF) {
-//                                                               successAF([QZBCategory MR_findAll]);
-//                                                           }
-//                                                           //}
-//                                                       }];
 
+   
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             DDLogInfo(@"Error: %@", error);
@@ -1395,7 +1395,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
-    NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
+   // NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
 
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
@@ -1404,27 +1404,31 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
     if (isWeekly) {
         params[@"weekly"] = @"true";
     }
+    
+    if(isFriends) {
+         params[@"friends"] = @"true";
+    }
 
     if (ID > 0) {
         if (isCategory) {
             params[@"category_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
-            [urlAsString appendString:@"category"];
+            //[urlAsString appendString:@"category"];
         } else {
-            [urlAsString appendString:@"topic"];
+         //   [urlAsString appendString:@"topic"];
             params[@"topic_id"] = [NSString stringWithFormat:@"%ld", (long)ID];
         }
     } else {
-        [urlAsString appendString:@"general"];
+      //  [urlAsString appendString:@"general"];
     }
 
     DDLogInfo(@"params ranking %@", params);
 
-    [self.requestOperationManager GET:urlAsString
+    [self.requestOperationManager GET:@"rankings"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
-            DDLogInfo(@" %@ ranking JSON: %@", urlAsString, responseObject);
+            DDLogInfo(@"params %@ ,/n ranking JSON: %@", params, responseObject);
 
             NSMutableArray *usersTop = [NSMutableArray array];
             NSMutableArray *usersPlayer = [NSMutableArray array];
@@ -1466,10 +1470,13 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
              toTopArray:(NSMutableArray *)usersTop
            playerRating:(NSMutableArray *)usersPlayer {
     NSArray *usersTopArray = responseObject[@"rankings"];
-    NSArray *usersPlayerArray = responseObject[@"player_rankings"];
+    //NSArray *usersPlayerArray = responseObject[@"player_rankings"];
 
-    NSInteger playerPosition = [responseObject[@"position"] integerValue];
-
+    NSInteger playerPosition = 0;
+    if(![responseObject[@"position"] isEqual:[NSNull null]]){
+        playerPosition = [responseObject[@"position"] integerValue];
+    }
+    
     NSInteger position = 1;
     for (NSDictionary *dict in usersTopArray) {
         QZBUserInRating *user = [[QZBUserInRating alloc] initWithDictionary:dict position:position];
@@ -1477,17 +1484,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
         [usersTop addObject:user];
     }
-    if (usersPlayerArray) {
-        position = playerPosition - 4;
-
-        for (NSDictionary *dict in usersPlayerArray) {
-            QZBUserInRating *user =
-                [[QZBUserInRating alloc] initWithDictionary:dict position:position];
-            position++;
-
-            [usersPlayer addObject:user];
-        }
-        [usersPlayer removeObjectsInArray:usersTop];
+    
+    if(playerPosition > usersTopArray.count) {
+    NSDictionary *currentUserDict = [QZBUserWorker dictForUser:[QZBCurrentUser sharedInstance].user];
+    QZBUserInRating *userInRating = [[QZBUserInRating alloc] initWithDictionary:currentUserDict
+                                                                       position:playerPosition];
+    [usersPlayer addObject:userInRating];
     }
 }
 
