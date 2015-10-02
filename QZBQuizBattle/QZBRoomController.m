@@ -62,30 +62,20 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
-const NSInteger QZBMaxLeaveTime = 30;
+const NSInteger QZBMinimumPlayersCountInRoom = 3;//REDO
+const NSInteger QZBMaxLeaveTime = 20;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
-
 @property (strong, nonatomic) QZBRoom *room;
-
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
-
 @property (assign, nonatomic) BOOL isLeaveRoom;
-
 @property (assign, nonatomic) BOOL isStarted;
-
 @property(assign, nonatomic) BOOL needRemoveObserver;
-
 @property (strong, nonatomic) UITapGestureRecognizer *isReadyGestureRecognizer;
-
 @property(strong, nonatomic) UIView *bottomView;
-
 @property (strong, nonatomic) NSAttributedString *stringWithCross;
 @property (strong, nonatomic) NSAttributedString *stringWithCrown;
-
 @property (assign, nonatomic) UIEdgeInsets edgeInset;
-
 @property (strong, nonatomic) UIView *fakeKeyboard;
 
 //new rooms
@@ -279,7 +269,8 @@ const NSInteger QZBMaxLeaveTime = 30;
 - (void)startGame {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBServerManager sharedManager] POSTStartRoomWithID:self.room.roomID onSuccess:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
             if(!self.isStarted){
             [SVProgressHUD showErrorWithStatus:QZBStartSessionProblems];
             }
@@ -556,16 +547,11 @@ const NSInteger QZBMaxLeaveTime = 30;
 }
 
 - (QZBRoomState)roomState {
-    //    if([self isOwner] && !self.room){
-    //        return @"Выбрать тему и создать комнату";
-    //    }else if ()
-
-    
     QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
     if ([self isOwner]) {
         if (userWithTopic && !userWithTopic.isReady){
             return QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom) {
+        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom || [self checkAllReady]) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateCanStartGame;
@@ -582,6 +568,15 @@ const NSInteger QZBMaxLeaveTime = 30;
             return QZBRoomStateWaitingPlayers;
         }
     }
+}
+
+-(BOOL)checkAllReady {
+    for(QZBUserWithTopic *userWithTopic in self.room.participants) {
+        if(!userWithTopic.ready) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (NSString *)stringForState:(QZBRoomState)roomState {
@@ -650,7 +645,8 @@ const NSInteger QZBMaxLeaveTime = 30;
         
         NSIndexPath *ip = [NSIndexPath indexPathForRow:position inSection:0];
         
-        QZBUserInRoomCell *userInRoomCell = (QZBUserInRoomCell *)[self.tableView cellForRowAtIndexPath:ip];
+        QZBUserInRoomCell *userInRoomCell = (QZBUserInRoomCell *)[self.tableView
+                                                                  cellForRowAtIndexPath:ip];
         
         userInRoomCell.isReadyLabel.hidden = YES;
         userInRoomCell.isReadyActivityIndicator.hidden = NO;
@@ -664,6 +660,7 @@ const NSInteger QZBMaxLeaveTime = 30;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
         [userInRoomCell.isReadyActivityIndicator stopAnimating];
         [self.tableView reloadData];
+                                                         
     } onFailure:^(NSError *error, NSInteger statusCode) {
         userInRoomCell.isReadyLabel.hidden = NO;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
@@ -743,7 +740,8 @@ const NSInteger QZBMaxLeaveTime = 30;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(_bottomView){
     CGRect frame = self.bottomView.frame;
-    frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height - self.bottomView.frame.size.height;
+    frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height -
+        self.bottomView.frame.size.height;
     self.bottomView.frame = frame;
     
     //[self.view bringSubviewToFront:self.bottomView];
@@ -751,7 +749,8 @@ const NSInteger QZBMaxLeaveTime = 30;
     
     if(_fakeKeyboard) {
         CGRect frame = self.fakeKeyboard.frame;
-        frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height - self.fakeKeyboard.frame.size.height;
+        frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height -
+        self.fakeKeyboard.frame.size.height;
         self.fakeKeyboard.frame = frame;
         
         [self.view bringSubviewToFront:self.fakeKeyboard];
@@ -767,7 +766,9 @@ const NSInteger QZBMaxLeaveTime = 30;
     [UIView animateWithDuration:0.3
                      animations:^{
                          self.bottomView.frame = CGRectMake(0,
-                                                            self.tableView.contentOffset.y + self.tableView.frame.size.height - self.bottomView.frame.size.height,
+                                                            self.tableView.contentOffset.y +
+                                                            self.tableView.frame.size.height -
+                                                            self.bottomView.frame.size.height,
                                                             r.size.width,
                                                             80);
     }];
@@ -833,6 +834,7 @@ const NSInteger QZBMaxLeaveTime = 30;
             [button addTarget:self
                        action:@selector(fakeKeyboardAction:)
              forControlEvents:UIControlEventTouchUpInside];
+            [button setExclusiveTouch:YES];
         }
         [v.closeButton addTarget:self
                           action:@selector(keyboardShowAction)
@@ -841,6 +843,7 @@ const NSInteger QZBMaxLeaveTime = 30;
         UIImage *cancelCross =  [[UIImage imageNamed:@"cancelCross"]
                                  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [v.closeButton setImage:cancelCross forState:UIControlStateNormal];
+        [v.closeButton setExclusiveTouch:YES];
         _fakeKeyboard = v;
     }
     return _fakeKeyboard;
@@ -951,7 +954,8 @@ const NSInteger QZBMaxLeaveTime = 30;
         v.frame = newR;
     } completion:^(BOOL finished) {
         if(finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.4
                              animations:^{
                                  v.alpha = 0.4;
@@ -980,6 +984,11 @@ const NSInteger QZBMaxLeaveTime = 30;
 #pragma mark - new room changes
 
 -(void)leaveRoomWithWithDelay{
+    self.backgroundTask =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+        self.backgroundTask = UIBackgroundTaskInvalid;
+    }];
     [self timeCountingStart];
     [self makeCurrentUserReady:NO];
 }
@@ -1001,6 +1010,9 @@ const NSInteger QZBMaxLeaveTime = 30;
         [timer invalidate];
         timer = nil;
         return;
+    }
+    if(self.time == QZBMaxLeaveTime - 5) {
+        [self postLocalNotificationWithText:@"Вернитесь в игру!"];//redo text
     }
     
     if (self.time < QZBMaxLeaveTime) {
@@ -1037,13 +1049,18 @@ const NSInteger QZBMaxLeaveTime = 30;
     }
 }
 
-
 - (void)accentReadyButtons {
     NSLog(@"accented");
 }
 
-
--(void)localNotificationWithText:(NSString *)message {
+-(void)postLocalNotificationWithText:(NSString *)message {
+    
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = message;//@"Комната заполнена, возвращайтесь в игру";
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    }
     
 }
 
