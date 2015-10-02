@@ -198,7 +198,8 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
   //  NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
     
     
-    [[QZBServerManager sharedManager] GETCompareVersion:version onSuccess:^(QZBUpdateType updateType, NSString *message) {
+    [[QZBServerManager sharedManager] GETCompareVersion:version
+                                              onSuccess:^(QZBUpdateType updateType, NSString *message) {
         self.isAsked = YES;
         if(updateType != QZBUpdateTypeNone){
             [self showAlertVersionUpdateWithType:updateType message:message];

@@ -2294,14 +2294,16 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
     
     [self.requestOperationManager GET:@"players/version" parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //{ needs_update: true, major: true }
+        //{ update_available: true, major: true }
                                   DDLogInfo(@"version response %@", responseObject);
                                   QZBUpdateType updateType = QZBUpdateTypeNone;
                                   NSString *message = nil;
                                   if(responseObject[@"message"] && ![responseObject[@"message"] isEqual:[NSNull null]]){
                                       message = responseObject[@"message"];
                                   }
-                                  BOOL needUpdate = [responseObject[@"needs_update"] boolValue];
+                                 
+                                 
+                                  BOOL needUpdate = [responseObject[@"update_available"] boolValue];
                                   BOOL isMajor = [responseObject[@"major"] boolValue];
                                   if(needUpdate) {
                                   if( isMajor){
