@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 };
 
 const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
+const NSInteger QZBMaxLeaveTime = 30;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 
@@ -87,6 +88,11 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
 @property (strong, nonatomic) UIView *fakeKeyboard;
 
+//new rooms
+@property (assign, nonatomic) NSInteger time;
+@property (strong, nonatomic) NSTimer *globalTimer;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
+@property (assign, nonatomic) NSInteger maxTime;
 @end
 
 @implementation QZBRoomController
@@ -134,12 +140,16 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(leaveThisRoom)
+                                             selector:@selector(leaveRoomWithWithDelay)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(leaveThisRoom)
                                                  name:UIApplicationWillTerminateNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userBackFromBackgound)
+                                                 name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
     //TODO закрытвать экран
@@ -382,8 +392,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     } else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
-    
 }
 
 #pragma mark - UITableViewDelegate
@@ -439,10 +447,7 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     QZBUser *u = [QZBCurrentUser sharedInstance].user;
     QZBUserWithTopic *uAndT = [[QZBUserWithTopic alloc] initWithUser:u topic:topic];
 
-    //self.currentUserWithTopic = uAndT;
-
     [self.room addUser:uAndT];
-    //  [self.usersWithTopics addObject:uAndT];
     [self.tableView reloadData];
 }
 
@@ -858,7 +863,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 }
 
 - (void)animateKeyboardUp {
-  //  CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
     UIEdgeInsets general = self.tableView.contentInset;
     self.tableView.contentInset = UIEdgeInsetsMake(general.top,
                                                    0,
@@ -922,12 +926,6 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
     r.size.width = r.size.width - cell.isReadyBackView.frame.origin.x; //r.size.width/2.0;
     
     UIView *v = [[UIView alloc] initWithFrame:r];
-//    CAGradientLayer *gradient = [CAGradientLayer layer];
-//    gradient.frame = v.bounds;
-//    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
-//    [gradient setStartPoint:CGPointMake(0,0.5)];
-//    [gradient setEndPoint:CGPointMake(1,0.5)];
-//    [v.layer insertSublayer:gradient atIndex:0];
     v.backgroundColor = [UIColor veryDarkGreyColor];
     v.alpha = 0;
     CGFloat offset = 20.0;
@@ -977,6 +975,76 @@ const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 -(void)fakeKeyboardAction:(UIButton *)sender {
     
     [self messageTestWithMessage:sender.titleLabel.text];
+}
+
+#pragma mark - new room changes
+
+-(void)leaveRoomWithWithDelay{
+    [self timeCountingStart];
+    [self makeCurrentUserReady:NO];
+}
+
+- (void)timeCountingStart {
+    self.time = 0;
+    self.globalTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                        target:self
+                                                      selector:@selector(updateTime:)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    
+}
+
+- (void)updateTime:(NSTimer *)timer {
+    self.time++;
+    
+    if(timer != self.globalTimer) {
+        [timer invalidate];
+        timer = nil;
+        return;
+    }
+    
+    if (self.time < QZBMaxLeaveTime) {
+        NSLog(@"time %ld", (long)self.time);
+    } else {
+        if (timer != nil) {
+            [self leaveThisRoom];
+            self.time = 0;
+            [timer invalidate];
+            timer = nil;
+            
+            [self endBackgroundTask];
+        }
+    }
+}
+
+-(void)userBackFromBackgound {
+    [self invalidateTimer];
+    [self accentReadyButtons];
+}
+
+- (void)invalidateTimer {
+    [self.globalTimer invalidate];
+    self.globalTimer = nil;
+    self.time = 0;
+    
+    [self endBackgroundTask];
+}
+
+-(void)endBackgroundTask {
+    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+        self.backgroundTask = UIBackgroundTaskInvalid;
+    }
+}
+
+
+- (void)accentReadyButtons {
+    NSLog(@"accented");
+}
+
+
+-(void)localNotificationWithText:(NSString *)message {
+    
 }
 
 
