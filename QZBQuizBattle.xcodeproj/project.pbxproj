@@ -1661,7 +1661,7 @@
 				191559BE1A39CDD400462C93 /* Frameworks */,
 				191559BF1A39CDD400462C93 /* Resources */,
 				E52D9F52544036B52A5D9E4A /* Copy Pods Resources */,
-				199596211AE979C500B09EA7 /* ShellScript */,
+				199596211AE979C500B09EA7 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1785,13 +1785,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		199596211AE979C500B09EA7 /* ShellScript */ = {
+		199596211AE979C500B09EA7 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
