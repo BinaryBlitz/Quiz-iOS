@@ -1,1 +1,0 @@
-../../../DFImageManager/DFImageManager/Source/Core/Protocols/DFImageProcessing.h
