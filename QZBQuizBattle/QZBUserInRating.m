@@ -18,7 +18,7 @@
     self = [super initWithDictionary:dict];
     if (self) {
         NSInteger points = 0;
-        if(dict[@"points"] && [dict[@"points"] isEqual:[NSNull null]]){
+        if(dict[@"points"] && ![dict[@"points"] isEqual:[NSNull null]]){
             points = [dict[@"points"] integerValue];
         }
         

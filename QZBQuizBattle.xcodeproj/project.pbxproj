@@ -155,8 +155,6 @@
 		19A127831ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A127821ABA0BE5009075AD /* QZBFriendsTVC+QZBFriendsCategory.m */; };
 		19A29C331B57F59500C5F398 /* QZBFriendsChooserRoomsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A29C321B57F59500C5F398 /* QZBFriendsChooserRoomsController.m */; };
 		19A29C361B5826D000C5F398 /* QZBRoomInvite.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A29C351B5826D000C5F398 /* QZBRoomInvite.m */; };
-		19A4C5F11BBF0475006F818F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A4C5EF1BBF0475006F818F /* Crashlytics.framework */; settings = {ASSET_TAGS = (); }; };
-		19A4C5F21BBF0475006F818F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A4C5F01BBF0475006F818F /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
 		19AB8DFA1B9DD3EB004329F8 /* QZBRoomCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AB8DF91B9DD3EB004329F8 /* QZBRoomCommentController.m */; };
 		19AB8DFE1B9DD65C004329F8 /* QZBCommentRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AB8DFD1B9DD65C004329F8 /* QZBCommentRoomCell.m */; };
 		19AB8E021B9DD995004329F8 /* QZBComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AB8E011B9DD995004329F8 /* QZBComment.m */; };
@@ -496,8 +494,6 @@
 		19A29C321B57F59500C5F398 /* QZBFriendsChooserRoomsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendsChooserRoomsController.m; sourceTree = "<group>"; };
 		19A29C341B5826D000C5F398 /* QZBRoomInvite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomInvite.h; sourceTree = "<group>"; };
 		19A29C351B5826D000C5F398 /* QZBRoomInvite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomInvite.m; sourceTree = "<group>"; };
-		19A4C5EF1BBF0475006F818F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		19A4C5F01BBF0475006F818F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		19AB8DF81B9DD3EB004329F8 /* QZBRoomCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomCommentController.h; sourceTree = "<group>"; };
 		19AB8DF91B9DD3EB004329F8 /* QZBRoomCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomCommentController.m; sourceTree = "<group>"; };
 		19AB8DFC1B9DD65C004329F8 /* QZBCommentRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCommentRoomCell.h; sourceTree = "<group>"; };
@@ -602,12 +598,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19A4C5F21BBF0475006F818F /* Fabric.framework in Frameworks */,
 				1989C6CB1B74C87F001ECF3A /* AVFoundation.framework in Frameworks */,
 				197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */,
 				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */,
-				19A4C5F11BBF0475006F818F /* Crashlytics.framework in Frameworks */,
 				192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,8 +717,6 @@
 		191559B81A39CDD400462C93 = {
 			isa = PBXGroup;
 			children = (
-				19A4C5EF1BBF0475006F818F /* Crashlytics.framework */,
-				19A4C5F01BBF0475006F818F /* Fabric.framework */,
 				191559C31A39CDD400462C93 /* QZBQuizBattle */,
 				191559E01A39CDD400462C93 /* QZBQuizBattleTests */,
 				191559C21A39CDD400462C93 /* Products */,
@@ -1804,7 +1796,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 886de8c1d524dbaa9dfdbd457b8c8469ecafdfd4 fe43661af277625de578631f794d9557e38adacd6b02682d23b328918ca7fbf6";
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 886de8c1d524dbaa9dfdbd457b8c8469ecafdfd4 fe43661af277625de578631f794d9557e38adacd6b02682d23b328918ca7fbf6";
 		};
 		99ECA6CEBBB7C4E28D65645B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

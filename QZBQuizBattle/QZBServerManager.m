@@ -1486,9 +1486,14 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
     }
     
     if(playerPosition > usersTopArray.count) {
-    NSDictionary *currentUserDict = [QZBUserWorker dictForUser:[QZBCurrentUser sharedInstance].user];
-    QZBUserInRating *userInRating = [[QZBUserInRating alloc] initWithDictionary:currentUserDict
-                                                                       position:playerPosition];
+        NSInteger points = 0;
+        if(responseObject[@"points"] && ![responseObject[@"points"] isEqual:[NSNull null]]) {
+            points = [responseObject[@"points"] integerValue];
+        }
+        NSDictionary *currentUserDict = [QZBUserWorker dictForUser:[QZBCurrentUser sharedInstance].user];
+        QZBUserInRating *userInRating = [[QZBUserInRating alloc] initWithDictionary:currentUserDict
+                                                                           position:playerPosition];
+        userInRating.points = points;
     [usersPlayer addObject:userInRating];
     }
 }
