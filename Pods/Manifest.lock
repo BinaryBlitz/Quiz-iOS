@@ -25,6 +25,7 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
+  - Crashlytics (3.3.4)
   - DateTools (1.5.0)
   - DBCamera (2.3.10):
     - GPUImage (~> 0.1)
@@ -49,6 +50,9 @@ PODS:
     - DFImageManager/Core
   - DFImageManager/UI (0.3.2):
     - DFImageManager/Core
+  - Fabric (1.5.5):
+    - Fabric/Base (= 1.5.5)
+  - Fabric/Base (1.5.5)
   - FLAnimatedImage (1.0.8)
   - GPUImage (0.1.6)
   - HexColors (2.2.1)
@@ -78,11 +82,13 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - CocoaLumberjack (~> 1.9)
+  - Crashlytics
   - DateTools
   - DBCamera
   - DFImageManager
   - DFImageManager/AFNetworking
   - DFImageManager/GIF
+  - Fabric
   - JSBadgeView
   - JSQMessagesViewController
   - LayerKit
@@ -100,9 +106,11 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
   CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
+  Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7
   DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
   DFImageManager: 8d5ed7dc1872606b408687dc48979095319eaeaf
+  Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
   GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   HexColors: abfd172e329dab59888614ccba6f216cec59289d

@@ -25,6 +25,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Crashlytics.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-DBCamera.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -41,6 +46,11 @@
 			<false/>
 		</dict>
 		<key>Pods-FLAnimatedImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Fabric.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -195,6 +205,7 @@
 >>>>>>> pod updated
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+<<<<<<< HEAD
 		<key>03EB0B53311282E9BF6D023F</key>
 		<dict>
 			<key>primary</key>
@@ -676,10 +687,14 @@
 =======
 		<key>9717306A45C323B19601A905</key>
 >>>>>>> schememanagment changed
+=======
+		<key>00B53435BDCF34C90107DFFF</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		<key>A72E5D735E99A9C122DE493F</key>
@@ -687,34 +702,46 @@
 =======
 >>>>>>> schememanagment changed
 		<key>978906A275FCB31EC4B319EB</key>
+=======
+		<key>02A9FCB21564B3EADEC005A6</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>97A51223DFA19F204B87BECD</key>
+		<key>1CC68B77B23C98722E1BCF5F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<key>9999D7BB93B336D4A371534D</key>
 =======
 		<key>9A61937ECD3FC31752903D0E</key>
 >>>>>>> schememanagment changed
+=======
+		<key>1FB4A6DCE8C4775B84C68375</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<key>9BF57353C9D9EF92B0025A0A</key>
 >>>>>>> leave room after 30 seconds feature
 =======
 		<key>9CEC368E1DE5A96365056CFC</key>
 >>>>>>> schememanagment changed
+=======
+		<key>23D2634452E50CD981A9F217</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		<key>A8CBA9937E9D514FFEAE01B5</key>
@@ -722,45 +749,49 @@
 =======
 >>>>>>> schememanagment changed
 		<key>A0F59589855B72B79E3E2048</key>
+=======
+		<key>2B7CD0C88099F4A60C88D94F</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A58C937F25364EBF2F965584</key>
+		<key>3592BBCA1AE886725A30B78E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A72E5D735E99A9C122DE493F</key>
+		<key>3C0E91B8C4743ACF8521D8C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7852FC7B9EDBE6850E0457B</key>
+		<key>3E1635EED13492877D9A3D85</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A8CBA9937E9D514FFEAE01B5</key>
+		<key>587F7E18DC1D36F7D10EC82A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD7F79977775651492FA0F3E</key>
+		<key>67A9A17F78083A720F1B54C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AF2DFF2AF6A3FD9B82B3C1E0</key>
+		<key>71675C5F5F2B282EE74AB47A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B07609BE9434E290A4567EFA</key>
+		<key>7545E66DA5CB42C8D171521F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<key>B0A7A7BA83C087FC8B5247C7</key>
 =======
@@ -793,10 +824,14 @@
 		</dict>
 		<key>BF7296B18DF56214BDBFB97C</key>
 >>>>>>> leave room after 30 seconds feature
+=======
+		<key>80C4FCA46D3C264DDE2DE3C2</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 		<key>B07609BE9434E290A4567EFA</key>
 		<dict>
 			<key>primary</key>
@@ -813,10 +848,14 @@
 			<true/>
 		</dict>
 		<key>CC4ED64D882D19AB48C75882</key>
+=======
+		<key>8D4E5CE9F5E1F8386F04096C</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 		<key>CF502D8B3F5CE9922D935679</key>
 >>>>>>> background task added
 		<dict>
@@ -833,10 +872,14 @@
 		</dict>
 		<key>D82DAB673678F1B8A018D3BF</key>
 >>>>>>> background task added
+=======
+		<key>93187900265DCBB8624DCB19</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<key>BE4463AF55B9076FC8815391</key>
 =======
@@ -852,10 +895,14 @@
 		</dict>
 		<key>E2B159675B63D555DB466F27</key>
 >>>>>>> leave room after 30 seconds feature
+=======
+		<key>9DC07A2F4AF41B3F971F0E9B</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -864,26 +911,34 @@
 		<key>E7D0442E7D7B3CCBF3699934</key>
 =======
 		<key>BEB19D7E3C442095C2A41D6A</key>
+=======
+		<key>A5C6AF11BF9833A6615BE0CD</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0215072E7D6097DECE8914D</key>
+		<key>A8EE6A8F43201086D9A0B95D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC29F9E256EBE3F06ECFB45C</key>
+		<key>B1008A546DCDBEF824A18357</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 		<key>CE0248583C8516A127822572</key>
 >>>>>>> schememanagment changed
+=======
+		<key>C01F4E37899B2F2DF5FA5914</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> background task added
 		<key>E8118742D065902B4EF242DA</key>
@@ -902,20 +957,24 @@
 			<true/>
 		</dict>
 		<key>E866A21AA104DCB1E3DBC716</key>
+=======
+		<key>C0DEE9DEEA8AF01F941BD2F8</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E05B71FEEA7A8CE8C0750A54</key>
+		<key>C9A8BCC7536507ADBF5BE3C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8B39BF1C1E85858251FED5C</key>
+		<key>D2076BA232B300CB0C75CFC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 		<key>EFD0039B3BE7FFDE2BA65C47</key>
 <<<<<<< HEAD
 =======
@@ -935,10 +994,14 @@
 			<true/>
 		</dict>
 		<key>FA385D4579B23482F31158B4</key>
+=======
+		<key>E74494833C5237703243F730</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -946,17 +1009,24 @@
 =======
 =======
 		<key>F155B7A1959B37932F38E855</key>
+=======
+		<key>F1AD61BED92179BCCC3E2879</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F4DAA3F5D31AFF0E9B152721</key>
+		<key>F705816A0C42EC71640E6BCE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+<<<<<<< HEAD
 >>>>>>> schememanagment changed
 		<key>FA385D4579B23482F31158B4</key>
+=======
+		<key>F9DE22A6F03F8A89DAB62D87</key>
+>>>>>>> pod fabric
 		<dict>
 			<key>primary</key>
 			<true/>
