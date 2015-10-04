@@ -141,8 +141,6 @@
 		198C33F11A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 198C33F01A9F6C7500A015E8 /* QZBQuizTopicIAPHelper.m */; };
 		198CB9851B6F8AC4007E5B4A /* QZBLayerMessagerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 198CB9841B6F8AC4007E5B4A /* QZBLayerMessagerManager.m */; };
 		199062DC1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */; };
-		199596601AE97D3300B09EA7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1995965E1AE97D3300B09EA7 /* Crashlytics.framework */; };
-		199596611AE97D3300B09EA7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1995965F1AE97D3300B09EA7 /* Fabric.framework */; };
 		1995966C1AEA6C9C00B09EA7 /* QZBChallengeDescriptionWithResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 1995966B1AEA6C9C00B09EA7 /* QZBChallengeDescriptionWithResults.m */; };
 		199596851AEBD47A00B09EA7 /* QZBResultOfSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 199596841AEBD47A00B09EA7 /* QZBResultOfSessionCell.m */; };
 		199820AA1A447628003AECB9 /* QZBOpponentBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 199820A91A447628003AECB9 /* QZBOpponentBot.m */; };
@@ -466,8 +464,6 @@
 		198E09651AA1E584006A08BB /* QZBUserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBUserProtocol.h; sourceTree = "<group>"; };
 		199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRatingSeperatorCell.h; sourceTree = "<group>"; };
 		199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRatingSeperatorCell.m; sourceTree = "<group>"; };
-		1995965E1AE97D3300B09EA7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		1995965F1AE97D3300B09EA7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		1995966A1AEA6C9C00B09EA7 /* QZBChallengeDescriptionWithResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBChallengeDescriptionWithResults.h; sourceTree = "<group>"; };
 		1995966B1AEA6C9C00B09EA7 /* QZBChallengeDescriptionWithResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBChallengeDescriptionWithResults.m; sourceTree = "<group>"; };
 		199596831AEBD47900B09EA7 /* QZBResultOfSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBResultOfSessionCell.h; sourceTree = "<group>"; };
@@ -609,11 +605,9 @@
 			files = (
 				1989C6CB1B74C87F001ECF3A /* AVFoundation.framework in Frameworks */,
 				197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */,
-				199596601AE97D3300B09EA7 /* Crashlytics.framework in Frameworks */,
 				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				47E51F1F28C3EC65A1F5017D /* libPods.a in Frameworks */,
 				192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */,
-				199596611AE97D3300B09EA7 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,8 +722,6 @@
 		191559B81A39CDD400462C93 = {
 			isa = PBXGroup;
 			children = (
-				1995965E1AE97D3300B09EA7 /* Crashlytics.framework */,
-				1995965F1AE97D3300B09EA7 /* Fabric.framework */,
 				191559C31A39CDD400462C93 /* QZBQuizBattle */,
 				191559E01A39CDD400462C93 /* QZBQuizBattleTests */,
 				191559C21A39CDD400462C93 /* Products */,
