@@ -14,7 +14,11 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+<<<<<<< HEAD
                BlueprintIdentifier = "A8EE6A8F43201086D9A0B95D"
+=======
+               BlueprintIdentifier = "CC29F9E256EBE3F06ECFB45C"
+>>>>>>> crashlytics added
                BuildableName = "libPods-AFNetworking.a"
                BlueprintName = "Pods-AFNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">
