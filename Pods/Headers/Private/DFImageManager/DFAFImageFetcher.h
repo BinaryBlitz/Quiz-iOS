@@ -1,1 +1,0 @@
-../../../DFImageManager/DFImageManager/Source/AFNetworking/DFAFImageFetcher.h

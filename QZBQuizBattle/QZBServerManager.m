@@ -131,19 +131,19 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
             DDLogInfo(@"category JSON: %@", responseObject);
 
             [self updateCategories:responseObject];
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
             // REDO problems
-            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//
+//            } completion:^(BOOL success, NSError *error) {
 
-            } completion:^(BOOL success, NSError *error) {
-
-=======
+//=======
             
             [[NSManagedObjectContext  MR_defaultContext]
             MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
             
->>>>>>> rating server api changed
+//>>>>>>> rating server api changed
                 if (successAF) {
                     successAF([QZBCategory MR_findAll]);
                 }
