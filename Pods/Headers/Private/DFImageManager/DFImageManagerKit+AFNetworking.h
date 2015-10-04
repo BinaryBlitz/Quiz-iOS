@@ -1,0 +1,1 @@
+../../../DFImageManager/DFImageManager/Source/AFNetworking/DFImageManagerKit+AFNetworking.h
