@@ -1,6 +1,8 @@
 //
 //  AppDelegate.h
 //  QZBQuizBattle
+
+//help me plz
 //
 //  Created by Andrey Mikhaylov on 11/12/14.
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
