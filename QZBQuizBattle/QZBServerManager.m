@@ -2276,19 +2276,29 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
            inRoomWithID:(NSNumber *)roomID
               onSuccess:(void (^)())success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-//                   dispatch_get_main_queue(), ^{
-//                       int rand = arc4random() % 100;
-//                       if (rand < 80) {
-//                           if (success) {
-//                               success();
-//                           }
-//                       } else {
-//                           if (failure) {
-//                               failure(nil, 500);
-//                           }
-//                       }
-//                   });
+    
+    if(!message || !roomID) {
+        return;
+    }
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+                              @"content":message};
+    NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/messages",roomID];
+    
+    [self.requestOperationManager POST:urlAsString
+                            parameters:params
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   DDLogCVerbose(@"send succesfully");
+        if(success) {
+            success();
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"sending room message error %@",error);
+        if(failure) {
+            failure(error, operation.response.statusCode);
+        }
+    }];
+
 }
 
 #pragma mark - support

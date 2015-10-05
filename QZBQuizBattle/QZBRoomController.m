@@ -508,6 +508,10 @@ const NSInteger QZBMaxRedyTime = 5;
                                                  name:QZBOneUserChangedStatus
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(roomMessageRecieved:)
+                                                 name:QZBRoomMessageRecieved object:nil];
+    
 }
 
 -(void)showGameController{
@@ -982,9 +986,21 @@ const NSInteger QZBMaxRedyTime = 5;
 
 
 -(void)messageTestWithMessage:(NSString *)message {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [[QZBServerManager sharedManager] POSTSendMessage:message inRoomWithID:self.room.roomID onSuccess:^{
         [self userWithID:[QZBCurrentUser sharedInstance].user.userID say:message];
-    });
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
+}
+
+-(void)roomMessageRecieved:(NSNotification *)note {
+    NSDictionary *content = note.object[@"content"];
+    NSLog(@"%@",note.object);
+    NSNumber *userID = content[@"player_id"];
+    NSString *message = content[@"content"];
+    
+    [self userWithID:userID say:message];
 }
 
 -(void)fakeKeyboardAction:(UIButton *)sender {

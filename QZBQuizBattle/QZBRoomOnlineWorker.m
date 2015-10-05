@@ -27,6 +27,7 @@ NSString *const QZBNewParticipantJoinedRoom = @"NewParticipantJoinedRoom";
 NSString *const QZBOneOfUserLeftRoom = @"OneOfUserLeftRoom";
 NSString *const QZBOneUserChangedStatus = @"OneUserChangedStatus";
 NSString *const QZBOneUserFinishedGameInRoom = @"OneUserFinishedGameInRoom";
+NSString *const QZBRoomMessageRecieved = @"ZBRoomMessageRecieved";
 
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -130,6 +131,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
             DDLogVerbose(@"player finished game %@",channelEvent.data);
             
             [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneUserFinishedGameInRoom
+                                                                object:channelEvent.data];
+        }];
+        
+        [channel bindToEventNamed:@"room-message" handleWithBlock:^(PTPusherEvent *channelEvent) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:QZBRoomMessageRecieved
                                                                 object:channelEvent.data];
         }];
         
