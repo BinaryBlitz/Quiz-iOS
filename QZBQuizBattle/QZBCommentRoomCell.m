@@ -58,7 +58,6 @@
                               @"left": @5,
                               @"attchSize": @80,
                               };
-    //redo
     [self.contentView addConstraints:
      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-[timeAgoLabel(attchSize)]-right-|"
                                              options:0 metrics:metrics views:views]];

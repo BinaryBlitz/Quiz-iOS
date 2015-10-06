@@ -506,12 +506,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{
-        @"game_session_question" : @{@"answer_id" : @(answerID), @"time" : @(answerTime)},
+        @"game_question" : @{@"answer_id" : @(answerID), @"time" : @(answerTime)},
         @"token" : [QZBCurrentUser sharedInstance].user.api_key
     };
 
     NSString *URLString =
-        [NSString stringWithFormat:@"game_session_questions/%ld", (long)sessionQuestionID];
+        [NSString stringWithFormat:@"game_questions/%ld", (long)sessionQuestionID];
 
     [self.requestOperationManager PATCH:URLString
         parameters:params

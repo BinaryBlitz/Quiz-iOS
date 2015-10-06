@@ -66,8 +66,8 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         
 
         
-        if(dict[@"game_session_questions"] && ![dict[@"game_session_questions"] isEqual:[NSNull null]]){
-            arrayOfQuestionDicts = dict[@"game_session_questions"];
+        if(dict[@"game_questions"] && ![dict[@"game_questions"] isEqual:[NSNull null]]){
+            arrayOfQuestionDicts = dict[@"game_questions"];
             self.isRoom = NO;
         } else {
             arrayOfQuestionDicts = dict[@"room_questions"];
