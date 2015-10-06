@@ -56,6 +56,7 @@
 		1936E0781B3BFC0F00BE6B16 /* QZBRoomResultTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */; };
 		1936E07B1B3BFED800BE6B16 /* QZBRoomUserResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */; };
 		1936E07E1B3C24A900BE6B16 /* QZBTopicWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */; };
+		193A14CD1BC4352B005C6C36 /* NSDate+QZBDateCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */; settings = {ASSET_TAGS = (); }; };
 		193CC9111B42A3F70060B69B /* QZBRoomChooseTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */; };
 		193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */; };
 		193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9171B441EAD0060B69B /* QZBRoomSession.m */; };
@@ -311,6 +312,8 @@
 		1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomUserResultCell.m; sourceTree = "<group>"; };
 		1936E07C1B3C24A900BE6B16 /* QZBTopicWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicWorker.h; sourceTree = "<group>"; };
 		1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicWorker.m; sourceTree = "<group>"; };
+		193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+QZBDateCategory.h"; sourceTree = "<group>"; };
+		193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QZBDateCategory.m"; sourceTree = "<group>"; };
 		193CC90F1B42A3F60060B69B /* QZBRoomChooseTopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomChooseTopicCell.h; sourceTree = "<group>"; };
 		193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomChooseTopicCell.m; sourceTree = "<group>"; };
 		193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnlineWorker.h; sourceTree = "<group>"; };
@@ -962,6 +965,8 @@
 				191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */,
 				1944A1901B109F0B0095C600 /* UIFont+QZBCustomFont.h */,
 				1944A1911B109F0B0095C600 /* UIFont+QZBCustomFont.m */,
+				193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */,
+				193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -1987,6 +1992,7 @@
 				194258291B18BB86008A3449 /* QZBViewWithLineOnBottom.m in Sources */,
 				197669951A67B4B0006C2757 /* QZBRegisterWithEmailVC.m in Sources */,
 				193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */,
+				193A14CD1BC4352B005C6C36 /* NSDate+QZBDateCategory.m in Sources */,
 				196472641AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m in Sources */,
 				1901BA161B303732003E2895 /* QZBRoomListTVC.m in Sources */,
 				19DA48DD1A7BCC8700649BE4 /* QZBMainTBC.m in Sources */,

@@ -30,6 +30,8 @@
 #import "QZBRoomController.h"
 #import "QZBRoomOnMainCell.h"
 #import "UIFont+QZBCustomFont.h"
+#import <NSDate+DateTools.h>
+#import "NSDate+QZBDateCategory.h"
 //#import "UIViewController+QZBMessagerCategory.h"
 
 NSString *const QZBNewQuestionControllerSegueIdentifier =
@@ -213,7 +215,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     
     if(arr == self.questionFakeArray){
         UITableViewCell *cell =
-        [tableView dequeueReusableCellWithIdentifier:@"showAddNewQuestionSegueIdentifier"];
+        [tableView dequeueReusableCellWithIdentifier:@"showAddNewQuestionCelldentifier"];
         
         cell.backgroundColor = [self colorForSection:indexPath.section];
         return cell;
@@ -232,6 +234,13 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
             cell.opponentNameLabel.text = @"";
         }
 
+        if(rI.createdAt){
+            if([rI.createdAt hoursAgo] < 5.0 ){
+                cell.timeAgoLabel.text = [NSDate redableTimeFromDate:rI.createdAt];
+            } else {
+                cell.timeAgoLabel.text = [rI.createdAt timeAgoSinceNow];
+            }
+        }
         return cell;
 
     } else if (arr == self.challenges) {
