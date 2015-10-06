@@ -38,6 +38,7 @@
             
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 
+            [dateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
             [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
             [dateFormat setLocale:[NSLocale systemLocale]];
             
