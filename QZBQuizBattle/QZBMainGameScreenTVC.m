@@ -101,7 +101,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
     // self.workArray = [NSMutableArray array];
 
-    self.title = @"1 на 1";  // REDO
+    self.title = @"1 на 1";  
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 

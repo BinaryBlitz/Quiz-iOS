@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 3;//REDO
+const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 const NSInteger QZBMaxLeaveTime = 20;
 const NSInteger QZBMaxRedyTime = 5;
 
@@ -584,7 +584,7 @@ const NSInteger QZBMaxRedyTime = 5;
 }
 
 -(BOOL)checkAllReady {
-    return YES;//redo
+    //return YES;//redo
     for(QZBUserWithTopic *userWithTopic in self.room.participants) {
         if(!userWithTopic.ready) {
             return NO;
