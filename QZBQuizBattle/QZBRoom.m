@@ -248,11 +248,11 @@
     return NO;
 }
 
-- (QZBUserWithTopic *)findUser:(id<QZBUserProtocol>)user {
+- (QZBUserWithTopic *)findUserWithID:(NSNumber *)userID{
    // QZBUserWithTopic *u = nil;
     
     for (QZBUserWithTopic *userWithTopic in self.participants) {
-        if ([userWithTopic.user.userID isEqualToNumber:user.userID]) {
+        if ([userWithTopic.user.userID isEqualToNumber:userID]) {
             return userWithTopic;
         }
     }
