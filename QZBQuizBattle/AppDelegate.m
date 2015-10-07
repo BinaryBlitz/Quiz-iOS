@@ -4,7 +4,8 @@
 //
 //  Created by Andrey Mikhaylov on 11/12/14.
 //  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//build 1.0.1 19
+//build 1.1.1 24
+
 
 #define MR_LOGGING_ENABLED 0
 
@@ -59,7 +60,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     [DDLog addLogger:[DDASLLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:LOG_LEVEL_VERBOSE];
-    
+
     [UAAppReviewManager setAppID:@"1017347211"];
     [UAAppReviewManager setSignificantEventsUntilPrompt:7];
     [UAAppReviewManager setDaysUntilPrompt:4];
@@ -165,7 +166,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // Called when the application is about to terminate. Save data if appropriate. See also
     // applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
- 
+
 
     [MagicalRecord saveUsingCurrentThreadContextWithBlock:nil completion:nil];
     [self saveContext];
@@ -442,10 +443,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 //        NSDictionary *p = userInfo[@"player"];
 //        NSString *username = p[@"username"];  // userInfo[@""];
 //        NSString *body = d[@"content"];
-//        
+//
 //        body = userInfo[]
-        
-        
+
+
         NSDictionary *payload = @{ @"username" : @"", @"message" : body };
         [[NSNotificationCenter defaultCenter]
             postNotificationName:@"QZBMessageRecievedNotificationIdentifier"
