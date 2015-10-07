@@ -35,6 +35,7 @@
 #import "UIFont+QZBCustomFont.h"
 #import "QZBRoomFakeKeyboard.h"
 #import <TSMessage.h>
+#import "UIView+QZBShakeExtension.h"
 
 // cells
 NSString *const QZBUserInRoomCellIdentifier = @"userInRoomCellIdentifier";
@@ -65,16 +66,16 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
 
 const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 const NSInteger QZBMaxLeaveTime = 20;
-const NSInteger QZBMaxRedyTime = 5;
+const NSInteger QZBMaxRedyTime = 20;
 
 @interface QZBRoomController () <UIAlertViewDelegate>
 @property (strong, nonatomic) QZBRoom *room;
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
 @property (assign, nonatomic) BOOL isLeaveRoom;
 @property (assign, nonatomic) BOOL isStarted;
-@property(assign, nonatomic) BOOL needRemoveObserver;
+@property (assign, nonatomic) BOOL needRemoveObserver;
 @property (strong, nonatomic) UITapGestureRecognizer *isReadyGestureRecognizer;
-@property(strong, nonatomic) UIView *bottomView;
+@property (strong, nonatomic) UIView *bottomView;
 @property (strong, nonatomic) NSAttributedString *stringWithCross;
 @property (strong, nonatomic) NSAttributedString *stringWithCrown;
 @property (assign, nonatomic) UIEdgeInsets edgeInset;
@@ -87,6 +88,8 @@ const NSInteger QZBMaxRedyTime = 5;
 @property (assign, nonatomic) NSInteger maxTime;
 @property (strong, nonatomic) NSTimer *readyTimer;
 @property (assign, nonatomic) NSInteger readyTime;
+
+@property (strong, nonatomic) UIProgressView *isReadyProgressView;
 @end
 
 @implementation QZBRoomController
@@ -107,14 +110,16 @@ const NSInteger QZBMaxRedyTime = 5;
     self.tableView.contentInset = self.edgeInset;
     [self reloadRoom];
     
-    UIImage *crossImage = [[UIImage imageNamed:@"cancelCross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *crossImage = [[UIImage imageNamed:@"cancelCross"]
+                           imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
     attachment.image = crossImage;
     self.stringWithCross = [NSAttributedString attributedStringWithAttachment:attachment];
     
     //[self.navigationController setToolbarHidden:NO animated:YES];
-    self.isReadyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                         action:@selector(userPressIsReadyButton:)];
+    self.isReadyGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                     initWithTarget:self
+                                             action:@selector(userPressIsReadyButton:)];
     
     self.isReadyGestureRecognizer.numberOfTapsRequired = 1;
     self.isReadyGestureRecognizer.numberOfTouchesRequired = 1;
@@ -145,15 +150,10 @@ const NSInteger QZBMaxRedyTime = 5;
                                              selector:@selector(userBackFromBackgound)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-    
-    //TODO закрытвать экран
-    
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     if(self.roomWorker){
         [self animateUp];
     }
@@ -289,7 +289,7 @@ const NSInteger QZBMaxRedyTime = 5;
 
 -(void)userPressIsReadyButton:(UIGestureRecognizer *)sender {
     
-    QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
+    QZBUserWithTopic *userWithTopic = [self.room findUserWithID:[QZBCurrentUser sharedInstance].user.userID];
     
     [self makeCurrentUserReady:!userWithTopic.isReady];
  
@@ -382,6 +382,7 @@ const NSInteger QZBMaxRedyTime = 5;
             break;
         }
     }
+    [self invalidateRedyTimer];
     if(destVC){
         [self.navigationController popToViewController:destVC animated:YES];
     } else {
@@ -459,6 +460,7 @@ const NSInteger QZBMaxRedyTime = 5;
                 [self postLocalNotificationWithText:@"Комната заполнилась, возвращайтесь в игру"];
             }
             self.roomWorker.room = room;
+            [self showReadyProgressView];
         } else {
             QZBUser *u = [QZBCurrentUser sharedInstance].user;
             if([room isContainUser:u]){
@@ -488,6 +490,8 @@ const NSInteger QZBMaxRedyTime = 5;
     [self.roomWorker addRoomOnlineWorker];
     [self addBarButtonRight];
     [self animateUp];
+    
+    [self showReadyProgressView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showGameController)
@@ -560,7 +564,8 @@ const NSInteger QZBMaxRedyTime = 5;
 }
 
 - (QZBRoomState)roomState {
-    QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
+    QZBUserWithTopic *userWithTopic = [self.room
+                                       findUserWithID:[QZBCurrentUser sharedInstance].user.userID];
     if ([self isOwner]) {
         if (userWithTopic && !userWithTopic.isReady){
             return QZBRoomStateIsNotReady;
@@ -652,7 +657,8 @@ const NSInteger QZBMaxRedyTime = 5;
 }
 
 -(void)makeCurrentUserReady:(BOOL)isReady {
-    QZBUserWithTopic *userWithTopic = [self.room findUser:[QZBCurrentUser sharedInstance].user];
+    QZBUserWithTopic *userWithTopic = [self.room
+                                       findUserWithID:[QZBCurrentUser sharedInstance].user.userID];
     
     if(userWithTopic){
         
@@ -675,6 +681,9 @@ const NSInteger QZBMaxRedyTime = 5;
         userInRoomCell.isReadyActivityIndicator.hidden = YES;
         [userInRoomCell.isReadyActivityIndicator stopAnimating];
         [self.tableView reloadData];
+                                                         [self showReadyProgressView];
+                                                         
+                                                         
                                                          
     } onFailure:^(NSError *error, NSInteger statusCode) {
         userInRoomCell.isReadyLabel.hidden = NO;
@@ -771,11 +780,21 @@ const NSInteger QZBMaxRedyTime = 5;
         [self.view bringSubviewToFront:self.fakeKeyboard];
     }
     
+    if(_isReadyProgressView) {
+        CGRect frame = self.isReadyProgressView.frame;
+        CGRect navRect = self.navigationController.navigationBar.frame;
+        frame.origin.y = scrollView.contentOffset.y + navRect.origin.y +
+        navRect.size.height + 2;
+        self.isReadyProgressView.frame = frame;
+        
+        [self.view bringSubviewToFront:self.isReadyProgressView];
+    }
+    
 }
 
 
 -(void)animateUp {
-    CGRect r = self.view.frame;//[UIScreen mainScreen].bounds;
+    CGRect r = self.view.frame;
     [self.view addSubview:self.bottomView];
     [self.view bringSubviewToFront:self.bottomView];
     [UIView animateWithDuration:0.3
@@ -920,21 +939,9 @@ const NSInteger QZBMaxRedyTime = 5;
 #pragma mark - messages
 
 -(void)userWithID:(NSNumber *)userID say:(NSString *)message {
-    NSInteger index = -1;
+
+    QZBUserInRoomCell *cell = [self cellForUserWithID:userID];// (QZBUserInRoomCell *)[self.tableView cellForRowAtIndexPath:ip];
     
-    for (int i = 0; i<self.room.participants.count;i++){
-        QZBUserWithTopic *userWithTopic = self.room.participants[i];
-        if([userWithTopic.user.userID isEqualToNumber:userID]) {
-            index = i;
-            break;
-        }
-    }
-    if(index == -1){
-        return;
-    }
-    
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
-    QZBUserInRoomCell *cell = (QZBUserInRoomCell *)[self.tableView cellForRowAtIndexPath:ip];
     if(!cell){
         return;
     }
@@ -996,7 +1003,6 @@ const NSInteger QZBMaxRedyTime = 5;
 
 -(void)roomMessageRecieved:(NSNotification *)note {
     NSDictionary *content = note.object[@"content"];
-    NSLog(@"%@",note.object);
     NSNumber *userID = content[@"player_id"];
     NSString *message = content[@"content"];
     
@@ -1038,7 +1044,7 @@ const NSInteger QZBMaxRedyTime = 5;
     }
     self.time++;
     
-    if(self.time == QZBMaxLeaveTime - 5) {
+    if(self.time == QZBMaxLeaveTime - 10) {
         [self postLocalNotificationWithText:@"Вернитесь в игру!"];//redo text
     }
     
@@ -1058,7 +1064,7 @@ const NSInteger QZBMaxRedyTime = 5;
 
 -(void)userBackFromBackgound {
     [self invalidateGlobalTimer];
-    [self accentReadyButtons];
+   // [self accentReadyButtons];
 }
 
 - (void)invalidateGlobalTimer {
@@ -1078,9 +1084,18 @@ const NSInteger QZBMaxRedyTime = 5;
 
 - (void)accentReadyButtons {
     NSLog(@"accented");
+    
+    QZBUserInRoomCell *cell = [self cellForUserWithID:[QZBCurrentUser sharedInstance].user.userID];
+    
+    if(!cell) {
+        return;
+    }
+    
+    [cell.isReadyBackView shakeView];
+    
 }
 
--(void)postLocalNotificationWithText:(NSString *)message {
+- (void)postLocalNotificationWithText:(NSString *)message {
     
     if([UIApplication sharedApplication].applicationState == UIApplicationStateBackground){
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
@@ -1091,46 +1106,135 @@ const NSInteger QZBMaxRedyTime = 5;
     
 }
 
--(void)startCountingUntilLeave {
+- (void)startCountingUntilLeave {
+    if(self.readyTime){
+        return;
+    }
     self.readyTime = 0;
-    self.readyTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+    self.readyTimer = [NSTimer scheduledTimerWithTimeInterval:0.01
                                                         target:self
                                                       selector:@selector(updateReadyTime:)
                                                       userInfo:nil
                                                        repeats:YES];
-    [TSMessage showNotificationWithTitle:@"Подтвердите готовность!"
-                                    type:TSMessageNotificationTypeWarning];
+    [[NSRunLoop mainRunLoop] addTimer:self.readyTimer forMode:NSRunLoopCommonModes];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        
+        [TSMessage showNotificationWithTitle:@"Подтвердите готовность"
+                                        type:TSMessageNotificationTypeWarning];
+    });
 }
 
--(void)updateReadyTime:(NSTimer *)timer {
-    if(timer != self.readyTimer) {
+
+- (void)updateReadyTime:(NSTimer *)timer {
+    if(timer != self.readyTimer || self.isLeaveRoom) {
         [timer invalidate];
         timer = nil;
         return;
     }
-    
+
     self.readyTime++;
     
-    if (self.readyTime < QZBMaxRedyTime) {
+    if([self isCurrentUserReady]) {
+        [self invalidateRedyTimer];
+        [self removeReadyProgressView];
+        return;
+    }
+    
+    
+    if (self.readyTime < QZBMaxRedyTime * 100) {
+        float progress = (float)self.readyTime / (QZBMaxRedyTime * 100);
+        [self.isReadyProgressView setProgress:progress
+                                     animated:YES];
+        NSLog(@"isready %f",(float)self.readyTime );
+        
+        if(self.readyTime == 400 ||
+           self.readyTime == 800 ||
+           self.readyTime == 1600 ) {
+            [self accentReadyButtons];
+        }
 
-        [TSMessage showNotificationWithTitle:@"Подтвердите готовность!"
-                                        type:TSMessageNotificationTypeWarning];
     } else {
         [self leaveThisRoom];
-        [self invalidateGlobalTimer];
+        [self invalidateRedyTimer];
     }
 }
 
--(void)invalidateRedyTimer {
-    [self.readyTimer invalidate];
-    self.readyTimer = nil;
-    self.readyTime = 0;
-    
-   // [self endBackgroundTask];
+- (void)invalidateRedyTimer {
+    if(self.readyTimer){
+        [self.readyTimer invalidate];
+        self.readyTimer = nil;
+        self.readyTime = 0;
+    }
 }
 
--(BOOL)roomIsFull:(QZBRoom *)room {
+- (BOOL)roomIsFull:(QZBRoom *)room {
     return room.participants.count == [room.maxUserCount integerValue];
+}
+
+#pragma mark - progress
+
+- (UIProgressView *)isReadyProgressView {
+    if(!_isReadyProgressView) {
+        _isReadyProgressView = [[UIProgressView alloc]
+                                initWithProgressViewStyle:UIProgressViewStyleDefault];
+        
+        CGRect r = [UIScreen mainScreen].bounds;//self.navigationController.view.frame;
+        NSLog(@"progress width %f", r.size.width);
+        _isReadyProgressView.frame = CGRectMake(2, 0, r.size.width, 2);
+        _isReadyProgressView.progressTintColor = [UIColor goldColor];
+        _isReadyProgressView.trackTintColor = [UIColor middleDarkGreyColor];
+        [_isReadyProgressView setProgress:0.0];
+    }
+    return _isReadyProgressView;
+}
+
+- (void)showReadyProgressView {
+    if(![self isCurrentUserReady]) {
+        if(![self.view.subviews containsObject:_isReadyProgressView]){
+            [self.view addSubview:self.isReadyProgressView];
+            [self.view bringSubviewToFront:self.isReadyProgressView];
+            [self startCountingUntilLeave];
+        }
+    } else {
+        [self removeReadyProgressView];
+    }
+}
+
+-(void)removeReadyProgressView {
+    if(_isReadyProgressView){
+        self.isReadyProgressView.progress = 0.0;
+        [self.isReadyProgressView removeFromSuperview];
+    }
+}
+
+- (BOOL)isCurrentUserReady {
+
+    QZBUserWithTopic *userWithTopic = [self.room
+                                       findUserWithID:[QZBCurrentUser sharedInstance].user.userID];
+    return userWithTopic.isReady;
+   // return NO;
+}
+
+- (QZBUserInRoomCell *)cellForUserWithID:(NSNumber *)userID{
+    
+    QZBUserWithTopic *userWithTopic = [self.room findUserWithID:userID];
+    if(!userWithTopic){
+        return nil;
+    }
+    NSInteger index = [self.room.participants indexOfObject:userWithTopic];
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
+    
+    if(cell) {
+        return (QZBUserInRoomCell *)cell;
+    } else {
+        return nil;
+    }
+    
+//    return cell;
+    
 }
 
 
