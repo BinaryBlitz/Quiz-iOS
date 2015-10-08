@@ -149,7 +149,7 @@ static NSInteger answerOffset = 2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"pressed");
+//    NSLog(@"pressed");
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifierInQuest] ||
         [cell.reuseIdentifier isEqualToString:QZBTopicCellIdentifierInQuest]) {
@@ -359,7 +359,7 @@ navigation
     }
     self.question = [textView.text stringByReplacingCharactersInRange:range withString:text];
 
-    NSLog(@"%@", self.question);
+  //  NSLog(@"%@", self.question);
     return YES;
 }
 

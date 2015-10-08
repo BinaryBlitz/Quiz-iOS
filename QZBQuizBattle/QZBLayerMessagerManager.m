@@ -89,7 +89,7 @@ static NSString *const LQSLayerAppIDString =
     // https://developer.layer.com/docs/quick-start/ios#connect
     [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
         if (!success) {
-            NSLog(@"Failed to connect to Layer: %@", error);
+         //   NSLog(@"Failed to connect to Layer: %@", error);
         } else {
             NSString *identifier = nil;
             id userID = [QZBCurrentUser sharedInstance].user.userID;
@@ -261,7 +261,7 @@ static NSString *const LQSLayerAppIDString =
      * 1. Request an authentication Nonce from Layer
      */
     [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
-        NSLog(@"nonce %@", nonce);
+      //  NSLog(@"nonce %@", nonce);
         if (!nonce) {
             if (completion) {
                 completion(NO, error);

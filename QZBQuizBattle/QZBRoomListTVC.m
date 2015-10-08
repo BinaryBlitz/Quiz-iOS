@@ -148,7 +148,7 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 
     //  NSNumber *number = @([stringToSearch intValue]);
 
-    NSLog(@"num to search %ld", (long)val);
+  //  NSLog(@"num to search %ld", (long)val);
 
     //
     [[QZBServerManager sharedManager] GETRoomWithID:@(val)
