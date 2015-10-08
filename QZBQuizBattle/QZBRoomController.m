@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, QZBRoomState) {
     QZBRoomStateNone
 };
 
-const NSInteger QZBMinimumPlayersCountInRoom = 3;//REDO
+const NSInteger QZBMinimumPlayersCountInRoom = 2;//REDO
 const NSInteger QZBMaxLeaveTime = 20;
 const NSInteger QZBMaxRedyTime = 20;
 
@@ -470,7 +470,7 @@ const NSInteger QZBMaxRedyTime = 20;
         
         self.room = room;
                                               
-        NSLog(@"room %@ roomworker %@",self.room, self.roomWorker.room);
+   //     NSLog(@"room %@ roomworker %@",self.room, self.roomWorker.room);
         [self.tableView reloadData];
         
         [SVProgressHUD dismiss];
@@ -569,7 +569,8 @@ const NSInteger QZBMaxRedyTime = 20;
     if ([self isOwner]) {
         if (userWithTopic && !userWithTopic.isReady){
             return QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom || ![self checkAllReady]) {
+        }else if (self.room.participants.count < [self.room.maxUserCount integerValue]
+                  /*QZBMinimumPlayersCountInRoom*/ || ![self checkAllReady]) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateCanStartGame;
@@ -580,7 +581,8 @@ const NSInteger QZBMaxRedyTime = 20;
             return QZBRoomStateChooseAndJoin;
         } else if (userWithTopic && !userWithTopic.isReady){
             return  QZBRoomStateIsNotReady;
-        }else if (self.room.participants.count < QZBMinimumPlayersCountInRoom) {
+        }else if (self.room.participants.count < [self.room.maxUserCount integerValue]
+                  /* QZBMinimumPlayersCountInRoom*/) {
             return QZBRoomStateWaitingPlayers;
         } else {
             return QZBRoomStateWaitingPlayers;
@@ -1049,7 +1051,7 @@ const NSInteger QZBMaxRedyTime = 20;
     }
     
     if (self.time < QZBMaxLeaveTime) {
-        NSLog(@"time %ld", (long)self.time);
+     //   NSLog(@"time %ld", (long)self.time);
     } else {
         if (timer != nil) {
             [self leaveThisRoom];
@@ -1083,7 +1085,7 @@ const NSInteger QZBMaxRedyTime = 20;
 }
 
 - (void)accentReadyButtons {
-    NSLog(@"accented");
+   // NSLog(@"accented");
     
     QZBUserInRoomCell *cell = [self cellForUserWithID:[QZBCurrentUser sharedInstance].user.userID];
     
@@ -1147,7 +1149,7 @@ const NSInteger QZBMaxRedyTime = 20;
         float progress = (float)self.readyTime / (QZBMaxRedyTime * 100);
         [self.isReadyProgressView setProgress:progress
                                      animated:YES];
-        NSLog(@"isready %f",(float)self.readyTime );
+
         
         if(self.readyTime == 400 ||
            self.readyTime == 800 ||
@@ -1181,7 +1183,7 @@ const NSInteger QZBMaxRedyTime = 20;
                                 initWithProgressViewStyle:UIProgressViewStyleDefault];
         
         CGRect r = [UIScreen mainScreen].bounds;//self.navigationController.view.frame;
-        NSLog(@"progress width %f", r.size.width);
+       // NSLog(@"progress width %f", r.size.width);
         _isReadyProgressView.frame = CGRectMake(2, 0, r.size.width, 2);
         _isReadyProgressView.progressTintColor = [UIColor goldColor];
         _isReadyProgressView.trackTintColor = [UIColor middleDarkGreyColor];

@@ -71,7 +71,7 @@
         if([cell isKindOfClass:[QZBFriendRequestCell class]]){
             
             
-            NSLog(@"YES");
+          //  NSLog(@"YES");
             QZBFriendRequestCell *c = (QZBFriendRequestCell *)cell;
             
             [[QZBFriendRequestManager sharedInstance] acceptForUser:c.user callback:^(BOOL succes) {
@@ -104,7 +104,7 @@
     
     if(cell){
         if([cell isKindOfClass:[QZBFriendRequestCell class]]){
-            NSLog(@"YES");
+         //   NSLog(@"YES");
             QZBFriendRequestCell *c = (QZBFriendRequestCell *)cell;
             
             [[QZBFriendRequestManager sharedInstance] declineForUser:c.user callback:^(BOOL succes) {

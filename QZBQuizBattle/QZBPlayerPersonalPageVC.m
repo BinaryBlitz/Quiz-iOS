@@ -730,7 +730,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 }
 
 -(void)showUserPicFullScreen:(id)sender{
-    NSLog(@"tapped pic");
+  //  NSLog(@"tapped pic");
    
 //    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:nil];
 //    
@@ -1052,7 +1052,7 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
                   subTitle:achievment.achievementDescription
           closeButtonTitle:@"ОК"
                   duration:0.0f];
-    NSLog(@"alert setted");
+  //  NSLog(@"alert setted");
 }
 
 

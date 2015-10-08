@@ -39,7 +39,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
         [[NSNotificationCenter defaultCenter] postNotificationName:QZBFriendRequestUpdated object:nil];
         
     } onFailure:^(NSError *error, NSInteger statusCode) {
-        NSLog(@"request err %@", error);
+      //  NSLog(@"request err %@", error);
     }];
     
 }
@@ -52,7 +52,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     if(friendRequest){
         [[QZBServerManager sharedManager] PATCHAcceptFriendRequestWithID:friendRequest.requestID onSuccess:^{
             
-            NSLog(@"accepted");
+         //   NSLog(@"accepted");
             [self.incoming removeObject:friendRequest];
                        if(callback){
                 callback(YES);
@@ -128,7 +128,7 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     if(friendRequest){
         
         [[QZBServerManager sharedManager] DELETEDeclineFriendRequestWithID:friendRequest.requestID onSuccess:^{
-            NSLog(@"decline");
+      //      NSLog(@"decline");
             //[self.incoming removeObject:friendRequest];
             if(action){
                 action();

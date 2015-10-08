@@ -512,7 +512,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     BOOL success = [self.conversation sendMessage:message error:&error];
     if (success) {
         // If the message was sent by the participant, show the sentAt time and mark the message as read
-        NSLog(@"Message queued to be sent: %@", messageText);
+       // NSLog(@"Message queued to be sent: %@", messageText);
         //self.inputTextView.text = @"";
         
     } else {

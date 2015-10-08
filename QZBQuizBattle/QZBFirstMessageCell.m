@@ -40,7 +40,7 @@
         self.badgeView.badgeText = nil;
     }
     
-    NSLog(@"%@", userAndMessage.unreadedCount);
+ //   NSLog(@"%@", userAndMessage.unreadedCount);
     
         if(userAndMessage.user.imageURL){
             [self.userpicImageView setImageWithURL:userAndMessage.user.imageURL

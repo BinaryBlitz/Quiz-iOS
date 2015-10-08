@@ -671,7 +671,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 #pragma mark - gesture recognizer
 
 - (IBAction)showUser:(id)sender {
-    NSLog(@"gg");
+  //  NSLog(@"gg");
     [self showOpponent];
 }
 
