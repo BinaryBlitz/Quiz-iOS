@@ -5210,8 +5210,7 @@
                                                             <exclude reference="aMk-3t-Qy5"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="115.5" y="11" width="115" height="50"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="aMk-3t-Qy5"/>
                                                         </mask>
@@ -13599,7 +13598,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9y-K3-ky7">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить новый вопрос" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTO-fP-kn3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отправить свой вопрос" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTO-fP-kn3">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="19"/>

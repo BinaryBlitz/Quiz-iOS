@@ -363,7 +363,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         [self performSegueWithIdentifier:@"showChallenges" sender:nil];
     } else if ([cell.reuseIdentifier isEqualToString:@"mainDescriptionCell"]) {
         return;
-    } else if ([cell.reuseIdentifier isEqualToString:@"showAddNewQuestionSegueIdentifier"]){
+    } else if ([cell.reuseIdentifier isEqualToString:@"showAddNewQuestionCelldentifier"]){
         [self showNewQuestionController];
     }else {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
