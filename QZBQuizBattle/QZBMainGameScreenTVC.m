@@ -32,6 +32,8 @@
 #import "UIFont+QZBCustomFont.h"
 #import <NSDate+DateTools.h>
 #import "NSDate+QZBDateCategory.h"
+#import "QZBLayerMessagerManager.h"
+#import <LayerKit/LayerKit.h>
 //#import "UIViewController+QZBMessagerCategory.h"
 
 NSString *const QZBNewQuestionControllerSegueIdentifier =
@@ -789,7 +791,9 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
             [self.workArray addObject:self.additionalTopics];
         }
         [self.workArray addObject:self.questionFakeArray];
-
+        
+        [self authenticateLayer:resultDict];
+    
         [self.mainTableView reloadData];
         //  //   //   UITabBarController *tabController = self.tabBarController;
         //  //   //   UITabBarItem *tabbarItem = tabController.tabBar.items[2];
@@ -804,6 +808,21 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
             [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
         }
     }];
+}
+
+-(void)authenticateLayer:(id)result {
+    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
+            NSLog(@"done mof %@", error);
+        }];
+        return;
+    }
+    
+    if(result[@"needStartMessager"] && [result[@"needStartMessager"] boolValue]) {
+        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
+            NSLog(@"done mof %@", error);
+        }];
+    }
 }
 
 - (NSInteger)allCount {

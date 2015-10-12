@@ -354,6 +354,12 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
+                                      onSuccess:(void (^)())success
+                                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+
+
 #pragma mark - new_questions
 
 - (void)POSTNewQuestionWithText:(NSString *)text

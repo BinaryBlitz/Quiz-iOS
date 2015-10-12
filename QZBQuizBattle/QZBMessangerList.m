@@ -9,6 +9,7 @@
 #import "QZBMessangerList.h"
 #import "QZBMessagerVC.h"
 
+#import "QZBCurrentUser.h"
 
 #import "QZBLayerMessagerManager.h"
 
@@ -35,7 +36,9 @@
     self.title = @"Сообщения";
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self initStatusbarWithColor:[UIColor blackColor]];
-    if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+    if([[QZBCurrentUser sharedInstance] needStartMessager] &&
+       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+        
         [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
             
         }];

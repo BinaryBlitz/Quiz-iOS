@@ -357,8 +357,21 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
             NSArray *roomInvites = [self parseRoomInvitesFromArray:roomInvitesDicts];
             NSArray *rooms = [self parseRoomsFromArray:roomsDicts];
+            
+            NSNumber *needStartMessager = @(NO);
+            if(responseObject[@"layer_needs_authentication"] &&
+               ![responseObject[@"layer_needs_authentication"] isEqual:[NSNull null]]) {
+                
+                //NSLog(@"need start layer %@",responseObject[@"layer_needs_authentication"]);
+                needStartMessager = responseObject[@"layer_needs_authentication"];
+                
+                if ([needStartMessager boolValue]){
+                    [[QZBCurrentUser sharedInstance] setNeedStartMessager:[needStartMessager boolValue]];
+                }
+            }
 
             NSDictionary *resultDict = @{
+                @"needStartMessager":needStartMessager,
                 @"favorite_topics" : faveTopics,
                 @"recent_topics":recentTopics,
                 @"friends_favorite_topics" : friendsFaveTopics,
@@ -1540,11 +1553,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params = @{
         @"token" : [QZBCurrentUser sharedInstance].user.api_key,
+        
         @"old_token" : oldToken,
         @"new_token" : newToken
     };
 
-    [self.requestOperationManager PATCH:@"push_tokens/replace"
+    [self.requestOperationManager PATCH:@"device_tokens/replace"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -1568,9 +1582,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *params =
         @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-           @"push_token" : token };
+           @"device_token":@{
+                   @"token" : token,
+                   @"platform": @"ios"}
+            };
 
-    [self.requestOperationManager DELETE:@"push_tokens/delete"
+    [self.requestOperationManager DELETE:@"device_tokens/delete"
         parameters:params
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             DDLogInfo(@"token delete response %@", responseObject);
@@ -2342,6 +2359,37 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
         }
 
     }];
+}
+
+
+- (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
+                                      onSuccess:(void (^)())success
+                                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
+    
+    
+    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key};
+    
+    NSString *urlAsString = [NSString stringWithFormat:@"players/%@/flag_layer", userID];
+    
+    [self.requestOperationManager PATCH:urlAsString
+                             parameters:params
+                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    
+                                    DDLogInfo(@"need login PATHCED");
+                                    if (success) {
+                                        success();
+                                    }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogError(@"patch layer fail err %@", error);
+        if (failure) {
+            failure(error, operation.response.statusCode);
+        }
+        
+
+        
+    }];
+    
 }
 
 #pragma mark - new_questions

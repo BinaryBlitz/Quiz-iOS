@@ -13,6 +13,8 @@
 #import "QZBLayerMessagerManager.h"
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
+static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
+
 //#import "QZBUser.h"
 
 @interface QZBCurrentUser ()
@@ -20,7 +22,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @property (strong, nonatomic) QZBUser *user;
 @property (strong, nonatomic) NSString *pushToken;
 @property (strong, nonatomic) NSData *pushTokenData;
-//@property(strong, nonatomic) NSString *
+
+@property (assign, nonatomic) BOOL needStartMessager;
+
 @property(assign, nonatomic) BOOL pushTokenNew;
 
 @end
@@ -72,6 +76,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
                 }];
         }
+        
     }
 }
 
@@ -133,12 +138,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // self.pushToken = nil;
     self.user = nil;
     
-    
-    
-
+  
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:QZBNeedStartMessager];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentUser"];
 }
+
 
 - (BOOL)checkUser {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"]) {
@@ -162,5 +167,16 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         return NO;
     }
 }
+
+
+- (void)setNeedStartMessager:(BOOL)needStartMessager {
+    [[NSUserDefaults standardUserDefaults] setBool:needStartMessager forKey:QZBNeedStartMessager];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)needStartMessager {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:QZBNeedStartMessager];
+}
+
 
 @end

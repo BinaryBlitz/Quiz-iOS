@@ -28,7 +28,7 @@
 #import "UIImageView+QZBImagePickerCategory.h"
 
 #import "QZBLayerMessagerManager.h"
-
+#import <LayerKit/LayerKit.h>
 
 
 @interface QZBSettingsTVC () <UITextFieldDelegate>
@@ -383,16 +383,33 @@
 #pragma mark - actions
 
 - (IBAction)logOutAction:(UIButton *)sender {
+    
+    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID){
+    
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBLayerMessagerManager sharedInstance] logOutWithCompletion:^(BOOL success, NSError *error) {
         [SVProgressHUD dismiss];
         if(success) {
     
-    [[QZBCurrentUser sharedInstance] userLogOut];
+            [self logOut];
+        } else {
+            [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
+                                        subtitle:nil
+                                            type:TSMessageNotificationTypeError];
+        }
+        }];
+    } else {
+        [self logOut];
+    }
+}
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+-(void)logOut {
+    [[QZBCurrentUser sharedInstance] userLogOut];
     
-      //  [self.navigationController popToRootViewControllerAnimated:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        //  [self.navigationController popToRootViewControllerAnimated:NO];
         
         NSArray *controllers = self.tabBarController.viewControllers;
         
@@ -402,20 +419,14 @@
                 [c popToRootViewControllerAnimated:NO];
             }
         }
+        self.tabBarController.selectedIndex = 2;
     });
     
-   // [self.navigationController popToRootViewControllerAnimated:NO];
-
-    [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
-        } else {
-            [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
-                                        subtitle:nil
-                                            type:TSMessageNotificationTypeError];
-        }
-        }];
+  //  self.tabBarController.selectedIndex = 2;
     
+    
+    [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
 }
-
 //-(void)loadDeafaultPicture {
 //    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
 //    [self loadNewPic:image];

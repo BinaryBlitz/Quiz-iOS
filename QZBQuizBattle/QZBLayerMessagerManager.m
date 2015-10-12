@@ -104,6 +104,9 @@ static NSString *const LQSLayerAppIDString =
                                        if(success) {
                                            
                                            [[[self class] sharedInstance] updateConversations];
+                                           if(completion){
+                                               completion(success, error);
+                                           }
                                        }
 
                                        NSData *token =
