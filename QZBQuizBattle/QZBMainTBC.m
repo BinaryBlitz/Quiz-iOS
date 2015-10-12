@@ -136,10 +136,12 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
      //   if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID){
-            
-        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-            NSLog(@"done mof %@", error);
-        }];
+        
+    
+    //    [QZBCurrentUser sharedInstance]
+//        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
+//            NSLog(@"done mof %@", error);
+//        }];
    //     }
         
         [self subscribeToMessages];
