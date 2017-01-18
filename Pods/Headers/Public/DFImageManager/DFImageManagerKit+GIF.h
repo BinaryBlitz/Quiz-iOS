@@ -1,1 +1,0 @@
-../../../DFImageManager/DFImageManager/Source/GIF/DFImageManagerKit+GIF.h

@@ -121,7 +121,7 @@
     // UIImageView *v = [[UIImageView alloc] init];
 
     
-    [alert showInfo:self.navigationController
+    [alert showInfo:self.tabBarController
               title:@"Ошибка"
            subTitle:descr
    closeButtonTitle:@"ОК"
@@ -162,7 +162,7 @@
     }];
     
     
-    [alert showInfo:self.navigationController
+    [alert showInfo:self.tabBarController
               title:title subTitle:subTitle
    closeButtonTitle:@"Нет" duration:0.0f];
     
@@ -191,6 +191,14 @@
         }
     }
     return nil;
+}
+
+- (void)ignoreIteractions {
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                   });
 }
 
 

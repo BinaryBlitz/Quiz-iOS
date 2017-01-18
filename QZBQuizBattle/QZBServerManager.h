@@ -13,8 +13,7 @@
 UIKIT_EXTERN NSString *const QZBServerBaseUrl;
 UIKIT_EXTERN NSString *const QZBNoInternetConnectionMessage;
 UIKIT_EXTERN NSString *const QZBPusherKey;
-
-
+UIKIT_EXTERN NSString *const QZBiTunesIdentifier;
 
 @class QZBSession;
 @class QZBLobby;
@@ -31,6 +30,13 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
     QZBNoProblems,
     QZBUserNameProblem,
     QZBEmailProblem
+};
+
+typedef NS_ENUM(NSInteger, QZBUpdateType) {
+    QZBUpdateTypeMajor,
+    QZBUpdateTypeMinor,
+    QZBUpdateTypeBugfix,
+    QZBUpdateTypeNone
 };
 
 @interface QZBServerManager : NSObject
@@ -152,11 +158,16 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                                                        NSInteger statusCode,
                                                        QZBUserRegistrationProblem problem))failure;
 
+-(void)PATCHPlayerDeleteAvatarOnSuccess:(void (^)())success
+                              onFailure:(void (^)(NSError *error,
+                                                  NSInteger statusCode,
+                                                  QZBUserRegistrationProblem problem))failure;
+
 #pragma mark - friends
 
 - (void)POSTFriendWithID:(NSNumber *)userID
-               onSuccess:(void (^)(QZBFriendRequest *friendRequest)) success
-               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure ;
+               onSuccess:(void (^)(QZBFriendRequest *friendRequest))success
+               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)DELETEUNFriendWithID:(NSNumber *)userID
                    onSuccess:(void (^)())success
@@ -171,15 +182,15 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)GETReportForUserID:(NSNumber *)userID
-                   message:(NSString *)reportMessage
-                 onSuccess:(void (^)())success
-                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
--(void)POSTReportForDevelopersWithMessage:(NSString *)message
-                                onSuccess:(void (^)())success
-                                onFailure:(void (^)(NSError *error,
-                                                    NSInteger statusCode))failure;
+//- (void)GETReportForUserID:(NSNumber *)userID
+//                   message:(NSString *)reportMessage
+//                 onSuccess:(void (^)())success
+//                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+//
+//-(void)POSTReportForDevelopersWithMessage:(NSString *)message
+//                                onSuccess:(void (^)())success
+//                                onFailure:(void (^)(NSError *error,
+//                                                    NSInteger statusCode))failure;
 
 - (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
                              onSuccess:(void (^)())success
@@ -189,9 +200,25 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                                onSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+#pragma mark - report
+
+- (void)GETReportForUserID:(NSNumber *)userID
+                   message:(NSString *)reportMessage
+                 onSuccess:(void (^)())success
+                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTReportForDevelopersWithMessage:(NSString *)message
+                                 onSuccess:(void (^)())success
+                                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)POSTReportForQuestionWithID:(NSInteger)questionID
+                            message:(NSString *)message
+                          onSuccess:(void (^)())success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 #pragma mark - rate
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
+              forFriends:(BOOL)isFriends
                   withID:(NSInteger)ID
                onSuccess:(void (^)(NSArray *topRanking, NSArray *playerRanking))success
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -245,15 +272,16 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
 //                     onSuccess:(void (^)(NSArray *messages))success
 //                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)POSTAuthenticateLayerWithNonce:(NSString *) nonce
-                             callback:(void (^)(NSString *token, NSError *error))callback;
+- (void)POSTAuthenticateLayerWithNonce:(NSString *)nonce
+                              callback:(void (^)(NSString *token, NSError *error))callback;
 
 #pragma mark - rooms
 
 - (void)GETAllRoomsOnSuccess:(void (^)(NSArray *rooms))success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)GETRoomWithID:(NSNumber *)roomID OnSuccess:(void (^)(QZBRoom *room))success
+- (void)GETRoomWithID:(NSNumber *)roomID
+            OnSuccess:(void (^)(QZBRoom *room))success
             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)POSTCreateRoomWithTopic:(QZBGameTopic *)topic
@@ -267,9 +295,9 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                  onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-- (void)DELETELeaveRoomWithID:(NSNumber *)roomID onSuccess:(void (^)())success
+- (void)DELETELeaveRoomWithID:(NSNumber *)roomID
+                    onSuccess:(void (^)())success
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
 
 - (void)DELETEDeleteRoomWithID:(NSNumber *)roomID
                      onSuccess:(void (^)())success
@@ -279,20 +307,20 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                   onSuccess:(void (^)())success
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)POSTAnswerRoomQuestionWithID:(NSInteger) questionID
-                            answerID:(NSInteger) answerID
-                                time:(NSInteger) time
+- (void)POSTAnswerRoomQuestionWithID:(NSInteger)questionID
+                            answerID:(NSInteger)answerID
+                                time:(NSInteger)time
                            onSuccess:(void (^)())success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
--(void)POSTFinishRoomSessionWithID:(NSNumber *)roomID onSuccess:(void (^)())success
-                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)POSTFinishRoomSessionWithID:(NSNumber *)roomID
+                          onSuccess:(void (^)())success
+                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 - (void)PATCHParticipationWithID:(NSNumber *)userID
                          isReady:(BOOL)isReady
                        onSuccess:(void (^)())success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
 
 - (void)GETResultsOfRoomSessionWithID:(NSNumber *)roomID
                             onSuccess:(void (^)(QZBRoomSessionResults *sessionResults))success
@@ -307,7 +335,36 @@ typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
                            onSuccess:(void (^)())success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
+- (void)DELETEBanParticipationWithID:(NSNumber *)participationID
+                           onSuccess:(void (^)())succes
+                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)GETChatForRoomWithID:(NSNumber *)roomID
+                   onSuccess:(void (^)(NSArray *messages))success
+                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)POSTSendMessage:(NSString *)message
+           inRoomWithID:(NSNumber *)roomID
+              onSuccess:(void (^)())success
+              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+#pragma mark - support
+
+- (void)GETCompareVersion:(NSString *)version
+                onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
+                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
+                                      onSuccess:(void (^)())success
+                                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 
 
+#pragma mark - new_questions
+
+- (void)POSTNewQuestionWithText:(NSString *)text
+                        answers:(NSArray *)answers
+                        topicID:(NSNumber *)topicID
+                      onSuccess:(void (^)())success
+                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 @end

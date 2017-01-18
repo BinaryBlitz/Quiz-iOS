@@ -22,12 +22,10 @@
 #import <LayerKit/LayerKit.h>
 #import "QZBLayerMessagerManager.h"
 
-
-
 NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 const NSTimeInterval QZBMessageTimeInterval = 600;
 
-@interface QZBMessagerVC () < LYRQueryControllerDelegate>
+@interface QZBMessagerVC () <LYRQueryControllerDelegate>
 
 //@property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
@@ -53,13 +51,12 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     [self initStatusbarWithColor:[UIColor blackColor]];
 
-   // self.automaticallyScrollsToMostRecentMessage = YES;
-    
-  //  self.inputToolbar.contentView.textView.delegate = self;
-  
+    // self.automaticallyScrollsToMostRecentMessage = YES;
 
-    self.senderId =  [QZBCurrentUser sharedInstance].user.userID.stringValue;
-      //  jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
+    //  self.inputToolbar.contentView.textView.delegate = self;
+
+    self.senderId = [QZBCurrentUser sharedInstance].user.userID.stringValue;
+    //  jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
     self.senderDisplayName = [QZBCurrentUser sharedInstance].user.userID.stringValue;
     // self.showLoadEarlierMessagesHeader = YES;
     self.inputToolbar.contentView.leftBarButtonItem = nil;
@@ -76,37 +73,38 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     // Do any additional setup after loading the view.
 
     //[self.view setBackgroundColor:[UIColor darkGrayColor]];
-    
-    self.layerClient = [QZBLayerMessagerManager sharedInstance].layerClient;
-    
-    if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
-        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-            
-        }];
-    }
 
+    self.layerClient = [QZBLayerMessagerManager sharedInstance].layerClient;
+
+    if ([[QZBCurrentUser sharedInstance] needStartMessager] &&
+        ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+        [[QZBLayerMessagerManager sharedInstance]
+            connectWithCompletion:^(BOOL success, NSError *error){
+
+            }];
+    }
 
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
-                                                        object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                      object:nil];
 
     [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
 
     [self.collectionView reloadData];
 
     self.tabBarController.tabBar.hidden = YES;
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didReceiveTypingIndicator:)
-//                                                 name:LYRConversationDidReceiveTypingIndicatorNotification
-//                                               object:nil];
-    
+
+    //    [[NSNotificationCenter defaultCenter] addObserver:self
+    //                                             selector:@selector(didReceiveTypingIndicator:)
+    //                                                 name:LYRConversationDidReceiveTypingIndicatorNotification
+    //                                               object:nil];
+
     // [self initMessager];
 }
 
@@ -117,20 +115,21 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                    dispatch_get_main_queue(), ^{
                        [self scrollToBottomAnimated:YES];
                    });
-    
-    [self setupLayerNotificationObservers];
-    [self fetchLayerConversation];
-}
 
+    [self setupLayerNotificationObservers];
+    NSOrderedSet *convs = [self conversationsWithFriend];
+    if (convs.count > 0) {
+        [self fetchLayerConversation];
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
- //   [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    //   [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                         object:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,12 +140,11 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 - (void)initWithUser:(id<QZBUserProtocol>)user {
     self.title = user.name;
     self.friend = user;
-    
+
     [self setupLayerNotificationObservers];
 
     [self updateImages];
 }
-
 
 - (void)updateImages {
     // NSURL *url = [NSURL URLWithString:self.user.imageURL];
@@ -208,42 +206,57 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
+    NSLog(@"layer conv %@", self.conversation);
 
-    if([QZBLayerMessagerManager sharedInstance].layerClient.isConnected){
+    if (!self.conversation) {
+        [[QZBServerManager sharedManager] PATCHNeedAuthenticateLayerForUserWithID:self.friend.userID
+            onSuccess:^{
+                if (![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+                    [[QZBLayerMessagerManager sharedInstance]
+                        connectWithCompletion:^(BOOL success, NSError *error) {
+                            [self sendMessageCommon:text];
+                        }];
+                } else {
+                    [self sendMessageCommon:text];
+                }
+
+            }
+            onFailure:^(NSError *error, NSInteger statusCode) {
+                [TSMessage showNotificationWithTitle:@"Подключение к серверу"
+                                            subtitle:@"Попробуйте позже"
+                                                type:TSMessageNotificationTypeError];
+            }];
+    } else {
+        [self sendMessageCommon:text];
+    }
+}
+
+- (void)sendMessageCommon:(NSString *)text {
+    if ([QZBLayerMessagerManager sharedInstance].layerClient.isConnected) {
+        // NSLog(@"layer conv %@",self.conversation);
         [self sendMessage:text];
         [self fetchLayerConversation];
         [self finishSendingMessageAnimated:YES];
-        
+
     } else {
-     //   if([QZBLayerMessagerManager sharedInstance].layerClient.isConnecting) {
         [TSMessage showNotificationWithTitle:@"Подключение к серверу"
                                     subtitle:@"Попробуйте позже"
                                         type:TSMessageNotificationTypeError];
-//        } else {
-//            [TSMessage showNotificationWithTitle: @"Не удалось отправить сообщение"
-//                                        subtitle:@"Проверьте интернет соединение"
-//                                            type:TSMessageNotificationTypeError];
-//        }
     }
-
-
 }
-
-
 
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
        messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
-//    LYRMessagePart *messagePart = message.parts[0];
-//    NSString *text = [[NSString alloc]initWithData:messagePart.data
-//                                          encoding:NSUTF8StringEncoding];
-    
+    //    LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
+    //    LYRMessagePart *messagePart = message.parts[0];
+    //    NSString *text = [[NSString alloc]initWithData:messagePart.data
+    //                                          encoding:NSUTF8StringEncoding];
+
     JSQMessage *messageView = [self messageAtIndexPath:indexPath];
-    
-    return messageView;//[self.messages objectAtIndex:indexPath.item];
+
+    return messageView;  //[self.messages objectAtIndex:indexPath.item];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -255,7 +268,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
      *  Otherwise, return your previously created bubble image data objects.
      */
 
-    JSQMessage *message = [self messageAtIndexPath:indexPath]; //[self.messages objectAtIndex:indexPath.item];
+    JSQMessage *message =
+        [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.outgoingBubbleImageData;
@@ -263,7 +277,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
     return self.incomingBubbleImageData;
 
-  //  return nil;
+    //  return nil;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -288,7 +302,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
      *
      *  Override the defaults in `viewDidLoad`
      */
-    JSQMessage *message = [self messageAtIndexPath:indexPath];//[self.messages objectAtIndex:indexPath.item];
+    JSQMessage *message =
+        [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.myAvatar;
@@ -303,10 +318,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    
     NSInteger rows = [self.queryController numberOfObjectsInSection:0];
     return rows;
-    //return [self.messages count];
+    // return [self.messages count];
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -333,7 +347,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
      *`viewDidLoad`
      */
 
-    JSQMessage *msg =  [self messageAtIndexPath:indexPath];//[self.messages objectAtIndex:indexPath.item];
+    JSQMessage *msg =
+        [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
     if (!msg.isMediaMessage) {
         if ([msg.senderId isEqualToString:self.senderId]) {
@@ -368,8 +383,6 @@ navigation
 
 #pragma mark - server methods
 
-
-
 #pragma mark - support methods
 
 - (void)initAvatars {
@@ -381,84 +394,93 @@ navigation
                     diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 }
 
-
 #pragma mark - date
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
-attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.queryController.count > 0 && indexPath.item == 0){
-       // JSQMessage *message = self.messages[indexPath.item];
-         NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];
-        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
-    } else if(indexPath.item > 0){
-       // NSDate *firstDate =
-      //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
-         NSIndexPath *nip = [NSIndexPath indexPathForItem:indexPath.item -1 inSection:indexPath.section];
-        NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];//firstMessage.date;
-        NSDate *secondDate = [[self.queryController objectAtIndexPath:nip] sentAt];//secondMessage.date;
-        
+    attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.queryController.count > 0 && indexPath.item == 0) {
+        // JSQMessage *message = self.messages[indexPath.item];
+        NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];
+        return
+            [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
+    } else if (indexPath.item > 0) {
+        // NSDate *firstDate =
+        //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
+        NSIndexPath *nip =
+            [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+        NSDate *firstDate =
+            [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
+        NSDate *secondDate =
+            [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
+
         NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
-        
-        if(timeInterval> QZBMessageTimeInterval){
-            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
+
+        if (timeInterval > QZBMessageTimeInterval) {
+            return [[JSQMessagesTimestampFormatter sharedFormatter]
+                attributedTimestampForDate:firstDate];
         }
-        
     }
-    
-//    if (indexPath.item % 3 == 0) {
-//        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-//        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-//    }
-    
+
+    //    if (indexPath.item % 3 == 0) {
+    //        JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
+    //        return [[JSQMessagesTimestampFormatter sharedFormatter]
+    //        attributedTimestampForDate:message.date];
+    //    }
+
     return nil;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
-heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+                              layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
+    heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
-     *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
+     *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource
+     * method
      */
-    
+
     /**
-     *  This logic should be consistent with what you return from `attributedTextForCellTopLabelAtIndexPath:`
+     *  This logic should be consistent with what you return from
+     *`attributedTextForCellTopLabelAtIndexPath:`
      *  The other label height delegate methods should follow similarly
      *
      *  Show a timestamp for every 3rd message
      */
-   // if (indexPath.item % 3 == 0) {
-      //  return kJSQMessagesCollectionViewCellLabelHeightDefault;
-  //  }
-    
-   // return 0.0f;
-    
-    
-    if(self.queryController.count > 0 && indexPath.item == 0){
-     //   JSQMessage *message = self.messages[indexPath.item];
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-    } else if(indexPath.item > 0){
+    // if (indexPath.item % 3 == 0) {
+    //  return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    //  }
+
+    // return 0.0f;
+
+    if (self.queryController.count > 0 && indexPath.item == 0) {
+        //   JSQMessage *message = self.messages[indexPath.item];
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;  //[[JSQMessagesTimestampFormatter
+                                                                  //sharedFormatter]
+                                                                  //attributedTimestampForDate:message.date];
+    } else if (indexPath.item > 0) {
         // NSDate *firstDate =
         //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
-        
-        
-        //JSQMessage *firstMessage = [self messageAtIndexPath:indexPath];// self.messages[indexPath.item];
-        NSIndexPath *nip = [NSIndexPath indexPathForItem:indexPath.item -1 inSection:indexPath.section];
-       // JSQMessage *secondMessage = [self messageAtIndexPath:nip];//self.messages[indexPath.item-1];
-        
-        
-        
-        NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];//firstMessage.date;
-        NSDate *secondDate = [[self.queryController objectAtIndexPath:nip] sentAt];//secondMessage.date;
-        
+
+        // JSQMessage *firstMessage = [self messageAtIndexPath:indexPath];//
+        // self.messages[indexPath.item];
+        NSIndexPath *nip =
+            [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+        // JSQMessage *secondMessage = [self
+        // messageAtIndexPath:nip];//self.messages[indexPath.item-1];
+
+        NSDate *firstDate =
+            [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
+        NSDate *secondDate =
+            [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
+
         NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
-        
-        if(timeInterval>QZBMessageTimeInterval){
-            return  kJSQMessagesCollectionViewCellLabelHeightDefault;//[[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstMessage.date];
+
+        if (timeInterval > QZBMessageTimeInterval) {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault;  //[[JSQMessagesTimestampFormatter
+                                                                      //sharedFormatter]
+                                                                      //attributedTimestampForDate:firstMessage.date];
         }
-        
     }
-    
+
     return 0.0f;
 }
 
@@ -467,7 +489,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
  didTapAvatarImageView:(UIImageView *)avatarImageView
            atIndexPath:(NSIndexPath *)indexPath {
-    JSQMessage *m = [self messageAtIndexPath:indexPath];//self.messages[indexPath.row];
+    JSQMessage *m = [self messageAtIndexPath:indexPath];  // self.messages[indexPath.row];
     if (![m.senderId isEqualToString:self.senderId]) {
         [self performSegueWithIdentifier:QZBSegueToUserPageIdentifier sender:nil];
     }
@@ -484,130 +506,137 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
-- (void)sendMessage:(NSString *)messageText{
-    
+- (void)sendMessage:(NSString *)messageText {
     // Send a Message
     // See "Quick Start - Send a Message" for more details
     // https://developer.layer.com/docs/quick-start/ios#send-a-message
-    
+
     LYRMessagePart *messagePart;
-   // self.messageImage.image = nil;
+    // self.messageImage.image = nil;
     // If no conversations exist, create a new conversation object with a single participant
     if (!self.conversation) {
         [self fetchLayerConversation];
     }
-    
 
-        messagePart = [LYRMessagePart messagePartWithText:messageText];
-    
+    messagePart = [LYRMessagePart messagePartWithText:messageText];
+
     NSString *name = [QZBCurrentUser sharedInstance].user.name;
 
-    
-    // Creates and returns a new message object with the given conversation and array of message parts
-    NSString *pushMessage= [NSString stringWithFormat:@"%@: %@",name ,messageText];
-    LYRMessage *message = [self.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: pushMessage, LYRMessageOptionsPushNotificationSoundNameKey: @"layerbell.caf"} error:nil];
-    
+    // Creates and returns a new message object with the given conversation and array of message
+    // parts
+    NSString *pushMessage = [NSString stringWithFormat:@"%@: %@", name, messageText];
+    LYRMessage *message = [self.layerClient
+        newMessageWithParts:@[ messagePart ]
+                    options:@{
+                        LYRMessageOptionsPushNotificationAlertKey : pushMessage,
+                        LYRMessageOptionsPushNotificationSoundNameKey : @"layerbell.caf"
+                    } error:nil];
+
     // Sends the specified message
     NSError *error;
     BOOL success = [self.conversation sendMessage:message error:&error];
     if (success) {
-        // If the message was sent by the participant, show the sentAt time and mark the message as read
-        NSLog(@"Message queued to be sent: %@", messageText);
-        //self.inputTextView.text = @"";
-        
+        // If the message was sent by the participant, show the sentAt time and mark the message as
+        // read
+        // NSLog(@"Message queued to be sent: %@", messageText);
+        // self.inputTextView.text = @"";
+
     } else {
         NSLog(@"Message send failed: %@", error);
     }
-   // self.photo = nil;
-//    if (!self.queryController) {
-//        [self setupQueryController];
-//    }
+    // self.photo = nil;
+    //    if (!self.queryController) {
+    //        [self setupQueryController];
+    //    }
 }
-
 
 - (void)fetchLayerConversation {
     // Fetches all conversations between the authenticated user and the supplied participant
-    // For more information about Querying, check out https://developer.layer.com/docs/integration/ios#querying
-    
-   
-    NSString *identifier =  [self opponentIdentifier];//nil;
-    
-//    if([self.friend.userID isKindOfClass:[NSString class]]){
-//        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
-//    } else {
-//        identifier = self.friend.userID.stringValue;
-//    }
-//    
+    // For more information about Querying, check out
+    // https://developer.layer.com/docs/integration/ios#querying
+
+    NSString *identifier = [self opponentIdentifier];  // nil;
+
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsEqualTo
-                                                    value:@[ identifier]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants"
+                                        predicateOperator:LYRPredicateOperatorIsEqualTo
+                                                    value:@[ identifier ]];
     query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
-    
+
     NSError *error;
     NSOrderedSet *conversations = [self.layerClient executeQuery:query error:&error];
-    
+
     if (conversations.count <= 0) {
         NSError *conv_error = nil;
-        if(!self.layerClient.authenticatedUserID){
+        if (!self.layerClient.authenticatedUserID) {
             return;
         }
-        self.conversation = [self.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ identifier,self.layerClient.authenticatedUserID ]]
-                                                                      options:nil
-                                                                        error:&conv_error];
+        self.conversation = [self.layerClient
+            newConversationWithParticipants:
+                [NSSet setWithArray:@[ identifier, self.layerClient.authenticatedUserID ]]
+                                    options:nil
+                                      error:&conv_error];
         [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
-        [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user inConversation:self.conversation];
+        [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user
+                 inConversation:self.conversation];
 
-        
-      //  [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
-        
         if (!self.conversation) {
             NSLog(@"New Conversation creation failed: %@", conv_error);
         }
     }
-    
+
     if (!error) {
         NSLog(@"%tu conversations with participants %@", conversations.count, @[ identifier ]);
     } else {
         NSLog(@"Query failed with error %@", error);
     }
-    
+
     // Retrieve the last conversation
     if (conversations.count) {
         self.conversation = [conversations lastObject];
-        NSLog(@"Get last conversation object: %@",self.conversation.identifier);
+        NSLog(@"Get last conversation object: %@", self.conversation.identifier);
         //[self.conversation delete:LYRDeletionModeAllParticipants error:nil];
-        
+
         // setup query controller with messages from last conversation
         if (!self.queryController) {
             [self setupQueryController];
         }
     }
-    
-//    if(self.conversation) {
-//        [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
-//        [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user inConversation:self.conversation];
-//    }
-    
 }
 
+- (NSOrderedSet *)conversationsWithFriend {
+    NSString *identifier = [self opponentIdentifier];  // nil;
 
--(void)setupQueryController
-{
-    // For more information about the Query Controller, check out https://developer.layer.com/docs/integration/ios#querying
-    
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants"
+                                        predicateOperator:LYRPredicateOperatorIsEqualTo
+                                                    value:@[ identifier ]];
+    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+
+    NSError *error;
+    return [self.layerClient executeQuery:query error:&error];
+}
+
+- (void)setupQueryController {
+    // For more information about the Query Controller, check out
+    // https://developer.layer.com/docs/integration/ios#querying
+
     // Query for all the messages in conversation sorted by position
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
-    query.predicate = [LYRPredicate predicateWithProperty:@"conversation" predicateOperator:LYRPredicateOperatorIsEqualTo value:self.conversation];
-    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
-    
+    query.predicate = [LYRPredicate predicateWithProperty:@"conversation"
+                                        predicateOperator:LYRPredicateOperatorIsEqualTo
+                                                    value:self.conversation];
+    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES] ];
+
     // Set up query controller
     self.queryController = [self.layerClient queryControllerWithQuery:query];
     self.queryController.delegate = self;
-    
+
     NSError *error;
     BOOL success = [self.queryController execute:&error];
     if (success) {
-        NSLog(@"Query fetched %tu message objects", [self.queryController numberOfObjectsInSection:0]);
+        NSLog(@"Query fetched %tu message objects",
+              [self.queryController numberOfObjectsInSection:0]);
     } else {
         NSLog(@"Query failed with error: %@", error);
     }
@@ -615,54 +644,52 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     [self.conversation markAllMessagesAsRead:nil];
 }
 
-
--(JSQMessage *)messageAtIndexPath:(NSIndexPath *)path {
+- (JSQMessage *)messageAtIndexPath:(NSIndexPath *)path {
     LYRMessage *message = [self.queryController objectAtIndexPath:path];
     [message markAsRead:nil];
     LYRMessagePart *messagePart = message.parts[0];
-    NSString *text = [[NSString alloc]initWithData:messagePart.data
-                                          encoding:NSUTF8StringEncoding];
-    
+    NSString *text = [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding];
+
     JSQMessage *messageView = [JSQMessage messageWithSenderId:message.sender.userID
                                                   displayName:message.sender.userID
                                                          text:text];
-    
+
     return messageView;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setupLayerNotificationObservers
-{
+- (void)setupLayerNotificationObservers {
     // Register for Layer object change notifications
-    // For more information about Synchronization, check out https://developer.layer.com/docs/integration/ios#synchronization
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveLayerObjectsDidChangeNotification:)
-                                                 name:LYRClientObjectsDidChangeNotification
-                                               object:nil];
-    
-//     Register for typing indicator notifications
-//     For more information about Typing Indicators, check out https://developer.layer.com/docs/integration/ios#typing-indicator
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didReceiveTypingIndicator:)
-//                                                 name:LYRConversationDidReceiveTypingIndicatorNotification
-//                                               object:self.conversation];
-//    
-//    // Register for synchronization notifications
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didReceiveLayerClientWillBeginSynchronizationNotification:)
-//                                                 name:LYRClientWillBeginSynchronizationNotification
-//                                               object:self.layerClient];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didReceiveLayerClientDidFinishSynchronizationNotification:)
-//                                                 name:LYRClientDidFinishSynchronizationNotification
-//                                               object:self.layerClient];
-}
+    // For more information about Synchronization, check out
+    // https://developer.layer.com/docs/integration/ios#synchronization
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(didReceiveLayerObjectsDidChangeNotification:)
+               name:LYRClientObjectsDidChangeNotification
+             object:nil];
 
+    //     Register for typing indicator notifications
+    //     For more information about Typing Indicators, check out
+    //     https://developer.layer.com/docs/integration/ios#typing-indicator
+    //    [[NSNotificationCenter defaultCenter] addObserver:self
+    //                                             selector:@selector(didReceiveTypingIndicator:)
+    //                                                 name:LYRConversationDidReceiveTypingIndicatorNotification
+    //                                               object:self.conversation];
+    //
+    //    // Register for synchronization notifications
+    //    [[NSNotificationCenter defaultCenter] addObserver:self
+    //                                             selector:@selector(didReceiveLayerClientWillBeginSynchronizationNotification:)
+    //                                                 name:LYRClientWillBeginSynchronizationNotification
+    //                                               object:self.layerClient];
+    //
+    //    [[NSNotificationCenter defaultCenter] addObserver:self
+    //                                             selector:@selector(didReceiveLayerClientDidFinishSynchronizationNotification:)
+    //                                                 name:LYRClientDidFinishSynchronizationNotification
+    //                                               object:self.layerClient];
+}
 
 - (void)didReceiveLayerObjectsDidChangeNotification:(NSNotification *)notification;
 {
@@ -671,64 +698,59 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
     [self fetchLayerConversation];
 }
 
-
 #pragma mark - Query Controller Delegate Methods
 
-- (void)queryControllerWillChangeContent:(LYRQueryController *)queryController
-{
+- (void)queryControllerWillChangeContent:(LYRQueryController *)queryController {
     //[self.tableView beginUpdates];
-   // [self.collectionView reloadData];
+    // [self.collectionView reloadData];
 }
 
 - (void)queryController:(LYRQueryController *)controller
         didChangeObject:(id)object
             atIndexPath:(NSIndexPath *)indexPath
           forChangeType:(LYRQueryControllerChangeType)type
-           newIndexPath:(NSIndexPath *)newIndexPath
-{
-    
+           newIndexPath:(NSIndexPath *)newIndexPath {
     [self finishReceivingMessage];
-    
+
     // Automatically update tableview when there are change events
-//    switch (type) {
-//        case LYRQueryControllerChangeTypeInsert:
-//            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
-//                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-//            break;
-//        case LYRQueryControllerChangeTypeUpdate:
-//            [self.tableView reloadRowsAtIndexPaths:@[indexPath]
-//                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-//            break;
-//        case LYRQueryControllerChangeTypeMove:
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
-//                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-//            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
-//                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-//            break;
-//        case LYRQueryControllerChangeTypeDelete:
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
-//                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-//            break;
-//        default:
-//            break;
-//    }
+    //    switch (type) {
+    //        case LYRQueryControllerChangeTypeInsert:
+    //            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
+    //                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            break;
+    //        case LYRQueryControllerChangeTypeUpdate:
+    //            [self.tableView reloadRowsAtIndexPaths:@[indexPath]
+    //                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            break;
+    //        case LYRQueryControllerChangeTypeMove:
+    //            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+    //                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
+    //                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            break;
+    //        case LYRQueryControllerChangeTypeDelete:
+    //            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+    //                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+    //            break;
+    //        default:
+    //            break;
+    //    }
 }
 
-- (void)queryControllerDidChangeContent:(LYRQueryController *)queryController
-{
-    
+- (void)queryControllerDidChangeContent:(LYRQueryController *)queryController {
     [self.collectionView reloadData];
-//    [self.tableView endUpdates];
-//    [self scrollToBottom];
-    
+    //    [self.tableView endUpdates];
+    //    [self scrollToBottom];
 }
 
 //- (void)didReceiveTypingIndicator:(NSNotification *)notification
 //{
 //    NSString *participantID = notification.userInfo[LYRTypingIndicatorParticipantUserInfoKey];
-//    LYRTypingIndicator typingIndicator = [notification.userInfo[LYRTypingIndicatorValueUserInfoKey] unsignedIntegerValue];
+//    LYRTypingIndicator typingIndicator =
+//    [notification.userInfo[LYRTypingIndicatorValueUserInfoKey] unsignedIntegerValue];
 //    NSString *opponentIdentifier = [self opponentIdentifier];
-//    if (typingIndicator == LYRTypingDidBegin && [participantID isEqualToString:opponentIdentifier]) {
+//    if (typingIndicator == LYRTypingDidBegin && [participantID
+//    isEqualToString:opponentIdentifier]) {
 //        NSLog(@"Typing Started");
 //        self.showTypingIndicator = YES;
 //    }
@@ -738,23 +760,23 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 //    }
 //}
 
-
--(NSString *)opponentIdentifier {
+- (NSString *)opponentIdentifier {
     NSString *identifier = nil;
-    
-    if([self.friend.userID isKindOfClass:[NSString class]]){
-        identifier = (NSString *)self.friend.userID;//self.friend.userID.stringValue;
+
+    if ([self.friend.userID isKindOfClass:[NSString class]]) {
+        identifier = (NSString *)self.friend.userID;  // self.friend.userID.stringValue;
     } else {
         identifier = self.friend.userID.stringValue;
     }
-    
+
     return identifier;
 }
 
 //- (void)textViewDidBeginEditing:(UITextView *)textView
 //{
-//    // For more information about Typing Indicators, check out https://developer.layer.com/docs/integration/ios#typing-indicator
-//    
+//    // For more information about Typing Indicators, check out
+//    https://developer.layer.com/docs/integration/ios#typing-indicator
+//
 //    // Sends a typing indicator event to the given conversation.
 //    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
 //   // [self moveViewUpToShowKeyboard:YES];
@@ -767,7 +789,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 //}
 //
 //- (void)textViewDidBeginEditing:(UITextView *)textView{
-//    
+//
 //     [self.conversation sendTypingIndicator:LYRTypingDidBegin];
 //}
 //- (void)textViewDidEndEditing:(UITextView *)textView{
@@ -785,13 +807,13 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 //  //  return [super textViewShouldBeginEditing:textView];
 //}
 
-//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
+//replacementText:(NSString *)text {
 //    [self.conversation sendTypingIndicator:LYRTypingDidBegin];
 //    return YES;
 //}
 //- (void)textViewDidChange:(UITextView *)textView {
 //    [self.conversation sendTypingIndicator:LYRTypingDidFinish];
 //}
-
 
 @end

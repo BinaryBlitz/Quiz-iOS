@@ -17,8 +17,6 @@
 
 @implementation QZBUserWorker
 
-
-
 + (QZBAnotherUser *)userFromConversation:(LYRConversation *)conversation {
     NSDictionary *dict = nil; //conversation.metadata;
     NSNumber *usID = [QZBCurrentUser sharedInstance].user.userID;
@@ -37,9 +35,6 @@
     }
     
     QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
-   // NSDictionary *dict =
-    
-   // user.userID = conversatio
     
     return user;
     

@@ -23,5 +23,6 @@
                  inView:(UIView *)view;
 
 - (UITableViewCell *)parentCellForView:(id)theView;
+- (void)ignoreIteractions;
 
 @end

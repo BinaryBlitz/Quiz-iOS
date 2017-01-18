@@ -17,5 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *underView;
 @property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet UILabel *timeAgoLabel;
 
 @end

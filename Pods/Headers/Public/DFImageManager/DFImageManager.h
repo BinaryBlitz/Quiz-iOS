@@ -1,1 +1,0 @@
-../../../DFImageManager/DFImageManager/Source/Core/Managing/DFImageManager.h

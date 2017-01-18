@@ -17,9 +17,12 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dict position:(NSInteger)position {
     self = [super initWithDictionary:dict];
     if (self) {
-       // self.name = dict[@"name"];
-       // self.userID = (NSNumber *)dict[@"id"];
-        self.points = [dict[@"points"] integerValue];
+        NSInteger points = 0;
+        if(dict[@"points"] && ![dict[@"points"] isEqual:[NSNull null]]){
+            points = [dict[@"points"] integerValue];
+        }
+        
+        self.points = points;
         self.position = position;
     }
     return self;

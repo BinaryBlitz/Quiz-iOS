@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.0):
-    - AFNetworking/NSURLConnection (= 2.5.0)
-    - AFNetworking/NSURLSession (= 2.5.0)
-    - AFNetworking/Reachability (= 2.5.0)
-    - AFNetworking/Security (= 2.5.0)
-    - AFNetworking/Serialization (= 2.5.0)
-    - AFNetworking/UIKit (= 2.5.0)
-  - AFNetworking/NSURLConnection (2.5.0):
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.0):
+  - AFNetworking/NSURLSession (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.0)
-  - AFNetworking/Security (2.5.0)
-  - AFNetworking/Serialization (2.5.0)
-  - AFNetworking/UIKit (2.5.0):
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CocoaLumberjack (1.9.2):
@@ -25,95 +25,106 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
-  - DateTools (1.5.0)
-  - DBCamera (2.3.10):
+  - Crashlytics (3.8.3):
+    - Fabric (~> 1.6.3)
+  - DateTools (1.7.0)
+  - DBCamera (2.4.1):
     - GPUImage (~> 0.1)
-  - DFImageManager (0.3.2):
-    - DFImageManager/AssetsLibrary (= 0.3.2)
-    - DFImageManager/Core (= 0.3.2)
-    - DFImageManager/NSURLSession (= 0.3.2)
-    - DFImageManager/PhotosKit (= 0.3.2)
-    - DFImageManager/UI (= 0.3.2)
-  - DFImageManager/AFNetworking (0.3.2):
+  - DFImageManager (0.8.0):
+    - DFImageManager/Core (= 0.8.0)
+    - DFImageManager/NSURLSession (= 0.8.0)
+    - DFImageManager/PhotosKit (= 0.8.0)
+    - DFImageManager/UI (= 0.8.0)
+  - DFImageManager/AFNetworking (0.8.0):
     - AFNetworking/NSURLSession (~> 2.0)
     - DFImageManager/Core
-  - DFImageManager/AssetsLibrary (0.3.2):
-    - DFImageManager/Core
-  - DFImageManager/Core (0.3.2)
-  - DFImageManager/GIF (0.3.2):
-    - DFImageManager/Core
+  - DFImageManager/Core (0.8.0)
+  - DFImageManager/GIF (0.8.0):
     - FLAnimatedImage (~> 1.0)
-  - DFImageManager/NSURLSession (0.3.2):
+  - DFImageManager/NSURLSession (0.8.0):
     - DFImageManager/Core
-  - DFImageManager/PhotosKit (0.3.2):
+  - DFImageManager/PhotosKit (0.8.0):
     - DFImageManager/Core
-  - DFImageManager/UI (0.3.2):
+  - DFImageManager/UI (0.8.0):
     - DFImageManager/Core
-  - FLAnimatedImage (1.0.8)
-  - GPUImage (0.1.6)
+  - Fabric (1.6.11)
+  - FLAnimatedImage (1.0.12)
+  - GPUImage (0.1.7)
   - HexColors (2.2.1)
-  - JSBadgeView (1.3.2)
-  - JSQMessagesViewController (7.0.1):
+  - JSBadgeView (1.4.1)
+  - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - LayerKit (0.15.0)
-  - libPusher (1.6):
-    - libPusher/Core (= 1.6)
-  - libPusher/Core (1.6):
-    - SocketRocket (= 0.3.1-beta2)
-  - MagicalRecord (2.2):
-    - MagicalRecord/Core (= 2.2)
-  - MagicalRecord/Core (2.2)
-  - SCLAlertView-Objective-C (0.5.9)
-  - SocketRocket (0.3.1-beta2)
-  - SVProgressHUD (1.1.2)
+  - libPusher (1.6.2):
+    - libPusher/Core (= 1.6.2)
+  - libPusher/Core (1.6.2):
+    - SocketRocket (= 0.5.1)
+  - LoremIpsum (1.0.0)
+  - MagicalRecord (2.3.2):
+    - MagicalRecord/Core (= 2.3.2)
+  - MagicalRecord/Core (2.3.2)
+  - SCLAlertView-Objective-C (0.9.3)
+  - SlackTextViewController (1.9.5)
+  - SocketRocket (0.5.1)
+  - SVProgressHUD (1.1.3)
   - TSMessages (0.9.12):
     - HexColors (~> 2.2.0)
   - UAAppReviewManager (0.2.6)
-  - UAProgressView (0.1.1)
-  - VK-ios-sdk (1.0.9.2)
+  - UAProgressView (0.1.3)
+  - VK-ios-sdk (1.4.6)
 
 DEPENDENCIES:
-  - AFNetworking
+  - AFNetworking (~> 2.5)
   - CocoaLumberjack (~> 1.9)
-  - DateTools
-  - DBCamera
-  - DFImageManager
-  - DFImageManager/AFNetworking
-  - DFImageManager/GIF
-  - JSBadgeView
-  - JSQMessagesViewController
-  - LayerKit
+  - Crashlytics (~> 3.3)
+  - DateTools (~> 1.5)
+  - DBCamera (~> 2.3)
+  - DFImageManager (~> 0.3)
+  - DFImageManager/AFNetworking (~> 0.3)
+  - DFImageManager/GIF (~> 0.3)
+  - Fabric (~> 1.5)
+  - JSBadgeView (~> 1.3)
+  - JSQMessagesViewController (~> 7.0)
+  - LayerKit (~> 0.15.0)
   - libPusher (~> 1.6)
-  - MagicalRecord
-  - SCLAlertView-Objective-C
-  - SVProgressHUD
-  - TSMessages
-  - UAAppReviewManager
-  - UAProgressView
-  - VK-ios-sdk
+  - LoremIpsum (~> 1.0)
+  - MagicalRecord (~> 2.2)
+  - SCLAlertView-Objective-C (~> 0.5)
+  - SlackTextViewController (~> 1.6)
+  - SVProgressHUD (~> 1.1)
+  - TSMessages (~> 0.9)
+  - UAAppReviewManager (~> 0.2)
+  - UAProgressView (~> 0.1)
+  - VK-ios-sdk (~> 1.0)
 
 SPEC CHECKSUMS:
-  AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
-  DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7
-  DBCamera: 9f40f76f6397153b214d938feb3f3ffd4a195eed
-  DFImageManager: 8d5ed7dc1872606b408687dc48979095319eaeaf
-  FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
-  GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
+  DBCamera: 7a4343a541e1264610f9f33176552b93170a843e
+  DFImageManager: 37d75898009b05e49d13e36576677c76847b7d2a
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
-  JSBadgeView: 08284afc9d0eb60069674e517cac2d37d4319208
-  JSQMessagesViewController: 03fba8a3021a3ddc1c91847f180ffe549f2e8cf2
+  JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
+  JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   LayerKit: ac8c5c227a06e2ea5e042303b80e931a8ffe3568
-  libPusher: f9367ede8f5141e74adc90ba20536cbc3c7b68e1
-  MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
-  SCLAlertView-Objective-C: 39e9c3a9135603f587ff2890217ed52a58bb0eab
-  SocketRocket: 7284ab9370a06c99aba92b2fe3a32aedd0f9a6fa
-  SVProgressHUD: 3afb875b9eb23acd1bed9b82495695c68621a8b2
+  libPusher: 21c6209fa84a829e963f1b2fe5bff34722f3f3f4
+  LoremIpsum: 9029c55d36501b2ee0b05cc9ecda11d3a0479160
+  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  SCLAlertView-Objective-C: 6a7639e443be62dca1e13b004702d5c3642f7f36
+  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
+  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
   UAAppReviewManager: 334bdb0085c3f80c7b696f33edc53667eda548e6
-  UAProgressView: 9518e321a5d4173f66c225717db873322ec1f070
-  VK-ios-sdk: 26c2475927e209e5567f858ad355485bcbc5b972
+  UAProgressView: ce49aee47c14df6dc372f6fd57852f570ca97e6b
+  VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
 
-COCOAPODS: 0.35.0
+PODFILE CHECKSUM: 2e1f038db2130d2a8c4ce129d723db04c18768f0
+
+COCOAPODS: 1.1.1

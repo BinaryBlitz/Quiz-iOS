@@ -39,11 +39,12 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    UITabBarController *tabController = self.tabBarController;
-    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
+//    UITabBarController *tabController = self.tabBarController;
+//    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
     
 
-    tabbarItem.badgeValue = nil;
+    
+    //tabbarItem.badgeValue = nil;
     
 
 }
@@ -68,7 +69,9 @@
     
     if(cell){
         if([cell isKindOfClass:[QZBFriendRequestCell class]]){
-            NSLog(@"YES");
+            
+            
+          //  NSLog(@"YES");
             QZBFriendRequestCell *c = (QZBFriendRequestCell *)cell;
             
             [[QZBFriendRequestManager sharedInstance] acceptForUser:c.user callback:^(BOOL succes) {
@@ -83,6 +86,8 @@
                     c.declineButton.enabled = YES;
                     [c.acceptButton setTitle:@"Принято"
                                     forState:UIControlStateDisabled];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
+                                                                        object:nil];
                    
                 } else {
                     [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
@@ -99,7 +104,7 @@
     
     if(cell){
         if([cell isKindOfClass:[QZBFriendRequestCell class]]){
-            NSLog(@"YES");
+         //   NSLog(@"YES");
             QZBFriendRequestCell *c = (QZBFriendRequestCell *)cell;
             
             [[QZBFriendRequestManager sharedInstance] declineForUser:c.user callback:^(BOOL succes) {
@@ -125,6 +130,8 @@
                     
                     [self setFriendsOwner:nil andFriends:[QZBFriendRequestManager sharedInstance].incoming];
                     
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
+                                                                        object:nil];
                     
                 } else {
                     [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage

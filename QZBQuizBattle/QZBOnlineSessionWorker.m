@@ -122,7 +122,7 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
 
         NSUInteger answerNum = [num unsignedIntegerValue];
         NSUInteger answerTime = [time unsignedIntegerValue];
-        NSInteger questID = [pusherDict[@"game_session_question_id"] integerValue];
+        NSInteger questID = [pusherDict[@"game_question_id"] integerValue];
         DDLogInfo(@"%ld", (long)questID);
 
         if ([QZBSessionManager sessionManager].currentQuestion.questionId == questID) {
