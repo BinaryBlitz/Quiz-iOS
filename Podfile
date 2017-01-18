@@ -1,6 +1,6 @@
 platform :ios, '8.4'
 
-target 'QZBQuizBattle' do
+target 'Quiz' do
   pod 'AFNetworking', '~> 2.5'
   pod 'libPusher', '~> 1.6'
   pod 'CocoaLumberjack', '~>1.9'
