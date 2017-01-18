@@ -1,1 +1,0 @@
-../../../DFImageManager/Pod/Source/UI/DFImageManagerKit+UI.h

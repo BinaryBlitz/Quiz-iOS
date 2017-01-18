@@ -1,1 +1,0 @@
-../../../DFImageManager/Pod/Source/Core/Protocols/DFImageCaching.h

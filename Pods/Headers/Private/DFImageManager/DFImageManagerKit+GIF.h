@@ -1,1 +1,0 @@
-../../../DFImageManager/Pod/Source/GIF/DFImageManagerKit+GIF.h
