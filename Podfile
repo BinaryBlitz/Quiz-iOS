@@ -1,20 +1,26 @@
-platform :ios, "7.1"
+platform :ios, '8.4'
 
-pod "AFNetworking"
-pod 'libPusher', '~> 1.6'
-pod 'CocoaLumberjack', "~>1.9"
-pod "VK-ios-sdk"
-pod "TSMessages"
-pod "MagicalRecord"
-pod "DBCamera"
-pod 'SVProgressHUD'
-pod 'JSBadgeView'
-pod 'UAProgressView'
-pod 'SCLAlertView-Objective-C'
-pod 'JSQMessagesViewController'
-pod 'DFImageManager'
-pod 'DFImageManager/AFNetworking'
-pod 'DFImageManager/GIF'
-pod 'DateTools'
-pod 'LayerKit'
-pod 'UAAppReviewManager'
+target 'QZBQuizBattle' do
+  pod 'AFNetworking', '~> 2.5'
+  pod 'libPusher', '~> 1.6'
+  pod 'CocoaLumberjack', '~>1.9'
+  pod 'VK-ios-sdk', '~> 1.0'
+  pod 'TSMessages', '~> 0.9'
+  pod 'MagicalRecord', '~> 2.2'
+  pod 'DBCamera', '~> 2.3'
+  pod 'SVProgressHUD', '~> 1.1'
+  pod 'JSBadgeView', '~> 1.3'
+  pod 'UAProgressView', '~> 0.1'
+  pod 'SCLAlertView-Objective-C', '~> 0.5'
+  pod 'JSQMessagesViewController', '~> 7.0'
+  pod 'DFImageManager', '~> 0.3'
+  pod 'DFImageManager/AFNetworking', '~> 0.3'
+  pod 'DFImageManager/GIF', '~> 0.3'
+  pod 'DateTools', '~> 1.5'
+  pod 'LayerKit', '~> 0.15.0'
+  pod 'UAAppReviewManager', '~> 0.2'
+  pod 'SlackTextViewController', '~> 1.6'
+  pod 'LoremIpsum', '~> 1.0'
+  pod 'Fabric', '~> 1.5'
+  pod 'Crashlytics', '~> 3.3'
+end

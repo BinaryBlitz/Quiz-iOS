@@ -32,12 +32,12 @@
     
     self.nameLabel.text = user.name;
     
-    if(user.imageURL){
-        [self.userpicImageView setImageWithURL:user.imageURL
-                              placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
-    }else{
-        [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-    }
+//    if(user.imageURL){
+//        [self.userpicImageView setImageWithURL:user.imageURL
+//                              placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
+//    }else{
+//        [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+//    }
     
     if([self.user respondsToSelector:@selector(isOnline)]) {
         

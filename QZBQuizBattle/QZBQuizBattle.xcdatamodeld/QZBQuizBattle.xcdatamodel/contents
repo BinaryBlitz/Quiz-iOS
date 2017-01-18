@@ -11,6 +11,7 @@
     </entity>
     <entity name="QZBGameTopic" representedClassName="QZBGameTopic" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paid" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="points" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="topic_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -18,6 +19,6 @@
     </entity>
     <elements>
         <element name="QZBCategory" positionX="2403" positionY="-153" width="128" height="150"/>
-        <element name="QZBGameTopic" positionX="2635" positionY="-153" width="128" height="120"/>
+        <element name="QZBGameTopic" positionX="2635" positionY="-153" width="128" height="133"/>
     </elements>
 </model>

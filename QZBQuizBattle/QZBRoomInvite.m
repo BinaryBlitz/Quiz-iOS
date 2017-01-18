@@ -7,12 +7,14 @@
 //
 
 #import "QZBRoomInvite.h"
+#import "NSDate+QZBDateCategory.h"
 
 @interface QZBRoomInvite()
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSNumber *roomID;
 @property (strong, nonatomic) NSNumber *roomInviteID;
+@property (strong, nonatomic) NSDate *createdAt;
 
 @end
 
@@ -35,6 +37,10 @@
         //self.name = @"redo";
         self.roomID = dict[@"room_id"];
         self.roomInviteID = dict[@"id"];
+        
+        if(dict[@"created_at"] && ![dict[@"created_at"] isEqual:[NSNull null]]) {
+            self.createdAt = [NSDate customDateFromString:dict[@"created_at"]];//[NSDate date];//redo!
+        }
     }
     return self;
 }

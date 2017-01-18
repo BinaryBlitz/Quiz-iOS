@@ -9,6 +9,7 @@
 #import "QZBFirstMessageCell.h"
 #import "QZBAnotherUserWithLastMessages.h"
 #import <JSBadgeView/JSBadgeView.h>
+#import <UIImageView+AFNetworking.h>
 
 @interface QZBFirstMessageCell()
 
@@ -39,9 +40,15 @@
         self.badgeView.badgeText = nil;
     }
     
-    NSLog(@"%@", userAndMessage.unreadedCount);
+ //   NSLog(@"%@", userAndMessage.unreadedCount);
     
-    
+        if(userAndMessage.user.imageURL){
+            [self.userpicImageView setImageWithURL:userAndMessage.user.imageURL
+                                  placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
+        }else{
+            [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
+        }
+
     
 }
 

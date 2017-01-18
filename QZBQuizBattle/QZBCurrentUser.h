@@ -25,4 +25,8 @@
 
 -(void)setAPNsToken:(NSData *)pushToken;
 
+- (void)setNeedStartMessager:(BOOL)needStartMessager;
+- (BOOL)needStartMessager;
+
+
 @end

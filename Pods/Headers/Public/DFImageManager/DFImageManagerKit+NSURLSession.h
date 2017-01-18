@@ -1,1 +1,0 @@
-../../../DFImageManager/DFImageManager/Source/NSURLSession/DFImageManagerKit+NSURLSession.h

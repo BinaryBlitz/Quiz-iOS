@@ -7,7 +7,7 @@
 //
 
 #import "QZBFriendsChooserRoomsController.h"
-#import "QZBFriendCell.h"
+//#import "QZBFriendCell.h"
 #import "QZBServerManager.h"
 #import <SVProgressHUD.h>
 
@@ -52,34 +52,17 @@ NSString *const QZBUserAlreadyInvited = @"Пользователе уже при
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    
-//    if (![cell isKindOfClass:[QZBFriendCell class]]) {
-//        return;
-//    }
-//    
-//    QZBFriendCell *friendCell = (QZBFriendCell *)cell;
-    //self.user = friendCell.user;
-    
     id<QZBUserProtocol> user = [self userAtIndex:indexPath.row];
     [self inviteUser:user];
-    
-    //[self performSegueWithIdentifier:@"showUserpage" sender:nil];
+
 }
 
-//-(void)popBack {
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
 
 -(void)inviteUser:(id<QZBUserProtocol>) user {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBServerManager sharedManager] POSTInviteFriendWithID:user.userID inRoomWithID:self.roomID onSuccess:^{
         [SVProgressHUD showSuccessWithStatus:@"Друг приглашен"];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            
-//        });
-//        [self.navigationController popViewControllerAnimated:YES];
+
     } onFailure:^(NSError *error, NSInteger statusCode) {
         if(statusCode == 422){
             [SVProgressHUD showErrorWithStatus:QZBUserAlreadyInvited];
