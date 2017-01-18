@@ -55,7 +55,11 @@
     VKError *error = [VKError new];
     error.errorCode = VK_API_ERROR;
     error.errorReason = queryParams[@"error_reason"];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
     error.errorMessage = [queryParams[@"error_description"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+#else 
+    error.errorMessage = [queryParams[@"error_description"] stringByRemovingPercentEncoding];
+#endif
     return error;
 }
 
@@ -70,8 +74,8 @@
     }
     else {
         if (self.errorCode == VK_API_ERROR)
-            return [NSString stringWithFormat:@"<VKError: %p; Internal API error {%@}>",
-                                              self, self.apiError];
+            return [NSString stringWithFormat:@"<VKError: %p; Internal API error (%@, %@, %@})>",
+                                              self, self.apiError, self.errorReason, self.errorMessage];
         else if (self.errorCode == VK_API_CANCELED)
             return [NSString stringWithFormat:@"<VKError: %p; SDK error (request canceled)>", self];
         else if (self.errorCode == VK_API_REQUEST_NOT_PREPARED)

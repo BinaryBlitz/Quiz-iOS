@@ -22,10 +22,11 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import <Foundation/Foundation.h>
+#import "NSString+MD5.h"
 
-@implementation NSString (MD5)
+@implementation NSString (VKSMD5)
 
-- (NSString *)MD5 {
+- (NSString *)vks_md5 {
     // Create pointer to the string as UTF8
     const char *ptr = [self UTF8String];
 

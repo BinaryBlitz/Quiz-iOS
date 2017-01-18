@@ -42,9 +42,9 @@
 #endif
 
 static const CGFloat JSBadgeViewShadowRadius = 1.0f;
-static const CGFloat JSBadgeViewHeight = 26.0f;
-static const CGFloat JSBadgeViewTextSideMargin = 16.0f;
-static const CGFloat JSBadgeViewCornerRadius = 13.0f;
+static const CGFloat JSBadgeViewHeight = 16.0f;
+static const CGFloat JSBadgeViewTextSideMargin = 8.0f;
+static const CGFloat JSBadgeViewCornerRadius = 10.0f;
 
 // Thanks to Peter Steinberger: https://gist.github.com/steipete/6526860
 static BOOL JSBadgeViewIsUIKitFlatMode(void)

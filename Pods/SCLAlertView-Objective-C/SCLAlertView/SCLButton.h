@@ -3,10 +3,16 @@
 //  SCLAlertView
 //
 //  Created by Diogo Autilio on 9/26/14.
-//  Copyright (c) 2014 AnyKey Entertainment. All rights reserved.
+//  Copyright (c) 2014-2016 AnyKey Entertainment. All rights reserved.
 //
 
+#if defined(__has_feature) && __has_feature(modules)
 @import UIKit;
+#else
+#import <UIKit/UIKit.h>
+#endif
+
+@class SCLTimerDisplay;
 
 @interface SCLButton : UIButton
 
@@ -18,9 +24,9 @@ typedef NSDictionary* (^ButtonFormatBlock)(void);
 // Action Types
 typedef NS_ENUM(NSInteger, SCLActionType)
 {
-    None,
-    Selector,
-    Block
+    SCLNone,
+    SCLSelector,
+    SCLBlock
 };
 
 /** Set button action type.
@@ -44,14 +50,14 @@ typedef NS_ENUM(NSInteger, SCLActionType)
 /** Set Complete button format block.
  *
  * Holds the complete button format block.
- * Support keys : backgroundColor, borderColor, textColor
+ * Support keys : backgroundColor, borderWidth, borderColor, textColor
  */
 @property (nonatomic, copy) CompleteButtonFormatBlock completeButtonFormatBlock;
 
 /** Set button format block.
  *
  * Holds the button format block.
- * Support keys : backgroundColor, borderColor, textColor
+ * Support keys : backgroundColor, borderWidth, borderColor, textColor
  */
 @property (nonatomic, copy) ButtonFormatBlock buttonFormatBlock;
 
@@ -69,7 +75,7 @@ typedef NS_ENUM(NSInteger, SCLActionType)
 
 /** Set selector id.
  *
- * A selector is the name used to select a method to execute for an object, 
+ * A selector is the name used to select a method to execute for an object,
  * or the unique identifier that replaces the name when the source code is compiled.
  */
 @property SEL selector;
@@ -77,8 +83,19 @@ typedef NS_ENUM(NSInteger, SCLActionType)
 /** Parse button configuration
  *
  * Parse ButtonFormatBlock and CompleteButtonFormatBlock setting custom configuration.
- * Set keys : backgroundColor, borderColor, textColor
+ * Set keys : backgroundColor, borderWidth, borderColor, textColor
  */
 - (void)parseConfig:(NSDictionary *)buttonConfig;
+
+/** Set button timer.
+ *
+ * Holds the button timer, if present.
+ */
+@property (nonatomic) SCLTimerDisplay *timer;
+
+/** Init method
+ *
+ */
+- (instancetype)initWithWindowWidth:(CGFloat)windowWidth;
 
 @end

@@ -40,21 +40,17 @@
     _methodGroup = methodGroup;
 }
 
-- (VKRequest *)prepareRequestWithMethodName:(NSString *)methodName andParameters:(NSDictionary *)methodParameters {
-    return [self prepareRequestWithMethodName:methodName andParameters:methodParameters andHttpMethod:@"POST"];
+- (VKRequest *)prepareRequestWithMethodName:(NSString *)methodName
+                                 parameters:(NSDictionary *)methodParameters {
+    return [self prepareRequestWithMethodName:methodName parameters:methodParameters modelClass:nil];
 }
 
-- (VKRequest *)prepareRequestWithMethodName:(NSString *)methodName andParameters:(NSDictionary *)methodParameters andHttpMethod:(NSString *)httpMethod {
+- (VKRequest *)prepareRequestWithMethodName:(NSString *)methodName
+                                 parameters:(NSDictionary *)methodParameters
+                                 modelClass:(Class)modelClass {
     return [VKRequest requestWithMethod:[NSString stringWithFormat:@"%@.%@", _methodGroup, methodName]
-                          andParameters:methodParameters
-                          andHttpMethod:httpMethod];
-}
-
-- (VKRequest *)prepareRequestWithMethodName:(NSString *)methodName andParameters:(NSDictionary *)methodParameters andHttpMethod:(NSString *)httpMethod andClassOfModel:(Class)modelClass {
-    return [VKRequest requestWithMethod:[NSString stringWithFormat:@"%@.%@", _methodGroup, methodName]
-                          andParameters:methodParameters
-                          andHttpMethod:httpMethod
-                           classOfModel:modelClass];
+                             parameters:methodParameters
+                             modelClass:modelClass];
 }
 
 @end
