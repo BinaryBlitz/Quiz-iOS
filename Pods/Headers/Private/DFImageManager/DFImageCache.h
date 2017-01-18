@@ -1,1 +1,0 @@
-../../../DFImageManager/Pod/Source/Core/Caching/DFImageCache.h

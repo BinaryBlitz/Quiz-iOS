@@ -1,1 +1,0 @@
-../../../DFImageManager/Pod/Source/AFNetworking/DFImageManagerKit+AFNetworking.h
