@@ -24,7 +24,7 @@
 
 #ifndef DBCameraLocalizedStrings
 #define DBCameraLocalizedStrings(key) \
-NSLocalizedStringFromTable(key, @"DBCamera", nil)
+[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"DBCamera" ofType:@"bundle"]] localizedStringForKey:(key) value:@"" table:@"DBCamera"]
 #endif
 
 @interface DBCameraViewController () <DBCameraManagerDelegate, DBCameraViewDelegate> {
@@ -138,16 +138,18 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
     [self.cameraManager performSelector:@selector(stopRunning) withObject:nil afterDelay:0.0];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     _cameraManager = nil;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 - (void) checkForLibraryImage
@@ -202,6 +204,7 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
     if ( !_cameraGridView ) {
         DBCameraView *camera =_customCamera ?: _cameraView;
         _cameraGridView = [[DBCameraGridView alloc] initWithFrame:camera.previewLayer.frame];
+        [_cameraGridView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         [_cameraGridView setNumberOfColumns:2];
         [_cameraGridView setNumberOfRows:2];
         [_cameraGridView setAlpha:0];
@@ -234,11 +237,42 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
     }
 }
 
-- (void) disPlayGridViewToCameraView:(BOOL)show
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.cameraGridView.alpha = (show ? 1.0 : 0.0);
-    } completion:NULL];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    DBCameraView *camera = _customCamera ?: _cameraView;
+    camera.frame = CGRectMake(0, 0, size.width, size.height);
+    camera.previewLayer.frame = CGRectMake(0, 0, size.width, size.height);
+}
+
++ (AVCaptureVideoOrientation)interfaceOrientationToVideoOrientation:(UIInterfaceOrientation)orientation {
+    AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
+    switch (orientation) {
+        case UIInterfaceOrientationPortraitUpsideDown:
+            videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        default:
+            break;
+    }
+    return videoOrientation;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    AVCaptureVideoOrientation videoOrientation = [[self class] interfaceOrientationToVideoOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+    DBCameraView *camera = _customCamera ?: _cameraView;
+    if (camera.previewLayer.connection.supportsVideoOrientation
+        && camera.previewLayer.connection.videoOrientation != videoOrientation) {
+        camera.previewLayer.connection.videoOrientation = videoOrientation;
+    }
 }
 
 #pragma mark - CameraManagerDelagate
@@ -255,7 +289,9 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 }
 
 - (void) cameraView:(UIView *)camera showGridView:(BOOL)show {
-    [self disPlayGridViewToCameraView:!show];
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.cameraGridView.alpha = (show ? 1.0 : 0.0);
+    } completion:NULL];
 }
 
 - (void) triggerFlashForMode:(AVCaptureFlashMode)flashMode
@@ -346,6 +382,25 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
         return;
 
     _processingPhoto = YES;
+
+    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
+        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+
+        if (status == AVAuthorizationStatusDenied || status == AVAuthorizationStatusRestricted) {
+            [[[UIAlertView alloc] initWithTitle:DBCameraLocalizedStrings(@"general.error.title")
+                                        message:DBCameraLocalizedStrings(@"cameraimage.nopolicy")
+                                       delegate:nil
+                              cancelButtonTitle:@"Ok"
+                              otherButtonTitles:nil, nil] show];
+
+            return;
+        }
+        else if (status == AVAuthorizationStatusNotDetermined) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:nil];
+
+            return;
+        }
+    }
 
     [self.cameraManager captureImageForDeviceOrientation:_deviceOrientation];
 }

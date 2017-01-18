@@ -23,6 +23,20 @@
 #import "VKAuthorizeController.h"
 #import "VKBundle.h"
 
+NSString *VK_AUTHORIZE_URL_STRING = @"vkauthorize://authorize";
+
+@interface VKAuthorizationContext ()
+@property (nonatomic, readwrite, strong) NSString *authPrefix;
+@property (nonatomic, readwrite, strong) NSString *redirectUri;
+@property (nonatomic, readwrite, strong) NSString *clientId;
+@property (nonatomic, readwrite, strong) NSString *displayType;
+@property (nonatomic, readwrite, strong) NSString *responseType;
+@property (nonatomic, readwrite, strong) NSArray<NSString*> *scope;
+@property (nonatomic, readwrite) BOOL revoke;
+
+@property (nonatomic, assign) BOOL usingVkApp;
+@end
+
 @implementation UINavigationController (LastControllerBar)
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -32,11 +46,15 @@
 }
 @end
 
+@interface VKSdk ()
++ (BOOL)processOpenInternalURL:(NSURL *)passedUrl validation:(BOOL)validation;
+@end
+
 @interface VKAuthorizeController ()
 @property(nonatomic, strong) UIWebView *webView;
 @property(nonatomic, strong) NSString *appId;
 @property(nonatomic, strong) NSString *scope;
-@property(nonatomic, strong) NSString *redirectUri;
+@property(nonatomic, strong) NSURL *redirectUri;
 @property(nonatomic, strong) UIActivityIndicatorView *activityMark;
 @property(nonatomic, strong) UILabel *warningLabel;
 @property(nonatomic, strong) UILabel *statusBar;
@@ -66,7 +84,7 @@
 + (void)presentThisController:(VKAuthorizeController *)controller {
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:controller];
 
-    if (VK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if ([VKUtil isOperatingSystemAtLeastIOS7]) {
         navigation.navigationBar.barTintColor = VK_COLOR;
         navigation.navigationBar.tintColor = [UIColor whiteColor];
         navigation.navigationBar.translucent = YES;
@@ -78,37 +96,44 @@
 
     UIImage *image = [VKBundle vkLibraryImageNamed:@"ic_vk_logo_nb"];
     controller.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
-    [VKSdk.instance.delegate vkSdkShouldPresentViewController:navigation];
+    [navigation vks_presentViewControllerThroughDelegate];
 
     controller.internalNavigationController = navigation;
 }
 
-+ (NSString *)buildAuthorizationUrl:(NSString *)redirectUri
-                           clientId:(NSString *)clientId
-                              scope:(NSString *)scope
-                             revoke:(BOOL)revoke
-                            display:(NSString *)display {
-    NSDictionary *params = @{
-            @"v" : [[VKSdk instance] apiVersion],
-            @"scope" : scope ?: @"",
-            @"revoke" : @(revoke),
-            @"display" : display ?: VK_DISPLAY_MOBILE,
-            @"client_id" : clientId ?: @"",
-            @"sdk_version" : VK_SDK_VERSION,
-            @"redirect_uri" : redirectUri ?: @"",
-            @"response_type" : @"token"
-    };
-    return [NSString stringWithFormat:@"https://oauth.vk.com/authorize?%@", [VKUtil queryStringFromParams:params]];
++ (NSURL *)buildAuthorizationURLWithContext:(VKAuthorizationContext*) ctx {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
+              @"v" : [[VKSdk instance] apiVersion],
+              @"revoke" : @(ctx.revoke),
+              @"sdk_version" : VK_SDK_VERSION,
+              }];
+    if (ctx.clientId) {
+        params[@"client_id"] = ctx.clientId;
+    }
+    if (ctx.scope) {
+        params[@"scope"] = [ctx.scope componentsJoinedByString:@","];
+    }
+    if (ctx.redirectUri) {
+        params[@"redirect_uri"] = ctx.redirectUri;
+    }
+    if (ctx.responseType) {
+        params[@"response_type"] = ctx.responseType;
+    }
+    if (ctx.displayType) {
+        params[@"display"] = ctx.displayType;
+    }
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", ctx.authPrefix ?: @"https://oauth.vk.com/authorize", [VKUtil queryStringFromParams:params]]];
 }
 
 #pragma mark View prepare
 
 - (void)loadView {
     [super loadView];
-    if (VK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    if ([VKUtil isOperatingSystemAtLeastIOS7]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     view.backgroundColor = [UIColor colorWithRed:240.0f / 255 green:242.0f / 255 blue:245.0f / 255 alpha:1.0f];
     self.view = view;
     _activityMark = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -141,11 +166,7 @@
     _webView.scrollView.clipsToBounds = NO;
     [view addSubview:_webView];
     if (self.internalNavigationController) {
-#if  __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[VKBundle localizedString:@"Cancel"] style:UIBarButtonItemStylePlain target:self action:@selector(cancelAuthorization:)];
-#else
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[VKBundle localizedString:@"Cancel"] style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAuthorization:)];
-#endif
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAuthorization:)];
     }
 }
 
@@ -158,7 +179,12 @@
     self = [super init];
     _appId = appId;
     _scope = [permissions componentsJoinedByString:@","];
-    _redirectUri = [[self class] buildAuthorizationUrl:nil clientId:_appId scope:_scope revoke:revoke display:display];
+    _redirectUri = [[self class] buildAuthorizationURLWithContext:
+                    [VKAuthorizationContext contextWithAuthType:VKAuthorizationTypeWebView
+                                                       clientId:appId
+                                                    displayType:display
+                                                          scope:permissions
+                                                         revoke:revoke]];
     return self;
 }
 
@@ -168,10 +194,11 @@
 }
 
 - (void)startLoading {
-    if (!_redirectUri)
-        _redirectUri = _validationError.redirectUri;
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-            initWithURL:[NSURL URLWithString:_redirectUri]];
+    if (!self.redirectUri) {
+        self.redirectUri = [NSURL URLWithString:self.validationError.redirectUri];
+
+    }
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.redirectUri];
 
     [_webView loadRequest:request];
 }
@@ -179,16 +206,19 @@
 #pragma mark Web view work
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    _lastRequest = request;
+    self.lastRequest = request;
     NSString *urlString = [[request URL] absoluteString];
-    _statusBar.text = urlString;
+    self.statusBar.text = urlString;
     if (!webView.hidden && !self.navigationItem.rightBarButtonItem) {
         [self setRightBarButtonActivity];
     }
     if ([[[request URL] path] isEqual:@"/blank.html"]) {
         [self dismissWithCompletion:^{
-            if ([VKSdk processOpenURL:[request URL] fromApplication:VK_ORIGINAL_CLIENT_BUNDLE] && _validationError)
-                [_validationError.request repeat];
+            if ([VKSdk processOpenInternalURL:[request URL] validation:self.validationError != nil] && self.validationError) {
+                [self.validationError.request repeat];
+            } else if (self.validationError) {
+                [self.validationError.request cancel];
+            }
         }];
         return NO;
     }
@@ -196,9 +226,9 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if (_finished) return;
+    if (self.finished) return;
     if ([error code] != NSURLErrorCancelled) {
-        _warningLabel.hidden = NO;
+        self.warningLabel.hidden = NO;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (500 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^(void) {
             [webView loadRequest:_lastRequest];
             if (!self.navigationItem.rightBarButtonItem)
@@ -234,10 +264,18 @@
 - (void)cancelAuthorization:(id)sender {
     [self dismissWithCompletion:^{
         if (!_validationError) {
-            VKError *error = [VKError errorWithCode:VK_API_CANCELED];
-            [VKSdk setAccessTokenError:error];
+            //Silent cancel
+            [VKSdk processOpenInternalURL:[NSURL URLWithString:@"#"] validation:NO];
+        } else {
+            [_validationError.request cancel];
         }
     }];
+    if (_validationError) {
+        NSError *error = [NSError errorWithVkError:[VKError errorWithCode:VK_AUTHORIZE_CONTROLLER_CANCEL]];
+        if (_validationError.request.errorBlock) {
+            _validationError.request.errorBlock(error);
+        }
+    }
 }
 
 - (void)dismissWithCompletion:(void (^)())completion {
@@ -253,35 +291,24 @@
 
     if (!_internalNavigationController) {
         if (self.navigationController) {
-            if ([VKSdk.instance.delegate respondsToSelector:@selector(vkSdkWillDismissViewController:)]) {
-                [VKSdk.instance.delegate vkSdkWillDismissViewController:self];
-            }
+            [self vks_viewControllerWillDismiss];
             [self.navigationController popViewControllerAnimated:YES];
             if (completion) {
                 completion();
             }
         } else if (self.presentingViewController) {
-            if ([VKSdk.instance.delegate respondsToSelector:@selector(vkSdkWillDismissViewController:)]) {
-                [VKSdk.instance.delegate vkSdkWillDismissViewController:self];
-            }
+            [self vks_viewControllerWillDismiss];
             [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
-                if ([VKSdk.instance.delegate respondsToSelector:@selector(vkSdkDidDismissViewController:)]) {
-                    [VKSdk.instance.delegate vkSdkDidDismissViewController:self];
-                }
+                [self vks_viewControllerDidDismiss];
                 if (completion) {
                     completion();
                 }
             }];
         }
     } else {
-        if ([VKSdk.instance.delegate respondsToSelector:@selector(vkSdkWillDismissViewController:)]) {
-            [VKSdk.instance.delegate vkSdkWillDismissViewController:self];
-        }
+        [self vks_viewControllerWillDismiss];
         [_internalNavigationController.presentingViewController dismissViewControllerAnimated:YES completion:^{
-            if ([VKSdk.instance.delegate respondsToSelector:@selector(vkSdkDidDismissViewController:)]) {
-                [VKSdk.instance.delegate vkSdkDidDismissViewController:self];
-            }
-
+            [self vks_viewControllerDidDismiss];
             completion();
         }];
     }
@@ -289,6 +316,38 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+@end
+
+@implementation VKAuthorizationContext
+
++(instancetype) contextWithAuthType:(VKAuthorizationType) authType
+                           clientId:(NSString*)clientId
+                        displayType:(NSString*)displayType
+                              scope:(NSArray<NSString*>*)scope
+                             revoke:(BOOL) revoke {
+    VKAuthorizationContext *res = [self new];
+    res.scope = scope;
+    res.revoke = revoke;
+    res.clientId = clientId;
+    res.displayType = displayType;
+    
+    switch (authType) {
+        case VKAuthorizationTypeApp:
+            res.authPrefix = VK_AUTHORIZE_URL_STRING;
+            res.displayType = nil;
+            break;
+        case VKAuthorizationTypeSafari:
+            res.redirectUri = [NSString stringWithFormat:@"vk%@://authorize", clientId];
+            res.responseType = @"token";
+            break;
+        default:
+            res.responseType = @"token";
+            break;
+    }
+    
+    return res;
 }
 
 @end

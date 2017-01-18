@@ -1,6 +1,5 @@
 // UIImageView+AFNetworking.m
-//
-// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
+// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -65,18 +64,6 @@
 @implementation UIImageView (AFNetworking)
 @dynamic imageResponseSerializer;
 
-
-- (void)clearImageCacheForURL:(NSURL *)url {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    
-    UIImage *cachedImage = [[[self class] sharedImageCache] cachedImageForRequest:request];
-    
-    if (cachedImage) {
-        [[[self class] sharedImageCache] clearCachedRequest:request];
-    }
-}
-
 + (id <AFImageCache>)sharedImageCache {
     static AFImageCache *_af_defaultImageCache = nil;
     static dispatch_once_t oncePredicate;
@@ -94,7 +81,7 @@
 #pragma clang diagnostic pop
 }
 
-+ (void)setSharedImageCache:(id <AFImageCache>)imageCache {
++ (void)setSharedImageCache:(__nullable id <AFImageCache>)imageCache {
     objc_setAssociatedObject(self, @selector(sharedImageCache), imageCache, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -119,9 +106,6 @@
 
 #pragma mark -
 
-
-
-
 - (void)setImageWithURL:(NSURL *)url {
     [self setImageWithURL:url placeholderImage:nil];
 }
@@ -137,15 +121,15 @@
 
 - (void)setImageWithURLRequest:(NSURLRequest *)urlRequest
               placeholderImage:(UIImage *)placeholderImage
-                       success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
-                       failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure
+                       success:(void (^)(NSURLRequest *request, NSHTTPURLResponse * __nullable response, UIImage *image))success
+                       failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse * __nullable response, NSError *error))failure
 {
     [self cancelImageRequestOperation];
 
     UIImage *cachedImage = [[[self class] sharedImageCache] cachedImageForRequest:urlRequest];
     if (cachedImage) {
         if (success) {
-            success(nil, nil, cachedImage);
+            success(urlRequest, nil, cachedImage);
         } else {
             self.image = cachedImage;
         }
@@ -155,7 +139,7 @@
         if (placeholderImage) {
             self.image = placeholderImage;
         }
-        
+
         __weak __typeof(self)weakSelf = self;
         self.af_imageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         self.af_imageRequestOperation.responseSerializer = self.imageResponseSerializer;
@@ -205,13 +189,6 @@ static inline NSString * AFImageCacheKeyFromURLRequest(NSURLRequest *request) {
 }
 
 @implementation AFImageCache
-
-- (void)clearCachedRequest:(NSURLRequest *)request {
-    if (request) {
-        
-        [self removeObjectForKey:AFImageCacheKeyFromURLRequest(request)];
-    }
-}
 
 - (UIImage *)cachedImageForRequest:(NSURLRequest *)request {
     switch ([request cachePolicy]) {

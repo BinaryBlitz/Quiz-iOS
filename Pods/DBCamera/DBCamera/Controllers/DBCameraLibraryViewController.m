@@ -18,10 +18,11 @@
 #import "UIImage+Crop.h"
 #import "UIImage+TintColor.h"
 #import "UIImage+Asset.h"
+#import "UIImage+Bundle.h"
 
 #ifndef DBCameraLocalizedStrings
 #define DBCameraLocalizedStrings(key) \
-NSLocalizedStringFromTable(key, @"DBCamera", nil)
+[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"DBCamera" ofType:@"bundle"]] localizedStringForKey:(key) value:@"" table:@"DBCamera"]
 #endif
 
 #define kItemIdentifier @"ItemIdentifier"
@@ -156,42 +157,54 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
     __block NSUInteger blockPresentationIndex = _presentationIndex;
     __block BOOL isEnumeratingGroupsBlock = _isEnumeratingGroups;
     isEnumeratingGroupsBlock = YES;
-    
+
     [[DBLibraryManager sharedInstance] loadGroupsAssetWithBlock:^(BOOL success, NSArray *items) {
-        if ( success ) {
+        if (!blockSelf) {
+            return;
+        }
+
+        if (success) {
             [blockSelf.loading removeFromSuperview];
-            if ( items.count > 0) {
+
+            if (items.count > 0) {
                 [blockItems removeAllObjects];
                 [blockItems addObjectsFromArray:items];
                 [blockContainerMapping removeAllObjects];
-                
-                for ( NSUInteger i=0; i<blockItems.count; i++ ) {
+
+                for (NSUInteger i = 0; i < blockItems.count; i++) {
                     DBCameraCollectionViewController *vc = [[DBCameraCollectionViewController alloc] initWithCollectionIdentifier:kItemIdentifier];
                     [vc setCurrentIndex:i];
-                    [vc setItems:(NSArray *)blockItems[i][@"groupAssets"]];
+                    [vc setItems:(NSArray *) blockItems[i][@"groupAssets"]];
                     [vc setCollectionControllerDelegate:blockSelf];
-                    [blockContainerMapping setObject:vc forKey:@(i)];
+
+                    blockContainerMapping[@(i)] = vc;
                 }
-                
+
                 NSInteger usedIndex = [blockSelf indexForSelectedItem];
-                blockPresentationIndex = usedIndex >= 0 ? usedIndex : 0;
+                blockPresentationIndex = (NSUInteger) (usedIndex >= 0 ? usedIndex : 0);
+
                 [blockSelf setNavigationTitleAtIndex:blockPresentationIndex];
                 [blockSelf setSelectedItemID:blockItems[blockPresentationIndex][@"propertyID"]];
-                [pageViewControllerBlock setViewControllers:@[ blockContainerMapping[@(blockPresentationIndex)] ]
+
+                [pageViewControllerBlock setViewControllers:@[blockContainerMapping[@(blockPresentationIndex)]]
                                                   direction:UIPageViewControllerNavigationDirectionForward
                                                    animated:NO
                                                  completion:nil];
-                
+
                 [UIView animateWithDuration:.3 animations:^{
                     [pageViewControllerBlock.view setAlpha:1];
                 }];
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[[UIAlertView alloc] initWithTitle:DBCameraLocalizedStrings(@"general.error.title") message:DBCameraLocalizedStrings(@"pickerimage.nophoto") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil] show];
+                    [[[UIAlertView alloc] initWithTitle:DBCameraLocalizedStrings(@"general.error.title")
+                                                message:DBCameraLocalizedStrings(@"pickerimage.nophoto")
+                                               delegate:nil
+                                      cancelButtonTitle:@"Ok"
+                                      otherButtonTitles:nil, nil] show];
                 });
             }
         }
-        
+
         isEnumeratingGroupsBlock = NO;
     }];
 }
@@ -205,7 +218,8 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
 - (NSInteger) indexForSelectedItem
 {
     __weak typeof(self) blockSelf = self;
-    __block NSUInteger blockIndex = -1;
+    __block NSInteger blockIndex = -1;
+
     [_items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ( [blockSelf.selectedItemID isEqualToString:obj[@"propertyID"]] ) {
             *stop = YES;
@@ -255,7 +269,7 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
         
         UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closeButton setBackgroundColor:[UIColor clearColor]];
-        [closeButton setImage:[[UIImage imageNamed:@"close"] tintImageWithColor:self.tintColor] forState:UIControlStateNormal];
+        [closeButton setImage:[[UIImage imageInBundleNamed:@"close"] tintImageWithColor:self.tintColor] forState:UIControlStateNormal];
         [closeButton setFrame:(CGRect){ 10, 10, 45, 45 }];
         [closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
         [_topContainerBar addSubview:closeButton];
@@ -337,7 +351,10 @@ NSLocalizedStringFromTable(key, @"DBCamera", nil)
             ALAssetRepresentation *defaultRep = [asset defaultRepresentation];
             NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[defaultRep metadata]];
             metadata[@"DBCameraSource"] = @"Library";
-            
+            if ([defaultRep url]) {
+                metadata[@"DBCameraAssetURL"] = [[defaultRep url] absoluteString];
+            }
+
             UIImage *image = [UIImage imageForAsset:asset maxPixelSize:_libraryMaxImageSize];
 //            UIImage *image = [self test:asset];
             

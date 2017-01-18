@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, VKShareDialogControllerResult) {
 /// Array of prepared VKUploadImage objects for upload and share. User can remove any attachment
 @property(nonatomic, strong) NSArray *uploadImages;
 
-/// Photos already uploaded to VK. That is array of photos ids: @[ownerid_photoid, ...];
+/// Photos already uploaded to VK. That is array of photos ids: @["ownerid_photoid", ...];
 @property(nonatomic, strong) NSArray *vkImages;
 
 /// Links attachment for new post
@@ -63,17 +63,12 @@ typedef NS_ENUM(NSInteger, VKShareDialogControllerResult) {
 @property(nonatomic, strong) NSArray *requestedScope;
 
 /// You can receive information about sharing state
-@property(nonatomic, copy) void (^completionHandler)(VKShareDialogControllerResult result);
+@property(nonatomic, copy) void (^completionHandler)(VKShareDialogController *dialog, VKShareDialogControllerResult result);
 
 /// Flag meaning the share viewcontroller manage it's presentation state by itself
 @property(nonatomic, assign) BOOL dismissAutomatically;
 
-/// Force share dialog to use in-app webview authorization
-@property(nonatomic, assign) BOOL authorizeInApp;
+/// Contains post id created via share dialog. Example string: 123_4567890
+@property(nonatomic, readonly, copy) NSString *postId;
 
-/**
-Correctly presents current view controller in another
-@param viewController Parent view controller
-*/
-- (void)presentIn:(UIViewController *)viewController __deprecated;
 @end
