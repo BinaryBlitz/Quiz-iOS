@@ -59,28 +59,10 @@ static const int ddLogLevel = LOG_LEVEL_ERROR;
 #else
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
-//#import "QZBLoggingConfig.h"
 
-//#ifdef DEBUG
-// static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
-//#else
-// static const DDLogLevel ddLogLevel = DDLogLevelWarning;
-//#endif
-// static const DDLogLevel ddLogLevel = DDLogLevelWarning;
-
-//#define PRODUCTION 0
-
-#if QZB_PRODUCTION
 NSString *const QZBServerBaseUrl = @"http://188.166.14.118";
 NSString *const QZBPusherKey = @"3335176afe7e37cd28c2";
-#else
-NSString *const QZBServerBaseUrl = @"http://quizapp.binaryblitz.ru";
-NSString *const QZBPusherKey = @"d982e4517caa41cf637c";
-#endif
-
-NSString *const QZBNoInternetConnectionMessage =
-@"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
-
+NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 NSString *const QZBiTunesIdentifier = @"1017347211";
 
 @interface QZBServerManager ()
@@ -106,13 +88,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (id)init {
   self = [super init];
   if (self) {
-    NSString *apiPath =
-    [NSString stringWithFormat:@"%@/%@" /*@"http://quizapp.binaryblitz.ru/%@"*/,
-     QZBServerBaseUrl, @"api"];
+    NSString *apiPath = [NSString stringWithFormat:@"%@/%@", QZBServerBaseUrl, @"api"];
+
     self.baseURL = apiPath;
-    //[NSString stringWithFormat:@"http://%@:%@/", @"192.168.1.39", @"3000"];
     NSURL *url = [NSURL URLWithString:apiPath];
-    // url.port = @3000;
 
     self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
   }
@@ -1890,10 +1869,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(r);
                               }
-                              
+
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                              
+
                               DDLogError(@"room list error %@", error);
                               if (failure) {
                                 failure(error, operation.response.statusCode);
@@ -1913,23 +1892,23 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   [self.requestOperationManager POST:@"rooms"
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                               
+
                                DDLogCVerbose(@"room create %@", responseObject);
-                               
+
                                QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
-                               
+
                                if (success) {
                                  success(r);
                                }
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                               
+
                                DDLogError(@"create room error %@", error);
-                               
+
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-                               
+
                              }];
 }
 
@@ -1940,27 +1919,27 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   NSDictionary *params =
   @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
      @"topic_id" : topic.topic_id };
-  
+
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/join", roomID];
-  
+
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                               
+
                                DDLogCVerbose(@"join room response %@", responseObject);
                                // QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
-                               
+
                                if (success) {
                                  success();
                                }
-                               
+
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                               
+
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-                               
+
                              }];
 }
 
@@ -1968,20 +1947,20 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                     onSuccess:(void (^)())success
                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-  
+
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/leave", roomID];
-  
+
   [self.requestOperationManager DELETE:urlAsString
                             parameters:params
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                 
+
                                  DDLogVerbose(@"room leaved");
                                  if (success) {
                                    success();
                                  }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                 
+
                                  DDLogError(@"room leave error %@", error);
                                  if (failure) {
                                    failure(error, operation.response.statusCode);
@@ -1994,24 +1973,24 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@", roomID];
-  
+
   [self.requestOperationManager DELETE:urlAsString
                             parameters:params
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                 
+
                                  DDLogVerbose(@"room deleted");
                                  if (success) {
                                    success();
                                  }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                 
+
                                  DDLogCError(@"deletionFailure, err %@", error);
-                                 
+
                                  if (failure) {
                                    failure(error, operation.response.statusCode);
                                  }
-                                 
+
                                }];
 }
 
@@ -2020,7 +1999,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                   onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/start", roomID];
-  
+
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -2028,12 +2007,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-                               
+
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                               
+
                                DDLogCError(@"startingRoomFailure, err %@", error);
-                               
+
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
@@ -2047,12 +2026,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
                            @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-                           
+
                            @"room_answer" : @{@"answer_id" : @(answerID), @"time" : @(time)}
                            };
-  
+
   NSString *urlAsString = [NSString stringWithFormat:@"room_questions/%@/answer", @(questionID)];
-  
+
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -2060,12 +2039,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-                               
+
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                DDLogCError(@"post answer err %@ \n response object %@", error,
                                            operation.responseObject);
-                               
+
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
@@ -2077,11 +2056,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/finish", roomID];
-  
+
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                               
+
                                DDLogCVerbose(@"room closed");
                                if (success) {
                                  success();
@@ -2102,10 +2081,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   NSDictionary *params = @{
                            @"token" : [QZBCurrentUser sharedInstance].user.api_key,
                            @"invite" : @{
-                               
+
                                @"room_id" : roomID,
                                @"player_id" : userID
-                               
+
                                }
                            };
   //    {
@@ -2114,9 +2093,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   //            "player_id": "2"
   //        }
   //    }
-  
+
   NSString *urlAsString = [NSString stringWithFormat:@"invites"];
-  
+
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -2138,16 +2117,16 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
   NSString *urlAsString = [NSString stringWithFormat:@"invites/%@", inviteID];
-  
+
   [self.requestOperationManager DELETE:urlAsString
                             parameters:params
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                 
+
                                  DDLogCVerbose(@"room invite deleted");
                                  if (success) {
                                    success();
                                  }
-                                 
+
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  DDLogError(@"room invite deletion error %@", error);
@@ -2166,12 +2145,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                            @"participation" : @{@"ready" : @(isReady)}
                            };
   NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", userID];
-  
+
   [self.requestOperationManager PATCH:urlAsString
                            parameters:params
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                 DDLogCVerbose(@"user ready patched");
-                                
+
                                 if (success) {
                                   success();
                                 }
@@ -2189,26 +2168,26 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
   NSString *urlAsString = [NSString stringWithFormat:@"room_sessions/%@", roomID];
-  
+
   [self.requestOperationManager GET:urlAsString
                          parameters:params
                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               DDLogVerbose(@"session results %@", responseObject);
-                              
+
                               QZBRoomSessionResults *rsr =
                               [[QZBRoomSessionResults alloc] initWithDictionary:responseObject];
-                              
+
                               if (success) {
                                 success(rsr);
                               }
-                              
+
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogError(@"room session get error %@", error);
                               if (failure) {
                                 failure(error, operation.response.statusCode);
                               }
-                              
+
                             }];
 }
 
