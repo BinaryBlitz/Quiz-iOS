@@ -384,7 +384,7 @@
 
 - (IBAction)logOutAction:(UIButton *)sender {
     
-    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID){
+    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID){
     
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QZBLayerMessagerManager sharedInstance] logOutWithCompletion:^(BOOL success, NSError *error) {
