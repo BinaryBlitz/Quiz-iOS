@@ -21,7 +21,6 @@
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBAnotherUser.h"
 #import "QZBSessionManager.h"
-#import "QZBAcceptChallengeVC.h"
 #import "QZBRegistrationChooserVC.h"
 #import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
