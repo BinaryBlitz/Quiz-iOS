@@ -739,9 +739,9 @@
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				19407B121AE8E79600A12F20 /* categories */,
-				195EA0A61AD52093000C4341 /* lib */,
-				19C78A391B4687B800B46372 /* ui */,
+				19407B121AE8E79600A12F20 /* Categories */,
+				195EA0A61AD52093000C4341 /* Libraries */,
+				19C78A391B4687B800B46372 /* UI */,
 				191559C81A39CDD400462C93 /* AppDelegate.h */,
 				191559C91A39CDD400462C93 /* AppDelegate.m */,
 				191559C51A39CDD400462C93 /* Info.plist */,
@@ -919,7 +919,7 @@
 			path = "question report";
 			sourceTree = "<group>";
 		};
-		19407B121AE8E79600A12F20 /* categories */ = {
+		19407B121AE8E79600A12F20 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
 				196099F91B2452C400EEB9D6 /* colors */,
@@ -940,7 +940,8 @@
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
 			);
-			path = categories;
+			name = Categories;
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		19416C1D1B2C7040005D34EA /* topic and category */ = {
@@ -1042,7 +1043,7 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		195EA0A61AD52093000C4341 /* lib */ = {
+		195EA0A61AD52093000C4341 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				19D911341B171178007B4CF2 /* FXBlurView.h */,
@@ -1052,7 +1053,8 @@
 				195EA0A91AD520AA000C4341 /* UIButton+Badge.h */,
 				195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */,
 			);
-			path = lib;
+			name = Libraries;
+			path = Libraries;
 			sourceTree = "<group>";
 		};
 		196099F21B24523F00EEB9D6 /* Utils */ = {
@@ -1385,13 +1387,14 @@
 			path = rooms;
 			sourceTree = "<group>";
 		};
-		19C78A391B4687B800B46372 /* ui */ = {
+		19C78A391B4687B800B46372 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */,
 				19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */,
 			);
-			path = ui;
+			name = UI;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		19CB508D1A3C32E700A3CD74 /* Models */ = {
