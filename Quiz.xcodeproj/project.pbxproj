@@ -208,8 +208,7 @@
 		19E62AB31B4FE334001319E4 /* QZBImageViewerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 19E62AB21B4FE334001319E4 /* QZBImageViewerVC.m */; };
 		19FA44F61B31951600B5E853 /* QZBEnterRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19FA44F51B31951600B5E853 /* QZBEnterRoomCell.m */; };
 		19FA44F91B319FB200B5E853 /* QZBRoomTopicChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 19FA44F81B319FB200B5E853 /* QZBRoomTopicChooser.m */; };
-		5A48A4F70ADD38360538BBD3 /* libPods-QZBQuizBattle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B26F410645B8A84FB03459 /* libPods-QZBQuizBattle.a */; };
-		81AADAACB91AE7DBD598D4A4 /* libPods-Quiz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DA7F0D46D192D4CF1A2E89 /* libPods-Quiz.a */; };
+		EB753FC3AADA095C04284F6A /* libPods-Quiz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DA7F0D46D192D4CF1A2E89 /* libPods-Quiz.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -614,8 +613,7 @@
 				197E47D01A8FB2B500E43120 /* MobileCoreServices.framework in Frameworks */,
 				19423D7B1A80F5AC0014B0AD /* SystemConfiguration.framework in Frameworks */,
 				192796771A9A026F00A468E5 /* StoreKit.framework in Frameworks */,
-				5A48A4F70ADD38360538BBD3 /* libPods-QZBQuizBattle.a in Frameworks */,
-				81AADAACB91AE7DBD598D4A4 /* libPods-Quiz.a in Frameworks */,
+				EB753FC3AADA095C04284F6A /* libPods-Quiz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2118,7 +2116,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2156,7 +2154,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2172,48 +2170,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/QZBQuizBattle",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public/DBCamera\"",
-					"\"${PODS_ROOT}/Headers/Public/EGOCache\"",
-					"\"${PODS_ROOT}/Headers/Public/FSImageViewer\"",
-					"\"${PODS_ROOT}/Headers/Public/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/Public/HexColors\"",
-					"\"${PODS_ROOT}/Headers/Public/JSBadgeView\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/Public/MagicalRecord\"",
-					"\"${PODS_ROOT}/Headers/Public/SCLAlertView-Objective-C\"",
-					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
-					"\"${PODS_ROOT}/Headers/Public/TSMessages\"",
-					"\"${PODS_ROOT}/Headers/Public/UAProgressView\"",
-					"\"${PODS_ROOT}/Headers/Public/VK-ios-sdk\"",
-					"\"${PODS_ROOT}/Headers/Public/iOS-blur\"",
-					"\"${PODS_ROOT}/Headers/Public/libPusher\"",
-					"\"${PODS_ROOT}/Headers/Public/libPusher/Pusher\"",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Crashlytics.framework",
-					"$(PROJECT_DIR)/Crashlytics.framework/Versions/A",
-					"$(PROJECT_DIR)/Fabric.framework",
-					"$(PROJECT_DIR)/Fabric.framework/Versions/A",
-					"$(PROJECT_DIR)/QZBQuizBattle/libidn",
-				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-l\"Pods-AFNetworking\"",
@@ -2283,48 +2241,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/QZBQuizBattle",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public/DBCamera\"",
-					"\"${PODS_ROOT}/Headers/Public/EGOCache\"",
-					"\"${PODS_ROOT}/Headers/Public/FSImageViewer\"",
-					"\"${PODS_ROOT}/Headers/Public/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/Public/HexColors\"",
-					"\"${PODS_ROOT}/Headers/Public/JSBadgeView\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/Public/MagicalRecord\"",
-					"\"${PODS_ROOT}/Headers/Public/SCLAlertView-Objective-C\"",
-					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
-					"\"${PODS_ROOT}/Headers/Public/TSMessages\"",
-					"\"${PODS_ROOT}/Headers/Public/UAProgressView\"",
-					"\"${PODS_ROOT}/Headers/Public/VK-ios-sdk\"",
-					"\"${PODS_ROOT}/Headers/Public/iOS-blur\"",
-					"\"${PODS_ROOT}/Headers/Public/libPusher\"",
-					"\"${PODS_ROOT}/Headers/Public/libPusher/Pusher\"",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Crashlytics.framework",
-					"$(PROJECT_DIR)/Crashlytics.framework/Versions/A",
-					"$(PROJECT_DIR)/Fabric.framework",
-					"$(PROJECT_DIR)/Fabric.framework/Versions/A",
-					"$(PROJECT_DIR)/QZBQuizBattle/libidn",
-				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-l\"Pods-AFNetworking\"",
