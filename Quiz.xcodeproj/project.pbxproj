@@ -2169,6 +2169,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -2177,6 +2178,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -2188,6 +2190,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
 				INFOPLIST_FILE = QZBQuizBattle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -2196,6 +2199,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
