@@ -13,7 +13,6 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "QZBRegistrationUsernameInput.h"
 
-static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
 static NSArray *SCOPE = nil;
 
@@ -36,9 +35,7 @@ static NSArray *SCOPE = nil;
 
   SCOPE = @[@"friends", @"email", @"offline"];
 
-  [VKSdk initializeWithAppId:@"4795421"];
-
-//  NSArray *SCOPE = @[@"friends", @"email", @"offline"];
+  [[VKSdk initializeWithAppId:@"4795421"] registerDelegate:self];
 
   [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
     [self startWorking];
@@ -51,29 +48,20 @@ static NSArray *SCOPE = nil;
 }
 
 - (IBAction)authorize:(id)sender {
-  //  [VKSdk authorize:SCOPE revokeAccess:YES];
-
+  NSLog(@"LALKA0");
   [VKSdk authorize:SCOPE];
 }
 
+// TODO: Redo
 - (void)startWorking {
-  // redo
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  if ([[QZBCurrentUser sharedInstance] checkUser]) {//redo возможно старый код, проверить
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-
-                             }];
-    //[self performSegueWithIdentifier:@"userExist" sender:nil];
+  // TODO: возможно старый код, проверить
+  if ([[QZBCurrentUser sharedInstance] checkUser]) {
+    [self dismissViewControllerAnimated:YES completion:^{}];
   }
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {
@@ -85,40 +73,44 @@ static NSArray *SCOPE = nil;
   [self authorize:nil];
 }
 
+- (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
+
+  [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+    if (state == VKAuthorizationAuthorized) {
+      // Authorized and ready to go
+
+      [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+
+      [[QZBServerManager sharedManager] POSTAuthWithVKToken:result.token.accessToken
+                                                  onSuccess:^(QZBUser *user) {
+                                                    if (user.isRegistred) {
+                                                      [[QZBCurrentUser sharedInstance] setUser:user];
+                                                      [SVProgressHUD dismiss];
+                                                      [self dismissViewControllerAnimated:YES completion:^{}];
+                                                    } else {
+                                                      self.user = user;
+                                                      [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
+                                                    }
+                                                  }
+                                                  onFailure:^(NSError *error, NSInteger statusCode) {
+                                                    [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к "
+                                                     @"интернету"];
+                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+                                                                   dispatch_get_main_queue(), ^{
+                                                                     [SVProgressHUD dismiss];
+                                                                   });
+                                                    
+                                                  }];
+      
+      [self startWorking];
+
+    } else if (error) {
+      // Some error happend, but you may try later
+    }
+  }];
+}
+
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken {
-  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-
-  [[QZBServerManager sharedManager] POSTAuthWithVKToken:newToken.accessToken
-                                              onSuccess:^(QZBUser *user) {
-
-                                                if (user.isRegistred) {
-                                                  [[QZBCurrentUser sharedInstance] setUser:user];
-
-                                                  // [weakSelf performSegueWithIdentifier:@"LoginIsOK" sender:nil];
-
-                                                  [SVProgressHUD dismiss];
-
-                                                  [self dismissViewControllerAnimated:YES
-                                                                           completion:^{
-
-                                                                           }];
-                                                } else {
-                                                  self.user = user;
-                                                  [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
-                                                }
-
-                                              }
-                                              onFailure:^(NSError *error, NSInteger statusCode) {
-                                                [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к "
-                                                 @"интернету"];
-                                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-                                                               dispatch_get_main_queue(), ^{
-                                                                 [SVProgressHUD dismiss];
-                                                               });
-
-                                              }];
-
-  [self startWorking];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
@@ -129,9 +121,6 @@ static NSArray *SCOPE = nil;
   [self startWorking];
 }
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError {
-  //[[[UIAlertView alloc] initWithTitle:nil message:@"Access denied" delegate:nil
-  // cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-
   [SVProgressHUD dismiss];
 }
 
@@ -160,8 +149,6 @@ static NSArray *SCOPE = nil;
         break;
       }
     }
-    
-    //[destVC setUSerWhithoutUsername:self.user];
   }
 }
 
