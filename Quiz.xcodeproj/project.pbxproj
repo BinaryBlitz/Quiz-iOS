@@ -605,7 +605,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1901BA0F1B3026AD003E2895 /* rooms */ = {
+		1901BA0F1B3026AD003E2895 /* Rooms */ = {
 			isa = PBXGroup;
 			children = (
 				19AB8DFF1B9DD978004329F8 /* comment */,
@@ -619,7 +619,7 @@
 				19A29C341B5826D000C5F398 /* QZBRoomInvite.h */,
 				19A29C351B5826D000C5F398 /* QZBRoomInvite.m */,
 			);
-			name = rooms;
+			name = Rooms;
 			sourceTree = "<group>";
 		};
 		1901BA131B30354A003E2895 /* Rooms */ = {
@@ -781,7 +781,7 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		191E12EE1A8CA1FD00AFB829 /* achievement */ = {
+		191E12EE1A8CA1FD00AFB829 /* Achievements */ = {
 			isa = PBXGroup;
 			children = (
 				191E12EF1A8CA22600AFB829 /* QZBAchievement.h */,
@@ -789,7 +789,7 @@
 				195EA0A31AD4338B000C4341 /* QZBAchievementManager.h */,
 				195EA0A41AD4338C000C4341 /* QZBAchievementManager.m */,
 			);
-			name = achievement;
+			name = Achievements;
 			sourceTree = "<group>";
 		};
 		191E12F21A8CA65D00AFB829 /* horizontal */ = {
@@ -966,7 +966,7 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		19446A6B1A9E224E005BB485 /* IAP */ = {
+		19446A6B1A9E224E005BB485 /* In-app purchases */ = {
 			isa = PBXGroup;
 			children = (
 				19446A6C1A9E226C005BB485 /* QZBIAPHelper.h */,
@@ -978,7 +978,7 @@
 				19C0DEBC1AB4A1D1005F27D4 /* QZBProduct.h */,
 				19C0DEBD1AB4A1D1005F27D4 /* QZBProduct.m */,
 			);
-			name = IAP;
+			name = "In-app purchases";
 			sourceTree = "<group>";
 		};
 		19446A721A9E35CE005BB485 /* IAP */ = {
@@ -1057,11 +1057,11 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
-		196099F21B24523F00EEB9D6 /* utils */ = {
+		196099F21B24523F00EEB9D6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = utils;
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		196099F91B2452C400EEB9D6 /* colors */ = {
@@ -1210,7 +1210,7 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		1976FBB01A4B05FF0016130B /* topic */ = {
+		1976FBB01A4B05FF0016130B /* Topics */ = {
 			isa = PBXGroup;
 			children = (
 				195EA0AD1AD52DE7000C4341 /* QZBCategory.h */,
@@ -1220,16 +1220,16 @@
 				194BD6B01BB15F5500DBDC2C /* QZBGameTopic.h */,
 				194BD6B11BB15F5500DBDC2C /* QZBGameTopic.m */,
 			);
-			name = topic;
+			name = Topics;
 			sourceTree = "<group>";
 		};
-		1976FBB41A4B11DF0016130B /* serverAPI */ = {
+		1976FBB41A4B11DF0016130B /* API */ = {
 			isa = PBXGroup;
 			children = (
 				1976FBB51A4B12280016130B /* QZBServerManager.h */,
 				1976FBB61A4B12280016130B /* QZBServerManager.m */,
 			);
-			name = serverAPI;
+			name = API;
 			sourceTree = "<group>";
 		};
 		197E47C71A8F6B4400E43120 /* CategoryChoosers */ = {
@@ -1282,7 +1282,7 @@
 			name = Buttons;
 			sourceTree = "<group>";
 		};
-		199667001B209B8D00793610 /* messanger */ = {
+		199667001B209B8D00793610 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
 				19609A081B287A2400EEB9D6 /* QZBAnotherUserWithLastMessages.h */,
@@ -1290,7 +1290,7 @@
 				198CB9831B6F8AC4007E5B4A /* QZBLayerMessagerManager.h */,
 				198CB9841B6F8AC4007E5B4A /* QZBLayerMessagerManager.m */,
 			);
-			name = messanger;
+			name = Messenger;
 			sourceTree = "<group>";
 		};
 		199CD9431A8BAFAB00FBF820 /* Achievement */ = {
@@ -1399,15 +1399,15 @@
 		19CB508D1A3C32E700A3CD74 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1901BA0F1B3026AD003E2895 /* rooms */,
-				196099F21B24523F00EEB9D6 /* utils */,
-				199667001B209B8D00793610 /* messanger */,
-				19446A6B1A9E224E005BB485 /* IAP */,
-				1976FBB41A4B11DF0016130B /* serverAPI */,
-				191E12EE1A8CA1FD00AFB829 /* achievement */,
-				1976FBB01A4B05FF0016130B /* topic */,
-				19CB509A1A3C388900A3CD74 /* User */,
-				19CB50931A3C33B900A3CD74 /* Session */,
+				1901BA0F1B3026AD003E2895 /* Rooms */,
+				196099F21B24523F00EEB9D6 /* Utils */,
+				199667001B209B8D00793610 /* Messenger */,
+				19446A6B1A9E224E005BB485 /* In-app purchases */,
+				1976FBB41A4B11DF0016130B /* API */,
+				191E12EE1A8CA1FD00AFB829 /* Achievements */,
+				1976FBB01A4B05FF0016130B /* Topics */,
+				19CB509A1A3C388900A3CD74 /* Users */,
+				19CB50931A3C33B900A3CD74 /* Sessions */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1442,7 +1442,7 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		19CB50931A3C33B900A3CD74 /* Session */ = {
+		19CB50931A3C33B900A3CD74 /* Sessions */ = {
 			isa = PBXGroup;
 			children = (
 				19A127701AB9DE9C009075AD /* challenge */,
@@ -1458,10 +1458,10 @@
 				19E344591A7A2117000D0EDB /* QZBOnlineSessionWorker.h */,
 				19E3445A1A7A2117000D0EDB /* QZBOnlineSessionWorker.m */,
 			);
-			name = Session;
+			name = Sessions;
 			sourceTree = "<group>";
 		};
-		19CB509A1A3C388900A3CD74 /* User */ = {
+		19CB509A1A3C388900A3CD74 /* Users */ = {
 			isa = PBXGroup;
 			children = (
 				1944A1751B0F543A0095C600 /* current user */,
@@ -1475,7 +1475,7 @@
 				1901BA1E1B30646C003E2895 /* QZBUserWithTopic.h */,
 				1901BA1F1B30646C003E2895 /* QZBUserWithTopic.m */,
 			);
-			name = User;
+			name = Users;
 			sourceTree = "<group>";
 		};
 		19CB50A71A3C567A00A3CD74 /* question */ = {
