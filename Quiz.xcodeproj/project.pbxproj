@@ -2107,7 +2107,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				INFOPLIST_FILE = "$(SRCROOT)/Quiz/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.1vs1;
@@ -2130,7 +2130,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				INFOPLIST_FILE = "$(SRCROOT)/Quiz/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.1vs1;
@@ -2153,9 +2153,9 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "QZBQuizBattleTests/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "QuizTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "drumih.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.QuizTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiz.app/Quiz";
 			};
@@ -2168,9 +2168,9 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "QZBQuizBattleTests/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "QuizTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "drumih.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.QuizTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiz.app/Quiz";
 			};
