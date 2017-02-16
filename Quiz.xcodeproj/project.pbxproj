@@ -1201,7 +1201,7 @@
 			name = viewcontrollers;
 			sourceTree = "<group>";
 		};
-		197669991A67D057006C2757 /* Registration and login */ = {
+		197669991A67D057006C2757 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				197669961A67D040006C2757 /* QZBRegisterAndLoginBaseVC.h */,
@@ -1215,7 +1215,7 @@
 				195FDA861ADA84E8000F86F9 /* QZBRegistrationUsernameInput.h */,
 				195FDA871ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m */,
 			);
-			name = "Registration and login";
+			name = Auth;
 			sourceTree = "<group>";
 		};
 		1976FBAC1A4B04B50016130B /* cells */ = {
@@ -1478,7 +1478,7 @@
 			children = (
 				1901BA131B30354A003E2895 /* rooms */,
 				197F2C021AF2779E00C8BC2A /* messager */,
-				197669991A67D057006C2757 /* Registration and login */,
+				197669991A67D057006C2757 /* Auth */,
 				19A1276C1AB9DCB3009075AD /* main */,
 				19446A721A9E35CE005BB485 /* IAP */,
 				199CD9431A8BAFAB00FBF820 /* achievement */,
