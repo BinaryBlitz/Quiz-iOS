@@ -10,7 +10,7 @@
 #import "QZBAnotherUser.h"
 #import "QZBUserWithTopic.h"
 #import "QZBGameTopic.h"
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBServerManager.h"
 #import "QZBTopicWorker.h"
 

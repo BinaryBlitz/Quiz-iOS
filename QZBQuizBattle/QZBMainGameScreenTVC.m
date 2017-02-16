@@ -21,7 +21,7 @@
 #import "QZBProgressViewController.h"
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBResultOfSessionCell.h"
 #import "QZBAnotherUser.h"
 #import "QZBEndGameVC.h"

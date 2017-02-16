@@ -18,7 +18,7 @@
 #import "NSString+QZBStringCategory.h"
 #import <Crashlytics/Crashlytics.h>
 #import "QZBServerManager.h"
-#import <CoreData+MagicalRecord.h>
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBGameTopic.h"
 
 

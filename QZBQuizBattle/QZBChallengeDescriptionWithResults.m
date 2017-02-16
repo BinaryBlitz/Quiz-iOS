@@ -11,7 +11,7 @@
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
 #import "QZBGameTopic.h"
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 
 
 @interface QZBChallengeDescriptionWithResults()
