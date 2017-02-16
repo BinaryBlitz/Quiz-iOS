@@ -707,8 +707,8 @@
 				52F9464174E630E1C51630F7 /* Frameworks */,
 				5DD19AEA5BA026DBD462D42E /* Pods */,
 				191559C21A39CDD400462C93 /* Products */,
-				191559C31A39CDD400462C93 /* QZBQuizBattle */,
-				191559E01A39CDD400462C93 /* QZBQuizBattleTests */,
+				191559C31A39CDD400462C93 /* Quiz */,
+				191559E01A39CDD400462C93 /* QuizTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -721,7 +721,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		191559C31A39CDD400462C93 /* QZBQuizBattle */ = {
+		191559C31A39CDD400462C93 /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
 				19CB508F1A3C32FA00A3CD74 /* Controller */,
@@ -733,7 +733,7 @@
 				199820AB1A44A039003AECB9 /* Main.storyboard */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
 			);
-			path = QZBQuizBattle;
+			path = Quiz;
 			sourceTree = "<group>";
 		};
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
@@ -753,13 +753,13 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		191559E01A39CDD400462C93 /* QZBQuizBattleTests */ = {
+		191559E01A39CDD400462C93 /* QuizTests */ = {
 			isa = PBXGroup;
 			children = (
 				191559E11A39CDD400462C93 /* Supporting Files */,
 				191559E31A39CDD400462C93 /* QZBQuizBattleTests.m */,
 			);
-			path = QZBQuizBattleTests;
+			path = QuizTests;
 			sourceTree = "<group>";
 		};
 		191559E11A39CDD400462C93 /* Supporting Files */ = {
@@ -940,7 +940,6 @@
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
 			);
-			name = Categories;
 			path = Categories;
 			sourceTree = "<group>";
 		};
@@ -1053,7 +1052,6 @@
 				195EA0A91AD520AA000C4341 /* UIButton+Badge.h */,
 				195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */,
 			);
-			name = Libraries;
 			path = Libraries;
 			sourceTree = "<group>";
 		};
@@ -1393,7 +1391,6 @@
 				192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */,
 				19C78A3C1B468B2500B46372 /* QZBRoomUsersView.xib */,
 			);
-			name = UI;
 			path = UI;
 			sourceTree = "<group>";
 		};
@@ -2104,7 +2101,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				INFOPLIST_FILE = "QZBQuizBattle/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.1vs1;
@@ -2126,7 +2123,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
-				INFOPLIST_FILE = "QZBQuizBattle/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.binaryblitz.1vs1;
