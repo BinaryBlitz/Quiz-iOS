@@ -644,7 +644,7 @@
 			name = rooms;
 			sourceTree = "<group>";
 		};
-		1901BA131B30354A003E2895 /* rooms */ = {
+		1901BA131B30354A003E2895 /* Rooms */ = {
 			isa = PBXGroup;
 			children = (
 				19AB8DF71B9DD03D004329F8 /* messages */,
@@ -658,7 +658,7 @@
 				192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */,
 				192CDE2F1B41A28B003992C7 /* QZBSettingTopicProtocol.h */,
 			);
-			name = rooms;
+			name = Rooms;
 			sourceTree = "<group>";
 		};
 		1901BA171B303920003E2895 /* rooms */ = {
@@ -705,13 +705,13 @@
 			name = game;
 			sourceTree = "<group>";
 		};
-		191137EF1BA59F85000115B0 /* newQuestions */ = {
+		191137EF1BA59F85000115B0 /* New questions */ = {
 			isa = PBXGroup;
 			children = (
 				191137F01BA5A086000115B0 /* QZBNewQuestionController.h */,
 				191137F11BA5A086000115B0 /* QZBNewQuestionController.m */,
 			);
-			name = newQuestions;
+			name = "New questions";
 			sourceTree = "<group>";
 		};
 		191137F31BA5AABC000115B0 /* newQuestion */ = {
@@ -750,8 +750,8 @@
 			children = (
 				19CB508F1A3C32FA00A3CD74 /* Controller */,
 				19CB508E1A3C32F000A3CD74 /* View */,
-				19CB508D1A3C32E700A3CD74 /* model */,
-				191E12E31A8BD3A700AFB829 /* resources */,
+				19CB508D1A3C32E700A3CD74 /* Models */,
+				191E12E31A8BD3A700AFB829 /* Resources */,
 				191559C41A39CDD400462C93 /* Supporting Files */,
 				199820AB1A44A039003AECB9 /* Main.storyboard */,
 				191559D41A39CDD400462C93 /* Images.xcassets */,
@@ -794,20 +794,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		191E12E31A8BD3A700AFB829 /* resources */ = {
+		191E12E31A8BD3A700AFB829 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				19CFA1931B5D856500DC8C43 /* logo-512.png */,
-				1944A1761B1082740095C600 /* fonts */,
-				191E46681B0279170037963F /* sounds */,
-				19B3746D1AE16673007F05EA /* animation */,
-				19D258D41AD8682C00F15395 /* icons */,
-				1983EE2F1AAC6DC200D59268 /* indicators */,
+				1944A1761B1082740095C600 /* Fonts */,
+				191E46681B0279170037963F /* Sounds */,
+				19B3746D1AE16673007F05EA /* Animations */,
+				19D258D41AD8682C00F15395 /* Icons */,
+				1983EE2F1AAC6DC200D59268 /* Indicators */,
 				1944A1951B10CB050095C600 /* placeholderIMG.png */,
 				191E12E61A8BD48500AFB829 /* notAchiv.png */,
 				191E12E41A8BD3CA00AFB829 /* Artboard 1.png */,
 			);
-			name = resources;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		191E12EE1A8CA1FD00AFB829 /* achievement */ = {
@@ -838,7 +838,7 @@
 			name = horizontal;
 			sourceTree = "<group>";
 		};
-		191E46681B0279170037963F /* sounds */ = {
+		191E46681B0279170037963F /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
 				19D282C81B8B64D4007213F9 /* correct.wav */,
@@ -848,7 +848,7 @@
 				19D282C51B8B5E99007213F9 /* win.wav */,
 				1989C6C61B74BB5A001ECF3A /* melody.wav */,
 			);
-			name = sounds;
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		192CDE251B418D56003992C7 /* create room */ = {
@@ -983,7 +983,7 @@
 			name = "topic and category";
 			sourceTree = "<group>";
 		};
-		194258261B18BB63008A3449 /* views */ = {
+		194258261B18BB63008A3449 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				19AB8E031B9DDA77004329F8 /* rooms */,
@@ -992,7 +992,7 @@
 				19C78A3E1B468EED00B46372 /* QZBRoomUsersView.h */,
 				19C78A3F1B468EED00B46372 /* QZBRoomUsersView.m */,
 			);
-			name = views;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		19446A6B1A9E224E005BB485 /* IAP */ = {
@@ -1056,7 +1056,7 @@
 			name = "current user";
 			sourceTree = "<group>";
 		};
-		1944A1761B1082740095C600 /* fonts */ = {
+		1944A1761B1082740095C600 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				1944A1791B1098A40095C600 /* MuseoSansCyrl_0.otf */,
@@ -1070,7 +1070,7 @@
 				1944A1811B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf */,
 				1944A1821B1098A40095C600 /* MuseoSansCyrl.otf */,
 			);
-			name = fonts;
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		195EA0A61AD52093000C4341 /* lib */ = {
@@ -1218,7 +1218,7 @@
 			name = Auth;
 			sourceTree = "<group>";
 		};
-		1976FBAC1A4B04B50016130B /* cells */ = {
+		1976FBAC1A4B04B50016130B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				191137F31BA5AABC000115B0 /* newQuestion */,
@@ -1236,7 +1236,7 @@
 				19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */,
 				19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */,
 			);
-			name = cells;
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		1976FBB01A4B05FF0016130B /* topic */ = {
@@ -1287,7 +1287,7 @@
 			name = settings;
 			sourceTree = "<group>";
 		};
-		197F2C021AF2779E00C8BC2A /* messager */ = {
+		197F2C021AF2779E00C8BC2A /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
 				197F2C031AF27F9700C8BC2A /* QZBMessagerVC.h */,
@@ -1295,10 +1295,10 @@
 				196099FB1B2721C300EEB9D6 /* QZBMessangerList.h */,
 				196099FC1B2721C300EEB9D6 /* QZBMessangerList.m */,
 			);
-			name = messager;
+			name = Messenger;
 			sourceTree = "<group>";
 		};
-		198066A81A39DB6500B749BA /* buttons */ = {
+		198066A81A39DB6500B749BA /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				1901B9AD1A4729A9002FC87C /* QZBAnswerButton.h */,
@@ -1308,16 +1308,16 @@
 				191B9DDC1AACC48500611C71 /* QZBAnswerCircle.h */,
 				191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */,
 			);
-			name = buttons;
+			name = Buttons;
 			sourceTree = "<group>";
 		};
-		1983EE2F1AAC6DC200D59268 /* indicators */ = {
+		1983EE2F1AAC6DC200D59268 /* Indicators */ = {
 			isa = PBXGroup;
 			children = (
 				1983EE3A1AAC8C1700D59268 /* icon_back_white.png */,
 				1983EE301AAC6DDF00D59268 /* icon_next.png */,
 			);
-			name = indicators;
+			name = Indicators;
 			sourceTree = "<group>";
 		};
 		199667001B209B8D00793610 /* messanger */ = {
@@ -1331,13 +1331,13 @@
 			name = messanger;
 			sourceTree = "<group>";
 		};
-		199CD9431A8BAFAB00FBF820 /* achievement */ = {
+		199CD9431A8BAFAB00FBF820 /* Achievement */ = {
 			isa = PBXGroup;
 			children = (
 				199CD9441A8BB11600FBF820 /* QZBAchievementCVC.h */,
 				199CD9451A8BB11600FBF820 /* QZBAchievementCVC.m */,
 			);
-			name = achievement;
+			name = Achievement;
 			sourceTree = "<group>";
 		};
 		199CD9471A8BB19B00FBF820 /* collectionViewCells */ = {
@@ -1349,14 +1349,14 @@
 			name = collectionViewCells;
 			sourceTree = "<group>";
 		};
-		19A1276C1AB9DCB3009075AD /* main */ = {
+		19A1276C1AB9DCB3009075AD /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				191137EF1BA59F85000115B0 /* newQuestions */,
+				191137EF1BA59F85000115B0 /* New questions */,
 				19A1276D1AB9DCDE009075AD /* QZBMainGameScreenTVC.h */,
 				19A1276E1AB9DCDE009075AD /* QZBMainGameScreenTVC.m */,
 			);
-			name = main;
+			name = Main;
 			sourceTree = "<group>";
 		};
 		19A127701AB9DE9C009075AD /* challenge */ = {
@@ -1425,7 +1425,7 @@
 			name = rooms;
 			sourceTree = "<group>";
 		};
-		19B3746D1AE16673007F05EA /* animation */ = {
+		19B3746D1AE16673007F05EA /* Animations */ = {
 			isa = PBXGroup;
 			children = (
 				191E46601B023CD60037963F /* leftGreen.png */,
@@ -1434,7 +1434,7 @@
 				191E46631B023CD60037963F /* rightRed.png */,
 				1943E8D31AF6549E00129042 /* flashWhite.png */,
 			);
-			name = animation;
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		19C78A391B4687B800B46372 /* ui */ = {
@@ -1446,7 +1446,7 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
-		19CB508D1A3C32E700A3CD74 /* model */ = {
+		19CB508D1A3C32E700A3CD74 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				1901BA0F1B3026AD003E2895 /* rooms */,
@@ -1459,16 +1459,16 @@
 				19CB509A1A3C388900A3CD74 /* User */,
 				19CB50931A3C33B900A3CD74 /* Session */,
 			);
-			name = model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		19CB508E1A3C32F000A3CD74 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				194258261B18BB63008A3449 /* views */,
-				19D691181A6E5E5B008B2AE1 /* textFields */,
-				1976FBAC1A4B04B50016130B /* cells */,
-				198066A81A39DB6500B749BA /* buttons */,
+				194258261B18BB63008A3449 /* Views */,
+				19D691181A6E5E5B008B2AE1 /* Text fields */,
+				1976FBAC1A4B04B50016130B /* Cells */,
+				198066A81A39DB6500B749BA /* Buttons */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1476,15 +1476,15 @@
 		19CB508F1A3C32FA00A3CD74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1901BA131B30354A003E2895 /* rooms */,
-				197F2C021AF2779E00C8BC2A /* messager */,
+				1901BA131B30354A003E2895 /* Rooms */,
+				197F2C021AF2779E00C8BC2A /* Messenger */,
 				197669991A67D057006C2757 /* Auth */,
-				19A1276C1AB9DCB3009075AD /* main */,
+				19A1276C1AB9DCB3009075AD /* Main */,
 				19446A721A9E35CE005BB485 /* IAP */,
-				199CD9431A8BAFAB00FBF820 /* achievement */,
-				19DEA8591A8552E800E610DB /* rating */,
-				19DFF33F1A700F5B00E8CB1C /* player */,
-				19D691171A6D56D2008B2AE1 /* topic and group choose */,
+				199CD9431A8BAFAB00FBF820 /* Achievement */,
+				19DEA8591A8552E800E610DB /* Rating */,
+				19DFF33F1A700F5B00E8CB1C /* Player */,
+				19D691171A6D56D2008B2AE1 /* Topic and group select */,
 				19D691161A6D56A1008B2AE1 /* Game */,
 				19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */,
 				19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */,
@@ -1556,11 +1556,11 @@
 			name = friends;
 			sourceTree = "<group>";
 		};
-		19D258D41AD8682C00F15395 /* icons */ = {
+		19D258D41AD8682C00F15395 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = icons;
+			name = Icons;
 			sourceTree = "<group>";
 		};
 		19D691161A6D56A1008B2AE1 /* Game */ = {
@@ -1578,7 +1578,7 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
-		19D691171A6D56D2008B2AE1 /* topic and group choose */ = {
+		19D691171A6D56D2008B2AE1 /* Topic and group select */ = {
 			isa = PBXGroup;
 			children = (
 				1976FBA91A4B03E40016130B /* QZBTopicChooserController.h */,
@@ -1588,10 +1588,10 @@
 				197B4E081AB3647E00BBEDBC /* QZBFriendsChallengeTVC.h */,
 				197B4E091AB3647E00BBEDBC /* QZBFriendsChallengeTVC.m */,
 			);
-			name = "topic and group choose";
+			name = "Topic and group select";
 			sourceTree = "<group>";
 		};
-		19D691181A6E5E5B008B2AE1 /* textFields */ = {
+		19D691181A6E5E5B008B2AE1 /* Text fields */ = {
 			isa = PBXGroup;
 			children = (
 				19D691221A6E6110008B2AE1 /* QZBRegistrationAndLoginTextFieldBase.h */,
@@ -1603,7 +1603,7 @@
 				19D691281A6EA4E8008B2AE1 /* QZBUserNameTextField.h */,
 				19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */,
 			);
-			name = textFields;
+			name = "Text fields";
 			sourceTree = "<group>";
 		};
 		19D891471ABB2DB000251ADF /* achievments */ = {
@@ -1613,7 +1613,7 @@
 			name = achievments;
 			sourceTree = "<group>";
 		};
-		19DEA8591A8552E800E610DB /* rating */ = {
+		19DEA8591A8552E800E610DB /* Rating */ = {
 			isa = PBXGroup;
 			children = (
 				197E47C71A8F6B4400E43120 /* CategoryChoosers */,
@@ -1624,10 +1624,10 @@
 				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
 				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
 			);
-			name = rating;
+			name = Rating;
 			sourceTree = "<group>";
 		};
-		19DFF33F1A700F5B00E8CB1C /* player */ = {
+		19DFF33F1A700F5B00E8CB1C /* Player */ = {
 			isa = PBXGroup;
 			children = (
 				19CECFB11AB099EA002F9224 /* friends */,
@@ -1637,7 +1637,7 @@
 				19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */,
 				19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */,
 			);
-			name = player;
+			name = Player;
 			sourceTree = "<group>";
 		};
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
