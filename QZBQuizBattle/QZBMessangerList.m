@@ -37,7 +37,7 @@
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self initStatusbarWithColor:[UIColor blackColor]];
     if([[QZBCurrentUser sharedInstance] needStartMessager] &&
-       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
         
         [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
             

@@ -17,7 +17,7 @@ target 'Quiz' do
   pod 'DFImageManager/AFNetworking', '~> 0.3'
   pod 'DFImageManager/GIF', '~> 0.3'
   pod 'DateTools', '~> 1.5'
-  pod 'LayerKit', '~> 0.15.0'
+  pod 'LayerKit', '~> 0.17'
   pod 'UAAppReviewManager', '~> 0.2'
   pod 'SlackTextViewController', '~> 1.6'
   pod 'LoremIpsum', '~> 1.0'

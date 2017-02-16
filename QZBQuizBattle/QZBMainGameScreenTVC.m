@@ -811,7 +811,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 }
 
 -(void)authenticateLayer:(id)result {
-    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID) {
+    if([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
         [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
             NSLog(@"done mof %@", error);
         }];

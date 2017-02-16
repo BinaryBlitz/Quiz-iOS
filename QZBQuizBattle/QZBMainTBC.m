@@ -135,7 +135,7 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
         [[QZBServerManager sharedManager] GETCategoriesOnSuccess:nil onFailure:nil];
         [[QZBFriendRequestManager sharedInstance] updateRequests];
 
-     //   if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUserID){
+     //   if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID){
         
     
     //    [QZBCurrentUser sharedInstance]
