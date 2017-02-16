@@ -9,7 +9,7 @@
 #import "QZBTopicWorker.h"
 #import "QZBGameTopic.h"
 //#import "QZBServerManager.h"
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBCategory.h"
 
 @implementation QZBTopicWorker

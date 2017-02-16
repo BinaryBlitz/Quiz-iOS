@@ -32,71 +32,65 @@
 @implementation QZBAchievement
 
 - (instancetype)initWithName:(NSString *)name imageName:(NSString *)imgName {
-    self = [super init];
-    if (self) {
-        self.name = name;
-        self.image = [UIImage imageNamed:imgName];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.name = name;
+    self.image = [UIImage imageNamed:imgName];
+  }
+  return self;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
-    self = [super init];
-    if (self) {
-        
-        self.name = dict[@"name"];
-        self.achievementID = dict[@"id"];
-        self.achievementDescription = dict[@"description"];
-        self.isAchieved = [dict[@"achieved"] boolValue];
-        
-        
-        if(![dict[@"icon_url"] isEqual:[NSNull null]] && dict[@"icon_url"] ){
-            
-            
-            NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:dict[@"icon_url"]];
-            
-            self.imageURL = [NSURL URLWithString:urlAsString];
-            
-            
-            DFImageRequestOptions *options = [DFImageRequestOptions new];
-            //       // options.allowsClipping = YES;
-            options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad ) };
-            options.expirationAge = 60*60*24*10;
-            options.priority = DFImageRequestPriorityLow;
-            
-            DFImageRequest *request = [DFImageRequest requestWithResource:self.imageURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
-            
-            [[DFImageManager sharedManager] requestImageForRequest:request
-                                                        completion:^(UIImage *image, NSDictionary *info) {
-                                                            
-                                                         //   NSLog(@"achieve message %@",info);
-                                                        }];
+  self = [super init];
+  if (self) {
 
-   
-        }
-        
+    self.name = dict[@"name"];
+    self.achievementID = dict[@"id"];
+    self.achievementDescription = dict[@"description"];
+    self.isAchieved = [dict[@"achieved"] boolValue];
+
+
+    if(![dict[@"icon_url"] isEqual:[NSNull null]] && dict[@"icon_url"] ){
+
+
+      NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:dict[@"icon_url"]];
+
+      self.imageURL = [NSURL URLWithString:urlAsString];
+
+
+      DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
+
+      options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad ) };
+      options.expirationAge = 60*60*24*10;
+      options.priority = DFImageRequestPriorityLow;
+
+      DFImageRequest *request = [DFImageRequest requestWithResource:self.imageURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
+
+      [[DFImageManager sharedManager] imageTaskForRequest:request completion:nil];
     }
-    return self;
+
+  }
+  return self;
 }
 
 -(void)makeAchievementGetted{
-    self.isAchieved = YES;
+  self.isAchieved = YES;
 }
 
 -(void)makeAchievementUnGetted{
-    self.isAchieved = NO;
+  self.isAchieved = NO;
 }
 
 -(BOOL)isEqual:(id)object{
-    if([object isKindOfClass:[QZBAchievement class]]){
-        QZBAchievement *anotherAchievement = (QZBAchievement *)object;
-        
-        if([anotherAchievement.achievementID isEqualToNumber:self.achievementID]){
-            return YES;
-        }
+  if([object isKindOfClass:[QZBAchievement class]]){
+    QZBAchievement *anotherAchievement = (QZBAchievement *)object;
+
+    if([anotherAchievement.achievementID isEqualToNumber:self.achievementID]){
+      return YES;
     }
-    return NO;
+  }
+  return NO;
 }
 
 

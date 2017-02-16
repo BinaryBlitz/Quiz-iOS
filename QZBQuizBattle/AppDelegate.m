@@ -13,7 +13,8 @@
 #import "VKSdk.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "CoreData+MagicalRecord.h"
+//#import <CoreData/CoreData.h>
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBQuizIAPHelper.h"
 #import "QZBQuizTopicIAPHelper.h"
 #import "QZBUser.h"

@@ -7,7 +7,7 @@
 //
 
 #import "QZBPaidTopicsController.h"
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBGameTopic.h"
 #import "UIColor+QZBProjectColors.h"
 

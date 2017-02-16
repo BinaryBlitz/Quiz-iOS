@@ -9,7 +9,7 @@
 #import "QZBProgressViewController.h"
 #import "QZBGameSessionViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
-#import "CoreData+MagicalRecord.h"
+#import "MagicalRecord/MagicalRecord.h"
 #import "QZBLobby.h"
 #import "QZBSession.h"
 #import "QZBOnlineSessionWorker.h"
@@ -45,12 +45,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @property (assign, nonatomic) BOOL isPlayAgain;
 
-//@property (assign, nonatomic) BOOL isManualHandling; //если не приходит пуш запускается мануальное
-//управление
-//показывается уведомление об ошибках на сервере
-
-//@property(strong, nonatomic) PTPusher *client;
-
 @end
 
 @implementation QZBProgressViewController
@@ -61,14 +55,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self setNeedsStatusBarAppearanceUpdate];
 
     self.playOfflineButton.alpha = 0;
-
-    //    self.animationView = [[SVIndefiniteAnimatedView alloc]
-    //    initWithFrame:self.backView.bounds];
-    //    self.animationView.strokeThickness = 1.0;
-    //    self.animationView.strokeColor = [UIColor redColor];
-    //    self.animationView.radius = 60.0;
-    //
-    //    [self.backView addSubview:self.animationView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,10 +122,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-
-    //  self.animationView.center = self.backView.center;
-    //   [self initWhiteViewOn:self.backgroundImageView];
-    //   [self initBlurEffect];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
