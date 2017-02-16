@@ -574,6 +574,7 @@
 		19FA44F51B31951600B5E853 /* QZBEnterRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEnterRoomCell.m; sourceTree = "<group>"; };
 		19FA44F71B319FB200B5E853 /* QZBRoomTopicChooser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomTopicChooser.h; sourceTree = "<group>"; };
 		19FA44F81B319FB200B5E853 /* QZBRoomTopicChooser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomTopicChooser.m; sourceTree = "<group>"; };
+		37364F6B1E56410100EA3900 /* Quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Quiz.entitlements; path = ../Quiz.entitlements; sourceTree = "<group>"; };
 		46B26F410645B8A84FB03459 /* libPods-QZBQuizBattle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QZBQuizBattle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF4067D9D934D74B0D9283BD /* Pods-Quiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz/Pods-Quiz.release.xcconfig"; sourceTree = "<group>"; };
 		D0DA7F0D46D192D4CF1A2E89 /* libPods-Quiz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Quiz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -739,6 +740,7 @@
 		191559C41A39CDD400462C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				37364F6B1E56410100EA3900 /* Quiz.entitlements */,
 				19407B121AE8E79600A12F20 /* Categories */,
 				195EA0A61AD52093000C4341 /* Libraries */,
 				19C78A391B4687B800B46372 /* UI */,
@@ -1656,7 +1658,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = "Andrey Mikhaylov";
+				ORGANIZATIONNAME = "Binary Blitz";
 				TargetAttributes = {
 					191559C01A39CDD400462C93 = {
 						CreatedOnToolsVersion = 6.1;
@@ -1667,6 +1669,9 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -2097,6 +2102,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Quiz/Quiz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
 				CURRENT_PROJECT_VERSION = 26;
@@ -2119,6 +2125,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Quiz/Quiz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
 				CURRENT_PROJECT_VERSION = 26;
