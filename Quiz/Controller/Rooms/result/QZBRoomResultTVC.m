@@ -261,11 +261,9 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
                                                                                                   onFailure:^(NSError *error, NSInteger statusCode) {
                                                                                                     [self.refreshControl endRefreshing];
                                                                                                   }];
-
                                           }
                                           onFailure:^(NSError *error, NSInteger statusCode) {
                                             [self.refreshControl endRefreshing];
-
                                           }];
   }
 }
@@ -389,7 +387,6 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
   [alert showInfo:self.tabBarController
             title:title subTitle:subTitle
  closeButtonTitle:@"Нет" duration:0.0f];
-
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

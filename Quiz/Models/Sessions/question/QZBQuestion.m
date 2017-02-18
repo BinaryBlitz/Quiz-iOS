@@ -118,7 +118,6 @@
     self.question = questText;
     self.rightAnswer = correctAnswer;
     self.questionId = questionID;
-
   }
   return self;
 }

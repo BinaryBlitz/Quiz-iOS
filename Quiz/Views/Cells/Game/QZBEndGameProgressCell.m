@@ -61,7 +61,6 @@
   self.circularOldProgress.tintColor = [UIColor lightBlueColor];
   self.circularProgress.tintColor = [UIColor lightGreenColor];
   self.circularProgress.animationDuration = 2.0;
-
 }
 
 - (void)initCellWithBeginScore:(NSInteger)beginScore {
@@ -151,7 +150,6 @@
           self.circularProgress.progress = 0.0;
           self.currentLevel++;
           [self turningCircularView];
-
         });
   }
 }

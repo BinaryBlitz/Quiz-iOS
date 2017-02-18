@@ -31,11 +31,9 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     self.outgoing = [outgoing mutableCopy];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:QZBFriendRequestUpdated object:nil];
-
   }                                                   onFailure:^(NSError *error, NSInteger statusCode) {
     //  NSLog(@"request err %@", error);
   }];
-
 }
 
 #pragma mark - actions
@@ -51,7 +49,6 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
       if (callback) {
         callback(YES);
       }
-
     }                                                      onFailure:^(NSError *error, NSInteger statusCode) {
       if (callback) {
         callback(NO);
@@ -86,11 +83,9 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     [self.outgoing addObject:friendRequest];
 
     callback(YES);
-
   }                                        onFailure:^(NSError *error, NSInteger statusCode) {
     callback(NO);
   }];
-
 }
 
 #pragma mark - friend state
@@ -106,7 +101,6 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
     return QZBFriendStateOutcomingRequest;
   }
   return QZBFriendStateNotDefined;
-
 }
 
 #pragma mark - support methods
@@ -136,7 +130,6 @@ NSString *const QZBFriendRequestUpdated = @"QZBFriendRequestUpdated";
       callback(NO);
     }
   }
-
 }
 
 - (QZBFriendRequest *)findIncomingUser:(id <QZBUserProtocol>)user {

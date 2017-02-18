@@ -38,7 +38,6 @@
   if ([QZBFriendRequestManager sharedInstance].incoming.count == 0) {
     self.navigationItem.rightBarButtonItem = nil;
   }
-
 }
 
 #pragma mark - custom init
@@ -70,9 +69,7 @@
       //[NSString stringWithFormat:@"Заявки (%ld)", count];
       self.navigationItem.rightBarButtonItem.badgeValue =
           [NSString stringWithFormat:@"%ld", (long) count];
-
     }
-
   } else {
     // self.friendsRequestsButton.enabled = NO;
   }
@@ -205,7 +202,6 @@ didEndDisplayingCell:(UITableViewCell *)cell
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
   return 71.0;
-
 }
 
 #pragma mark - Navigation
@@ -220,7 +216,6 @@ didEndDisplayingCell:(UITableViewCell *)cell
     QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
 
     [vc initPlayerPageWithUser:self.user];
-
   } else if ([segue.identifier isEqualToString:@"showFriendsRequests"]) {
     QZBFriendsRequestsTVC *destinationVC =
         (QZBFriendsRequestsTVC *) segue.destinationViewController;
@@ -248,7 +243,6 @@ didEndDisplayingCell:(UITableViewCell *)cell
   } else {
     return nil;
   }
-
 }
 
 @end

@@ -72,7 +72,6 @@
 
     return [self initWithAnswersAndTimes:answersWithTime];
   }
-
 }
 
 - (void)dealloc {

@@ -98,7 +98,6 @@
     //   navigationController.topic = self.choosedTopic;
 
     [navigationController initSessionWithTopic:self.choosedTopic user:self.user];
-
   } else if ([segue.identifier isEqualToString:@"showRate"]) {
     QZBRatingMainVC *destinationVC = segue.destinationViewController;
     [destinationVC initWithTopic:self.choosedTopic];
@@ -111,10 +110,8 @@
                                                         [destinationVC setFriendsOwner:user
                                                                             andFriends:friends
                                                                              gameTopic:self.choosedTopic];
-
                                                       }
                                                       onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                       }];
 
     //  [destinationVC setFriendsOwner:user andFriends:
@@ -176,7 +173,6 @@
     //                                                     fileExtension:kJSQSystemSoundTypeWAV];//REDO
     [tableView beginUpdates];
     [tableView endUpdates];
-
   } else {
     self.choosedTopic = self.topics[indexPath.row];
     [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
@@ -294,10 +290,8 @@
                                                   self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
                                                       sortedArrayUsingDescriptors:@[sort]];
                                                   [self.topicTableView reloadData];
-
                                                 }
                                                 onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                 }];
 }
 

@@ -117,7 +117,6 @@
          subTitle:descr
  closeButtonTitle:@"ОК"
          duration:0.0];
-
 }
 
 - (void)showAlertAboutUnvisibleTopic:(NSString *)topicName {
@@ -154,7 +153,6 @@
   [alert showInfo:self.tabBarController
             title:title subTitle:subTitle
  closeButtonTitle:@"Нет" duration:0.0f];
-
 }
 
 - (UILabel *)labelForNum:(NSInteger)num inView:(UIView *)view {

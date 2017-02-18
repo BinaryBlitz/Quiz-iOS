@@ -140,14 +140,12 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
           [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportImageCellIdentifier];
       [self configureImage:cell.questionImageView withQuest:q];
       return cell;
-
     } else {
       UITableViewCell *cell =
           [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportEmptyCellIdentifier];
 
       return cell;
     }
-
   } else if (indexPath.row > 1 && indexPath.row < 6) {
     QZBQuestuinReportAnswerCell *cell =
         [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportAnswerCellIdentifier];
@@ -229,7 +227,6 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
   if (indexPath.row == 0) {
     return 100.0;
-
   } else if (indexPath.row == 1) {
     if (q.imageURL)
       return self.imageHeight;

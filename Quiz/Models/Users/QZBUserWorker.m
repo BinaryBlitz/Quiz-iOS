@@ -29,7 +29,6 @@
   QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:dict];
 
   return user;
-
 }
 
 + (void)saveUser:(id <QZBUserProtocol>)user inConversation:(LYRConversation *)conversation {

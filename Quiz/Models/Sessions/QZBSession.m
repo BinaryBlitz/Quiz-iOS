@@ -126,7 +126,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         } else {
           opponent.imageURL = nil;
         }
-
       } else {
         self.userBeginingScore = [opponentDict[@"points"] integerValue];
 
@@ -187,7 +186,6 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 - (BOOL)isAnswerRightForQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer {
   if (qestion.rightAnswer == answer.answerNum) {
     return YES;
-
   } else {
     return NO;
   }

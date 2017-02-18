@@ -59,10 +59,8 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
                         [[NSNotificationCenter defaultCenter]
                             postNotificationName:@"QZBOnlineGameNeedStart"
                                           object:nil];
-
                       });
                 }
-
               }];
     [channel bindToEventNamed:@"challenge-declined" handleWithBlock:^(PTPusherEvent *channelEvent) {
 
@@ -78,7 +76,6 @@ NSString *const QZBPusherChallengeDeclined = @"QZBChallengeDeclined";
               handleWithBlock:^(PTPusherEvent *channelEvent) {
 
                 [weakSelf oppomentAnswered:channelEvent.data];
-
               }];
 
     [_client connect];

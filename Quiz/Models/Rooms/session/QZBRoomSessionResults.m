@@ -39,9 +39,7 @@
         } else {
           resultDict[userID] = @(points);
         }
-
       }
-
     }
 
     self.resDict = [NSDictionary dictionaryWithDictionary:resultDict];
@@ -53,7 +51,6 @@
 - (NSNumber *)pointsForUserWithID:(NSNumber *)userID {
 
   return self.resDict[userID];
-
 }
 
 - (NSInteger)pointsForTime:(NSInteger)time correct:(BOOL)correct {
@@ -63,7 +60,6 @@
   } else {
     return 0;
   }
-
 }
 
 

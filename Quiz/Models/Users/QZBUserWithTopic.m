@@ -20,7 +20,6 @@
     self.topic = topic;
     self.finished = YES;//redo
     self.points = @(0);
-
   }
   return self;
 }

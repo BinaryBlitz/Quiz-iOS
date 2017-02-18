@@ -155,7 +155,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [self unsubscribeFromMessages];
-
 }
 
 #pragma mark - support methods
@@ -193,7 +192,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
                                                 [self showAlertVersionUpdateWithType:updateType message:message];
                                               }
                                             } onFailure:^(NSError *error, NSInteger statusCode) {
-
       }];
 }
 
@@ -216,7 +214,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 - (void)showMajorUpdateWithMessage:(NSString *)message {
 
   [self showWithCompletionButton:nil message:message];
-
 }
 
 - (void)showMinorUpdateWithMessage:(NSString *)message {
@@ -224,7 +221,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
 }
 
 - (void)showBugFixWithMessage:(NSString *)message {
-
 }
 
 - (void)showWithCompletionButton:(NSString *)buttonTitle message:(NSString *)message {
@@ -249,7 +245,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
   [alert showInfo:self
             title:title subTitle:subTitle
  closeButtonTitle:buttonTitle duration:0.0f];
-
 }
 
 @end

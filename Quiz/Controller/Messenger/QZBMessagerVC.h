@@ -5,6 +5,4 @@
 
 - (void)initWithUser:(id <QZBUserProtocol>)user;
 
-//-(void)initWithUser:(id<QZBUserProtocol>)user userpic:(UIImage *)image;
-
 @end

@@ -139,7 +139,6 @@
                  direction:UIPageViewControllerNavigationDirectionForward
                   animated:YES
                 completion:^(BOOL finished) {
-
                 }];
 }
 

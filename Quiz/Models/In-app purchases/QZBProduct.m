@@ -36,11 +36,9 @@
       self.expiratesDate = [dateFormat dateFromString:dateAsString];
 
       self.dayCount = [self daysRemainingOnSubscription];
-
     } else {
       self.dayCount = -1;
     }
-
   }
   return self;
 }

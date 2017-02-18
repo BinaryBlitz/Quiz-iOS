@@ -65,7 +65,6 @@
     } else {
       self.imageURLBig = nil;
     }
-
   }
   return self;
 }
@@ -82,7 +81,6 @@
 
     self.imageURL = [coder decodeObjectForKey:@"user_image_url"];
     self.imageURLBig = [coder decodeObjectForKey:@"user_image_url_big"];
-
   }
   return self;
 }
@@ -136,7 +134,6 @@
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
 
   [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
-
 }
 
 - (void)makeUserRegisterWithUserName:(NSString *)username {
@@ -154,14 +151,12 @@
         self.imageURL = anotherUser.imageURL;
 
         changed = YES;
-
       }
 
       if (![self.imageURLBig isEqual:anotherUser.imageURLBig]) {
         self.imageURLBig = anotherUser.imageURLBig;
 
         changed = YES;
-
       }
 
       if (![self.name isEqual:anotherUser.name]) {
@@ -174,11 +169,9 @@
 
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
       }
-
     }                                       onFailure:^(NSError *error, NSInteger statusCode) {
     }];
   }
-
 }
 
 - (void)deleteImage {

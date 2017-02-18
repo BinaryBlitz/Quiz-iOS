@@ -41,7 +41,6 @@
     self.queryCount = queryCount;
   }
   return self;
-
 }
 
 - (instancetype)initWithLobbyID:(NSInteger)lobbyID
@@ -58,7 +57,6 @@
     self.fact = fact;
   }
   return self;
-
 }
 
 

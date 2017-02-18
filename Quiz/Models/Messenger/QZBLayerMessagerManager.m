@@ -262,7 +262,6 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
                                               [QZBUserWorker saveUser:anotherUser inConversation:c];
                                               [QZBUserWorker saveUser:user inConversation:c];
                                             } onFailure:^(NSError *error, NSInteger statusCode) {
-
         }];
   }
 }
@@ -328,12 +327,10 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
     NSError *error = nil;
     [conversation delete:LYRDeletionModeMyDevices error:&error];
   }
-
 }
 
 - (void)logOut {
   [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
-
   }];
 }
 

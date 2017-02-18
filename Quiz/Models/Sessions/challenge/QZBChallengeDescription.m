@@ -39,7 +39,6 @@
 
     self.topicName = self.topic.name;
     self.topicID = dict[@"topic_id"];
-
   }
   return self;
 }

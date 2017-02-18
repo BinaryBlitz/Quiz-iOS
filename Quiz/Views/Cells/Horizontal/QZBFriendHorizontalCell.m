@@ -5,7 +5,6 @@
 - (void)setFriendArray:(NSArray *)friendArray {
 
   [self setSomethingArray:friendArray];
-
 }
 
 /*

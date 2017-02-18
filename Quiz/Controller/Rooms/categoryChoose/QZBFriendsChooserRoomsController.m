@@ -29,7 +29,6 @@ NSString *const QZBUserAlreadyInvited = @"Пользователе уже при
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
                                                       object:nil];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -37,7 +36,6 @@ NSString *const QZBUserAlreadyInvited = @"Пользователе уже при
 
   [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedShowMessagerNotifications"
                                                       object:nil];
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,14 +43,12 @@ NSString *const QZBUserAlreadyInvited = @"Пользователе уже при
 
   id <QZBUserProtocol> user = [self userAtIndex:indexPath.row];
   [self inviteUser:user];
-
 }
 
 - (void)inviteUser:(id <QZBUserProtocol>)user {
   [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
   [[QZBServerManager sharedManager] POSTInviteFriendWithID:user.userID inRoomWithID:self.roomID onSuccess:^{
     [SVProgressHUD showSuccessWithStatus:@"Друг приглашен"];
-
   }                                              onFailure:^(NSError *error, NSInteger statusCode) {
     if (statusCode == 422) {
       [SVProgressHUD showErrorWithStatus:QZBUserAlreadyInvited];
@@ -68,7 +64,6 @@ NSString *const QZBUserAlreadyInvited = @"Пользователе уже при
            inRoomWithID:(NSNumber *)roomID {
   [self setFriendsOwner:user andFriends:friends];
   self.roomID = roomID;
-
 }
 
 /*

@@ -35,7 +35,6 @@
                     value:font
                     range:NSMakeRange(0, [atrName length])];
     self.name.attributedText = atrName;
-
   } else {
     self.name.text = user.name;
   }

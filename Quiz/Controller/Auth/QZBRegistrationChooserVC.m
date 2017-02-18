@@ -93,11 +93,9 @@ static NSArray *SCOPE = nil;
                                                         dispatch_get_main_queue(), ^{
                                                           [SVProgressHUD dismiss];
                                                         });
-
                                                   }];
 
       [self startWorking];
-
     } else if (error) {
       // Some error happend, but you may try later
     }

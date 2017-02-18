@@ -39,7 +39,6 @@
   } else {
     [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
   }
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -176,7 +175,6 @@ shouldChangeCharactersInRange:(NSRange)range
   picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
 
   [self presentViewController:picker animated:YES completion:NULL];
-
 }
 
 - (IBAction)selectPhoto:(UIButton *)sender {
@@ -187,7 +185,6 @@ shouldChangeCharactersInRange:(NSRange)range
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
   [self presentViewController:picker animated:YES completion:NULL];
-
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -198,13 +195,11 @@ shouldChangeCharactersInRange:(NSRange)range
   [self.userPicImageView loadNewPic:chosenImage];
 
   [picker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 
   [picker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 //
@@ -239,7 +234,6 @@ shouldChangeCharactersInRange:(NSRange)range
     [self.userNewPasswordAgainTextField becomeFirstResponder];
     [self.userNewPasswordAgainTextField shakeView];
     return NO;
-
   } else {
     return YES;
   }
@@ -255,7 +249,6 @@ shouldChangeCharactersInRange:(NSRange)range
   if ([self validateTextField:self.userNameTextField]) {
     [self updateUserName];
   }
-
 }
 
 - (void)patchPassword {
@@ -272,7 +265,6 @@ shouldChangeCharactersInRange:(NSRange)range
 
                          [TSMessage showNotificationWithTitle:@"Пароль не обновлен"
                                                          type:TSMessageNotificationTypeWarning];
-
                        }];
 }
 
@@ -295,7 +287,6 @@ shouldChangeCharactersInRange:(NSRange)range
                                                        [TSMessage showNotificationWithTitle:@"Имя обновлено"
                                                                                        type:TSMessageNotificationTypeSuccess];
                                                        [[QZBCurrentUser sharedInstance].user setUserName:newName];
-
                                                      }
                                                      onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
 
@@ -303,14 +294,12 @@ shouldChangeCharactersInRange:(NSRange)range
                                                          [TSMessage
                                                              showNotificationWithTitle:@"Это имя уже занято"
                                                                                   type:TSMessageNotificationTypeWarning];
-
                                                        } else {
                                                          [TSMessage
                                                              showNotificationWithTitle:@"Имя не обновлено, проверьте "
                                                                  @"интернет-соединение"
                                                                                   type:TSMessageNotificationTypeWarning];
                                                        }
-
                                                      }];
 }
 

@@ -162,12 +162,10 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
   if (self.onlineSessionWorker) {
     [self.onlineSessionWorker closeConnection];
-
   }
   self.bot = nil;
 
   self.isOfflineChallenge = YES;
-
 }
 
 - (BOOL)isRoom {
@@ -213,7 +211,6 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
                                                                 DDLogInfo(@"PATCHED");
                                                               } onFailure:^(NSError *error, NSInteger statusCode) {
-
       }];
 
   self.onlineSessionWorker = nil;
@@ -245,14 +242,12 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 - (void)updateTime:(NSTimer *)timer {
   if (self.questionTimer && [timer isEqual:self.questionTimer]) {
     self.currentTime++;
-
   } else {
     DDLogWarn(@"bad timer invalidate");
     [timer invalidate];
     timer = nil;
   }
   if (self.currentTime < 100) {
-
   } else {
     if (self.questionTimer) {
       [self.questionTimer invalidate];
@@ -389,7 +384,6 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
     [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserInRoomGaveAnswer
                                                         object:[NSDictionary dictionaryWithDictionary:payload]];
-
   }
 }
 //- (void)oneOfOpponentWithID:(NSNumber *)userID
@@ -471,7 +465,6 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUnshowQuestion"
                                                         object:self];
-
   } else {
     [self postNotificationWithGameResult];
 
@@ -528,7 +521,6 @@ NSString *const QZBOneOfUserInRoomGaveAnswer = @"oneOfUserInRoomGaveAnswer";
 
 
                                                   } onFailure:^(NSError *error, NSInteger statusCode) {
-
           }];
     }
   }

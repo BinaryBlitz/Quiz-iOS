@@ -45,7 +45,6 @@
       bezierPathWithRect:view.bounds].CGPath];
 
   [self addSubview:view];
-
 }
 
 - (void)addShadows {
@@ -91,7 +90,6 @@
   self.layer.shadowOpacity = 0.7;
   self.layer.shouldRasterize = YES;
   self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-
 }
 
 - (UIView *)addShadowWithBackgroundCopy {

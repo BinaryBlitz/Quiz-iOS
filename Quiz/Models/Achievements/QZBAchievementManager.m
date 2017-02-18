@@ -28,10 +28,8 @@
                                                      }
 
                                                      self.achievements = achievements;
-
                                                    }
                                                    onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                    }];
 }
 
@@ -55,11 +53,9 @@
 
       QZBAchievement *a = self.achievements[index];
       [a makeAchievementGetted];
-
     }
     return self.achievements;
   }
-
 }
 
 @end

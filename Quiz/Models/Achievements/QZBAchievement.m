@@ -55,7 +55,6 @@
 
       [[DFImageManager sharedManager] imageTaskForRequest:request completion:nil];
     }
-
   }
   return self;
 }

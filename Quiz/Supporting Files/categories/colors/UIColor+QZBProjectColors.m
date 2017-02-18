@@ -92,7 +92,6 @@
 
 + (UIColor *)roomColor {
   return [UIColor colorWithRed:48.0 / 255.0 green:143.0 / 255.0 blue:201.0 / 255.0 alpha:1.0];
-
 }
 
 + (UIColor *)sandColor {

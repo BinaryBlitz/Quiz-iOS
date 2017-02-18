@@ -19,12 +19,10 @@
 
     [[QZBCurrentUser sharedInstance].user updateUserFromServer];
     self.image = image;
-
   }                                                        onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
     [SVProgressHUD showErrorWithStatus:@"Не удалось обновить аватар"];
     self.image = oldImg;
   }];
-
 }
 
 - (void)loadNewPic:(UIImage *)image {
@@ -47,7 +45,6 @@
 
       [[QZBCurrentUser sharedInstance].user updateUserFromServer];
       self.image = image;
-
     }                                                onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
 
       [SVProgressHUD showErrorWithStatus:@"Не удалось обновить аватар"];

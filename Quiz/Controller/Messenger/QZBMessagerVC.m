@@ -16,7 +16,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 @interface QZBMessagerVC () <LYRQueryControllerDelegate>
 
-//@property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -40,14 +39,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
   [self initStatusbarWithColor:[UIColor blackColor]];
 
-  // self.automaticallyScrollsToMostRecentMessage = YES;
-
-  //  self.inputToolbar.contentView.textView.delegate = self;
-
   self.senderId = [QZBCurrentUser sharedInstance].user.userID.stringValue;
-  //  jidAsStringFromUser:[QZBCurrentUser sharedInstance].user];
   self.senderDisplayName = [QZBCurrentUser sharedInstance].user.userID.stringValue;
-  // self.showLoadEarlierMessagesHeader = YES;
   self.inputToolbar.contentView.leftBarButtonItem = nil;
 
   [self initAvatars];
@@ -61,15 +54,12 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
   // Do any additional setup after loading the view.
 
-  //[self.view setBackgroundColor:[UIColor darkGrayColor]];
-
   self.layerClient = [QZBLayerMessagerManager sharedInstance].layerClient;
 
   if ([[QZBCurrentUser sharedInstance] needStartMessager] &&
       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
     [[QZBLayerMessagerManager sharedInstance]
         connectWithCompletion:^(BOOL success, NSError *error) {
-
         }];
   }
 
@@ -131,13 +121,10 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   self.friend = user;
 
   [self setupLayerNotificationObservers];
-
   [self updateImages];
 }
 
 - (void)updateImages {
-  // NSURL *url = [NSURL URLWithString:self.user.imageURL];
-
   if (self.friend.imageURL) {
     NSURLRequest *request = [NSURLRequest requestWithURL:self.friend.imageURL];
 
@@ -153,7 +140,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                       diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 
       [self.collectionView reloadData];
-
     }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
       NSLog(@"Error: %@", error);
@@ -178,7 +164,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
           avatarImageWithImage:responseObject
                       diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
       [self.collectionView reloadData];
-
     }                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
       NSLog(@"Error: %@", error);
@@ -208,7 +193,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                                                                       } else {
                                                                         [self sendMessageCommon:text];
                                                                       }
-
                                                                     }
                                                                     onFailure:^(NSError *error, NSInteger statusCode) {
                                                                       [TSMessage showNotificationWithTitle:@"Подключение к серверу"
@@ -226,7 +210,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     [self sendMessage:text];
     [self fetchLayerConversation];
     [self finishSendingMessageAnimated:YES];
-
   } else {
     [TSMessage showNotificationWithTitle:@"Подключение к серверу"
                                 subtitle:@"Попробуйте позже"
@@ -238,14 +221,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 - (id <JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
         messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-  //    LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
-  //    LYRMessagePart *messagePart = message.parts[0];
-  //    NSString *text = [[NSString alloc]initWithData:messagePart.data
-  //                                          encoding:NSUTF8StringEncoding];
-
   JSQMessage *messageView = [self messageAtIndexPath:indexPath];
-
-  return messageView;  //[self.messages objectAtIndex:indexPath.item];
+  return messageView;
 }
 
 - (id <JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -256,7 +233,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
    *
    *  Otherwise, return your previously created bubble image data objects.
    */
-
   JSQMessage *message =
       [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
@@ -265,8 +241,6 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   }
 
   return self.incomingBubbleImageData;
-
-  //  return nil;
 }
 
 - (id <JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -664,7 +638,6 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Query Controller Delegate Methods
 
 - (void)queryControllerWillChangeContent:(LYRQueryController *)queryController {
-
 }
 
 - (void)queryController:(LYRQueryController *)controller

@@ -69,7 +69,6 @@ NSString const *UIBarButtonItem_badgeValueKey = @"UIBarButtonItem_badgeValueKey"
     self.badge.hidden = NO;
     [self updateBadgeValueAnimated:YES];
   }
-
 }
 
 - (CGSize)badgeExpectedSize {

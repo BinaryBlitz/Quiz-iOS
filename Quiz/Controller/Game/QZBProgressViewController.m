@@ -226,10 +226,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
   [[QZBServerManager sharedManager] PATCHCloseLobby:self.lobby
                                           onSuccess:^(QZBSession *session, id bot) {
-
                                           }
                                           onFailure:^(NSError *error, NSInteger statusCode) {
-
                                           }];
 
   [self.navigationController popViewControllerAnimated:YES];
@@ -281,22 +279,18 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                             onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
 
                                                               [self settitingSession:session bot:bot];
-
                                                             }
                                                             onFailure:^(NSError *error, NSInteger statusCode) {
                                                               [self showAlertServerProblem];
-
                                                             }];
   } else if (!self.user) {
     [[QZBServerManager sharedManager] POSTLobbyWithTopic:self.topic
                                                onSuccess:^(QZBLobby *lobby) {
 
                                                  [self sessionFromLobby:lobby];
-
                                                }
                                                onFailure:^(NSError *error, NSInteger statusCode) {
                                                  [self showAlertServerProblem];
-
                                                }];
   } else if (!self.isChallenge) {
     if (self.isPlayAgain) {
@@ -318,7 +312,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         } else {
           [self postLobbyChallenge];
         }
-
       }                                                    onFailure:^(NSError *error, NSInteger statusCode) {
         [self showAlertServerProblem];
       }];
@@ -374,11 +367,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                           onSuccess:^(QZBSession *session, QZBOpponentBot *bot) {
 
                                                             [self settitingSession:session bot:bot];
-
                                                           }
                                                           onFailure:^(NSError *error, NSInteger statusCode) {
                                                             [self showAlertServerProblem];
-
                                                           }];
 }
 
@@ -403,12 +394,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                                           animations:^{
 
                                                                             self.playOfflineButton.alpha = 1.0;
-
                                                                           }
                                                                           completion:^(BOOL finished) {
 
                                                                             self.playOfflineButton.enabled = YES;
-
                                                                           }];
 
                                                          // self.playOfflineButton.alpha = 1.0;//??
@@ -477,13 +466,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
                                                  [_timer invalidate];
                                                  _timer = nil;
-
                                                }
                                                onFailure:^(NSError *error, NSInteger statusCode) {
 
                                                  DDLogInfo(@"finding failure");
                                                  [self.navigationController popViewControllerAnimated:YES];
-
                                                }];
 }
 
@@ -565,11 +552,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
       [self.checkNeedStartTimer invalidate];
       self.checkNeedStartTimer = nil;
       [self enterGame];
-
     } else if (self.isEntered || self.isCanceled) {
       [self.checkNeedStartTimer invalidate];
       self.checkNeedStartTimer = nil;
-
     } else if (--self.needStartCounter <= 0 && !self.isEntered && !self.isCanceled) {
       [self.checkNeedStartTimer invalidate];
       self.checkNeedStartTimer = nil;

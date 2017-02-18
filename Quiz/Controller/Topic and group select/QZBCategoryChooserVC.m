@@ -157,7 +157,6 @@
         sortedArrayUsingDescriptors:@[sort]]];
 
     [self.mainTableView reloadData];
-
   }                                              onFailure:^(NSError *error, NSInteger statusCode) {
 
     [self.refreshControl endRefreshing];
@@ -168,7 +167,6 @@
       // fix it
       [self performSegueWithIdentifier:@"logOutUnauthorized" sender:nil];
     }
-
   }];
 }
 

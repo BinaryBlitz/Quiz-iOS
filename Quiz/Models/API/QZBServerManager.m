@@ -112,7 +112,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                       successAF([QZBCategory MR_findAll]);
                                     }
                                   }];
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogInfo(@"Error: %@", error);
@@ -143,9 +142,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                                                            if (successAF) {
                                                                              successAF(nil);
                                                                            }
-
                                                                          }];
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogInfo(@"Error: %@", error);
@@ -187,7 +184,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
           [QZBServerBaseUrl stringByAppendingString:backgroundURL];
 
       [self savePictureFromString:existingEntity.background_url];
-
     }  // TEST
 
     if (bannerURL && ![bannerURL isEqualToString:existingEntity.banner_url]) {
@@ -326,7 +322,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(resultDict);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -335,7 +330,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (failure) {
                                 failure(error, operation.response.statusCode);
                               }
-
                             }];
 }
 
@@ -385,7 +379,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success(lobby);
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                DDLogInfo(@"%@, /n %@", operation, error);
@@ -428,7 +421,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               }
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
                             }];
 }
 
@@ -447,7 +439,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 DDLogInfo(@"lobby closed");
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
                               }];
 }
 
@@ -470,12 +461,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
                                 DDLogInfo(@"patched");
-
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
                                 DDLogInfo(@"path error%@", error);
-
                               }];
 }
 
@@ -501,7 +490,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                   failure(error, operation.response.statusCode);
                                 }
                                 DDLogInfo(@"session close failure %@", error);
-
                               }];
 }
 
@@ -524,7 +512,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (success) {
                                   success();
                                 }
-
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                 DDLogInfo(@"ofline patch error");
@@ -532,7 +519,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (failure) {
                                   failure(error, operation.response.statusCode);
                                 }
-
                               }];
 }
 
@@ -577,7 +563,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success(session);
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -651,7 +636,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(challengeDescriptions);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               if (failure) {
@@ -782,7 +766,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (failure) {
                                  failure(error, operation.response.statusCode, problem);
                                }
-
                              }];
 }
 
@@ -814,7 +797,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-
                              }];
 }
 
@@ -843,7 +825,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                }
 
                                DDLogInfo(@"vk token failure %@  %@", error, operation.responseObject);
-
                              }];
 }
 
@@ -873,7 +854,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(user);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -899,7 +879,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                                               if (success) {
                                                                 success();
                                                               }
-
                                                             }
                                                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -914,7 +893,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                                                   failure(error, operation.response.statusCode);
                                                                 }
                                                               }
-
                                                             }];
 }
 
@@ -1068,7 +1046,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
                                if (success)
                                  success(fr);
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                if (failure) {
@@ -1092,7 +1069,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  DDLogInfo(@"deleted %@", responseObject);
                                  if (success)
                                    success();
-
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  if (failure) {
@@ -1133,7 +1109,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(incoming, outgoing);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1156,7 +1131,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (success) {
                                   success();
                                 }
-
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                 if (failure) {
@@ -1193,7 +1167,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(result);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1223,7 +1196,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success();
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogInfo(@"report error %@", error);
@@ -1247,7 +1219,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (success) {
                                   success();
                                 }
-
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                 if (failure) {
@@ -1269,7 +1240,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  if (success) {
                                    success();
                                  }
-
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  if (failure) {
@@ -1299,7 +1269,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1308,7 +1277,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-
                              }];
 }
 
@@ -1326,7 +1294,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                DDLogError(@"report error %@", error);
@@ -1402,7 +1369,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if ([SVProgressHUD isVisible]) {
                                 [SVProgressHUD dismiss];
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -1414,7 +1380,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (operation.response.statusCode == 0) {
                                 [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
                               }
-
                             }];
 }
 
@@ -1505,7 +1470,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (success) {
                                   success();
                                 }
-
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1533,7 +1497,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  if (success) {
                                    success();
                                  }
-
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  DDLogInfo(@"token delete failure %@", error);
@@ -1599,7 +1562,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1607,7 +1569,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-
                              }];
 }
 
@@ -1669,7 +1630,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(achievements);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogInfo(@"achievments error %@", error);
@@ -1677,7 +1637,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (failure) {
                                 failure(error, operation.response.statusCode);
                               }
-
                             }];
 }
 
@@ -1762,7 +1721,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (callback) {
                                  callback(token, nil);
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1773,7 +1731,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (callback) {
                                  callback(nil, error);
                                }
-
                              }];
 }
 
@@ -1852,7 +1809,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(r);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -1891,7 +1847,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-
                              }];
 }
 
@@ -1915,14 +1870,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
                                if (failure) {
                                  failure(error, operation.response.statusCode);
                                }
-
                              }];
 }
 
@@ -1973,7 +1926,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  if (failure) {
                                    failure(error, operation.response.statusCode);
                                  }
-
                                }];
 }
 
@@ -1990,7 +1942,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -2022,7 +1973,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                DDLogCError(@"post answer err %@ \n response object %@", error,
@@ -2067,7 +2017,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
           @"room_id": roomID,
           @"player_id": userID
-
       }
   };
   //    {
@@ -2109,7 +2058,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  if (success) {
                                    success();
                                  }
-
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  DDLogError(@"room invite deletion error %@", error);
@@ -2163,14 +2111,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(rsr);
                               }
-
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogError(@"room session get error %@", error);
                               if (failure) {
                                 failure(error, operation.response.statusCode);
                               }
-
                             }];
 }
 
@@ -2247,14 +2193,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                if (success) {
                                  success();
                                }
-
                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DDLogError(@"sending room message error %@", error);
         if (failure) {
           failure(error, operation.response.statusCode);
         }
       }];
-
 }
 
 #pragma mark - support
@@ -2288,14 +2232,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (success) {
                                 success(updateType, message);
                               }
-
                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DDLogError(@"new quest problems err %@", error);
 
         if (failure) {
           failure(error, operation.response.statusCode);
         }
-
       }];
 }
 
@@ -2315,15 +2257,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                 if (success) {
                                   success();
                                 }
-
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DDLogError(@"patch layer fail err %@", error);
         if (failure) {
           failure(error, operation.response.statusCode);
         }
-
       }];
-
 }
 
 #pragma mark - new_questions
@@ -2357,7 +2296,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
           failure(error, operation.response.statusCode);
         }
       }];
-
 }
 
 

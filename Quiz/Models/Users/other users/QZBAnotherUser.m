@@ -61,7 +61,6 @@
     if (dict[@"is_online"] && ![dict[@"is_online"] isEqual:[NSNull null]]) {
       self.isOnline = [dict[@"is_online"] boolValue];
     }
-
   }
   return self;
 }

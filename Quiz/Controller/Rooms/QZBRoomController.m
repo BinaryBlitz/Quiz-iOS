@@ -114,7 +114,6 @@ const NSInteger QZBMaxRedyTime = 20;
 
   self.isReadyGestureRecognizer.numberOfTapsRequired = 1;
   self.isReadyGestureRecognizer.numberOfTouchesRequired = 1;
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -213,18 +212,14 @@ const NSInteger QZBMaxRedyTime = 20;
 
       [[QZBServerManager sharedManager] DELETEDeleteRoomWithID:self.room.roomID
                                                      onSuccess:^{
-
                                                      }
                                                      onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                      }];
     } else {
       [[QZBServerManager sharedManager] DELETELeaveRoomWithID:self.room.roomID
                                                     onSuccess:^{
-
                                                     }
                                                     onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                     }];
     }
   }
@@ -267,10 +262,8 @@ const NSInteger QZBMaxRedyTime = 20;
             [SVProgressHUD showErrorWithStatus:QZBStartSessionProblems];
           }
         });
-
   }                                           onFailure:^(NSError *error, NSInteger statusCode) {
     [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
-
   }];
 }
 
@@ -279,7 +272,6 @@ const NSInteger QZBMaxRedyTime = 20;
   QZBUserWithTopic *userWithTopic = [self.room findUserWithID:[QZBCurrentUser sharedInstance].user.userID];
 
   [self makeCurrentUserReady:!userWithTopic.isReady];
-
 }
 
 #pragma mark - Navigation
@@ -294,12 +286,9 @@ const NSInteger QZBMaxRedyTime = 20;
                         OnSuccess:^(NSArray *friends) {
                           QZBUser *user = [QZBCurrentUser sharedInstance].user;
                           [destinationVC setFriendsOwner:user andFriends:friends inRoomWithID:roomID];
-
                         }
                         onFailure:^(NSError *error, NSInteger statusCode) {
-
                         }];
-
   } else if ([segue.identifier isEqualToString:QZBShowChatFromRoomController]) {
     QZBRoomCommentController *destVC = (QZBRoomCommentController *) segue.destinationViewController;
     [destVC configureWithRoomID:self.room.roomID];
@@ -417,7 +406,6 @@ const NSInteger QZBMaxRedyTime = 20;
                                                if (statusCode == 403) {
                                                  [self leaveRoomWithMessage:QZBNoPlacesInRoom];
                                                }
-
                                              }];
 }
 
@@ -497,7 +485,6 @@ const NSInteger QZBMaxRedyTime = 20;
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(roomMessageRecieved:)
                                                name:QZBRoomMessageRecieved object:nil];
-
 }
 
 - (void)showGameController {
@@ -666,7 +653,6 @@ const NSInteger QZBMaxRedyTime = 20;
                                                        [userInRoomCell.isReadyActivityIndicator stopAnimating];
                                                        [self.tableView reloadData];
                                                        [self showReadyProgressView];
-
                                                      } onFailure:^(NSError *error, NSInteger statusCode) {
           userInRoomCell.isReadyLabel.hidden = NO;
           userInRoomCell.isReadyActivityIndicator.hidden = YES;
@@ -736,7 +722,6 @@ const NSInteger QZBMaxRedyTime = 20;
   }
 
   return _bottomView;
-
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -767,7 +752,6 @@ const NSInteger QZBMaxRedyTime = 20;
 
     [self.view bringSubviewToFront:self.isReadyProgressView];
   }
-
 }
 
 - (void)animateUp {
@@ -892,9 +876,7 @@ const NSInteger QZBMaxRedyTime = 20;
                      self.fakeKeyboard.frame = frame;
 
                      [self.view bringSubviewToFront:self.fakeKeyboard];
-
                    }];
-
 }
 
 - (void)animateKeyboardDown {
@@ -970,9 +952,7 @@ const NSInteger QZBMaxRedyTime = 20;
   [[QZBServerManager sharedManager] POSTSendMessage:message inRoomWithID:self.room.roomID onSuccess:^{
     [self userWithID:[QZBCurrentUser sharedInstance].user.userID say:message];
   }                                       onFailure:^(NSError *error, NSInteger statusCode) {
-
   }];
-
 }
 
 - (void)roomMessageRecieved:(NSNotification *)note {
@@ -1007,7 +987,6 @@ const NSInteger QZBMaxRedyTime = 20;
                                                     selector:@selector(updateTime:)
                                                     userInfo:nil
                                                      repeats:YES];
-
 }
 
 - (void)updateTime:(NSTimer *)timer {
@@ -1066,7 +1045,6 @@ const NSInteger QZBMaxRedyTime = 20;
   }
 
   [cell.isReadyBackView shakeView];
-
 }
 
 - (void)postLocalNotificationWithText:(NSString *)message {
@@ -1077,7 +1055,6 @@ const NSInteger QZBMaxRedyTime = 20;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
   }
-
 }
 
 - (void)startCountingUntilLeave {
@@ -1125,7 +1102,6 @@ const NSInteger QZBMaxRedyTime = 20;
         self.readyTime == 1600) {
       [self accentReadyButtons];
     }
-
   } else {
     [self leaveThisRoom];
     [self invalidateRedyTimer];

@@ -88,14 +88,12 @@
                                                  }
                                                  onFailure:^(NSError *error, NSInteger statusCode) {
                                                    [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
-
                                                  }];
     } else {
       NSLog(@"no user ");
       [[QZBServerManager sharedManager]
           POSTReportForDevelopersWithMessage:self.reportTextView.text onSuccess:^{
         [self afterSend];
-
       }                            onFailure:^(NSError *error, NSInteger statusCode) {
         [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
       }];
@@ -117,7 +115,6 @@
 
         [self.navigationController popViewControllerAnimated:YES];
       });
-
 }
 
 #pragma mark - UITextViewDelegate

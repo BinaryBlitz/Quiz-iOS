@@ -152,7 +152,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     self.isCurrent = YES;
     [[QZBFriendRequestManager sharedInstance] updateRequests];
     self.unreadedCount = [[QZBLayerMessagerManager sharedInstance] unreadedCount];
-
   } else {
     self.isCurrent = NO;
   }
@@ -208,7 +207,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     self.isCurrent = YES;
     [self updateCurentUser:user];
     [[QZBFriendRequestManager sharedInstance] updateRequests];
-
   } else {
     self.user = user;
     self.isCurrent = NO;
@@ -245,7 +243,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
                                                 currentUser.isFriend = anotherUser.isFriend;
                                                 currentUser.imageURL = anotherUser.imageURL;
                                               }
-
                                             } else if ([user isKindOfClass:[QZBUser class]]) {
                                               QZBUser *u = (QZBUser *) user;
 
@@ -265,7 +262,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
                                                 dispatch_get_main_queue(), ^{
                                                   [SVProgressHUD dismiss];
                                                 });
-
                                           }];
 }
 
@@ -306,7 +302,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     [userStatisticCell setCellWithUser:self.user];
 
     return userStatisticCell;
-
   } else if (indexPath.row == 2) {
     QZBDescriptionForHorizontalCell *descrForHorizontal =
         [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
@@ -317,7 +312,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     descrForHorizontal.contentView.backgroundColor = [UIColor friendsLightGreyColor];
 
     return descrForHorizontal;
-
   } else if (indexPath.row == 3) {
     if (self.friends && self.friends.count == 0) {//TEST
       if (self.isCurrent) {
@@ -347,7 +341,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
         [friendsHorizontalCell setFriendArray:self.friends];
 
         return friendsHorizontalCell;
-
       }
     } else {
       QZBFriendHorizontalCell *friendsHorizontalCell =
@@ -357,7 +350,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
       return friendsHorizontalCell;
     }
-
   } else if (indexPath.row == 4) {
     QZBDescriptionForHorizontalCell *descrForHorizontal =
         [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
@@ -368,7 +360,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     descrForHorizontal.contentView.backgroundColor = [UIColor whiteColor];
 
     return descrForHorizontal;
-
   } else if (indexPath.row == 5) {
     QZBAchivHorizontalCell *achivCell =
         [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
@@ -377,7 +368,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     [achivCell setAchivArray:self.achivArray];
 
     return achivCell;
-
   } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
     if (self.isCurrent) {
       if (!self.friends.count == 0) {
@@ -396,7 +386,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
       cell = [tableView dequeueReusableCellWithIdentifier:challengeCell];
       return cell;
     }
-
   } else if (indexPath.row == 6 && self.faveTopics.count > 0) {
     QZBDescriptionForHorizontalCell *descrForHorizontal =
         [tableView dequeueReusableCellWithIdentifier:descriptionIdentifier];
@@ -408,7 +397,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     descrForHorizontal.contentView.backgroundColor = [UIColor veryDarkGreyColor];
 
     return descrForHorizontal;
-
   } else if (!self.isCurrent && indexPath.row == [tableView numberOfRowsInSection:0] - 2) {
     QZBVSScoreCell *vsCell =
         [tableView dequeueReusableCellWithIdentifier:vsScoreCellIndentifier];
@@ -416,7 +404,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
     vsCell.contentView.backgroundColor = [UIColor middleDarkGreyColor];
     return vsCell;
-
   } else if (indexPath.row > 6) {
     QZBTopicTableViewCell *topicCell =
         [tableView dequeueReusableCellWithIdentifier:topicCellIdentifier];
@@ -459,7 +446,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
           [self.storyboard instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
       [personalVC initPlayerPageWithUser:user];
       [self.navigationController pushViewController:personalVC animated:YES];
-
     } else if (globabalIP.row == 5) {
       QZBAchievement *achiev = self.achivArray[localIP.row];
       [self showAchievement:achiev];
@@ -570,23 +556,19 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
   } else if ([segue.identifier isEqualToString:@"challengeSegue"]) {
     QZBCategoryChooserVC *destinationVC = segue.destinationViewController;
     [destinationVC initWithUser:self.user];
-
   } else if ([segue.identifier isEqualToString:@"showPreparingVC"]) {
     QZBProgressViewController *navigationController = segue.destinationViewController;
 
     if (!self.isOnlineChallenge) {
       [navigationController initSessionWithTopic:self.choosedTopic user:nil];
       self.isOnlineChallenge = NO;
-
     } else {
       [navigationController initSessionWithTopic:self.choosedTopic user:self.user];
       self.isOnlineChallenge = NO;
     }
-
   } else if ([segue.identifier isEqualToString:@"showRate"]) {
     QZBRatingMainVC *destinationVC = segue.destinationViewController;
     [destinationVC initWithTopic:self.choosedTopic];
-
   } else if ([segue.identifier isEqualToString:@"showFriendsChallenge"]) {
     QZBFriendsChallengeTVC *destinationVC = segue.destinationViewController;
     QZBUser *user = [QZBCurrentUser sharedInstance].user;
@@ -596,7 +578,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
                           andFriends:self.friends
                            gameTopic:self.choosedTopic];
     }
-
   } else if ([segue.identifier isEqualToString:@"showReportScreen"]) {
     QZBReportVC *destVC = (QZBReportVC *) segue.destinationViewController;
 
@@ -605,7 +586,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     QZBMessagerVC *destVC = (QZBMessagerVC *) segue.destinationViewController;
 
     [destVC initWithUser:self.user];
-
   } else if ([segue.identifier isEqualToString:@"showAllMessages"]) {
     // QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
     // [destVC setFriendsOwner:self.user andFriends:self.friends];
@@ -654,7 +634,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
   } else {
     [self performSegueWithIdentifier:@"pushMessager" sender:nil];
   }
-
 }
 
 - (void)showActionSheet {
@@ -690,7 +669,6 @@ destructiveButtonTitle:nil
     if (self.isCurrent) {
       self.isOnlineChallenge = NO;
       [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
-
     } else {
       self.isOnlineChallenge = YES;
       [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
@@ -767,7 +745,6 @@ destructiveButtonTitle:nil
                                                  }
                                                }
                                                onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                }];
 }
 
@@ -943,10 +920,8 @@ destructiveButtonTitle:nil
                                                     OnSuccess:^(NSArray *friends) {
                                                       self.friends = friends;
                                                       [self.tableView reloadData];
-
                                                     }
                                                     onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                     }];
 
   if (self.isCurrent) {  // REDO
@@ -1007,7 +982,6 @@ destructiveButtonTitle:nil
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.5 * NSEC_PER_SEC)),
         dispatch_get_main_queue(), ^{
           [self setNeedsStatusBarAppearanceUpdate];
-
         });
   }];
 

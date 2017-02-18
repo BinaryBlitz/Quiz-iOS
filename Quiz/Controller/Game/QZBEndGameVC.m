@@ -163,7 +163,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   if (self.soundPlayer) {
     [self.soundPlayer stop];
   }
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -254,10 +253,8 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
   [[QZBServerManager sharedManager] DELETELobbiesWithID:challengeDescription.lobbyID
                                               onSuccess:^{
-
                                               }
                                               onFailure:^(NSError *error, NSInteger statusCode) {
-
                                               }];
 }
 
@@ -464,7 +461,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   if (!destinationVC) {
     NSUInteger objectIndex = [self.navigationController.viewControllers indexOfObject:self];
     [controllers insertObject:progressVC atIndex:objectIndex];
-
   } else {
     NSUInteger objectIndex =
         [self.navigationController.viewControllers indexOfObject:destinationVC];
@@ -522,7 +518,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     } else {
       [self.navigationController popToViewController:destinationVC animated:YES];
     }
-
   } else {
     [self.navigationController popToRootViewControllerAnimated:YES];
   }
@@ -602,7 +597,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
                      flashImage.alpha = 1.0;
                    }
                    completion:^(BOOL finished) {
-
                    }];
 }
 
@@ -612,12 +606,10 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     if (self.firstUserScore < self.secondUserScore) {
       //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"lose"];
-
     } else if (self.firstUserScore > self.secondUserScore) {
       //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"win"];
     }
-
   }
 }
 

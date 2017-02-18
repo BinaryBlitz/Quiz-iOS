@@ -17,7 +17,6 @@
   }
 
   return topic;
-
 }
 
 + (QZBGameTopic *)parseTopicFromDict:(NSDictionary *)dict inCategory:(QZBCategory *)category {
@@ -31,7 +30,6 @@
   }
 
   return topic;
-
 }
 
 + (QZBGameTopic *)parseTopicWithoutRelationFromDict:(NSDictionary *)dict {
@@ -54,7 +52,6 @@
   }
 
   return topic;
-
 }
 
 + (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic {

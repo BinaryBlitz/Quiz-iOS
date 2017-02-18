@@ -49,7 +49,6 @@
     } else {
       self.totalWins = nil;
     }
-
   }
   return self;
 }

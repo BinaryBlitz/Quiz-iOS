@@ -3,7 +3,6 @@
 @implementation QZBRoomUsersView
 
 - (void)awakeFromNib {
-
 }
 
 @end

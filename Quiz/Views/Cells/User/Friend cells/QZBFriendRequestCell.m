@@ -16,7 +16,6 @@
 
   [self.declineButton setExclusiveTouch:YES];
   [self.acceptButton setExclusiveTouch:YES];
-
 }
 
 @end
