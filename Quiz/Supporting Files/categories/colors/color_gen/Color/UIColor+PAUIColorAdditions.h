@@ -1,11 +1,3 @@
-//
-//  UIColor+PAUIColorAdditions.h
-//  PartyApp
-//
-//  Created by Alfred Zien on 18/06/15.
-//  Copyright (c) 2015 Alfred Zien. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 @interface UIColor (PAUIColorAdditions)
