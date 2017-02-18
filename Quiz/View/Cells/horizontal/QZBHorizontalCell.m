@@ -1,11 +1,3 @@
-//
-//  QZBFriendsHorizontalCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 22/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBHorizontalCell.h"
 #import "QZBSomethingInHorizontalTabelViewCell.h"
 #import "QZBLastElementInHorizontalTCCell.h"

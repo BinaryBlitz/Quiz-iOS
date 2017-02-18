@@ -1,11 +1,3 @@
-//
-//  QZBPaidTopicsController.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 16/09/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBPaidTopicsController.h"
 #import "MagicalRecord/MagicalRecord.h"
 #import "QZBGameTopic.h"

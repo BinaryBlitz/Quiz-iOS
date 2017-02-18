@@ -1,11 +1,3 @@
-//
-//  QZBCommentRoomCell.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/09/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 static CGFloat kMessageTableViewCellMinimumHeight = 50.0;

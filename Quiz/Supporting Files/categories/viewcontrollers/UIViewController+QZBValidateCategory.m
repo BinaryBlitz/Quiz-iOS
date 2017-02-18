@@ -1,11 +1,3 @@
-//
-//  UIViewController+QZBValidateCategory.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 06/05/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UIViewController+QZBValidateCategory.h"
 #import "UIView+QZBShakeExtension.h"
 #import "QZBRegistrationAndLoginTextFieldBase.h"

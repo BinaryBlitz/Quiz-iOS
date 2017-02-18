@@ -1,11 +1,3 @@
-//
-//  QZBLayerMessagerManager.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 03/08/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 @class LYRClient;
 @class QZBAnotherUserWithLastMessages;

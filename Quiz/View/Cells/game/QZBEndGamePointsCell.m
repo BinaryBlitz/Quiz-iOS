@@ -1,11 +1,3 @@
-//
-//  QZBEndGamePointsCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 09/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBEndGamePointsCell.h"
 #import "UIColor+QZBProjectColors.h"
 #import "UITableViewCell+QZBCellCategory.h"

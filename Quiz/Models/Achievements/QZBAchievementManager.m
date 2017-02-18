@@ -1,11 +1,3 @@
-//
-//  QZBAchievementManager.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBAchievementManager.h"
 #import "QZBAchievement.h"
 #import "QZBServerManager.h"

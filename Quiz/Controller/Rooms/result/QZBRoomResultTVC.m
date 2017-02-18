@@ -1,11 +1,3 @@
-//
-//  QZBRoomResultTVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 25/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRoomResultTVC.h"
 #import "QZBRoomUserResultCell.h"
 #import "QZBUserWithTopic.h"

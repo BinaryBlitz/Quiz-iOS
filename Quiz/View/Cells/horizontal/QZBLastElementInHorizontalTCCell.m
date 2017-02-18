@@ -1,11 +1,3 @@
-//
-//  QZBLastElementInHorizontalTCCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 22/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBLastElementInHorizontalTCCell.h"
 #import "QZBHorizontalCell.h"
 #import "UIColor+QZBProjectColors.h"

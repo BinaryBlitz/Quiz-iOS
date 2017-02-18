@@ -1,11 +1,3 @@
-//
-//  QZBTopicTableViewCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 24/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBTopicTableViewCell.h"
 #import "QZBGameTopic.h"
 #import "UIColor+QZBProjectColors.h"

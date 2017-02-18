@@ -1,11 +1,3 @@
-//
-//  QZBStatiscticCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 27/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBStatiscticCell.h"
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"

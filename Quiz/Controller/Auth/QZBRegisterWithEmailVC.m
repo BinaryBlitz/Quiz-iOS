@@ -1,11 +1,3 @@
-//
-//  QZBRegisterWithEmailVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 15/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRegisterWithEmailVC.h"
 #import "QZBCurrentUser.h"
 #import "TSMessage.h"
