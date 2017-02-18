@@ -1,11 +1,3 @@
-//
-//  QZBCategoryChooserVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 15/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBCategoryChooserVC.h"
 #import "MagicalRecord/MagicalRecord.h"
 #import "QZBServerManager.h"
@@ -13,26 +5,19 @@
 #import "QZBCategoryTableViewCell.h"
 #import "QZBTopicChooserController.h"
 #import "QZBCurrentUser.h"
-#import "QZBUser.h"
-#import "QZBRegistrationChooserVC.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
-#import <JSQSystemSoundPlayer.h>
 
-#import <DFImageManager/DFImageManager.h>
 #import <DFImageManager/DFImageRequestOptions.h>
 #import <DFImageManager/DFURLImageFetcher.h>
 #import <DFImageManager/DFImageRequest.h>
-#import <DFImageManager/DFImageView.h>
-
 
 @interface QZBCategoryChooserVC ()
 
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) QZBCategory *choosedCategory;
-@property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) id <QZBUserProtocol> user;
 
-@property(strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 
 @end
@@ -64,7 +49,7 @@
   NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                          ascending:YES];
 
-  _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[ sort ]]];
+  _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[sort]]];
 
   // _categories = [QZBCategory MR_findAll];
 
@@ -83,8 +68,6 @@
     [self initCategories];
   }
 
-
-
   [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
 
@@ -97,9 +80,9 @@
   // Pass the selected object to the new view controller.
   if ([segue.identifier isEqualToString:@"showTopicsSegue"]) {
     QZBTopicChooserController *destination = segue.destinationViewController;
-    if(self.user){
+    if (self.user) {
       [destination initWithChallengeUser:self.user category:self.choosedCategory];
-    }else{
+    } else {
       [destination initTopicsWithCategory:self.choosedCategory];
     }
   }
@@ -121,13 +104,13 @@
   QZBCategory *category = self.categories[indexPath.row];
   cell.categoryLabel.text = category.name;
   NSURL *categoryBannerURL =
-  [NSURL URLWithString:category.banner_url];
+      [NSURL URLWithString:category.banner_url];
 
   DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
   options.allowsClipping = YES;
-  options.expirationAge = 60*60*24*20;
+  options.expirationAge = 60 * 60 * 24 * 20;
 
-  options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+  options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
   DFImageRequest *request = [DFImageRequest requestWithResource:categoryBannerURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
 
@@ -153,10 +136,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [[UIScreen mainScreen] bounds].size.width/3.0;
+  return [[UIScreen mainScreen] bounds].size.width / 3.0;
 }
-
-
 
 #pragma mark - custom init
 
@@ -173,11 +154,10 @@
                                                            ascending:YES];
 
     _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll]
-                                           sortedArrayUsingDescriptors:@[ sort ]]];
+        sortedArrayUsingDescriptors:@[sort]]];
 
     [self.mainTableView reloadData];
-
-  } onFailure:^(NSError *error, NSInteger statusCode) {
+  }                                              onFailure:^(NSError *error, NSInteger statusCode) {
 
     [self.refreshControl endRefreshing];
 
@@ -187,11 +167,10 @@
       // fix it
       [self performSegueWithIdentifier:@"logOutUnauthorized" sender:nil];
     }
-
   }];
 }
 
--(void)initWithUser:(id<QZBUserProtocol>) user{
+- (void)initWithUser:(id <QZBUserProtocol>)user {
   self.user = user;
   //  [self initCategories];
 }
@@ -201,7 +180,6 @@
 }
 
 #pragma mark - lazy init
-
 
 
 @end

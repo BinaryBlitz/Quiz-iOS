@@ -3,7 +3,6 @@
 #import "QZBLayerMessagerManager.h"
 #import <LayerKit/LayerKit.h>
 #import "QZBCurrentUser.h"
-#import "QZBUser.h"
 #import "QZBAnotherUserWithLastMessages.h"
 #import "QZBAnotherUser.h"
 #import "QZBUserWorker.h"
@@ -23,7 +22,7 @@ static NSString *const LQSLayerAppIDString =
 @"layer:///apps/production/7523431a-3ba1-11e5-85e6-2d4d7f0072d6";
 #else
 static NSString *const LQSLayerAppIDString =
-@"layer:///apps/staging/75233f64-3ba1-11e5-81a5-2d4d7f0072d6";
+    @"layer:///apps/staging/75233f64-3ba1-11e5-81a5-2d4d7f0072d6";
 #endif
 
 @interface QZBLayerMessagerManager () <LYRClientDelegate>
@@ -68,28 +67,28 @@ static NSString *const LQSLayerAppIDString =
       if ([userID isKindOfClass:[NSNumber class]]) {
         identifier = [userID stringValue];
       } else {
-        identifier = (NSString *)userID;
+        identifier = (NSString *) userID;
       }
       //[QZBCurrentUser sharedInstance].user.userID;
       [self authenticateLayerWithUserID:identifier
                              completion:^(BOOL success, NSError *error) {
-                               if(success) {
+                               if (success) {
 
                                  [[[self class] sharedInstance] updateConversations];
-                                 if(completion){
+                                 if (completion) {
                                    completion(success, error);
                                  }
                                }
 
                                NSData *token =
-                               [QZBCurrentUser sharedInstance].pushTokenData;
+                                   [QZBCurrentUser sharedInstance].pushTokenData;
                                [self.layerClient updateRemoteNotificationDeviceToken:token
                                                                                error:nil];
 
                                if (!success) {
                                  NSLog(
-                                       @"Failed Authenticating Layer Client with error:%@",
-                                       error);
+                                     @"Failed Authenticating Layer Client with error:%@",
+                                     error);
                                }
                              }];
     }
@@ -102,7 +101,6 @@ static NSString *const LQSLayerAppIDString =
                          completion:(void (^)(BOOL success, NSError *error))completion {
   if (self.layerClient.authenticatedUser.userID) {
     NSLog(@"Layer Authenticated as User %@", self.layerClient.authenticatedUser.userID);
-
 
     if (completion)
       completion(YES, nil);
@@ -129,40 +127,40 @@ static NSString *const LQSLayerAppIDString =
      * 2. Acquire identity Token from Layer Identity Service
      */
     [self
-     requestIdentityTokenForUserID:userID
-     appID:[self.layerClient.appID absoluteString]
-     nonce:nonce
-     completion:^(NSString *identityToken, NSError *error) {
-       if (!identityToken) {
-         if (completion) {
-           completion(NO, error);
-         }
-         return;
-       }
+        requestIdentityTokenForUserID:userID
+                                appID:[self.layerClient.appID absoluteString]
+                                nonce:nonce
+                           completion:^(NSString *identityToken, NSError *error) {
+                             if (!identityToken) {
+                               if (completion) {
+                                 completion(NO, error);
+                               }
+                               return;
+                             }
 
-       /*
-        * 3. Submit identity token to Layer for validation
-        */
-       //       [self.layerClient authenticateWithIdentityToken:identityToken completion:^(NSString *authenticatedUserID, NSError *error) {
-       //          if (authenticatedUserID) {
-       //            if (completion) {
-       //              completion(YES, nil);
-       //            }
-       //            NSLog(@"Layer Authenticated as User: %@", authenticatedUserID);
-       //          } else {
-       //            completion(NO, error);
-       //          }
-       //        }];
-       [self.layerClient authenticateWithIdentityToken:identityToken completion:^(LYRIdentity * _Nullable authenticatedUser, NSError * _Nullable error) {
-         if (authenticatedUser.userID) {
-           if (completion) {
-             completion(YES, nil);
-           }
-         } else {
-           completion(NO, error);
-         }
-       }];
-     }];
+                             /*
+                              * 3. Submit identity token to Layer for validation
+                              */
+                             //       [self.layerClient authenticateWithIdentityToken:identityToken completion:^(NSString *authenticatedUserID, NSError *error) {
+                             //          if (authenticatedUserID) {
+                             //            if (completion) {
+                             //              completion(YES, nil);
+                             //            }
+                             //            NSLog(@"Layer Authenticated as User: %@", authenticatedUserID);
+                             //          } else {
+                             //            completion(NO, error);
+                             //          }
+                             //        }];
+                             [self.layerClient authenticateWithIdentityToken:identityToken completion:^(LYRIdentity *_Nullable authenticatedUser, NSError *_Nullable error) {
+                               if (authenticatedUser.userID) {
+                                 if (completion) {
+                                   completion(YES, nil);
+                                 }
+                               } else {
+                                 completion(NO, error);
+                               }
+                             }];
+                           }];
   }];
 }
 
@@ -170,29 +168,29 @@ static NSString *const LQSLayerAppIDString =
                                 appID:(NSString *)appID
                                 nonce:(NSString *)nonce
                            completion:
-(void (^)(NSString *identityToken, NSError *error))completion {
+                               (void (^)(NSString *identityToken, NSError *error))completion {
   NSParameterAssert(userID);
   NSParameterAssert(appID);
   NSParameterAssert(nonce);
   NSParameterAssert(completion);
 
   [[QZBServerManager sharedManager]
-   POSTAuthenticateLayerWithNonce:nonce
-   callback:^(NSString *token, NSError *error) {
-     if (error) {
-       completion(nil, error);
-       return;
-     }
+      POSTAuthenticateLayerWithNonce:nonce
+                            callback:^(NSString *token, NSError *error) {
+                              if (error) {
+                                completion(nil, error);
+                                return;
+                              }
 
-     if (!error) {
-       completion(token, nil);
-     }
-   }];
+                              if (!error) {
+                                completion(token, nil);
+                              }
+                            }];
 }
 
 #pragma - mark LYRClientDelegate Delegate Methods
 
-- (void)layerClient:(LYRClient *)client
+- (void)                       layerClient:(LYRClient *)client
 didReceiveAuthenticationChallengeWithNonce:(NSString *)nonce {
   NSLog(@"Layer Client did recieve authentication challenge with nonce: %@", nonce);
 }
@@ -213,9 +211,9 @@ didReceiveAuthenticationChallengeWithNonce:(NSString *)nonce {
   NSLog(@"Layer Client did fail synchronization with error: %@", error);
 }
 
-- (void)layerClient:(LYRClient *)client
-willAttemptToConnect:(NSUInteger)attemptNumber
-         afterDelay:(NSTimeInterval)delayInterval
+- (void)    layerClient:(LYRClient *)client
+   willAttemptToConnect:(NSUInteger)attemptNumber
+             afterDelay:(NSTimeInterval)delayInterval
 maximumNumberOfAttempts:(NSUInteger)attemptLimit {
   NSLog(@"Layer Client will attempt to connect");
 }
@@ -241,13 +239,13 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
   NSMutableArray *arr = [NSMutableArray array];
   for (LYRConversation *c in res) {
     QZBAnotherUserWithLastMessages *userWithLastMessage =
-    [[QZBAnotherUserWithLastMessages alloc]
-     initWithConversation:c];  //[QZBUserWorker userFromConversation:c];
+        [[QZBAnotherUserWithLastMessages alloc]
+            initWithConversation:c];  //[QZBUserWorker userFromConversation:c];
     [arr addObject:userWithLastMessage];
   }
   NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"lastTimestamp" ascending:NO];
 
-  return [arr sortedArrayUsingDescriptors:@[ sort ]];
+  return [arr sortedArrayUsingDescriptors:@[sort]];
 }
 
 - (void)updateConversations {
@@ -256,43 +254,40 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
   QZBUser *user = [QZBCurrentUser sharedInstance].user;
   for (LYRConversation *c in res) {
     QZBAnotherUserWithLastMessages *userWithLastMessage =
-    [[QZBAnotherUserWithLastMessages alloc]
-     initWithConversation:c];
+        [[QZBAnotherUserWithLastMessages alloc]
+            initWithConversation:c];
 
     [[QZBServerManager sharedManager] GETPlayerWithID:userWithLastMessage.user.userID
                                             onSuccess:^(QZBAnotherUser *anotherUser) {
                                               [QZBUserWorker saveUser:anotherUser inConversation:c];
                                               [QZBUserWorker saveUser:user inConversation:c];
                                             } onFailure:^(NSError *error, NSInteger statusCode) {
-
-                                            }];
+        }];
   }
 }
-
-
 
 - (NSInteger)unreadedCount {
   LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
 
   LYRPredicate *unreadPredicate =
-  [LYRPredicate predicateWithProperty:@"isUnread"
-                    predicateOperator:LYRPredicateOperatorIsEqualTo
-                                value:@(YES)];
+      [LYRPredicate predicateWithProperty:@"isUnread"
+                        predicateOperator:LYRPredicateOperatorIsEqualTo
+                                    value:@(YES)];
 
   // Messages must not be sent by the authenticated user
   LYRPredicate *userPredicate =
-  [LYRPredicate predicateWithProperty:@"sender.userID"
-                    predicateOperator:LYRPredicateOperatorIsNotEqualTo
-                                value:self.layerClient.authenticatedUser.userID];
+      [LYRPredicate predicateWithProperty:@"sender.userID"
+                        predicateOperator:LYRPredicateOperatorIsNotEqualTo
+                                    value:self.layerClient.authenticatedUser.userID];
 
   query.predicate =
-  [LYRCompoundPredicate compoundPredicateWithType:LYRCompoundPredicateTypeAnd
-                                    subpredicates:@[ unreadPredicate, userPredicate ]];
+      [LYRCompoundPredicate compoundPredicateWithType:LYRCompoundPredicateTypeAnd
+                                        subpredicates:@[unreadPredicate, userPredicate]];
   query.resultType = LYRQueryResultTypeCount;
   NSError *error = nil;
   NSUInteger unreadMessageCount = [self.layerClient countForQuery:query error:&error];
 
-  if(error){
+  if (error) {
     return 0;
   }
   return unreadMessageCount;
@@ -301,16 +296,16 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
 - (void)deleteConversationLocalyForUser:(QZBAnotherUserWithLastMessages *)user {
   NSString *identifier = nil;
 
-  if([user.user.userID isKindOfClass:[NSString class]]){
-    identifier = (NSString *)user.user.userID;//self.friend.userID.stringValue;
+  if ([user.user.userID isKindOfClass:[NSString class]]) {
+    identifier = (NSString *) user.user.userID;//self.friend.userID.stringValue;
   } else {
     identifier = user.user.userID.stringValue;
   }
 
   LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
   query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsEqualTo
-                                                  value:@[ identifier]];
-  query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+                                                  value:@[identifier]];
+  query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
 
   NSError *error;
   NSOrderedSet *conversations = [self.layerClient executeQuery:query error:&error];
@@ -320,7 +315,7 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
   }
 
   if (!error) {
-    NSLog(@"%tu conversations with participants %@", conversations.count, @[ identifier ]);
+    NSLog(@"%tu conversations with participants %@", conversations.count, @[identifier]);
   } else {
     NSLog(@"Query failed with error %@", error);
     return;
@@ -332,12 +327,10 @@ maximumNumberOfAttempts:(NSUInteger)attemptLimit {
     NSError *error = nil;
     [conversation delete:LYRDeletionModeMyDevices error:&error];
   }
-
 }
 
 - (void)logOut {
-  [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error){
-    
+  [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
   }];
 }
 

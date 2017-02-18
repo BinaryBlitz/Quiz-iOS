@@ -1,23 +1,16 @@
-//
-//  QZBChallengeDescription.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 18/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "QZBUserProtocol.h"
 
 @class QZBGameTopic;
+
 @interface QZBChallengeDescription : NSObject//<QZBUserProtocol>
 
-@property(strong, nonatomic, readonly) NSNumber *lobbyID;
-@property(copy,   nonatomic, readonly) NSString *name;
-@property(strong, nonatomic, readonly) NSNumber *userID;
-@property(strong, nonatomic, readonly) NSNumber *topicID;
-@property(strong, nonatomic, readonly) NSString *topicName;
-@property(strong, nonatomic, readonly) QZBGameTopic *topic;
+@property (strong, nonatomic, readonly) NSNumber *lobbyID;
+@property (copy, nonatomic, readonly) NSString *name;
+@property (strong, nonatomic, readonly) NSNumber *userID;
+@property (strong, nonatomic, readonly) NSNumber *topicID;
+@property (strong, nonatomic, readonly) NSString *topicName;
+@property (strong, nonatomic, readonly) QZBGameTopic *topic;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 

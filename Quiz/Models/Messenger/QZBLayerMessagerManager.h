@@ -1,12 +1,5 @@
-//
-//  QZBLayerMessagerManager.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 03/08/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+
 @class LYRClient;
 @class QZBAnotherUserWithLastMessages;
 
@@ -14,21 +7,20 @@
 
 @property (nonatomic, readonly) LYRClient *layerClient;
 
-- (void)connectWithCompletion:(void (^)(BOOL success, NSError * error))completion;
+- (void)connectWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
 + (instancetype)sharedInstance;
 
+- (NSInteger)unreadedCount;
 
--(NSInteger)unreadedCount;
-
--(NSArray *)conversations;
+- (NSArray *)conversations;
 
 - (void)updateConversations;
 
 - (void)deleteConversationLocalyForUser:(QZBAnotherUserWithLastMessages *)user;
 
--(void)logOut;
+- (void)logOut;
 
--(void)logOutWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+- (void)logOutWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
 @end

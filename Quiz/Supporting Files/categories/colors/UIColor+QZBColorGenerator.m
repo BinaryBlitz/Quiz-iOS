@@ -1,24 +1,14 @@
-//
-//  UIColor+QZBColorGenerator.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UIColor+QZBColorGenerator.h"
-#import "UIColor+QZBProjectColors.h"
 #import "UIColor+PAUIColorAdditions.h"
 
 @implementation UIColor (QZBColorGenerator)
 
++ (UIColor *)colorForString:(NSString *)string {
 
-+(UIColor *)colorForString:(NSString *)string{
-    
-   // NSUInteger toSearch = string.hash%9;
-    
-   // NSLog(@"%ld", toSearch);
-    
+  // NSUInteger toSearch = string.hash%9;
+
+  // NSLog(@"%ld", toSearch);
+
 //    UIColor *color = nil;
 //    
 //    switch (toSearch) {
@@ -53,13 +43,11 @@
 //            color = [UIColor lightGreenColor];
 //            break;
 //    }
-    
-    UIColor *color = [UIColor colorLightWithString:string];
-    
-    return color;
+
+  UIColor *color = [UIColor colorLightWithString:string];
+
+  return color;
 }
-
-
 
 
 @end

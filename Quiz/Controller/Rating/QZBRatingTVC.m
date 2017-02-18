@@ -1,23 +1,11 @@
-//
-//  QZBRatingVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 06/02/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRatingTVC.h"
 #import "QZBRatingTVCell.h"
 #import "QZBReloadingCell.h"
-#import "UIImageView+AFNetworking.h"
 #import "QZBRatingPageVC.h"
 #import "QZBUserInRating.h"
-#import "QZBCurrentUser.h"
-#import "QZBUser.h"
 #import "UIColor+QZBProjectColors.h"
 
 #import <DFImageManager/DFImageManagerKit.h>
-#import <DFImageManagerKit+UI.h>
 
 NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
 //#import <DFImageManager/DFImageManager.h>
@@ -88,7 +76,7 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (self.topRank.count == 0 && self.playerRank.count == 0) {
     QZBReloadingCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
+        [tableView dequeueReusableCellWithIdentifier:@"activitiIndicatorCellIdentifier"];
     [cell.activityIndicator startAnimating];
     return cell;
   }
@@ -99,7 +87,7 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
     resultCell = [tableView dequeueReusableCellWithIdentifier:@"ratingSeperator"];
   } else {
     QZBRatingTVCell *cell =
-    (QZBRatingTVCell *)[tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
+        (QZBRatingTVCell *) [tableView dequeueReusableCellWithIdentifier:@"ratingCell"];
     QZBUserInRating *user = nil;
 
     if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
@@ -135,14 +123,14 @@ NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
   [cell setCellWithUser:user];
 }
 
-- (void)tableView:(UITableView *)tableView
+- (void)   tableView:(UITableView *)tableView
 didEndDisplayingCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
+   forRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
-    QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+    QZBRatingTVCell *c = (QZBRatingTVCell *) cell;
     c.userpic.image = [UIImage imageNamed:@"userpicStandart"];
   } else if ([cell isKindOfClass:[QZBReloadingCell class]]) {
-    QZBReloadingCell *c = (QZBReloadingCell *)cell;
+    QZBReloadingCell *c = (QZBReloadingCell *) cell;
     [c.activityIndicator stopAnimating];
   }
 }
@@ -151,17 +139,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([cell isKindOfClass:[QZBRatingTVCell class]]) {
-    QZBRatingTVCell *c = (QZBRatingTVCell *)cell;
+    QZBRatingTVCell *c = (QZBRatingTVCell *) cell;
     QZBUserInRating *user = c.user;
 
     if (user.imageURL) {
       DFImageRequest *request = [self requestFromURL:user.imageURL];
-      [[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage * _Nullable image, NSError * _Nullable error, DFImageResponse * _Nullable response, DFImageTask * _Nonnull imageTask) {
+      [[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *_Nullable image, NSError *_Nullable error, DFImageResponse *_Nullable response, DFImageTask *_Nonnull imageTask) {
         dispatch_async(dispatch_get_main_queue(), ^{
           UITableViewCell *cel =
-          [tableView cellForRowAtIndexPath:indexPath];
+              [tableView cellForRowAtIndexPath:indexPath];
           if (cel && [cel isKindOfClass:[QZBRatingTVCell class]]) {
-            QZBRatingTVCell *c = (QZBRatingTVCell *)cel;
+            QZBRatingTVCell *c = (QZBRatingTVCell *) cel;
             c.userpic.image = image;
           }
         });
@@ -192,7 +180,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
   DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
   options.allowsClipping = YES;
-  options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+  options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
   options.priority = NSOperationQueuePriorityHigh;
 
   DFImageRequest *request = [DFImageRequest requestWithResource:imageURL
@@ -228,10 +216,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
   }
 
   if ([self.parentViewController isKindOfClass:[QZBRatingPageVC class]]) {
-    QZBRatingTVCell *userCell = (QZBRatingTVCell *)cell;
+    QZBRatingTVCell *userCell = (QZBRatingTVCell *) cell;
     QZBUserInRating *user = userCell.user;
 
-    QZBRatingPageVC *vc = (QZBRatingPageVC *)self.parentViewController;
+    QZBRatingPageVC *vc = (QZBRatingPageVC *) self.parentViewController;
 
     [vc showUserPage:user];
   }
@@ -278,7 +266,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   if (tmpArr.count > 0) {
     [[DFImageManager sharedManager]
-     startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
+        startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
   }
 }
 

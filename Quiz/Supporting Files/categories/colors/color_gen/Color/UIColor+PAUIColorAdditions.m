@@ -1,11 +1,3 @@
-//
-//  UIColor+PAUIColorAdditions.m
-//  PartyApp
-//
-//  Created by Alfred Zien on 18/06/15.
-//  Copyright (c) 2015 Alfred Zien. All rights reserved.
-//
-
 #import "UIColor+PAUIColorAdditions.h"
 #import "NSString+PANSStringAdditions.h"
 
@@ -31,18 +23,19 @@ typedef struct PATwoNSUIntegers {
 
 + (instancetype)colorWithString:(NSString *)string
                   andBrightness:(CGFloat)brightness {
- // NSLog(@"STRING: %@", string);
-  return [self colorWithHash:(NSUInteger)string.FNVhash brightness:brightness];
+  // NSLog(@"STRING: %@", string);
+  return [self colorWithHash:(NSUInteger) string.FNVhash brightness:brightness];
 }
 
 PATwoNSUIntegers evenAndOddBitsDivided(NSUInteger hash);
+
 + (instancetype)colorWithHash:(NSUInteger)hash brightness:(CGFloat)brightness {
 
   PATwoNSUIntegers hueAndSat = evenAndOddBitsDivided(hash);
   CGFloat max = ((1 << kBitPairsTakenFromHash) - 1);
-  CGFloat hue = (CGFloat)hueAndSat.first / max;
+  CGFloat hue = (CGFloat) hueAndSat.first / max;
   CGFloat range = kSaturationRangeEnd - kSaturationRangeStart;
-  CGFloat saturation = ((CGFloat)hueAndSat.second / max) * range;
+  CGFloat saturation = ((CGFloat) hueAndSat.second / max) * range;
   saturation += kSaturationRangeStart;
   return [UIColor colorWithHue:hue
                     saturation:saturation
@@ -55,7 +48,7 @@ PATwoNSUIntegers evenAndOddBitsDivided(NSUInteger hash) {
   answer.first = 0;
   answer.second = 0;
   hash &= ((1 << kBitPairsTakenFromHash * 2) - 1);
- // NSLog(@"HASH: %lu", (unsigned long)hash);
+  // NSLog(@"HASH: %lu", (unsigned long)hash);
   for (int i = 0; i < kBitPairsTakenFromHash; ++i) {
     answer.first <<= 1;
     answer.second <<= 1;
@@ -64,8 +57,8 @@ PATwoNSUIntegers evenAndOddBitsDivided(NSUInteger hash) {
     answer.second |= (hash & 2) >> 1;
     hash >>= 2;
   }
- // NSLog(@"FIRST: %lu", (unsigned long)answer.first);
- // NSLog(@"SECOND: %lu", (unsigned long)answer.second);
+  // NSLog(@"FIRST: %lu", (unsigned long)answer.first);
+  // NSLog(@"SECOND: %lu", (unsigned long)answer.second);
   return answer;
 }
 
@@ -96,9 +89,9 @@ PATwoNSUIntegers evenAndOddBitsDivided(NSUInteger hash) {
 #pragma mark - Creating color from integer.
 
 + (instancetype)colorWithIntegerRGB:(NSInteger)rgbValue {
-  return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0f
-                         green:((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0f
-                          blue:((CGFloat)(rgbValue & 0xFF)) / 255.0f
+  return [UIColor colorWithRed:((CGFloat) ((rgbValue & 0xFF0000) >> 16)) / 255.0f
+                         green:((CGFloat) ((rgbValue & 0xFF00) >> 8)) / 255.0f
+                          blue:((CGFloat) (rgbValue & 0xFF)) / 255.0f
                          alpha:1.0];
 }
 

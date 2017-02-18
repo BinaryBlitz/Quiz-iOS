@@ -1,11 +1,3 @@
-//
-//  QZBLobby.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 28/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 @interface QZBLobby : NSObject
@@ -17,9 +9,10 @@
 @property (copy, nonatomic, readonly) NSString *fact;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
--(instancetype)initWithLobbyID:(NSInteger)lobbyID
-                       topicID:(NSInteger)topicID
-                      playerID:(NSInteger)playerID
-                    queryCount:(NSInteger)queryCount;
+
+- (instancetype)initWithLobbyID:(NSInteger)lobbyID
+                        topicID:(NSInteger)topicID
+                       playerID:(NSInteger)playerID
+                     queryCount:(NSInteger)queryCount;
 
 @end

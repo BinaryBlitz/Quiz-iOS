@@ -1,14 +1,3 @@
-//
-//  AppDelegate.h
-//  QZBQuizBattle
-
-//help me plz
-//
-//  Created by Andrey Mikhaylov on 11/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-// before merge
-
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
@@ -18,20 +7,18 @@
                    blue:((float)(rgbValue & 0xFF)) / 255.0                     \
                   alpha:1.0]
 
-
 #define QZB_PRODUCTION 0
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property(strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow *window;
 
-@property(readonly, strong, nonatomic)
-    NSManagedObjectContext *managedObjectContext;
-@property(readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property(readonly, strong, nonatomic)
-    NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (void)saveContext;
+
 - (NSURL *)applicationDocumentsDirectory;
 
 @end

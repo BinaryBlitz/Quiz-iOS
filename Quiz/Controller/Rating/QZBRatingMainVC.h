@@ -1,11 +1,3 @@
-//
-//  QZBRatingMainVC.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/02/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import "QZBUserProtocol.h"
 
@@ -21,7 +13,8 @@
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) QZBGameTopic *topic;
 
-- (void)showUserPage:(id<QZBUserProtocol>)user;
+- (void)showUserPage:(id <QZBUserProtocol>)user;
+
 - (void)initWithTopic:(QZBGameTopic *)topic;
 
 - (void)createButtonBackgroundView;

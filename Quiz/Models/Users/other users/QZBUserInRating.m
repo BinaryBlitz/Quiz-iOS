@@ -1,45 +1,37 @@
-//
-//  QZBUserInRating.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 12/02/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBUserInRating.h"
 
 @implementation QZBUserInRating
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
-    return [self initWithDictionary:dict position:0];
+  return [self initWithDictionary:dict position:0];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict position:(NSInteger)position {
-    self = [super initWithDictionary:dict];
-    if (self) {
-        NSInteger points = 0;
-        if(dict[@"points"] && ![dict[@"points"] isEqual:[NSNull null]]){
-            points = [dict[@"points"] integerValue];
-        }
-        
-        self.points = points;
-        self.position = position;
+  self = [super initWithDictionary:dict];
+  if (self) {
+    NSInteger points = 0;
+    if (dict[@"points"] && ![dict[@"points"] isEqual:[NSNull null]]) {
+      points = [dict[@"points"] integerValue];
     }
-    return self;
+
+    self.points = points;
+    self.position = position;
+  }
+  return self;
 }
 
 - (BOOL)isEqual:(id)object {
-    if ([object isKindOfClass:[self class]]) {
-        QZBUserInRating *obj = (QZBUserInRating *)object;
-        if (self.userID == obj.userID) {
-            return YES;
-        }
+  if ([object isKindOfClass:[self class]]) {
+    QZBUserInRating *obj = (QZBUserInRating *) object;
+    if (self.userID == obj.userID) {
+      return YES;
     }
-    return NO;
+  }
+  return NO;
 }
 
 - (NSUInteger)hash {
-    return [self.userID unsignedIntegerValue];
+  return [self.userID unsignedIntegerValue];
 }
 
 @end

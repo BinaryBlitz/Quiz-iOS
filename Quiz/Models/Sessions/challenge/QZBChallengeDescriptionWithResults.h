@@ -1,11 +1,3 @@
-//
-//  QZBChallengeDescriptionWithResults.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 24/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBChallengeDescription.h"
 
 @class QZBUser;
@@ -14,12 +6,12 @@
 
 @interface QZBChallengeDescriptionWithResults : QZBChallengeDescription
 
-@property(assign, nonatomic, readonly) NSInteger firstResult;
-@property(assign, nonatomic, readonly) NSInteger opponentResult;
-@property(strong, nonatomic, readonly) QZBAnotherUser *opponentUser;
-@property(strong, nonatomic, readonly) QZBUser *firstUser;
-@property(assign, nonatomic, readonly) NSInteger multiplier;
-@property(copy, nonatomic, readonly) NSString *sessionResult;
+@property (assign, nonatomic, readonly) NSInteger firstResult;
+@property (assign, nonatomic, readonly) NSInteger opponentResult;
+@property (strong, nonatomic, readonly) QZBAnotherUser *opponentUser;
+@property (strong, nonatomic, readonly) QZBUser *firstUser;
+@property (assign, nonatomic, readonly) NSInteger multiplier;
+@property (copy, nonatomic, readonly) NSString *sessionResult;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 

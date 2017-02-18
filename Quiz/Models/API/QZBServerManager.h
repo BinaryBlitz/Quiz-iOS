@@ -1,11 +1,3 @@
-//
-//  QZBServerManager.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 24/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 #import "QZBUserProtocol.h"
@@ -27,19 +19,20 @@ UIKIT_EXTERN NSString *const QZBiTunesIdentifier;
 @class QZBRoomSessionResults;
 
 typedef NS_ENUM(NSInteger, QZBUserRegistrationProblem) {
-    QZBNoProblems,
-    QZBUserNameProblem,
-    QZBEmailProblem
+  QZBNoProblems,
+  QZBUserNameProblem,
+  QZBEmailProblem
 };
 
 typedef NS_ENUM(NSInteger, QZBUpdateType) {
-    QZBUpdateTypeMajor,
-    QZBUpdateTypeMinor,
-    QZBUpdateTypeBugfix,
-    QZBUpdateTypeNone
+  QZBUpdateTypeMajor,
+  QZBUpdateTypeMinor,
+  QZBUpdateTypeBugfix,
+  QZBUpdateTypeNone
 };
 
 @interface QZBServerManager : NSObject
+
 @property (copy, nonatomic, readonly) NSString *baseURL;
 
 + (QZBServerManager *)sharedManager;
@@ -94,6 +87,7 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)POSTDeclineChallengeWhithLobbyID:(NSNumber *)lobbyID
                                onSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 - (void)GETThrownChallengesOnSuccess:(void (^)(NSArray *challenges))success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
@@ -112,8 +106,8 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
                     password:(NSString *)password
                    onSuccess:(void (^)(QZBUser *user))success
                    onFailure:(void (^)(NSError *error,
-                                       NSInteger statusCode,
-                                       QZBUserRegistrationProblem problem))failure;
+                       NSInteger statusCode,
+                       QZBUserRegistrationProblem problem))failure;
 
 - (void)POSTLoginUserName:(NSString *)username
                  password:(NSString *)password
@@ -133,35 +127,37 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - user update
+
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode,
-                                             QZBUserRegistrationProblem problem))failure;
+                             NSInteger statusCode,
+                             QZBUserRegistrationProblem problem))failure;
 
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error,
-                                             NSInteger statusCode,
-                                             QZBUserRegistrationProblem problem))failure;
+                             NSInteger statusCode,
+                             QZBUserRegistrationProblem problem))failure;
+
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
                        onFailure:(void (^)(NSError *error,
-                                           NSInteger statusCode,
-                                           QZBUserRegistrationProblem problem))failure;
+                           NSInteger statusCode,
+                           QZBUserRegistrationProblem problem))failure;
 
 - (void)PATCHPlayerWithNewUserNameThenRegistration:(NSString *)userName
                                               user:(QZBUser *)user
                                          onSuccess:(void (^)())success
                                          onFailure:
                                              (void (^)(NSError *error,
-                                                       NSInteger statusCode,
-                                                       QZBUserRegistrationProblem problem))failure;
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure;
 
--(void)PATCHPlayerDeleteAvatarOnSuccess:(void (^)())success
-                              onFailure:(void (^)(NSError *error,
-                                                  NSInteger statusCode,
-                                                  QZBUserRegistrationProblem problem))failure;
+- (void)PATCHPlayerDeleteAvatarOnSuccess:(void (^)())success
+                               onFailure:(void (^)(NSError *error,
+                                   NSInteger statusCode,
+                                   QZBUserRegistrationProblem problem))failure;
 
 #pragma mark - friends
 
@@ -179,6 +175,7 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 
 - (void)GETFriendsRequestsOnSuccess:(void (^)(NSArray *incoming, NSArray *outgoing))success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
@@ -210,12 +207,14 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)POSTReportForDevelopersWithMessage:(NSString *)message
                                  onSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+
 - (void)POSTReportForQuestionWithID:(NSInteger)questionID
                             message:(NSString *)message
                           onSuccess:(void (^)())success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - rate
+
 - (void)GETRankingWeekly:(BOOL)isWeekly
               isCategory:(BOOL)isCategory
               forFriends:(BOOL)isFriends
@@ -357,8 +356,6 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
                                       onSuccess:(void (^)())success
                                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-
 
 #pragma mark - new_questions
 

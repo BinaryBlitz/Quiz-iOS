@@ -1,11 +1,3 @@
-//
-//  QZBQestionWithAnswer.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 13/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBQuestionWithUserAnswer.h"
 
 @interface QZBQuestionWithUserAnswer ()
@@ -19,22 +11,21 @@
 @implementation QZBQuestionWithUserAnswer
 
 - (instancetype)initWithQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer {
-    self = [super init];
-    if (self) {
-        self.question = qestion;
-        self.answer = answer;
-        if (answer) {
-            if (qestion.rightAnswer == answer.answerNum) {
-                self.isRight = YES;
-
-            } else {
-                self.isRight = NO;
-            }
-        } else {
-            self.isRight = NO;
-        }
+  self = [super init];
+  if (self) {
+    self.question = qestion;
+    self.answer = answer;
+    if (answer) {
+      if (qestion.rightAnswer == answer.answerNum) {
+        self.isRight = YES;
+      } else {
+        self.isRight = NO;
+      }
+    } else {
+      self.isRight = NO;
     }
-    return self;
+  }
+  return self;
 }
 
 @end

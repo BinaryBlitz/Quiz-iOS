@@ -1,11 +1,3 @@
-//
-//  QZBRoomListTVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 16/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRoomListTVC.h"
 #import "QZBServerManager.h"
 #import <SVProgressHUD.h>
@@ -38,168 +30,167 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 @implementation QZBRoomListTVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.searchBar.delegate = self;
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    // self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(reloadRooms)
-                  forControlEvents:UIControlEventValueChanged];
-    
-    self.refreshControl.tintColor = [UIColor whiteColor];
+  [super viewDidLoad];
+  self.searchBar.delegate = self;
+  self.refreshControl = [[UIRefreshControl alloc] init];
+  // self.refreshControl.tintColor = [UIColor whiteColor];
+  [self.refreshControl addTarget:self
+                          action:@selector(reloadRooms)
+                forControlEvents:UIControlEventValueChanged];
 
-    [self initStatusbarWithColor:[UIColor blackColor]];
+  self.refreshControl.tintColor = [UIColor whiteColor];
 
-    [self addBarButtonRight];
+  [self initStatusbarWithColor:[UIColor blackColor]];
 
-    self.title = QZBCurrentTitle;
+  [self addBarButtonRight];
 
-   //[self reloadRooms];
+  self.title = QZBCurrentTitle;
+
+  //[self reloadRooms];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
-    [self reloadRooms];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.tabBarController.tabBar.hidden = NO;
+  [self reloadRooms];
   //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    //[self reloadRooms];
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  //[self reloadRooms];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+  return UIStatusBarStyleLightContent;
 }
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:QZBShowRoomSegueIdentifier]) {
-        QZBRoomController *destVC = segue.destinationViewController;
+  if ([segue.identifier isEqualToString:QZBShowRoomSegueIdentifier]) {
+    QZBRoomController *destVC = segue.destinationViewController;
 
-        [destVC initWithRoom:self.choosedRoom];
-        self.choosedRoom = nil;
-    }
+    [destVC initWithRoom:self.choosedRoom];
+    self.choosedRoom = nil;
+  }
 }
 
 #pragma mark - table view
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.rooms.count + 1;
+  return self.rooms.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == 0){
-        UITableViewCell *cell = [tableView
-                                 dequeueReusableCellWithIdentifier:QZBCreateRoomCellIdentifierInRoomList];
-        
-        return cell;
-    }
-    
-    QZBRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBRoomCellIdentifier];
-    QZBRoom *room = self.rooms[indexPath.row-1];
-
-    [cell configureCellWithRoom:room];
+  if (indexPath.row == 0) {
+    UITableViewCell *cell = [tableView
+        dequeueReusableCellWithIdentifier:QZBCreateRoomCellIdentifierInRoomList];
 
     return cell;
+  }
+
+  QZBRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:QZBRoomCellIdentifier];
+  QZBRoom *room = self.rooms[indexPath.row - 1];
+
+  [cell configureCellWithRoom:room];
+
+  return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.searchBar resignFirstResponder];
+  [self.searchBar resignFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == 0){
-        [self createRoom];
-        return;
-    }
-    
-    QZBRoom *r = self.rooms[indexPath.row-1];
+  if (indexPath.row == 0) {
+    [self createRoom];
+    return;
+  }
 
-    self.choosedRoom = r;
-    [self performSegueWithIdentifier:QZBShowRoomSegueIdentifier sender:nil];
+  QZBRoom *r = self.rooms[indexPath.row - 1];
+
+  self.choosedRoom = r;
+  [self performSegueWithIdentifier:QZBShowRoomSegueIdentifier sender:nil];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if(indexPath.row == 0) {
-        return 80;
-    }
-    QZBRoom *r = self.rooms[indexPath.row-1];
-    const CGFloat shortCellHeight = 70.0;
-    const CGFloat longCellHeight  = 140.0;
-    if(r.participants.count <= 2){
-        return shortCellHeight;
-    }else{
-        return longCellHeight;
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  if (indexPath.row == 0) {
+    return 80;
+  }
+  QZBRoom *r = self.rooms[indexPath.row - 1];
+  const CGFloat shortCellHeight = 70.0;
+  const CGFloat longCellHeight = 140.0;
+  if (r.participants.count <= 2) {
+    return shortCellHeight;
+  } else {
+    return longCellHeight;
+  }
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSString *stringToSearch = searchBar.text;
+  NSString *stringToSearch = searchBar.text;
 
-    NSInteger val = [stringToSearch integerValue];
+  NSInteger val = [stringToSearch integerValue];
 
-    //  NSNumber *number = @([stringToSearch intValue]);
+  //  NSNumber *number = @([stringToSearch intValue]);
 
   //  NSLog(@"num to search %ld", (long)val);
 
-    //
-    [[QZBServerManager sharedManager] GETRoomWithID:@(val)
-        OnSuccess:^(QZBRoom *room) {
+  //
+  [[QZBServerManager sharedManager] GETRoomWithID:@(val)
+                                        OnSuccess:^(QZBRoom *room) {
 
-            self.rooms = @[ room ];
-            [self.tableView reloadData];
-
-        }
-        onFailure:^(NSError *error, NSInteger statusCode) {
-            [SVProgressHUD showErrorWithStatus:QZBNothingFindedMessage];
-
-        }];
+                                          self.rooms = @[room];
+                                          [self.tableView reloadData];
+                                        }
+                                        onFailure:^(NSError *error, NSInteger statusCode) {
+                                          [SVProgressHUD showErrorWithStatus:QZBNothingFindedMessage];
+                                        }];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if ([searchText isEqualToString:@""]) {
-        [self reloadRooms];
-    }
+  if ([searchText isEqualToString:@""]) {
+    [self reloadRooms];
+  }
 }
 
 #pragma mark - actions
 
 - (void)reloadRooms {
-    [self.refreshControl beginRefreshing];
+  [self.refreshControl beginRefreshing];
 
-    [[QZBServerManager sharedManager] GETAllRoomsOnSuccess:^(NSArray *rooms) {
+  [[QZBServerManager sharedManager] GETAllRoomsOnSuccess:^(NSArray *rooms) {
 
-        [self.refreshControl endRefreshing];
-        self.rooms = rooms;
-        [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+    self.rooms = rooms;
+    [self.tableView reloadData];
+  }                                            onFailure:^(NSError *error, NSInteger statusCode) {
 
-    } onFailure:^(NSError *error, NSInteger statusCode) {
+    [self.refreshControl endRefreshing];
 
-        [self.refreshControl endRefreshing];
-
-        if (statusCode == 0) {
-            [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
-        }
-    }];
+    if (statusCode == 0) {
+      [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+    }
+  }];
 }
 
 - (void)createRoom {
-    //
-    //    [[QZBServerManager sharedManager] POSTCreateRoomOnSuccess:^(QZBRoom *room) {
-    //
-    //    } onFailure:^(NSError *error, NSInteger statusCode) {
-    //
-    //    }];
-    self.choosedRoom = nil;
-    [self performSegueWithIdentifier:QZBRoomCreationSegueIdentifier sender:nil];
+  //
+  //    [[QZBServerManager sharedManager] POSTCreateRoomOnSuccess:^(QZBRoom *room) {
+  //
+  //    } onFailure:^(NSError *error, NSInteger statusCode) {
+  //
+  //    }];
+  self.choosedRoom = nil;
+  [self performSegueWithIdentifier:QZBRoomCreationSegueIdentifier sender:nil];
 }
 
 //-(void)showCategoryChooser{
@@ -210,10 +201,10 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 #pragma mark - support methods
 
 - (void)addBarButtonRight {
-    self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                      target:self
-                                                      action:@selector(reloadRooms)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                    target:self
+                                                    action:@selector(reloadRooms)];
 }
 
 

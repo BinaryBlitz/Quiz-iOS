@@ -1,11 +1,3 @@
-//
-//  QZBRoom.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 16/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import "QZBUserProtocol.h"
 
@@ -24,7 +16,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)d;
 
-- (BOOL)isContainUser:(id<QZBUserProtocol>)user;
+- (BOOL)isContainUser:(id <QZBUserProtocol>)user;
 
 - (QZBUserWithTopic *)findUserWithID:(NSNumber *)userID;
 
@@ -39,8 +31,8 @@
 //- (NSString *)descriptionForAllUsers;
 
 - (NSString *)participantsDescription;
-- (NSString *)topicsDescription;
 
+- (NSString *)topicsDescription;
 
 
 @end

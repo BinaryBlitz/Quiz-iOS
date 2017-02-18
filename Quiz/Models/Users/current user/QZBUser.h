@@ -1,11 +1,3 @@
-//
-//  QZBUser.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 13/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "QZBUserProtocol.h"
 #import <UIKit/UIKit.h>
@@ -30,7 +22,9 @@
 
 //- (void)setUserPic:(UIImage *)userPic;
 - (void)setUserName:(NSString *)userName;
--(void)makeUserRegisterWithUserName:(NSString *)username;
+
+- (void)makeUserRegisterWithUserName:(NSString *)username;
+
 - (void)updateUserFromServer;
 
 //-(void)deleteImage;

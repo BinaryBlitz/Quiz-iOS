@@ -1,11 +1,3 @@
-//
-//  QZBCurrentUser.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 15/01/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "QZBUser.h"
 
@@ -20,12 +12,15 @@
 @property (strong, nonatomic, readonly) NSData *pushTokenData;
 
 - (void)setUser:(QZBUser *)user;
+
 - (BOOL)checkUser;
+
 - (void)userLogOut;
 
--(void)setAPNsToken:(NSData *)pushToken;
+- (void)setAPNsToken:(NSData *)pushToken;
 
 - (void)setNeedStartMessager:(BOOL)needStartMessager;
+
 - (BOOL)needStartMessager;
 
 

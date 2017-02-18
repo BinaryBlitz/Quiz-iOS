@@ -1,15 +1,6 @@
-//
-//  QZBQuestion.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 13/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBQuestion.h"
 #import "QZBAnswerTextAndID.h"
 #import "QZBServerManager.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
 
 //image manager
 #import <DFImageManager/DFImageManager.h>
@@ -17,10 +8,8 @@
 #import <DFImageManager/DFURLImageFetcher.h>
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageCaching.h>
-#import <DFImageCache.h>
 #import "QZBGameTopic.h"
 #import "MagicalRecord/MagicalRecord.h"
-
 
 @interface QZBQuestion ()
 
@@ -53,25 +42,22 @@
   return self;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict
-{
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
   self = [super init];
   if (self) {
-
 
     NSDictionary *questDict = [dict objectForKey:@"question"];
     NSString *questText = [questDict objectForKey:@"content"];
 
     NSInteger questionID = [[dict objectForKey:@"id"] integerValue];
-    if([questDict objectForKey:@"id"]){
+    if ([questDict objectForKey:@"id"]) {
       self.questionIDForReport = [[questDict objectForKey:@"id"] integerValue];
     }
 
-
-    if(questDict[@"topic_id"] && ![questDict[@"topic_id"] isEqual:[NSNull null]]) {
+    if (questDict[@"topic_id"] && ![questDict[@"topic_id"] isEqual:[NSNull null]]) {
       QZBGameTopic *topic = [QZBGameTopic MR_findFirstByAttribute:@"topic_id"
                                                         withValue:questDict[@"topic_id"]];
-      if(topic){
+      if (topic) {
         self.topic = topic;
       }
     }
@@ -86,7 +72,7 @@
       NSString *textOfAnswer = [answDict objectForKey:@"content"];
       NSInteger answerID = [[answDict objectForKey:@"id"] integerValue];
       QZBAnswerTextAndID *answerWithId =
-      [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer answerID:answerID];
+          [[QZBAnswerTextAndID alloc] initWithText:textOfAnswer answerID:answerID];
 
       [answers addObject:answerWithId];
       NSNumber *isRight = [answDict objectForKey:@"correct"];
@@ -107,15 +93,15 @@
 
     NSString *imageURLAsString = questDict[@"image_url"];
 
-    if(imageURLAsString && ![imageURLAsString isEqual:[NSNull null]]){
+    if (imageURLAsString && ![imageURLAsString isEqual:[NSNull null]]) {
 
       NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:imageURLAsString];
       NSURL *imgURL = [NSURL URLWithString:urlStr];
 
       DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
-      options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad )
-                            };
+      options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad )
+      };
 
       options.priority = DFImageRequestPriorityHigh;
       DFImageRequest *request = [DFImageRequest requestWithResource:imgURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
@@ -123,27 +109,18 @@
 //      [[DFImageManager sharedManager] requestImageForRequest:request completion:^(UIImage *image, NSDictionary *info) {}];
       [[DFImageManager sharedManager] imageTaskForRequest:request completion:nil];
 
-
-
       self.imageURL = imgURL;
-    }else{
+    } else {
       self.imageURL = nil;
     }
-
 
     self.answers = answers;
     self.question = questText;
     self.rightAnswer = correctAnswer;
     self.questionId = questionID;
-
-
   }
   return self;
 }
-
-
-
-
 
 
 @end

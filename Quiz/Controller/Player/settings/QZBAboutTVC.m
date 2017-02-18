@@ -1,11 +1,3 @@
-//
-//  QZBAboutTVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 20/07/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBAboutTVC.h"
 #import <MessageUI/MessageUI.h>
 
@@ -16,61 +8,60 @@
 @implementation QZBAboutTVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  [super viewDidLoad];
+
+  // Uncomment the following line to preserve selection between presentations.
+  // self.clearsSelectionOnViewWillAppear = NO;
+
+  // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+  // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
+
 - (IBAction)sendEmail:(UIButton *)sender {
-    
-    NSString *emailTitle = @"Ваш вопрос или предложение";
-    // Email Content
-   // NSString *messageBody = @"<h1>Learning iOS Programming!</h1>"; // Change the message body to HTML
-    // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"1na1@binaryblitz.ru"];
-    
-    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
-    mc.mailComposeDelegate = self;
-    [mc setSubject:emailTitle];
-   // [mc setMessageBody:messageBody isHTML:YES];
-    [mc setToRecipients:toRecipents];
-    
-    // Present mail view controller on screen
-    [self presentViewController:mc animated:YES completion:NULL];
+
+  NSString *emailTitle = @"Ваш вопрос или предложение";
+  // Email Content
+  // NSString *messageBody = @"<h1>Learning iOS Programming!</h1>"; // Change the message body to HTML
+  // To address
+  NSArray *toRecipents = [NSArray arrayWithObject:@"1na1@binaryblitz.ru"];
+
+  MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+  mc.mailComposeDelegate = self;
+  [mc setSubject:emailTitle];
+  // [mc setMessageBody:messageBody isHTML:YES];
+  [mc setToRecipients:toRecipents];
+
+  // Present mail view controller on screen
+  [self presentViewController:mc animated:YES completion:NULL];
 }
 
-- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            NSLog(@"Mail cancelled");
-            break;
-        case MFMailComposeResultSaved:
-            NSLog(@"Mail saved");
-            break;
-        case MFMailComposeResultSent:
-            NSLog(@"Mail sent");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
-            break;
-        default:
-            break;
-    }
-    
-    // Close the Mail Interface
-    [self dismissViewControllerAnimated:YES completion:NULL];
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+  switch (result) {
+    case MFMailComposeResultCancelled:
+      NSLog(@"Mail cancelled");
+      break;
+    case MFMailComposeResultSaved:
+      NSLog(@"Mail saved");
+      break;
+    case MFMailComposeResultSent:
+      NSLog(@"Mail sent");
+      break;
+    case MFMailComposeResultFailed:
+      NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+      break;
+    default:
+      break;
+  }
+
+  // Close the Mail Interface
+  [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 /*
@@ -128,7 +119,7 @@
 */
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+  return UIStatusBarStyleLightContent;
 }
 
 
