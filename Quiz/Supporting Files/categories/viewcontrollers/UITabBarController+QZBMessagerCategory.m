@@ -1,7 +1,7 @@
 #import "UITabBarController+QZBMessagerCategory.h"
 #import <TSMessage.h>
 #import <TSMessageView.h>
-#import "QZBMessangerList.h"
+#import "QZBMessengerList.h"
 #import "QZBSessionManager.h"
 
 @implementation UITabBarController (QZBMessagerCategory)
@@ -74,7 +74,7 @@
   UINavigationController *nav = self.viewControllers[1];
 
   [nav popToRootViewControllerAnimated:NO];
-  QZBMessangerList *messList = [nav.storyboard
+  QZBMessengerList *messList = [nav.storyboard
       instantiateViewControllerWithIdentifier:@"messagerList"];
 
   [nav pushViewController:messList animated:YES];

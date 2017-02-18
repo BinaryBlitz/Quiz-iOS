@@ -1,4 +1,4 @@
-#import "QZBMessagerVC.h"
+#import "QZBMessengerVC.h"
 #import "QZBCurrentUser.h"
 #import <JSQMessagesViewController/JSQMessages.h>
 #import <AFNetworking/AFNetworking.h>
@@ -14,7 +14,7 @@
 NSString *const QZBSegueToUserPageIdentifier = @"showBuddy";
 const NSTimeInterval QZBMessageTimeInterval = 600;
 
-@interface QZBMessagerVC () <LYRQueryControllerDelegate>
+@interface QZBMessengerVC () <LYRQueryControllerDelegate>
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 
@@ -32,7 +32,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 @end
 
-@implementation QZBMessagerVC
+@implementation QZBMessengerVC
 
 - (void)viewDidLoad {
   [super viewDidLoad];

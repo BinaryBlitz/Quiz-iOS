@@ -1,7 +1,7 @@
 #import "JSQMessagesViewController.h"
 #import "QZBUserProtocol.h"
 
-@interface QZBMessagerVC : JSQMessagesViewController //<XMPPStreamDelegate>
+@interface QZBMessengerVC : JSQMessagesViewController //<XMPPStreamDelegate>
 
 - (void)initWithUser:(id <QZBUserProtocol>)user;
 
