@@ -53,8 +53,6 @@
 		193A14CD1BC4352B005C6C36 /* NSDate+QZBDateCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */; };
 		193CC9111B42A3F70060B69B /* QZBRoomChooseTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */; };
 		193CC9151B43F7970060B69B /* QZBRoomOnlineWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */; };
-		193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC9171B441EAD0060B69B /* QZBRoomSession.m */; };
-		193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */; };
 		193D39DE1B55770E00301F99 /* UIColor+PAUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 193D39DA1B55770E00301F99 /* UIColor+PAUIColorAdditions.m */; };
 		193D39DF1B55770E00301F99 /* NSString+PANSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 193D39DD1B55770E00301F99 /* NSString+PANSStringAdditions.m */; };
 		193DEE411B0E227D009CEB50 /* QZBFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DEE401B0E227D009CEB50 /* QZBFriendRequest.m */; };
@@ -301,10 +299,6 @@
 		193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomChooseTopicCell.m; sourceTree = "<group>"; };
 		193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnlineWorker.h; sourceTree = "<group>"; };
 		193CC9141B43F7970060B69B /* QZBRoomOnlineWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomOnlineWorker.m; sourceTree = "<group>"; };
-		193CC9161B441EAD0060B69B /* QZBRoomSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomSession.h; sourceTree = "<group>"; };
-		193CC9171B441EAD0060B69B /* QZBRoomSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomSession.m; sourceTree = "<group>"; };
-		193CC91A1B4420C80060B69B /* QZBRoomQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomQuestion.h; sourceTree = "<group>"; };
-		193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomQuestion.m; sourceTree = "<group>"; };
 		193D39D91B55770E00301F99 /* UIColor+PAUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PAUIColorAdditions.h"; sourceTree = "<group>"; };
 		193D39DA1B55770E00301F99 /* UIColor+PAUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PAUIColorAdditions.m"; sourceTree = "<group>"; };
 		193D39DC1B55770E00301F99 /* NSString+PANSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PANSStringAdditions.h"; sourceTree = "<group>"; };
@@ -858,10 +852,6 @@
 		193CC9191B441EB20060B69B /* session */ = {
 			isa = PBXGroup;
 			children = (
-				193CC91A1B4420C80060B69B /* QZBRoomQuestion.h */,
-				193CC91B1B4420C80060B69B /* QZBRoomQuestion.m */,
-				193CC9161B441EAD0060B69B /* QZBRoomSession.h */,
-				193CC9171B441EAD0060B69B /* QZBRoomSession.m */,
 				19C78A411B4C0B1D00B46372 /* QZBRoomSessionResults.h */,
 				19C78A421B4C0B1D00B46372 /* QZBRoomSessionResults.m */,
 			);
@@ -1899,12 +1889,10 @@
 				197669981A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m in Sources */,
 				195FDA851ADA662E000F86F9 /* QZBReportVC.m in Sources */,
 				193D39DE1B55770E00301F99 /* UIColor+PAUIColorAdditions.m in Sources */,
-				193CC91C1B4420C80060B69B /* QZBRoomQuestion.m in Sources */,
 				19CB509D1A3C3D0300A3CD74 /* QZBAnswer.m in Sources */,
 				197669A21A67FDE2006C2757 /* QZBCategoryChooserVC.m in Sources */,
 				19DEA8651A860E4500E610DB /* QZBRatingMainVC.m in Sources */,
 				19B5E05A1A713D1B00DCD9C3 /* QZBLastElementInHorizontalTCCell.m in Sources */,
-				193CC9181B441EAD0060B69B /* QZBRoomSession.m in Sources */,
 				191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */,
 				195CAC071B512EF600564776 /* UIImageView+QZBImagePickerCategory.m in Sources */,
 				19B5E0571A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m in Sources */,
