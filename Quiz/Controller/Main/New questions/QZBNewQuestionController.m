@@ -103,7 +103,6 @@ static NSInteger answerOffset = 2;
 
       return cell;
     }
-
   } else if (indexPath.row == 6) {
     UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionSubmitCellIdentifier];
@@ -263,9 +262,7 @@ static NSInteger answerOffset = 2;
     QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *) cell;
     [c.answerTextField shakeView];
     [c.answerTextField becomeFirstResponder];
-
   }
-
 }
 
 - (void)clearAllFields {

@@ -23,7 +23,6 @@
 #import "NSDate+QZBDateCategory.h"
 #import "QZBLayerMessagerManager.h"
 #import <LayerKit/LayerKit.h>
-//#import "UIViewController+QZBMessagerCategory.h"
 
 NSString *const QZBNewQuestionControllerSegueIdentifier =
     @"QZBNewQuestionControllerSegueIdentifier";
@@ -66,8 +65,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
   [self.mainTableView addSubview:self.refreshControl];
 
-  // [self addBarButtonRight];
-
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(reloadTopicsDataFromNotification:)
                                                name:@"QZBNeedUpdateMainScreen"
@@ -90,8 +87,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // self.workArray = [NSMutableArray array];
-
   self.title = @"1 на 1";
 
   [self initStatusbarWithColor:[UIColor blackColor]];
@@ -99,10 +94,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
   UITabBarController *tabController = self.tabBarController;
   UITabBarItem *tabbarItem = tabController.tabBar.items[2];
   tabbarItem.badgeValue = nil;
-
-  // [self.refreshControl beginRefreshing];
-
-  //  [self subscribeToMessages];
 
   [self reloadTopicsData];
 }
@@ -113,9 +104,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
   UITabBarController *tabController = self.tabBarController;
   UITabBarItem *tabbarItem = tabController.tabBar.items[2];
   tabbarItem.badgeValue = nil;
-
-  //[self.tabBarController]
-  //[self unsubscribeFromMessages];
 }
 
 #pragma mark - Navigation
@@ -129,7 +117,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     [destinationController initSessionWithDescription:self.challengeDescription];
 
     self.challengeDescription = nil;
-
   } else if ([segue.identifier isEqualToString:@"showSessionResult"] &&
       self.challengeDescriptionWithResults) {
     QZBEndGameVC *destinationVC = segue.destinationViewController;
@@ -147,7 +134,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     QZBRoomController *destinationController = segue.destinationViewController;
     [destinationController initWithRoom:self.room];
     self.room = nil;
-
   } else {
     [super prepareForSegue:segue sender:sender];
   }
@@ -233,7 +219,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
       }
     }
     return cell;
-
   } else if (arr == self.challenges) {
     QZBChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"challengeCell"];
     cell.backgroundColor = [self colorForSection:indexPath.section];
@@ -245,7 +230,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     // cell.visible = descr.topic.visible;
 
     return cell;
-
   } else if (arr == self.challenged) {
     QZBResultOfSessionCell *cell =
         [tableView dequeueReusableCellWithIdentifier:@"resultSessionCell"];
@@ -258,7 +242,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
         [NSString stringWithFormat:@"%@ (%@)", descr.opponentUser.name, descr.sessionResult];
 
     return cell;
-
   } else {
     QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
 
@@ -576,7 +559,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
       self.challengeDescriptionWithResults = description;
 
       [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
-
     } else if (arr == self.roomsIvites) {
       QZBRoomInvite *roomInvite = arr[ip.row];
       self.roomInvite = roomInvite;
@@ -612,7 +594,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
                                                   onSuccess:nil
                                                   onFailure:nil];
       [self deleteRowWithAnimationOnIdexPath:ip array:self.challenged];
-
     } else if (arr == self.roomsIvites) {
       QZBRoomInvite *roomInvite = arr[ip.row];
 
@@ -620,7 +601,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
       [self deleteRowWithAnimationOnIdexPath:ip array:self.roomsIvites];
     }
     [self ignoreInteractions];
-
   }
 }
 

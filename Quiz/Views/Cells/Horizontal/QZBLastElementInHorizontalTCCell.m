@@ -60,7 +60,6 @@
     NSIndexPath *indexPath =
         [(UITableView *) view.superview.superview indexPathForCell:(UITableViewCell *) view];
     return indexPath;
-
   } else {
     return [self getIndexPathCell:view.superview];
   }

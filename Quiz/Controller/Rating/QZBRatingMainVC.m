@@ -98,7 +98,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
 
   [[QZBServerManager sharedManager] GETRankingWeekly:YES
@@ -109,7 +108,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
 
   [[QZBServerManager sharedManager] GETRankingWeekly:NO
@@ -120,7 +118,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
 }
 
@@ -136,7 +133,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setAllTimeRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
 
   [[QZBServerManager sharedManager] GETRankingWeekly:YES
@@ -147,7 +143,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setWeekRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
   [[QZBServerManager sharedManager] GETRankingWeekly:NO
                                           isCategory:NO
@@ -157,7 +152,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                              [pageVC setFriendsRanksWithTop:topRanking playerArray:playerRanking];
                                            }
                                            onFailure:^(NSError *error, NSInteger statusCode) {
-
                                            }];
 }
 
@@ -187,14 +181,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
 
     [self setRatingWithTopicID:[self.topic.topic_id integerValue]];
-
   } else if (self.category) {
     NSString *title = [NSString stringWithFormat:@"%@", self.category.name];
 
     [self.chooseTopicButton setTitle:title forState:UIControlStateNormal];
 
     [self setRatingWithCategoryID:[self.category.category_id integerValue]];
-
   } else {
     [self.chooseTopicButton setTitle:@"Все темы" forState:UIControlStateNormal];
     [self setRatingWithTopicID:0];

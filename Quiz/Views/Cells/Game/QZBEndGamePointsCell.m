@@ -32,10 +32,8 @@
   if (multiplier == 1) {
   } else if (multiplier == 2) {
     color = [UIColor lightButtonColor];
-
   } else if (multiplier == 3) {
     color = [UIColor lightGreenColor];
-
   } else if (multiplier == 5) {
     color = [UIColor lightRedColor];
   }

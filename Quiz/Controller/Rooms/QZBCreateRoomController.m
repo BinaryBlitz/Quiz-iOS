@@ -85,7 +85,6 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
         [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicDescriptionCellIdentifier];
 
     return cell;
-
   } else if (indexPath.row == 2) {
     if (self.topic) {
       QZBTopicTableViewCell *cell =
@@ -107,12 +106,10 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
     self.friendsOnlySwitch = cell.passwordOnlySwitch;
 
     return cell;
-
   } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 2) {
     UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:QZBEmptyCellIdentifier];
     return cell;
-
   } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {
     UITableViewCell *cell =
         [tableView dequeueReusableCellWithIdentifier:QZBCreateRoomCellIdentifier];
@@ -194,7 +191,6 @@ NSString *const QZBRoomCreatedMessage = @"Комната создана!";
     QZBRoomController *destVC = (QZBRoomController *) segue.destinationViewController;
 
     [destVC initWithRoom:self.room];
-
   }
 }
 

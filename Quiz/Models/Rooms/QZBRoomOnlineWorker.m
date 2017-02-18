@@ -70,7 +70,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
              [[NSNotificationCenter defaultCenter] postNotificationName:QZBNeedStartRoomGame
                                                                  object:nil];
-
            });
 
            NSLog(@"%@", session);
@@ -96,14 +95,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                        answeredQuestionWithID:questionID
                                                      answerID:answerID
                                                      withTime:time];
-
     }];
 
     [channel bindToEventNamed:@"participant-left"
               handleWithBlock:^(PTPusherEvent *channelEvent) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:QZBOneOfUserLeftRoom
                                                                     object:nil];
-
               }];
 
     [channel bindToEventNamed:@"status-changed" handleWithBlock:^(PTPusherEvent *channelEvent) {

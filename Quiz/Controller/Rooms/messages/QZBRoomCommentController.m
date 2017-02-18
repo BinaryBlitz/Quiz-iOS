@@ -246,7 +246,6 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationAutomatic];
         [TSMessage showNotificationWithTitle:@"Не удалось отправить сообщение" type:TSMessageNotificationTypeError];
-
       }];
 }
 
@@ -512,7 +511,6 @@ shouldChangeTextInRange:(NSRange)range
                                                  [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
                                                                                  type:TSMessageNotificationTypeError];
                                                }];
-
 }
 
 #pragma mark - recieve message

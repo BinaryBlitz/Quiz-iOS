@@ -85,7 +85,6 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
   }
 
   return -1;
-
 }
 
 #pragma mark - SKProductsRequestDelegate
@@ -172,16 +171,13 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
                                                             postNotificationName:IAPHelperProductPurchasedNotification
                                                                           object:productIdentifier
                                                                         userInfo:nil];
-
                                                       }
                                                       onFailure:^(NSError *error, NSInteger statusCode) {
 
                                                         [[NSNotificationCenter defaultCenter]
                                                             postNotificationName:IAPHelperProductPurchaseFailed
                                                                           object:productIdentifier];
-
                                                       }];
-
 }
 
 - (void)restoreCompletedTransactions {
@@ -196,7 +192,6 @@ NSString *const IAPHelperProductRestoreFinished = @"IAPHelperProductRestoreFinis
   DDLogInfo(@"restored");
   [[NSNotificationCenter defaultCenter]
       postNotificationName:IAPHelperProductRestoreFinished object:nil];
-
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {

@@ -61,7 +61,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                   categories:nil]];
 
     [application registerForRemoteNotifications];
-
   } else {
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
@@ -73,7 +72,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   if (userInfo) {
     if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
       [self showFriendRequestScreenWithDictionary:userInfo];
-
     } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
       [self acceptChallengeWithDict:userInfo];
     } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
@@ -254,7 +252,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
   if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
     if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
       [self showFriendRequestScreenWithDictionary:userInfo];
-
     } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
       [self acceptChallengeWithDict:userInfo];
     } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
@@ -287,7 +284,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 
   if ([userInfo[@"action"] isEqualToString:@"FRIEND_REQUEST"]) {
     vcNum = 1;
-
   } else if ([userInfo[@"action"] isEqualToString:@"CHALLENGE"]) {
     vcNum = 2;
   } else {

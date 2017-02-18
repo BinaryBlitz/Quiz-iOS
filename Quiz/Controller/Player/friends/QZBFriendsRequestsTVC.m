@@ -79,7 +79,6 @@
                           forState:UIControlStateDisabled];
           [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
                                                               object:nil];
-
         } else {
           [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
                                       subtitle:nil
@@ -123,17 +122,14 @@
 
           [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBFriendRequestUpdated"
                                                               object:nil];
-
         } else {
           [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
                                       subtitle:nil
                                           type:TSMessageNotificationTypeError];
-
         }
       }];
     }
   }
-
 }
 
 #pragma mark - UITableViewDelegate

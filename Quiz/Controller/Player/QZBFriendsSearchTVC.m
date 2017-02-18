@@ -9,7 +9,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,7 +35,6 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 
   [self searchWithSearchBar:searchBar];
-
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -45,7 +43,6 @@
   } else {
     [self setFriendsOwner:nil andFriends:nil];
   }
-
 }
 
 

@@ -32,7 +32,6 @@
       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
 
     [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-
     }];
   }
 }
@@ -71,7 +70,6 @@
                                                       object:nil];
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -90,13 +88,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   QZBFirstMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell"];
-
   QZBAnotherUserWithLastMessages *userWithLastMessage = self.listOfUsers[indexPath.row];
 
   [cell setCellWithUserWithLastMessage:userWithLastMessage];
 
   return cell;
-
 }
 
 #pragma mark - UITableViewDelegate
@@ -147,7 +143,6 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 - (void)didRecieveMessageFrom:(NSString *)bareJid text:(NSString *)text {
 
   [self reloadMessages];
-
 }
 
 - (void)reloadMessages {

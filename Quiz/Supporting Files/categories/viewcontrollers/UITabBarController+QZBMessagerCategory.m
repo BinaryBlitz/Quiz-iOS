@@ -63,7 +63,6 @@
 
     [m fadeMeOut];
   }
-
 }
 
 - (void)showMessageList {
@@ -79,7 +78,6 @@
       instantiateViewControllerWithIdentifier:@"messagerList"];
 
   [nav pushViewController:messList animated:YES];
-
 }
 
 @end

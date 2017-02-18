@@ -64,7 +64,6 @@
   [self initCircularProgressWithLevel:level
                              progress:progress
                               visible:[topic.visible boolValue]];
-
 }
 
 - (void)initCircularProgressWithLevel:(NSInteger)level
@@ -125,7 +124,6 @@
 
 - (UIColor *)colorForText:(NSString *)text {
   return arc4random() % 10 > 5 ? [UIColor lightRedColor] : [UIColor lightGreenColor];
-
 }
 
 @end

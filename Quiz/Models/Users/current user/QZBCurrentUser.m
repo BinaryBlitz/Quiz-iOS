@@ -28,7 +28,6 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedInstance = [[QZBCurrentUser alloc] init];
-
   });
   return sharedInstance;
 }
@@ -62,13 +61,10 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
 
       [[QZBServerManager sharedManager] POSTAPNsToken:self.pushToken
                                             onSuccess:^{
-
                                             }
                                             onFailure:^(NSError *error, NSInteger statusCode) {
-
                                             }];
     }
-
   }
 }
 
@@ -87,20 +83,15 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
     if (self.user) {
       [[QZBServerManager sharedManager] POSTAPNsToken:pushToken
                                             onSuccess:^{
-
                                             }
                                             onFailure:^(NSError *error, NSInteger statusCode) {
-
                                             }];
     }
   } else if (![pushToken isEqualToString:self.pushToken]) {
 
     [[QZBServerManager sharedManager] PATCHAPNsTokenNew:pushToken oldToken:self.pushToken onSuccess:^{
-
     }                                         onFailure:^(NSError *error, NSInteger statusCode) {
-
     }];
-
   } else {
     return;
   }

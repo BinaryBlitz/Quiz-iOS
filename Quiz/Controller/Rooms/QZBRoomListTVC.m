@@ -150,11 +150,9 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 
                                           self.rooms = @[room];
                                           [self.tableView reloadData];
-
                                         }
                                         onFailure:^(NSError *error, NSInteger statusCode) {
                                           [SVProgressHUD showErrorWithStatus:QZBNothingFindedMessage];
-
                                         }];
 }
 
@@ -174,7 +172,6 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
     [self.refreshControl endRefreshing];
     self.rooms = rooms;
     [self.tableView reloadData];
-
   }                                            onFailure:^(NSError *error, NSInteger statusCode) {
 
     [self.refreshControl endRefreshing];

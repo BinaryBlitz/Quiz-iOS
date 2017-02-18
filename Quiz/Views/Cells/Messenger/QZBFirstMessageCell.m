@@ -14,7 +14,6 @@
 - (void)awakeFromNib {
   self.badgeView = [[JSBadgeView alloc] initWithParentView:self.firstMessageLabel
                                                  alignment:JSBadgeViewAlignmentCenterRight];
-
 }
 
 - (void)setCellWithUserWithLastMessage:(QZBAnotherUserWithLastMessages *)userAndMessage {
@@ -38,7 +37,6 @@
   } else {
     [self.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
   }
-
 }
 
 @end

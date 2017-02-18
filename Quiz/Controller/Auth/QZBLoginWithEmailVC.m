@@ -108,9 +108,7 @@ navigation
                                                 [SVProgressHUD dismiss];
                                                 [self dismissViewControllerAnimated:YES
                                                                          completion:^{
-
                                                                          }];
-
                                               }
                                               onFailure:^(NSError *error, NSInteger statusCode) {
 
@@ -127,7 +125,6 @@ navigation
                                                 }
 
                                                 weakSelf.loginInProgress = NO;
-
                                               }];
   }
 }
@@ -165,14 +162,12 @@ navigation
   [alert addButton:@"Восстановить"
    validationBlock:^BOOL {
      return [self validateEmailTextField];
-
    }
        actionBlock:^{
          NSString *email = [self.emailTextField.text copy];
          self.emailTextField.text = @"";
 
          [self showAlertWaitingForEmail:email];
-
        }];
 
   [alert showEdit:self.navigationController
@@ -193,7 +188,6 @@ navigation
                                                      onSuccess:^{
 
                                                        [self showAlertSucces:email];
-
                                                      }
                                                      onFailure:^(NSError *error, NSInteger statusCode) {
                                                        // if(alert.isVisible){
@@ -225,7 +219,6 @@ navigation
           @"Введите почту, чтобы восстановить "
               @"аккаунт"];
     }
-
   }];
 
   [alert showError:self.navigationController
@@ -262,10 +255,8 @@ navigation
       [self.passwordTextField becomeFirstResponder];
       return YES;
     }
-
   } else if ([textField isEqual:self.emailTextField]) {
     return [self validateEmailTextField];
-
   } else if ([textField isEqual:self.passwordTextField]) {
     if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *) textField]) {
       return NO;

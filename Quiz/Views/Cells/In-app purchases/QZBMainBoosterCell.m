@@ -30,7 +30,6 @@
   [button setTitle:@"Купить" forState:UIControlStateNormal];
   button.enabled = YES;
   [button setTitleColor:self.tintColor forState:UIControlStateNormal];
-
 }
 
 - (void)configButtonPurchased:(UIButton *)button {

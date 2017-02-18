@@ -98,14 +98,12 @@
                                                                            if (problem == QZBUserNameProblem) {
                                                                              [TSMessage showNotificationWithTitle:@"Это имя уже занято"
                                                                                                              type:TSMessageNotificationTypeWarning];
-
                                                                            } else {
                                                                              [TSMessage showNotificationWithTitle:
                                                                                      @"Имя не обновлено, проверьте "
                                                                                          @"интернет-соединение"
                                                                                                              type:TSMessageNotificationTypeWarning];
                                                                            }
-
                                                                          }];
     }
   }
@@ -119,7 +117,6 @@
   if ([textField isEqual:self.usernameTextField]) {
     if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *) textField]) {
       return NO;
-
     } else {
       [self loginAction:nil];
 

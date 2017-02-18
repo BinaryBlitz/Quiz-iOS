@@ -83,7 +83,6 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
 
                                           cell.achievementPic.image =
                                               [self grayscaleImagefromImage:image];
-
                                         }
                                         failure:nil];
   }
@@ -111,7 +110,6 @@ static NSString *const reuseIdentifier = @"achievementIdentifier";
                                                      [self.collectionView reloadData];
                                                    }
                                                    onFailure:^(NSError *error, NSInteger statusCode) {
-
                                                    }];
 }
 

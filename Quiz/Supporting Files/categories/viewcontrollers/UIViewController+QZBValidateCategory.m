@@ -30,18 +30,15 @@
     } else {
       return YES;
     }
-
   } else if ([textField isKindOfClass:[QZBPasswordTextField class]]) {
     if (![textField validate]) {
       [TSMessage showNotificationWithTitle:[self errorAsNSString:password_error_message]
                                       type:TSMessageNotificationTypeWarning];
       [textField shakeView];
       return NO;
-
     } else {
       return YES;
     }
-
   } else if ([textField isKindOfClass:[QZBUserNameTextField class]]) {
     if (![textField validate]) {
       if ([textField.text length] < 2) {
@@ -60,11 +57,9 @@
 
       [textField shakeView];
       return NO;
-
     } else {
       return YES;
     }
-
   } else {
     return NO;
   }

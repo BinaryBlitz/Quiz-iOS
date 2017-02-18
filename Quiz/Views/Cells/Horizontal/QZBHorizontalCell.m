@@ -108,7 +108,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
       [cell setName:achiv.name picture:[UIImage imageNamed:@"achiv"]];
     }
-
   } else if ([object isKindOfClass:[QZBAnotherUser class]]) {
 
     QZBAnotherUser *user = (QZBAnotherUser *) object;
@@ -152,7 +151,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
   [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBUserPressSomethingInHorizontallTV"
                                                       object:dict];
-
 }
 
 - (NSIndexPath *)getIndexPathCell:(UIView *)view {
@@ -161,7 +159,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
     NSIndexPath *indexPath = [(UITableView *) view.superview.superview indexPathForCell:(UITableViewCell *) view];
     return indexPath;
-
   } else {
     return [self getIndexPathCell:view.superview];
   }

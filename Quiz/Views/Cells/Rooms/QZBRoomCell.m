@@ -31,7 +31,6 @@
       } else {
         nameLabel.textColor = [UIColor whiteColor];
       }
-
     } else {
       nameLabel.text = nil;
       topicsLabel.text = nil;

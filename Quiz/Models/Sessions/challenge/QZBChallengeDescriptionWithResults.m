@@ -39,10 +39,8 @@
     // NSNumber *topicID = dict[@"topic_id"];
 
     self.topic.points = firstDict[@"points"];
-
   }
   return self;
-
 }
 
 - (NSString *)resultOfSession {

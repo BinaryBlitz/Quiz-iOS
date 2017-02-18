@@ -51,7 +51,6 @@
         self.owner = userWithTopic;
         break;
       }
-
     }
 
     id usersCount = d[@"size"];
@@ -112,7 +111,6 @@
   userWithTopic.userWithTopicID = userWithTopicID;
 
   return userWithTopic;
-
 }
 
 //- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
@@ -159,7 +157,6 @@
   [attributedName appendAttributedString:attributedTopicName];
 
   return [[NSAttributedString alloc] initWithAttributedString:attributedName];
-
 }
 
 - (NSString *)descriptionForAllUsers {
@@ -210,7 +207,6 @@
 
     if (i < self.participants.count - 1)
       [res appendString:@", "];
-
   }
 
   return [NSString stringWithString:res];
@@ -248,7 +244,6 @@
     }
   }
   return nil;
-
 }
 
 #pragma mark - results
@@ -263,7 +258,6 @@
 
   return [self.participants
       sortedArrayUsingDescriptors:@[finishedSortDescriptor, pointsDescriptor]];
-
 }
 
 

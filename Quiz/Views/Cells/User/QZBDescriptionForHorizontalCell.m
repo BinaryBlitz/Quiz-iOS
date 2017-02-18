@@ -7,7 +7,6 @@
   // Initialization code
 
   self.shadowView = [self addDropShadows];
-
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -116,7 +116,6 @@ const float fontSize = 19.0;
   circle.backgroundColor = [UIColor clearColor];
 
   [self addSubview:circle];
-
 }
 
 - (void)addCircleRight {
@@ -130,7 +129,6 @@ const float fontSize = 19.0;
   circle.backgroundColor = [UIColor clearColor];
 
   [self addSubview:circle];
-
 }
 
 - (void)unshowCircles {
@@ -141,7 +139,6 @@ const float fontSize = 19.0;
       [view removeFromSuperview];
     }
   }
-
 }
 
 - (void)unshowTriangles {

@@ -117,7 +117,6 @@
                                                    }
 
                                                    weakSelf.registrationInProgress = NO;
-
                                                  }];
   }
 }
@@ -149,7 +148,6 @@
   if ([textField isEqual:self.userNameTextField]) {
     if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *) textField]) {
       return NO;
-
     } else {
       [self.emailTextField becomeFirstResponder];
       return YES;
@@ -161,7 +159,6 @@
       [self.passwordTextField becomeFirstResponder];
       return YES;
     }
-
   } else if ([textField isEqual:self.passwordTextField]) {
     if (![self validateTextField:(QZBRegistrationAndLoginTextFieldBase *) textField]) {
       return NO;

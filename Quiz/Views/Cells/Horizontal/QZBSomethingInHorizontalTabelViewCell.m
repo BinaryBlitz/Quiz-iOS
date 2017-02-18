@@ -65,7 +65,6 @@
 - (void)setName:(NSString *)name picture:(UIImage *)image {
   self.name.text = name;
   self.picture.image = image;
-
 }
 
 - (NSString *)reuseIdentifier {

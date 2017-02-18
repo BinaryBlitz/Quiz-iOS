@@ -156,7 +156,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
             [SVProgressHUD dismiss];
             [self.refreshControl endRefreshing];
           }];
-
     }                                                                    onFailure:^(NSError *error, NSInteger statusCode) {
 
       DDLogInfo(@"status code %ld", (long) statusCode);
@@ -172,7 +171,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
       // [SVProgressHUD dismiss];
       [self.refreshControl endRefreshing];
       self.reloadInProgress = NO;
-
     }];
   }
 }
@@ -221,7 +219,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
     }
 
     return cell;
-
   } else
 //        if (indexPath.row == 1) {
 //        QZBDescriptionForHorizontalCell *descrCell =
@@ -252,7 +249,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
       [cell.purchaseButton setTitle:@"Куплено" forState:UIControlStateNormal];
       cell.purchaseButton.backgroundColor = [UIColor lightGrayColor];
       cell.purchaseButton.enabled = NO;
-
     } else {
 //            [cell.purchaseButton setTitle:[self.priceFormatter stringFromNumber:product.price]
 //                                 forState:UIControlStateNormal];
@@ -304,7 +300,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
     }
 
     label.text = labelString;
-
   } else {
     label.text = [self.priceFormatter stringFromNumber:product.price];
 

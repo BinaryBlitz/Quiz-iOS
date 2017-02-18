@@ -61,7 +61,6 @@
   [self addSubview:view];
 
   return view;
-
 }
 
 @end

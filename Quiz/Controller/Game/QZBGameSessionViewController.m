@@ -212,7 +212,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     [self loadRoomView];
     [self setRoomsUsersScoresForUserWithID:@(-1) isCorrect:NO];
   }
-
 }
 
 - (void)playGameSound {
@@ -235,7 +234,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     [player prepareToPlay];
     [player play];
   }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -245,7 +243,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   if (self.soundPlayer) {
     [self.soundPlayer stop];
   }
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -331,7 +328,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
           [[JSQSystemSoundPlayer sharedPlayer]         playSoundWithFilename:@"wrong"
                                                        fileExtension:kJSQSystemSoundTypeWAV];
           [[JSQSystemSoundPlayer sharedPlayer] playVibrateSound];
-
         } else {
           [[JSQSystemSoundPlayer sharedPlayer]         playSoundWithFilename:@"correct"
                                                        fileExtension:kJSQSystemSoundTypeWAV];
@@ -342,9 +338,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                            sender.backgroundColor = color;
                          }
                          completion:^(BOOL finished) {
-
                          }];
-
       });
 }
 
@@ -481,7 +475,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                                       }
                                       completion:^(BOOL finished) {
                                         [weakSelf showOnlyQuestionAndAnswers];
-
                                       }];
                    }];
 }
@@ -507,7 +500,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                            }
                            completion:^(BOOL finished) {
                              button.enabled = YES;
-
                            }];
         }
         [UIView          animateWithDuration:0.3
@@ -543,12 +535,10 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
                      weakSelf.timeLabel.alpha = .0;
                      weakSelf.progressView.alpha = .0;
-
                    }
                    completion:^(BOOL finished) {
 
                      weakSelf.progressView.progress = 0.0;
-
                    }];
 
   for (UIButton *button in weakSelf.answerButtons) {
@@ -616,7 +606,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)),
             dispatch_get_main_queue(), ^{
               [weakSelf showQuestionAndAnswers];
-
             });
       });
 }
@@ -634,7 +623,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                          b.backgroundColor = [UIColor transperentLightGreenColor];
                        }
                        completion:^(BOOL finished) {
-
                        }];
     } else {
       [UIView animateWithDuration:QZB_TIME_OF_COLORING_BUTTONS
@@ -644,7 +632,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                          b.alpha = 0;
                        }
                        completion:^(BOOL finished) {
-
                        }];
     }
 
@@ -661,7 +648,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                              b.backgroundColor = [UIColor transperentLightRedColor];
                            }
                            completion:^(BOOL finished) {
-
                            }];
         }
       }
@@ -710,9 +696,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
               } else {
                 [self performSegueWithIdentifier:@"gameEnded" sender:nil];
               }
-
             });
-
           }
         });
   }
@@ -768,7 +752,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                      weakSelf.opponentScore.textColor = color;
                    }
                    completion:^(BOOL finished) {
-
                    }];
 }
 
@@ -791,7 +774,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                      weakSelf.firstUserScore.textColor = color;
                    }
                    completion:^(BOOL finished) {
-
                    }];
 }
 
@@ -819,7 +801,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   } else {
     [self.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
   }
-
 }
 
 #pragma mark - status bar
@@ -905,9 +886,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
           }
           [self colorLabel:nameLabel color:color];
           [self colorLabel:scoreLabel color:color];
-
         }
-
       } else {
         nameLabel.text = @"";
         scoreLabel.text = @"";
@@ -935,7 +914,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
                       label.textColor = [UIColor blackColor];
                     } completion:^(BOOL finished) {
         }];
-
   });
 }
 

@@ -17,7 +17,6 @@
   [super viewDidLoad];
 
   [self.userPicImageView removeConstraints:self.userPicImageView.constraints];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -31,7 +30,6 @@
 //        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
 //    }
     [self setImageWithUrl:self.user.imageURLBig];
-
   } else {
 //        if(self.user.imageURL){
 //            [self.userPicImageView setImageWithURL:self.user.imageURL];
@@ -41,7 +39,6 @@
 
     [self setImageWithUrl:self.user.imageURL];
   }
-
 }
 
 - (void)setImageWithUrl:(NSURL *)url {
@@ -60,14 +57,11 @@
 //        weakSelf.userPicImageView.frame = CGRectMake(0, 0, 200, 300);
 //        weakSelf.userPicImageView.center = weakSelf.view.center;
       [weakSelf.userPicImageView setImage:image];
-
     }                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-
     }];
   } else {
     [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
   }
-
 }
 
 - (void)configureWithUser:(id <QZBUserProtocol>)user {
@@ -89,7 +83,6 @@
                 style:UIBarButtonItemStylePlain
                target:self
                action:@selector(showChoose)];
-
   }
 }
 
@@ -147,7 +140,6 @@
   picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
 
   [self presentViewController:picker animated:YES completion:NULL];
-
 }
 
 - (IBAction)selectPhoto:(UIButton *)sender {
@@ -158,7 +150,6 @@
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
   [self presentViewController:picker animated:YES completion:NULL];
-
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -169,13 +160,11 @@
   [self.userPicImageView loadNewPic:chosenImage];
 
   [picker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 
   [picker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 
 

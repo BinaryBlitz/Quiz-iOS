@@ -67,7 +67,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [userWithTopic setPoints:points];
     userWithTopic.finished = YES;
   }
-
 }
 
 - (QZBUserWithTopic *)userWithTopicWithID:(NSNumber *)userID {
@@ -81,7 +80,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
   }
   return nil;
-
 }
 
 #pragma mark - notifications

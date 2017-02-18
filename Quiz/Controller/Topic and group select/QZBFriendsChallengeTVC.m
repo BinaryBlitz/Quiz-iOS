@@ -67,24 +67,20 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
   [self searchWithSearchBar:searchBar];
-
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
   if (searchText.length == 0) {
     [super setFriendsOwner:nil andFriends:self.currentFriends];
-
   } else {
     [self searchWithSearchBar:searchBar];
   }
-
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
   if (searchBar.text.length == 0) {
 
     [super setFriendsOwner:nil andFriends:self.currentFriends];
-
   }
 }
 
@@ -92,7 +88,6 @@
   if (searchBar.text.length == 0) {
 
     [super setFriendsOwner:nil andFriends:self.currentFriends];
-
   }
 }
 
