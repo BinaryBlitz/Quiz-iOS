@@ -233,21 +233,21 @@
 		190DE8181AD66AA80040585A /* QZBEndGameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGameVC.m; sourceTree = "<group>"; };
 		190DE81B1AD66B320040585A /* QZBEndGameMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBEndGameMainCell.h; sourceTree = "<group>"; };
 		190DE81C1AD66B320040585A /* QZBEndGameMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBEndGameMainCell.m; sourceTree = "<group>"; };
-		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBSessionManager.h; sourceTree = "<group>"; };
+		190F8BBF1A41C91F00B9E27F /* QZBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBSessionManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		190F8BC01A41C91F00B9E27F /* QZBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBSessionManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191137F01BA5A086000115B0 /* QZBNewQuestionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionController.h; sourceTree = "<group>"; };
 		191137F11BA5A086000115B0 /* QZBNewQuestionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionController.m; sourceTree = "<group>"; };
 		191137F41BA5AB1B000115B0 /* QZBNewQuestionInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionInputCell.h; sourceTree = "<group>"; };
-		191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionInputCell.m; sourceTree = "<group>"; };
+		191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBNewQuestionInputCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191137F71BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBNewQuestionAnswerCell.h; sourceTree = "<group>"; };
 		191137F81BA5ABA8000115B0 /* QZBNewQuestionAnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBNewQuestionAnswerCell.m; sourceTree = "<group>"; };
 		191559C11A39CDD400462C93 /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		191559C51A39CDD400462C93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		191559C61A39CDD400462C93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191559C81A39CDD400462C93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		191559C91A39CDD400462C93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		191559C91A39CDD400462C93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191559CC1A39CDD400462C93 /* QZBQuizBattle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QZBQuizBattle.xcdatamodel; sourceTree = "<group>"; };
-		191559CE1A39CDD400462C93 /* QZBGameSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QZBGameSessionViewController.h; sourceTree = "<group>"; };
+		191559CE1A39CDD400462C93 /* QZBGameSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBGameSessionViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		191559CF1A39CDD400462C93 /* QZBGameSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBGameSessionViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191559D41A39CDD400462C93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		191559D71A39CDD400462C93 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -292,8 +292,8 @@
 		1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomUserResultCell.m; sourceTree = "<group>"; };
 		1936E07C1B3C24A900BE6B16 /* QZBTopicWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBTopicWorker.h; sourceTree = "<group>"; };
 		1936E07D1B3C24A900BE6B16 /* QZBTopicWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBTopicWorker.m; sourceTree = "<group>"; };
-		193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+QZBDateCategory.h"; sourceTree = "<group>"; };
-		193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+QZBDateCategory.m"; sourceTree = "<group>"; };
+		193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSDate+QZBDateCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSDate+QZBDateCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		193CC90F1B42A3F60060B69B /* QZBRoomChooseTopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomChooseTopicCell.h; sourceTree = "<group>"; };
 		193CC9101B42A3F70060B69B /* QZBRoomChooseTopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomChooseTopicCell.m; sourceTree = "<group>"; };
 		193CC9131B43F7970060B69B /* QZBRoomOnlineWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomOnlineWorker.h; sourceTree = "<group>"; };
@@ -355,10 +355,10 @@
 		195CAC061B512EF600564776 /* UIImageView+QZBImagePickerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+QZBImagePickerCategory.m"; sourceTree = "<group>"; };
 		195EA0A31AD4338B000C4341 /* QZBAchievementManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBAchievementManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		195EA0A41AD4338C000C4341 /* QZBAchievementManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBAchievementManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		195EA0A71AD520AA000C4341 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
-		195EA0A81AD520AA000C4341 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
-		195EA0A91AD520AA000C4341 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
-		195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
+		195EA0A71AD520AA000C4341 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		195EA0A81AD520AA000C4341 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		195EA0A91AD520AA000C4341 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIButton+Badge.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		195EA0AA1AD520AA000C4341 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIButton+Badge.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		195EA0AD1AD52DE7000C4341 /* QZBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCategory.h; sourceTree = "<group>"; };
 		195EA0AE1AD52DE7000C4341 /* QZBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBCategory.m; sourceTree = "<group>"; };
 		195FDA831ADA662E000F86F9 /* QZBReportVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBReportVC.h; sourceTree = "<group>"; };
@@ -408,7 +408,7 @@
 		197669931A67B4B0006C2757 /* QZBRegisterWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterWithEmailVC.h; sourceTree = "<group>"; };
 		197669941A67B4B0006C2757 /* QZBRegisterWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterWithEmailVC.m; sourceTree = "<group>"; };
 		197669961A67D040006C2757 /* QZBRegisterAndLoginBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRegisterAndLoginBaseVC.h; sourceTree = "<group>"; };
-		197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRegisterAndLoginBaseVC.m; sourceTree = "<group>"; };
+		197669971A67D040006C2757 /* QZBRegisterAndLoginBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBRegisterAndLoginBaseVC.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1976699A1A67D7A1006C2757 /* QZBLoginWithEmailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBLoginWithEmailVC.h; sourceTree = "<group>"; };
 		1976699B1A67D7A1006C2757 /* QZBLoginWithEmailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBLoginWithEmailVC.m; sourceTree = "<group>"; };
 		1976699D1A67EEAC006C2757 /* QZBCurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBCurrentUser.h; sourceTree = "<group>"; };
@@ -501,13 +501,13 @@
 		19C78A3F1B468EED00B46372 /* QZBRoomUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomUsersView.m; sourceTree = "<group>"; };
 		19C78A411B4C0B1D00B46372 /* QZBRoomSessionResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomSessionResults.h; sourceTree = "<group>"; };
 		19C78A421B4C0B1D00B46372 /* QZBRoomSessionResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomSessionResults.m; sourceTree = "<group>"; };
-		19CB50901A3C33B000A3CD74 /* QZBQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBQuestion.h; sourceTree = "<group>"; };
+		19CB50901A3C33B000A3CD74 /* QZBQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBQuestion.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		19CB50911A3C33B000A3CD74 /* QZBQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBQuestion.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		19CB50941A3C37BA00A3CD74 /* QZBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBSession.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		19CB50951A3C37BA00A3CD74 /* QZBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBSession.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		19CB50971A3C388000A3CD74 /* QZBUserInSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBUserInSession.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		19CB50981A3C388000A3CD74 /* QZBUserInSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBUserInSession.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		19CB509B1A3C3D0300A3CD74 /* QZBAnswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnswer.h; sourceTree = "<group>"; };
+		19CB509B1A3C3D0300A3CD74 /* QZBAnswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBAnswer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		19CB509C1A3C3D0300A3CD74 /* QZBAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBAnswer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		19CB509E1A3C51CA00A3CD74 /* QZBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBUser.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		19CB509F1A3C51CA00A3CD74 /* QZBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBUser.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -540,8 +540,8 @@
 		19D691291A6EA4E8008B2AE1 /* QZBUserNameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBUserNameTextField.m; sourceTree = "<group>"; };
 		19D8914B1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+QZBControllerCategory.h"; sourceTree = "<group>"; };
 		19D8914C1ABB3A8100251ADF /* UIViewController+QZBControllerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+QZBControllerCategory.m"; sourceTree = "<group>"; };
-		19D911341B171178007B4CF2 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
-		19D911351B171178007B4CF2 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		19D911341B171178007B4CF2 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FXBlurView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		19D911351B171178007B4CF2 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FXBlurView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		19DA48DB1A7BCC8700649BE4 /* QZBMainTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBMainTBC.h; sourceTree = "<group>"; };
 		19DA48DC1A7BCC8700649BE4 /* QZBMainTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBMainTBC.m; sourceTree = "<group>"; };
 		19DC85A01B3AE01F00E20998 /* QZBRoomWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomWorker.h; sourceTree = "<group>"; };
@@ -645,7 +645,6 @@
 				1901BA211B3067E7003E2895 /* QZBUserInRoomCell.h */,
 				1901BA221B3067E7003E2895 /* QZBUserInRoomCell.m */,
 			);
-			name = Rooms;
 			path = Rooms;
 			sourceTree = "<group>";
 		};
@@ -674,7 +673,6 @@
 				1974BC111AD6B0800057E966 /* QZBEndGameResultScoreCell.h */,
 				1974BC121AD6B0800057E966 /* QZBEndGameResultScoreCell.m */,
 			);
-			name = Game;
 			path = Game;
 			sourceTree = "<group>";
 		};
@@ -695,7 +693,6 @@
 				191137F41BA5AB1B000115B0 /* QZBNewQuestionInputCell.h */,
 				191137F51BA5AB1B000115B0 /* QZBNewQuestionInputCell.m */,
 			);
-			name = "New question";
 			path = "New question";
 			sourceTree = "<group>";
 		};
@@ -803,7 +800,6 @@
 				19B5E0551A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.h */,
 				19B5E0561A7104D100DCD9C3 /* QZBSomethingInHorizontalTabelViewCell.m */,
 			);
-			name = Horizontal;
 			path = Horizontal;
 			sourceTree = "<group>";
 		};
@@ -832,7 +828,6 @@
 				192CDE291B419D21003992C7 /* QZBRoomPasswordOnlyCell.h */,
 				192CDE2A1B419D21003992C7 /* QZBRoomPasswordOnlyCell.m */,
 			);
-			name = "New room";
 			path = "New room";
 			sourceTree = "<group>";
 		};
@@ -842,7 +837,6 @@
 				1936E0791B3BFED800BE6B16 /* QZBRoomUserResultCell.h */,
 				1936E07A1B3BFED800BE6B16 /* QZBRoomUserResultCell.m */,
 			);
-			name = Result;
 			path = Result;
 			sourceTree = "<group>";
 		};
@@ -914,7 +908,6 @@
 				193ED1471B9095CE00582758 /* QZBQuestuinReportAnswerCell.h */,
 				193ED1481B9095CE00582758 /* QZBQuestuinReportAnswerCell.m */,
 			);
-			name = "Report question";
 			path = "Report question";
 			sourceTree = "<group>";
 		};
@@ -960,7 +953,6 @@
 				194258271B18BB86008A3449 /* QZBViewWithLineOnBottom.h */,
 				194258281B18BB86008A3449 /* QZBViewWithLineOnBottom.m */,
 			);
-			name = "Custom views";
 			path = "Custom views";
 			sourceTree = "<group>";
 		};
@@ -997,7 +989,6 @@
 				1944A1701B0F39110095C600 /* QZBFriendRequestCell.h */,
 				1944A1711B0F39110095C600 /* QZBFriendRequestCell.m */,
 			);
-			name = "Friend cells";
 			path = "Friend cells";
 			sourceTree = "<group>";
 		};
@@ -1090,7 +1081,6 @@
 				196099FF1B272EA500EEB9D6 /* QZBFirstMessageCell.h */,
 				19609A001B272EA500EEB9D6 /* QZBFirstMessageCell.m */,
 			);
-			name = Messenger;
 			path = Messenger;
 			sourceTree = "<group>";
 		};
@@ -1118,7 +1108,6 @@
 				1965879B1AC5879200C58C60 /* QZBVSScoreCell.h */,
 				1965879C1AC5879200C58C60 /* QZBVSScoreCell.m */,
 			);
-			name = User;
 			path = User;
 			sourceTree = "<group>";
 		};
@@ -1133,7 +1122,6 @@
 				196F9AF31BA1FFF2001AF551 /* QZBReloadingCell.h */,
 				196F9AF41BA1FFF2001AF551 /* QZBReloadingCell.m */,
 			);
-			name = Rating;
 			path = Rating;
 			sourceTree = "<group>";
 		};
@@ -1145,7 +1133,6 @@
 				19446A761A9E3693005BB485 /* QZBStoreBoosterCell.h */,
 				19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */,
 			);
-			name = "In-app purchases";
 			path = "In-app purchases";
 			sourceTree = "<group>";
 		};
@@ -1157,7 +1144,6 @@
 				1976FBAD1A4B04F10016130B /* QZBTopicTableViewCell.h */,
 				1976FBAE1A4B04F10016130B /* QZBTopicTableViewCell.m */,
 			);
-			name = Topics;
 			path = Topics;
 			sourceTree = "<group>";
 		};
@@ -1312,7 +1298,6 @@
 				199CD9481A8BB1DA00FBF820 /* QZBAchievementCollectionCell.h */,
 				199CD9491A8BB1DA00FBF820 /* QZBAchievementCollectionCell.m */,
 			);
-			name = "Collection view";
 			path = "Collection view";
 			sourceTree = "<group>";
 		};
@@ -1351,7 +1336,6 @@
 				19CFA1981B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.h */,
 				19CFA1991B5E854100DC8C43 /* QZBShowAllRoomsOnMainCell.m */,
 			);
-			name = Main;
 			path = Main;
 			sourceTree = "<group>";
 		};
@@ -1370,7 +1354,6 @@
 				19AB8DFC1B9DD65C004329F8 /* QZBCommentRoomCell.h */,
 				19AB8DFD1B9DD65C004329F8 /* QZBCommentRoomCell.m */,
 			);
-			name = Messages;
 			path = Messages;
 			sourceTree = "<group>";
 		};
@@ -1391,7 +1374,6 @@
 				192311C81BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.h */,
 				192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */,
 			);
-			name = Rooms;
 			path = Rooms;
 			sourceTree = "<group>";
 		};
@@ -1428,7 +1410,6 @@
 				194258261B18BB63008A3449 /* Custom views */,
 				19D691181A6E5E5B008B2AE1 /* Text fields */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};

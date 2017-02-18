@@ -1,11 +1,3 @@
-//
-//  NSDate+QZBDateCategory.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 06/10/15.
-//  Copyright © 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "NSDate+QZBDateCategory.h"
 #import <NSDate+DateTools.h>
 
