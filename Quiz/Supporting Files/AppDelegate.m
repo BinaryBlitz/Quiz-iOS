@@ -16,7 +16,7 @@
 #import "QZBSessionManager.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
-#import "QZBMessangerList.h"
+#import "QZBMessengerList.h"
 
 #import <LayerKit/LayerKit.h>
 
@@ -368,7 +368,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   UINavigationController *nav = tabController.viewControllers[1];
 
   [nav popToRootViewControllerAnimated:NO];
-  QZBMessangerList *messList =
+  QZBMessengerList *messList =
       [nav.storyboard instantiateViewControllerWithIdentifier:@"messagerList"];
 
   [nav pushViewController:messList animated:YES];

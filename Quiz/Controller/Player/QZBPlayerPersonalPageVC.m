@@ -33,7 +33,7 @@
 
 
 //messager
-#import "QZBMessagerVC.h"
+#import "QZBMessengerVC.h"
 #import "QZBLayerMessagerManager.h"
 
 
@@ -583,11 +583,11 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
     [destVC initWithUser:self.user];
   } else if ([segue.identifier isEqualToString:@"pushMessager"]) {
-    QZBMessagerVC *destVC = (QZBMessagerVC *) segue.destinationViewController;
+    QZBMessengerVC *destVC = (QZBMessengerVC *) segue.destinationViewController;
 
     [destVC initWithUser:self.user];
   } else if ([segue.identifier isEqualToString:@"showAllMessages"]) {
-    // QZBMessangerList *destVC = (QZBMessangerList *)segue.destinationViewController;
+    // QZBMessengerList *destVC = (QZBMessengerList *)segue.destinationViewController;
     // [destVC setFriendsOwner:self.user andFriends:self.friends];
 
   } else if ([segue.identifier isEqualToString:QZBShowUserPicViewController]) {

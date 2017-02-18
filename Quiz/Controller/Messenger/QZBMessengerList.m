@@ -1,5 +1,5 @@
-#import "QZBMessangerList.h"
-#import "QZBMessagerVC.h"
+#import "QZBMessengerList.h"
+#import "QZBMessengerVC.h"
 
 #import "QZBCurrentUser.h"
 
@@ -11,7 +11,7 @@
 
 #import <LayerKit/LayerKit.h>
 
-@interface QZBMessangerList ()
+@interface QZBMessengerList ()
 
 @property (strong, nonatomic) id <QZBUserProtocol> user;
 @property (strong, nonatomic) NSMutableArray *listOfUsers;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation QZBMessangerList
+@implementation QZBMessengerList
 
 #pragma mark - Navigation
 
@@ -75,7 +75,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
   if ([segue.identifier isEqualToString:@"showMessager"]) {
-    QZBMessagerVC *destVC = (QZBMessagerVC *) segue.destinationViewController;
+    QZBMessengerVC *destVC = (QZBMessengerVC *) segue.destinationViewController;
     [destVC initWithUser:self.user];
   }
 }
