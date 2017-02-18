@@ -5,7 +5,7 @@
 #import "QZBTopicTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "QZBFriendHorizontalCell.h"
-#import "QZBAchivHorizontalCell.h"
+#import "QZBAchievementHorizontalCell.h"
 #import "QZBAchievement.h"
 #import <TSMessages/TSMessage.h>
 #import "QZBFriendsTVC.h"
@@ -361,11 +361,11 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
     return descrForHorizontal;
   } else if (indexPath.row == 5) {
-    QZBAchivHorizontalCell *achivCell =
+    QZBAchievementHorizontalCell *achivCell =
         [tableView dequeueReusableCellWithIdentifier:achivIdentifier];
     achivCell.contentView.backgroundColor = [UIColor whiteColor];
 
-    [achivCell setAchivArray:self.achivArray];
+    [achivCell setAchievementsArray:self.achivArray];
 
     return achivCell;
   } else if (indexPath.row == [tableView numberOfRowsInSection:0] - 1) {

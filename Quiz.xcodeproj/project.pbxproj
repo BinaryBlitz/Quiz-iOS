@@ -33,7 +33,7 @@
 		19168A971AA887EE0012341D /* QZBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19168A961AA887EE0012341D /* QZBFriendCell.m */; };
 		191B9DDE1AACC48500611C71 /* QZBAnswerCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */; };
 		191E12EA1A8C9FC700AFB829 /* QZBFriendHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12E91A8C9FC700AFB829 /* QZBFriendHorizontalCell.m */; };
-		191E12ED1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12EC1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m */; };
+		191E12ED1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12EC1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.m */; };
 		191E12F11A8CA22600AFB829 /* QZBAchievement.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12F01A8CA22600AFB829 /* QZBAchievement.m */; };
 		191E12F81A8CD80400AFB829 /* QZBAnotherUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12F71A8CD80400AFB829 /* QZBAnotherUser.m */; };
 		191E12FB1A8CD87700AFB829 /* QZBUserInRating.m in Sources */ = {isa = PBXBuildFile; fileRef = 191E12FA1A8CD87700AFB829 /* QZBUserInRating.m */; };
@@ -260,8 +260,8 @@
 		191B9DDD1AACC48500611C71 /* QZBAnswerCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBAnswerCircle.m; sourceTree = "<group>"; };
 		191E12E81A8C9FC700AFB829 /* QZBFriendHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendHorizontalCell.h; sourceTree = "<group>"; };
 		191E12E91A8C9FC700AFB829 /* QZBFriendHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendHorizontalCell.m; sourceTree = "<group>"; };
-		191E12EB1A8CA09C00AFB829 /* QZBAchivHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBAchivHorizontalCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		191E12EC1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBAchivHorizontalCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		191E12EB1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBAchievementHorizontalCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		191E12EC1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBAchievementHorizontalCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191E12EF1A8CA22600AFB829 /* QZBAchievement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = QZBAchievement.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		191E12F01A8CA22600AFB829 /* QZBAchievement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = QZBAchievement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		191E12F61A8CD80400AFB829 /* QZBAnotherUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBAnotherUser.h; sourceTree = "<group>"; };
@@ -789,8 +789,8 @@
 		191E12F21A8CA65D00AFB829 /* Horizontal */ = {
 			isa = PBXGroup;
 			children = (
-				191E12EB1A8CA09C00AFB829 /* QZBAchivHorizontalCell.h */,
-				191E12EC1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m */,
+				191E12EB1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.h */,
+				191E12EC1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.m */,
 				191E12E81A8C9FC700AFB829 /* QZBFriendHorizontalCell.h */,
 				191E12E91A8C9FC700AFB829 /* QZBFriendHorizontalCell.m */,
 				19B5E0521A71018D00DCD9C3 /* QZBHorizontalCell.h */,
@@ -1944,7 +1944,7 @@
 				195FDA881ADA84E8000F86F9 /* QZBRegistrationUsernameInput.m in Sources */,
 				19A1276F1AB9DCDE009075AD /* QZBMainGameScreenTVC.m in Sources */,
 				195A7E401A69893B003AC3BA /* QZBRegistrationChooserVC.m in Sources */,
-				191E12ED1A8CA09C00AFB829 /* QZBAchivHorizontalCell.m in Sources */,
+				191E12ED1A8CA09C00AFB829 /* QZBAchievementHorizontalCell.m in Sources */,
 				196534511BA96E2E00342454 /* QZBPaidTopicsController.m in Sources */,
 				19CECFB41AB0A3C0002F9224 /* QZBFriendsSearchTVC.m in Sources */,
 				19C0DEC11AB4B81F005F27D4 /* QZBMainBoosterCell.m in Sources */,

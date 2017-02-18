@@ -100,13 +100,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)setCell:(QZBSomethingInHorizontalTabelViewCell *)cell withObject:(id)object {
   if ([object isKindOfClass:[QZBAchievement class]]) {
-    QZBAchievement *achiv = (QZBAchievement *) object;
+    QZBAchievement *achievement = (QZBAchievement *) object;
 
-    if (achiv.imageURL) {
-      [cell setName:achiv.name picURL:achiv.imageURL];
+    if (achievement.imageURL) {
+      [cell setName:achievement.name picURL:achievement.imageURL];
     } else {
 
-      [cell setName:achiv.name picture:[UIImage imageNamed:@"achiv"]];
+      [cell setName:achievement.name picture:[UIImage imageNamed:@"achiv"]];
     }
   } else if ([object isKindOfClass:[QZBAnotherUser class]]) {
 
