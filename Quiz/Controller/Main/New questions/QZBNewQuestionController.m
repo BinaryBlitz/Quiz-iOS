@@ -20,6 +20,7 @@ NSString *const QZBShowCategoryChooserFromNewQuestionSegueIdentifier =
     @"QZBShowCategoryChooserFromNewQuestionSegueIdentifier";
 
 static NSInteger answerOffset = 2;
+
 @interface QZBNewQuestionController () <UITextViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) QZBGameTopic *topic;
@@ -33,140 +34,141 @@ static NSInteger answerOffset = 2;
 @implementation QZBNewQuestionController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [self initStatusbarWithColor:[UIColor blackColor]];
-    self.title = @"Добавление вопроса";
+  [super viewDidLoad];
+  [self initStatusbarWithColor:[UIColor blackColor]];
+  self.title = @"Добавление вопроса";
 
-    //[self addBarButtonRight];
+  //[self addBarButtonRight];
 
-    //    for (int i = 0; i < self.answersTextFields.count; i++) {
-    //        UITextField *tf = self.answersTextFields[i];
-    //        NSString *placeholder = @"Ответ";
-    //        if (i == 0) {
-    //            placeholder = [placeholder stringByAppendingString:@" (правильный)"];
-    //        }
-    //        tf.delegate = self;
-    //        tf.placeholder = placeholder;
-    //    }
-    //    self.inputTextView.text = @"";
-    //    [self.inputTextView becomeFirstResponder];
-    //    self.inputTextView.delegate = self;
+  //    for (int i = 0; i < self.answersTextFields.count; i++) {
+  //        UITextField *tf = self.answersTextFields[i];
+  //        NSString *placeholder = @"Ответ";
+  //        if (i == 0) {
+  //            placeholder = [placeholder stringByAppendingString:@" (правильный)"];
+  //        }
+  //        tf.delegate = self;
+  //        tf.placeholder = placeholder;
+  //    }
+  //    self.inputTextView.text = @"";
+  //    [self.inputTextView becomeFirstResponder];
+  //    self.inputTextView.delegate = self;
 
-    self.tabBarController.hidesBottomBarWhenPushed = YES;
+  self.tabBarController.hidesBottomBarWhenPushed = YES;
 
-    //    self.inputTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    //    self.inputTextView.layer.borderWidth = 0.5;
+  //    self.inputTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+  //    self.inputTextView.layer.borderWidth = 0.5;
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
+  // Return the number of sections.
+  return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    if(self.topic){
-        return 7;
-    } else {
-        return 6;
-    }
+  // Return the number of rows in the section.
+  if (self.topic) {
+    return 7;
+  } else {
+    return 6;
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 1) {
-        QZBNewQuestionInputCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionInputCellIdentifier];
-        cell.inputTextView.delegate = self;
-        cell.inputTextView.text = self.question;
+  if (indexPath.row == 1) {
+    QZBNewQuestionInputCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionInputCellIdentifier];
+    cell.inputTextView.delegate = self;
+    cell.inputTextView.text = self.question;
 
-        return cell;
-    } else if (indexPath.row == 0) {
-        if (self.topic) {
-            QZBTopicTableViewCell *cell =
-                [tableView dequeueReusableCellWithIdentifier:QZBTopicCellIdentifierInQuest];
+    return cell;
+  } else if (indexPath.row == 0) {
+    if (self.topic) {
+      QZBTopicTableViewCell *cell =
+          [tableView dequeueReusableCellWithIdentifier:QZBTopicCellIdentifierInQuest];
 
-            [cell initWithTopic:self.topic];
+      [cell initWithTopic:self.topic];
 
-            return cell;
-        } else {
-            UITableViewCell *cell =
-                [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicCellIdentifierInQuest];
-
-            return cell;
-        }
-
-    } else if (indexPath.row == 6) {
-        UITableViewCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionSubmitCellIdentifier];
-        return cell;
+      return cell;
     } else {
-        QZBNewQuestionAnswerCell *cell =
-            [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionAnswerCellIdentifier];
-        cell.answerTextField.tag = indexPath.row - 2;
-        NSString *placeholder = @"Ответ";
-        if (cell.answerTextField.tag == 0) {
-            placeholder = [placeholder stringByAppendingString:@" (правильный)"];
-            cell.answerTextField.font = [UIFont boldMuseoFontOfSize:14.0];
-        } else {
-            cell.answerTextField.font = [UIFont museoFontOfSize:14.0];
-        }
-        cell.answerTextField.delegate = self;
-        cell.answerTextField.placeholder = placeholder;
-        cell.answerTextField.text = self.answers[cell.answerTextField.tag];
+      UITableViewCell *cell =
+          [tableView dequeueReusableCellWithIdentifier:QZBChooseTopicCellIdentifierInQuest];
 
-        return cell;
+      return cell;
     }
+
+  } else if (indexPath.row == 6) {
+    UITableViewCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionSubmitCellIdentifier];
+    return cell;
+  } else {
+    QZBNewQuestionAnswerCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:QZBNewQuestionAnswerCellIdentifier];
+    cell.answerTextField.tag = indexPath.row - 2;
+    NSString *placeholder = @"Ответ";
+    if (cell.answerTextField.tag == 0) {
+      placeholder = [placeholder stringByAppendingString:@" (правильный)"];
+      cell.answerTextField.font = [UIFont boldMuseoFontOfSize:14.0];
+    } else {
+      cell.answerTextField.font = [UIFont museoFontOfSize:14.0];
+    }
+    cell.answerTextField.delegate = self;
+    cell.answerTextField.placeholder = placeholder;
+    cell.answerTextField.text = self.answers[cell.answerTextField.tag];
+
+    return cell;
+  }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 1) {
-        return 200.0;
-    } else if (indexPath.row == 0) {
-        return 79.0;
-    } else if (indexPath.row == 6) {
-        return 80.0;
-    } else {
-        return 60.0;
-    }
+  if (indexPath.row == 1) {
+    return 200.0;
+  } else if (indexPath.row == 0) {
+    return 79.0;
+  } else if (indexPath.row == 6) {
+    return 80.0;
+  } else {
+    return 60.0;
+  }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    NSLog(@"pressed");
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifierInQuest] ||
-        [cell.reuseIdentifier isEqualToString:QZBTopicCellIdentifierInQuest]) {
-        // do segue to group chooser
-        [self showCategoryChooser];
-     //   [self performSegueWithIdentifier:QZBShowRoomCategoryChooserFromCreate sender:nil];
-    } else if([cell.reuseIdentifier isEqualToString:QZBNewQuestionSubmitCellIdentifier]) {
-        [self submitQuestion];
-    }
+  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+  if ([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifierInQuest] ||
+      [cell.reuseIdentifier isEqualToString:QZBTopicCellIdentifierInQuest]) {
+    // do segue to group chooser
+    [self showCategoryChooser];
+    //   [self performSegueWithIdentifier:QZBShowRoomCategoryChooserFromCreate sender:nil];
+  } else if ([cell.reuseIdentifier isEqualToString:QZBNewQuestionSubmitCellIdentifier]) {
+    [self submitQuestion];
+  }
 }
 
 #pragma mark - actions
 
 - (IBAction)submitQuestion:(id)sender {
-    //[self submitQuestion];
-    if ([self isQuestionFilled] && [self isAnswersFilled]) {
-        [self submitQuestion];
-    }
+  //[self submitQuestion];
+  if ([self isQuestionFilled] && [self isAnswersFilled]) {
+    [self submitQuestion];
+  }
 }
+
 - (void)submitQuestion {
-        if ([self isQuestionFilled] && [self isAnswersFilled] && self.topic) {
-            NSString *question = self.question;
-            if (!question) {
-                return;
-            }
+  if ([self isQuestionFilled] && [self isAnswersFilled] && self.topic) {
+    NSString *question = self.question;
+    if (!question) {
+      return;
+    }
 //            NSMutableArray *arr = [NSMutableArray array];
 //            for (UITextField *tf in self.answersTextFields) {
 //                NSString *answer = tf.text;
@@ -177,62 +179,62 @@ static NSInteger answerOffset = 2;
 //                }
 //            }
 //            NSString *rightAnswer = [arr firstObject];
-            
-    
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-            
-            [[QZBServerManager sharedManager] POSTNewQuestionWithText:question
-        answers:self.answers topicID:self.topic.topic_id onSuccess:^{
-            [SVProgressHUD showSuccessWithStatus:@"Вопрос отправлен"];
-            [self clearAllFields];
-        } onFailure:^(NSError *error, NSInteger statusCode) {
-            if(statusCode!=-1){
-               // [self clearAllFields];
-                [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
-            }
+
+
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+
+    [[QZBServerManager sharedManager] POSTNewQuestionWithText:question
+                                                      answers:self.answers topicID:self.topic.topic_id onSuccess:^{
+          [SVProgressHUD showSuccessWithStatus:@"Вопрос отправлен"];
+          [self clearAllFields];
+        }                                           onFailure:^(NSError *error, NSInteger statusCode) {
+          if (statusCode != -1) {
+            // [self clearAllFields];
+            [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
+          }
         }];
-        }
+  }
 }
 
 - (BOOL)isQuestionFilled {
-    
-    if(self.question.length == 0) {
-        [TSMessage showNotificationWithTitle:@"Введите вопрос"
-                                                 type:TSMessageNotificationTypeWarning];
-        
-        NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
-        [self.tableView scrollToRowAtIndexPath:ip
-                              atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
-        
-        if(cell && [cell isKindOfClass:[QZBNewQuestionInputCell class]]){
-            QZBNewQuestionInputCell *c = (QZBNewQuestionInputCell *)cell;
-            [c.inputTextView shakeView];
-            [c.inputTextView becomeFirstResponder];
-        }
 
-        return NO;
+  if (self.question.length == 0) {
+    [TSMessage showNotificationWithTitle:@"Введите вопрос"
+                                    type:TSMessageNotificationTypeWarning];
+
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:ip
+                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
+
+    if (cell && [cell isKindOfClass:[QZBNewQuestionInputCell class]]) {
+      QZBNewQuestionInputCell *c = (QZBNewQuestionInputCell *) cell;
+      [c.inputTextView shakeView];
+      [c.inputTextView becomeFirstResponder];
     }
 
-    return YES;
+    return NO;
+  }
+
+  return YES;
 }
 
 - (BOOL)isAnswersFilled {
-    for(int i = 0; i<self.answers.count;i++){
-        NSString *s = self.answers[i];
-        if(s.length==0){
-            [self markAnswerWithIndex:i];
-            return NO;
-        }
+  for (int i = 0; i < self.answers.count; i++) {
+    NSString *s = self.answers[i];
+    if (s.length == 0) {
+      [self markAnswerWithIndex:i];
+      return NO;
     }
-    return YES;
+  }
+  return YES;
 }
 
 - (void)markAnswer:(UITextField *)tf {
-    [tf shakeView];
-    [tf becomeFirstResponder];
-    [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
-    
+  [tf shakeView];
+  [tf becomeFirstResponder];
+  [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
+
 //    NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
 //    [self.tableView scrollToRowAtIndexPath:ip
 //                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
@@ -245,37 +247,37 @@ static NSInteger answerOffset = 2;
 //    }
 }
 
--(NSIndexPath *)indexPathForAnswerIndex:(NSInteger)answerIndex {
-    return [NSIndexPath indexPathForRow:answerIndex+answerOffset inSection:0];
+- (NSIndexPath *)indexPathForAnswerIndex:(NSInteger)answerIndex {
+  return [NSIndexPath indexPathForRow:answerIndex + answerOffset inSection:0];
 }
 
--(void)markAnswerWithIndex:(NSInteger)answerIndex {
-    NSIndexPath *ip = [self indexPathForAnswerIndex:answerIndex];
-    [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
-    
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
-    
-    if(cell && [cell isKindOfClass:[QZBNewQuestionAnswerCell class]]){
-       
-            QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
-            [c.answerTextField shakeView];
-            [c.answerTextField becomeFirstResponder];
-        
-    }
-    
+- (void)markAnswerWithIndex:(NSInteger)answerIndex {
+  NSIndexPath *ip = [self indexPathForAnswerIndex:answerIndex];
+  [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
+
+  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
+
+  if (cell && [cell isKindOfClass:[QZBNewQuestionAnswerCell class]]) {
+
+    QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *) cell;
+    [c.answerTextField shakeView];
+    [c.answerTextField becomeFirstResponder];
+
+  }
+
 }
 
 - (void)clearAllFields {
-    self.question = nil;
-    self.answers = nil;
-    self.topic = nil;
-    [self.tableView reloadData];
-    //    self.inputTextView.text = @"";
-    //    for (UITextField *tf in self.answersTextFields) {
-    //        tf.text = @"";
-    //    }
-    //    [self.inputTextView resignFirstResponder];
+  self.question = nil;
+  self.answers = nil;
+  self.topic = nil;
+  [self.tableView reloadData];
+  //    self.inputTextView.text = @"";
+  //    for (UITextField *tf in self.answersTextFields) {
+  //        tf.text = @"";
+  //    }
+  //    [self.inputTextView resignFirstResponder];
 }
 
 /*
@@ -330,51 +332,52 @@ navigation
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textView:(UITextView *)textView
-    shouldChangeTextInRange:(NSRange)range
-            replacementText:(NSString *)text {
-    if ([text isEqualToString:@"\n"]) {
-        if (![self isQuestionFilled]) {
-            return NO;
-        }
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-        if(cell && [cell isKindOfClass:[QZBNewQuestionAnswerCell class]]) {
-            QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
-            [c.answerTextField becomeFirstResponder];
-        }
-        
-        // [textView resignFirstResponder];
-     //   UITextField *tf = [self.answersTextFields firstObject];
-
-      //  [tf becomeFirstResponder];
-        return NO;
+- (BOOL)       textView:(UITextView *)textView
+shouldChangeTextInRange:(NSRange)range
+        replacementText:(NSString *)text {
+  if ([text isEqualToString:@"\n"]) {
+    if (![self isQuestionFilled]) {
+      return NO;
     }
-    self.question = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    if (cell && [cell isKindOfClass:[QZBNewQuestionAnswerCell class]]) {
+      QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *) cell;
+      [c.answerTextField becomeFirstResponder];
+    }
+
+    // [textView resignFirstResponder];
+    //   UITextField *tf = [self.answersTextFields firstObject];
+
+    //  [tf becomeFirstResponder];
+    return NO;
+  }
+  self.question = [textView.text stringByReplacingCharactersInRange:range withString:text];
 
   //  NSLog(@"%@", self.question);
-    return YES;
+  return YES;
 }
 
 //
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textField:(UITextField *)textField
+- (BOOL)            textField:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
-replacementString:(NSString *)string {
+            replacementString:(NSString *)string {
   //  NSLog(@"%ld",(long)textField.tag);
-    self.answers[textField.tag] = [textField.text stringByReplacingCharactersInRange:range
-                                                                          withString:string];
+  self.answers[textField.tag] = [textField.text stringByReplacingCharactersInRange:range
+                                                                        withString:string];
 //    for(NSString *s in self.answers){
 //        NSLog(@"%ld %@",(long)textField.tag, s);
 //    }
-    return YES;
+  return YES;
 }
+
 //
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField.text.length == 0) {
-        [self markAnswer:textField];
-        return NO;
-    }
+  if (textField.text.length == 0) {
+    [self markAnswer:textField];
+    return NO;
+  }
 //
 //    NSInteger index = [self.answersTextFields indexOfObject:textField];
 //    if (index != 3) {
@@ -384,68 +387,66 @@ replacementString:(NSString *)string {
 //        [self submitQuestion];
 //    }
 //    return YES;
-    
-    UITableViewCell *cell = [self parentCellForView:textField];
-    
-    if(cell){
-      //  QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
-        NSIndexPath *ip = [self.tableView indexPathForCell:cell];
-        if(ip.row < 5){
-            NSIndexPath *newIP = [NSIndexPath indexPathForRow:ip.row+1 inSection:0];
-            UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:newIP];
-            if(newCell && [newCell isKindOfClass:[QZBNewQuestionAnswerCell class]]){
-                QZBNewQuestionAnswerCell *newC = (QZBNewQuestionAnswerCell *)newCell;
-                [newC.answerTextField becomeFirstResponder];
-            }
-        }
+
+  UITableViewCell *cell = [self parentCellForView:textField];
+
+  if (cell) {
+    //  QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
+    NSIndexPath *ip = [self.tableView indexPathForCell:cell];
+    if (ip.row < 5) {
+      NSIndexPath *newIP = [NSIndexPath indexPathForRow:ip.row + 1 inSection:0];
+      UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:newIP];
+      if (newCell && [newCell isKindOfClass:[QZBNewQuestionAnswerCell class]]) {
+        QZBNewQuestionAnswerCell *newC = (QZBNewQuestionAnswerCell *) newCell;
+        [newC.answerTextField becomeFirstResponder];
+      }
     }
-    
-    return YES;
+  }
+
+  return YES;
 }
 
-
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+  return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - actions
 
 - (void)setUserTopic:(QZBGameTopic *)topic {
-    self.topic = topic;
-    [self.tableView reloadData];
+  self.topic = topic;
+  [self.tableView reloadData];
 }
 
 #pragma mark - support
 
 - (void)addBarButtonRight {
-    self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(showCategoryChooser)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(showCategoryChooser)];
 }
 
 - (void)showCategoryChooser {
-    [self performSegueWithIdentifier:QZBShowCategoryChooserFromNewQuestionSegueIdentifier
-                              sender:nil];
+  [self performSegueWithIdentifier:QZBShowCategoryChooserFromNewQuestionSegueIdentifier
+                            sender:nil];
 }
 
 #pragma mark - lazy
 
 - (NSMutableArray *)answers {
-    if (!_answers) {
-        _answers = [@[ @"", @"", @"", @"" ] mutableCopy];
-    }
+  if (!_answers) {
+    _answers = [@[@"", @"", @"", @""] mutableCopy];
+  }
 
-    return _answers;
+  return _answers;
 }
 
--(NSString *)question {
-    if(!_question) {
-        _question = @"";
-    }
-    return _question;
+- (NSString *)question {
+  if (!_question) {
+    _question = @"";
+  }
+  return _question;
 }
 
 @end

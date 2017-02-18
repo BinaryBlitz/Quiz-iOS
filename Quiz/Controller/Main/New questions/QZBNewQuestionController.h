@@ -5,6 +5,6 @@
 //@property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 //@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *answersTextFields;
 
--(void)setUserTopic:(QZBGameTopic *)topic;
+- (void)setUserTopic:(QZBGameTopic *)topic;
 
 @end

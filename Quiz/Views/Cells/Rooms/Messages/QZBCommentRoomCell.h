@@ -4,6 +4,7 @@ static CGFloat kMessageTableViewCellMinimumHeight = 50.0;
 static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
 
 @class DFImageView;
+
 @interface QZBCommentRoomCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *titleLabel;

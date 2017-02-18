@@ -2,6 +2,6 @@
 
 @interface UITableViewCell (QZBCellCategory)
 
--(UIView *)addDropShadows;
+- (UIView *)addDropShadows;
 
 @end

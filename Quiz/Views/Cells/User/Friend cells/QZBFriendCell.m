@@ -1,12 +1,11 @@
 #import "QZBFriendCell.h"
 #import "QZBAnotherUser.h"
-#import "UIImageView+AFNetworking.h"
 #import "UIFont+QZBCustomFont.h"
 #import "UIColor+QZBProjectColors.h"
 
 @interface QZBFriendCell ()
 
-@property(strong, nonatomic) QZBAnotherUser *user;
+@property (strong, nonatomic) QZBAnotherUser *user;
 
 @end
 
@@ -16,16 +15,15 @@
   [super setSelected:selected animated:animated];
 }
 
-
--(void)setCellWithUser:(id<QZBUserProtocol>)user{
+- (void)setCellWithUser:(id <QZBUserProtocol>)user {
 
   self.user = user;
 
   self.nameLabel.text = user.name;
 
-  if([self.user respondsToSelector:@selector(isOnline)]) {
+  if ([self.user respondsToSelector:@selector(isOnline)]) {
 
-    if(self.user.isOnline){
+    if (self.user.isOnline) {
       self.userpicImageView.layer.borderColor = [UIColor lightBlueColor].CGColor;
       self.userpicImageView.layer.borderWidth = 2.0;
     } else {

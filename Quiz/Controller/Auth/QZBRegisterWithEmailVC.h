@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "QZBRegisterAndLoginBaseVC.h"
+
 @class QZBPasswordTextField;
 @class QZBEmailTextField;
 @class QZBUserNameTextField;

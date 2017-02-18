@@ -1,7 +1,5 @@
 #import "QZBCommentRoomCell.h"
-#import <SLKTextView+SLKAdditions.h>
 #import "UIFont+QZBCustomFont.h"
-#import "UIColor+QZBProjectColors.h"
 #import <DFImageManager/DFImageView.h>
 
 @implementation QZBCommentRoomCell
@@ -15,7 +13,6 @@
 
   // Configure the view for the selected state
 }
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -36,40 +33,40 @@
   [self.contentView addSubview:self.timeAgoLabel];
 
   NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
-                          @"titleLabel": self.titleLabel,
-                          @"bodyLabel": self.bodyLabel,
-                          @"attachmentView": self.attachmentView,
-                          @"timeAgoLabel":self.timeAgoLabel
-                          };
+      @"titleLabel": self.titleLabel,
+      @"bodyLabel": self.bodyLabel,
+      @"attachmentView": self.attachmentView,
+      @"timeAgoLabel": self.timeAgoLabel
+  };
 
   NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
-                            @"padding": @15,
-                            @"right": @10,
-                            @"left": @5,
-                            @"attchSize": @80,
-                            };
+      @"padding": @15,
+      @"right": @10,
+      @"left": @5,
+      @"attchSize": @80,
+  };
   [self.contentView addConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-[timeAgoLabel(attchSize)]-right-|"
-                                           options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-[timeAgoLabel(attchSize)]-right-|"
+                                              options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|"
-                                           options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|"
+                                              options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[attachmentView]-right-|"
-                                           options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[attachmentView]-right-|"
+                                              options:0 metrics:metrics views:views]];
 
   [self.contentView addConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(tumbSize)]-(>=0)-|"
-                                           options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(tumbSize)]-(>=0)-|"
+                                              options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:
-   [NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:|-right-[titleLabel]-left-[bodyLabel(>=0)]-left-[attachmentView(>=0,<=attchSize)]-right-|"
-    options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint
+          constraintsWithVisualFormat:@"V:|-right-[titleLabel]-left-[bodyLabel(>=0)]-left-[attachmentView(>=0,<=attchSize)]-right-|"
+                              options:0 metrics:metrics views:views]];
 
   [self.contentView addConstraints:
-   [NSLayoutConstraint
-    constraintsWithVisualFormat:@"V:|-right-[timeAgoLabel]-left-[bodyLabel(>=0)]-left-[attachmentView(>=0,<=attchSize)]-right-|"
-    options:0 metrics:metrics views:views]];
+      [NSLayoutConstraint
+          constraintsWithVisualFormat:@"V:|-right-[timeAgoLabel]-left-[bodyLabel(>=0)]-left-[attachmentView(>=0,<=attchSize)]-right-|"
+                              options:0 metrics:metrics views:views]];
 }
 
 - (void)prepareForReuse {
@@ -119,7 +116,7 @@
     _thumbnailView.userInteractionEnabled = NO;
     _thumbnailView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 
-    _thumbnailView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
+    _thumbnailView.layer.cornerRadius = kMessageTableViewCellAvatarHeight / 2.0;
     _thumbnailView.layer.masksToBounds = YES;
   }
   return _thumbnailView;
@@ -133,21 +130,21 @@
     _attachmentView.backgroundColor = [UIColor clearColor];
     _attachmentView.contentMode = UIViewContentModeCenter;
 
-    _attachmentView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/4.0;
+    _attachmentView.layer.cornerRadius = kMessageTableViewCellAvatarHeight / 4.0;
     _attachmentView.layer.masksToBounds = YES;
   }
   return _attachmentView;
 }
 
--(UILabel *)timeAgoLabel {
-  if(!_timeAgoLabel) {
+- (UILabel *)timeAgoLabel {
+  if (!_timeAgoLabel) {
     _timeAgoLabel = [UILabel new];
     _timeAgoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _timeAgoLabel.backgroundColor = [UIColor clearColor];
     _timeAgoLabel.userInteractionEnabled = NO;
     _timeAgoLabel.numberOfLines = 1;
-    _timeAgoLabel.textAlignment =  NSTextAlignmentRight;
-    _timeAgoLabel.textColor = [UIColor colorWithWhite:128.0/255.0 alpha:1.0];
+    _timeAgoLabel.textAlignment = NSTextAlignmentRight;
+    _timeAgoLabel.textColor = [UIColor colorWithWhite:128.0 / 255.0 alpha:1.0];
     _timeAgoLabel.font = [UIFont museoFontOfSize:[QZBCommentRoomCell defaultFontSize]];
     _timeAgoLabel.text = @"10:10";
   }
@@ -164,7 +161,6 @@
 
   return pointSize;
 }
-
 
 
 @end

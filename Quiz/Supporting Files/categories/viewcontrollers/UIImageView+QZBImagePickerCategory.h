@@ -2,7 +2,8 @@
 
 @interface UIImageView (QZBImagePickerCategory)
 
--(void)loadNewPic:(UIImage *)image;
--(void)loadDeafaultPicture;
+- (void)loadNewPic:(UIImage *)image;
+
+- (void)loadDeafaultPicture;
 
 @end

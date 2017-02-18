@@ -6,21 +6,20 @@
 #import "UIFont+QZBCustomFont.h"
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
-#import "QZBServerManager.h"
 #import "QZBCategory.h"
 
-@interface QZBTopicTableViewCell()
+@interface QZBTopicTableViewCell ()
 
-@property(strong, nonatomic) UILabel *centralLabel;
-@property(strong, nonatomic) UIImageView *icon;
-@property(assign, nonatomic) BOOL visible;
-@property(strong, nonatomic) UIColor *mainCellColor;
+@property (strong, nonatomic) UILabel *centralLabel;
+@property (strong, nonatomic) UIImageView *icon;
+@property (assign, nonatomic) BOOL visible;
+@property (strong, nonatomic) UIColor *mainCellColor;
 
 @end
 
 @implementation QZBTopicTableViewCell
 
--(void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
   [self.backView addShadowsAllWay];
   [self.underView addShadowsAllWayRasterize];
@@ -37,7 +36,7 @@
   [super setSelected:selected animated:animated];
 }
 
--(void)initWithTopic:(QZBGameTopic *)topic{
+- (void)initWithTopic:(QZBGameTopic *)topic {
   [self.layer setNeedsLayout];
 
   self.symbolLabel.minimumScaleFactor = 0.5;
@@ -47,7 +46,7 @@
 
   QZBCategory *relationCategory = topic.relationToCategory;
 
-  if(relationCategory){
+  if (relationCategory) {
     NSString *firstTwoChar = [NSString firstTwoChars:relationCategory.name];
 
     self.mainCellColor = [UIColor colorForString:relationCategory.name];
@@ -66,8 +65,6 @@
                              progress:progress
                               visible:[topic.visible boolValue]];
 
-
-
 }
 
 - (void)initCircularProgressWithLevel:(NSInteger)level
@@ -75,7 +72,7 @@
                               visible:(BOOL)visible {
   self.visible = visible;
 
-  if(!visible){
+  if (!visible) {
     self.topicProgressView.tintColor = [UIColor clearColor];
     self.topicProgressView.centralView = self.icon;
     self.icon.image = [UIImage imageNamed:@"lockIcon"];
@@ -85,9 +82,9 @@
   if (progress > 0 || level > 0) {
     self.topicProgressView.centralView = self.centralLabel;
     self.topicProgressView.tintColor = [UIColor lightGreenColor];
-    self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)level];
+    self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long) level];
     self.topicProgressView.progress = progress;
-    if(self.mainCellColor){
+    if (self.mainCellColor) {
       self.topicProgressView.tintColor = self.mainCellColor;
     }
   } else {
@@ -97,20 +94,18 @@
   }
 }
 
--(void)setSymbolsWithText:(NSString *)symbols{
-
-
+- (void)setSymbolsWithText:(NSString *)symbols {
 
   self.symbolLabel.text = symbols;
 }
 
--(UILabel *)centralLabel{
-  if(!_centralLabel){
+- (UILabel *)centralLabel {
+  if (!_centralLabel) {
     _centralLabel = [[UILabel alloc]
-                     initWithFrame:CGRectMake(0,
-                                              0,
-                                              CGRectGetWidth(self.topicProgressView.frame) / 2.0,
-                                              CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
+        initWithFrame:CGRectMake(0,
+            0,
+            CGRectGetWidth(self.topicProgressView.frame) / 2.0,
+            CGRectGetWidth(self.topicProgressView.frame) / 2.0)];
 
     _centralLabel.textColor = [UIColor lightGrayColor];
     _centralLabel.textAlignment = NSTextAlignmentCenter;
@@ -121,15 +116,15 @@
   return _centralLabel;
 }
 
--(UIImageView *)icon{
-  if(!_icon){
+- (UIImageView *)icon {
+  if (!_icon) {
     _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
   }
   return _icon;
 }
 
--(UIColor *)colorForText:(NSString *)text{
-  return arc4random()%10>5?[UIColor lightRedColor]:[UIColor lightGreenColor];
+- (UIColor *)colorForText:(NSString *)text {
+  return arc4random() % 10 > 5 ? [UIColor lightRedColor] : [UIColor lightGreenColor];
 
 }
 

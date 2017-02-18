@@ -18,6 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *playAgainButton;
 @property (weak, nonatomic) IBOutlet UIButton *chooseAnotherTopicButton;
 
--(void)initCell;
+- (void)initCell;
 
 @end

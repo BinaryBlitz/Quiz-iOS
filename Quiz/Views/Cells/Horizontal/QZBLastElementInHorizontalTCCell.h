@@ -3,6 +3,7 @@
 @interface QZBLastElementInHorizontalTCCell : UITableViewCell
 
 @property (strong, nonatomic) UIButton *button;
--(void)setButtonTitle:(NSString *)buttonTitle;
+
+- (void)setButtonTitle:(NSString *)buttonTitle;
 
 @end

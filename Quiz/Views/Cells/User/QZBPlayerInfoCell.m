@@ -1,12 +1,11 @@
 #import "QZBPlayerInfoCell.h"
 #import <JSBadgeView/JSBadgeView.h>
-#import "UITableViewCell+QZBCellCategory.h"
 #import "UIButton+Badge.h"
 
 @interface QZBPlayerInfoCell ()
 
-@property(strong, nonatomic) JSBadgeView *badgeView;
-@property(strong, nonatomic) JSBadgeView *messageBadgeView;
+@property (strong, nonatomic) JSBadgeView *badgeView;
+@property (strong, nonatomic) JSBadgeView *messageBadgeView;
 
 @end
 
@@ -33,24 +32,24 @@
   self.achievementLabel.text = @"";
 }
 
--(void)setBAdgeCount:(NSInteger)count{
-  if(count <= 0){
+- (void)setBAdgeCount:(NSInteger)count {
+  if (count <= 0) {
     self.friendsButton.badgeValue = nil;
-  } else{
+  } else {
 
-    self.friendsButton.badgeOriginX = 3*self.friendsButton.bounds.size.width/4;
-    self.friendsButton.badgeOriginY = self.friendsButton.bounds.size.height/5;
+    self.friendsButton.badgeOriginX = 3 * self.friendsButton.bounds.size.width / 4;
+    self.friendsButton.badgeOriginY = self.friendsButton.bounds.size.height / 5;
     self.friendsButton.badgeMinSize = 10;
 
-    self.friendsButton.badgeValue = [NSString stringWithFormat:@"%ld", (long)count];
+    self.friendsButton.badgeValue = [NSString stringWithFormat:@"%ld", (long) count];
   }
 }
 
--(void)setMessageBadgeCount:(NSInteger)count{
-  if(count <= 0){
+- (void)setMessageBadgeCount:(NSInteger)count {
+  if (count <= 0) {
     self.messageBadgeView.badgeText = nil;
-  } else{
-    self.messageBadgeView.badgeText = [NSString stringWithFormat:@"%ld", (long)count];
+  } else {
+    self.messageBadgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) count];
   }
 }
 
@@ -58,8 +57,8 @@
   [super setSelected:selected animated:animated];
 }
 
--(JSBadgeView *)messageBadgeView{
-  if(!_messageBadgeView){
+- (JSBadgeView *)messageBadgeView {
+  if (!_messageBadgeView) {
     _messageBadgeView = [[JSBadgeView alloc] initWithParentView:self.messageButton
                                                       alignment:JSBadgeViewAlignmentTopRight];
   }

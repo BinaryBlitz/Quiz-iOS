@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
+
 @class QZBGameTopic;
+
 @interface QZBQuestion : NSObject
 
 //@property (nonatomic, copy, readonly) NSString *topic;

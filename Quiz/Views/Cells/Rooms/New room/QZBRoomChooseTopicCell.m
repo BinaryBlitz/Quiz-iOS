@@ -3,8 +3,8 @@
 
 @implementation QZBRoomChooseTopicCell
 
--(void)drawRect:(CGRect)rect{
-    [self.backView addShadowsAllWay];
+- (void)drawRect:(CGRect)rect {
+  [self.backView addShadowsAllWay];
 }
 
 @end

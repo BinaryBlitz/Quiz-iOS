@@ -12,6 +12,7 @@
                            secondName:(NSString *)secondName;
 
 + (instancetype)colorLightWithString:(NSString *)string;
+
 + (instancetype)colorDarkWithString:(NSString *)string;
 
 + (instancetype)colorWithIntegerRGB:(NSInteger)rgbValue;

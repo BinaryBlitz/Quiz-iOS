@@ -2,10 +2,10 @@
 
 @implementation QZBFriendHorizontalCell
 
--(void)setFriendArray:(NSArray *)friendArray{
-    
-    [self setSomethingArray:friendArray];
-    
+- (void)setFriendArray:(NSArray *)friendArray {
+
+  [self setSomethingArray:friendArray];
+
 }
 
 /*

@@ -9,11 +9,6 @@
 #import "QZBFriendsChallengeTVC.h"
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
-#import "NSObject+QZBSpecialCategory.h"
-#import "UIColor+QZBProjectColors.h"
-#import <JSQSystemSoundPlayer.h>
-#import "UIView+QZBShakeExtension.h"
 
 //dfiimage
 
@@ -24,12 +19,13 @@
 #import <DFImageManager/DFImageView.h>
 
 @interface QZBTopicChooserController ()
+
 //@property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
-@property(strong, nonatomic) UIView *backView;
+@property (strong, nonatomic) UIView *backView;
 //@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 
-@property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) id <QZBUserProtocol> user;
 
 @end
 
@@ -44,16 +40,16 @@
   self.topicTableView.dataSource = self;
 
   UIBarButtonItem *backButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@""
-                                   style:UIBarButtonItemStylePlain
-                                  target:nil
-                                  action:nil];
+      [[UIBarButtonItem alloc] initWithTitle:@""
+                                       style:UIBarButtonItemStylePlain
+                                      target:nil
+                                      action:nil];
   [self.navigationItem setBackBarButtonItem:backButtonItem];
 
   [self.navigationController.navigationBar
-   setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
+      setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
   [self.navigationController.navigationBar
-   setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
+      setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,19 +62,19 @@
 
   [self initStatusbarWithColor:[UIColor blackColor]];
 
-  if(self.category){
+  if (self.category) {
     [self configureBackgroundImage];
   }
 }
 
--(void)configureBackgroundImage{
+- (void)configureBackgroundImage {
   NSURL *url = [NSURL URLWithString:self.category.background_url];
 
   DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
   options.allowsClipping = YES;
 
-  options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
-  options.expirationAge = 60*60*24*10;
+  options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
+  options.expirationAge = 60 * 60 * 24 * 10;
 
   DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                      targetSize:CGSizeZero
@@ -117,7 +113,7 @@
                                                                              gameTopic:self.choosedTopic];
 
                                                       }
-                                                      onFailure:^(NSError *error, NSInteger statusCode){
+                                                      onFailure:^(NSError *error, NSInteger statusCode) {
 
                                                       }];
 
@@ -126,6 +122,7 @@
 }
 
 #pragma mark - UITableViewDataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return [self.topics count];
 }
@@ -145,8 +142,7 @@
   cell.backgroundView = self.backView;
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-  QZBGameTopic *topic = (QZBGameTopic *)self.topics[indexPath.row];
-
+  QZBGameTopic *topic = (QZBGameTopic *) self.topics[indexPath.row];
 
   [cell initWithTopic:topic];
 
@@ -158,7 +154,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
   if ([cell isKindOfClass:[QZBTopicTableViewCell class]]) {
-    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *) cell;
     if (!topicCell.visible) {
       self.choosedIndexPath = nil;
       [tableView beginUpdates];
@@ -195,15 +191,13 @@
   return 74.0f;
 }
 
-
-
 #pragma actions
 
 - (IBAction)playButtonAction:(UIButton *)sender {
   UITableViewCell *cell = [self parentCellForView:sender];
 
   if ([cell isKindOfClass:[QZBGameTopic class]]) {
-    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *) cell;
 
     if (!topicCell.visible) {
       self.choosedIndexPath = nil;
@@ -220,11 +214,12 @@
     [self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
   }
 }
+
 - (IBAction)challengeAction:(id)sender {
   UITableViewCell *cell = [self parentCellForView:sender];
 
   if ([cell isKindOfClass:[QZBGameTopic class]]) {
-    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *) cell;
 
     if (!topicCell.visible) {
       self.choosedIndexPath = nil;
@@ -240,11 +235,12 @@
     [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
   }
 }
+
 - (IBAction)rateAction:(UIButton *)sender {
   UITableViewCell *cell = [self parentCellForView:sender];
 
   if ([cell isKindOfClass:[QZBGameTopic class]]) {
-    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *) cell;
 
     if (!topicCell.visible) {
       self.choosedIndexPath = nil;
@@ -264,7 +260,7 @@
 
 - (BOOL)checkVisibiliti:(UITableViewCell *)cell {
   if ([cell isKindOfClass:[QZBGameTopic class]]) {
-    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *)cell;
+    QZBTopicTableViewCell *topicCell = (QZBTopicTableViewCell *) cell;
 
     if (!topicCell.visible) {
       self.choosedIndexPath = nil;
@@ -278,7 +274,7 @@
 
 #pragma mark - custom init
 
-- (void)initWithChallengeUser:(id<QZBUserProtocol>)user category:(QZBCategory *)category {
+- (void)initWithChallengeUser:(id <QZBUserProtocol>)user category:(QZBCategory *)category {
   self.user = user;
   [self initTopicsWithCategory:category];
 }
@@ -289,18 +285,18 @@
   NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
 
   self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
-                 sortedArrayUsingDescriptors:@[ sort ]];
+      sortedArrayUsingDescriptors:@[sort]];
 
   self.title = category.name;
 
   [[QZBServerManager sharedManager] GETTopicsWithCategory:category
                                                 onSuccess:^(NSArray *topics) {
                                                   self.topics = [[NSArray arrayWithArray:[[category relationToTopic] allObjects]]
-                                                                 sortedArrayUsingDescriptors:@[ sort ]];
+                                                      sortedArrayUsingDescriptors:@[sort]];
                                                   [self.topicTableView reloadData];
 
                                                 }
-                                                onFailure:^(NSError *error, NSInteger statusCode){
+                                                onFailure:^(NSError *error, NSInteger statusCode) {
 
                                                 }];
 }
@@ -311,8 +307,8 @@
 
 #pragma mark -lazy init
 
--(UIView *)backView{
-  if(!_backView){
+- (UIView *)backView {
+  if (!_backView) {
     _backView = [[UIView alloc] initWithFrame:CGRectZero];
     _backView.backgroundColor = [UIColor clearColor];
   }

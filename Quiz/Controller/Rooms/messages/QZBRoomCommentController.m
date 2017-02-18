@@ -3,11 +3,9 @@
 #import "QZBComment.h"
 #import "QZBCommentTextView.h"
 #import "QZBCurrentUser.h"
-#import "QZBUser.h"
 
 #import "QZBServerManager.h"
 
-#import <LoremIpsum/LoremIpsum.h>
 #import <NSDate+DateTools.h>
 
 #import <DFImageManager/DFImageManager.h>
@@ -24,6 +22,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 @interface QZBRoomCommentController ()
+
 @property (nonatomic, strong) NSMutableArray *messages;
 
 @property (nonatomic, strong) QZBUser *user;
@@ -120,7 +119,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 #pragma mark - Action Methods
 
 - (void)editCellMessage:(UIGestureRecognizer *)gesture {
-  QZBCommentRoomCell *cell = (QZBCommentRoomCell *)gesture.view;
+  QZBCommentRoomCell *cell = (QZBCommentRoomCell *) gesture.view;
   QZBComment *message = self.messages[cell.indexPath.row];
 
   [self editText:message.text];
@@ -151,9 +150,9 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
   [self editText:lastMessage.text];
 
   [self.tableView
-   scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex]
-   atScrollPosition:UITableViewScrollPositionBottom
-   animated:YES];
+      scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex]
+            atScrollPosition:UITableViewScrollPositionBottom
+                    animated:YES];
 }
 
 #pragma mark - Overriden Methods
@@ -208,53 +207,53 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   UITableViewRowAnimation rowAnimation =
-  self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
+      self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
   UITableViewScrollPosition scrollPosition =
-  self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
+      self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
 
   [self.tableView beginUpdates];
   [self.messages insertObject:message atIndex:0];
-  [self.tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:rowAnimation];
+  [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
   [self.tableView endUpdates];
 
   [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
 
   // Fixes the cell from blinking (because of the transform, when using translucent cells)
   // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
-  [self.tableView reloadRowsAtIndexPaths:@[ indexPath ]
+  [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                         withRowAnimation:UITableViewRowAnimationAutomatic];
   [super didPressRightButton:sender];
 
   [self sendMessage:message];
 }
--(void)sendMessage:(QZBComment *)comment {
+
+- (void)sendMessage:(QZBComment *)comment {
   [[QZBServerManager sharedManager] POSTSendMessage:comment.text inRoomWithID:self.roomID
                                           onSuccess:^{
                                             comment.isSended = YES;
                                           } onFailure:^(NSError *error, NSInteger statusCode) {//REDO TEST (may not crash)
-                                            if(![self.messages containsObject:comment]){
-                                              return ;
-                                            }
+        if (![self.messages containsObject:comment]) {
+          return;
+        }
 
-                                            NSInteger row = [self.messages indexOfObject:comment];
-                                            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-                                            [self.tableView beginUpdates];
-                                            [self.messages removeObject:comment];
-                                            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        NSInteger row = [self.messages indexOfObject:comment];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        [self.tableView beginUpdates];
+        [self.messages removeObject:comment];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
 
-                                            [self.tableView endUpdates];
-                                            [self.tableView reloadRowsAtIndexPaths:@[ indexPath ]
-                                                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-                                            [TSMessage showNotificationWithTitle:@"Не удалось отправить сообщение" type:TSMessageNotificationTypeError];
+        [self.tableView endUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
+        [TSMessage showNotificationWithTitle:@"Не удалось отправить сообщение" type:TSMessageNotificationTypeError];
 
-
-                                          }];
+      }];
 }
 
 - (void)didPressArrowKey:(id)sender {
   [super didPressArrowKey:sender];
 
-  UIKeyCommand *keyCommand = (UIKeyCommand *)sender;
+  UIKeyCommand *keyCommand = (UIKeyCommand *) sender;
 
   if ([keyCommand.input isEqualToString:UIKeyInputUpArrow]) {
     [self editLastMessage:nil];
@@ -331,34 +330,33 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 - (QZBCommentRoomCell *)messageCellForRowAtIndexPath:(NSIndexPath *)indexPath {
   QZBCommentRoomCell *cell = (QZBCommentRoomCell *)
-  [self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
+      [self.tableView dequeueReusableCellWithIdentifier:MessengerCellIdentifier];
 
   QZBComment *message = self.messages[indexPath.row];
 
   cell.titleLabel.text = message.username;
   cell.bodyLabel.text = message.text;
   NSString *minutes = [message.timestamp minute] < 10
-  ? [NSString stringWithFormat:@"0%ld", [message.timestamp minute]]
-  : [NSString stringWithFormat:@"%ld", [message.timestamp minute]];
+      ? [NSString stringWithFormat:@"0%ld", [message.timestamp minute]]
+      : [NSString stringWithFormat:@"%ld", [message.timestamp minute]];
   cell.timeAgoLabel.text =
-  [NSString stringWithFormat:@"%ld:%@", [message.timestamp hour], minutes];
+      [NSString stringWithFormat:@"%ld:%@", [message.timestamp hour], minutes];
 
   cell.indexPath = indexPath;
   cell.usedForMessage = YES;
-
 
   if (cell.needsPlaceholder) {
     if (message.owner.imageURL) {
       DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
       options.allowsClipping = YES;
-      options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+      options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
       DFImageRequest *request =
-      [DFImageRequest requestWithResource:message.owner.imageURL
-                               targetSize:CGSizeZero
-                              contentMode:DFImageContentModeAspectFill
-                                  options:options];
+          [DFImageRequest requestWithResource:message.owner.imageURL
+                                   targetSize:CGSizeZero
+                                  contentMode:DFImageContentModeAspectFill
+                                      options:options];
 
       cell.thumbnailView.allowsAnimations = YES;
 
@@ -411,18 +409,18 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
     CGFloat pointSize = [QZBCommentRoomCell defaultFontSize];
 
     NSDictionary *attributes = @{
-                                 NSFontAttributeName : [UIFont systemFontOfSize:pointSize],
-                                 NSParagraphStyleAttributeName : paragraphStyle
-                                 };
+        NSFontAttributeName: [UIFont systemFontOfSize:pointSize],
+        NSParagraphStyleAttributeName: paragraphStyle
+    };
 
     CGFloat width = CGRectGetWidth(tableView.frame) - kMessageTableViewCellAvatarHeight;
     width -= 25.0;
 
     CGRect titleBounds =
-    [message.username boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
-                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                attributes:attributes
-                                   context:NULL];
+        [message.username boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
+                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                    attributes:attributes
+                                       context:NULL];
     CGRect bodyBounds = [message.text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
                                                    options:NSStringDrawingUsesLineFragmentOrigin
                                                 attributes:attributes
@@ -456,9 +454,9 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 #pragma mark - UITextViewDelegate Methods
 
-- (BOOL)textView:(SLKTextView *)textView
+- (BOOL)       textView:(SLKTextView *)textView
 shouldChangeTextInRange:(NSRange)range
- replacementText:(NSString *)text {
+        replacementText:(NSString *)text {
   return [super textView:textView shouldChangeTextInRange:range replacementText:text];
 }
 
@@ -474,16 +472,15 @@ shouldChangeTextInRange:(NSRange)range
 
 #pragma mark - reload
 
-
 - (void)addBarButtonRight {
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                target:self
-                                                action:@selector(reloadMessages)];
+      [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                    target:self
+                                                    action:@selector(reloadMessages)];
 }
 
--(void)addSpinnerRight {
-  UIActivityIndicatorView *actInd = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0,20, 20)];
+- (void)addSpinnerRight {
+  UIActivityIndicatorView *actInd = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
   [actInd startAnimating];
 
   //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -496,10 +493,10 @@ shouldChangeTextInRange:(NSRange)range
   // button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithCustomView:actInd];
+      [[UIBarButtonItem alloc] initWithCustomView:actInd];
 }
 
--(void)reloadMessages {
+- (void)reloadMessages {
   [self addSpinnerRight];
 
   [[QZBServerManager sharedManager] GETChatForRoomWithID:self.roomID
@@ -516,27 +513,27 @@ shouldChangeTextInRange:(NSRange)range
                                                                                  type:TSMessageNotificationTypeError];
                                                }];
 
-
 }
+
 #pragma mark - recieve message
 
 - (void)didRecieveMessage:(QZBComment *)message {
   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   UITableViewRowAnimation rowAnimation =
-  self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
+      self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
   UITableViewScrollPosition scrollPosition =
-  self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
+      self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
 
   [self.tableView beginUpdates];
   [self.messages insertObject:message atIndex:0];
-  [self.tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:rowAnimation];
+  [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
   [self.tableView endUpdates];
 
   [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
 
   // Fixes the cell from blinking (because of the transform, when using translucent cells)
   // See https://github.com/slackhq/SlackTextViewController/issues/94#issuecomment-69929927
-  [self.tableView reloadRowsAtIndexPaths:@[ indexPath ]
+  [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                         withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 @end

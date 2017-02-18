@@ -5,20 +5,20 @@
 @implementation QZBEndGameResultScoreCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    [self addDropShadows];
+  // Initialization code
+  [self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+  [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+  // Configure the view for the selected state
 }
 
--(void)setResultScore:(NSInteger)score{
-    
-    NSString *scoreName = [NSString endOfWordFromNumber:score];
-    self.resultLabel.text = [NSString stringWithFormat:@"+%ld %@",score, scoreName];
+- (void)setResultScore:(NSInteger)score {
+
+  NSString *scoreName = [NSString endOfWordFromNumber:score];
+  self.resultLabel.text = [NSString stringWithFormat:@"+%ld %@", score, scoreName];
 }
 
 @end

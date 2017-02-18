@@ -52,7 +52,8 @@ static NSArray *SCOPE = nil;
   [super viewDidAppear:animated];
   // TODO: возможно старый код, проверить
   if ([[QZBCurrentUser sharedInstance] checkUser]) {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
   }
 }
 
@@ -78,7 +79,8 @@ static NSArray *SCOPE = nil;
                                                     if (user.isRegistred) {
                                                       [[QZBCurrentUser sharedInstance] setUser:user];
                                                       [SVProgressHUD dismiss];
-                                                      [self dismissViewControllerAnimated:YES completion:^{}];
+                                                      [self dismissViewControllerAnimated:YES completion:^{
+                                                      }];
                                                     } else {
                                                       self.user = user;
                                                       [self performSegueWithIdentifier:@"enterUsernameSegue" sender:nil];
@@ -86,14 +88,14 @@ static NSArray *SCOPE = nil;
                                                   }
                                                   onFailure:^(NSError *error, NSInteger statusCode) {
                                                     [SVProgressHUD showErrorWithStatus:@"Проверьте подключение к "
-                                                     @"интернету"];
-                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-                                                                   dispatch_get_main_queue(), ^{
-                                                                     [SVProgressHUD dismiss];
-                                                                   });
-                                                    
+                                                        @"интернету"];
+                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (2 * NSEC_PER_SEC)),
+                                                        dispatch_get_main_queue(), ^{
+                                                          [SVProgressHUD dismiss];
+                                                        });
+
                                                   }];
-      
+
       [self startWorking];
 
     } else if (error) {
@@ -112,6 +114,7 @@ static NSArray *SCOPE = nil;
 - (void)vkSdkAcceptedUserToken:(VKAccessToken *)token {
   [self startWorking];
 }
+
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError {
   [SVProgressHUD dismiss];
 }
@@ -127,16 +130,16 @@ static NSArray *SCOPE = nil;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   // Get the new view controller using [segue destinationViewController].
   // Pass the selected object to the new view controller.
-  
+
   // Get the new view controller using [segue destinationViewController].
   // Pass the selected object to the new view controller.
-  
+
   if ([segue.identifier isEqualToString:@"enterUsernameSegue"]) {
     UINavigationController *navController = segue.destinationViewController;
-    
+
     for (UIViewController *vc in navController.viewControllers) {
       if ([vc isKindOfClass:[QZBRegistrationUsernameInput class]]) {
-        QZBRegistrationUsernameInput *destVC = (QZBRegistrationUsernameInput *)vc;
+        QZBRegistrationUsernameInput *destVC = (QZBRegistrationUsernameInput *) vc;
         [destVC setUSerWhithoutUsername:self.user];
         break;
       }

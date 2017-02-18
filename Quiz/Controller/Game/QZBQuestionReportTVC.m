@@ -19,10 +19,7 @@
 
 #import <SVProgressHUD.h>
 
-#import <TSMessages/TSMessage.h>
-
 #import "UIViewController+QZBControllerCategory.h"
-#import "UIColor+QZBProjectColors.h"
 #import "UIFont+QZBCustomFont.h"
 
 NSString *const QZBQuestionReportTextCellIdentifier = @"QZBQuestionCellIdentifier";
@@ -60,17 +57,17 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   self.title = @"Вопросы";
 
   self.rightImage = [[UIImage imageNamed:@"checkIcon"]
-                     imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.tabBarController setHidesBottomBarWhenPushed:NO];
 
   //    self.tableView.contentInset =
   //        UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
 
   self.tableView.tableFooterView = [[UIView alloc]
-                                    initWithFrame:CGRectMake(0,
-                                                             0,
-                                                             [UIScreen mainScreen].bounds.size.width,
-                                                             50)];
+      initWithFrame:CGRectMake(0,
+          0,
+          [UIScreen mainScreen].bounds.size.width,
+          50)];
 
   // Uncomment the following line to preserve selection between presentations.
   // self.clearsSelectionOnViewWillAppear = NO;
@@ -92,7 +89,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   //    UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
 }
 
--(void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   //    self.tabBarController.tabBar.hidden = NO;
 }
@@ -132,7 +129,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
   if (indexPath.row == 0) {
     QZBQuestionReportQuestionTextCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportTextCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportTextCellIdentifier];
     cell.questionLabel.text = q.question;
     [cell updateConstraintsIfNeeded];
     cell.questionLabel.preferredMaxLayoutWidth = CGRectGetWidth(tableView.bounds);
@@ -140,20 +137,20 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   } else if (indexPath.row == 1) {
     if (q.imageURL) {
       QZBQuestionReportPictureCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportImageCellIdentifier];
+          [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportImageCellIdentifier];
       [self configureImage:cell.questionImageView withQuest:q];
       return cell;
 
     } else {
       UITableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportEmptyCellIdentifier];
+          [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportEmptyCellIdentifier];
 
       return cell;
     }
 
   } else if (indexPath.row > 1 && indexPath.row < 6) {
     QZBQuestuinReportAnswerCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportAnswerCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportAnswerCellIdentifier];
 
     QZBAnswerTextAndID *answer = q.answers[indexPath.row - 2];
 
@@ -171,7 +168,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
     return cell;
   } else if (indexPath.row == 6) {
     QZBQuestionReportButtonCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportButtonCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:QZBQuestionReportButtonCellIdentifier];
 
     return cell;
   }
@@ -182,7 +179,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   UIView *view = [[UIView alloc] init];
 
   view.backgroundColor =
-  [UIColor colorWithWhite:0.0 alpha:1.0];  //[self colorForSection:section];
+      [UIColor colorWithWhite:0.0 alpha:1.0];  //[self colorForSection:section];
 
   CGRect rect = CGRectMake(0, 7, CGRectGetWidth(tableView.frame), 42);
 
@@ -201,8 +198,8 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   // NSArray *arr = self.workArray[section];
 
   label.text =
-  [NSString stringWithFormat:@"Вопрос %@",
-   @(section + 1)];  //[[self textForArray:arr] uppercaseString];
+      [NSString stringWithFormat:@"Вопрос %@",
+                                 @(section + 1)];  //[[self textForArray:arr] uppercaseString];
 
   return view;
 }
@@ -211,7 +208,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
   options.allowsClipping = YES;
-  options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+  options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
   DFImageRequest *request = [DFImageRequest requestWithResource:question.imageURL
                                                      targetSize:CGSizeZero
@@ -244,16 +241,17 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
   return 44.0;
 }
+
 #pragma mark - action
 
 - (IBAction)makeReport:(UIButton *)sender {
-  QZBQuestionReportButtonCell *cell = (QZBQuestionReportButtonCell *)[self parentCellForView:sender];
+  QZBQuestionReportButtonCell *cell = (QZBQuestionReportButtonCell *) [self parentCellForView:sender];
   if (cell) {
 
     NSIndexPath *ip = [self.tableView indexPathForCell:cell];
 
     QZBQuestion *q = self.questions[ip.section];
-    if(!q.questionIDForReport){
+    if (!q.questionIDForReport) {
       return;
     }
 
@@ -268,7 +266,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
                                                           [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
                                                         }];
 
-    NSLog(@"num %ld", (long)q.questionIDForReport);
+    NSLog(@"num %ld", (long) q.questionIDForReport);
   }
 }
 
@@ -286,7 +284,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 - (QZBQuestionReportQuestionTextCell *)protoCell {
   if (!_protoCell) {
     _protoCell =
-    [self.tableView dequeueReusableCellWithIdentifier:QZBQuestionReportTextCellIdentifier];
+        [self.tableView dequeueReusableCellWithIdentifier:QZBQuestionReportTextCellIdentifier];
   }
   return _protoCell;
 }
@@ -303,7 +301,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
     NSURL *url = [NSURL URLWithString:category.background_url];
 
     CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
-                          16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
+        16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
 
     DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
 
@@ -312,7 +310,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
     DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
     options.allowsClipping = YES;
-    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
     DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                        targetSize:CGSizeZero
@@ -322,9 +320,9 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
     dfiIV.allowsAnimations = NO;
 
     [dfiIV prepareForReuse];
-    
+
     [dfiIV setImageWithRequest:request];
-    
+
     self.tableView.backgroundView = dfiIV;
   }
 }
