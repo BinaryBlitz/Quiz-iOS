@@ -3,9 +3,9 @@
 UIKIT_EXTERN NSString *const QZBNeedReloadRatingTableView;
 
 typedef NS_ENUM(NSInteger, QZBRatingTableType) {
-    QZBRatingTableAllTime,
-    QZBRatingTableWeek,
-    QZBRatingTableFriends
+  QZBRatingTableAllTime,
+  QZBRatingTableWeek,
+  QZBRatingTableFriends
 };
 
 @interface QZBRatingTVC : UITableViewController

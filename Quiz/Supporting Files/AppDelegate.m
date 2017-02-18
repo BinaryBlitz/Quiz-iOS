@@ -9,24 +9,18 @@
 #import <Crashlytics/Crashlytics.h>
 #import "MagicalRecord/MagicalRecord.h"
 #import "QZBQuizIAPHelper.h"
-#import "QZBQuizTopicIAPHelper.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBAnotherUser.h"
 #import "QZBSessionManager.h"
-#import "QZBRegistrationChooserVC.h"
-#import "QZBMainGameScreenTVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
 #import "QZBMessangerList.h"
 
 #import <LayerKit/LayerKit.h>
 
-
-#import "DDASLLogger.h"
 #import "DDTTYLogger.h"
-#import "DDFileLogger.h"
 
 #import <UAAppReviewManager.h>
 
@@ -42,7 +36,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application
+- (BOOL)          application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"QZBQuizBattle"];
 
@@ -60,20 +54,20 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
   if (IS_OS_8_OR_LATER) {
     [application
-     registerUserNotificationSettings:[UIUserNotificationSettings
-                                       settingsForTypes:(UIUserNotificationTypeSound |
-                                                         UIUserNotificationTypeAlert |
-                                                         UIUserNotificationTypeBadge)
-                                       categories:nil]];
+        registerUserNotificationSettings:[UIUserNotificationSettings
+            settingsForTypes:(UIUserNotificationTypeSound |
+                UIUserNotificationTypeAlert |
+                UIUserNotificationTypeBadge)
+                  categories:nil]];
 
     [application registerForRemoteNotifications];
 
   } else {
     [[UIApplication sharedApplication]
-     registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+        registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
   }
 
-  UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+  UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
   tabController.selectedIndex = 2;
   NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
   if (userInfo) {
@@ -87,11 +81,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     } /*else if ([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
        [self showMessageWithDict:userInfo];
        }*/ else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
-         // ROOM_INVITE
-         //  [self showRoomsWithDict:userInfo];
-       } else if (userInfo[@"layer"]&& ![userInfo[@"layer"] isEqual:[NSNull null]]) {
-         [self showMessageWithDict:userInfo];
-       }
+      // ROOM_INVITE
+      //  [self showRoomsWithDict:userInfo];
+    } else if (userInfo[@"layer"] && ![userInfo[@"layer"] isEqual:[NSNull null]]) {
+      [self showMessageWithDict:userInfo];
+    }
   }
 
   // [self presentRegistration];
@@ -110,7 +104,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
-            options:(NSDictionary<NSString *,id> *)options {
+            options:(NSDictionary<NSString *, id> *)options {
 
   [VKSdk processOpenURL:url
         fromApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]];
@@ -172,12 +166,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Create the coordinator and store
 
   _persistentStoreCoordinator =
-  [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+      [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
   NSURL *storeURL =
-  [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"QZBQuizBattle.sqlite"];
+      [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"QZBQuizBattle.sqlite"];
   NSError *error = nil;
   NSString *failureReason =
-  @"There was an error creating or loading the application's saved data.";
+      @"There was an error creating or loading the application's saved data.";
 
   if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                  configuration:nil
@@ -237,7 +231,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 #pragma mark - notifications
 
-- (void)application:(UIApplication *)application
+- (void)                             application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   // DDLogInfo(@"My token is: %@", deviceToken);
 
@@ -252,7 +246,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [[QZBCurrentUser sharedInstance] setAPNsToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application
+- (void)         application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
   DDLogInfo(@"Received notification: %@", userInfo);
 
@@ -275,7 +269,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
       [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                           object:nil];
-    } else if (userInfo[@"layer"]&& ![userInfo[@"layer"] isEqual:[NSNull null]]) {
+    } else if (userInfo[@"layer"] && ![userInfo[@"layer"] isEqual:[NSNull null]]) {
       [self showMessageNotificationWithDictInActiveApp:userInfo];
     }
 
@@ -283,7 +277,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
   }
 }
 
-- (void)application:(UIApplication *)application
+- (void)                             application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   // DDLogWarn(@"Failed to get token, error: %@", error);
 }
@@ -300,21 +294,21 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     return;
   }
 
-  UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+  UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
   UITabBarItem *tabbarItem = tabController.tabBar.items[vcNum];
   tabbarItem.badgeValue = @"1";
 }
 
 - (void)showFriendRequestScreenWithDictionary:(NSDictionary *)dict {
   if (![QZBSessionManager sessionManager].isGoing) {
-    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
 
     UINavigationController *navController =
-    (UINavigationController *)tabController.viewControllers[1];
+        (UINavigationController *) tabController.viewControllers[1];
 
     QZBPlayerPersonalPageVC *notificationController =
-    (QZBPlayerPersonalPageVC *)[navController.storyboard
-                                instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
+        (QZBPlayerPersonalPageVC *) [navController.storyboard
+            instantiateViewControllerWithIdentifier:@"friendStoryboardID"];
 
     tabController.selectedIndex = 1;
 
@@ -335,9 +329,9 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     UIApplicationState state = application.applicationState;
     if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
       UITabBarController *tabController =
-      (UITabBarController *)self.window.rootViewController;
+          (UITabBarController *) self.window.rootViewController;
       UINavigationController *navController =
-      (UINavigationController *)tabController.viewControllers[2];
+          (UINavigationController *) tabController.viewControllers[2];
       [navController popToRootViewControllerAnimated:NO];
       tabController.selectedIndex = 2;
     }
@@ -348,10 +342,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 
 - (void)showAchiewvmentWithDict:(NSDictionary *)dict {
   if (![QZBSessionManager sessionManager].isGoing) {
-    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
 
     UINavigationController *navController =
-    (UINavigationController *)tabController.viewControllers[2];
+        (UINavigationController *) tabController.viewControllers[2];
 
     QZBPlayerPersonalPageVC *notificationController = navController.viewControllers[0];
     [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
@@ -372,14 +366,14 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   //        "player_id" = 64;
   //        "updated_at" = "2015-07-15T14:45:31.964Z";
   //    };
-  UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+  UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
   tabController.selectedIndex = 1;
 
   UINavigationController *nav = tabController.viewControllers[1];
 
   [nav popToRootViewControllerAnimated:NO];
   QZBMessangerList *messList =
-  [nav.storyboard instantiateViewControllerWithIdentifier:@"messagerList"];
+      [nav.storyboard instantiateViewControllerWithIdentifier:@"messagerList"];
 
   [nav pushViewController:messList animated:YES];
 }
@@ -397,7 +391,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
     NSDictionary *d = userInfo[@"aps"];
     NSString *body = @"Новое сообщение";
-    if(d[@"alert"] && ![d[@"alert"] isEqual:[NSNull null]] && ![d[@"alert"] isEqual:@""]){
+    if (d[@"alert"] && ![d[@"alert"] isEqual:[NSNull null]] && ![d[@"alert"] isEqual:@""]) {
       body = d[@"alert"];
     } else {
       return;
@@ -410,13 +404,12 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     //        body = userInfo[]
 
 
-    NSDictionary *payload = @{ @"username" : @"", @"message" : body };
+    NSDictionary *payload = @{@"username": @"", @"message": body};
     [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"QZBMessageRecievedNotificationIdentifier"
-     object:payload];
+        postNotificationName:@"QZBMessageRecievedNotificationIdentifier"
+                      object:payload];
   }
 }
-
 
 
 @end

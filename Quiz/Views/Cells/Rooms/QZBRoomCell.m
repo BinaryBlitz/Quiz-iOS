@@ -16,15 +16,14 @@
     UILabel *nameLabel = self.namesLabels[i];
     UILabel *topicsLabel = self.topicsNamesLabels[i];
 
-
     if (i < usersWithTopics.count) {
       QZBUserWithTopic *userWithTopic = usersWithTopics[i];
 
       nameLabel.text = userWithTopic.user.name;
       topicsLabel.text = userWithTopic.topic.name;
 
-      if([userWithTopic.user respondsToSelector:@selector(isFriend)]){
-        if(userWithTopic.user.isFriend){
+      if ([userWithTopic.user respondsToSelector:@selector(isFriend)]) {
+        if (userWithTopic.user.isFriend) {
           nameLabel.textColor = [UIColor ultralightGreenColor];
         } else {
           nameLabel.textColor = [UIColor whiteColor];
@@ -44,10 +43,10 @@
 
 - (NSAttributedString *)usersCountAtrtStringFromRoom:(QZBRoom *)room {
   NSInteger count = room.participants.count;
-  NSString *currentCount = [NSString stringWithFormat:@"%ld",(long)count];
-  NSString *maxCountString = [NSString stringWithFormat:@"%@",room.maxUserCount];
+  NSString *currentCount = [NSString stringWithFormat:@"%ld", (long) count];
+  NSString *maxCountString = [NSString stringWithFormat:@"%@", room.maxUserCount];
   NSMutableAttributedString *slashString = [[NSMutableAttributedString alloc]
-                                            initWithString:@"/"];
+      initWithString:@"/"];
 
   NSMutableAttributedString *atrStr = [[NSMutableAttributedString alloc] initWithString:currentCount];
 
@@ -69,7 +68,6 @@
   [maxCountAttrString addAttribute:NSFontAttributeName
                              value:museoFontSmall
                              range:r];
-
 
   [atrStr appendAttributedString:slashString];
   [atrStr appendAttributedString:maxCountAttrString];

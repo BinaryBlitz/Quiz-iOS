@@ -3,6 +3,6 @@
 
 @interface QZBFriendRequest : QZBAnotherUser
 
-@property(strong, nonatomic, readonly) NSNumber *requestID;
+@property (strong, nonatomic, readonly) NSNumber *requestID;
 
 @end

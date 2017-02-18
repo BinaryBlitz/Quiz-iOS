@@ -10,12 +10,12 @@
 @implementation QZBAnswerTextAndID
 
 - (instancetype)initWithText:(NSString *)answer answerID:(NSInteger)answerID {
-    self = [super init];
-    if (self) {
-        self.answerText = answer;
-        self.answerID = answerID;
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.answerText = answer;
+    self.answerID = answerID;
+  }
+  return self;
 }
 
 @end

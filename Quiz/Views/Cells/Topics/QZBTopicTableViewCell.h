@@ -13,10 +13,10 @@
 @property (weak, nonatomic) IBOutlet UIView *symbolsView;
 @property (weak, nonatomic) IBOutlet UILabel *symbolLabel;
 
--(void)initCircularProgressWithLevel:(NSInteger)level
-                            progress:(float)progress
-                             visible:(BOOL)visible;
+- (void)initCircularProgressWithLevel:(NSInteger)level
+                             progress:(float)progress
+                              visible:(BOOL)visible;
 
--(void)initWithTopic:(QZBGameTopic *)topic;
+- (void)initWithTopic:(QZBGameTopic *)topic;
 
 @end

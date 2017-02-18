@@ -12,12 +12,15 @@
 @property (strong, nonatomic, readonly) NSData *pushTokenData;
 
 - (void)setUser:(QZBUser *)user;
+
 - (BOOL)checkUser;
+
 - (void)userLogOut;
 
--(void)setAPNsToken:(NSData *)pushToken;
+- (void)setAPNsToken:(NSData *)pushToken;
 
 - (void)setNeedStartMessager:(BOOL)needStartMessager;
+
 - (BOOL)needStartMessager;
 
 

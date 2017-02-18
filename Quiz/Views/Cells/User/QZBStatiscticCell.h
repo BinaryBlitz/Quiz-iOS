@@ -12,6 +12,6 @@
 @property (weak, nonatomic) IBOutlet UAProgressView *drawsCircular;
 @property (weak, nonatomic) IBOutlet UAProgressView *lossesCircular;
 
--(void)setCellWithUser:(id <QZBUserProtocol>)user;
+- (void)setCellWithUser:(id <QZBUserProtocol>)user;
 
 @end

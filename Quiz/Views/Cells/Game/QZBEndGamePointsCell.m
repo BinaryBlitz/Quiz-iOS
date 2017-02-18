@@ -7,49 +7,49 @@
 @implementation QZBEndGamePointsCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    [self addDropShadows];
-    self.circleView.borderWidth = 10;
-    CGRect rect = CGRectMake(0, 0, CGRectGetHeight(self.circleView.frame) / 2.0,
-                             CGRectGetHeight(self.circleView.frame) / 2.0);
+  // Initialization code
+  [self addDropShadows];
+  self.circleView.borderWidth = 10;
+  CGRect rect = CGRectMake(0, 0, CGRectGetHeight(self.circleView.frame) / 2.0,
+      CGRectGetHeight(self.circleView.frame) / 2.0);
 
-    UILabel *centralLabel = [[UILabel alloc] initWithFrame:rect];
-    centralLabel.font = [UIFont boldMuseoFontOfSize:40];
-    centralLabel.textAlignment = NSTextAlignmentCenter;
-    self.circleView.centralView = centralLabel;
-    self.circleView.fillOnTouch = NO;
+  UILabel *centralLabel = [[UILabel alloc] initWithFrame:rect];
+  centralLabel.font = [UIFont boldMuseoFontOfSize:40];
+  centralLabel.textAlignment = NSTextAlignmentCenter;
+  self.circleView.centralView = centralLabel;
+  self.circleView.fillOnTouch = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+  [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+  // Configure the view for the selected state
 }
 
 - (void)setCentralLabelWithNimber:(NSInteger)multiplier {
-    UIColor *color = [UIColor whiteColor];
+  UIColor *color = [UIColor whiteColor];
 
-    if (multiplier == 1) {
-    } else if (multiplier == 2) {
-        color = [UIColor lightButtonColor];
+  if (multiplier == 1) {
+  } else if (multiplier == 2) {
+    color = [UIColor lightButtonColor];
 
-    } else if (multiplier == 3) {
-        color = [UIColor lightGreenColor];
+  } else if (multiplier == 3) {
+    color = [UIColor lightGreenColor];
 
-    } else if (multiplier == 5) {
-        color = [UIColor lightRedColor];
-    }
+  } else if (multiplier == 5) {
+    color = [UIColor lightRedColor];
+  }
 
-    self.circleView.tintColor = color;
+  self.circleView.tintColor = color;
 
-    UILabel *label = (UILabel *)self.circleView.centralView;
-    label.textColor = color;
-    label.text = [NSString stringWithFormat:@"x%ld", (long)multiplier];
+  UILabel *label = (UILabel *) self.circleView.centralView;
+  label.textColor = color;
+  label.text = [NSString stringWithFormat:@"x%ld", (long) multiplier];
 }
 
 - (void)setScore:(NSUInteger)score {
-    self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)score];
-    self.pointsNameLabel.text = [NSString endOfWordFromNumber:score]; 
+  self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long) score];
+  self.pointsNameLabel.text = [NSString endOfWordFromNumber:score];
 }
 
 //- (NSString *)endOfWordFromNumber:(NSInteger)number {

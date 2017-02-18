@@ -2,6 +2,6 @@
 
 @interface QZBAchivHorizontalCell : QZBHorizontalCell
 
--(void)setAchivArray:(NSArray *)achivArray;
+- (void)setAchivArray:(NSArray *)achivArray;
 
 @end

@@ -10,12 +10,12 @@
 @implementation QZBAnswer
 
 - (instancetype)initWithAnswerNumber:(NSUInteger)answerNum answerTime:(NSUInteger)time {
-    self = [super init];
-    if (self) {
-        self.answerNum = answerNum;
-        self.time = time;
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.answerNum = answerNum;
+    self.time = time;
+  }
+  return self;
 }
 
 @end

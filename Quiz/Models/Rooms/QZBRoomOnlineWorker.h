@@ -12,6 +12,7 @@ UIKIT_EXTERN NSString *const QZBRoomMessageRecieved;
 @interface QZBRoomOnlineWorker : NSObject
 
 - (instancetype)initWithRoom:(QZBRoom *)room;
+
 - (void)closeConnection;
 
 @end

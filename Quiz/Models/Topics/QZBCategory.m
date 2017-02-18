@@ -7,8 +7,6 @@
 //
 
 #import "QZBCategory.h"
-#import "QZBGameTopic.h"
-
 
 @implementation QZBCategory
 

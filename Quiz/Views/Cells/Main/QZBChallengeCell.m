@@ -3,12 +3,12 @@
 
 @implementation QZBChallengeCell
 
--(void)drawRect:(CGRect)rect{
-    [self.backView addShadowsAllWay];
-    [self.underView addShadowsAllWayRasterize];
+- (void)drawRect:(CGRect)rect {
+  [self.backView addShadowsAllWay];
+  [self.underView addShadowsAllWayRasterize];
 }
 
--(void)awakeFromNib{
+- (void)awakeFromNib {
 // //   [self.backView addShadowsAllWay];
 // //   [self.underView addShadowsAllWayRasterize];
 }

@@ -1,21 +1,17 @@
 #import "QZBFriendsTVC.h"
 #import "QZBFriendCell.h"
-#import "QZBServerManager.h"
 #import "QZBAnotherUser.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "QZBFriendsRequestsTVC.h"
-#import "QZBFriendRequest.h"
 #import "QZBFriendRequestManager.h"
-#import <JSBadgeView/JSBadgeView.h>
 #import "UIBarButtonItem+Badge.h"
 #import <DFImageManager/DFImageManagerKit.h>
-#import <DFImageManagerKit+UI.h>
 
 @interface QZBFriendsTVC ()
 
 @property (strong, nonatomic) NSArray *friends;          // QZBAnotherUser
 @property (strong, nonatomic) NSArray *friendsRequests;  // QZBAnotherUser
-@property (strong, nonatomic) id<QZBUserProtocol> user;
+@property (strong, nonatomic) id <QZBUserProtocol> user;
 
 
 @end
@@ -37,25 +33,23 @@
   // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  if([QZBFriendRequestManager sharedInstance].incoming.count == 0){
+  if ([QZBFriendRequestManager sharedInstance].incoming.count == 0) {
     self.navigationItem.rightBarButtonItem = nil;
   }
 
-
 }
-
 
 #pragma mark - custom init
 
-- (void)setFriendsOwner:(id<QZBUserProtocol>)user
+- (void)setFriendsOwner:(id <QZBUserProtocol>)user
                 friends:(NSArray *)friends
         friendsRequests:(NSArray *)friendsRequest {
   if (friendsRequest && friendsRequest.count > 0) {
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0,0,100, 20);
+    button.frame = CGRectMake(0, 0, 100, 20);
     [button addTarget:self action:@selector(showFriendsRequestsAction:) forControlEvents:UIControlEventTouchUpInside];
 
     NSString *requestTitle = @"Заявки";
@@ -65,21 +59,19 @@
 
     self.friendsRequests = friendsRequest;
     self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithCustomView:button];
+        [[UIBarButtonItem alloc] initWithCustomView:button];
 
     NSInteger count = 0;
-    if(friendsRequest ){
+    if (friendsRequest) {
       count = [self badgeNumberWithRequestFriends:friendsRequest];
     }
-    if(count>0){
+    if (count > 0) {
       button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
       //[NSString stringWithFormat:@"Заявки (%ld)", count];
       self.navigationItem.rightBarButtonItem.badgeValue =
-      [NSString stringWithFormat:@"%ld",(long)count];
+          [NSString stringWithFormat:@"%ld", (long) count];
 
     }
-
-
 
   } else {
     // self.friendsRequestsButton.enabled = NO;
@@ -100,7 +92,7 @@
 //- (void)setFriendsOwner:(id<QZBUserProtocol>)user friendsRequests:(NSArray *)friendsRequest {
 //}
 
-- (void)setFriendsOwner:(id<QZBUserProtocol>)user andFriends:(NSArray *)friends {
+- (void)setFriendsOwner:(id <QZBUserProtocol>)user andFriends:(NSArray *)friends {
   self.user = user;
   self.friends = friends;
 
@@ -133,7 +125,7 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
   QZBFriendCell *cell =
-  [self.tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
+      [self.tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
 
   QZBAnotherUser *user = self.friends[indexPath.row];
 
@@ -144,25 +136,25 @@
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if([cell isKindOfClass:[QZBFriendCell class]]) {
-    QZBFriendCell *c = (QZBFriendCell *)cell;
+  if ([cell isKindOfClass:[QZBFriendCell class]]) {
+    QZBFriendCell *c = (QZBFriendCell *) cell;
     QZBAnotherUser *user = self.friends[indexPath.row];
 
     DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
     options.allowsClipping = YES;
-    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
     DFImageRequest *request = [DFImageRequest requestWithResource:user.imageURL
                                                        targetSize:CGSizeZero
                                                       contentMode:DFImageContentModeAspectFill
                                                           options:options];
     if (user.imageURL) {
-      [[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage * _Nullable image, NSError * _Nullable error, DFImageResponse * _Nullable response, DFImageTask * _Nonnull imageTask) {
+      [[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *_Nullable image, NSError *_Nullable error, DFImageResponse *_Nullable response, DFImageTask *_Nonnull imageTask) {
         UITableViewCell *cel =
-        [tableView cellForRowAtIndexPath:indexPath];
+            [tableView cellForRowAtIndexPath:indexPath];
         if (cel && [cel isKindOfClass:[QZBFriendCell class]]) {
-          QZBFriendCell *c = (QZBFriendCell *)cel;
+          QZBFriendCell *c = (QZBFriendCell *) cel;
           c.userpicImageView.image = image;
         }
       }];
@@ -184,11 +176,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
   }
 }
 
-- (void)tableView:(UITableView *)tableView
+- (void)   tableView:(UITableView *)tableView
 didEndDisplayingCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
+   forRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([cell isKindOfClass:[QZBFriendCell class]]) {
-    QZBFriendCell *c = (QZBFriendCell *)cell;
+    QZBFriendCell *c = (QZBFriendCell *) cell;
     c.userpicImageView.image = [UIImage imageNamed:@"userpicStandart"];
   }
 }
@@ -204,13 +196,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return;
   }
 
-  QZBFriendCell *friendCell = (QZBFriendCell *)cell;
+  QZBFriendCell *friendCell = (QZBFriendCell *) cell;
   self.user = friendCell.user;
 
   [self performSegueWithIdentifier:@"showUserpage" sender:nil];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
   return 71.0;
 
@@ -231,28 +223,29 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
   } else if ([segue.identifier isEqualToString:@"showFriendsRequests"]) {
     QZBFriendsRequestsTVC *destinationVC =
-    (QZBFriendsRequestsTVC *)segue.destinationViewController;
+        (QZBFriendsRequestsTVC *) segue.destinationViewController;
 
     [destinationVC setFriendsOwner:self.user andFriends:self.friendsRequests];
   }
 }
 
 #pragma mark - actions
+
 - (void)showFriendsRequestsAction:(id)sender {
   [self performSegueWithIdentifier:@"showFriendsRequests" sender:nil];
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - support methods
 
--(id<QZBUserProtocol>)userAtIndex:(NSUInteger)userIndex{
+- (id <QZBUserProtocol>)userAtIndex:(NSUInteger)userIndex {
 
-  if(userIndex<self.friends.count){
+  if (userIndex < self.friends.count) {
     return [self.friends objectAtIndex:userIndex];
-  }else{
+  } else {
     return nil;
   }
 

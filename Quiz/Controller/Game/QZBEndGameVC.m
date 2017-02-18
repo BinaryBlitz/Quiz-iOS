@@ -8,7 +8,6 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBGameTopic.h"
 #import <JSBadgeView.h>
-#import "UIColor+QZBProjectColors.h"
 #import "QZBCategory.h"
 #import "QZBTopicChooserController.h"
 #import "QZBPlayerPersonalPageVC.h"
@@ -60,11 +59,10 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 @property (assign, nonatomic) BOOL isJustResult;
 @property (assign, nonatomic) BOOL isMainInited;
 @property (assign, nonatomic) BOOL isAnimated;
-@property (strong, nonatomic) id<QZBUserProtocol> opponent;
+@property (strong, nonatomic) id <QZBUserProtocol> opponent;
 @property (strong, nonatomic) QZBChallengeDescriptionWithResults *challengeDescriptionWithResult;
 
-
-@property(strong, nonatomic) NSArray *questions;//QZBQuestion
+@property (strong, nonatomic) NSArray *questions;//QZBQuestion
 
 @property (strong, nonatomic) AVAudioPlayer *soundPlayer;
 
@@ -118,7 +116,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     NSURL *url = [NSURL URLWithString:category.background_url];
 
     CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
-                          16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
+        16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
 
     DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
 
@@ -127,7 +125,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
     options.allowsClipping = YES;
-    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
 
     DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                        targetSize:CGSizeZero
@@ -149,7 +147,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   [super viewDidAppear:animated];
   self.tabBarController.tabBar.hidden = NO;
 
-
   if (!self.isOfflineChallenge && !self.isAnimated) {
     self.isAnimated = YES;
     [self playResultsSounds];
@@ -163,7 +160,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   [super viewDidDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
-  if(self.soundPlayer) {
+  if (self.soundPlayer) {
     [self.soundPlayer stop];
   }
 
@@ -242,8 +239,8 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     self.opponentImageURL = challengeDescription.opponentUser.imageURL;
   }
 
-  self.firstUserScore = (NSUInteger)challengeDescription.firstResult;
-  self.secondUserScore = (NSUInteger)challengeDescription.opponentResult;
+  self.firstUserScore = (NSUInteger) challengeDescription.firstResult;
+  self.secondUserScore = (NSUInteger) challengeDescription.opponentResult;
 
   self.sessionResult = [self resultOfSession];
 
@@ -259,7 +256,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
                                               onSuccess:^{
 
                                               }
-                                              onFailure:^(NSError *error, NSInteger statusCode){
+                                              onFailure:^(NSError *error, NSInteger statusCode) {
 
                                               }];
 }
@@ -291,7 +288,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
   if ([segue.identifier isEqualToString:QZBSegueToOpponentUser] && self.opponent) {
     QZBPlayerPersonalPageVC *destVC =
-    (QZBPlayerPersonalPageVC *)segue.destinationViewController;
+        (QZBPlayerPersonalPageVC *) segue.destinationViewController;
 
     [destVC initPlayerPageWithUser:self.opponent];
   } else if ([segue.identifier isEqualToString:QZBSegueToQuestionsReportIdentifier]) {
@@ -321,7 +318,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   UITableViewCell *cell = nil;
   if (indexPath.row == 0) {
     QZBEndGameMainCell *mainCell =
-    [tableView dequeueReusableCellWithIdentifier:mainCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:mainCellIdentifier];
 
     if (!self.isMainInited) {
       self.isMainInited = YES;
@@ -331,20 +328,20 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     return mainCell;
   } else if (indexPath.row == 1) {
     QZBEndGamePointsCell *pointsCell =
-    [tableView dequeueReusableCellWithIdentifier:pointCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:pointCellIdentifier];
     [pointsCell setCentralLabelWithNimber:self.multiplier];
     [pointsCell setScore:self.firstUserScore];
     return pointsCell;
   } else if (indexPath.row == 3) {
     QZBEndGameResultScoreCell *resultScoreCell =
-    [tableView dequeueReusableCellWithIdentifier:resultCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:resultCellIdentifier];
 
     NSInteger result = self.firstUserScore * self.multiplier;
     [resultScoreCell setResultScore:result];
     return resultScoreCell;
   } else if (indexPath.row == 2) {
     QZBEndGameProgressCell *progressCell =
-    [tableView dequeueReusableCellWithIdentifier:progressCellIdentifier];
+        [tableView dequeueReusableCellWithIdentifier:progressCellIdentifier];
     //[progressCell initCell];
     if (!self.cellInited) {
       self.cellInited = YES;
@@ -381,7 +378,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
       if ([self checkVisibilityOfCell:cell inScrollView:scrollView]) {
         if (!self.progressShown) {
           self.progressShown = YES;
-          QZBEndGameProgressCell *c = (QZBEndGameProgressCell *)cell;
+          QZBEndGameProgressCell *c = (QZBEndGameProgressCell *) cell;
           [c moveProgressFromBeginScore:self.beginScore toEndScore:self.endScore];
         }
       }
@@ -423,9 +420,9 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
   //`NSLog(@"%@", cell.oppone)
   cell.opponentBV.badgeText =
-  [NSString stringWithFormat:@"%ld", (unsigned long)self.secondUserScore];
+      [NSString stringWithFormat:@"%ld", (unsigned long) self.secondUserScore];
 
-  cell.userBV.badgeText = [NSString stringWithFormat:@"%ld", (unsigned long)self.firstUserScore];
+  cell.userBV.badgeText = [NSString stringWithFormat:@"%ld", (unsigned long) self.firstUserScore];
   cell.resultOfSessionLabel.text = self.sessionResult;
 
   cell.playAgainButton.exclusiveTouch = YES;
@@ -460,7 +457,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   }
 
   QZBProgressViewController *progressVC =
-  [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
+      [self.storyboard instantiateViewControllerWithIdentifier:@"QZBPreparingScreenIdentifier"];
 
   [progressVC initPlayAgainSessionWithTopic:self.topic user:self.opponent];
 
@@ -470,7 +467,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
   } else {
     NSUInteger objectIndex =
-    [self.navigationController.viewControllers indexOfObject:destinationVC];
+        [self.navigationController.viewControllers indexOfObject:destinationVC];
     [controllers replaceObjectAtIndex:objectIndex withObject:progressVC];
   }
 
@@ -480,6 +477,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
   // self.navigationController.viewControllers
 }
+
 - (IBAction)chooseAnotherTopic:(id)sender {
   NSEnumerator *controllers = [self.navigationController.viewControllers reverseObjectEnumerator];
 
@@ -499,6 +497,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     [self.navigationController popToViewController:destinationVC animated:YES];
   }
 }
+
 - (IBAction)showQuestionReport:(UIButton *)sender {
   [self showReportScreen];
 }
@@ -506,7 +505,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 - (void)moveToPlayerChooseVC {
   if (self.isOfflineChallenge) {
     NSEnumerator *controllers =
-    [self.navigationController.viewControllers reverseObjectEnumerator];
+        [self.navigationController.viewControllers reverseObjectEnumerator];
 
     UIViewController *destinationVC;
 
@@ -552,17 +551,18 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 }
 
 #pragma mark - animation
+
 - (void)animateResults {
   CGRect mainRect = [UIScreen mainScreen].bounds;
 
   CGRect rLeft = CGRectMake(0, -CGRectGetHeight(mainRect) * 1.4, 0.61 * CGRectGetWidth(mainRect),
-                            1.4 * CGRectGetHeight(mainRect));
+      1.4 * CGRectGetHeight(mainRect));
 
   CGRect rRight = CGRectMake(0.247 * CGRectGetWidth(mainRect), CGRectGetHeight(mainRect),
-                             0.755 * CGRectGetWidth(mainRect), 1.2 * CGRectGetHeight(mainRect));
+      0.755 * CGRectGetWidth(mainRect), 1.2 * CGRectGetHeight(mainRect));
 
   CGRect rFlash = CGRectMake(0.25 * CGRectGetWidth(mainRect), 0, 0.42 * CGRectGetWidth(mainRect),
-                             0.95 * CGRectGetHeight(mainRect));
+      0.95 * CGRectGetHeight(mainRect));
 
   UIImageView *leftImage = [[UIImageView alloc] initWithFrame:rLeft];
   UIImageView *rightImage = [[UIImageView alloc] initWithFrame:rRight];
@@ -593,38 +593,37 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      leftImage.frame =
-                     CGRectMake(0, 0, CGRectGetWidth(leftImage.frame), 1.4 * CGRectGetHeight(mainRect));
+                         CGRectMake(0, 0, CGRectGetWidth(leftImage.frame), 1.4 * CGRectGetHeight(mainRect));
 
                      rightImage.frame =
-                     CGRectMake(0.245 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
-                                CGRectGetWidth(rightImage.frame), CGRectGetHeight(mainRect) * 1.2);
+                         CGRectMake(0.245 * CGRectGetWidth(mainRect), -CGRectGetHeight(mainRect) * 0.2,
+                             CGRectGetWidth(rightImage.frame), CGRectGetHeight(mainRect) * 1.2);
 
                      flashImage.alpha = 1.0;
                    }
-                   completion:^(BOOL finished){
+                   completion:^(BOOL finished) {
 
                    }];
 }
 
--(void)playResultsSounds{
-  if([JSQSystemSoundPlayer sharedPlayer].on){
+- (void)playResultsSounds {
+  if ([JSQSystemSoundPlayer sharedPlayer].on) {
     [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
-    if(self.firstUserScore < self.secondUserScore) {
+    if (self.firstUserScore < self.secondUserScore) {
       //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"lose"];
 
-    } else if(self.firstUserScore > self.secondUserScore) {
+    } else if (self.firstUserScore > self.secondUserScore) {
       //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"win"];
     }
 
-
   }
 }
 
--(void)playWithName:(NSString *)name {
+- (void)playWithName:(NSString *)name {
   NSString *soundFilePath = [NSString stringWithFormat:@"%@/%@.wav",
-                             [[NSBundle mainBundle] resourcePath],name];
+                                                       [[NSBundle mainBundle] resourcePath], name];
   NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
   NSError *error;
   AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
@@ -646,18 +645,17 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 }
 
 #pragma mark - report
--(void)addBarButtonRight {
+
+- (void)addBarButtonRight {
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(showReportScreen)];
 }
 
--(void)showReportScreen {
+- (void)showReportScreen {
   [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
 }
-
-
 
 #pragma mark - gesture recognizer
 
@@ -665,7 +663,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   //  NSLog(@"gg");
   [self showOpponent];
 }
-
 
 
 @end

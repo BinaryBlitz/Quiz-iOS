@@ -2,6 +2,6 @@
 
 @interface UIColor (QZBColorGenerator)
 
-+(UIColor *)colorForString:(NSString *)string;
++ (UIColor *)colorForString:(NSString *)string;
 
 @end

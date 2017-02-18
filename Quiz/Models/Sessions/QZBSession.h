@@ -9,7 +9,9 @@
 @class QZBUserInSession;
 @class QZBUser;
 
-typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWinnerNone };
+typedef NS_ENUM(NSInteger, QZBWinnew) {
+  QZBWinnerFirst, QZBWinnerOpponent, QZBWinnerNone
+};
 
 @interface QZBSession : NSObject
 
@@ -20,7 +22,6 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 @property (assign, nonatomic, readonly) NSInteger session_id;
 @property (assign, nonatomic, readonly) NSInteger userBeginingScore;
 @property (copy, nonatomic, readonly) NSString *fact;
-
 
 @property (assign, nonatomic, readonly) NSInteger userMultiplier;
 
@@ -34,12 +35,11 @@ typedef NS_ENUM(NSInteger, QZBWinnew) { QZBWinnerFirst, QZBWinnerOpponent, QZBWi
 
 - (void)gaveAnswerByUser:(QZBUserInSession *)user forQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer;
 
-
 - (QZBWinnew)getWinner;
 
 //for rooms
--(NSUInteger)scoreForQestion:(QZBQuestion *)qestion
-                      answer:(QZBAnswer *)answer;//for rooms
--(QZBQuestion *)questionWithID:(NSInteger)questionID;
+- (NSUInteger)scoreForQestion:(QZBQuestion *)qestion
+                       answer:(QZBAnswer *)answer;//for rooms
+- (QZBQuestion *)questionWithID:(NSInteger)questionID;
 
 @end

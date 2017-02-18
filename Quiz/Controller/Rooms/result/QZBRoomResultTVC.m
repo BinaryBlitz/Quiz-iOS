@@ -6,7 +6,6 @@
 #import "QZBRoomOnlineWorker.h"
 #import "QZBSessionManager.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import "UIColor+QZBProjectColors.h"
 
 #import "QZBCategory.h"
 #import "QZBGameTopic.h"
@@ -16,7 +15,6 @@
 #import "QZBRoomListTVC.h"
 #import "QZBRoomSessionResults.h"
 #import "QZBQuestionReportTVC.h"
-#import "QZBStoreListTVC.h"
 
 // dfiimage
 
@@ -32,8 +30,6 @@
 
 //alert
 
-#import <SCLAlertView-Objective-C/SCLAlertView.h>
-
 // cell identifiers
 NSString *const QZBRoomUserResultCellIdentifier = @"roomUserResultCellIdentifier";
 
@@ -45,6 +41,7 @@ NSString *const QZBShowQuestionsFromRoomIdentifier = @"showQuestionsFromRoomIden
 static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
 @interface QZBRoomResultTVC ()
+
 @property (strong, nonatomic) QZBRoomWorker *roomWorker;
 @property (strong, nonatomic) NSNumber *roomSessionID;
 @property (strong, nonatomic) NSArray *questions;
@@ -99,10 +96,10 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
   [super viewDidAppear:animated];
 
   [self animateUp];
-  if (!self.isPaidChecked){
+  if (!self.isPaidChecked) {
     self.isPaidChecked = YES;
     QZBGameTopic *topic = [self findPaidTopic];
-    if(topic){
+    if (topic) {
       [self showAlertAboutPaidTopic:topic];
     }
   }
@@ -151,7 +148,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   QZBRoomUserResultCell *cell =
-  [tableView dequeueReusableCellWithIdentifier:QZBRoomUserResultCellIdentifier];
+      [tableView dequeueReusableCellWithIdentifier:QZBRoomUserResultCellIdentifier];
 
   QZBUserWithTopic *userWithTopic = self.roomWorker.room.participants[indexPath.row];
 
@@ -161,7 +158,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
   if (indexPath.row < 3 && userWithTopic.finished) {
     UIImage *cupImage = [[UIImage imageNamed:@"cupImage"]
-                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIColor *color = [UIColor whiteColor];
     if (indexPath.row == 0) {
       color = [UIColor goldColor];
@@ -183,7 +180,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
   if (_bottomView) {
     CGRect frame = self.bottomView.frame;
     frame.origin.y = scrollView.contentOffset.y + self.tableView.frame.size.height -
-    self.bottomView.frame.size.height + 20;
+        self.bottomView.frame.size.height + 20;
     self.bottomView.frame = frame;
     [self.view bringSubviewToFront:self.bottomView];
   }
@@ -200,13 +197,13 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
     NSURL *url = [NSURL URLWithString:category.background_url];
 
     CGRect r = CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds),
-                          16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
+        16 * CGRectGetWidth([UIScreen mainScreen].bounds) / 9);
 
     DFImageView *dfiIV = [[DFImageView alloc] initWithFrame:r];
     DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
     options.allowsClipping = YES;
-    options.userInfo = @{ DFURLRequestCachePolicyKey : @(NSURLRequestReturnCacheDataElseLoad) };
+    options.userInfo = @{DFURLRequestCachePolicyKey: @(NSURLRequestReturnCacheDataElseLoad)};
     options.expirationAge = 60 * 60 * 24 * 10;
     DFImageRequest *request = [DFImageRequest requestWithResource:url
                                                        targetSize:CGSizeZero
@@ -229,14 +226,13 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
 - (void)backButtonInit {
   UIBarButtonItem *logoutButton =
-  [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelCross"]
-                                   style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(leaveResults)];
+      [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelCross"]
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(leaveResults)];
 
   self.navigationItem.leftBarButtonItem = logoutButton;
 }
-
 
 - (void)reloadRoom {
   if (self.roomSessionID) {
@@ -248,13 +244,12 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
                                                                                                   onSuccess:^(QZBRoomSessionResults *sessionResults) {
 
                                                                                                     for (QZBUserWithTopic *userWithTopic in room.participants) {
-                                                                                                      id<QZBUserProtocol> us = userWithTopic.user;
+                                                                                                      id <QZBUserProtocol> us = userWithTopic.user;
                                                                                                       if ([sessionResults pointsForUserWithID:us.userID]) {
                                                                                                         userWithTopic.points =
-                                                                                                        [sessionResults pointsForUserWithID:us.userID];
+                                                                                                            [sessionResults pointsForUserWithID:us.userID];
                                                                                                       }
                                                                                                     }
-
 
                                                                                                     self.roomWorker.room = room;
 
@@ -279,19 +274,19 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
 - (void)oneOfUsersFinishedRoom:(NSNotification *)note {
   if (note && [note.name isEqualToString:QZBOneUserFinishedGameInRoom]) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                     [self.tableView reloadData];
-                   });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.1 * NSEC_PER_SEC)),
+        dispatch_get_main_queue(), ^{
+          [self.tableView reloadData];
+        });
   }
 }
 
 - (void)addBarButtonRight {
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
-                                   style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(showReportScreen)];
+      [[UIBarButtonItem alloc] initWithTitle:@"Вопросы"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(showReportScreen)];
 }
 
 - (void)showReportScreen {
@@ -309,7 +304,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
     UIView *v = [[UIView alloc] initWithFrame:destRect];
 
     UIColor *blueColor =
-    [UIColor colorWithRed:22.0 / 255.0 green:131.0 / 255.0 blue:199.0 / 255.0 alpha:1];
+        [UIColor colorWithRed:22.0 / 255.0 green:131.0 / 255.0 blue:199.0 / 255.0 alpha:1];
     v.backgroundColor = blueColor;
     v.layer.cornerRadius = 5.0;
     v.layer.masksToBounds = YES;
@@ -347,19 +342,19 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
   [UIView animateWithDuration:0.3
                    animations:^{
                      self.bottomView.frame = CGRectMake(
-                                                        0, self.tableView.contentOffset.y + self.tableView.frame.size.height -
-                                                        self.bottomView.frame.size.height + 20,
-                                                        r.size.width, 60);
+                         0, self.tableView.contentOffset.y + self.tableView.frame.size.height -
+                             self.bottomView.frame.size.height + 20,
+                         r.size.width, 60);
                    }];
 }
 
 #pragma mark - paid topics
 
--(QZBGameTopic *)findPaidTopic {
-  for(QZBQuestion *question in self.questions) {
-    if(question.topic){
-      if([question.topic.paid isEqualToNumber:@(YES)] &&
-         [question.topic.visible isEqualToNumber:@(NO)]){
+- (QZBGameTopic *)findPaidTopic {
+  for (QZBQuestion *question in self.questions) {
+    if (question.topic) {
+      if ([question.topic.paid isEqualToNumber:@(YES)] &&
+          [question.topic.visible isEqualToNumber:@(NO)]) {
         return question.topic;
       }
     }
@@ -367,36 +362,34 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
   return nil;
 }
 
--(void)showAlertAboutPaidTopic:(QZBGameTopic *)topic {
+- (void)showAlertAboutPaidTopic:(QZBGameTopic *)topic {
   // NSDictionary *d = dict[@"badge"];
-  
+
   SCLAlertView *alert = [[SCLAlertView alloc] init];
   alert.backgroundType = Blur;
   alert.showAnimationType = FadeIn;
-  
+
   NSString *title = [NSString stringWithFormat:@"Понравилась тема?"];
   NSString *subTitle = [NSString
-                        stringWithFormat:@"Тема '%@' платная. Купить?",
-                        topic.name];
-  
-  alert.completeButtonFormatBlock = ^NSDictionary*(void){
-    NSDictionary *formatDict = @{@"backgroundColor":[UIColor middleDarkGreyColor]};
+      stringWithFormat:@"Тема '%@' платная. Купить?",
+                       topic.name];
+
+  alert.completeButtonFormatBlock = ^NSDictionary *(void) {
+    NSDictionary *formatDict = @{@"backgroundColor": [UIColor middleDarkGreyColor]};
     return formatDict;
   };
-  
+
   [alert addButton:@"Да" actionBlock:^{
     self.tabBarController.selectedIndex = 4;
-    
+
     //            QZBStoreListTVC *store = (QZBStoreListTVC *)[self.storyboard instantiateViewControllerWithIdentifier:QZBStoreStorybordID];
     //            [self.navigationController pushViewController:store animated:YES];
   }];
-  
-  
-  
+
   [alert showInfo:self.tabBarController
             title:title subTitle:subTitle
  closeButtonTitle:@"Нет" duration:0.0f];
-  
+
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

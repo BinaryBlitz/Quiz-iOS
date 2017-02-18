@@ -11,22 +11,22 @@
 @implementation QZBQuestionWithUserAnswer
 
 - (instancetype)initWithQestion:(QZBQuestion *)qestion answer:(QZBAnswer *)answer {
-    self = [super init];
-    if (self) {
-        self.question = qestion;
-        self.answer = answer;
-        if (answer) {
-            if (qestion.rightAnswer == answer.answerNum) {
-                self.isRight = YES;
+  self = [super init];
+  if (self) {
+    self.question = qestion;
+    self.answer = answer;
+    if (answer) {
+      if (qestion.rightAnswer == answer.answerNum) {
+        self.isRight = YES;
 
-            } else {
-                self.isRight = NO;
-            }
-        } else {
-            self.isRight = NO;
-        }
+      } else {
+        self.isRight = NO;
+      }
+    } else {
+      self.isRight = NO;
     }
-    return self;
+  }
+  return self;
 }
 
 @end

@@ -16,7 +16,6 @@ UIKIT_EXTERN NSString *const QZBOneOfUserInRoomGaveAnswer;//test
 @property (assign, nonatomic, readonly) BOOL isOfflineChallenge;
 @property (assign, nonatomic, readonly) BOOL isRoom;
 
-
 @property (strong, nonatomic, readonly) NSString *sessionResult;
 @property (assign, nonatomic, readonly) NSInteger multiplier;
 @property (strong, nonatomic, readonly) QZBGameTopic *topic;
@@ -32,7 +31,7 @@ UIKIT_EXTERN NSString *const QZBOneOfUserInRoomGaveAnswer;//test
 @property (copy, nonatomic, readonly) NSString *firstUserName;
 @property (copy, nonatomic, readonly) NSString *opponentUserName;
 
-@property (strong, nonatomic, readonly) id<QZBUserProtocol> opponent;
+@property (strong, nonatomic, readonly) id <QZBUserProtocol> opponent;
 
 @property (strong, nonatomic, readonly) NSURL *firstImageURL;
 @property (strong, nonatomic, readonly) NSURL *opponentImageURL;
@@ -50,29 +49,40 @@ UIKIT_EXTERN NSString *const QZBOneOfUserInRoomGaveAnswer;//test
 @property (strong, nonatomic, readonly) QZBRoomWorker *roomWorker;
 
 - (void)setSession:(QZBSession *)session;
+
 - (void)setBot:(QZBOpponentBot *)bot;
+
 - (void)setOnlineSessionWorkerFromOutside:(QZBOnlineSessionWorker *)onlineSessionWorker;
+
 - (void)setTopicForSession:(QZBGameTopic *)topic;
+
 - (void)setIsChallenge:(BOOL)isChallenge;
 
 + (instancetype)sessionManager;
 
 - (void)newQuestionStart;
+
 - (void)firstUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum;
+
 - (void)opponentUserAnswerCurrentQuestinWithAnswerNumber:(NSUInteger)answerNum
                                                     time:(NSUInteger)time;
 
 - (NSNumber *)sessionID;
+
 - (NSArray *)sessionQuestions;
 
 - (void)removeBotOrOnlineWorker;
+
 - (void)makeSessionRoomSession;
+
 - (void)closeSession;
 
 #pragma mark - online methods
 
 - (QZBQuestion *)findQZBQuestionWithID:(NSInteger)questionID;
+
 - (void)opponentAnswerNotInTimeQuestion:(QZBQuestion *)question
                            AnswerNumber:(NSUInteger)answerNum
                                    time:(NSUInteger)time;

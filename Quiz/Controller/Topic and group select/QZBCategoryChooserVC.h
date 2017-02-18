@@ -5,6 +5,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 
--(void)initWithUser:(id<QZBUserProtocol>) user;
+- (void)initWithUser:(id <QZBUserProtocol>)user;
 
 @end

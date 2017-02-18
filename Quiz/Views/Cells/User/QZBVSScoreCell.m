@@ -1,8 +1,5 @@
 #import "QZBVSScoreCell.h"
 #import "QZBAnotherUser.h"
-#import "QZBUserStatistic.h"
-#import "QZBCurrentUser.h"
-#import "QZBUser.h"
 #import "UITableViewCell+QZBCellCategory.h"
 
 @implementation QZBVSScoreCell
@@ -18,10 +15,10 @@
   // Configure the view for the selected state
 }
 
--(void)setCellWithUser:(QZBAnotherUser *)user{
+- (void)setCellWithUser:(QZBAnotherUser *)user {
   NSNumber *opponentUserScore = @(0);
 
-  if(user.userStatistics.losses){
+  if (user.userStatistics.losses) {
     opponentUserScore = user.userStatistics.losses;
   }
 
@@ -31,7 +28,7 @@
   }
 
   self.currentUserScoreLabel.text = [NSString stringWithFormat:@"%@-%@",
-                                     currentUserScore,opponentUserScore];
+                                                               currentUserScore, opponentUserScore];
 }
 
 @end

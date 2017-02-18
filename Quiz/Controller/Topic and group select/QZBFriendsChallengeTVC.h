@@ -2,8 +2,9 @@
 
 @class QZBGameTopic;
 
-@interface QZBFriendsChallengeTVC : QZBFriendsTVC<UISearchBarDelegate>
+@interface QZBFriendsChallengeTVC : QZBFriendsTVC <UISearchBarDelegate>
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
--(void)setFriendsOwner:(id<QZBUserProtocol>)user andFriends:(NSArray *)friends gameTopic:(QZBGameTopic *)topic;
+- (void)setFriendsOwner:(id <QZBUserProtocol>)user andFriends:(NSArray *)friends gameTopic:(QZBGameTopic *)topic;
 @end

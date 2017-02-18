@@ -22,7 +22,9 @@
 
 //- (void)setUserPic:(UIImage *)userPic;
 - (void)setUserName:(NSString *)userName;
--(void)makeUserRegisterWithUserName:(NSString *)username;
+
+- (void)makeUserRegisterWithUserName:(NSString *)username;
+
 - (void)updateUserFromServer;
 
 //-(void)deleteImage;

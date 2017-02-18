@@ -38,11 +38,11 @@
   // Configure the view for the selected state
 }
 
--(void)setCellWithUser:(id <QZBUserProtocol>)user{
+- (void)setCellWithUser:(id <QZBUserProtocol>)user {
 
   QZBUserStatistic *statistic = user.userStatistics;
 
-  if(!statistic){
+  if (!statistic) {
     return;
   }
 
@@ -50,19 +50,19 @@
   NSNumber *losses = @(0);
   NSNumber *draws = @(0);
 
-  if(statistic.totalWins){
+  if (statistic.totalWins) {
     wins = statistic.totalWins;
   }
 
-  if(statistic.totaLosses){
+  if (statistic.totaLosses) {
     losses = statistic.totaLosses;
   }
-  if(statistic.totalDraws){
+  if (statistic.totalDraws) {
     draws = statistic.totalDraws;
   }
 
-  self.winLabel.text = [NSString stringWithFormat:@"%@",wins];
-  self.lossesLabel.text = [NSString stringWithFormat:@"%@",losses];
+  self.winLabel.text = [NSString stringWithFormat:@"%@", wins];
+  self.lossesLabel.text = [NSString stringWithFormat:@"%@", losses];
   self.drawsLabel.text = [NSString stringWithFormat:@"%@", draws];
 }
 

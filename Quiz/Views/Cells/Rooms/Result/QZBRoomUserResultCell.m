@@ -5,7 +5,7 @@
 @implementation QZBRoomUserResultCell
 
 - (void)confirureWithUserWithTopic:(QZBUserWithTopic *)userWithTopic position:(NSNumber *)position {
-  self.usernameLabel.text = [NSString stringWithFormat:@"%@. %@",position, userWithTopic.user.name];
+  self.usernameLabel.text = [NSString stringWithFormat:@"%@. %@", position, userWithTopic.user.name];
 
   if (userWithTopic.finished) {
     self.userPointsLabel.text = [NSString stringWithFormat:@"%@", userWithTopic.points];

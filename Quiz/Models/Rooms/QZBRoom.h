@@ -16,7 +16,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)d;
 
-- (BOOL)isContainUser:(id<QZBUserProtocol>)user;
+- (BOOL)isContainUser:(id <QZBUserProtocol>)user;
 
 - (QZBUserWithTopic *)findUserWithID:(NSNumber *)userID;
 
@@ -31,8 +31,8 @@
 //- (NSString *)descriptionForAllUsers;
 
 - (NSString *)participantsDescription;
-- (NSString *)topicsDescription;
 
+- (NSString *)topicsDescription;
 
 
 @end

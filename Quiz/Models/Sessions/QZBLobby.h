@@ -9,9 +9,10 @@
 @property (copy, nonatomic, readonly) NSString *fact;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
--(instancetype)initWithLobbyID:(NSInteger)lobbyID
-                       topicID:(NSInteger)topicID
-                      playerID:(NSInteger)playerID
-                    queryCount:(NSInteger)queryCount;
+
+- (instancetype)initWithLobbyID:(NSInteger)lobbyID
+                        topicID:(NSInteger)topicID
+                       playerID:(NSInteger)playerID
+                     queryCount:(NSInteger)queryCount;
 
 @end

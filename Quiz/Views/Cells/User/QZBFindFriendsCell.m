@@ -4,8 +4,8 @@
 @implementation QZBFindFriendsCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    self.shadowView = [self addDropShadows];
+  // Initialization code
+  self.shadowView = [self addDropShadows];
 }
 
 @end

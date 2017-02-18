@@ -7,20 +7,20 @@
 
 @required
 
--(NSString *)name;
+- (NSString *)name;
 
--(NSNumber *)userID;
+- (NSNumber *)userID;
 
--(NSURL *)imageURL;
+- (NSURL *)imageURL;
 
--(NSURL *)imageURLBig;
+- (NSURL *)imageURLBig;
 
 @optional
 
--(BOOL)isFriend;
+- (BOOL)isFriend;
 
--(QZBUserStatistic *)userStatistics;
+- (QZBUserStatistic *)userStatistics;
 
--(BOOL)isOnline;
+- (BOOL)isOnline;
 
 @end

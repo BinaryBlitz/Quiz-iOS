@@ -1,15 +1,12 @@
 #import "QZBMessagerVC.h"
 #import "QZBCurrentUser.h"
-#import "QZBUser.h"
 #import <JSQMessagesViewController/JSQMessages.h>
 #import <AFNetworking/AFNetworking.h>
-#import "UIColor+QZBProjectColors.h"
 #import <TSMessage.h>
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBUserWorker.h"
-#import <NSDate+DateTools.h>
 
 #import <LayerKit/LayerKit.h>
 #import "QZBLayerMessagerManager.h"
@@ -27,7 +24,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 @property (strong, nonatomic) JSQMessagesAvatarImage *myAvatar;
 @property (strong, nonatomic) JSQMessagesAvatarImage *friendAvatar;
 
-@property (strong, nonatomic) id<QZBUserProtocol> friend;
+@property (strong, nonatomic) id <QZBUserProtocol> friend;
 
 @property (nonatomic) LYRConversation *conversation;
 @property (nonatomic, retain) LYRQueryController *queryController;
@@ -58,9 +55,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
 
   self.outgoingBubbleImageData =
-  [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+      [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
   self.incomingBubbleImageData = [bubbleFactory
-                                  incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
+      incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
 
   // Do any additional setup after loading the view.
 
@@ -71,9 +68,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   if ([[QZBCurrentUser sharedInstance] needStartMessager] &&
       ![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
     [[QZBLayerMessagerManager sharedInstance]
-     connectWithCompletion:^(BOOL success, NSError *error){
+        connectWithCompletion:^(BOOL success, NSError *error) {
 
-     }];
+        }];
   }
 
   [self setNeedsStatusBarAppearanceUpdate];
@@ -83,8 +80,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   [super viewWillAppear:animated];
 
   [[NSNotificationCenter defaultCenter]
-   postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
-   object:nil];
+      postNotificationName:@"QZBDoNotNeedShowMessagerNotifications"
+                    object:nil];
 
   [self.collectionView setBackgroundColor:[UIColor darkGrayColor]];
 
@@ -103,10 +100,10 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self.inputToolbar.contentView.textView becomeFirstResponder];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)),
-                 dispatch_get_main_queue(), ^{
-                   [self scrollToBottomAnimated:YES];
-                 });
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.2 * NSEC_PER_SEC)),
+      dispatch_get_main_queue(), ^{
+        [self scrollToBottomAnimated:YES];
+      });
 
   [self setupLayerNotificationObservers];
   NSOrderedSet *convs = [self conversationsWithFriend];
@@ -129,7 +126,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   // Dispose of any resources that can be recreated.
 }
 
-- (void)initWithUser:(id<QZBUserProtocol>)user {
+- (void)initWithUser:(id <QZBUserProtocol>)user {
   self.title = user.name;
   self.friend = user;
 
@@ -145,19 +142,19 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.friend.imageURL];
 
     AFHTTPRequestOperation *operation =
-    [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFImageResponseSerializer serializer];
 
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
-                                               id responseObject) {
+        id responseObject) {
 
       self.friendAvatar = [JSQMessagesAvatarImageFactory
-                           avatarImageWithImage:responseObject
-                           diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+          avatarImageWithImage:responseObject
+                      diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 
       [self.collectionView reloadData];
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
       NSLog(@"Error: %@", error);
     }];
@@ -167,22 +164,22 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
   if ([QZBCurrentUser sharedInstance].user.imageURL) {
     NSURLRequest *requestForMyAva =
-    [NSURLRequest requestWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
+        [NSURLRequest requestWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
 
     AFHTTPRequestOperation *operationForMyAva =
-    [[AFHTTPRequestOperation alloc] initWithRequest:requestForMyAva];
+        [[AFHTTPRequestOperation alloc] initWithRequest:requestForMyAva];
 
     operationForMyAva.responseSerializer = [AFImageResponseSerializer serializer];
 
     [operationForMyAva setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation,
-                                                       id responseObject) {
+        id responseObject) {
 
       self.myAvatar = [JSQMessagesAvatarImageFactory
-                       avatarImageWithImage:responseObject
-                       diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+          avatarImageWithImage:responseObject
+                      diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
       [self.collectionView reloadData];
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
       NSLog(@"Error: %@", error);
     }];
@@ -205,9 +202,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
                                                                     onSuccess:^{
                                                                       if (![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
                                                                         [[QZBLayerMessagerManager sharedInstance]
-                                                                         connectWithCompletion:^(BOOL success, NSError *error) {
-                                                                           [self sendMessageCommon:text];
-                                                                         }];
+                                                                            connectWithCompletion:^(BOOL success, NSError *error) {
+                                                                              [self sendMessageCommon:text];
+                                                                            }];
                                                                       } else {
                                                                         [self sendMessageCommon:text];
                                                                       }
@@ -239,8 +236,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
-       messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (id <JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
+        messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
   //    LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
   //    LYRMessagePart *messagePart = message.parts[0];
   //    NSString *text = [[NSString alloc]initWithData:messagePart.data
@@ -251,8 +248,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   return messageView;  //[self.messages objectAtIndex:indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
-             messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (id <JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+              messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
   /**
    *  You may return nil here if you do not want bubbles.
    *  In this case, you should set the background color of your collection view cell's textView.
@@ -261,7 +258,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
    */
 
   JSQMessage *message =
-  [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
+      [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
   if ([message.senderId isEqualToString:self.senderId]) {
     return self.outgoingBubbleImageData;
@@ -272,8 +269,8 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
   //  return nil;
 }
 
-- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
-                    avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (id <JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+                     avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
   /**
    *  Return `nil` here if you do not want avatars.
    *  If you do return `nil`, be sure to do the following in `viewDidLoad`:
@@ -295,7 +292,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
    *  Override the defaults in `viewDidLoad`
    */
   JSQMessage *message =
-  [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
+      [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
   if ([message.senderId isEqualToString:self.senderId]) {
     return self.myAvatar;
@@ -321,7 +318,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
    *  Override point for customizing cells
    */
   JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)
-  [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+      [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
 
   /**
    *  Configure almost *anything* on the cell
@@ -340,7 +337,7 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
    */
 
   JSQMessage *msg =
-  [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
+      [self messageAtIndexPath:indexPath];  //[self.messages objectAtIndex:indexPath.item];
 
   if (!msg.isMediaMessage) {
     if ([msg.senderId isEqualToString:self.senderId]) {
@@ -350,9 +347,9 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
     }
 
     cell.textView.linkTextAttributes = @{
-                                         NSForegroundColorAttributeName : cell.textView.textColor,
-                                         NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid)
-                                         };
+        NSForegroundColorAttributeName: cell.textView.textColor,
+        NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle | NSUnderlinePatternSolid)
+    };
   }
 
   return cell;
@@ -379,37 +376,37 @@ const NSTimeInterval QZBMessageTimeInterval = 600;
 
 - (void)initAvatars {
   self.myAvatar = [JSQMessagesAvatarImageFactory
-                   avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
-                   diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+      avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
+                  diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
   self.friendAvatar = [JSQMessagesAvatarImageFactory
-                       avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
-                       diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+      avatarImageWithImage:[UIImage imageNamed:@"userpicStandart"]
+                  diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 }
 
 #pragma mark - date
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
+- (NSAttributedString *)  collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   if (self.queryController.count > 0 && indexPath.item == 0) {
     // JSQMessage *message = self.messages[indexPath.item];
     NSDate *firstDate = [[self.queryController objectAtIndexPath:indexPath] sentAt];
     return
-    [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
+        [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:firstDate];
   } else if (indexPath.item > 0) {
     // NSDate *firstDate =
     //  NSTimeInterval timeInterval = self.messages[indexPath.item] indexPath.item
     NSIndexPath *nip =
-    [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+        [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
     NSDate *firstDate =
-    [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
+        [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
     NSDate *secondDate =
-    [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
+        [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
 
     NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
 
     if (timeInterval > QZBMessageTimeInterval) {
       return [[JSQMessagesTimestampFormatter sharedFormatter]
-              attributedTimestampForDate:firstDate];
+          attributedTimestampForDate:firstDate];
     }
   }
 
@@ -422,8 +419,8 @@ attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   return nil;
 }
 
-- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
+- (CGFloat)       collectionView:(JSQMessagesCollectionView *)collectionView
+                          layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
 heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   /**
    *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource
@@ -455,14 +452,14 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     // JSQMessage *firstMessage = [self messageAtIndexPath:indexPath];//
     // self.messages[indexPath.item];
     NSIndexPath *nip =
-    [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+        [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
     // JSQMessage *secondMessage = [self
     // messageAtIndexPath:nip];//self.messages[indexPath.item-1];
 
     NSDate *firstDate =
-    [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
+        [[self.queryController objectAtIndexPath:indexPath] sentAt];  // firstMessage.date;
     NSDate *secondDate =
-    [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
+        [[self.queryController objectAtIndexPath:nip] sentAt];  // secondMessage.date;
 
     NSTimeInterval timeInterval = [firstDate timeIntervalSinceDate:secondDate];
 
@@ -492,7 +489,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   if ([segue.identifier isEqualToString:QZBSegueToUserPageIdentifier]) {
     QZBPlayerPersonalPageVC *destVC =
-    (QZBPlayerPersonalPageVC *)segue.destinationViewController;
+        (QZBPlayerPersonalPageVC *) segue.destinationViewController;
 
     [destVC initPlayerPageWithUser:self.friend];
   }
@@ -546,8 +543,8 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
   query.predicate = [LYRPredicate predicateWithProperty:@"participants"
                                       predicateOperator:LYRPredicateOperatorIsEqualTo
-                                                  value:@[ identifier ]];
-  query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+                                                  value:@[identifier]];
+  query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
 
   NSError *error;
   NSOrderedSet *conversations = [self.layerClient executeQuery:query error:&error];
@@ -558,10 +555,10 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
       return;
     }
     self.conversation = [self.layerClient
-                         newConversationWithParticipants:
-                         [NSSet setWithArray:@[ identifier, self.layerClient.authenticatedUser.userID ]]
-                         options:nil
-                         error:&conv_error];
+        newConversationWithParticipants:
+            [NSSet setWithArray:@[identifier, self.layerClient.authenticatedUser.userID]]
+                                options:nil
+                                  error:&conv_error];
     [QZBUserWorker saveUser:self.friend inConversation:self.conversation];
     [QZBUserWorker saveUser:[QZBCurrentUser sharedInstance].user
              inConversation:self.conversation];
@@ -572,7 +569,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   }
 
   if (!error) {
-    NSLog(@"%tu conversations with participants %@", conversations.count, @[ identifier ]);
+    NSLog(@"%tu conversations with participants %@", conversations.count, @[identifier]);
   } else {
     NSLog(@"Query failed with error %@", error);
   }
@@ -596,8 +593,8 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
   query.predicate = [LYRPredicate predicateWithProperty:@"participants"
                                       predicateOperator:LYRPredicateOperatorIsEqualTo
-                                                  value:@[ identifier ]];
-  query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+                                                  value:@[identifier]];
+  query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
 
   NSError *error;
   return [self.layerClient executeQuery:query error:&error];
@@ -612,7 +609,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   query.predicate = [LYRPredicate predicateWithProperty:@"conversation"
                                       predicateOperator:LYRPredicateOperatorIsEqualTo
                                                   value:self.conversation];
-  query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES] ];
+  query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
 
   // Set up query controller
   self.queryController = [self.layerClient queryControllerWithQuery:query error:nil];
@@ -622,7 +619,7 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   BOOL success = [self.queryController execute:&error];
   if (success) {
     NSLog(@"Query fetched %tu message objects",
-          [self.queryController numberOfObjectsInSection:0]);
+        [self.queryController numberOfObjectsInSection:0]);
   } else {
     NSLog(@"Query failed with error: %@", error);
   }
@@ -652,14 +649,13 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
   // For more information about Synchronization, check out
   // https://developer.layer.com/docs/integration/ios#synchronization
   [[NSNotificationCenter defaultCenter]
-   addObserver:self
-   selector:@selector(didReceiveLayerObjectsDidChangeNotification:)
-   name:LYRClientObjectsDidChangeNotification
-   object:nil];
+      addObserver:self
+         selector:@selector(didReceiveLayerObjectsDidChangeNotification:)
+             name:LYRClientObjectsDidChangeNotification
+           object:nil];
 }
 
-- (void)didReceiveLayerObjectsDidChangeNotification:(NSNotification *)notification;
-{
+- (void)didReceiveLayerObjectsDidChangeNotification:(NSNotification *)notification; {
   // Get nav bar colors from conversation metadata
   //[self setNavbarColorFromConversationMetadata:self.conversation.metadata];
   [self fetchLayerConversation];
@@ -682,11 +678,12 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
 - (void)queryControllerDidChangeContent:(LYRQueryController *)queryController {
   [self.collectionView reloadData];
 }
+
 - (NSString *)opponentIdentifier {
   NSString *identifier = nil;
 
   if ([self.friend.userID isKindOfClass:[NSString class]]) {
-    identifier = (NSString *)self.friend.userID;  // self.friend.userID.stringValue;
+    identifier = (NSString *) self.friend.userID;  // self.friend.userID.stringValue;
   } else {
     identifier = self.friend.userID.stringValue;
   }

@@ -2,6 +2,6 @@
 
 @interface QZBFindFriendsCell : UITableViewCell
 
-@property(strong, nonatomic) UIView *shadowView;
+@property (strong, nonatomic) UIView *shadowView;
 
 @end

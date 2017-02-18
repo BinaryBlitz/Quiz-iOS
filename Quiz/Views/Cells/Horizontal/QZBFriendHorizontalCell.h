@@ -2,6 +2,6 @@
 
 @interface QZBFriendHorizontalCell : QZBHorizontalCell
 
--(void)setFriendArray:(NSArray *)friendArray;
+- (void)setFriendArray:(NSArray *)friendArray;
 
 @end

@@ -29,36 +29,36 @@
 
 
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
-    
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetLineWidth(context, 1.0);
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    
-    CGContextMoveToPoint(context, CGRectGetMinX(rect), CGRectGetMinY(rect));
-    CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMidY(rect));
-    CGContextAddLineToPoint(context, CGRectGetMinX(rect), CGRectGetMaxY(rect));
-    CGContextClosePath(context);
+  // Drawing code
 
-    CGContextStrokePath(context);
-    
-    /*
-    CGContextBeginPath(ctx);
-    
-    CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
-    CGContextSetLineWidth(ctx, 2.0);
-    
-    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));     // top left
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMidY(rect));  // mid right
-    CGContextAddLineToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));  // bottom left
-  //  CGContextClosePath(ctx);
 
-    // CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
+  CGContextRef context = UIGraphicsGetCurrentContext();
 
-   // CGContextFillPath(ctx);*/
+  CGContextSetLineWidth(context, 1.0);
+
+  CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+
+  CGContextMoveToPoint(context, CGRectGetMinX(rect), CGRectGetMinY(rect));
+  CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMidY(rect));
+  CGContextAddLineToPoint(context, CGRectGetMinX(rect), CGRectGetMaxY(rect));
+  CGContextClosePath(context);
+
+  CGContextStrokePath(context);
+
+  /*
+  CGContextBeginPath(ctx);
+
+  CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
+  CGContextSetLineWidth(ctx, 2.0);
+
+  CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));     // top left
+  CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMidY(rect));  // mid right
+  CGContextAddLineToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));  // bottom left
+//  CGContextClosePath(ctx);
+
+  // CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
+
+ // CGContextFillPath(ctx);*/
 }
 
 @end
