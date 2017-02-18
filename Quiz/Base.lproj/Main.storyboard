@@ -4946,7 +4946,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="achivCell" rowHeight="19" id="DBa-Q9-oWc" customClass="QZBAchivHorizontalCell">
+                            <tableViewCell clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="achivCell" rowHeight="19" id="DBa-Q9-oWc" customClass="QZBAchievementHorizontalCell">
                                 <rect key="frame" x="0.0" y="571" width="375" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DBa-Q9-oWc" id="teK-G5-GEc">

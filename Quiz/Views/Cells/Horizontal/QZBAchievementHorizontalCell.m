@@ -1,9 +1,9 @@
-#import "QZBAchivHorizontalCell.h"
+#import "QZBAchievementHorizontalCell.h"
 
-@implementation QZBAchivHorizontalCell
+@implementation QZBAchievementHorizontalCell
 
-- (void)setAchivArray:(NSArray *)achivArray {
-  [self setSomethingArray:achivArray];
+- (void)setAchievementsArray:(NSArray *)achievementsArray {
+  [self setSomethingArray:achievementsArray];
 }
 
 /*
