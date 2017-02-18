@@ -1,11 +1,3 @@
-//
-//  NSString+PANSStringAdditions.m
-//  PartyApp
-//
-//  Created by Alfred Zien on 14/07/15.
-//  Copyright (c) 2015 Alfred Zien. All rights reserved.
-//
-
 #import "NSString+PANSStringAdditions.h"
 
 @implementation NSString (PANSStringAdditions)
