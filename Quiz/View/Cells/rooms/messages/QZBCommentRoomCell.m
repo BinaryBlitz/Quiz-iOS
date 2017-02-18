@@ -1,11 +1,3 @@
-//
-//  QZBCommentRoomCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/09/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBCommentRoomCell.h"
 #import <SLKTextView+SLKAdditions.h>
 #import "UIFont+QZBCustomFont.h"

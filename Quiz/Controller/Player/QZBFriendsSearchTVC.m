@@ -1,11 +1,3 @@
-//
-//  QZBFriendsSearchTVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 11/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBFriendsSearchTVC.h"
 #import "QZBServerManager.h"
 #import "QZBFriendsTVC+QZBFriendsCategory.h"

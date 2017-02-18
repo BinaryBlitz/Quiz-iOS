@@ -1,14 +1,6 @@
 //
 //  QZBSessionManager.m
 //  QZBQuizBattle
-//
-// Менеджер сессии, контроллер общается именно с менеджером сессии, а не с самой
-// сессией
-//
-//  Created by Andrey Mikhaylov on 17/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBSessionManager.h"
 #import "QZBUser.h"
 #import "QZBOnlineSessionWorker.h"

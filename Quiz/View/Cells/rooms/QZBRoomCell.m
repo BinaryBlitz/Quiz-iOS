@@ -1,11 +1,3 @@
-//
-//  QZBRoomCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 16/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRoomCell.h"
 #import "QZBRoom.h"
 #import "QZBUserWithTopic.h"

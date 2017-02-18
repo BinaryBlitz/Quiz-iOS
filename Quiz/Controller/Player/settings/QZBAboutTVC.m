@@ -1,11 +1,3 @@
-//
-//  QZBAboutTVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 20/07/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBAboutTVC.h"
 #import <MessageUI/MessageUI.h>
 

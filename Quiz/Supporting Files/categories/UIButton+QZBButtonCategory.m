@@ -1,11 +1,3 @@
-//
-//  UIButton+QZBButtonCategory.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UIButton+QZBButtonCategory.h"
 #import "UIColor+QZBProjectColors.h"
 

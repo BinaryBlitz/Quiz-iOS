@@ -1,11 +1,3 @@
-//
-//  QZBReportVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 12/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBReportVC.h"
 #import "UIButton+QZBButtonCategory.h"
 #import "QZBServerManager.h"

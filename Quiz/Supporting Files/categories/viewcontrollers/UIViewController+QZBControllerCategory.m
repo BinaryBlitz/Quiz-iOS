@@ -1,11 +1,3 @@
-//
-//  UIViewController+QZBControllerCategory.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 19/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBServerManager.h"
 #import "UIFont+QZBCustomFont.h"

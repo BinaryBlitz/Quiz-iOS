@@ -1,11 +1,3 @@
-//
-//  QZBRoomInvite.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 16/07/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRoomInvite.h"
 #import "NSDate+QZBDateCategory.h"
 

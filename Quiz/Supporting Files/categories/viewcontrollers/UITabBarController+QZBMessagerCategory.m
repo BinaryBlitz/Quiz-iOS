@@ -1,11 +1,3 @@
-//
-//  UIViewController+QZBMessagerCategory.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 12/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UITabBarController+QZBMessagerCategory.h"
 #import <TSMessage.h>
 #import <TSMessageView.h>

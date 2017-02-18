@@ -1,11 +1,3 @@
-//
-//  QZBUser.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 13/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBUserInSession.h"
 #import "QZBUser.h"
 #import "QZBQuestionWithUserAnswer.h"

@@ -1,11 +1,3 @@
-//
-//  QZBEndGameProgressCell.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 10/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBEndGameProgressCell.h"
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"

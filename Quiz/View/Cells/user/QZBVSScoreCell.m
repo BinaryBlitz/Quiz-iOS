@@ -1,11 +1,3 @@
-//
-//  QZBVSScoreLabel.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 27/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBVSScoreCell.h"
 #import "QZBAnotherUser.h"
 #import "QZBUserStatistic.h"

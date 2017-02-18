@@ -1,11 +1,3 @@
-//
-//  QZBOpponentBot.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 19/12/14.
-//  Copyright (c) 2014 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBOpponentBot.h"
 #import "QZBSessionManager.h"
 

@@ -1,11 +1,3 @@
-//
-//  UIColor+QZBProjectColors.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 08/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "UIColor+QZBProjectColors.h"
 
 @implementation UIColor (QZBProjectColors)

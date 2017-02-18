@@ -1,11 +1,3 @@
-//
-//  QZBFriendCell.h
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 05/03/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 //#import "QZBAnotherUser.h"
 #import "QZBUserProtocol.h"

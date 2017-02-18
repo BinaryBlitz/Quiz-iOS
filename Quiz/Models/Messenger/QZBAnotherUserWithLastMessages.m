@@ -1,11 +1,3 @@
-//
-//  QZBAnotherUserWithLastMessages.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 10/06/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBAnotherUserWithLastMessages.h"
 #import "QZBAnotherUser.h"
 #import "QZBUserWorker.h"

@@ -1,11 +1,3 @@
-//
-//  QZBEndGameVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 09/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBEndGameVC.h"
 #import "QZBEndGameMainCell.h"
 #import "QZBEndGamePointsCell.h"

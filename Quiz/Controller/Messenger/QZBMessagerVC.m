@@ -1,11 +1,3 @@
-//
-//  QZBMessagerVC.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 30/04/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBMessagerVC.h"
 #import "QZBCurrentUser.h"
 #import "QZBUser.h"

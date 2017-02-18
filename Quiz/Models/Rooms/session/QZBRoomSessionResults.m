@@ -1,11 +1,3 @@
-//
-//  QZBRoomSessionResults.m
-//  QZBQuizBattle
-//
-//  Created by Andrey Mikhaylov on 07/07/15.
-//  Copyright (c) 2015 Andrey Mikhaylov. All rights reserved.
-//
-
 #import "QZBRoomSessionResults.h"
 //#import "QZBRoom.h"
 //#import "QZBRoomWorker.h"
