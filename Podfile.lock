@@ -25,7 +25,7 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - DateTools (1.7.0)
   - DBCamera (2.4.1):
@@ -55,7 +55,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - LayerKit (0.24.0)
+  - LayerKit (0.25.0)
   - libPusher (1.6.2):
     - libPusher/Core (= 1.6.2)
   - libPusher/Core (1.6.2):
@@ -101,7 +101,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DBCamera: 7a4343a541e1264610f9f33176552b93170a843e
   DFImageManager: 37d75898009b05e49d13e36576677c76847b7d2a
@@ -112,7 +112,7 @@ SPEC CHECKSUMS:
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  LayerKit: ef028036b5623d2daf2f590c688fd790cd90340c
+  LayerKit: 2c92ab1325af22f9f62d00cd1e878903f87eb9b6
   libPusher: 21c6209fa84a829e963f1b2fe5bff34722f3f3f4
   LoremIpsum: 9029c55d36501b2ee0b05cc9ecda11d3a0479160
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
