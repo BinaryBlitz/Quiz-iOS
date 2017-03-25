@@ -302,7 +302,7 @@
                                                     <rect key="frame" x="27" y="45" width="322" height="59"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0p-pY-RAe">
-                                                            <rect key="frame" x="0.0" y="11" width="108" height="50"/>
+                                                            <rect key="frame" x="0.0" y="11" width="107" height="50"/>
                                                             <color key="backgroundColor" red="0.30663670310000002" green="0.30663670310000002" blue="0.30663670310000002" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="50" id="fPr-OO-Stz"/>
@@ -351,7 +351,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjd-0E-9rF">
-                                                            <rect key="frame" x="108" y="11" width="107" height="50"/>
+                                                            <rect key="frame" x="107" y="11" width="108" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="50" id="846-lH-BbG"/>
                                                             </constraints>
@@ -392,7 +392,7 @@
                                                             </variation>
                                                         </view>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hz-LY-Q7A">
-                                                            <rect key="frame" x="108" y="8" width="1" height="51"/>
+                                                            <rect key="frame" x="107" y="8" width="1" height="51"/>
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="1" id="cYh-K9-b3B"/>
@@ -787,7 +787,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l05-K9-Hrj">
-                                                    <rect key="frame" x="8" y="31.5" width="359" height="110.5"/>
+                                                    <rect key="frame" x="8" y="32" width="359" height="110"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="l05-K9-Hrj" secondAttribute="height" multiplier="192:59" id="XIF-0w-WII"/>
@@ -809,14 +809,14 @@
                                                     </variation>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-uw-Owd">
-                                                    <rect key="frame" x="6" y="31.5" width="363" height="110.5"/>
+                                                    <rect key="frame" x="6" y="32" width="363" height="110"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GDe-ic-Wpf" customClass="DFImageView">
-                                                            <rect key="frame" x="-2" y="-2" width="367" height="114.5"/>
+                                                            <rect key="frame" x="-2" y="-1" width="367" height="114"/>
                                                             <color key="backgroundColor" red="0.7752398175735683" green="0.77053552514702084" blue="0.79494160353535359" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YKE-yq-9xQ">
-                                                            <rect key="frame" x="0.0" y="76.5" width="363" height="34"/>
+                                                            <rect key="frame" x="0.0" y="77" width="363" height="34"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0zj-NG-8VN">
                                                                     <rect key="frame" x="24" y="0.0" width="331" height="34"/>
