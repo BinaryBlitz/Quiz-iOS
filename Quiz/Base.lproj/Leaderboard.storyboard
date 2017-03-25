@@ -14,9 +14,6 @@
         <array key="MuseoSansCyrl_1.otf">
             <string>MuseoSansCyrl-500</string>
         </array>
-        <array key="MuseoSansCyrl_2.otf">
-            <string>MuseoSansCyrl-700</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Rating MainVC-->
@@ -149,13 +146,13 @@
                                 <exclude reference="TCu-So-CdE"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="1dY-79-P3O"/>
+                                <exclude reference="E1O-UB-bXv"/>
+                                <exclude reference="Zpy-PN-FGv"/>
                                 <exclude reference="AbA-pl-ciw"/>
                                 <exclude reference="Cbv-6c-MyA"/>
                                 <exclude reference="XRz-7W-RCe"/>
                                 <exclude reference="YdZ-WH-udK"/>
-                                <exclude reference="1dY-79-P3O"/>
-                                <exclude reference="E1O-UB-bXv"/>
-                                <exclude reference="Zpy-PN-FGv"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -164,13 +161,13 @@
                                 <include reference="TCu-So-CdE"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="1dY-79-P3O"/>
+                                <include reference="E1O-UB-bXv"/>
+                                <include reference="Zpy-PN-FGv"/>
                                 <include reference="AbA-pl-ciw"/>
                                 <include reference="Cbv-6c-MyA"/>
                                 <include reference="XRz-7W-RCe"/>
                                 <include reference="YdZ-WH-udK"/>
-                                <include reference="1dY-79-P3O"/>
-                                <include reference="E1O-UB-bXv"/>
-                                <include reference="Zpy-PN-FGv"/>
                             </mask>
                         </variation>
                     </view>
@@ -179,9 +176,9 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title=" " id="fTc-dZ-idH"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SOr-fc-Dc8">
-                            <rect key="frame" x="142" y="7" width="92" height="30"/>
+                            <rect key="frame" x="141" y="7" width="93" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="20"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                             <state key="normal" title="Все темы">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -275,7 +272,7 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="По выбранной категории" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEM-Yx-JrJ">
                                                             <rect key="frame" x="8" y="0.0" width="311" height="63"/>
-                                                            <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -414,7 +411,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="eTm-Lp-sMa"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="heightClass=regular-widthClass=compact">
@@ -594,7 +591,7 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Общий рейтинг" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfl-bx-sV2">
                                                             <rect key="frame" x="20" y="8" width="299" height="48"/>
-                                                            <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -755,7 +752,7 @@
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="S2v-zC-SCH">
                                                                     <rect key="frame" x="24" y="0.0" width="331" height="34"/>
-                                                                    <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="22"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -950,7 +947,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="E2a-mk-XRf">
-                                            <rect key="frame" x="0.0" y="14" width="39" height="21.5"/>
+                                            <rect key="frame" x="0.0" y="14" width="39" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="37" id="Seu-TB-Ia9">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="39"/>
@@ -971,7 +968,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wzC-xg-vkX">
-                                            <rect key="frame" x="309" y="14" width="53" height="21.5"/>
+                                            <rect key="frame" x="309" y="14" width="53" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="57" id="sy3-dX-mbw">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="53"/>
@@ -992,7 +989,7 @@
                                             </variation>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="apj-dr-TjT">
-                                            <rect key="frame" x="39" y="4" width="40" height="39.5"/>
+                                            <rect key="frame" x="39" y="4" width="40" height="40"/>
                                             <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="Mvk-qH-MUa">
@@ -1102,21 +1099,21 @@
                                             <exclude reference="gTM-hb-bgx"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="sZy-Hn-pVa"/>
-                                            <exclude reference="BKJ-yR-wzF"/>
-                                            <exclude reference="HZ6-ea-nVw"/>
-                                            <exclude reference="GWT-KC-awf"/>
                                             <exclude reference="RJw-jM-XW1"/>
                                             <exclude reference="Uat-82-MPn"/>
                                             <exclude reference="Xqk-HY-FT8"/>
-                                            <exclude reference="0UV-P5-9nZ"/>
-                                            <exclude reference="dwf-0T-j6M"/>
-                                            <exclude reference="16j-cN-AE1"/>
                                             <exclude reference="3xj-1k-mLu"/>
                                             <exclude reference="qD4-iT-QjY"/>
+                                            <exclude reference="0UV-P5-9nZ"/>
+                                            <exclude reference="16j-cN-AE1"/>
+                                            <exclude reference="dwf-0T-j6M"/>
                                             <exclude reference="dXG-eT-WQ4"/>
                                             <exclude reference="kF3-hI-NhF"/>
                                             <exclude reference="rN8-zd-vJb"/>
+                                            <exclude reference="BKJ-yR-wzF"/>
+                                            <exclude reference="GWT-KC-awf"/>
+                                            <exclude reference="HZ6-ea-nVw"/>
+                                            <exclude reference="sZy-Hn-pVa"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -1128,21 +1125,21 @@
                                             <include reference="gTM-hb-bgx"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="sZy-Hn-pVa"/>
-                                            <include reference="BKJ-yR-wzF"/>
-                                            <include reference="HZ6-ea-nVw"/>
-                                            <include reference="GWT-KC-awf"/>
                                             <include reference="RJw-jM-XW1"/>
                                             <include reference="Uat-82-MPn"/>
                                             <include reference="Xqk-HY-FT8"/>
-                                            <include reference="0UV-P5-9nZ"/>
-                                            <include reference="dwf-0T-j6M"/>
-                                            <include reference="16j-cN-AE1"/>
                                             <include reference="3xj-1k-mLu"/>
                                             <include reference="qD4-iT-QjY"/>
+                                            <include reference="0UV-P5-9nZ"/>
+                                            <include reference="16j-cN-AE1"/>
+                                            <include reference="dwf-0T-j6M"/>
                                             <include reference="dXG-eT-WQ4"/>
                                             <include reference="kF3-hI-NhF"/>
                                             <include reference="rN8-zd-vJb"/>
+                                            <include reference="BKJ-yR-wzF"/>
+                                            <include reference="GWT-KC-awf"/>
+                                            <include reference="HZ6-ea-nVw"/>
+                                            <include reference="sZy-Hn-pVa"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -1162,7 +1159,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2I-sb-kzR">
-                                            <rect key="frame" x="8" y="0.0" width="359" height="33.5"/>
+                                            <rect key="frame" x="8" y="0.0" width="359" height="33"/>
                                             <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="41"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1181,9 +1178,9 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="AJU-3r-voj"/>
-                                            <exclude reference="gAm-aM-oMI"/>
-                                            <exclude reference="LzJ-Gr-65l"/>
                                             <exclude reference="L9S-Ye-6sj"/>
+                                            <exclude reference="LzJ-Gr-65l"/>
+                                            <exclude reference="gAm-aM-oMI"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -1192,9 +1189,9 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="AJU-3r-voj"/>
-                                            <include reference="gAm-aM-oMI"/>
-                                            <include reference="LzJ-Gr-65l"/>
                                             <include reference="L9S-Ye-6sj"/>
+                                            <include reference="LzJ-Gr-65l"/>
+                                            <include reference="gAm-aM-oMI"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -1207,7 +1204,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ay5-Hr-3Ns">
-                                            <rect key="frame" x="177.5" y="15" width="20" height="20"/>
+                                            <rect key="frame" x="178" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>

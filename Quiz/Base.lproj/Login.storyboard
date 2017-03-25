@@ -146,7 +146,7 @@
                                             <constraint firstAttribute="width" constant="280" id="IPm-h9-28c"/>
                                             <constraint firstAttribute="height" constant="30" id="qfR-pD-jOC"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="MuseoSansCyrl-700" family="Museo Sans Cyrl" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <state key="normal" title="ЗАБЫЛИ СВОЙ ПАРОЛЬ">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
