@@ -18,7 +18,6 @@ target 'Quiz' do
   pod 'DateTools', '~> 1.5'
   pod 'UAAppReviewManager', '~> 0.2'
   pod 'SlackTextViewController', '~> 1.6'
-  pod 'LoremIpsum', '~> 1.0'
   pod 'JSQSystemSoundPlayer', '~> 3.0'
 
   pod 'Fabric', '~> 1.5'

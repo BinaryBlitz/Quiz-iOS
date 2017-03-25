@@ -2123,55 +2123,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)DELETEBanParticipationWithID:(NSNumber *)participationID
                            onSuccess:(void (^)())succes
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-  //    NSDictionary *params = @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key };
-  //    NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", participationID];
-  //
-  //    [self.requestOperationManager DELETE:urlAsString
-  //        parameters:params
-  //        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-  //            DDLogCInfo(@"participation deleted ");
-  //            if (succes) {
-  //                succes();
-  //            }
-  //        }
-  //        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-  //            DDLogCError(@"deletion error %@", error);
-  //            if (failure) {
-  //                failure(error, operation.response.statusCode);
-  //            }
-  //        }];
 }
 
 - (void)GETChatForRoomWithID:(NSNumber *)roomID
                    onSuccess:(void (^)(NSArray *messages))success
                    onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-  //    [[[self class] sharedManager]
-  //        GETAllFriendsOfUserWithID:[QZBCurrentUser sharedInstance].user.userID
-  //        OnSuccess:^(NSArray *friends) {
-  //
-  //            NSMutableArray *comments = [NSMutableArray array];
-  //            for (QZBAnotherUser *user in friends) {
-  //                NSInteger words = (arc4random() % 40) + 1;
-  //                QZBComment *comment = [QZBComment new];
-  //                comment.username = user.name;
-  //                comment.owner = user;
-  //                comment.text = [LoremIpsum wordsWithNumber:words];
-  //                comment.timestamp = [LoremIpsum date];
-  //                [comments addObject:comment];
-  //            }
-  //            if (success) {
-  //                success([NSArray arrayWithArray:comments]);
-  //            }
-  //
-  //        }
-  //        onFailure:^(NSError *error, NSInteger statusCode) {
-  //
-  //            DDLogError(@"message error %@", error);
-  //
-  //            if (failure) {
-  //                failure(error, statusCode);
-  //            }
-  //        }];
 }
 
 - (void)POSTSendMessage:(NSString *)message

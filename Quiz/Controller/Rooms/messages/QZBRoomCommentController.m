@@ -134,7 +134,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
   if (sentences <= 1)
     sentences = 1;
 
-  [self editText:@"edit text"];  //[LoremIpsum sentencesWithNumber:sentences]];
+  [self editText:@"edit text"];
 }
 
 - (void)editLastMessage:(id)sender {
@@ -200,7 +200,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
   [self.textView refreshFirstResponder];
 
   QZBComment *message = [QZBComment new];
-  message.username = self.user.name;  //@"right button name";//[LoremIpsum name];
+  message.username = self.user.name;
   message.text = [self.textView.text copy];
   message.timestamp = [NSDate date];
   message.isSended = NO;
@@ -274,7 +274,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
   // edited text
 
   QZBComment *message = [QZBComment new];
-  message.username = @"Commit name";  //[LoremIpsum name];
+  message.username = @"Commit name";
   message.text = [self.textView.text copy];
   // message.timestamp = [NSDate date];
 
