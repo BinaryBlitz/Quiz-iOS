@@ -156,7 +156,7 @@
                                                     </variation>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arX-pO-sXA">
-                                                    <rect key="frame" x="154.5" y="63" width="174" height="28"/>
+                                                    <rect key="frame" x="155" y="63" width="174" height="28"/>
                                                     <color key="backgroundColor" red="0.12410053668580469" green="0.66274284221621749" blue="0.81526601314544678" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="206" id="L74-MN-fJ7">
@@ -268,7 +268,7 @@
                                                     <rect key="frame" x="17" y="43" width="342" height="120"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgl-ll-nFy">
-                                                            <rect key="frame" x="0.0" y="59.5" width="342" height="1"/>
+                                                            <rect key="frame" x="0.0" y="60" width="342" height="1"/>
                                                             <color key="backgroundColor" red="0.79607843140000001" green="0.81176470590000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="ZHJ-9c-1Pe"/>
@@ -285,12 +285,12 @@
                                                             </variation>
                                                         </view>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Новый пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jl-PZ-xxF" customClass="QZBPasswordTextField">
-                                                            <rect key="frame" x="8" y="8" width="315" height="43.5"/>
+                                                            <rect key="frame" x="8" y="8" width="315" height="44"/>
                                                             <fontDescription key="fontDescription" name="MuseoSansCyrl-500" family="Museo Sans Cyrl" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" secureTextEntry="YES"/>
                                                         </textField>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Новый пароль, еще раз" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KgQ-7L-CgI" customClass="QZBPasswordTextField">
-                                                            <rect key="frame" x="8" y="68.5" width="314" height="43.5"/>
+                                                            <rect key="frame" x="8" y="69" width="314" height="43"/>
                                                             <fontDescription key="fontDescription" name="MuseoSansCyrl-500" family="Museo Sans Cyrl" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                                                         </textField>
@@ -372,7 +372,7 @@
                                                     </variation>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74M-Of-vqS">
-                                                    <rect key="frame" x="71.5" y="171" width="232" height="44"/>
+                                                    <rect key="frame" x="72" y="171" width="232" height="44"/>
                                                     <color key="backgroundColor" red="0.15222091278771932" green="0.81291606853477583" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="9mz-W4-2bS"/>
@@ -474,7 +474,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Myl-jA-VBV">
-                                                    <rect key="frame" x="318" y="11.5" width="51" height="31"/>
+                                                    <rect key="frame" x="318" y="12" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="THo-Vf-l7N"/>
                                                         <constraint firstAttribute="width" constant="49" id="bhA-c0-CKs"/>
@@ -750,7 +750,7 @@
                                                     </variation>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 на 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unN-am-PBo">
-                                                    <rect key="frame" x="62.5" y="241" width="250" height="38"/>
+                                                    <rect key="frame" x="63" y="241" width="250" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="CvA-1U-dUV"/>
                                                         <constraint firstAttribute="width" constant="250" id="nHp-lX-SNH"/>
