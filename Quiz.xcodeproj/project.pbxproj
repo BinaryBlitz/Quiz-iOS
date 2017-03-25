@@ -192,6 +192,7 @@
 		372E7F5A1E868DE7000D88BD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372E7F591E868DE7000D88BD /* Settings.storyboard */; };
 		372E7F5D1E86909B000D88BD /* Store.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372E7F5B1E86909B000D88BD /* Store.storyboard */; };
 		372E7F5F1E86920A000D88BD /* Topics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372E7F5E1E86920A000D88BD /* Topics.storyboard */; };
+		372E7F621E869358000D88BD /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372E7F601E869358000D88BD /* Login.storyboard */; };
 		37D374451E58DA0A004CD3FC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D374441E58DA0A004CD3FC /* StoreKit.framework */; };
 		EB753FC3AADA095C04284F6A /* libPods-Quiz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DA7F0D46D192D4CF1A2E89 /* libPods-Quiz.a */; };
 /* End PBXBuildFile section */
@@ -558,6 +559,7 @@
 		372E7F591E868DE7000D88BD /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		372E7F5C1E86909B000D88BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Store.storyboard; sourceTree = "<group>"; };
 		372E7F5E1E86920A000D88BD /* Topics.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Topics.storyboard; sourceTree = "<group>"; };
+		372E7F611E869358000D88BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		37364F6B1E56410100EA3900 /* Quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quiz.entitlements; sourceTree = "<group>"; };
 		37D374441E58DA0A004CD3FC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		46B26F410645B8A84FB03459 /* libPods-QZBQuizBattle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QZBQuizBattle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -717,6 +719,7 @@
 				19CB508E1A3C32F000A3CD74 /* Views */,
 				191559D41A39CDD400462C93 /* Images.xcassets */,
 				199820AB1A44A039003AECB9 /* Main.storyboard */,
+				372E7F601E869358000D88BD /* Login.storyboard */,
 				372E7F5E1E86920A000D88BD /* Topics.storyboard */,
 				372E7F5B1E86909B000D88BD /* Store.storyboard */,
 				372E7F591E868DE7000D88BD /* Settings.storyboard */,
@@ -1664,6 +1667,7 @@
 				1944A1891B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf in Resources */,
 				19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */,
 				372E7F5D1E86909B000D88BD /* Store.storyboard in Resources */,
+				372E7F621E869358000D88BD /* Login.storyboard in Resources */,
 				1944A1881B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf in Resources */,
 				19D282CC1B8B64D4007213F9 /* timer.wav in Resources */,
 				372E7F5F1E86920A000D88BD /* Topics.storyboard in Resources */,
@@ -1962,6 +1966,14 @@
 				372E7F5C1E86909B000D88BD /* Base */,
 			);
 			name = Store.storyboard;
+			sourceTree = "<group>";
+		};
+		372E7F601E869358000D88BD /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				372E7F611E869358000D88BD /* Base */,
+			);
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
