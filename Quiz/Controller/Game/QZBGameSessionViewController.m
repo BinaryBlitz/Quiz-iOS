@@ -14,17 +14,13 @@
 #import "QZBTopicWorker.h"
 #import "QZBGameTopic.h"
 
-
-//DFImageManager
 #import <DFImageManager/DFImageManager.h>
 #import <DFImageManager/DFImageRequestOptions.h>
 #import <DFImageManager/DFURLImageFetcher.h>
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
-//#import <Crashlytics/Crashlytics.h>
 
-//rooms
-
+// Rooms
 #import "QZBRoomWorker.h"
 #import "QZBRoom.h"
 #import "QZBUserWithTopic.h"
@@ -435,12 +431,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   } else {
     return heigth - (width * 9.0) / 16.0;
   }
-
-
-  //return 30.0;
 }
 
-//показывает лейбл раунда
+// Round label
 - (void)showQuestionAndAnswers {
   [self prepareQuestion];
   __weak typeof(self) weakSelf = self;
@@ -458,7 +451,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     roundAsString = [roundAsString stringByAppendingString:stringToAppend];
   }
   self.roundLabel.text = roundAsString;
-  //self.title = roundAsString;
 
   [UIView animateWithDuration:0.3
                         delay:0

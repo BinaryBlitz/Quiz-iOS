@@ -1,6 +1,3 @@
-//build 1.1.1 25
-
-
 #define MR_LOGGING_ENABLED 0
 
 #import "AppDelegate.h"
@@ -16,9 +13,6 @@
 #import "QZBSessionManager.h"
 #import "UIViewController+QZBControllerCategory.h"
 #import <DDASLLogger.h>
-#import "QZBMessengerList.h"
-
-#import <LayerKit/LayerKit.h>
 
 #import "DDTTYLogger.h"
 
@@ -29,8 +23,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 @interface AppDelegate ()
-
-@property (nonatomic) LYRClient *layerClient;
 
 @end
 
@@ -76,17 +68,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       [self acceptChallengeWithDict:userInfo];
     } else if ([userInfo[@"action"] isEqualToString:@"ACHIEVEMENT"]) {
       [self showAchiewvmentWithDict:userInfo];
-    } /*else if ([userInfo[@"action"] isEqualToString:@"MESSAGE"]) {
-       [self showMessageWithDict:userInfo];
-       }*/ else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
-      // ROOM_INVITE
-      //  [self showRoomsWithDict:userInfo];
-    } else if (userInfo[@"layer"] && ![userInfo[@"layer"] isEqual:[NSNull null]]) {
-      [self showMessageWithDict:userInfo];
+    } else if ([userInfo[@"action"] isEqualToString:@"ROOM_INVITE"]) {
     }
   }
-
-  // [self presentRegistration];
 
   return YES;
 }
@@ -347,31 +331,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [notificationController showAlertAboutAchievmentWithDict:dict[@"badge"]];
     tabController.selectedIndex = 2;
   }
-}
-
-- (void)showMessageWithDict:(NSDictionary *)dict {
-  //    action = MESSAGE;
-  //    aps =     {
-  //        alert = fdfdf;
-  //    };
-  //    message =     {
-  //        content = fdfdf;
-  //        "created_at" = "2015-07-15T14:45:31.964Z";
-  //        "creator_id" = 7;
-  //        id = 8;
-  //        "player_id" = 64;
-  //        "updated_at" = "2015-07-15T14:45:31.964Z";
-  //    };
-  UITabBarController *tabController = (UITabBarController *) self.window.rootViewController;
-  tabController.selectedIndex = 1;
-
-  UINavigationController *nav = tabController.viewControllers[1];
-
-  [nav popToRootViewControllerAnimated:NO];
-  QZBMessengerList *messList =
-      [nav.storyboard instantiateViewControllerWithIdentifier:@"messagerList"];
-
-  [nav pushViewController:messList animated:YES];
 }
 
 - (void)showRoomsWithDict:(NSDictionary *)dict {

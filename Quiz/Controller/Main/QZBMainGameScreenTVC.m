@@ -21,8 +21,6 @@
 #import "UIFont+QZBCustomFont.h"
 #import <NSDate+DateTools.h>
 #import "NSDate+QZBDateCategory.h"
-#import "QZBLayerMessagerManager.h"
-#import <LayerKit/LayerKit.h>
 
 NSString *const QZBNewQuestionControllerSegueIdentifier =
     @"QZBNewQuestionControllerSegueIdentifier";
@@ -668,12 +666,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 - (void)reloadTopicsData {
   [[QZBServerManager sharedManager] GETTopicsForMainOnSuccess:^(NSDictionary *resultDict) {
 
-    //         @{@"favorite_topics":faveTopics,
-    //           @"friends_favorite_topics":friendsFaveTopics,
-    //           @"featured_topics":featuredTopics,
-    //           @"challenges":challenges
-    //           };
-
     [self.refreshControl endRefreshing];
 
     self.roomArray = resultDict[@"rooms"];
@@ -764,11 +756,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     }
     [self.workArray addObject:self.questionFakeArray];
 
-    [self authenticateLayer:resultDict];
-
     [self.mainTableView reloadData];
-    //  //   //   UITabBarController *tabController = self.tabBarController;
-    //  //   //   UITabBarItem *tabbarItem = tabController.tabBar.items[2];
 
   }                                                 onFailure:^(NSError *error, NSInteger statusCode) {
     [self.refreshControl endRefreshing];
@@ -780,21 +768,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
       [SVProgressHUD showErrorWithStatus:QZBNoInternetConnectionMessage];
     }
   }];
-}
-
-- (void)authenticateLayer:(id)result {
-  if ([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
-    [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-      NSLog(@"done mof %@", error);
-    }];
-    return;
-  }
-
-  if (result[@"needStartMessager"] && [result[@"needStartMessager"] boolValue]) {
-    [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-      NSLog(@"done mof %@", error);
-    }];
-  }
 }
 
 - (NSInteger)allCount {

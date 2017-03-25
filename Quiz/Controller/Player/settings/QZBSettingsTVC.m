@@ -1,8 +1,4 @@
 #import "QZBSettingsTVC.h"
-//#import "DBCameraViewController.h"
-//#import "DBCameraContainerViewController.h"
-//#import <DBCamera/DBCameraLibraryViewController.h>
-//#import <DBCamera/DBCameraSegueViewController.h>
 #import "QZBCurrentUser.h"
 #import "UIView+QZBShakeExtension.h"
 #import "QZBRegistrationAndLoginTextFieldBase.h"
@@ -17,9 +13,6 @@
 #import <JSQSystemSoundPlayer.h>
 #import <SVProgressHUD.h>
 #import "UIImageView+QZBImagePickerCategory.h"
-
-#import "QZBLayerMessagerManager.h"
-#import <LayerKit/LayerKit.h>
 
 @interface QZBSettingsTVC () <UITextFieldDelegate>
 @end
@@ -48,12 +41,6 @@
 
   [TSMessage setDefaultViewController:self.navigationController];
 
-  // self.userPicImageView.image = [QZBCurrentUser sharedInstance].user.userPic;
-//    if([QZBCurrentUser sharedInstance].user.imageURL){
-//        [self.userPicImageView setImageWithURL:[QZBCurrentUser sharedInstance].user.imageURL];
-//    }else{
-//        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-//    }
   self.userNameTextField.text = [QZBCurrentUser sharedInstance].user.name;
 
   self.nameTextFieldBackGroundView.layer.borderWidth = 1.0;
@@ -77,10 +64,6 @@
   self.tableView.backgroundColor = [UIColor colorWithWhite:250.0 / 255.0 alpha:1.0];
 
   self.soundSwitcher.on = [JSQSystemSoundPlayer sharedPlayer].on;
-
-
-
-  // [self.topCell addShadows];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -201,21 +184,6 @@ shouldChangeCharactersInRange:(NSRange)range
 
   [picker dismissViewControllerAnimated:YES completion:NULL];
 }
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-//
-//    if (buttonIndex == 0) {
-//        [self openLibrary];
-//    }else if (buttonIndex == 1) {
-//        //[self performSegueWithIdentifier:@"showCamera" sender:nil];
-//        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-//            [self openCamera];
-//        } else {
-//            [[[UIAlertView alloc] initWithTitle:@"Нет доступа к камере" message:@"Включите доступ к камере в настройках приложения" delegate:nil cancelButtonTitle:@"Ок" otherButtonTitles: nil] show];
-//        }
-//    }else if (buttonIndex == 2) {
-//        [self loadDeafaultPicture];
-//    }
-//}
 
 - (BOOL)checkPasswords {
   return [self checkFirstPassword] && [self checkSecondPassword];
@@ -352,32 +320,13 @@ shouldChangeCharactersInRange:(NSRange)range
 #pragma mark - actions
 
 - (IBAction)logOutAction:(UIButton *)sender {
-
-  if ([QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID) {
-
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[QZBLayerMessagerManager sharedInstance] logOutWithCompletion:^(BOOL success, NSError *error) {
-      [SVProgressHUD dismiss];
-      if (success) {
-
-        [self logOut];
-      } else {
-        [TSMessage showNotificationWithTitle:QZBNoInternetConnectionMessage
-                                    subtitle:nil
-                                        type:TSMessageNotificationTypeError];
-      }
-    }];
-  } else {
-    [self logOut];
-  }
+  [self logOut];
 }
 
 - (void)logOut {
   [[QZBCurrentUser sharedInstance] userLogOut];
 
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-    //  [self.navigationController popToRootViewControllerAnimated:NO];
 
     NSArray *controllers = self.tabBarController.viewControllers;
 
@@ -390,49 +339,9 @@ shouldChangeCharactersInRange:(NSRange)range
     self.tabBarController.selectedIndex = 2;
   });
 
-  //  self.tabBarController.selectedIndex = 2;
-
 
   [self performSegueWithIdentifier:@"logOutFromSettings" sender:nil];
 }
-//-(void)loadDeafaultPicture {
-//    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
-//    [self loadNewPic:image];
-//
-//}
-
-
-//-(void)loadNewPic:(UIImage *)image {
-//    if(image){
-//        
-//        UIImage *oldImg = [self.userPicImageView.image copy];
-//        [[QZBCurrentUser sharedInstance].user deleteImage];
-//        self.userPicImageView.image = image;
-//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-//        
-//        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-//        //self.userPicImageView.image = nil;
-//        [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-//            
-//            [SVProgressHUD dismiss];
-//            
-//            [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser
-//                                                          sharedInstance].user.imageURL];
-//            // self.userPicImageView.image = image;
-//            
-//            
-//            [[QZBCurrentUser sharedInstance].user updateUserFromServer];
-//            self.userPicImageView.image = image;
-//            
-//            
-//        } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-//            
-//            [SVProgressHUD showErrorWithStatus:@"Не удалось обновить картинку"];
-//            self.userPicImageView.image = oldImg;
-//        }];
-//    }
-//
-//}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;

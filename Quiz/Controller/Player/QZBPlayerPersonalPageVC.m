@@ -26,28 +26,12 @@
 #import "QZBFindFriendsCell.h"
 #import "QZBReportVC.h"
 #import "QZBFriendRequestManager.h"
-//#import <FSImageViewer.h>
-//#import <FSBasicImage.h>
-//#import <FSBasicImageSource.h>
 #import <DDLog.h>
 
-
-//messager
-#import "QZBMessengerVC.h"
-#import "QZBLayerMessagerManager.h"
-
-
-//dfiimage
-
-//image viewer
+// Image viewer
 #import "QZBImageViewerVC.h"
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-
-//#import "DBCameraViewController.h"
-//#import "DBCameraContainerViewController.h"
-//#import <DBCamera/DBCameraLibraryViewController.h>
-//#import <DBCamera/DBCameraSegueViewController.h>
 
 static NSString *playerIdentifier = @"playerСell";
 static NSString *friendsIdentifier = @"friendsCell";
@@ -71,7 +55,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id <QZBUserProtocol> user;
 @property (strong, nonatomic) NSArray *friends;  // QZBAnotherUser
-//@property (strong, nonatomic) NSArray *friendRequests;  // QZBAnotherUser
 @property (strong, nonatomic) NSArray *faveTopics;  // QZBGameTopic
 @property (assign, nonatomic) BOOL isCurrent;
 @property (assign, nonatomic) BOOL isFriend;
@@ -151,7 +134,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     [self updateCurentUser:self.user];
     self.isCurrent = YES;
     [[QZBFriendRequestManager sharedInstance] updateRequests];
-    self.unreadedCount = [[QZBLayerMessagerManager sharedInstance] unreadedCount];
   } else {
     self.isCurrent = NO;
   }
@@ -582,14 +564,6 @@ NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
     QZBReportVC *destVC = (QZBReportVC *) segue.destinationViewController;
 
     [destVC initWithUser:self.user];
-  } else if ([segue.identifier isEqualToString:@"pushMessager"]) {
-    QZBMessengerVC *destVC = (QZBMessengerVC *) segue.destinationViewController;
-
-    [destVC initWithUser:self.user];
-  } else if ([segue.identifier isEqualToString:@"showAllMessages"]) {
-    // QZBMessengerList *destVC = (QZBMessengerList *)segue.destinationViewController;
-    // [destVC setFriendsOwner:self.user andFriends:self.friends];
-
   } else if ([segue.identifier isEqualToString:QZBShowUserPicViewController]) {
     QZBImageViewerVC *imageViewController = segue.destinationViewController;
 
@@ -688,27 +662,7 @@ destructiveButtonTitle:nil
 }
 
 - (void)showUserPicFullScreen:(id)sender {
-  //  NSLog(@"tapped pic");
-
-//    FSBasicImage *firstPhoto = [[FSBasicImage alloc] initWithImageURL:self.user.imageURL name:nil];
-//    
-//    FSBasicImageSource *photoSource = [[FSBasicImageSource alloc] initWithImages:@[firstPhoto]];
-//    
-//    FSImageViewerViewController *imageViewController = [[FSImageViewerViewController alloc] initWithImageSource:photoSource];
-//    
-//    imageViewController.sharingDisabled = YES;
-
-//    QZBImageViewerVC *imageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"QZBImageViewerController"];
-//    
-//    [imageViewController configureWithUser:self.user];
-
   [self performSegueWithIdentifier:QZBShowUserPicViewController sender:nil];
-
-  //[self.navigationController pushViewController:imageViewController animated:YES];
-  // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imageViewController];
-  //[self.navigationController presentViewController:navigationController animated:YES completion:nil];
-
-
 }
 
 #pragma mark - support methods

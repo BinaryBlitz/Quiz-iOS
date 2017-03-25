@@ -52,9 +52,7 @@ PODS:
   - GPUImage (0.1.7)
   - HexColors (2.2.1)
   - JSBadgeView (1.4.1)
-  - JSQMessagesViewController (7.3.4):
-    - JSQSystemSoundPlayer (~> 2.0.1)
-  - JSQSystemSoundPlayer (2.0.1)
+  - JSQSystemSoundPlayer (3.0.0)
   - libPusher (1.6.3):
     - libPusher/Core (= 1.6.3)
   - libPusher/Core (1.6.3):
@@ -84,7 +82,7 @@ DEPENDENCIES:
   - DFImageManager/GIF (~> 0.3)
   - Fabric (~> 1.5)
   - JSBadgeView (~> 1.3)
-  - JSQMessagesViewController (~> 7.0)
+  - JSQSystemSoundPlayer (~> 3.0)
   - libPusher (~> 1.6)
   - LoremIpsum (~> 1.0)
   - MagicalRecord (~> 2.2)
@@ -108,8 +106,7 @@ SPEC CHECKSUMS:
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
-  JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
-  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  JSQSystemSoundPlayer: d4878a52611c97c82eff097d0c7dd5afad73457b
   libPusher: b7fcf16e2db51c37915613652311d66065743ead
   LoremIpsum: 9029c55d36501b2ee0b05cc9ecda11d3a0479160
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
@@ -122,6 +119,6 @@ SPEC CHECKSUMS:
   UAProgressView: ce49aee47c14df6dc372f6fd57852f570ca97e6b
   VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
 
-PODFILE CHECKSUM: 44cf7b451cf91a2033cf5c2f0f51dac44d9a32e9
+PODFILE CHECKSUM: c78edc0a72691e26fab287b2cfe7594b3087c29c
 
 COCOAPODS: 1.2.0
