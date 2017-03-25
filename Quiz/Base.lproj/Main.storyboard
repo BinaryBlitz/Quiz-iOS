@@ -2111,7 +2111,7 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="biF-8G-Iei" kind="modal" modalTransitionStyle="coverVertical" id="n61-gk-std"/>
+                                                    <segue destination="biF-8G-Iei" kind="presentation" id="n61-gk-std"/>
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ab6-av-YM6">
@@ -2183,7 +2183,7 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="Ijx-VL-fC1" kind="modal" modalTransitionStyle="coverVertical" id="EaB-GZ-olI"/>
+                                                    <segue destination="Ijx-VL-fC1" kind="presentation" id="EaB-GZ-olI"/>
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="registerIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xxw-Zh-KB4">
@@ -2444,7 +2444,7 @@
                         <outlet property="enterButton" destination="GOV-Am-3tj" id="pTj-ch-x0q"/>
                         <outlet property="registrationButton" destination="npd-jS-N4Z" id="071-K4-PMl"/>
                         <outlet property="vkButton" destination="diK-sd-Ftr" id="tIc-OO-o4s"/>
-                        <segue destination="XNl-Ly-uve" kind="modal" identifier="enterUsernameSegue" id="71l-D3-kbf"/>
+                        <segue destination="XNl-Ly-uve" kind="presentation" identifier="enterUsernameSegue" id="71l-D3-kbf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JUL-8O-HXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3069,7 +3069,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rkS-Qf-oFx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7026" y="-1576"/>
+            <point key="canvasLocation" x="6565" y="-1577"/>
         </scene>
         <!--New Question Controller-->
         <scene sceneID="dNF-KV-dyj">
@@ -4740,7 +4740,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bch-i4-dUz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6012" y="-622"/>
+            <point key="canvasLocation" x="5959" y="-623"/>
         </scene>
         <!--Friends Chooser Rooms Controller-->
         <scene sceneID="Dwq-1O-Kr9">
@@ -4853,7 +4853,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZK-dd-cQl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7025" y="-622"/>
+            <point key="canvasLocation" x="6565" y="-624"/>
         </scene>
         <!--Room ResultTVC-->
         <scene sceneID="sEU-Zs-2ac">
@@ -5006,7 +5006,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TPO-t5-PKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6871" y="-3528"/>
+            <point key="canvasLocation" x="6565" y="-3529"/>
         </scene>
         <!--Question ReportTVC-->
         <scene sceneID="iHg-nc-Q39">
@@ -5489,7 +5489,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybX-Ze-P6G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7734" y="-3528"/>
+            <point key="canvasLocation" x="7171" y="-3529"/>
         </scene>
         <!--Main Game ScreenTVC-->
         <scene sceneID="anL-Ef-AGl">
@@ -7813,7 +7813,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pk6-YA-tpX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6012" y="-1576"/>
+            <point key="canvasLocation" x="5959" y="-1577"/>
         </scene>
         <!--Settings-->
         <scene sceneID="pth-Ay-Hz7">
@@ -7821,7 +7821,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="BIw-Y1-lUN" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbc-LN-YLo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-407" y="-295"/>
+            <point key="canvasLocation" x="1165" y="-3352"/>
         </scene>
         <!--UINavigationController-fNL-rx-eLG-->
         <scene sceneID="6yV-Rw-Ozr">
@@ -7847,7 +7847,7 @@
                 <viewControllerPlaceholder storyboardName="Topics" referencedIdentifier="UIViewController-V4h-ET-EfJ" id="6bQ-la-yUp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nu6-f4-d19" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-326" y="-377"/>
+            <point key="canvasLocation" x="1228" y="-3433"/>
         </scene>
         <!--UINavigationController-W5J-rM-Niv-->
         <scene sceneID="euv-ga-fXs">
@@ -7925,7 +7925,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="UIViewController-Pad-5T-GT9" storyboardName="Leaderboard" referencedIdentifier="UIViewController-Pad-5T-GT9" id="rMH-in-wiS" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOh-TQ-uhw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2421" y="-1864"/>
+            <point key="canvasLocation" x="2568" y="-1897"/>
         </scene>
     </scenes>
     <resources>
@@ -7944,6 +7944,6 @@
         <segue reference="LYm-7Y-ok6"/>
         <segue reference="49e-sg-JRM"/>
         <segue reference="efK-D3-R2p"/>
-        <segue reference="eMg-QT-55k"/>
+        <segue reference="lRt-uN-MQs"/>
     </inferredMetricsTieBreakers>
 </document>

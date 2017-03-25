@@ -1015,7 +1015,7 @@
                     <connections>
                         <outlet property="mainTableView" destination="zem-Bb-nP2" id="XIv-td-yg8"/>
                         <segue destination="ebo-LZ-BvI" kind="show" identifier="showTopicsSegue" id="XwB-vy-41S"/>
-                        <segue destination="ZGc-9l-5Kd" kind="modal" identifier="logOutUnauthorized" modalTransitionStyle="coverVertical" id="1oA-Co-JGY"/>
+                        <segue destination="ZGc-9l-5Kd" kind="presentation" identifier="logOutUnauthorized" id="1oA-Co-JGY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BW3-4X-fFm" userLabel="First Responder" sceneMemberID="firstResponder"/>

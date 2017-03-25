@@ -702,7 +702,7 @@
                         <outlet property="userNewPasswordAgainTextField" destination="KgQ-7L-CgI" id="gRT-dp-YYE"/>
                         <outlet property="userNewPasswordTextField" destination="6Jl-PZ-xxF" id="Dhb-HV-eyT"/>
                         <outlet property="userPicImageView" destination="ZPh-cg-XPb" id="g2A-bo-U4L"/>
-                        <segue destination="RXt-Uh-t2C" kind="modal" identifier="logOutFromSettings" modalTransitionStyle="coverVertical" id="0Hm-fV-GlK"/>
+                        <segue destination="RXt-Uh-t2C" kind="presentation" identifier="logOutFromSettings" id="0Hm-fV-GlK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvk-sE-V3u" userLabel="First Responder" sceneMemberID="firstResponder"/>
