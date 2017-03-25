@@ -1387,7 +1387,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
              toTopArray:(NSMutableArray *)usersTop
            playerRating:(NSMutableArray *)usersPlayer {
   NSArray *usersTopArray = responseObject[@"rankings"];
-  //NSArray *usersPlayerArray = responseObject[@"player_rankings"];
 
   NSInteger playerPosition = 0;
   if (![responseObject[@"position"] isEqual:[NSNull null]]) {
@@ -1431,8 +1430,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
           @"token": token,
           @"platform": @"ios"}
       };
-
-  //[self.requestOperationManager ]
 
   [self.requestOperationManager POST:@"device_tokens"
                           parameters:params
@@ -1653,59 +1650,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
 #pragma mark - messager notifications
 
-//- (void)POSTSendNotificationAboutMessage:(NSString *)message
-//                            toUserWithID:(NSNumber *)userID
-//                               onSuccess:(void (^)())success
-//                               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-//    //    NSDictionary *params =
-//    //        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-//    //           @"message" : message };
-//    NSDictionary *params = @{
-//        @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-//        @"message" : @{@"content" : message, @"player_id" : userID}
-//    };
-//
-//    NSString *urlString = [NSString stringWithFormat:@"messages"];
-//    [self.requestOperationManager POST:urlString
-//        parameters:params
-//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//            NSLog(@"succes");
-//            if (success) {
-//                success();
-//            }
-//        }
-//        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//
-//            NSLog(@"message error %@", error);
-//            if (failure) {
-//                failure(error, operation.response.statusCode);
-//            }
-//
-//        }];
-//}
-//
-//- (void)GETAllMessagesForUserId:(NSNumber *)userID
-//                      onSuccess:(void (^)(NSArray *messages))success
-//                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-//    NSDictionary *params =
-//        @{ @"token" : [QZBCurrentUser sharedInstance].user.api_key,
-//           @"player_id" : userID };
-//
-//    //  NSString *urlString = [NSString stringWithFormat:@"players/%@/notify", userID];
-//
-//    [self.requestOperationManager GET:@"messages"
-//        parameters:params
-//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//            DDLogCVerbose(@"all nessages %@", responseObject);
-//
-//        }
-//        failure:^(AFHTTPRequestOperation *operation, NSError *error){
-//
-//        }];
-//}
-
 - (void)POSTAuthenticateLayerWithNonce:(NSString *)nonce
                               callback:(void (^)(NSString *token, NSError *error))callback {
   NSDictionary *params =
@@ -1745,18 +1689,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
                               DDLogCVerbose(@"%@", responseObject);
-
-                              //            NSMutableArray *tmpArr = [NSMutableArray array];
-                              //
-                              //            for (NSDictionary *d in responseObject) {
-                              //                QZBRoom *room = [[QZBRoom alloc] initWithDictionary:d];
-                              //                [tmpArr addObject:room];
-                              //            }
-                              //
-                              //            NSSortDescriptor *sortDescriptor =
-                              //                [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
-                              //            NSSortDescriptor *friendOnlySortDescriptor = [[NSSortDescriptor alloc]
-                              //            initWithKey:@"isFriendOnly" ascending:NO];
 
                               NSArray *resultArr = [self parseRoomsFromArray:responseObject];
 
@@ -1865,7 +1797,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
                                DDLogCVerbose(@"join room response %@", responseObject);
-                               // QZBRoom *r = [[QZBRoom alloc] initWithDictionary:responseObject];
 
                                if (success) {
                                  success();
@@ -2019,12 +1950,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
           @"player_id": userID
       }
   };
-  //    {
-  //        "invite": {
-  //            "room_id": "1",
-  //            "player_id": "2"
-  //        }
-  //    }
 
   NSString *urlAsString = [NSString stringWithFormat:@"invites"];
 
