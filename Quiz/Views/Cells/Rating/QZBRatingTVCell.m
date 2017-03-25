@@ -2,7 +2,7 @@
 #import "QZBUserInRating.h"
 #import "QZBUser.h"
 #import "QZBCurrentUser.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @interface QZBRatingTVCell ()
 
@@ -14,6 +14,8 @@
 @implementation QZBRatingTVCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
 }
 
@@ -28,12 +30,10 @@
   self.user = user;
 
   if ([user.userID isEqual:[QZBCurrentUser sharedInstance].user.userID]) {
-    NSMutableAttributedString *atrName =
-        [[NSMutableAttributedString alloc] initWithString:user.name];
-    UIFont *font = [UIFont boldMuseoFontOfSize:18];
-    [atrName addAttribute:NSFontAttributeName
-                    value:font
-                    range:NSMakeRange(0, [atrName length])];
+    NSMutableAttributedString *atrName = [[NSMutableAttributedString alloc] initWithString:user.name];
+
+    UIFont *font = [UIFont boldSystemFontOfSize:18];
+    [atrName addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [atrName length])];
     self.name.attributedText = atrName;
   } else {
     self.name.text = user.name;

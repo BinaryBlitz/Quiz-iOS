@@ -1,6 +1,6 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBServerManager.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 @implementation UIViewController (QZBControllerCategory)
@@ -9,7 +9,7 @@
 
 //    [self.navigationController.navigationBar setTitleTextAttributes:
 //     [NSDictionary dictionaryWithObjectsAndKeys:
-//      [UIFont boldMuseoFontOfSize:21],
+//      [UIFont boldSystemFontOfSize:21],
 //      NSFontAttributeName, nil]];
 
   //color = [UIColor brightRedColor];
@@ -34,7 +34,7 @@
 
   self.navigationController.navigationBar.translucent = YES;
 
-  UIFont *font = [UIFont boldMuseoFontOfSize:20];
+  UIFont *font = [UIFont boldSystemFontOfSize:20];
   [self.navigationController.navigationBar setTitleTextAttributes:@{
       NSForegroundColorAttributeName: [UIColor whiteColor],
       NSFontAttributeName: font

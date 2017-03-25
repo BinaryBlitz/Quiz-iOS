@@ -7,7 +7,7 @@
 #import "QZBNewQuestionInputCell.h"
 #import "QZBNewQuestionAnswerCell.h"
 #import "QZBTopicTableViewCell.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import "QZBGameTopic.h"
 
 NSString *const QZBNewQuestionInputCellIdentifier = @"QZBNewQuestionInputCellIdentifier";
@@ -114,9 +114,9 @@ static NSInteger answerOffset = 2;
     NSString *placeholder = @"Ответ";
     if (cell.answerTextField.tag == 0) {
       placeholder = [placeholder stringByAppendingString:@" (правильный)"];
-      cell.answerTextField.font = [UIFont boldMuseoFontOfSize:14.0];
+      cell.answerTextField.font = [UIFont boldSystemFontOfSize:14.0];
     } else {
-      cell.answerTextField.font = [UIFont museoFontOfSize:14.0];
+      cell.answerTextField.font = [UIFont systemFontOfSize:14.0];
     }
     cell.answerTextField.delegate = self;
     cell.answerTextField.placeholder = placeholder;

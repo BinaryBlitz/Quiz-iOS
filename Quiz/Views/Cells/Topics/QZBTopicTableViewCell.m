@@ -3,7 +3,7 @@
 #import "UIColor+QZBProjectColors.h"
 #import "UIColor+QZBColorGenerator.h"
 #import "NSString+QZBStringCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBCategory.h"
@@ -110,7 +110,7 @@
     _centralLabel.textAlignment = NSTextAlignmentCenter;
     _centralLabel.adjustsFontSizeToFitWidth = YES;
 
-    _centralLabel.font = [UIFont museoFontOfSize:15];
+    _centralLabel.font = [UIFont systemFontOfSize:15];
   }
   return _centralLabel;
 }

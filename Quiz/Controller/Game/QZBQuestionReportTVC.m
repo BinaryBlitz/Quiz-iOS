@@ -20,7 +20,7 @@
 #import <SVProgressHUD.h>
 
 #import "UIViewController+QZBControllerCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 NSString *const QZBQuestionReportTextCellIdentifier = @"QZBQuestionCellIdentifier";
 NSString *const QZBQuestionReportImageCellIdentifier = @"QZBQuestionReportImageCellIdentifier";
@@ -184,7 +184,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 
   label.textAlignment = NSTextAlignmentCenter;
   label.textColor = [UIColor whiteColor];
-  label.font = [UIFont boldMuseoFontOfSize:20];
+  label.font = [UIFont boldSystemFontOfSize:20];
 
   [view addSubview:label];
 

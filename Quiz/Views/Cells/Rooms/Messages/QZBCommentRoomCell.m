@@ -1,5 +1,5 @@
 #import "QZBCommentRoomCell.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import <DFImageManager/DFImageView.h>
 
 @implementation QZBCommentRoomCell
@@ -91,7 +91,7 @@
     _titleLabel.userInteractionEnabled = NO;
     _titleLabel.numberOfLines = 0;
     _titleLabel.textColor = [UIColor grayColor];
-    _titleLabel.font = [UIFont boldMuseoFontOfSize:[QZBCommentRoomCell defaultFontSize]];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:[QZBCommentRoomCell defaultFontSize]];
   }
   return _titleLabel;
 }
@@ -104,7 +104,7 @@
     _bodyLabel.userInteractionEnabled = NO;
     _bodyLabel.numberOfLines = 0;
     _bodyLabel.textColor = [UIColor darkGrayColor];
-    _bodyLabel.font = [UIFont museoFontOfSize:[QZBCommentRoomCell defaultFontSize]];
+    _bodyLabel.font = [UIFont systemFontOfSize:[QZBCommentRoomCell defaultFontSize]];
   }
   return _bodyLabel;
 }
@@ -145,7 +145,7 @@
     _timeAgoLabel.numberOfLines = 1;
     _timeAgoLabel.textAlignment = NSTextAlignmentRight;
     _timeAgoLabel.textColor = [UIColor colorWithWhite:128.0 / 255.0 alpha:1.0];
-    _timeAgoLabel.font = [UIFont museoFontOfSize:[QZBCommentRoomCell defaultFontSize]];
+    _timeAgoLabel.font = [UIFont systemFontOfSize:[QZBCommentRoomCell defaultFontSize]];
     _timeAgoLabel.text = @"10:10";
   }
 

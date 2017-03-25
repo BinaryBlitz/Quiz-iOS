@@ -2,7 +2,7 @@
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "NSObject+QZBSpecialCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @interface QZBEndGameProgressCell ()
 
@@ -16,9 +16,6 @@
 
 @implementation QZBEndGameProgressCell
 
-- (void)awakeFromNib {
-}
-
 - (void)initCell {
   CGRect r = CGRectMake(0,
       0,
@@ -27,7 +24,7 @@
 
   self.centralLabel = [[UILabel alloc] initWithFrame:r];
 
-  self.centralLabel.font = [UIFont boldMuseoFontOfSize:40];
+  self.centralLabel.font = [UIFont boldSystemFontOfSize:40];
   self.centralLabel.textColor = [UIColor whiteColor];
   self.centralLabel.adjustsFontSizeToFitWidth = YES;
   self.centralLabel.textAlignment = NSTextAlignmentCenter;
@@ -114,11 +111,8 @@
       initWithString:string];
 
   NSRange r = {.location = string.length - 7, .length = 7};
-  // NSDictionary *atributes = @{};
 
-  [attrString addAttribute:NSFontAttributeName
-                     value:[UIFont museoFontOfSize:12.0]
-                     range:r];
+  [attrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0] range:r];
 
   return attrString;
 }

@@ -5,7 +5,7 @@
 #import "QZBServerManager.h"
 #import "QZBPlayerPersonalPageVC.h"
 #import "UIViewController+QZBControllerCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import <DDLog.h>
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -36,7 +36,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                      action:@selector(typeChangedAction:)
                            forControlEvents:UIControlEventValueChanged];
 
-  UIFont *font = [UIFont boldMuseoFontOfSize:14.0f];
+  UIFont *font = [UIFont boldSystemFontOfSize:14.0f];
   NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
   [self.typeChooserSegmentControl setTitleTextAttributes:attributes
                                                 forState:UIControlStateNormal];

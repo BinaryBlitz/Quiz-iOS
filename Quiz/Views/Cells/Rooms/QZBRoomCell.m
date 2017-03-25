@@ -3,7 +3,7 @@
 #import "QZBUserWithTopic.h"
 #import "QZBGameTopic.h"
 #import "UIColor+QZBProjectColors.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @implementation QZBRoomCell
 
@@ -51,8 +51,8 @@
 
   NSMutableAttributedString *maxCountAttrString = [[NSMutableAttributedString alloc] initWithString:maxCountString];
 
-  UIFont *museoFontBig = [UIFont museoFontOfSize:30];
-  UIFont *museoFontSmall = [UIFont museoFontOfSize:20];
+  UIFont *museoFontBig = [UIFont systemFontOfSize:30];
+  UIFont *museoFontSmall = [UIFont systemFontOfSize:20];
 
   NSRange r = NSMakeRange(0, 1);
 

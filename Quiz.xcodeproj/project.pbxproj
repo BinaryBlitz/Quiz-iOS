@@ -69,17 +69,6 @@
 		19446A711A9E247C005BB485 /* QZBQuizIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A701A9E247C005BB485 /* QZBQuizIAPHelper.m */; };
 		19446A781A9E3693005BB485 /* QZBStoreBoosterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */; };
 		1944A1721B0F39110095C600 /* QZBFriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944A1711B0F39110095C600 /* QZBFriendRequestCell.m */; };
-		1944A1831B1098A40095C600 /* MuseoSansCyrl_0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A1791B1098A40095C600 /* MuseoSansCyrl_0.otf */; };
-		1944A1841B1098A40095C600 /* MuseoSansCyrl_1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17A1B1098A40095C600 /* MuseoSansCyrl_1.otf */; };
-		1944A1851B1098A40095C600 /* MuseoSansCyrl_2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17B1B1098A40095C600 /* MuseoSansCyrl_2.otf */; };
-		1944A1861B1098A40095C600 /* MuseoSansCyrl_3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17C1B1098A40095C600 /* MuseoSansCyrl_3.otf */; };
-		1944A1871B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17D1B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf */; };
-		1944A1881B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17E1B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf */; };
-		1944A1891B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A17F1B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf */; };
-		1944A18A1B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A1801B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf */; };
-		1944A18B1B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A1811B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf */; };
-		1944A18C1B1098A40095C600 /* MuseoSansCyrl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1944A1821B1098A40095C600 /* MuseoSansCyrl.otf */; };
-		1944A1921B109F0B0095C600 /* UIFont+QZBCustomFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944A1911B109F0B0095C600 /* UIFont+QZBCustomFont.m */; };
 		1946058C1AB4977E0023BE0D /* QZBStoreListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */; };
 		194BD6B21BB15F5500DBDC2C /* QZBGameTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 194BD6B11BB15F5500DBDC2C /* QZBGameTopic.m */; };
 		194E989C1AACADF4003F50DB /* UIColor+QZBProjectColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */; };
@@ -332,18 +321,6 @@
 		19446A771A9E3693005BB485 /* QZBStoreBoosterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreBoosterCell.m; sourceTree = "<group>"; };
 		1944A1701B0F39110095C600 /* QZBFriendRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFriendRequestCell.h; sourceTree = "<group>"; };
 		1944A1711B0F39110095C600 /* QZBFriendRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFriendRequestCell.m; sourceTree = "<group>"; };
-		1944A1791B1098A40095C600 /* MuseoSansCyrl_0.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_0.otf; sourceTree = "<group>"; };
-		1944A17A1B1098A40095C600 /* MuseoSansCyrl_1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_1.otf; sourceTree = "<group>"; };
-		1944A17B1B1098A40095C600 /* MuseoSansCyrl_2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_2.otf; sourceTree = "<group>"; };
-		1944A17C1B1098A40095C600 /* MuseoSansCyrl_3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_3.otf; sourceTree = "<group>"; };
-		1944A17D1B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_100_Italic.otf; sourceTree = "<group>"; };
-		1944A17E1B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_300_Italic.otf; sourceTree = "<group>"; };
-		1944A17F1B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_500_Italic.otf; sourceTree = "<group>"; };
-		1944A1801B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_700_Italic.otf; sourceTree = "<group>"; };
-		1944A1811B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl_900_Italic.otf; sourceTree = "<group>"; };
-		1944A1821B1098A40095C600 /* MuseoSansCyrl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MuseoSansCyrl.otf; sourceTree = "<group>"; };
-		1944A1901B109F0B0095C600 /* UIFont+QZBCustomFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+QZBCustomFont.h"; sourceTree = "<group>"; };
-		1944A1911B109F0B0095C600 /* UIFont+QZBCustomFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+QZBCustomFont.m"; sourceTree = "<group>"; };
 		1946058A1AB4977E0023BE0D /* QZBStoreListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBStoreListTVC.h; sourceTree = "<group>"; };
 		1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBStoreListTVC.m; sourceTree = "<group>"; };
 		194BD6B01BB15F5500DBDC2C /* QZBGameTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBGameTopic.h; sourceTree = "<group>"; };
@@ -772,7 +749,6 @@
 		191E12E31A8BD3A700AFB829 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1944A1761B1082740095C600 /* Fonts */,
 				191E46681B0279170037963F /* Sounds */,
 			);
 			path = Resources;
@@ -926,8 +902,6 @@
 				196472631AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.m */,
 				1936D7341AD42C12007B6368 /* UIButton+QZBButtonCategory.h */,
 				1936D7351AD42C12007B6368 /* UIButton+QZBButtonCategory.m */,
-				1944A1901B109F0B0095C600 /* UIFont+QZBCustomFont.h */,
-				1944A1911B109F0B0095C600 /* UIFont+QZBCustomFont.m */,
 				191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */,
 				191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */,
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
@@ -1016,23 +990,6 @@
 				19CB509F1A3C51CA00A3CD74 /* QZBUser.m */,
 			);
 			path = "current user";
-			sourceTree = "<group>";
-		};
-		1944A1761B1082740095C600 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				1944A1821B1098A40095C600 /* MuseoSansCyrl.otf */,
-				1944A1791B1098A40095C600 /* MuseoSansCyrl_0.otf */,
-				1944A17A1B1098A40095C600 /* MuseoSansCyrl_1.otf */,
-				1944A17D1B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf */,
-				1944A17B1B1098A40095C600 /* MuseoSansCyrl_2.otf */,
-				1944A17C1B1098A40095C600 /* MuseoSansCyrl_3.otf */,
-				1944A17E1B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf */,
-				1944A17F1B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf */,
-				1944A1801B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf */,
-				1944A1811B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		195EA0A61AD52093000C4341 /* Libraries */ = {
@@ -1664,31 +1621,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				19D282C71B8B5E99007213F9 /* win.wav in Resources */,
-				1944A1871B1098A40095C600 /* MuseoSansCyrl_100_Italic.otf in Resources */,
 				372E7F6A1E869880000D88BD /* Leaderboard.storyboard in Resources */,
-				1944A1841B1098A40095C600 /* MuseoSansCyrl_1.otf in Resources */,
-				1944A1831B1098A40095C600 /* MuseoSansCyrl_0.otf in Resources */,
 				199820AD1A44A039003AECB9 /* Main.storyboard in Resources */,
-				1944A1891B1098A40095C600 /* MuseoSansCyrl_500_Italic.otf in Resources */,
 				19C78A3D1B468B2500B46372 /* QZBRoomUsersView.xib in Resources */,
 				372E7F5D1E86909B000D88BD /* Store.storyboard in Resources */,
 				372E7F621E869358000D88BD /* Login.storyboard in Resources */,
-				1944A1881B1098A40095C600 /* MuseoSansCyrl_300_Italic.otf in Resources */,
 				372E7F671E869791000D88BD /* Registration.storyboard in Resources */,
 				19D282CC1B8B64D4007213F9 /* timer.wav in Resources */,
 				372E7F5F1E86920A000D88BD /* Topics.storyboard in Resources */,
 				19D282C61B8B5E99007213F9 /* lose.wav in Resources */,
 				19D282CB1B8B64D4007213F9 /* correct.wav in Resources */,
 				191559D81A39CDD400462C93 /* LaunchScreen.xib in Resources */,
-				1944A1851B1098A40095C600 /* MuseoSansCyrl_2.otf in Resources */,
 				372E7F5A1E868DE7000D88BD /* Settings.storyboard in Resources */,
-				1944A18B1B1098A40095C600 /* MuseoSansCyrl_900_Italic.otf in Resources */,
 				372E7F641E869583000D88BD /* Profile.storyboard in Resources */,
-				1944A18C1B1098A40095C600 /* MuseoSansCyrl.otf in Resources */,
-				1944A1861B1098A40095C600 /* MuseoSansCyrl_3.otf in Resources */,
 				191559D51A39CDD400462C93 /* Images.xcassets in Resources */,
 				192311C71BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib in Resources */,
-				1944A18A1B1098A40095C600 /* MuseoSansCyrl_700_Italic.otf in Resources */,
 				1989C6C71B74BB5A001ECF3A /* melody.wav in Resources */,
 				19D282CD1B8B64D4007213F9 /* wrong.wav in Resources */,
 			);
@@ -1799,7 +1746,6 @@
 				195EA0B11AD52DE7000C4341 /* QZBCategory.m in Sources */,
 				19E3445B1A7A2117000D0EDB /* QZBOnlineSessionWorker.m in Sources */,
 				19A127791AB9EA1C009075AD /* QZBChallengeCell.m in Sources */,
-				1944A1921B109F0B0095C600 /* UIFont+QZBCustomFont.m in Sources */,
 				19CB50921A3C33B000A3CD74 /* QZBQuestion.m in Sources */,
 				19DEA85F1A855A1900E610DB /* QZBRatingPageVC.m in Sources */,
 				19CFA1971B5D86ED00DC8C43 /* QZBAboutTVC.m in Sources */,

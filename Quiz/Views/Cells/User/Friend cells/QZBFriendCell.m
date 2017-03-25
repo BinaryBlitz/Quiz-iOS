@@ -1,6 +1,6 @@
 #import "QZBFriendCell.h"
 #import "QZBAnotherUser.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import "UIColor+QZBProjectColors.h"
 
 @interface QZBFriendCell ()
@@ -32,7 +32,7 @@
     }
   }
 
-  self.nameLabel.font = [UIFont museoFontOfSize:17.0];
+  self.nameLabel.font = [UIFont systemFontOfSize:17.0];
 }
 
 @end

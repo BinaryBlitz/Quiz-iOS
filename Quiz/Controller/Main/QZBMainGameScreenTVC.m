@@ -18,7 +18,7 @@
 #import "QZBRoom.h"
 #import "QZBRoomController.h"
 #import "QZBRoomOnMainCell.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import <NSDate+DateTools.h>
 #import "NSDate+QZBDateCategory.h"
 
@@ -376,7 +376,7 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
   label.textAlignment = NSTextAlignmentCenter;
   label.textColor = [UIColor whiteColor];
-  label.font = [UIFont boldMuseoFontOfSize:20];
+  label.font = [UIFont boldSystemFontOfSize:20];
 
   [view addSubview:label];
 

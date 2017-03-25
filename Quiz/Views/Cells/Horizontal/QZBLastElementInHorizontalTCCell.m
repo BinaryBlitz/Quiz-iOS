@@ -1,7 +1,7 @@
 #import "QZBLastElementInHorizontalTCCell.h"
 #import "QZBHorizontalCell.h"
 #import "UIColor+QZBProjectColors.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @implementation QZBLastElementInHorizontalTCCell
 
@@ -14,7 +14,7 @@
   if (self) {
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.backgroundColor = [UIColor lightButtonColor];
-    self.button.titleLabel.font = [UIFont museoFontOfSize:13];
+    self.button.titleLabel.font = [UIFont systemFontOfSize:13];
     self.button.layer.cornerRadius = 10.0;
     self.button.clipsToBounds = YES;
     // [self.button setTitle:@"Показать \nвсех" forState:UIControlStateNormal];
