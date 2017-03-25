@@ -7,6 +7,8 @@
 @implementation QZBEndGameMainCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
   self.firstUserScore.text = @"";
   self.opponentScore.text = @"";
@@ -41,10 +43,6 @@
   self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
   self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
   self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
-
-  [self.resultOfSessionLabel addShadowsAllWayRasterize];
-  [self.userNameLabel addShadows];
-  [self.opponentNameLabel addShadows];
 }
 
 @end

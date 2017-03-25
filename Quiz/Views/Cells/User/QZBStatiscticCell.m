@@ -1,11 +1,12 @@
 #import "QZBStatiscticCell.h"
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"
-#import "UITableViewCell+QZBCellCategory.h"
 
 @implementation QZBStatiscticCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   static float boarderWidth = 5.0;
 
   // Initialization code
@@ -28,8 +29,6 @@
   self.winCircular.centralView = self.winLabel;
   self.drawsCircular.centralView = self.drawsLabel;
   self.lossesCircular.centralView = self.lossesLabel;
-
-  [self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

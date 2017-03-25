@@ -378,10 +378,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
   label.textColor = [UIColor whiteColor];
   label.font = [UIFont boldMuseoFontOfSize:20];
 
-  if (section > 0) {
-    [view addDropShadowsForView];
-  }
-
   [view addSubview:label];
 
   NSArray *arr = self.workArray[section];
@@ -390,37 +386,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
   return view;
 }
-//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    // CGRect rect = CGRectMake(0, 0,CGRectGetWidth(tableView.frame), 48);
-//
-//    //    if(section==0){
-//    //        return nil;
-//    //    }
-//
-//    UIView *view = [[UIView alloc] init];
-//
-//    view.backgroundColor = [self colorForSection:section];
-//
-//    CGRect rect = CGRectMake(0, 7, CGRectGetWidth(tableView.frame), 42);
-//
-//    UILabel *label = [[UILabel alloc] initWithFrame:rect];
-//
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor whiteColor];
-//    label.font = [UIFont boldMuseoFontOfSize:20];
-//
-//    if (section > 0) {
-//        [view addDropShadowsForView];
-//    }
-//
-//    [view addSubview:label];
-//
-//    NSArray *arr = self.workArray[section];
-//
-//    label.text = [[self textForArray:arr] uppercaseString];
-//
-//    return view;
-//}
 
 #pragma mark - actions
 
@@ -458,9 +423,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
     self.choosedTopic = arr[ip.row];
     self.choosedIndexPath = nil;
 
-    //[self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
-
-    //[self performSegueWithIdentifier:@"showRate" sender:nil];
     [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
   }
 }
@@ -563,18 +525,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
       [self hideRoomIvite:roomInvite];
       [self performSegueWithIdentifier:@"showRoomFromInvite" sender:nil];
     }
-
-    // QZBChallengeDescriptionWithResults *description = arr[ip.row];
-
-    // self.challengeDescription = description;
-    //
-    //        self.choosedIndexPath = nil;
-    //        [self.topicTableView beginUpdates];
-    //        [self.topicTableView endUpdates];
-
-    //        self.challengeDescriptionWithResults = description;
-    //
-    //        [self performSegueWithIdentifier:@"showSessionResult" sender:nil];
   }
 }
 

@@ -119,7 +119,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   self.firstUserScore.text = @"";
   self.opponentScore.text = @"";
 
-  [self.roundLabel addShadows];
   if ([QZBSessionManager sessionManager].isRoom) {
 
     self.userNameLabel.superview.backgroundColor = [UIColor colorWithWhite:0.8
@@ -139,13 +138,8 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   self.opponentBV.badgeText = @"0";
   self.userBV.badgeText = @"0";
 
-  [self.timeLabel addShadows];
-
   [self initCircularProgress];
-
   [self setNamesAndUserpics];
-  //    self.roundLabel.adjustsFontSizeToFitWidth = YES;
-  //    self.roundLabel.numberOfLines = 2;
 
   QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
 
@@ -773,11 +767,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 - (void)setNamesAndUserpics {
   self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
-  [self.userNameLabel addShadows];
 
   if ([QZBSessionManager sessionManager].opponentUserName) {
     self.opponentNameLabel.text = [QZBSessionManager sessionManager].opponentUserName;
-    [self.opponentNameLabel addShadows];
   }
 
   if ([QZBSessionManager sessionManager].firstImageURL) {

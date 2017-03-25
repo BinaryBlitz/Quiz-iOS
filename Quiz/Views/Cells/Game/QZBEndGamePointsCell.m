@@ -1,6 +1,5 @@
 #import "QZBEndGamePointsCell.h"
 #import "UIColor+QZBProjectColors.h"
-#import "UITableViewCell+QZBCellCategory.h"
 #import "NSString+QZBStringCategory.h"
 #import "UIFont+QZBCustomFont.h"
 
@@ -8,7 +7,6 @@
 
 - (void)awakeFromNib {
   // Initialization code
-  [self addDropShadows];
   self.circleView.borderWidth = 10;
   CGRect rect = CGRectMake(0, 0, CGRectGetHeight(self.circleView.frame) / 2.0,
       CGRectGetHeight(self.circleView.frame) / 2.0);

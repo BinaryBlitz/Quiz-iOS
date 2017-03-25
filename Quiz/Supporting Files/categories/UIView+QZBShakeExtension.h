@@ -4,16 +4,4 @@
 
 - (void)shakeView;
 
-- (void)addDropShadowsForView;
-
-- (void)addShadows;
-
-- (void)addShadowsAllWay;
-
-- (void)addShadowsAllWayRasterize;
-
-- (void)addShadowsCategory;
-
-- (UIView *)addShadowWithBackgroundCopy;
-
 @end

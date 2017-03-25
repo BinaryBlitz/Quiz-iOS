@@ -2,7 +2,6 @@
 #import <UAProgressView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "NSObject+QZBSpecialCategory.h"
-#import "UITableViewCell+QZBCellCategory.h"
 #import "UIFont+QZBCustomFont.h"
 
 @interface QZBEndGameProgressCell ()
@@ -18,14 +17,9 @@
 @implementation QZBEndGameProgressCell
 
 - (void)awakeFromNib {
-
-
-  //  [self initCell];
 }
 
 - (void)initCell {
-  [self addDropShadows];
-
   CGRect r = CGRectMake(0,
       0,
       CGRectGetHeight(self.circularOldProgress.frame) / 2,

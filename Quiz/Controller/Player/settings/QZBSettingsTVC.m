@@ -21,9 +21,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self.middleCell addDropShadowsForView];
-  [self.exitCell addDropShadowsForView];
-  [self.soundCell addDropShadowsForView];
 
   [self initStatusbarWithColor:[UIColor blackColor]];
 
@@ -270,52 +267,6 @@ shouldChangeCharactersInRange:(NSRange)range
                                                        }
                                                      }];
 }
-
-//- (void)openCamera {
-//    DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
-//
-//    [cameraController setForceQuadCrop:YES];
-//
-//    DBCameraContainerViewController *container =
-//        [[DBCameraContainerViewController alloc] initWithDelegate:self];
-//    [container setCameraViewController:cameraController];
-//    [container setFullScreenMode];
-//
-//    UINavigationController *nav =
-//        [[UINavigationController alloc] initWithRootViewController:container];
-//    [nav setNavigationBarHidden:YES];
-//    [self presentViewController:nav animated:YES completion:nil];
-//}
-
-//- (void)openLibrary {
-//    DBCameraLibraryViewController *vc = [[DBCameraLibraryViewController alloc] init];
-//    [vc setDelegate:self];       // DBCameraLibraryViewController must have a
-//                                 // DBCameraViewControllerDelegate object
-//    [vc setForceQuadCrop:YES];   // Optional
-//    [vc setUseCameraSegue:YES];  // Optional
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-//    [nav setNavigationBarHidden:YES];
-//    [self presentViewController:nav animated:YES completion:nil];
-//}
-
-//#pragma mark - DBCameraViewControllerDelegate
-//
-//- (void)camera:(id)cameraViewController
-//    didFinishWithImage:(UIImage *)image
-//          withMetadata:(NSDictionary *)metadata {
-//    
-//    [self loadNewPic:image];
-//   // self.userPicImageView.image = image;
-//  //  [[QZBCurrentUser sharedInstance].user setUserPic:image];
-//
-//    [cameraViewController restoreFullScreenMode];
-//    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-//}
-//
-//- (void)dismissCamera:(id)cameraViewController {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//    [cameraViewController restoreFullScreenMode];
-//}
 
 #pragma mark - actions
 

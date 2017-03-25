@@ -17,6 +17,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 @implementation QZBHorizontalCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
 
   CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -54,8 +56,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
   [self.horizontalTabelView registerClass:[QZBLastElementInHorizontalTCCell class]
                    forCellReuseIdentifier:@"lastHorizontalElement"];
-
-  //[self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

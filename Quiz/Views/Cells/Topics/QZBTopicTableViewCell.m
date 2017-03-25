@@ -21,11 +21,11 @@
 
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
-  [self.backView addShadowsAllWay];
-  [self.underView addShadowsAllWayRasterize];
 }
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
   self.topicProgressView.lineWidth = 4;
   self.topicProgressView.fillOnTouch = NO;

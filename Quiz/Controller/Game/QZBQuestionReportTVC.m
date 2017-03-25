@@ -176,8 +176,7 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   UIView *view = [[UIView alloc] init];
 
-  view.backgroundColor =
-      [UIColor colorWithWhite:0.0 alpha:1.0];  //[self colorForSection:section];
+  view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:1.0];
 
   CGRect rect = CGRectMake(0, 7, CGRectGetWidth(tableView.frame), 42);
 
@@ -187,17 +186,9 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
   label.textColor = [UIColor whiteColor];
   label.font = [UIFont boldMuseoFontOfSize:20];
 
-  //    if (section > 0) {
-  //        [view addDropShadowsForView];
-  //    }
-  //
   [view addSubview:label];
 
-  // NSArray *arr = self.workArray[section];
-
-  label.text =
-      [NSString stringWithFormat:@"Вопрос %@",
-                                 @(section + 1)];  //[[self textForArray:arr] uppercaseString];
+  label.text = [NSString stringWithFormat:@"Вопрос %@", @(section + 1)];
 
   return view;
 }

@@ -101,7 +101,6 @@
 		196587A71AC5B5C100C58C60 /* QZBStatiscticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196587A61AC5B5C100C58C60 /* QZBStatiscticCell.m */; };
 		196963211B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196963201B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m */; };
 		196EA3581AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */; };
-		196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */; };
 		196EA35E1AD4000200AAF94E /* QZBFindFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */; };
 		196F9AF51BA1FFF2001AF551 /* QZBReloadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 196F9AF41BA1FFF2001AF551 /* QZBReloadingCell.m */; };
 		1974BC101AD699970057E966 /* QZBEndGamePointsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1974BC0F1AD699970057E966 /* QZBEndGamePointsCell.m */; };
@@ -387,8 +386,6 @@
 		196963201B2B2393007DF0E6 /* UITabBarController+QZBMessagerCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+QZBMessagerCategory.m"; sourceTree = "<group>"; };
 		196EA3561AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionForHorizontalCell.h; sourceTree = "<group>"; };
 		196EA3571AD29DA700AAF94E /* QZBDescriptionForHorizontalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionForHorizontalCell.m; sourceTree = "<group>"; };
-		196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+QZBCellCategory.h"; sourceTree = "<group>"; };
-		196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+QZBCellCategory.m"; sourceTree = "<group>"; };
 		196EA35C1AD4000200AAF94E /* QZBFindFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBFindFriendsCell.h; sourceTree = "<group>"; };
 		196EA35D1AD4000200AAF94E /* QZBFindFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBFindFriendsCell.m; sourceTree = "<group>"; };
 		196F9AF31BA1FFF2001AF551 /* QZBReloadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBReloadingCell.h; sourceTree = "<group>"; };
@@ -933,8 +930,6 @@
 				1944A1911B109F0B0095C600 /* UIFont+QZBCustomFont.m */,
 				191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */,
 				191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */,
-				196EA3591AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.h */,
-				196EA35A1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m */,
 				19D6911F1A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.h */,
 				19D691201A6E5F1C008B2AE1 /* UIView+QZBShakeExtension.m */,
 			);
@@ -1790,7 +1785,6 @@
 				195EA0A51AD4338C000C4341 /* QZBAchievementManager.m in Sources */,
 				191E12F81A8CD80400AFB829 /* QZBAnotherUser.m in Sources */,
 				1901B9B21A4729BC002FC87C /* QZBAnswerTriangle.m in Sources */,
-				196EA35B1AD3D24800AAF94E /* UITableViewCell+QZBCellCategory.m in Sources */,
 				19AB8DFA1B9DD3EB004329F8 /* QZBRoomCommentController.m in Sources */,
 				19D691271A6E6275008B2AE1 /* QZBPasswordTextField.m in Sources */,
 				19DC85A21B3AE01F00E20998 /* QZBRoomWorker.m in Sources */,
