@@ -61,7 +61,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="292" id="1LX-Fb-3y2"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="MuseoSansCyrl-500" family="Museo Sans Cyrl" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                                 <variation key="heightClass=regular-widthClass=compact">
                                                     <mask key="constraints">
@@ -71,7 +71,7 @@
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uqj-qm-8x0" customClass="QZBPasswordTextField">
                                                 <rect key="frame" x="8" y="74.5" width="302" height="30"/>
-                                                <fontDescription key="fontDescription" name="MuseoSansCyrl-500" family="Museo Sans Cyrl" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                                             </textField>
                                         </subviews>
