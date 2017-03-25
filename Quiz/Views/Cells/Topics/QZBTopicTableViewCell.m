@@ -3,7 +3,7 @@
 #import "UIColor+QZBProjectColors.h"
 #import "UIColor+QZBColorGenerator.h"
 #import "NSString+QZBStringCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 #import "UIView+QZBShakeExtension.h"
 #import "NSObject+QZBSpecialCategory.h"
 #import "QZBCategory.h"
@@ -21,11 +21,11 @@
 
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
-  [self.backView addShadowsAllWay];
-  [self.underView addShadowsAllWayRasterize];
 }
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
   self.topicProgressView.lineWidth = 4;
   self.topicProgressView.fillOnTouch = NO;
@@ -110,7 +110,7 @@
     _centralLabel.textAlignment = NSTextAlignmentCenter;
     _centralLabel.adjustsFontSizeToFitWidth = YES;
 
-    _centralLabel.font = [UIFont museoFontOfSize:15];
+    _centralLabel.font = [UIFont systemFontOfSize:15];
   }
   return _centralLabel;
 }

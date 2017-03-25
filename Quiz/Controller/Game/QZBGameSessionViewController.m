@@ -9,22 +9,18 @@
 #import "QZBCategory.h"
 #import "UIView+QZBShakeExtension.h"
 #import <JSQSystemSoundPlayer.h>
-#import "UIFont+QZBCustomFont.h"
+
 #import "QZBCurrentUser.h"
 #import "QZBTopicWorker.h"
 #import "QZBGameTopic.h"
 
-
-//DFImageManager
 #import <DFImageManager/DFImageManager.h>
 #import <DFImageManager/DFImageRequestOptions.h>
 #import <DFImageManager/DFURLImageFetcher.h>
 #import <DFImageManager/DFImageRequest.h>
 #import <DFImageManager/DFImageView.h>
-//#import <Crashlytics/Crashlytics.h>
 
-//rooms
-
+// Rooms
 #import "QZBRoomWorker.h"
 #import "QZBRoom.h"
 #import "QZBUserWithTopic.h"
@@ -123,7 +119,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   self.firstUserScore.text = @"";
   self.opponentScore.text = @"";
 
-  [self.roundLabel addShadows];
   if ([QZBSessionManager sessionManager].isRoom) {
 
     self.userNameLabel.superview.backgroundColor = [UIColor colorWithWhite:0.8
@@ -135,21 +130,16 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                   alignment:JSBadgeViewAlignmentCenterRight];
 
-  self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
-  self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
+  self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
+  self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
   self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
   self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
 
   self.opponentBV.badgeText = @"0";
   self.userBV.badgeText = @"0";
 
-  [self.timeLabel addShadows];
-
   [self initCircularProgress];
-
   [self setNamesAndUserpics];
-  //    self.roundLabel.adjustsFontSizeToFitWidth = YES;
-  //    self.roundLabel.numberOfLines = 2;
 
   QZBGameTopic *topic = [QZBSessionManager sessionManager].topic;
 
@@ -435,12 +425,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   } else {
     return heigth - (width * 9.0) / 16.0;
   }
-
-
-  //return 30.0;
 }
 
-//показывает лейбл раунда
+// Round label
 - (void)showQuestionAndAnswers {
   [self prepareQuestion];
   __weak typeof(self) weakSelf = self;
@@ -458,7 +445,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
     roundAsString = [roundAsString stringByAppendingString:stringToAppend];
   }
   self.roundLabel.text = roundAsString;
-  //self.title = roundAsString;
 
   [UIView animateWithDuration:0.3
                         delay:0
@@ -781,11 +767,9 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
 - (void)setNamesAndUserpics {
   self.userNameLabel.text = [QZBSessionManager sessionManager].firstUserName;
-  [self.userNameLabel addShadows];
 
   if ([QZBSessionManager sessionManager].opponentUserName) {
     self.opponentNameLabel.text = [QZBSessionManager sessionManager].opponentUserName;
-    [self.opponentNameLabel addShadows];
   }
 
   if ([QZBSessionManager sessionManager].firstImageURL) {

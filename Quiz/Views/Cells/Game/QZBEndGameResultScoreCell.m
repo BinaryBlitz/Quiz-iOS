@@ -1,12 +1,11 @@
 #import "QZBEndGameResultScoreCell.h"
-#import "UITableViewCell+QZBCellCategory.h"
 #import "NSString+QZBStringCategory.h"
 
 @implementation QZBEndGameResultScoreCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
   // Initialization code
-  [self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

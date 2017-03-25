@@ -23,7 +23,7 @@
 //ui
 
 #import <SVProgressHUD.h>
-#import "UIFont+QZBCustomFont.h"
+
 #import "QZBRoomFakeKeyboard.h"
 #import <TSMessage.h>
 #import "UIView+QZBShakeExtension.h"
@@ -707,7 +707,7 @@ const NSInteger QZBMaxRedyTime = 20;
     button.frame = CGRectMake(10, 10, r.size.width - 20, 60);
     [button setTitle:@"Пригласить друзей!" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldMuseoFontOfSize:22];//boldSystemFontOfSize:20];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:22];//boldSystemFontOfSize:20];
 
     [button setBackgroundColor:thirdColor];
     button.layer.cornerRadius = 2.0;
@@ -915,7 +915,7 @@ const NSInteger QZBMaxRedyTime = 20;
 
   UILabel *label = [[UILabel alloc] initWithFrame:lableR];
   label.textColor = [UIColor whiteColor];
-  label.font = [UIFont museoFontOfSize:18];
+  label.font = [UIFont systemFontOfSize:18];
   label.textAlignment = NSTextAlignmentRight;
   label.numberOfLines = 1;
   label.text = message;

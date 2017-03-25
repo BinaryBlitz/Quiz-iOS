@@ -1,20 +1,18 @@
 #import "QZBEndGamePointsCell.h"
 #import "UIColor+QZBProjectColors.h"
-#import "UITableViewCell+QZBCellCategory.h"
 #import "NSString+QZBStringCategory.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @implementation QZBEndGamePointsCell
 
 - (void)awakeFromNib {
   // Initialization code
-  [self addDropShadows];
   self.circleView.borderWidth = 10;
   CGRect rect = CGRectMake(0, 0, CGRectGetHeight(self.circleView.frame) / 2.0,
       CGRectGetHeight(self.circleView.frame) / 2.0);
 
   UILabel *centralLabel = [[UILabel alloc] initWithFrame:rect];
-  centralLabel.font = [UIFont boldMuseoFontOfSize:40];
+  centralLabel.font = [UIFont boldSystemFontOfSize:40];
   centralLabel.textAlignment = NSTextAlignmentCenter;
   self.circleView.centralView = centralLabel;
   self.circleView.fillOnTouch = NO;

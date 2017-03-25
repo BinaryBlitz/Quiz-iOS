@@ -26,7 +26,7 @@
 
 #import <UAAppReviewManager.h>
 
-#import "UIFont+QZBCustomFont.h"
+
 
 //alert
 
@@ -315,7 +315,7 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
     button.titleLabel.minimumScaleFactor = 0.5;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldMuseoFontOfSize:22];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
 
     [button setBackgroundColor:blueColor];
     button.layer.cornerRadius = 2.0;

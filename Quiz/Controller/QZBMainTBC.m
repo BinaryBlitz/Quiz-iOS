@@ -8,7 +8,6 @@
 #import "QZBFriendRequestManager.h"
 
 #import <SVProgressHUD.h>
-#import "QZBLayerMessagerManager.h"
 
 #import <SCLAlertView-Objective-C/SCLAlertView.h>
 
@@ -50,25 +49,11 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
                                            selector:@selector(unsubscribeFromMessages)
                                                name:QZBDoNotNeedShowMessagerNotifications
                                              object:nil];
-
-
-
-//    for (NSString* family in [UIFont familyNames])
-//    {
-//        NSLog(@"%@", family);
-//        
-//        for (NSString* name in [UIFont fontNamesForFamilyName: family])
-//        {
-//            NSLog(@"  %@", name);
-//        }
-//    }
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  //  [self setSelectedIndex:2];
   self.tabBar.translucent = YES;
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -106,8 +91,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
                                           [backgrView removeFromSuperview];
                                         }];
                      }];
-
-    //[self performSegueWithIdentifier:@"showRegistrationScreen" sender:nil];
   } else {
 
     UINavigationController *navVC = self.viewControllers[4];
@@ -121,15 +104,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
     [[QZBAchievementManager sharedInstance] updateAchievements];
     [[QZBServerManager sharedManager] GETCategoriesOnSuccess:nil onFailure:nil];
     [[QZBFriendRequestManager sharedInstance] updateRequests];
-
-    //   if(![QZBLayerMessagerManager sharedInstance].layerClient.authenticatedUser.userID){
-
-
-    //    [QZBCurrentUser sharedInstance]
-//        [[QZBLayerMessagerManager sharedInstance] connectWithCompletion:^(BOOL success, NSError *error) {
-//            NSLog(@"done mof %@", error);
-//        }];
-    //     }
 
     [self subscribeToMessages];
 
@@ -145,9 +119,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
                                              selector:@selector(unsubscribeFromMessages)
                                                  name:QZBDoNotNeedShowMessagerNotifications
                                                object:nil];
-
-
-    //[self setSelectedIndex:2];
   }
 }
 
@@ -164,12 +135,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
   UITabBarItem *it = self.tabBar.items[userBar];
   NSUInteger count = [QZBFriendRequestManager sharedInstance].incoming.count;
 
-  NSUInteger messageCount = [[QZBLayerMessagerManager sharedInstance] unreadedCount];
-
-  if (messageCount > 0) {
-    count += messageCount;
-  }
-
   if (count > 0) {
     it.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long) count];
   } else {
@@ -182,7 +147,6 @@ NSString *const QZBNeedShowMessagerNotifications = @"QZBNeedShowMessagerNotifica
   NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
 
   NSString *version = infoDictionary[@"CFBundleShortVersionString"];
-  //  NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
 
 
   [[QZBServerManager sharedManager] GETCompareVersion:version

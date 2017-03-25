@@ -2,11 +2,13 @@
 #import <JSBadgeView.h>
 #import "UIColor+QZBProjectColors.h"
 #import "UIView+QZBShakeExtension.h"
-#import "UIFont+QZBCustomFont.h"
+
 
 @implementation QZBEndGameMainCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
   self.firstUserScore.text = @"";
   self.opponentScore.text = @"";
@@ -16,8 +18,8 @@
   self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                   alignment:JSBadgeViewAlignmentCenterRight];
 
-  self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
-  self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
+  self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
+  self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
   self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
   self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
 }
@@ -37,14 +39,10 @@
   self.opponentBV = [[JSBadgeView alloc] initWithParentView:self.opponentScore
                                                   alignment:JSBadgeViewAlignmentCenterRight];
 
-  self.userBV.badgeTextFont = [UIFont museoFontOfSize:20];
-  self.opponentBV.badgeTextFont = [UIFont museoFontOfSize:20];
+  self.userBV.badgeTextFont = [UIFont systemFontOfSize:20];
+  self.opponentBV.badgeTextFont = [UIFont systemFontOfSize:20];
   self.userBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
   self.opponentBV.badgeBackgroundColor = [UIColor transperentLightBlueColor];
-
-  [self.resultOfSessionLabel addShadowsAllWayRasterize];
-  [self.userNameLabel addShadows];
-  [self.opponentNameLabel addShadows];
 }
 
 @end

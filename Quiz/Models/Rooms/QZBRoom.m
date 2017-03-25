@@ -5,15 +5,12 @@
 #import "MagicalRecord/MagicalRecord.h"
 #import "QZBTopicWorker.h"
 
-#import "UIFont+QZBCustomFont.h"
-
 @interface QZBRoom ()
 
 @property (strong, nonatomic) NSNumber *roomID;
-//@property(strong, nonatomic) QZBAnotherUser *owner;
 @property (strong, nonatomic) QZBUserWithTopic *owner;
 @property (strong, nonatomic) NSDate *creationDate;
-@property (strong, nonatomic) NSMutableArray *participants;  // QZBUserWithTopic
+@property (strong, nonatomic) NSMutableArray *participants;
 @property (assign, nonatomic) BOOL isFriendOnly;
 
 @property (strong, nonatomic) NSNumber *maxUserCount;
@@ -26,10 +23,6 @@
   self = [super init];
   if (self) {
     self.roomID = d[@"id"];
-    //   NSDictionary *userDict = d[@"owner"];
-    //QZBAnotherUser *user = [[QZBAnotherUser alloc] initWithDictionary:userDict];
-    // QZBGameTopic *topic = [QZBGameTopic MR_findFirst];
-    // self.owner = [self parseUserWithTopicFromDict:userDict]; //[[QZBUserWithTopic alloc] initWithUser:user topic:topic];
     self.participants = [NSMutableArray array];
 
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -60,12 +53,9 @@
     } else {
       self.maxUserCount = @(5);
     }
-    if (d[@"friends_only"])
+    if (d[@"friends_only"]) {
       self.isFriendOnly = [d[@"friends_only"] boolValue];
-
-    // self.maxUserCount = @(4);
-
-    //    [self.participants insertObject:self.owner atIndex:0];
+    }
   }
   return self;
 }
@@ -113,43 +103,28 @@
   return userWithTopic;
 }
 
-//- (NSString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
-//    NSMutableString *res = [NSMutableString string];
-//
-//    [res appendString:userWithTopic.user.name];
-//    [res appendString:@"   "];
-//    [res appendString:userWithTopic.topic.name];
-//    return [NSString stringWithString:res];
-//}
-
 - (NSAttributedString *)descriptionForUserWithTopic:(QZBUserWithTopic *)userWithTopic {
 
   NSString *name = userWithTopic.user.name;
 
   NSMutableAttributedString *attributedName = [[NSMutableAttributedString alloc]
-      initWithString:name];
+                                               initWithString:name];
   NSRange nameRange = NSMakeRange(0, name.length);
 
-  UIFont *museoFontBig = [UIFont boldMuseoFontOfSize:20];
+  UIFont *museoFontBig = [UIFont boldSystemFontOfSize:20];
 
   [attributedName addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:nameRange];
   [attributedName addAttribute:NSFontAttributeName value:museoFontBig range:nameRange];
 
   NSString *topicName = [userWithTopic.topic.name
-      stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                         stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
   NSRange topicNameRange = NSMakeRange(0, topicName.length);
-  UIFont *museoFontSmall = [UIFont museoFontOfSize:12];
+  UIFont *museoFontSmall = [UIFont systemFontOfSize:12];
 
   NSMutableAttributedString *attributedTopicName = [[NSMutableAttributedString alloc] initWithString:topicName];
 
   [attributedTopicName addAttribute:NSForegroundColorAttributeName value:[UIColor lightTextColor] range:topicNameRange];
   [attributedTopicName addAttribute:NSFontAttributeName value:museoFontSmall range:topicNameRange];
-
-  // NSAttributedString *nextLine = [NSAttributedString alloc] initWithString:<#(NSString *)#>
-
-  //NSAttributedString *resString = [NSAttributedString at]
-
-  // NSMutableAttributedString *res = [[NSMutableAttributedString alloc] init];
 
   NSAttributedString *nextLineString = [[NSAttributedString alloc] initWithString:@"\n"];
 
@@ -161,10 +136,6 @@
 
 - (NSString *)descriptionForAllUsers {
   NSMutableString *res = [NSMutableString string];
-
-  // NSString *ownerString = [self descriptionForUserWithTopic:self.owner];
-
-  // [res appendFormat:@"%@\n",ownerString];
 
   NSInteger count = self.participants.count;
 
@@ -179,12 +150,12 @@
 - (NSString *)participantsDescription {
   NSInteger count = self.participants.count;
   NSString *participantsDescription =
-      [NSString stringWithFormat:@"Количество игроков: %ld", (long) count];
+  [NSString stringWithFormat:@"Количество игроков: %ld", (long) count];
   if (self.maxUserCount) {
     NSString *appendString = [NSString stringWithFormat:@" из %@", self.maxUserCount];
     participantsDescription = [participantsDescription stringByAppendingString:appendString];
   }
-  return participantsDescription; //[NSString stringWithFormat:@"Количество игроков: %ld/%@", (long)count];
+  return participantsDescription;
 }
 
 - (NSString *)topicsDescription {
@@ -192,17 +163,10 @@
 
   [res appendString:@"Темы: "];
 
-//    for (QZBUserWithTopic *userWithTopic in self.participants) {
-//        NSString *topicName = [userWithTopic.topic.name
-//            stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-//        [res appendString:topicName];
-//        [res appendString:@", "];
-//    }
-
   for (int i = 0; i < self.participants.count; i++) {
     QZBUserWithTopic *userWithTopic = self.participants[i];
     NSString *topicName = [userWithTopic.topic.name
-        stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                           stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     [res appendString:topicName];
 
     if (i < self.participants.count - 1)
@@ -236,8 +200,6 @@
 }
 
 - (QZBUserWithTopic *)findUserWithID:(NSNumber *)userID {
-  // QZBUserWithTopic *u = nil;
-
   for (QZBUserWithTopic *userWithTopic in self.participants) {
     if ([userWithTopic.user.userID isEqualToNumber:userID]) {
       return userWithTopic;
@@ -251,13 +213,10 @@
 - (NSArray *)resultParticipants {
 
   NSSortDescriptor *finishedSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:NO];
-
   NSSortDescriptor *pointsDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"points" ascending:NO];
-
-  //TEST
-
+  
   return [self.participants
-      sortedArrayUsingDescriptors:@[finishedSortDescriptor, pointsDescriptor]];
+          sortedArrayUsingDescriptors:@[finishedSortDescriptor, pointsDescriptor]];
 }
 
 

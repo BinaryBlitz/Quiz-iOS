@@ -1,17 +1,14 @@
 #import "QZBVSScoreCell.h"
 #import "QZBAnotherUser.h"
-#import "UITableViewCell+QZBCellCategory.h"
 
 @implementation QZBVSScoreCell
 
 - (void)awakeFromNib {
   // Initialization code
-  [self addDropShadows];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
-
   // Configure the view for the selected state
 }
 

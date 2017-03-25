@@ -12,15 +12,14 @@ target 'Quiz' do
   pod 'JSBadgeView', '~> 1.3'
   pod 'UAProgressView', '~> 0.1'
   pod 'SCLAlertView-Objective-C', '~> 0.5'
-  pod 'JSQMessagesViewController', '~> 7.0'
   pod 'DFImageManager', '~> 0.3'
   pod 'DFImageManager/AFNetworking', '~> 0.3'
   pod 'DFImageManager/GIF', '~> 0.3'
   pod 'DateTools', '~> 1.5'
-  pod 'LayerKit', '~> 0.17'
   pod 'UAAppReviewManager', '~> 0.2'
   pod 'SlackTextViewController', '~> 1.6'
-  pod 'LoremIpsum', '~> 1.0'
+  pod 'JSQSystemSoundPlayer', '~> 3.0'
+
   pod 'Fabric', '~> 1.5'
   pod 'Crashlytics', '~> 3.3'
 end
