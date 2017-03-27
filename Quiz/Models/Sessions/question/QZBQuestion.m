@@ -94,9 +94,7 @@
     NSString *imageURLAsString = questDict[@"image_url"];
 
     if (imageURLAsString && ![imageURLAsString isEqual:[NSNull null]]) {
-
-      NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:imageURLAsString];
-      NSURL *imgURL = [NSURL URLWithString:urlStr];
+      NSURL *imgURL = [NSURL URLWithString:imageURLAsString];
 
       DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
 
@@ -106,7 +104,6 @@
       options.priority = DFImageRequestPriorityHigh;
       DFImageRequest *request = [DFImageRequest requestWithResource:imgURL targetSize:CGSizeZero contentMode:DFImageContentModeAspectFill options:options];
 
-//      [[DFImageManager sharedManager] requestImageForRequest:request completion:^(UIImage *image, NSDictionary *info) {}];
       [[DFImageManager sharedManager] imageTaskForRequest:request completion:nil];
 
       self.imageURL = imgURL;

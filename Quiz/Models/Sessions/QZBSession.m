@@ -119,10 +119,7 @@ static const NSUInteger QZBResultForRightAnswer = 10;
         }
         if (opponentDict[@"avatar_thumb_url"] &&
             ![opponentDict[@"avatar_thumb_url"] isEqual:[NSNull null]]) {
-          NSString *url =
-              [QZBServerBaseUrl stringByAppendingString:opponentDict[@"avatar_thumb_url"]];
-
-          opponent.imageURL = [NSURL URLWithString:url];
+          opponent.imageURL = [NSURL URLWithString:opponentDict[@"avatar_thumb_url"]];
         } else {
           opponent.imageURL = nil;
         }
@@ -143,23 +140,16 @@ static const NSUInteger QZBResultForRightAnswer = 10;
 
         opponent.userID = hostDict[@"id"];
         if (hostDict[@"avatar_thumb_url"] && ![hostDict[@"avatar_thumb_url"] isEqual:[NSNull null]]) {
-          NSString *url = [QZBServerBaseUrl stringByAppendingString:hostDict[@"avatar_thumb_url"]];
-          opponent.imageURL = [NSURL URLWithString:url];
+          opponent.imageURL = [NSURL URLWithString:hostDict[@"avatar_thumb_url"]];
         } else {
           opponent.imageURL = nil;
         }
       }
-
-      // self.firstUser = [[QZBUserInSession alloc] initWithUser:user1];
       self.opponentUser = [[QZBUserInSession alloc] initWithUser:opponent];
     }
 
-    //  self.questions = questions;
-    //   self.opponentUser = [[QZBUserInSession alloc] initWithUser:opponent];
-
     self.questions = questions;
     self.firstUser = [[QZBUserInSession alloc] initWithUser:user1];
-    // self.opponentUser = [[QZBUserInSession alloc] initWithUser:opponent];
     self.currentQestion = 0;
   }
   return self;  //[self initWithQestions:questions first:user1 opponentUser:opponent];

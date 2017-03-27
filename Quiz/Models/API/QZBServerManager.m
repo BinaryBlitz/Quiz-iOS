@@ -1,6 +1,5 @@
 #import "QZBServerManager.h"
 #import "AppDelegate.h"
-//#import <CocoaLumberjack/CocoaLumberjack.h>
 #import "QZBGameTopic.h"
 #import "QZBLobby.h"
 #import "QZBSession.h"
@@ -13,7 +12,6 @@
 #import "QZBUserInRating.h"
 #import "MagicalRecord/MagicalRecord.h"
 
-//#import "QZBRequestUser.h"
 #import "QZBProduct.h"
 #import "QZBChallengeDescription.h"
 #import "QZBChallengeDescriptionWithResults.h"
@@ -36,7 +34,6 @@
 // topics
 
 #import "QZBTopicWorker.h"
-
 #import <DDLog.h>
 
 #if QZB_PRODUCTION
@@ -45,7 +42,7 @@ static const int ddLogLevel = LOG_LEVEL_ERROR;
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
 
-NSString *const QZBServerBaseUrl = @"http://188.166.14.118";
+NSString *const QZBServerBaseUrl = @"https://oneversus.one";
 NSString *const QZBPusherKey = @"3335176afe7e37cd28c2";
 NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 NSString *const QZBiTunesIdentifier = @"1017347211";
@@ -95,19 +92,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               DDLogInfo(@"category JSON: %@", responseObject);
 
                               [self updateCategories:responseObject];
-                              //<<<<<<< HEAD
-
-                              // REDO problems
-                              //            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                              //
-                              //            } completion:^(BOOL success, NSError *error) {
-
-                              //=======
 
                               [[NSManagedObjectContext MR_defaultContext]
                                   MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
 
-                                    //>>>>>>> rating server api changed
                                     if (successAF) {
                                       successAF([QZBCategory MR_findAll]);
                                     }
@@ -180,19 +168,18 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
       existingEntity.name = name;
     }
     if (backgroundURL && ![backgroundURL isEqualToString:existingEntity.background_url]) {
-      existingEntity.background_url =
-          [QZBServerBaseUrl stringByAppendingString:backgroundURL];
+      existingEntity.background_url = backgroundURL;
 
       [self savePictureFromString:existingEntity.background_url];
-    }  // TEST
+    }
 
     if (bannerURL && ![bannerURL isEqualToString:existingEntity.banner_url]) {
-      existingEntity.banner_url = [QZBServerBaseUrl stringByAppendingString:bannerURL];
+      existingEntity.banner_url = bannerURL;
 
       [self savePictureFromString:existingEntity.banner_url];
     }
 
-    [self updateTopcs:dict inCategory:existingEntity];  // TODO!
+    [self updateTopcs:dict inCategory:existingEntity];
 
     [objectsArray addObject:existingEntity];
   }

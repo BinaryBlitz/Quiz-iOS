@@ -40,8 +40,7 @@
     self.isAchieved = [dict[@"achieved"] boolValue];
 
     if (![dict[@"icon_url"] isEqual:[NSNull null]] && dict[@"icon_url"]) {
-
-      NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:dict[@"icon_url"]];
+      NSString *urlAsString = dict[@"icon_url"];
 
       self.imageURL = [NSURL URLWithString:urlAsString];
 

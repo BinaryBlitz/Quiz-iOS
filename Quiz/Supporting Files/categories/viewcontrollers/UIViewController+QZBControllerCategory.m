@@ -63,10 +63,10 @@
   }];
 
   UIImageView *v = [[UIImageView alloc] init];
-  NSString *urlAppend = d[@"icon_url"];
+  NSString *iconURL = d[@"icon_url"];
 
-  if (![urlAppend isEqual:[NSNull null]] && urlAppend) {
-    NSString *urlAsString = [QZBServerBaseUrl stringByAppendingString:urlAppend];
+  if (![iconURL isEqual:[NSNull null]] && iconURL) {
+    NSString *urlAsString = iconURL;
 
     NSURL *imgURl = [NSURL URLWithString:urlAsString];
 

@@ -173,13 +173,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         [NSURLRequest requestWithURL:url
                          cachePolicy:NSURLRequestReturnCacheDataElseLoad
                      timeoutInterval:60];
-    //   UIImage *image = [[UIImage alloc] init];
 
     [self.backgroundImageView setImageWithURLRequest:imageRequest
                                     placeholderImage:nil
                                              success:nil
                                              failure:nil];
-    // [self.view sendSubviewToBack:self.backgroundImageView];
   }
 }
 

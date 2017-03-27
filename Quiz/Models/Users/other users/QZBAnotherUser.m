@@ -21,18 +21,10 @@
 
     self.userStatistics = [[QZBUserStatistic alloc] initWithDict:dict];
 
-    NSString *avaURL = dict[@"avatar_thumb_url"];
+    NSString *avatarURL = dict[@"avatar_thumb_url"];
 
-    if (![avaURL isEqual:[NSNull null]] && avaURL) {
-
-      if ([avaURL hasPrefix:QZBServerBaseUrl]) {
-        self.imageURL = [NSURL URLWithString:avaURL];
-      } else {
-
-        NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:avaURL];
-
-        self.imageURL = [NSURL URLWithString:urlStr];
-      }
+    if (![avatarURL isEqual:[NSNull null]] && avatarURL) {
+      self.imageURL = [NSURL URLWithString:avatarURL];
     } else {
       self.imageURL = nil;
     }
@@ -40,13 +32,7 @@
     NSString *avaURLBig = dict[@"avatar_url"];
 
     if (![avaURLBig isEqual:[NSNull null]] && avaURLBig) {
-      if ([avaURLBig hasPrefix:QZBServerBaseUrl]) {
-        self.imageURLBig = [NSURL URLWithString:avaURLBig];
-      } else {
-
-        NSString *urlStr = [QZBServerBaseUrl stringByAppendingString:avaURLBig];
-        self.imageURLBig = [NSURL URLWithString:urlStr];
-      }
+      self.imageURLBig = [NSURL URLWithString:avaURLBig];
     } else {
       self.imageURLBig = nil;
     }
