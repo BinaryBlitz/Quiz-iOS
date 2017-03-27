@@ -103,8 +103,7 @@
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   QZBCategory *category = self.categories[indexPath.row];
   cell.categoryLabel.text = category.name;
-  NSURL *categoryBannerURL =
-      [NSURL URLWithString:category.banner_url];
+  NSURL *categoryBannerURL = [NSURL URLWithString:category.banner_url];
 
   DFMutableImageRequestOptions *options = [DFMutableImageRequestOptions new];
   options.allowsClipping = YES;

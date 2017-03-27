@@ -150,20 +150,14 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
         [NSURLRequest requestWithURL:url
                          cachePolicy:NSURLRequestReturnCacheDataElseLoad
                      timeoutInterval:60];
-    //   UIImage *image = [[UIImage alloc] init];
 
     [self.backgroundImageView setImageWithURLRequest:imageRequest
                                     placeholderImage:nil
                                              success:nil
                                              failure:nil];
   }
-  //    if([QZBSessionManager sessionManager].roomWorker){
-  //        [self loadRoomView];
-  //    }
 
   if ([QZBSessionManager sessionManager].roomWorker) {
-    //        [self loadRoomView];
-    //        [self setRoomsUsersScoresForUserWithID:@(-1)];
     self.opponentImage.hidden = YES;
     self.opponentBV.hidden = YES;
     self.opponentNameLabel.hidden = YES;

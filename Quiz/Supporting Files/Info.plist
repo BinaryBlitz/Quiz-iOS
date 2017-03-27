@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>31</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -59,23 +59,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Take a photo to update profile picture</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose a photo from your library to update profile picture</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>MuseoSansCyrl.otf</string>
-		<string>MuseoSansCyrl_0.otf</string>
-		<string>MuseoSansCyrl_1.otf</string>
-		<string>MuseoSansCyrl_2.otf</string>
-		<string>MuseoSansCyrl_3.otf</string>
-	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

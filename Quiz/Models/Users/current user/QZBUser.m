@@ -52,16 +52,14 @@
 
     NSString *urlAppend = dict[@"avatar_thumb_url"];
     if (![urlAppend isEqual:[NSNull null]]) {
-      NSString *urlString = [QZBServerBaseUrl stringByAppendingString:urlAppend];
-      self.imageURL = [NSURL URLWithString:urlString];
+      self.imageURL = [NSURL URLWithString:urlAppend];
     } else {
       self.imageURL = nil;
     }
 
     NSString *urlAppendBig = dict[@"avatar_url"];
     if (![urlAppendBig isEqual:[NSNull null]]) {
-      NSString *urlString = [QZBServerBaseUrl stringByAppendingString:urlAppendBig];
-      self.imageURLBig = [NSURL URLWithString:urlString];
+      self.imageURLBig = [NSURL URLWithString:urlAppendBig];
     } else {
       self.imageURLBig = nil;
     }
