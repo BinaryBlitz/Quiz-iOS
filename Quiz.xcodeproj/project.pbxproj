@@ -261,7 +261,7 @@
 		191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+MultiLineAutoSize.h"; sourceTree = "<group>"; };
 		191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+MultiLineAutoSize.m"; sourceTree = "<group>"; };
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
-		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
+		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; wrapsLines = 1; };
 		192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QZBRoomFakeKeyboard.xib; sourceTree = "<group>"; };
 		192311C81BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomFakeKeyboard.h; sourceTree = "<group>"; };
 		192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomFakeKeyboard.m; sourceTree = "<group>"; };
@@ -697,15 +697,8 @@
 				191E12E31A8BD3A700AFB829 /* Resources */,
 				191559C41A39CDD400462C93 /* Supporting Files */,
 				19CB508E1A3C32F000A3CD74 /* Views */,
+				377081BB1E8F018E0015D388 /* UI */,
 				191559D41A39CDD400462C93 /* Images.xcassets */,
-				199820AB1A44A039003AECB9 /* Main.storyboard */,
-				372E7F681E869880000D88BD /* Leaderboard.storyboard */,
-				372E7F651E869791000D88BD /* Registration.storyboard */,
-				372E7F631E869583000D88BD /* Profile.storyboard */,
-				372E7F601E869358000D88BD /* Login.storyboard */,
-				372E7F5E1E86920A000D88BD /* Topics.storyboard */,
-				372E7F5B1E86909B000D88BD /* Store.storyboard */,
-				372E7F591E868DE7000D88BD /* Settings.storyboard */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
 			);
 			path = Quiz;
@@ -910,12 +903,13 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		19416C1D1B2C7040005D34EA /* topic and category */ = {
+		19416C1D1B2C7040005D34EA /* Topic and category */ = {
 			isa = PBXGroup;
 			children = (
 				19416C1E1B2C7072005D34EA /* QZBChooseThisCategoryCell.h */,
 				19416C1F1B2C7072005D34EA /* QZBChooseThisCategoryCell.m */,
 			);
+			name = "Topic and category";
 			path = "topic and category";
 			sourceTree = "<group>";
 		};
@@ -1063,7 +1057,7 @@
 		196587A21AC5B52500C58C60 /* Rating */ = {
 			isa = PBXGroup;
 			children = (
-				19416C1D1B2C7040005D34EA /* topic and category */,
+				19416C1D1B2C7040005D34EA /* Topic and category */,
 				199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */,
 				199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */,
 				19DEA8601A8561E600E610DB /* QZBRatingTVCell.h */,
@@ -1495,6 +1489,21 @@
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		377081BB1E8F018E0015D388 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				199820AB1A44A039003AECB9 /* Main.storyboard */,
+				372E7F681E869880000D88BD /* Leaderboard.storyboard */,
+				372E7F651E869791000D88BD /* Registration.storyboard */,
+				372E7F631E869583000D88BD /* Profile.storyboard */,
+				372E7F601E869358000D88BD /* Login.storyboard */,
+				372E7F5E1E86920A000D88BD /* Topics.storyboard */,
+				372E7F5B1E86909B000D88BD /* Store.storyboard */,
+				372E7F591E868DE7000D88BD /* Settings.storyboard */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
