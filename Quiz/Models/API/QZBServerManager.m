@@ -42,7 +42,7 @@ static const int ddLogLevel = LOG_LEVEL_ERROR;
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
 
-NSString *const QZBServerBaseUrl = @"https://oneversus.one";
+NSString *const QZBServerBaseUrl = @"https://onevsone-staging.herokuapp.com";
 NSString *const QZBPusherKey = @"3335176afe7e37cd28c2";
 NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 NSString *const QZBiTunesIdentifier = @"1017347211";
@@ -94,12 +94,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               [self updateCategories:responseObject];
 
                               [[NSManagedObjectContext MR_defaultContext]
-                                  MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+                               MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
 
-                                    if (successAF) {
-                                      successAF([QZBCategory MR_findAll]);
-                                    }
-                                  }];
+                                 if (successAF) {
+                                   successAF([QZBCategory MR_findAll]);
+                                 }
+                               }];
                             }
                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               DDLogInfo(@"Error: %@", error);
@@ -160,7 +160,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
     }
 
     QZBCategory *existingEntity =
-        [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
+    [QZBCategory MR_findFirstByAttribute:@"category_id" withValue:category_id];
 
     if (!existingEntity) {
       existingEntity = [QZBCategory MR_createEntity];
@@ -228,7 +228,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   }
 
   NSMutableArray *allTopics =
-      [NSMutableArray arrayWithArray:[[category relationToTopic] allObjects]];
+  [NSMutableArray arrayWithArray:[[category relationToTopic] allObjects]];
 
   [allTopics removeObjectsInArray:objectsArray];
 
@@ -281,31 +281,19 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               NSArray *rooms = [self parseRoomsFromArray:roomsDicts];
 
                               NSNumber *needStartMessager = @(NO);
-                              if (responseObject[@"layer_needs_authentication"] &&
-                                  ![responseObject[@"layer_needs_authentication"] isEqual:[NSNull null]]) {
-
-                                //NSLog(@"need start layer %@",responseObject[@"layer_needs_authentication"]);
-                                needStartMessager = responseObject[@"layer_needs_authentication"];
-
-                                if ([needStartMessager boolValue]) {
-                                  [[QZBCurrentUser sharedInstance] setNeedStartMessager:[needStartMessager boolValue]];
-                                }
-                              }
 
                               NSDictionary *resultDict = @{
-                                  @"needStartMessager": needStartMessager,
-                                  @"favorite_topics": faveTopics,
-                                  @"recent_topics": recentTopics,
-                                  @"friends_favorite_topics": friendsFaveTopics,
-                                  @"featured_topics": featuredTopics,
-                                  @"random_topics": randomTopics,
-                                  @"challenges": challenges,
-                                  @"challenged": challenged,
-                                  @"room_invites": roomInvites,
-                                  @"rooms": rooms
-                              };
-
-                              //  NSDictionary *resultDict = @{};
+                                                           @"needStartMessager": needStartMessager,
+                                                           @"favorite_topics": faveTopics,
+                                                           @"recent_topics": recentTopics,
+                                                           @"friends_favorite_topics": friendsFaveTopics,
+                                                           @"featured_topics": featuredTopics,
+                                                           @"random_topics": randomTopics,
+                                                           @"challenges": challenges,
+                                                           @"challenged": challenged,
+                                                           @"room_invites": roomInvites,
+                                                           @"rooms": rooms
+                                                           };
                               if (success) {
                                 success(resultDict);
                               }
@@ -352,9 +340,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   }
 
   NSDictionary *params = @{
-      @"lobby": @{@"topic_id": topic.topic_id},
-      @"token": [QZBCurrentUser sharedInstance].user.api_key
-  };
+                           @"lobby": @{@"topic_id": topic.topic_id},
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key
+                           };
 
   [self.requestOperationManager POST:@"lobbies"
                           parameters:params
@@ -436,12 +424,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"game_question": @{@"answer_id": @(answerID), @"time": @(answerTime)},
-      @"token": [QZBCurrentUser sharedInstance].user.api_key
-  };
+                           @"game_question": @{@"answer_id": @(answerID), @"time": @(answerTime)},
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key
+                           };
 
   NSString *URLString =
-      [NSString stringWithFormat:@"game_questions/%ld", (long) sessionQuestionID];
+  [NSString stringWithFormat:@"game_questions/%ld", (long) sessionQuestionID];
 
   [self.requestOperationManager PATCH:URLString
                            parameters:params
@@ -483,13 +471,13 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)PATCHMakeChallengeOfflineWithNumber:(NSNumber *)sessionID
                                   onSuccess:(void (^)())success
                                   onFailure:
-                                      (void (^)(NSError *error, NSInteger statusCode))failure {
+(void (^)(NSError *error, NSInteger statusCode))failure {
   NSString *urlString = [NSString stringWithFormat:@"game_sessions/%@", sessionID];
 
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"game_session": @{@"offline": @YES}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"game_session": @{@"offline": @YES}
+                           };
 
   [self.requestOperationManager PATCH:urlString
                            parameters:params
@@ -534,10 +522,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   }
 
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"opponent_id": userID,
-      @"topic_id": topic.topic_id
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"opponent_id": userID,
+                           @"topic_id": topic.topic_id
+                           };
 
   [self.requestOperationManager POST:@"lobbies/challenge"
                           parameters:params
@@ -580,7 +568,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
                                QZBSession *session = [[QZBSession alloc] initWIthDictionary:responseObject];
                                QZBOpponentBot *opponentBot =
-                                   [[QZBOpponentBot alloc] initWithHostAnswers:responseObject];
+                               [[QZBOpponentBot alloc] initWithHostAnswers:responseObject];
 
                                if (success) {
                                  success(session, opponentBot);
@@ -662,7 +650,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
   for (NSDictionary *dict in responseObject) {
     QZBChallengeDescription *challengeDescription =
-        [[QZBChallengeDescription alloc] initWithDictionary:dict];
+    [[QZBChallengeDescription alloc] initWithDictionary:dict];
     [challengeDescriptionsMuttable addObject:challengeDescription];
   }
 
@@ -677,7 +665,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   for (NSDictionary *dict in responseObject) {
     if (![dict[@"results"] isEqual:[NSNull null]] && dict[@"results"]) {
       QZBChallengeDescriptionWithResults *result =
-          [[QZBChallengeDescriptionWithResults alloc] initWithDictionary:dict];
+      [[QZBChallengeDescriptionWithResults alloc] initWithDictionary:dict];
 
       [challengesResultsMuttable addObject:result];
     }
@@ -706,16 +694,16 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                     password:(NSString *)password
                    onSuccess:(void (^)(QZBUser *user))success
                    onFailure:(void (^)(NSError *error,
-                       NSInteger statusCode,
-                       QZBUserRegistrationProblem problem))failure {
+                                       NSInteger statusCode,
+                                       QZBUserRegistrationProblem problem))failure {
   NSString *hashedPassword = [self hashPassword:password];
 
   NSDictionary *params = nil;
   if (userEmail.length > 0) {
     params = @{
-        @"player":
-        @{@"username": userName, @"email": userEmail, @"password": hashedPassword}
-    };
+               @"player":
+                 @{@"username": userName, @"email": userEmail, @"password": hashedPassword}
+               };
   } else {
     params = @{@"player": @{@"username": userName, @"password": hashedPassword}};
   }
@@ -743,7 +731,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  DDLogInfo(@"problem %@", usernameProblems);
                                  problem = QZBUserNameProblem;
                                } else if (![operation.responseObject[@"email"] isEqual:[NSNull null]] &&
-                                   operation.responseObject[@"email"]) {
+                                          operation.responseObject[@"email"]) {
                                  NSArray *usernameProblems = operation.responseObject[@"email"];
                                  // NSString *problem = [usernameProblems firstObject];
                                  DDLogInfo(@"problem %@", usernameProblems);
@@ -888,13 +876,13 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)PATCHPlayerWithNewPassword:(NSString *)password
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error,
-                             NSInteger statusCode,
-                             QZBUserRegistrationProblem problem))failure {
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure {
   NSString *hashedPassword = [self hashPassword:password];
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"player": @{@"password": hashedPassword}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"player": @{@"password": hashedPassword}
+                           };
 
   [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
@@ -902,12 +890,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)PATCHPlayerWithNewUserName:(NSString *)userName
                          onSuccess:(void (^)())success
                          onFailure:(void (^)(NSError *error,
-                             NSInteger statusCode,
-                             QZBUserRegistrationProblem problem))failure {
+                                             NSInteger statusCode,
+                                             QZBUserRegistrationProblem problem))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"player": @{@"username": userName}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"player": @{@"username": userName}
+                           };
 
   [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
@@ -916,9 +904,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                               user:(QZBUser *)user
                                          onSuccess:(void (^)())success
                                          onFailure:
-                                             (void (^)(NSError *error,
-                                             NSInteger statusCode,
-                                             QZBUserRegistrationProblem problem))failure {
+(void (^)(NSError *error,
+          NSInteger statusCode,
+          QZBUserRegistrationProblem problem))failure {
   NSDictionary *params = @{@"token": user.api_key, @"player": @{@"username": userName}};
 
   [self PATHPlayerDataWithDict:params userID:user.userID onSuccess:success onFailure:failure];
@@ -927,34 +915,34 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)PATCHPlayerWithNewAvatar:(UIImage *)avatar
                        onSuccess:(void (^)())success
                        onFailure:(void (^)(NSError *error,
-                           NSInteger statusCode,
-                           QZBUserRegistrationProblem problem))failure {
+                                           NSInteger statusCode,
+                                           QZBUserRegistrationProblem problem))failure {
   NSString *base64str =
-      [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
+  [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"player": @{@"avatar": base64str}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"player": @{@"avatar": base64str}
+                           };
 
   [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
 
 - (void)PATCHPlayerDeleteAvatarOnSuccess:(void (^)())success
                                onFailure:(void (^)(NSError *error,
-                                   NSInteger statusCode,
-                                   QZBUserRegistrationProblem problem))failure {
+                                                   NSInteger statusCode,
+                                                   QZBUserRegistrationProblem problem))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"player": @{@"remove_avatar": @(YES), @"remove_vk_avatar": @(YES)}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"player": @{@"remove_avatar": @(YES), @"remove_vk_avatar": @(YES)}
+                           };
   [self PATHPlayerDataWithDict:params userID:nil onSuccess:success onFailure:failure];
 }
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
   UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(200, 200)];
   return [UIImageJPEGRepresentation(newImage, 1.0)
-      base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+          base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
@@ -974,8 +962,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                         userID:(NSNumber *)userID
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error,
-                         NSInteger statusCode,
-                         QZBUserRegistrationProblem problem))failure {
+                                         NSInteger statusCode,
+                                         QZBUserRegistrationProblem problem))failure {
   if (!userID) {
     userID = [QZBCurrentUser sharedInstance].user.userID;
   }
@@ -1020,8 +1008,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   DDLogInfo(@"user id %@", userID);
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"friend_id": userID};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"friend_id": userID};
   NSString *urlString = @"friend_requests";
 
   [self.requestOperationManager POST:urlString
@@ -1172,8 +1160,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   NSString *urlString = [NSString stringWithFormat:@"players/%@/report", userID];
 
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"message": reportMessage};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"message": reportMessage};
 
   [self.requestOperationManager GET:urlString
                          parameters:params
@@ -1242,10 +1230,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                           onSuccess:(void (^)())success
                           onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"question_id": @(questionID),
-      @"message": @"message"
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"question_id": @(questionID),
+                           @"message": @"message"
+                           };
   //   NSString *urlAsString = [NSString stringWithFormat:@"reports/%@/report", @(questionID)];
 
   [self.requestOperationManager POST:@"reports"
@@ -1271,8 +1259,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  onSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"message": message};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"message": message};
 
   [self.requestOperationManager POST:@"reports"
                           parameters:params
@@ -1304,8 +1292,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   // NSMutableString *urlAsString = [NSMutableString stringWithString:@"rankings/"];
 
   NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key
-  }];
+                                                                                @"token": [QZBCurrentUser sharedInstance].user.api_key
+                                                                                }];
 
   if (isWeekly) {
     params[@"weekly"] = @"true";
@@ -1412,11 +1400,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   DDLogInfo(@"device token %@", token);
 
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"device_token": @{
-          @"token": token,
-          @"platform": @"ios"}
-      };
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"device_token": @{
+        @"token": token,
+        @"platform": @"ios"}
+    };
 
   [self.requestOperationManager POST:@"device_tokens"
                           parameters:params
@@ -1440,11 +1428,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                 onSuccess:(void (^)())success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
 
-      @"old_token": oldToken,
-      @"new_token": newToken
-  };
+                           @"old_token": oldToken,
+                           @"new_token": newToken
+                           };
 
   [self.requestOperationManager PATCH:@"device_tokens/replace"
                            parameters:params
@@ -1467,27 +1455,25 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 - (void)DELETEAPNsToken:(NSString *)token
               onSuccess:(void (^)())success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-  NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"device_token": @{
-          @"token": token,
-          @"platform": @"ios"}
-      };
+  NSDictionary *params = @{
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"user": @{ @"device_token": token }
+                           };
 
-  [self.requestOperationManager DELETE:@"device_tokens/delete"
-                            parameters:params
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                 DDLogInfo(@"token delete response %@", responseObject);
-                                 if (success) {
-                                   success();
-                                 }
-                               }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                 DDLogInfo(@"token delete failure %@", error);
-                                 if (failure) {
-                                   failure(error, operation.response.statusCode);
-                                 }
-                               }];
+  [self.requestOperationManager PATCH:@"players"
+                           parameters:params
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                DDLogInfo(@"token delete response %@", responseObject);
+                                if (success) {
+                                  success();
+                                }
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                DDLogInfo(@"token delete failure %@", error);
+                                if (failure) {
+                                  failure(error, operation.response.statusCode);
+                                }
+                              }];
 }
 
 #pragma mark - IAP
@@ -1534,8 +1520,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
     }
   }
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"identifier": identifier};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"identifier": identifier};
 
   [self.requestOperationManager POST:@"purchases"
                           parameters:params
@@ -1562,8 +1548,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                        OnSuccess:(void (^)(NSArray *friends))success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"query": text};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"query": text};
 
   [self.requestOperationManager GET:@"players/search"
                          parameters:params
@@ -1635,36 +1621,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   return [NSArray arrayWithArray:tmpArr];
 }
 
-#pragma mark - messager notifications
-
-- (void)POSTAuthenticateLayerWithNonce:(NSString *)nonce
-                              callback:(void (^)(NSString *token, NSError *error))callback {
-  NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"nonce": nonce};
-
-  [self.requestOperationManager POST:@"players/authenticate_layer"
-                          parameters:params
-                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-                               NSLog(@"layer auth %@", responseObject);
-                               NSString *token = responseObject[@"token"];
-                               if (callback) {
-                                 callback(token, nil);
-                               }
-                             }
-                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-                               DDLogError(@"layer responce %@ identy err %@ status %ld", operation, error,
-                                   (long) operation.response.statusCode);
-                               // operation.response
-
-                               if (callback) {
-                                 callback(nil, error);
-                               }
-                             }];
-}
-
 #pragma mark - rooms
 
 - (void)GETAllRoomsOnSuccess:(void (^)(NSArray *rooms))success
@@ -1701,12 +1657,12 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   }
 
   NSSortDescriptor *sortDescriptor =
-      [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
+  [[NSSortDescriptor alloc] initWithKey:@"roomID" ascending:NO];
   NSSortDescriptor *friendOnlySortDescriptor =
-      [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
+  [[NSSortDescriptor alloc] initWithKey:@"isFriendOnly" ascending:NO];
 
   NSArray *resultArr =
-      [tmpArr sortedArrayUsingDescriptors:@[friendOnlySortDescriptor, sortDescriptor]];
+  [tmpArr sortedArrayUsingDescriptors:@[friendOnlySortDescriptor, sortDescriptor]];
 
   return resultArr;
 }
@@ -1744,9 +1700,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                       OnSuccess:(void (^)(QZBRoom *room))success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"room": @{@"topic_id": topic.topic_id, @"friends_only": @(isPrivate), @"size": size}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"room": @{@"topic_id": topic.topic_id, @"friends_only": @(isPrivate), @"size": size}
+                           };
   [self.requestOperationManager POST:@"rooms"
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -1774,8 +1730,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                  onSuccess:(void (^)())success
                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params =
-      @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-          @"topic_id": topic.topic_id};
+  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
+    @"topic_id": topic.topic_id};
 
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/join", roomID];
 
@@ -1877,10 +1833,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                            onSuccess:(void (^)())success
                            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
 
-      @"room_answer": @{@"answer_id": @(answerID), @"time": @(time)}
-  };
+                           @"room_answer": @{@"answer_id": @(answerID), @"time": @(time)}
+                           };
 
   NSString *urlAsString = [NSString stringWithFormat:@"room_questions/%@/answer", @(questionID)];
 
@@ -1894,7 +1850,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                              }
                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                DDLogCError(@"post answer err %@ \n response object %@", error,
-                                   operation.responseObject);
+                                           operation.responseObject);
 
                                if (failure) {
                                  failure(error, operation.response.statusCode);
@@ -1930,13 +1886,13 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                      onSuccess:(void (^)())success
                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"invite": @{
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"invite": @{
 
-          @"room_id": roomID,
-          @"player_id": userID
-      }
-  };
+                               @"room_id": roomID,
+                               @"player_id": userID
+                               }
+                           };
 
   NSString *urlAsString = [NSString stringWithFormat:@"invites"];
 
@@ -1984,9 +1940,9 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                        onSuccess:(void (^)())success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
-      @"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"participation": @{@"ready": @(isReady)}
-  };
+                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
+                           @"participation": @{@"ready": @(isReady)}
+                           };
   NSString *urlAsString = [NSString stringWithFormat:@"participations/%@", userID];
 
   [self.requestOperationManager PATCH:urlAsString
@@ -2011,15 +1967,15 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                             onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{@"token": [QZBCurrentUser sharedInstance].user.api_key};
   NSString *urlAsString = [NSString stringWithFormat:@"room_sessions/%@", roomID];
-
+  
   [self.requestOperationManager GET:urlAsString
                          parameters:params
                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               DDLogVerbose(@"session results %@", responseObject);
-
+                              
                               QZBRoomSessionResults *rsr =
-                                  [[QZBRoomSessionResults alloc] initWithDictionary:responseObject];
-
+                              [[QZBRoomSessionResults alloc] initWithDictionary:responseObject];
+                              
                               if (success) {
                                 success(rsr);
                               }
@@ -2046,14 +2002,14 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
            inRoomWithID:(NSNumber *)roomID
               onSuccess:(void (^)())success
               onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-
+  
   if (!message || !roomID) {
     return;
   }
   NSDictionary *params = @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"content": message};
+                           @"content": message};
   NSString *urlAsString = [NSString stringWithFormat:@"rooms/%@/messages", roomID];
-
+  
   [self.requestOperationManager POST:urlAsString
                           parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -2062,11 +2018,11 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  success();
                                }
                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogError(@"sending room message error %@", error);
-        if (failure) {
-          failure(error, operation.response.statusCode);
-        }
-      }];
+                               DDLogError(@"sending room message error %@", error);
+                               if (failure) {
+                                 failure(error, operation.response.statusCode);
+                               }
+                             }];
 }
 
 #pragma mark - support
@@ -2075,8 +2031,8 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
   NSDictionary *params = @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"version": version};
-
+                           @"version": version};
+  
   [self.requestOperationManager GET:@"players/version" parameters:params
                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               //{ update_available: true, major: true }
@@ -2086,7 +2042,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                               if (responseObject[@"message"] && ![responseObject[@"message"] isEqual:[NSNull null]]) {
                                 message = responseObject[@"message"];
                               }
-
+                              
                               BOOL needUpdate = [responseObject[@"update_available"] boolValue];
                               BOOL isMajor = [responseObject[@"major"] boolValue];
                               if (needUpdate) {
@@ -2096,41 +2052,17 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                   updateType = QZBUpdateTypeMinor;
                                 }
                               }
-
+                              
                               if (success) {
                                 success(updateType, message);
                               }
                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogError(@"new quest problems err %@", error);
-
-        if (failure) {
-          failure(error, operation.response.statusCode);
-        }
-      }];
-}
-
-- (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
-                                      onSuccess:(void (^)())success
-                                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-
-  NSDictionary *params = @{@"token": [QZBCurrentUser sharedInstance].user.api_key};
-
-  NSString *urlAsString = [NSString stringWithFormat:@"players/%@/flag_layer", userID];
-
-  [self.requestOperationManager PATCH:urlAsString
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-                                DDLogInfo(@"need login PATHCED");
-                                if (success) {
-                                  success();
-                                }
-                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogError(@"patch layer fail err %@", error);
-        if (failure) {
-          failure(error, operation.response.statusCode);
-        }
-      }];
+                              DDLogError(@"new quest problems err %@", error);
+                              
+                              if (failure) {
+                                failure(error, operation.response.statusCode);
+                              }
+                            }];
 }
 
 #pragma mark - new_questions
@@ -2140,16 +2072,16 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                         topicID:(NSNumber *)topicID
                       onSuccess:(void (^)())success
                       onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {//REDO
-
+  
   if (!text || !answers || !topicID) {
     failure(nil, -1);
   }
-
+  
   NSDictionary *params = @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-      @"proposal": @{@"content": text,
-          @"topic_id": topicID,
-          @"answers": answers}
-  };
+                           @"proposal": @{@"content": text,
+                                          @"topic_id": topicID,
+                                          @"answers": answers}
+                           };
   [self.requestOperationManager POST:@"proposals.json" parameters:params
                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                DDLogCInfo(@"new quest ok %@", responseObject);
@@ -2157,13 +2089,13 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                  success();
                                }
                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        DDLogError(@"new quest problems err %@", error);
-
-        if (failure) {
-          failure(error, operation.response.statusCode);
-        }
-      }];
+                               
+                               DDLogError(@"new quest problems err %@", error);
+                               
+                               if (failure) {
+                                 failure(error, operation.response.statusCode);
+                               }
+                             }];
 }
 
 
