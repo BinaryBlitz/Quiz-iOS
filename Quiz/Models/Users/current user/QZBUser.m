@@ -97,26 +97,6 @@
   if (self.imageURLBig) {
     [coder encodeObject:self.imageURLBig forKey:@"user_image_url_big"];
   }
-
-
-//    if(self.pushToken){
-//        [coder encodeObject:self.pushToken forKey:@"pushToken"];
-//    }
-
-//    if(self.userPic){
-//    NSData *imageData = UIImageJPEGRepresentation(self.userPic, 1);
-//    
-//    // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
-//    NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"userpic_img.jpg"]];
-//    
-//    // Write image data to user's folder
-//    [imageData writeToFile:imagePath atomically:YES];
-//    
-//    // Store path in NSUserDefaults
-//        
-//    [coder encodeObject:imagePath forKey:@"userPic"];
-//    }
-
 }
 
 - (NSString *)documentsPathForFileName:(NSString *)name {
@@ -125,7 +105,6 @@
   return [documentsPath stringByAppendingPathComponent:name];
 }
 
-//TODO ?
 - (void)setUserName:(NSString *)userName {
   self.name = userName;
 

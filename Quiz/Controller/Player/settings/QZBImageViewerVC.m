@@ -95,7 +95,7 @@
                                   delegate:self
                          cancelButtonTitle:@"Отменить"
                     destructiveButtonTitle:nil
-                         otherButtonTitles:@"Выбрать из галереии",
+                         otherButtonTitles:@"Выбрать из галереи",
                                            @"Сфотографировать", @"Удалить фотографию", nil];
 
   [actSheet showInView:self.view];

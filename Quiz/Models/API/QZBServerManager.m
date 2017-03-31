@@ -918,7 +918,7 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                            NSInteger statusCode,
                                            QZBUserRegistrationProblem problem))failure {
   NSString *base64str =
-  [@"data:image/jpg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
+  [@"data:image/jpeg;base64," stringByAppendingString:[self encodeToBase64String:avatar]];
 
   NSDictionary *params = @{
                            @"token": [QZBCurrentUser sharedInstance].user.api_key,
