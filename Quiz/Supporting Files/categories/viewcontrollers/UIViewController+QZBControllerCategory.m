@@ -6,14 +6,6 @@
 @implementation UIViewController (QZBControllerCategory)
 
 - (void)initStatusbarWithColor:(UIColor *)color {
-
-//    [self.navigationController.navigationBar setTitleTextAttributes:
-//     [NSDictionary dictionaryWithObjectsAndKeys:
-//      [UIFont boldSystemFontOfSize:21],
-//      NSFontAttributeName, nil]];
-
-  //color = [UIColor brightRedColor];
-
   [self setNeedsStatusBarAppearanceUpdate];
   [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
@@ -44,8 +36,6 @@
 }
 
 - (void)showAlertAboutAchievmentWithDict:(NSDictionary *)dict {
-  // QZBAchievement *achievment = self.achivArray[indexPath.row];
-
   NSDictionary *d = dict[@"badge"];
 
   SCLAlertView *alert = [[SCLAlertView alloc] init];
@@ -93,10 +83,6 @@
 }
 
 - (void)showAlertAboutUnabletoPlay {
-  // QZBAchievement *achievment = self.achivArray[indexPath.row];
-
-  //  NSDictionary *d = dict[@"badge"];
-
   SCLAlertView *alert = [[SCLAlertView alloc] init];
   alert.backgroundType = Blur;
   alert.showAnimationType = FadeIn;
@@ -109,8 +95,6 @@
           [self setNeedsStatusBarAppearanceUpdate];
         });
   }];
-  // UIImageView *v = [[UIImageView alloc] init];
-
 
   [alert showInfo:self.tabBarController
             title:@"Ошибка"
@@ -120,14 +104,9 @@
 }
 
 - (void)showAlertAboutUnvisibleTopic:(NSString *)topicName {
-  // NSDictionary *d = dict[@"badge"];
-
   SCLAlertView *alert = [[SCLAlertView alloc] init];
   alert.backgroundType = Blur;
   alert.showAnimationType = FadeIn;
-
-  // NSString *descr = @"Поздравляем!\n Вы получили новое " @"достиже" @"н" @"и" @"е" @"!";
-  //NSString *name = d[@"name"];
 
   [alert alertIsDismissed:^{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (0.5 * NSEC_PER_SEC)),

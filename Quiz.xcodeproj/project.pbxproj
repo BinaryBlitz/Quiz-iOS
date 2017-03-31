@@ -830,12 +830,13 @@
 			path = session;
 			sourceTree = "<group>";
 		};
-		193D39D71B55770E00301F99 /* color_gen */ = {
+		193D39D71B55770E00301F99 /* Colors generation */ = {
 			isa = PBXGroup;
 			children = (
 				193D39D81B55770E00301F99 /* Color */,
 				193D39DB1B55770E00301F99 /* String */,
 			);
+			name = "Colors generation";
 			path = color_gen;
 			sourceTree = "<group>";
 		};
@@ -886,9 +887,9 @@
 		19407B121AE8E79600A12F20 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				196099F91B2452C400EEB9D6 /* colors */,
-				196099FA1B2454DE00EEB9D6 /* string */,
-				1969631E1B2B235A007DF0E6 /* viewcontrollers */,
+				196099F91B2452C400EEB9D6 /* Colors */,
+				196099FA1B2454DE00EEB9D6 /* String */,
+				1969631E1B2B235A007DF0E6 /* View controllers */,
 				193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */,
 				193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */,
 				196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */,
@@ -1006,24 +1007,26 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		196099F91B2452C400EEB9D6 /* colors */ = {
+		196099F91B2452C400EEB9D6 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
-				193D39D71B55770E00301F99 /* color_gen */,
+				193D39D71B55770E00301F99 /* Colors generation */,
 				196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */,
 				196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */,
 				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
 				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 			);
+			name = Colors;
 			path = colors;
 			sourceTree = "<group>";
 		};
-		196099FA1B2454DE00EEB9D6 /* string */ = {
+		196099FA1B2454DE00EEB9D6 /* String */ = {
 			isa = PBXGroup;
 			children = (
 				1974BC141AD6D6EC0057E966 /* NSString+QZBStringCategory.h */,
 				1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */,
 			);
+			name = String;
 			path = string;
 			sourceTree = "<group>";
 		};
@@ -1090,7 +1093,7 @@
 			path = Topics;
 			sourceTree = "<group>";
 		};
-		1969631E1B2B235A007DF0E6 /* viewcontrollers */ = {
+		1969631E1B2B235A007DF0E6 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */,
@@ -1102,6 +1105,7 @@
 				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
 				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
 			);
+			name = "View controllers";
 			path = viewcontrollers;
 			sourceTree = "<group>";
 		};

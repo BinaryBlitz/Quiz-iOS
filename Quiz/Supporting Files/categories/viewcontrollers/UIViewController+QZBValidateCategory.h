@@ -15,15 +15,10 @@ typedef enum {
 } QZBLoginErrors;
 
 - (BOOL)validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField;
-
 - (NSString *)errorAsNSString:(QZBLoginErrors)errorType;
-
 - (BOOL)validateEmailNormal:(NSString *)candidate;
-
 - (BOOL)validatePassword:(NSString *)candidate;
-
 - (BOOL)validateUsername:(NSString *)candidate;
-
 - (BOOL)validateEmail:(NSString *)candidate;
 
 @end

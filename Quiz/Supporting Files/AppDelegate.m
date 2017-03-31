@@ -166,21 +166,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     dict[NSLocalizedFailureReasonErrorKey] = failureReason;
     dict[NSUnderlyingErrorKey] = error;
     error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-    // Replace this with code to handle the error appropriately.
-    // abort() causes the application to generate a crash log and terminate. You should not use
-    // this function in a
-    // shipping application, although it may be useful during development.
     DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
-    // abort();
   }
 
   return _persistentStoreCoordinator;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
-  // Returns the managed object context for the application (which is already bound to the
-  // persistent store
-  // coordinator for the application.)
   if (_managedObjectContext != nil) {
     return _managedObjectContext;
   }
@@ -201,11 +193,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   if (managedObjectContext != nil) {
     NSError *error = nil;
     if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-      // Replace this implementation with code to handle the error appropriately.
-      // abort() causes the application to generate a crash log and terminate. You should not
-      // use this function in
-      // a shipping application, although it may be useful during development.
-      // DDLogError(@"Unresolved error %@, %@", error, [error userInfo]);
       abort();
     }
   }
@@ -215,16 +202,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 - (void)                             application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  // DDLogInfo(@"My token is: %@", deviceToken);
-
-  // DataModel *dataModel = chatViewController.dataModel;
-  // NSString *oldToken = [dataModel deviceToken];
-
-  //    NSString *newToken = [deviceToken description];
-  //    newToken = [newToken
-  //        stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-  //    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-
   [[QZBCurrentUser sharedInstance] setAPNsToken:deviceToken];
 }
 
@@ -256,11 +233,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 
     [self setBadgeWithDictionary:userInfo];
   }
-}
-
-- (void)                             application:(UIApplication *)application
-didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  // DDLogWarn(@"Failed to get token, error: %@", error);
 }
 
 - (void)setBadgeWithDictionary:(NSDictionary *)userInfo {
@@ -334,8 +306,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 }
 
 - (void)showRoomsWithDict:(NSDictionary *)dict {
-  // roomListTWCIdentifier
-
   if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBNeedUpdateMainScreen"
                                                         object:nil];
@@ -350,13 +320,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
       body = d[@"alert"];
     } else {
       return;
-      //       NSLog(@"EMPTY");
     }
-    //        NSDictionary *p = userInfo[@"player"];
-    //        NSString *username = p[@"username"];  // userInfo[@""];
-    //        NSString *body = d[@"content"];
-    //
-    //        body = userInfo[]
 
 
     NSDictionary *payload = @{@"username": @"", @"message": body};
