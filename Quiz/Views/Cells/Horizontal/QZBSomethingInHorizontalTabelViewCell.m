@@ -4,15 +4,13 @@
 
 @implementation QZBSomethingInHorizontalTabelViewCell
 
-- (void)awakeFromNib {
-  // Initialization code
-}
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+
   if (self) {
     [self commonInit];
   }
+
   return self;
 }
 
@@ -35,12 +33,6 @@
 
   [self addSubview:self.name];
   [self addSubview:self.picture];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
 }
 
 - (void)setName:(NSString *)name picURLAsString:(NSString *)URLString {
@@ -70,6 +62,5 @@
 - (NSString *)reuseIdentifier {
   return @"somethingInHorizontalCell";
 }
-
 
 @end

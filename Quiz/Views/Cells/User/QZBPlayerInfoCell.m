@@ -12,6 +12,8 @@
 @implementation QZBPlayerInfoCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   UIEdgeInsets edgeInset = UIEdgeInsetsMake(10, 10, 10, 10);
 
   self.playerUserpic.userInteractionEnabled = YES;

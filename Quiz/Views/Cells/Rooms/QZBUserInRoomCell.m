@@ -6,6 +6,8 @@
 @implementation QZBUserInRoomCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   self.isReadyBackView.layer.borderWidth = 2.0;
   self.isReadyBackView.layer.borderColor = [UIColor goldColor].CGColor;
 }

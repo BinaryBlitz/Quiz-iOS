@@ -3,7 +3,8 @@
 @implementation QZBStoreBoosterCell
 
 - (void)awakeFromNib {
-  //  [self.purchaseButton configButtonWithRoundedBorders];
+  [super awakeFromNib];
+
   self.layer.cornerRadius = 5.0;
   self.clipsToBounds = YES;
 }

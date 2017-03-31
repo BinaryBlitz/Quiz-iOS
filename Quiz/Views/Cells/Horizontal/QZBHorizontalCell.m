@@ -36,7 +36,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
   self.horizontalTabelView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
   self.horizontalTabelView.allowsSelection = YES;
-  // self.horizontalTabelView.
 
   CGAffineTransform transform = CGAffineTransformMakeRotation(-1.5707963);
   self.horizontalTabelView.transform = transform;
@@ -60,8 +59,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
 }
 
 #pragma mark - UITableViewDataSource

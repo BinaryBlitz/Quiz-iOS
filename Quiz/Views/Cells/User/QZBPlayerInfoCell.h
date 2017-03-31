@@ -11,7 +11,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
 
 - (void)setBAdgeCount:(NSInteger)count;
-
 - (void)setMessageBadgeCount:(NSInteger)count;
 
 @end

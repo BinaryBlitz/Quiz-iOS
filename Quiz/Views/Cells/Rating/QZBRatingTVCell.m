@@ -8,22 +8,9 @@
 
 @property (strong, nonatomic) QZBUserInRating *user;
 
-
 @end
 
 @implementation QZBRatingTVCell
-
-- (void)awakeFromNib {
-  [super awakeFromNib];
-
-  // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
-}
 
 - (void)setCellWithUser:(QZBUserInRating *)user {
 
@@ -46,12 +33,7 @@
     NSInteger newPoints = user.points / 1000;
     points = [NSString stringWithFormat:@"%ldк", (long) newPoints];
   }
-  self.score.text = points;//[NSString stringWithFormat:@"%ld", (long)user.points];
-
-  //  NSURL *url = [NSURL URLWithString:self.urlString];
-
-  // [self.userpic setImageWithURL:url];
-
+  self.score.text = points;
 }
 
 @end

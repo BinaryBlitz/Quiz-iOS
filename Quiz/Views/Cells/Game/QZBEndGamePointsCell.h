@@ -8,7 +8,6 @@
 @property (weak, nonatomic) IBOutlet UAProgressView *circleView;
 
 - (void)setCentralLabelWithNimber:(NSInteger)multiplier;
-
 - (void)setScore:(NSUInteger)score;
 
 @end
