@@ -860,7 +860,7 @@
 			path = String;
 			sourceTree = "<group>";
 		};
-		193DEE3E1B0E21B2009CEB50 /* friendRequest */ = {
+		193DEE3E1B0E21B2009CEB50 /* Friend request */ = {
 			isa = PBXGroup;
 			children = (
 				193DEE3F1B0E227D009CEB50 /* QZBFriendRequest.h */,
@@ -868,6 +868,7 @@
 				193DEE441B0E2713009CEB50 /* QZBFriendRequestManager.h */,
 				193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */,
 			);
+			name = "Friend request";
 			path = friendRequest;
 			sourceTree = "<group>";
 		};
@@ -964,7 +965,7 @@
 			path = "Friend cells";
 			sourceTree = "<group>";
 		};
-		1944A1741B0F54200095C600 /* other users */ = {
+		1944A1741B0F54200095C600 /* Other users */ = {
 			isa = PBXGroup;
 			children = (
 				191E12F61A8CD80400AFB829 /* QZBAnotherUser.h */,
@@ -975,10 +976,11 @@
 				19CB50981A3C388000A3CD74 /* QZBUserInSession.m */,
 				198E09651AA1E584006A08BB /* QZBUserProtocol.h */,
 			);
+			name = "Other users";
 			path = "other users";
 			sourceTree = "<group>";
 		};
-		1944A1751B0F543A0095C600 /* current user */ = {
+		1944A1751B0F543A0095C600 /* Current user */ = {
 			isa = PBXGroup;
 			children = (
 				1976699D1A67EEAC006C2757 /* QZBCurrentUser.h */,
@@ -986,6 +988,7 @@
 				19CB509E1A3C51CA00A3CD74 /* QZBUser.h */,
 				19CB509F1A3C51CA00A3CD74 /* QZBUser.m */,
 			);
+			name = "Current user";
 			path = "current user";
 			sourceTree = "<group>";
 		};
@@ -1382,10 +1385,10 @@
 		19CB509A1A3C388900A3CD74 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				19D891471ABB2DB000251ADF /* achievments */,
-				1944A1751B0F543A0095C600 /* current user */,
-				193DEE3E1B0E21B2009CEB50 /* friendRequest */,
-				1944A1741B0F54200095C600 /* other users */,
+				19D891471ABB2DB000251ADF /* Achievments */,
+				1944A1751B0F543A0095C600 /* Current user */,
+				193DEE3E1B0E21B2009CEB50 /* Friend request */,
+				1944A1741B0F54200095C600 /* Other users */,
 				1965879E1AC58A8E00C58C60 /* QZBUserStatistic.h */,
 				1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */,
 				1901BA1E1B30646C003E2895 /* QZBUserWithTopic.h */,
@@ -1468,10 +1471,11 @@
 			path = "Text fields";
 			sourceTree = "<group>";
 		};
-		19D891471ABB2DB000251ADF /* achievments */ = {
+		19D891471ABB2DB000251ADF /* Achievments */ = {
 			isa = PBXGroup;
 			children = (
 			);
+			name = Achievments;
 			path = achievments;
 			sourceTree = "<group>";
 		};

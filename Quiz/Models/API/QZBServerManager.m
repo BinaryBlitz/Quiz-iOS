@@ -499,18 +499,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
 #pragma mark - challenge
 
-// POST /lobbies/challenge
-//
-// Challenges and notifies opponent. You should open a Pusher channel and wait
-// for game-start event
-// once the session was returned. You may also receive a challenge-declined
-// event if the opponent
-// decided to decline your challenge.
-//
-// opponent_id — opponent
-//
-// topic_id — topic
-
 - (void)POSTLobbyChallengeWithUserID:(NSNumber *)userID
                              inTopic:(QZBGameTopic *)topic
                            onSuccess:(void (^)(QZBSession *session))success
@@ -547,12 +535,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
                                DDLogInfo(@" %@", error);
                              }];
 }
-
-// POST /lobbies/:id/accept_challenge
-//
-// Accepts the challenge and notifies the host about it. The host player will be
-// notified with
-// game-start event.
 
 - (void)POSTAcceptChallengeWhithLobbyID:(NSNumber *)lobbyID
                               onSuccess:(void (^)(QZBSession *session, id bot))success
@@ -946,11 +928,6 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 }
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-  // UIGraphicsBeginImageContext(newSize);
-  // In next line, pass 0.0 to use the current device's pixel scaling factor
-  // (and thus account for
-  // Retina resolution).
-  // Pass 1.0 to force exact pixel size.
   UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
   [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
   UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -1306,13 +1283,10 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
   if (ID > 0) {
     if (isCategory) {
       params[@"category_id"] = [NSString stringWithFormat:@"%ld", (long) ID];
-      //[urlAsString appendString:@"category"];
     } else {
-      //   [urlAsString appendString:@"topic"];
       params[@"topic_id"] = [NSString stringWithFormat:@"%ld", (long) ID];
     }
   } else {
-    //  [urlAsString appendString:@"general"];
   }
 
   DDLogInfo(@"params ranking %@", params);
@@ -1391,89 +1365,19 @@ NSString *const QZBiTunesIdentifier = @"1017347211";
 
 #pragma mark - APNs token
 
-- (void)POSTAPNsToken:(NSString *)token
-            onSuccess:(void (^)())success
-            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-  if (!token) {
-    return;
-  }
+- (void)PATCHAPNsToken:(NSString *)token {
   DDLogInfo(@"device token %@", token);
-
-  NSDictionary *params =
-  @{@"token": [QZBCurrentUser sharedInstance].user.api_key,
-    @"device_token": @{
-        @"token": token,
-        @"platform": @"ios"}
-    };
-
-  [self.requestOperationManager POST:@"device_tokens"
-                          parameters:params
-                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                               DDLogInfo(@"token response %@", responseObject);
-                               if (success) {
-                                 success();
-                               }
-                             }
-                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-                               DDLogInfo(@"token failure %@", error);
-                               if (failure) {
-                                 failure(error, operation.response.statusCode);
-                               }
-                             }];
-}
-
-- (void)PATCHAPNsTokenNew:(NSString *)newToken
-                 oldToken:(NSString *)oldToken
-                onSuccess:(void (^)())success
-                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
   NSDictionary *params = @{
                            @"token": [QZBCurrentUser sharedInstance].user.api_key,
-
-                           @"old_token": oldToken,
-                           @"new_token": newToken
+                           @"player": @{ @"device_token": token ? token : [NSNull null] }
                            };
 
-  [self.requestOperationManager PATCH:@"device_tokens/replace"
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-                                DDLogInfo(@"token replace response %@", responseObject);
-                                if (success) {
-                                  success();
-                                }
-                              }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-                                DDLogInfo(@"token replace failure %@", error);
-                                if (failure) {
-                                  failure(error, operation.response.statusCode);
-                                }
-                              }];
-}
-
-- (void)DELETEAPNsToken:(NSString *)token
-              onSuccess:(void (^)())success
-              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure {
-  NSDictionary *params = @{
-                           @"token": [QZBCurrentUser sharedInstance].user.api_key,
-                           @"user": @{ @"device_token": token }
-                           };
-
-  [self.requestOperationManager PATCH:@"players"
-                           parameters:params
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                DDLogInfo(@"token delete response %@", responseObject);
-                                if (success) {
-                                  success();
-                                }
-                              }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                DDLogInfo(@"token delete failure %@", error);
-                                if (failure) {
-                                  failure(error, operation.response.statusCode);
-                                }
-                              }];
+  [self PATHPlayerDataWithDict:params
+                        userID:nil
+                     onSuccess:nil
+                     onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
+                       NSLog(@"Device token update failed");
+                     }];
 }
 
 #pragma mark - IAP
