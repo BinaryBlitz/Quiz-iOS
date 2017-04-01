@@ -264,15 +264,10 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 }
 
 - (void)willRequestUndo {
-  // Notifies the view controller when a user did shake the device to undo the typed text
-
   [super willRequestUndo];
 }
 
 - (void)didCommitTextEditing:(id)sender {
-  // Notifies the view controller when tapped on the right "Accept" button for commiting the
-  // edited text
-
   QZBComment *message = [QZBComment new];
   message.username = @"Commit name";
   message.text = [self.textView.text copy];
@@ -374,29 +369,6 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
   return cell;
 }
 
-//- (QZBCommentRoomCell *)autoCompletionCellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    QZBCommentRoomCell *cell = (QZBCommentRoomCell *)[self.autoCompletionView
-//    dequeueReusableCellWithIdentifier:AutoCompletionCellIdentifier];
-//    cell.indexPath = indexPath;
-//
-//    NSString *item = self.searchResult[indexPath.row];
-//
-//    if ([self.foundPrefix isEqualToString:@"#"]) {
-//        item = [NSString stringWithFormat:@"# %@", item];
-//    }
-//    else if (([self.foundPrefix isEqualToString:@":"] || [self.foundPrefix
-//    isEqualToString:@"+:"])) {
-//        item = [NSString stringWithFormat:@":%@:", item];
-//    }
-//
-//    cell.titleLabel.text = item;
-//    cell.titleLabel.font = [UIFont systemFontOfSize:14.0];
-//    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-//
-//    return cell;
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([tableView isEqual:self.tableView]) {
     QZBComment *message = self.messages[indexPath.row];
@@ -481,15 +453,6 @@ shouldChangeTextInRange:(NSRange)range
 - (void)addSpinnerRight {
   UIActivityIndicatorView *actInd = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
   [actInd startAnimating];
-
-  //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  //    button.frame = CGRectMake(0,0,20, 20);
-  //    [button addTarget:self action:@selector(showChat) forControlEvents:UIControlEventTouchUpInside];
-
-  //    NSString *requestTitle = @"Чат";
-  //
-  //    [button setTitle:requestTitle forState:UIControlStateNormal];
-  // button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithCustomView:actInd];

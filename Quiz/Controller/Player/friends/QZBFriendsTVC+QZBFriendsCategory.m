@@ -9,9 +9,6 @@
     return;
   }
 
-
-  //[SVProgressHUD show];
-
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
   [[QZBServerManager sharedManager] GETSearchFriendsWithText:searchBar.text

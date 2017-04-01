@@ -123,25 +123,9 @@
 shouldChangeTextInRange:(NSRange)range
         replacementText:(NSString *)text {
   if ([text isEqualToString:@"\n"]) {
-    // Be sure to test for equality using the "isEqualToString" message
-    //  [textView resignFirstResponder];
-
     [self sendReportAction:nil];
-    // Return FALSE so that the final '\n' character doesn't get added
     return NO;
   }
-  // For any other character return TRUE so that the text gets added to the view
-  return YES;
-
-  //    NSArray* components = [textView.text componentsSeparatedByString:@"\n"];
-  //    if ([components count] > 0) {
-  //       // NSString* commandText = [components lastObject];
-  //        // and optionally clear the text view and hide the keyboard...
-  //        textView.text = @"";
-  //        [textView resignFirstResponder];
-  //        return NO;
-  //    }
-
   return YES;
 }
 

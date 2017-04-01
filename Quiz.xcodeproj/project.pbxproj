@@ -591,9 +591,9 @@
 		1901BA131B30354A003E2895 /* Rooms */ = {
 			isa = PBXGroup;
 			children = (
-				1901BA241B306DE6003E2895 /* categoryChoose */,
-				19AB8DF71B9DD03D004329F8 /* messages */,
-				1936E0751B3BFBF200BE6B16 /* result */,
+				1901BA241B306DE6003E2895 /* Category picker */,
+				19AB8DF71B9DD03D004329F8 /* Messages */,
+				1936E0751B3BFBF200BE6B16 /* Result */,
 				192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */,
 				192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */,
 				1901BA1B1B305D00003E2895 /* QZBRoomController.h */,
@@ -621,7 +621,7 @@
 			path = Rooms;
 			sourceTree = "<group>";
 		};
-		1901BA241B306DE6003E2895 /* categoryChoose */ = {
+		1901BA241B306DE6003E2895 /* Category picker */ = {
 			isa = PBXGroup;
 			children = (
 				19A29C311B57F59500C5F398 /* QZBFriendsChooserRoomsController.h */,
@@ -631,6 +631,7 @@
 				19FA44F71B319FB200B5E853 /* QZBRoomTopicChooser.h */,
 				19FA44F81B319FB200B5E853 /* QZBRoomTopicChooser.m */,
 			);
+			name = "Category picker";
 			path = categoryChoose;
 			sourceTree = "<group>";
 		};
@@ -812,12 +813,13 @@
 			path = Result;
 			sourceTree = "<group>";
 		};
-		1936E0751B3BFBF200BE6B16 /* result */ = {
+		1936E0751B3BFBF200BE6B16 /* Result */ = {
 			isa = PBXGroup;
 			children = (
 				1936E0761B3BFC0F00BE6B16 /* QZBRoomResultTVC.h */,
 				1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */,
 			);
+			name = Result;
 			path = result;
 			sourceTree = "<group>";
 		};
@@ -944,7 +946,7 @@
 		19446A721A9E35CE005BB485 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
-				1965344E1BA96DFA00342454 /* topics */,
+				1965344E1BA96DFA00342454 /* Topics */,
 				1946058A1AB4977E0023BE0D /* QZBStoreListTVC.h */,
 				1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */,
 			);
@@ -1030,12 +1032,13 @@
 			path = string;
 			sourceTree = "<group>";
 		};
-		1965344E1BA96DFA00342454 /* topics */ = {
+		1965344E1BA96DFA00342454 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
 				1965344F1BA96E2E00342454 /* QZBPaidTopicsController.h */,
 				196534501BA96E2E00342454 /* QZBPaidTopicsController.m */,
 			);
+			name = Topics;
 			path = topics;
 			sourceTree = "<group>";
 		};
@@ -1168,7 +1171,7 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		197E47C71A8F6B4400E43120 /* CategoryChoosers */ = {
+		197E47C71A8F6B4400E43120 /* Category pickers */ = {
 			isa = PBXGroup;
 			children = (
 				199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */,
@@ -1176,10 +1179,11 @@
 				199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */,
 				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
 			);
+			name = "Category pickers";
 			path = CategoryChoosers;
 			sourceTree = "<group>";
 		};
-		197E47CB1A8FAF5000E43120 /* settings */ = {
+		197E47CB1A8FAF5000E43120 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				19CFA1951B5D86ED00DC8C43 /* QZBAboutTVC.h */,
@@ -1191,6 +1195,7 @@
 				197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */,
 				197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */,
 			);
+			name = Settings;
 			path = settings;
 			sourceTree = "<group>";
 		};
@@ -1263,12 +1268,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		19AB8DF71B9DD03D004329F8 /* messages */ = {
+		19AB8DF71B9DD03D004329F8 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
 				19AB8DF81B9DD3EB004329F8 /* QZBRoomCommentController.h */,
 				19AB8DF91B9DD3EB004329F8 /* QZBRoomCommentController.m */,
 			);
+			name = Messages;
 			path = messages;
 			sourceTree = "<group>";
 		};
@@ -1405,7 +1411,7 @@
 			path = question;
 			sourceTree = "<group>";
 		};
-		19CECFB11AB099EA002F9224 /* friends */ = {
+		19CECFB11AB099EA002F9224 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
 				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
@@ -1415,6 +1421,7 @@
 				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
 				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
 			);
+			name = Friends;
 			path = friends;
 			sourceTree = "<group>";
 		};
@@ -1471,7 +1478,7 @@
 		19DEA8591A8552E800E610DB /* Rating */ = {
 			isa = PBXGroup;
 			children = (
-				197E47C71A8F6B4400E43120 /* CategoryChoosers */,
+				197E47C71A8F6B4400E43120 /* Category pickers */,
 				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
 				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
 				19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */,
@@ -1485,8 +1492,8 @@
 		19DFF33F1A700F5B00E8CB1C /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				19CECFB11AB099EA002F9224 /* friends */,
-				197E47CB1A8FAF5000E43120 /* settings */,
+				19CECFB11AB099EA002F9224 /* Friends */,
+				197E47CB1A8FAF5000E43120 /* Settings */,
 				19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */,
 				19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */,
 				19DFF3401A70161D00E8CB1C /* QZBPlayerPersonalPageVC.h */,

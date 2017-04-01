@@ -45,7 +45,6 @@ static NSString *totalStatisticsIdentifier = @"totalStatistics";
 static NSString *descriptionIdentifier = @"descriptionForHorizontal";
 static NSInteger topicsOffset = 7;
 
-//segues
 NSString *const QZBShowUserPicViewController = @"showUserpicViewController";
 
 @interface QZBPlayerPersonalPageVC () <UITableViewDataSource,
@@ -54,19 +53,15 @@ UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSArray *achivArray;
 @property (strong, nonatomic) id <QZBUserProtocol> user;
-@property (strong, nonatomic) NSArray *friends;  // QZBAnotherUser
-@property (strong, nonatomic) NSArray *faveTopics;  // QZBGameTopic
+@property (strong, nonatomic) NSArray *friends;
+@property (strong, nonatomic) NSArray *faveTopics;
 @property (assign, nonatomic) BOOL isCurrent;
 @property (assign, nonatomic) BOOL isFriend;
-
 @property (assign, nonatomic) NSInteger unreadedCount;
-
 @property (strong, nonatomic) NSIndexPath *choosedIndexPath;
 @property (strong, nonatomic) QZBGameTopic *choosedTopic;
 @property (assign, nonatomic) BOOL isOnlineChallenge;
-
 @property (strong, nonatomic) SCLAlertView *alert;
-
 @property (strong, nonatomic) UITapGestureRecognizer *userPicGestureRecognizer;
 @end
 
@@ -83,7 +78,6 @@ UIActionSheetDelegate>
   [self setNeedsStatusBarAppearanceUpdate];
 
   [self initStatusbarWithColor:[UIColor blackColor]];
-  // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
 
   self.userPicGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(showUserPicFullScreen:)];
@@ -92,21 +86,12 @@ UIActionSheetDelegate>
   self.userPicGestureRecognizer.numberOfTouchesRequired = 1;
   self.userPicGestureRecognizer.cancelsTouchesInView = NO;
 
-  //    [self.tabBarController.tabBar setHidden:NO];
-  //
   self.edgesForExtendedLayout = UIRectEdgeAll;
   self.tableView.contentInset = UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
 - (void)viewWillAppear:(BOOL)animate {
   [super viewWillAppear:animate];
-
-  //   [self subscribeToMessages];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(userPressShowAllButton:)
@@ -148,25 +133,17 @@ UIActionSheetDelegate>
   DDLogInfo(@"viewWillAppear %@", self.user.name);
 
   [self updateBadges];
-
-  //   self.tabBarController.tabBar.hidden = NO;
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
   self.tabBarController.tabBar.hidden = NO;
-
-  //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-  //        [self showAlertAboutAchievmentWithDict:@{@"badge":@{@"name":@"name"}}];
-  //    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
 
-  // [self unsubscribeFromMessages];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -484,24 +461,18 @@ UIActionSheetDelegate>
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (buttonIndex == 0) {
-    // Make user response
-
     if (self.user) {
       [self performSegueWithIdentifier:@"showReportScreen" sender:nil];
     }
 
     // TODO
   } else if (buttonIndex == 1) {
-    //    [self performSegueWithIdentifier:@"pushMessager" sender:nil];
-
     [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
   }
 }
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little
-// preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
   if ([segue.identifier isEqualToString:@"showAchivements"]) {
@@ -906,8 +877,6 @@ UIActionSheetDelegate>
 #pragma mark - achievment
 
 - (void)showAchievement:(QZBAchievement *)achievment {
-  // QZBAchievement *achievment = self.achivArray[indexPath.row];
-
   SCLAlertView *alert = [[SCLAlertView alloc] init];
   self.alert = alert;
   alert.backgroundType = Blur;

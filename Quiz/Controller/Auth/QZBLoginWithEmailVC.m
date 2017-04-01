@@ -28,7 +28,6 @@
   self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 
   self.loginInProgress = NO;
-  // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -63,16 +62,6 @@
                    }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before
-navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (IBAction)loginAction:(id)sender {
   NSString *userName = self.userNameTextField.text;
   NSString *password = self.passwordTextField.text;
@@ -82,7 +71,6 @@ navigation
 
     return;
   } else {
-    // self.emailTextField.backgroundColor = [UIColor greenColor];
   }
 
   if (![self validateTextField:self.passwordTextField]) {

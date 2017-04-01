@@ -897,7 +897,7 @@ const NSInteger QZBMaxRedyTime = 20;
 
 - (void)userWithID:(NSNumber *)userID say:(NSString *)message {
 
-  QZBUserInRoomCell *cell = [self cellForUserWithID:userID];// (QZBUserInRoomCell *)[self.tableView cellForRowAtIndexPath:ip];
+  QZBUserInRoomCell *cell = [self cellForUserWithID:userID];
 
   if (!cell) {
     return;
@@ -1002,7 +1002,6 @@ const NSInteger QZBMaxRedyTime = 20;
   }
 
   if (self.time < QZBMaxLeaveTime) {
-    //   NSLog(@"time %ld", (long)self.time);
   } else {
     if (timer != nil) {
       [self leaveThisRoom];
@@ -1036,8 +1035,6 @@ const NSInteger QZBMaxRedyTime = 20;
 }
 
 - (void)accentReadyButtons {
-  // NSLog(@"accented");
-
   QZBUserInRoomCell *cell = [self cellForUserWithID:[QZBCurrentUser sharedInstance].user.userID];
 
   if (!cell) {
@@ -1179,9 +1176,6 @@ const NSInteger QZBMaxRedyTime = 20;
   } else {
     return nil;
   }
-
-//    return cell;
-
 }
 
 

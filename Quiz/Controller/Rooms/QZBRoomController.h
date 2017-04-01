@@ -7,9 +7,6 @@
 @interface QZBRoomController : UITableViewController <QZBSettingTopicProtocol>
 
 - (void)initWithRoom:(QZBRoom *)room;
-
-//- (void)setCurrentUserTopic:(QZBGameTopic *)topic;
-
 - (void)setUserTopic:(QZBGameTopic *)topic;
 
 @end

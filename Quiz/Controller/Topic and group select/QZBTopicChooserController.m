@@ -10,8 +10,6 @@
 #import "QZBCurrentUser.h"
 #import "UIViewController+QZBControllerCategory.h"
 
-//dfiimage
-
 #import <DFImageManager/DFImageManager.h>
 #import <DFImageManager/DFImageRequestOptions.h>
 #import <DFImageManager/DFURLImageFetcher.h>
@@ -20,10 +18,8 @@
 
 @interface QZBTopicChooserController ()
 
-//@property (strong, nonatomic) NSArray *topics;
 @property (strong, nonatomic) QZBCategory *category;
 @property (strong, nonatomic) UIView *backView;
-//@property (strong, nonatomic) QZBGameTopic *choosedTopic;
 
 @property (strong, nonatomic) id <QZBUserProtocol> user;
 
@@ -50,11 +46,6 @@
       setBackIndicatorImage:[UIImage imageNamed:@"backWhiteIcon"]];
   [self.navigationController.navigationBar
       setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backWhiteIcon"]];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -113,8 +104,6 @@
                                                       }
                                                       onFailure:^(NSError *error, NSInteger statusCode) {
                                                       }];
-
-    //  [destinationVC setFriendsOwner:user andFriends:
   }
 }
 
@@ -168,9 +157,6 @@
     } else {
       self.choosedIndexPath = indexPath;
     }
-
-    //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
-    //                                                     fileExtension:kJSQSystemSoundTypeWAV];//REDO
     [tableView beginUpdates];
     [tableView endUpdates];
   } else {
@@ -181,7 +167,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([self.choosedIndexPath isEqual:indexPath]) {
-    // [JSQSystemSoundPlayer sha]
     return 130.0f;
   }
   return 74.0f;

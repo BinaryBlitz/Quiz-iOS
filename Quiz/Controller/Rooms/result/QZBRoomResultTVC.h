@@ -4,7 +4,4 @@
 
 @interface QZBRoomResultTVC : UITableViewController
 
-
-//- (void)configureResultWithRoom:(QZBRoom *)room;
-
 @end

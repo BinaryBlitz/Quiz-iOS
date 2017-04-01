@@ -45,12 +45,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
   self.playOfflineButton.alpha = 0;
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-
-  // Dispose of any resources that can be recreated.
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter]
@@ -64,7 +58,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
   QZBCategory *category = [QZBTopicWorker tryFindRelatedCategoryToTopic:self.topic];
   if (category) {
-    //[self initNavigationBar:topic.relationToCategory.name];
     [self initScreenWithCategory:category];
   }
 
@@ -98,25 +91,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                                                name:QZBPusherChallengeDeclined
                                              object:nil];
 
-  //[self initWhiteViewOn:self.backgroundImageView];
-
   [self addSpinner];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  // [self initWhiteViewOn:self.backgroundImageView];
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
   DDLogInfo(@"showed progress VC");
-  //  self.tabBarController.tabBar.hidden = YES;
 
   self.setted = NO;
   self.isCanceled = NO;
@@ -131,8 +112,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
   if (!self.onlineWorker) {
     self.onlineWorker = [[QZBOnlineSessionWorker alloc] init];
   }
-
-  //  [self addSpinner];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -155,8 +134,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
   [self.timer invalidate];
   self.timer = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-  //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)initNavigationBar:(NSString *)title {
@@ -316,46 +293,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     } else {
       [self postLobbyChallenge];
     }
-
-    //        [[QZBServerManager sharedManager] POSTLobbyChallengeWithUserID:self.user.userID
-    //            inTopic:self.topic
-    //            onSuccess:^(QZBSession *session) {
-    //
-    //                [self setFactWithString:session.fact];
-    //
-    //                QZBLobby *lobby =
-    //                    [[QZBLobby alloc] initWithLobbyID:[session.lobbyID integerValue]
-    //                                              topicID:[self.topic.topic_id integerValue]
-    //                                             playerID:[self.user.userID integerValue]
-    //                                           queryCount:0];
-    //                self.lobby = lobby;
-    //
-    //                [self settitingSession:session
-    //                                   bot:nil];
-    //
-    //                [UIView animateWithDuration:0.4
-    //                    delay:5
-    //                    options:UIViewAnimationOptionCurveEaseInOut
-    //                    animations:^{
-    //
-    //                        self.playOfflineButton.alpha = 1.0;
-    //
-    //                    }
-    //                    completion:^(BOOL finished) {
-    //
-    //                        self.playOfflineButton.enabled = YES;
-    //
-    //                    }];
-    //
-    //               // self.playOfflineButton.alpha = 1.0;//??
-    //
-    //            }
-    //            onFailure:^(NSError *error, NSInteger statusCode){
-    //
-    //                //if(!error && statusCode == -1){
-    //                    [self showAlertServerProblem];
-    //              //  }
-    //            }];
   } else {
   }
 }
@@ -397,13 +334,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
                                                                             self.playOfflineButton.enabled = YES;
                                                                           }];
-
-                                                         // self.playOfflineButton.alpha = 1.0;//??
-
                                                        }
                                                        onFailure:^(NSError *error, NSInteger statusCode) {
 
-                                                         // if(!error && statusCode == -1){
                                                          [self showAlertServerProblem];
                                                          //  }
                                                        }];
@@ -585,18 +518,10 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)initWhiteViewOn:(UIView *)view {
   CGRect r = [UIScreen mainScreen].bounds;
 
-  // FXBlurView *vi = [[FXBlurView alloc] initWithFrame:r];
-  // vi.dynamic = YES;
-  // vi.blurRadius = 0.9;
-  // vi.iterations = 12;
-
-  //[UIColor colorWithWhite:1.0 alpha:0.1];
   UIView *vi = [[UIView alloc] initWithFrame:r];
   vi.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
   [view addSubview:vi];
   [view sendSubviewToBack:vi];
-
-  //  [view setNeedsDisplay];
 }
 
 - (void)addSpinner {
@@ -625,12 +550,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
                               options:0
                               metrics:nil
                                 views:NSDictionaryOfVariableBindings(redView)]];
-
-  //        self.backView.strokeThickness = 2.0;
-  //        self.backView.strokeColor = [UIColor redColor];
-  //        self.backView.radius = 47.0;
-
-  //        [self.backView willMoveToSuperview:self.backView.superview];
 }
 
 #pragma mark - support method

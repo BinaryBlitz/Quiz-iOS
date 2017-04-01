@@ -60,43 +60,16 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.tabBarController setHidesBottomBarWhenPushed:NO];
 
-  //    self.tableView.contentInset =
-  //        UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
-
   self.tableView.tableFooterView = [[UIView alloc]
       initWithFrame:CGRectMake(0,
           0,
           [UIScreen mainScreen].bounds.size.width,
           50)];
-
-  // Uncomment the following line to preserve selection between presentations.
-  // self.clearsSelectionOnViewWillAppear = NO;
-
-  // Uncomment the following line to display an Edit button in the navigation bar for this view
-  // controller.
-  // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self configureBackgroundImage];
-  //   self.tabBarController.hidesBottomBarWhenPushed = YES;
-  // self.tabBarController.tabBar.hidden = NO;
-
-  //[self.tabBarController setHidesBottomBarWhenPushed:NO];
-
-  //    self.tableView.contentInset =
-  //    UIEdgeInsetsMake(0., 0., CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  //    self.tabBarController.tabBar.hidden = NO;
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 - (void)configureWithQuestions:(NSArray *)questions topic:(QZBGameTopic *)topic {
@@ -108,16 +81,10 @@ NSString *const QZBReportSendedMessage = @"Жалоба успешно отпр�
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  //#warning Potentially incomplete method implementation.
-  // Return the number of sections.
   return self.questions.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  //#warning Incomplete method implementation.
-  // Return the number of rows in the section.
-
-  // QZBQuestion *q = self.questions[section];
   NSInteger count = 7;
 
   return count;

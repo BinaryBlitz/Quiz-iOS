@@ -233,17 +233,6 @@ shouldChangeCharactersInRange:(NSRange)range
                        }];
 }
 
-//- (BOOL)checkUserName {
-//    if (![self.userNameTextField validate]) {
-//        [TSMessage
-//            showNotificationWithTitle:@"Имя должно быть длинее 1 символа"
-//                                 type:TSMessageNotificationTypeWarning];
-//        return NO;
-//    } else {
-//        return YES;
-//    }
-//}
-
 - (void)updateUserName {
   NSString *newName = [self.userNameTextField.text copy];
 

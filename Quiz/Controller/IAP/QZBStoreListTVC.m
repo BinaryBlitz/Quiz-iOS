@@ -34,8 +34,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
 
 @implementation QZBStoreListTVC
 
-//-(void)
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -58,8 +56,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
   self.tableView.backgroundColor = [UIColor veryDarkGreyColor];
 
   self.needRelaod = YES;
-
-  // [self addBarButtonRight];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,15 +81,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
                                            selector:@selector(transactionFailed:)
                                                name:IAPHelperProductRestoreFinished
                                              object:nil];
-
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [[QZBServerManager sharedManager] POSTInAppPurchaseIdentifier:@"ru.binaryblitz.1vs1.fiveTimesBoosterTenDays" onSuccess:^{
-//            NSLog(@"OK");
-//        } onFailure:^(NSError *error, NSInteger statusCode) {
-//            NSLog(@"noooooooooooo");
-//        }];
-//    });
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,12 +94,8 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
 }
 
 - (void)reload {
-  // [self.tableView reloadData];
-
   if (!self.reloadInProgress) {
-    // [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     self.reloadInProgress = YES;
-    //    _products = nil;
 
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
@@ -220,18 +203,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
 
     return cell;
   } else
-//        if (indexPath.row == 1) {
-//        QZBDescriptionForHorizontalCell *descrCell =
-//            [tableView dequeueReusableCellWithIdentifier:@"descriptionForHorizontal"];
-//
-//        descrCell.descriptionLabel.text = @"Платные темы";
-//        descrCell.descriptionLabel.textAlignment = NSTextAlignmentCenter;
-//        descrCell.descriptionLabel.textColor = [UIColor whiteColor];
-//        descrCell.contentView.backgroundColor = [UIColor veryDarkGreyColor];
-//
-//        return descrCell;
-//
-//    } else
   if (indexPath.row < [tableView numberOfRowsInSection:0] - 1) {
     QZBStoreBoosterCell *cell =
         [tableView dequeueReusableCellWithIdentifier:@"topicCell" forIndexPath:indexPath];
@@ -250,9 +221,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
       cell.purchaseButton.backgroundColor = [UIColor lightGrayColor];
       cell.purchaseButton.enabled = NO;
     } else {
-//            [cell.purchaseButton setTitle:[self.priceFormatter stringFromNumber:product.price]
-//                                 forState:UIControlStateNormal];
-      //  [cell.purchaseButton ]
       cell.allTopicPurchaseDescriptionLabel.text = [NSString
           stringWithFormat:@"Более %@ тем за %@",
                            self.paidCount,
@@ -319,21 +287,6 @@ NSString *const QZBShowAllPaidTopicsSegueIdentifier = @"QZBShowAllPaidTopicsSegu
                action:@selector(buyBoosterButtonTapped:)
      forControlEvents:UIControlEventTouchUpInside];
   }
-
-//    int tag = 0;
-//    if ([product isEqual:self.twiceBooster]) {
-//        tag = 2;
-//    } else if ([product isEqual:self.tripleBooster]) {
-//        tag = 3;
-//    } else if ([product isEqual:self.fiveTimesBooster]) {
-//        tag = 5;
-//    }
-//    
-//    button.tag = tag;
-//    [button addTarget:self
-//               action:@selector(buyBoosterButtonTapped:)
-//     forControlEvents:UIControlEventTouchUpInside];
-
 }
 
 - (NSString *)expirationDayCountFromInt:(int)dayCount {

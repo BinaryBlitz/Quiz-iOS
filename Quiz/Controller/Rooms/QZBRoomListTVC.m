@@ -6,18 +6,18 @@
 #import "UIViewController+QZBControllerCategory.h"
 #import "QZBRoom.h"
 
-// cell identifiers
+// Cell identifiers
 NSString *const QZBRoomCellIdentifier = @"QZBRoomCellIdentifier";
 NSString *const QZBCreateRoomCellIdentifierInRoomList = @"enterRoomCellIdentifier";
 
-// segues
+// Segues
 NSString *const QZBShowRoomSegueIdentifier = @"showRoomSegueIdentifier";
 NSString *const QZBRoomCreationSegueIdentifier = @"roomCreationSegueIdentifier";
 
-// title
+// Title
 NSString *const QZBCurrentTitle = @"Комнаты";
 
-//messages
+// Messages
 NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 
 @interface QZBRoomListTVC ()
@@ -39,26 +39,15 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
                 forControlEvents:UIControlEventValueChanged];
 
   self.refreshControl.tintColor = [UIColor whiteColor];
-
   [self initStatusbarWithColor:[UIColor blackColor]];
-
   [self addBarButtonRight];
-
   self.title = QZBCurrentTitle;
-
-  //[self reloadRooms];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.tabBarController.tabBar.hidden = NO;
   [self reloadRooms];
-  //  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeNone];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  //[self reloadRooms];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -140,11 +129,6 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 
   NSInteger val = [stringToSearch integerValue];
 
-  //  NSNumber *number = @([stringToSearch intValue]);
-
-  //  NSLog(@"num to search %ld", (long)val);
-
-  //
   [[QZBServerManager sharedManager] GETRoomWithID:@(val)
                                         OnSuccess:^(QZBRoom *room) {
 
@@ -183,20 +167,9 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
 }
 
 - (void)createRoom {
-  //
-  //    [[QZBServerManager sharedManager] POSTCreateRoomOnSuccess:^(QZBRoom *room) {
-  //
-  //    } onFailure:^(NSError *error, NSInteger statusCode) {
-  //
-  //    }];
   self.choosedRoom = nil;
   [self performSegueWithIdentifier:QZBRoomCreationSegueIdentifier sender:nil];
 }
-
-//-(void)showCategoryChooser{
-//
-//    [self performSegueWithIdentifier:QZBShowRoomCategoryChooser sender:nil];
-//}
 
 #pragma mark - support methods
 
@@ -206,22 +179,5 @@ NSString *const QZBNothingFindedMessage = @"Ничего не найдено";
                                                     target:self
                                                     action:@selector(reloadRooms)];
 }
-
-
-//-(void)findRoomWithID:(NSNumber *)roomID {
-//    self.searchBar.text = [NSString stringWithFormat:@"%@", roomID];
-//    [[QZBServerManager sharedManager] GETRoomWithID:roomID
-//                                          OnSuccess:^(QZBRoom *room) {
-//                                              
-//                                              self.rooms = @[ room ];
-//                                              [self.tableView reloadData];
-//                                              
-//                                          }
-//                                          onFailure:^(NSError *error, NSInteger statusCode) {
-//                                              [SVProgressHUD showErrorWithStatus:@"Ничего не найдено"];
-//                                              
-//                                          }];
-//
-//}
 
 @end

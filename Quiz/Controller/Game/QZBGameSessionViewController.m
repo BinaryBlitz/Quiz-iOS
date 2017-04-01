@@ -58,17 +58,10 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   [super viewDidLoad];
 
   [self setNeedsStatusBarAppearanceUpdate];
-
-  // self.tabBarController.hidesBottomBarWhenPushed = NO;
-
   [[NSNotificationCenter defaultCenter] postNotificationName:@"QZBDoNotNeedShowMessagerNotifications" object:nil];
 
   [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"timer"
                                                   fileExtension:kJSQSystemSoundTypeWAV];
-  //    [[JSQSystemSoundPlayer sharedPlayer] preloadSoundWithFilename:@"melody1"
-  //                                                    fileExtension:kJSQSystemSoundTypeAIF];
-
-  //[[self navigationController] setNavigationBarHidden:YES animated:NO];
   self.backgroundTask = UIBackgroundTaskInvalid;
 
   for (UIButton *b in self.answerButtons) {
@@ -399,9 +392,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   for (QZBAnswerButton *b in self.answerButtons) {
     QZBAnswerTextAndID *answerAndId = question.answers[i];
 
-    //[b setTitle:answerAndId.answerText forState:UIControlStateNormal];
-    // b.answerLabel.text = answerAndId.answerText;
-    //[b.answerLabel adjustFontSizeToFit];
     [b setAnswerText:answerAndId.answerText];
 
     b.tag = answerAndId.answerID;
@@ -409,8 +399,7 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
   }
 }
 
-- (CGFloat)calculateVerticalConstraints {//для размера картинки вопроса
-
+- (CGFloat)calculateVerticalConstraints {
   CGFloat width = CGRectGetWidth(self.questBackground.frame) - 16.0;
   CGFloat heigth = CGRectGetHeight(self.questBackground.frame) - 24.0;
 
@@ -701,9 +690,6 @@ NSString *const QZBRoomResultSegueIdentifier = @"showRoomResults";
 
   self.userBV.badgeText = firstScoreString;
   self.opponentBV.badgeText = opponentScoreString;
-
-  // self.firstUserScore.text = firstScoreString;
-  // self.opponentScore.text = opponentScoreString;
 }
 
 #pragma mark - score labels colored

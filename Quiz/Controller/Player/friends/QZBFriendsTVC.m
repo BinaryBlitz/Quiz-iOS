@@ -155,18 +155,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
           c.userpicImageView.image = image;
         }
       }];
-//      [[DFImageManager sharedManager]
-//       requestImageForRequest:request
-//       completion:^(UIImage *image, NSDictionary *info) {
-//         dispatch_async(dispatch_get_main_queue(), ^{
-//           UITableViewCell *cel =
-//           [tableView cellForRowAtIndexPath:indexPath];
-//           if (cel && [cel isKindOfClass:[QZBFriendCell class]]) {
-//             QZBFriendCell *c = (QZBFriendCell *)cel;
-//             c.userpicImageView.image = image;
-//           }
-//         });
-//       }];
     } else {
       [c.userpicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
@@ -206,12 +194,7 @@ didEndDisplayingCell:(UITableViewCell *)cell
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little
-// preparation before
-// navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  // Get the new view controller using [segue destinationViewController].
-  // Pass the selected object to the new view controller.
   if ([segue.identifier isEqualToString:@"showUserpage"]) {
     QZBPlayerPersonalPageVC *vc = segue.destinationViewController;
 
