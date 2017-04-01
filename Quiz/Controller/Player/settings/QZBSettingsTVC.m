@@ -74,7 +74,7 @@
                                   delegate:self
                          cancelButtonTitle:@"Отменить"
                     destructiveButtonTitle:nil
-                         otherButtonTitles:@"Выбрать из галереии",
+                         otherButtonTitles:@"Выбрать из галереи",
                                            @"Сфотографировать", @"Удалить фотографию", nil];
 
   [actSheet showInView:self.view];
@@ -232,17 +232,6 @@ shouldChangeCharactersInRange:(NSRange)range
                                                          type:TSMessageNotificationTypeWarning];
                        }];
 }
-
-//- (BOOL)checkUserName {
-//    if (![self.userNameTextField validate]) {
-//        [TSMessage
-//            showNotificationWithTitle:@"Имя должно быть длинее 1 символа"
-//                                 type:TSMessageNotificationTypeWarning];
-//        return NO;
-//    } else {
-//        return YES;
-//    }
-//}
 
 - (void)updateUserName {
   NSString *newName = [self.userNameTextField.text copy];

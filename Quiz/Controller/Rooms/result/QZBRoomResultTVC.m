@@ -379,9 +379,6 @@ static NSString *QZBStoreStorybordID = @"storeStorybordID";
 
   [alert addButton:@"Да" actionBlock:^{
     self.tabBarController.selectedIndex = 4;
-
-    //            QZBStoreListTVC *store = (QZBStoreListTVC *)[self.storyboard instantiateViewControllerWithIdentifier:QZBStoreStorybordID];
-    //            [self.navigationController pushViewController:store animated:YES];
   }];
 
   [alert showInfo:self.tabBarController

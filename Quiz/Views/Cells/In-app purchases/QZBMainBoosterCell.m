@@ -4,17 +4,11 @@
 @implementation QZBMainBoosterCell
 
 - (void)awakeFromNib {
-  // Initialization code
-  //self.doubleBoosterButton.backgroundColor = [UIColor greenColor];
+  [super awakeFromNib];
 
   [self.doubleBoosterButton configButtonWithRoundedBorders];
   [self.tripleBoosterButton configButtonWithRoundedBorders];
   [self.fiveTimesBoosterButton configButtonWithRoundedBorders];
-//    [self configButton:self.doubleBoosterButton];
-//    [self configButton:self.tripleBoosterButton];
-//    [self configButton:self.fiveTimesBoosterButton];
-
-
 }
 
 - (void)configButton:(UIButton *)button {
@@ -37,12 +31,6 @@
   [button setTitle:@"Куплено" forState:UIControlStateDisabled];
   button.enabled = NO;
   [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
 }
 
 @end

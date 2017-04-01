@@ -16,8 +16,6 @@
 }
 
 + (NSString *)redableTimeFromDate:(NSDate *)timestamp {
-  // NSDate *timestamp = [[self class] customDateFromString:dateAsString];
-
   NSString *minutes = [timestamp minute] < 10
       ? [NSString stringWithFormat:@"0%ld", [timestamp minute]]
       : [NSString stringWithFormat:@"%ld", [timestamp minute]];

@@ -37,42 +37,17 @@ static NSInteger answerOffset = 2;
   [super viewDidLoad];
   [self initStatusbarWithColor:[UIColor blackColor]];
   self.title = @"Добавление вопроса";
-
-  //[self addBarButtonRight];
-
-  //    for (int i = 0; i < self.answersTextFields.count; i++) {
-  //        UITextField *tf = self.answersTextFields[i];
-  //        NSString *placeholder = @"Ответ";
-  //        if (i == 0) {
-  //            placeholder = [placeholder stringByAppendingString:@" (правильный)"];
-  //        }
-  //        tf.delegate = self;
-  //        tf.placeholder = placeholder;
-  //    }
-  //    self.inputTextView.text = @"";
-  //    [self.inputTextView becomeFirstResponder];
-  //    self.inputTextView.delegate = self;
-
   self.tabBarController.hidesBottomBarWhenPushed = YES;
 
-  //    self.inputTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-  //    self.inputTextView.layer.borderWidth = 0.5;
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  // Return the number of sections.
   return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  // Return the number of rows in the section.
   if (self.topic) {
     return 7;
   } else {
@@ -141,13 +116,10 @@ static NSInteger answerOffset = 2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"pressed");
   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
   if ([cell.reuseIdentifier isEqualToString:QZBChooseTopicCellIdentifierInQuest] ||
       [cell.reuseIdentifier isEqualToString:QZBTopicCellIdentifierInQuest]) {
-    // do segue to group chooser
     [self showCategoryChooser];
-    //   [self performSegueWithIdentifier:QZBShowRoomCategoryChooserFromCreate sender:nil];
   } else if ([cell.reuseIdentifier isEqualToString:QZBNewQuestionSubmitCellIdentifier]) {
     [self submitQuestion];
   }
@@ -156,7 +128,6 @@ static NSInteger answerOffset = 2;
 #pragma mark - actions
 
 - (IBAction)submitQuestion:(id)sender {
-  //[self submitQuestion];
   if ([self isQuestionFilled] && [self isAnswersFilled]) {
     [self submitQuestion];
   }
@@ -168,18 +139,6 @@ static NSInteger answerOffset = 2;
     if (!question) {
       return;
     }
-//            NSMutableArray *arr = [NSMutableArray array];
-//            for (UITextField *tf in self.answersTextFields) {
-//                NSString *answer = tf.text;
-//                if (answer) {
-//                    [arr addObject:answer];
-//                } else {
-//                    return;
-//                }
-//            }
-//            NSString *rightAnswer = [arr firstObject];
-
-
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 
     [[QZBServerManager sharedManager] POSTNewQuestionWithText:question
@@ -233,17 +192,6 @@ static NSInteger answerOffset = 2;
   [tf shakeView];
   [tf becomeFirstResponder];
   [TSMessage showNotificationWithTitle:@"Введите ответ" type:TSMessageNotificationTypeWarning];
-
-//    NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
-//    [self.tableView scrollToRowAtIndexPath:ip
-//                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:ip];
-//    
-//    if(cell && [cell isKindOfClass:[QZBNewQuestionInputCell class]]){
-//        QZBNewQuestionInputCell *c = (QZBNewQuestionInputCell *)cell;
-//        [c.inputTextView shakeView];
-//        [c.inputTextView becomeFirstResponder];
-//    }
 }
 
 - (NSIndexPath *)indexPathForAnswerIndex:(NSInteger)answerIndex {
@@ -270,62 +218,7 @@ static NSInteger answerOffset = 2;
   self.answers = nil;
   self.topic = nil;
   [self.tableView reloadData];
-  //    self.inputTextView.text = @"";
-  //    for (UITextField *tf in self.answersTextFields) {
-  //        tf.text = @"";
-  //    }
-  //    [self.inputTextView resignFirstResponder];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView
-commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath
-*)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath]
-withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new
-row to the table view
-    }
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
-toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before
-navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - UITextViewDelegate
 
@@ -341,31 +234,19 @@ shouldChangeTextInRange:(NSRange)range
       QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *) cell;
       [c.answerTextField becomeFirstResponder];
     }
-
-    // [textView resignFirstResponder];
-    //   UITextField *tf = [self.answersTextFields firstObject];
-
-    //  [tf becomeFirstResponder];
     return NO;
   }
   self.question = [textView.text stringByReplacingCharactersInRange:range withString:text];
-
-  //  NSLog(@"%@", self.question);
   return YES;
 }
 
-//
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)            textField:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
             replacementString:(NSString *)string {
-  //  NSLog(@"%ld",(long)textField.tag);
   self.answers[textField.tag] = [textField.text stringByReplacingCharactersInRange:range
                                                                         withString:string];
-//    for(NSString *s in self.answers){
-//        NSLog(@"%ld %@",(long)textField.tag, s);
-//    }
   return YES;
 }
 
@@ -375,20 +256,10 @@ shouldChangeCharactersInRange:(NSRange)range
     [self markAnswer:textField];
     return NO;
   }
-//
-//    NSInteger index = [self.answersTextFields indexOfObject:textField];
-//    if (index != 3) {
-//        UITextField *tf = self.answersTextFields[index + 1];
-//        [tf becomeFirstResponder];
-//    } else {
-//        [self submitQuestion];
-//    }
-//    return YES;
 
   UITableViewCell *cell = [self parentCellForView:textField];
 
   if (cell) {
-    //  QZBNewQuestionAnswerCell *c = (QZBNewQuestionAnswerCell *)cell;
     NSIndexPath *ip = [self.tableView indexPathForCell:cell];
     if (ip.row < 5) {
       NSIndexPath *newIP = [NSIndexPath indexPathForRow:ip.row + 1 inSection:0];

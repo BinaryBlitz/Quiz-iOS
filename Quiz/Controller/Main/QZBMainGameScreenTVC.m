@@ -225,7 +225,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
     cell.topicNameLabel.text = descr.topicName;
     cell.opponentNameLabel.text = descr.name;
-    // cell.visible = descr.topic.visible;
 
     return cell;
   } else if (arr == self.challenged) {
@@ -243,24 +242,10 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
   } else {
     QZBTopicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"topicCell"];
 
-    // NSArray *arr = self.workArray[indexPath.section];
-
     QZBGameTopic *topic = arr[indexPath.row];
 
     cell.backgroundColor = [self colorForSection:indexPath.section];
 
-    //        NSInteger level = 0;
-    //        float progress = 0.0;
-    //
-    //        [NSObject calculateLevel:&level
-    //                   levelProgress:&progress
-    //                       fromScore:[topic.points integerValue]];
-    //
-    //        [cell initCircularProgressWithLevel:level
-    //                                   progress:progress
-    //                                    visible:[topic.visible boolValue]];
-    //
-    //        cell.topicName.text = topic.name;
     [cell initWithTopic:topic];
 
     return cell;
@@ -437,9 +422,6 @@ NSString *const QZBNewQuestionControllerSegueIdentifier =
 
     self.choosedTopic = arr[ip.row];
     self.choosedIndexPath = nil;
-
-    //[self performSegueWithIdentifier:@"showPreparingVC" sender:nil];
-    // [self performSegueWithIdentifier:@"showFriendsChallenge" sender:nil];
 
     [self performSegueWithIdentifier:@"showRate" sender:nil];
   }

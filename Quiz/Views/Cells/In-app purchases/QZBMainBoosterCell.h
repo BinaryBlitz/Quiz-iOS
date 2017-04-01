@@ -10,8 +10,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *fiveTimesBoosterLabel;
 
 - (void)configButtonPurchased:(UIButton *)button;
-
 - (void)configButtonNotPurchased:(UIButton *)button;
-
 
 @end

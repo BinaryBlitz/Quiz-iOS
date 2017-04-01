@@ -23,10 +23,6 @@
       destinationController = (id <QZBSettingTopicProtocol>) c;
       break;
     }
-//        if ([c isKindOfClass:[QZBRoomController class]]) {
-//            destinationController = (QZBRoomController *)c;
-//            break;
-//        }
   }
 
   QZBGameTopic *topic = self.topics[indexPath.row];

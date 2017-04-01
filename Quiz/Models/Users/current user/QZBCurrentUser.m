@@ -44,8 +44,6 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
   if (user) {
     _user = user;
 
-    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
 
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUser"];
@@ -58,12 +56,7 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
     }
 
     if (self.pushToken) {
-
-      [[QZBServerManager sharedManager] POSTAPNsToken:self.pushToken
-                                            onSuccess:^{
-                                            }
-                                            onFailure:^(NSError *error, NSInteger statusCode) {
-                                            }];
+      [[QZBServerManager sharedManager] PATCHAPNsToken:self.pushToken];
     }
   }
 }
@@ -80,46 +73,27 @@ static NSString *QZBNeedStartMessager = @"QZBNeedStartMessager";
 
     self.pushToken = pushToken;
     DDLogVerbose(@"push token %@", pushToken);
+
     if (self.user) {
-      [[QZBServerManager sharedManager] POSTAPNsToken:pushToken
-                                            onSuccess:^{
-                                            }
-                                            onFailure:^(NSError *error, NSInteger statusCode) {
-                                            }];
+      [[QZBServerManager sharedManager] PATCHAPNsToken:pushToken];
     }
   } else if (![pushToken isEqualToString:self.pushToken]) {
 
-    [[QZBServerManager sharedManager] PATCHAPNsTokenNew:pushToken oldToken:self.pushToken onSuccess:^{
-    }                                         onFailure:^(NSError *error, NSInteger statusCode) {
-    }];
+    [[QZBServerManager sharedManager] PATCHAPNsToken:pushToken];
   } else {
     return;
   }
 
   [[NSUserDefaults standardUserDefaults] setObject:pushToken forKey:@"APNStoken"];
-  // [[NSUserDefaults standardUserDefaults] setObject:pushTokenData forKey:@"APNStokenData"];
   [[NSUserDefaults standardUserDefaults] synchronize];  //?
 
   DDLogVerbose(@"push token setted %@", self.pushToken);
 }
 
 - (void)userLogOut {
-  // self.user.api_key = nil;
-
-  //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
-
   if (self.pushToken) {
-    [[QZBServerManager sharedManager] DELETEAPNsToken:self.pushToken
-                                            onSuccess:^{
-                                            }
-                                            onFailure:^(NSError *error, NSInteger statusCode) {
-                                            }];
+    [[QZBServerManager sharedManager] PATCHAPNsToken:nil];
   }
-
-  // [[QZBLayerMessagerManager sharedInstance] logOut];
-
-  //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"APNStoken"];
-  // self.pushToken = nil;
   self.user = nil;
 
   [[NSUserDefaults standardUserDefaults] setBool:NO forKey:QZBNeedStartMessager];

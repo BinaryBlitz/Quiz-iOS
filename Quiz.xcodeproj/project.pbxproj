@@ -261,7 +261,7 @@
 		191E46771B04A4160037963F /* UILabel+MultiLineAutoSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+MultiLineAutoSize.h"; sourceTree = "<group>"; };
 		191E46781B04A4160037963F /* UILabel+MultiLineAutoSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+MultiLineAutoSize.m"; sourceTree = "<group>"; };
 		19229BBF1ABD5AD500BCB0CD /* QZBDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBDescriptionCell.h; sourceTree = "<group>"; };
-		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; };
+		19229BC01ABD5AD500BCB0CD /* QZBDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBDescriptionCell.m; sourceTree = "<group>"; wrapsLines = 1; };
 		192311C61BBAE482007BAB0D /* QZBRoomFakeKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QZBRoomFakeKeyboard.xib; sourceTree = "<group>"; };
 		192311C81BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QZBRoomFakeKeyboard.h; sourceTree = "<group>"; };
 		192311C91BBAE9ED007BAB0D /* QZBRoomFakeKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QZBRoomFakeKeyboard.m; sourceTree = "<group>"; };
@@ -591,9 +591,9 @@
 		1901BA131B30354A003E2895 /* Rooms */ = {
 			isa = PBXGroup;
 			children = (
-				1901BA241B306DE6003E2895 /* categoryChoose */,
-				19AB8DF71B9DD03D004329F8 /* messages */,
-				1936E0751B3BFBF200BE6B16 /* result */,
+				1901BA241B306DE6003E2895 /* Category picker */,
+				19AB8DF71B9DD03D004329F8 /* Messages */,
+				1936E0751B3BFBF200BE6B16 /* Result */,
 				192CDE221B4182B7003992C7 /* QZBCreateRoomController.h */,
 				192CDE231B4182B7003992C7 /* QZBCreateRoomController.m */,
 				1901BA1B1B305D00003E2895 /* QZBRoomController.h */,
@@ -621,7 +621,7 @@
 			path = Rooms;
 			sourceTree = "<group>";
 		};
-		1901BA241B306DE6003E2895 /* categoryChoose */ = {
+		1901BA241B306DE6003E2895 /* Category picker */ = {
 			isa = PBXGroup;
 			children = (
 				19A29C311B57F59500C5F398 /* QZBFriendsChooserRoomsController.h */,
@@ -631,6 +631,7 @@
 				19FA44F71B319FB200B5E853 /* QZBRoomTopicChooser.h */,
 				19FA44F81B319FB200B5E853 /* QZBRoomTopicChooser.m */,
 			);
+			name = "Category picker";
 			path = categoryChoose;
 			sourceTree = "<group>";
 		};
@@ -697,15 +698,8 @@
 				191E12E31A8BD3A700AFB829 /* Resources */,
 				191559C41A39CDD400462C93 /* Supporting Files */,
 				19CB508E1A3C32F000A3CD74 /* Views */,
+				377081BB1E8F018E0015D388 /* UI */,
 				191559D41A39CDD400462C93 /* Images.xcassets */,
-				199820AB1A44A039003AECB9 /* Main.storyboard */,
-				372E7F681E869880000D88BD /* Leaderboard.storyboard */,
-				372E7F651E869791000D88BD /* Registration.storyboard */,
-				372E7F631E869583000D88BD /* Profile.storyboard */,
-				372E7F601E869358000D88BD /* Login.storyboard */,
-				372E7F5E1E86920A000D88BD /* Topics.storyboard */,
-				372E7F5B1E86909B000D88BD /* Store.storyboard */,
-				372E7F591E868DE7000D88BD /* Settings.storyboard */,
 				191559CB1A39CDD400462C93 /* QZBQuizBattle.xcdatamodeld */,
 			);
 			path = Quiz;
@@ -819,12 +813,13 @@
 			path = Result;
 			sourceTree = "<group>";
 		};
-		1936E0751B3BFBF200BE6B16 /* result */ = {
+		1936E0751B3BFBF200BE6B16 /* Result */ = {
 			isa = PBXGroup;
 			children = (
 				1936E0761B3BFC0F00BE6B16 /* QZBRoomResultTVC.h */,
 				1936E0771B3BFC0F00BE6B16 /* QZBRoomResultTVC.m */,
 			);
+			name = Result;
 			path = result;
 			sourceTree = "<group>";
 		};
@@ -837,12 +832,13 @@
 			path = session;
 			sourceTree = "<group>";
 		};
-		193D39D71B55770E00301F99 /* color_gen */ = {
+		193D39D71B55770E00301F99 /* Colors generation */ = {
 			isa = PBXGroup;
 			children = (
 				193D39D81B55770E00301F99 /* Color */,
 				193D39DB1B55770E00301F99 /* String */,
 			);
+			name = "Colors generation";
 			path = color_gen;
 			sourceTree = "<group>";
 		};
@@ -864,7 +860,7 @@
 			path = String;
 			sourceTree = "<group>";
 		};
-		193DEE3E1B0E21B2009CEB50 /* friendRequest */ = {
+		193DEE3E1B0E21B2009CEB50 /* Friend request */ = {
 			isa = PBXGroup;
 			children = (
 				193DEE3F1B0E227D009CEB50 /* QZBFriendRequest.h */,
@@ -872,6 +868,7 @@
 				193DEE441B0E2713009CEB50 /* QZBFriendRequestManager.h */,
 				193DEE451B0E2713009CEB50 /* QZBFriendRequestManager.m */,
 			);
+			name = "Friend request";
 			path = friendRequest;
 			sourceTree = "<group>";
 		};
@@ -893,9 +890,9 @@
 		19407B121AE8E79600A12F20 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				196099F91B2452C400EEB9D6 /* colors */,
-				196099FA1B2454DE00EEB9D6 /* string */,
-				1969631E1B2B235A007DF0E6 /* viewcontrollers */,
+				196099F91B2452C400EEB9D6 /* Colors */,
+				196099FA1B2454DE00EEB9D6 /* String */,
+				1969631E1B2B235A007DF0E6 /* View controllers */,
 				193A14CB1BC4352B005C6C36 /* NSDate+QZBDateCategory.h */,
 				193A14CC1BC4352B005C6C36 /* NSDate+QZBDateCategory.m */,
 				196472621AD8560100CAC8F3 /* NSObject+QZBSpecialCategory.h */,
@@ -910,12 +907,13 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		19416C1D1B2C7040005D34EA /* topic and category */ = {
+		19416C1D1B2C7040005D34EA /* Topic and category */ = {
 			isa = PBXGroup;
 			children = (
 				19416C1E1B2C7072005D34EA /* QZBChooseThisCategoryCell.h */,
 				19416C1F1B2C7072005D34EA /* QZBChooseThisCategoryCell.m */,
 			);
+			name = "Topic and category";
 			path = "topic and category";
 			sourceTree = "<group>";
 		};
@@ -949,7 +947,7 @@
 		19446A721A9E35CE005BB485 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
-				1965344E1BA96DFA00342454 /* topics */,
+				1965344E1BA96DFA00342454 /* Topics */,
 				1946058A1AB4977E0023BE0D /* QZBStoreListTVC.h */,
 				1946058B1AB4977E0023BE0D /* QZBStoreListTVC.m */,
 			);
@@ -967,7 +965,7 @@
 			path = "Friend cells";
 			sourceTree = "<group>";
 		};
-		1944A1741B0F54200095C600 /* other users */ = {
+		1944A1741B0F54200095C600 /* Other users */ = {
 			isa = PBXGroup;
 			children = (
 				191E12F61A8CD80400AFB829 /* QZBAnotherUser.h */,
@@ -978,10 +976,11 @@
 				19CB50981A3C388000A3CD74 /* QZBUserInSession.m */,
 				198E09651AA1E584006A08BB /* QZBUserProtocol.h */,
 			);
+			name = "Other users";
 			path = "other users";
 			sourceTree = "<group>";
 		};
-		1944A1751B0F543A0095C600 /* current user */ = {
+		1944A1751B0F543A0095C600 /* Current user */ = {
 			isa = PBXGroup;
 			children = (
 				1976699D1A67EEAC006C2757 /* QZBCurrentUser.h */,
@@ -989,6 +988,7 @@
 				19CB509E1A3C51CA00A3CD74 /* QZBUser.h */,
 				19CB509F1A3C51CA00A3CD74 /* QZBUser.m */,
 			);
+			name = "Current user";
 			path = "current user";
 			sourceTree = "<group>";
 		};
@@ -1012,33 +1012,36 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		196099F91B2452C400EEB9D6 /* colors */ = {
+		196099F91B2452C400EEB9D6 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
-				193D39D71B55770E00301F99 /* color_gen */,
+				193D39D71B55770E00301F99 /* Colors generation */,
 				196099F61B2452C000EEB9D6 /* UIColor+QZBColorGenerator.h */,
 				196099F71B2452C000EEB9D6 /* UIColor+QZBColorGenerator.m */,
 				194E989A1AACADF4003F50DB /* UIColor+QZBProjectColors.h */,
 				194E989B1AACADF4003F50DB /* UIColor+QZBProjectColors.m */,
 			);
+			name = Colors;
 			path = colors;
 			sourceTree = "<group>";
 		};
-		196099FA1B2454DE00EEB9D6 /* string */ = {
+		196099FA1B2454DE00EEB9D6 /* String */ = {
 			isa = PBXGroup;
 			children = (
 				1974BC141AD6D6EC0057E966 /* NSString+QZBStringCategory.h */,
 				1974BC151AD6D6EC0057E966 /* NSString+QZBStringCategory.m */,
 			);
+			name = String;
 			path = string;
 			sourceTree = "<group>";
 		};
-		1965344E1BA96DFA00342454 /* topics */ = {
+		1965344E1BA96DFA00342454 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
 				1965344F1BA96E2E00342454 /* QZBPaidTopicsController.h */,
 				196534501BA96E2E00342454 /* QZBPaidTopicsController.m */,
 			);
+			name = Topics;
 			path = topics;
 			sourceTree = "<group>";
 		};
@@ -1063,7 +1066,7 @@
 		196587A21AC5B52500C58C60 /* Rating */ = {
 			isa = PBXGroup;
 			children = (
-				19416C1D1B2C7040005D34EA /* topic and category */,
+				19416C1D1B2C7040005D34EA /* Topic and category */,
 				199062DA1A9391D8008FB1B5 /* QZBRatingSeperatorCell.h */,
 				199062DB1A9391D8008FB1B5 /* QZBRatingSeperatorCell.m */,
 				19DEA8601A8561E600E610DB /* QZBRatingTVCell.h */,
@@ -1096,7 +1099,7 @@
 			path = Topics;
 			sourceTree = "<group>";
 		};
-		1969631E1B2B235A007DF0E6 /* viewcontrollers */ = {
+		1969631E1B2B235A007DF0E6 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				195CAC051B512EF600564776 /* UIImageView+QZBImagePickerCategory.h */,
@@ -1108,6 +1111,7 @@
 				19A097791AFA3098000EA93B /* UIViewController+QZBValidateCategory.h */,
 				19A0977A1AFA3098000EA93B /* UIViewController+QZBValidateCategory.m */,
 			);
+			name = "View controllers";
 			path = viewcontrollers;
 			sourceTree = "<group>";
 		};
@@ -1170,7 +1174,7 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		197E47C71A8F6B4400E43120 /* CategoryChoosers */ = {
+		197E47C71A8F6B4400E43120 /* Category pickers */ = {
 			isa = PBXGroup;
 			children = (
 				199CD93D1A8A7DA500FBF820 /* QZBRatingCategoryChooserVC.h */,
@@ -1178,10 +1182,11 @@
 				199CD9401A8A803A00FBF820 /* QZBRatingTopicChooserVC.h */,
 				199CD9411A8A803A00FBF820 /* QZBRatingTopicChooserVC.m */,
 			);
+			name = "Category pickers";
 			path = CategoryChoosers;
 			sourceTree = "<group>";
 		};
-		197E47CB1A8FAF5000E43120 /* settings */ = {
+		197E47CB1A8FAF5000E43120 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				19CFA1951B5D86ED00DC8C43 /* QZBAboutTVC.h */,
@@ -1193,6 +1198,7 @@
 				197E47C81A8F8ED100E43120 /* QZBSettingsTVC.h */,
 				197E47C91A8F8ED100E43120 /* QZBSettingsTVC.m */,
 			);
+			name = Settings;
 			path = settings;
 			sourceTree = "<group>";
 		};
@@ -1265,12 +1271,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		19AB8DF71B9DD03D004329F8 /* messages */ = {
+		19AB8DF71B9DD03D004329F8 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
 				19AB8DF81B9DD3EB004329F8 /* QZBRoomCommentController.h */,
 				19AB8DF91B9DD3EB004329F8 /* QZBRoomCommentController.m */,
 			);
+			name = Messages;
 			path = messages;
 			sourceTree = "<group>";
 		};
@@ -1378,10 +1385,10 @@
 		19CB509A1A3C388900A3CD74 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				19D891471ABB2DB000251ADF /* achievments */,
-				1944A1751B0F543A0095C600 /* current user */,
-				193DEE3E1B0E21B2009CEB50 /* friendRequest */,
-				1944A1741B0F54200095C600 /* other users */,
+				19D891471ABB2DB000251ADF /* Achievments */,
+				1944A1751B0F543A0095C600 /* Current user */,
+				193DEE3E1B0E21B2009CEB50 /* Friend request */,
+				1944A1741B0F54200095C600 /* Other users */,
 				1965879E1AC58A8E00C58C60 /* QZBUserStatistic.h */,
 				1965879F1AC58A8E00C58C60 /* QZBUserStatistic.m */,
 				1901BA1E1B30646C003E2895 /* QZBUserWithTopic.h */,
@@ -1407,7 +1414,7 @@
 			path = question;
 			sourceTree = "<group>";
 		};
-		19CECFB11AB099EA002F9224 /* friends */ = {
+		19CECFB11AB099EA002F9224 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
 				1906EC0B1AAEF4F6004708AC /* QZBFriendsRequestsTVC.h */,
@@ -1417,6 +1424,7 @@
 				19B5E05B1A73CB0D00DCD9C3 /* QZBFriendsTVC.h */,
 				19B5E05C1A73CB0D00DCD9C3 /* QZBFriendsTVC.m */,
 			);
+			name = Friends;
 			path = friends;
 			sourceTree = "<group>";
 		};
@@ -1463,17 +1471,18 @@
 			path = "Text fields";
 			sourceTree = "<group>";
 		};
-		19D891471ABB2DB000251ADF /* achievments */ = {
+		19D891471ABB2DB000251ADF /* Achievments */ = {
 			isa = PBXGroup;
 			children = (
 			);
+			name = Achievments;
 			path = achievments;
 			sourceTree = "<group>";
 		};
 		19DEA8591A8552E800E610DB /* Rating */ = {
 			isa = PBXGroup;
 			children = (
-				197E47C71A8F6B4400E43120 /* CategoryChoosers */,
+				197E47C71A8F6B4400E43120 /* Category pickers */,
 				19DEA8631A860E4500E610DB /* QZBRatingMainVC.h */,
 				19DEA8641A860E4500E610DB /* QZBRatingMainVC.m */,
 				19DEA85D1A855A1900E610DB /* QZBRatingPageVC.h */,
@@ -1487,14 +1496,29 @@
 		19DFF33F1A700F5B00E8CB1C /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				19CECFB11AB099EA002F9224 /* friends */,
-				197E47CB1A8FAF5000E43120 /* settings */,
+				19CECFB11AB099EA002F9224 /* Friends */,
+				197E47CB1A8FAF5000E43120 /* Settings */,
 				19CECFB21AB0A3C0002F9224 /* QZBFriendsSearchTVC.h */,
 				19CECFB31AB0A3C0002F9224 /* QZBFriendsSearchTVC.m */,
 				19DFF3401A70161D00E8CB1C /* QZBPlayerPersonalPageVC.h */,
 				19DFF3411A70161D00E8CB1C /* QZBPlayerPersonalPageVC.m */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		377081BB1E8F018E0015D388 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				199820AB1A44A039003AECB9 /* Main.storyboard */,
+				372E7F681E869880000D88BD /* Leaderboard.storyboard */,
+				372E7F651E869791000D88BD /* Registration.storyboard */,
+				372E7F631E869583000D88BD /* Profile.storyboard */,
+				372E7F601E869358000D88BD /* Login.storyboard */,
+				372E7F5E1E86920A000D88BD /* Topics.storyboard */,
+				372E7F5B1E86909B000D88BD /* Store.storyboard */,
+				372E7F591E868DE7000D88BD /* Settings.storyboard */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 		52F9464174E630E1C51630F7 /* Frameworks */ = {
@@ -2039,7 +2063,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Quiz/Supporting Files/Quiz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gapbaev Boris (NP6L3K9A4S)";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
 				INFOPLIST_FILE = "Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2062,7 +2086,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Quiz/Supporting Files/Quiz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Binary Blitz OOO (4WGG8V34K4)";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = 4WGG8V34K4;
 				INFOPLIST_FILE = "Quiz/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

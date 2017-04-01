@@ -6,6 +6,8 @@
 @implementation QZBEndGamePointsCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
+
   // Initialization code
   self.circleView.borderWidth = 10;
   CGRect rect = CGRectMake(0, 0, CGRectGetHeight(self.circleView.frame) / 2.0,
@@ -20,8 +22,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
 }
 
 - (void)setCentralLabelWithNimber:(NSInteger)multiplier {
@@ -47,22 +47,5 @@
   self.pointsLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long) score];
   self.pointsNameLabel.text = [NSString endOfWordFromNumber:score];
 }
-
-//- (NSString *)endOfWordFromNumber:(NSInteger)number {
-//    NSInteger num = number / 100;
-//
-//    if (num > 20) {
-//        num = num / 10;
-//    }
-//    if (num == 0) {
-//        return @"очков";
-//    } else if (num >= 5 && num <= 20) {
-//        return @"очков";
-//    } else if (num == 1) {
-//        return @"очко";
-//    } else {
-//        return @"очка";
-//    }
-//}
 
 @end

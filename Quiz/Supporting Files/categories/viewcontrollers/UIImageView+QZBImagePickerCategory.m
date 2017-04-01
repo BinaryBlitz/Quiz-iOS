@@ -29,19 +29,11 @@
   if (image) {
 
     UIImage *oldImg = [self.image copy];
-    //  [[QZBCurrentUser sharedInstance].user deleteImage];
     self.image = image;
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 
-    //  [self clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-    //self.userPicImageView.image = nil;
     [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-
       [SVProgressHUD dismiss];
-
-      //  [self clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-      // self.userPicImageView.image = image;
-
 
       [[QZBCurrentUser sharedInstance].user updateUserFromServer];
       self.image = image;

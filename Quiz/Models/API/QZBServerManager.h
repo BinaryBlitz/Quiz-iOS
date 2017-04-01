@@ -47,8 +47,6 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)GETTopicsForMainOnSuccess:(void (^)(NSDictionary *resultDict))success
                         onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-//- (QZBCategory *)tryFindRelatedCategoryToTopic:(QZBGameTopic *)topic;
-
 #pragma mark - game
 
 - (void)POSTLobbyWithTopic:(QZBGameTopic *)topic
@@ -179,16 +177,6 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)PATCHMarkRequestsAsViewedOnSuccess:(void (^)())success
                                  onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
-//- (void)GETReportForUserID:(NSNumber *)userID
-//                   message:(NSString *)reportMessage
-//                 onSuccess:(void (^)())success
-//                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-//
-//-(void)POSTReportForDevelopersWithMessage:(NSString *)message
-//                                onSuccess:(void (^)())success
-//                                onFailure:(void (^)(NSError *error,
-//                                                    NSInteger statusCode))failure;
-
 - (void)PATCHAcceptFriendRequestWithID:(NSNumber *)reqID
                              onSuccess:(void (^)())success
                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
@@ -226,18 +214,7 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 
 #pragma mark - APNs tokens
 
-- (void)POSTAPNsToken:(NSString *)token
-            onSuccess:(void (^)())success
-            onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-- (void)PATCHAPNsTokenNew:(NSString *)newToken
-                 oldToken:(NSString *)oldToken
-                onSuccess:(void (^)())success
-                onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-- (void)DELETEAPNsToken:(NSString *)token
-              onSuccess:(void (^)())success
-              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
+- (void)PATCHAPNsToken:(NSString *)token;
 
 #pragma mark - IAP
 
@@ -259,20 +236,6 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)GETachievementsForUserID:(NSNumber *)userID
                        onSuccess:(void (^)(NSArray *achievements))success
                        onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-#pragma mark - messager notifications
-
-//-(void)POSTSendNotificationAboutMessage:(NSString *)message
-//                           toUserWithID:(NSNumber *)userID
-//                              onSuccess:(void (^)())success
-//                              onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-//
-//-(void)GETAllMessagesForUserId:(NSNumber *)userID
-//                     onSuccess:(void (^)(NSArray *messages))success
-//                     onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-- (void)POSTAuthenticateLayerWithNonce:(NSString *)nonce
-                              callback:(void (^)(NSString *token, NSError *error))callback;
 
 #pragma mark - rooms
 
@@ -352,10 +315,6 @@ typedef NS_ENUM(NSInteger, QZBUpdateType) {
 - (void)GETCompareVersion:(NSString *)version
                 onSuccess:(void (^)(QZBUpdateType updateType, NSString *message))success
                 onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
-
-- (void)PATCHNeedAuthenticateLayerForUserWithID:(NSNumber *)userID
-                                      onSuccess:(void (^)())success
-                                      onFailure:(void (^)(NSError *error, NSInteger statusCode))failure;
 
 #pragma mark - new_questions
 

@@ -3,7 +3,6 @@
 @interface UITabBarController (QZBMessagerCategory)
 
 - (void)subscribeToMessages;
-
 - (void)unsubscribeFromMessages;
 
 @end

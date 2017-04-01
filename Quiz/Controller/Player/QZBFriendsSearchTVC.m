@@ -7,23 +7,9 @@
 
 @implementation QZBFriendsSearchTVC
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self.searchBar becomeFirstResponder];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  //[SVProgressHUD dismiss];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -33,7 +19,6 @@
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-
   [self searchWithSearchBar:searchBar];
 }
 
@@ -44,6 +29,5 @@
     [self setFriendsOwner:nil andFriends:nil];
   }
 }
-
 
 @end

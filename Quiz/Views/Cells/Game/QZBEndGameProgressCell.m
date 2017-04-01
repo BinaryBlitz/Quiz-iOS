@@ -11,7 +11,6 @@
 @property (assign, nonatomic) NSInteger resultLevel;
 @property (assign, nonatomic) float resultProgress;
 
-
 @end
 
 @implementation QZBEndGameProgressCell
@@ -79,10 +78,6 @@
              levelProgress:&beginProgress
                  fromScore:beginScore];
 
-
-
-  // self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)beginLevel];
-
   self.centralLabel.attributedText = [self stringWithNumber:beginLevel];
 
   [self.circularProgress setProgress:beginProgress animated:NO];
@@ -99,8 +94,6 @@
   self.circularProgress.progress = beginProgress;
 
   [self turningCircularView];
-
-  //[self turningCircularView];
 }
 
 - (NSAttributedString *)stringWithNumber:(NSInteger)level {
@@ -118,7 +111,6 @@
 }
 
 - (void)turningCircularView {
-  // self.centralLabel.text = [NSString stringWithFormat:@"%ld", (long)self.currentLevel];
   self.centralLabel.attributedText = [self stringWithNumber:self.currentLevel];
 
   if (self.currentLevel == self.resultLevel) {

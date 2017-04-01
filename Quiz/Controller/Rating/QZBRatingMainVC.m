@@ -14,9 +14,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @property (strong, nonatomic) id <QZBUserProtocol> user;
 @property (assign, nonatomic) BOOL fromTopics;
-
 @property (assign, nonatomic) BOOL isLoaded;
-//@property (strong, nonatomic) UIView *buttonBackgroundView;
 
 @end
 

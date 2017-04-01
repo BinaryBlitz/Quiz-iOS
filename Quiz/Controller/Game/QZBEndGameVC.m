@@ -140,7 +140,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
     self.tableView.backgroundView = dfiIV;
   }
-  // [self.tableView layoutIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -151,7 +150,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     self.isAnimated = YES;
     [self playResultsSounds];
     [self animateResults];
-    // [UAAppReviewManager showPromptIfNecessary];
     [UAAppReviewManager userDidSignificantEvent:YES];
   }
 }
@@ -163,11 +161,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   if (self.soundPlayer) {
     [self.soundPlayer stop];
   }
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 - (void)initSessionResults {
@@ -214,11 +207,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   }
   self.questions = [[QZBSessionManager sessionManager] sessionQuestions];
 
-  //TEST
-  //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-  //        [self performSegueWithIdentifier:QZBSegueToQuestionsReportIdentifier sender:nil];
-  //    });
-  //[self addBarButtonRight];
   [[QZBSessionManager sessionManager] closeSession];
 }
 
@@ -277,12 +265,7 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before
-// navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  // Get the new view controller using [segue destinationViewController].
-  // Pass the selected object to the new view controller.
-
   if ([segue.identifier isEqualToString:QZBSegueToOpponentUser] && self.opponent) {
     QZBPlayerPersonalPageVC *destVC =
         (QZBPlayerPersonalPageVC *) segue.destinationViewController;
@@ -299,11 +282,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return 4;
 }
-
-// Row display. Implementers should *always* try to reuse cells by setting each cell's
-// reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source
-// (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -406,16 +384,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
     [cell.opponentImage setImage:[UIImage imageNamed:@"userpicStandart"]];
   }
 
-  // UIGestureRecognizer *gestRec = self.opponentGestureRecognizer;
-
-  //    NSLog(@"name %@",self.opponent.name);
-  //    cell.opponentImage.userInteractionEnabled = YES;
-  //    [cell.opponentNameLabel setUserInteractionEnabled:YES];
-  //    [cell.opponentImage addGestureRecognizer:_opponentGestureRecognizer];
-  //    [cell.opponentNameLabel addGestureRecognizer:_opponentGestureRecognizer];
-  //    [cell.opponentBV addGestureRecognizer:_opponentGestureRecognizer];
-
-  //`NSLog(@"%@", cell.oppone)
   cell.opponentBV.badgeText =
       [NSString stringWithFormat:@"%ld", (unsigned long) self.secondUserScore];
 
@@ -604,10 +572,8 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
   if ([JSQSystemSoundPlayer sharedPlayer].on) {
     [[JSQSystemSoundPlayer sharedPlayer] stopAllSounds];
     if (self.firstUserScore < self.secondUserScore) {
-      //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"lose" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"lose"];
     } else if (self.firstUserScore > self.secondUserScore) {
-      //        [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"win" fileExtension:kJSQSystemSoundTypeWAV];
       [self playWithName:@"win"];
     }
   }
@@ -652,7 +618,6 @@ NSString *const QZBSegueToQuestionsReportIdentifier = @"SegueToQuestionsReportId
 #pragma mark - gesture recognizer
 
 - (IBAction)showUser:(id)sender {
-  //  NSLog(@"gg");
   [self showOpponent];
 }
 

@@ -14,9 +14,7 @@
 @property (strong, nonatomic) QZBGameTopic *topic;
 
 - (void)showUserPage:(id <QZBUserProtocol>)user;
-
 - (void)initWithTopic:(QZBGameTopic *)topic;
-
 - (void)createButtonBackgroundView;
 
 @end

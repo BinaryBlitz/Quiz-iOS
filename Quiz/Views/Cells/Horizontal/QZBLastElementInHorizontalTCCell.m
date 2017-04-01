@@ -5,10 +5,6 @@
 
 @implementation QZBLastElementInHorizontalTCCell
 
-- (void)awakeFromNib {
-  // Initialization code
-}
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
@@ -34,12 +30,6 @@
   return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-
-  // Configure the view for the selected state
-}
-
 - (NSString *)reuseIdentifier {
   return @"lastHorizontalElement";
 }
@@ -55,8 +45,6 @@
 
 - (NSIndexPath *)getIndexPathCell:(UIView *)view {
   if ([view isKindOfClass:[QZBHorizontalCell class]]) {
-    // UITableView *tv = (UITableView *)view.superview;
-
     NSIndexPath *indexPath =
         [(UITableView *) view.superview.superview indexPathForCell:(UITableViewCell *) view];
     return indexPath;

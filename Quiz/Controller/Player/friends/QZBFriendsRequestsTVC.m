@@ -26,43 +26,12 @@
              andFriends:[QZBFriendRequestManager sharedInstance].incoming];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-
-//    UITabBarController *tabController = self.tabBarController;
-//    UITabBarItem *tabbarItem = tabController.tabBar.items[1];
-
-
-
-  //tabbarItem.badgeValue = nil;
-
-
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-  [super viewDidDisappear:animated];
-
-//    [[QZBServerManager sharedManager] PATCHMarkRequestsAsViewedOnSuccess:^{
-//        
-//    } onFailure:^(NSError *error, NSInteger statusCode) {
-//        
-//    }];
-}
-
 - (IBAction)acceptFriendRequestAction:(UIButton *)sender {
 
   UITableViewCell *cell = [self parentCellForView:sender];
 
   if (cell) {
     if ([cell isKindOfClass:[QZBFriendRequestCell class]]) {
-
-
-      //  NSLog(@"YES");
       QZBFriendRequestCell *c = (QZBFriendRequestCell *) cell;
 
       [[QZBFriendRequestManager sharedInstance] acceptForUser:c.user callback:^(BOOL succes) {
@@ -94,7 +63,6 @@
 
   if (cell) {
     if ([cell isKindOfClass:[QZBFriendRequestCell class]]) {
-      //   NSLog(@"YES");
       QZBFriendRequestCell *c = (QZBFriendRequestCell *) cell;
 
       [[QZBFriendRequestManager sharedInstance] declineForUser:c.user callback:^(BOOL succes) {
@@ -147,15 +115,5 @@
   v.backgroundColor = [UIColor whiteColor];
   return v;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

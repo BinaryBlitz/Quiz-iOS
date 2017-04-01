@@ -4,6 +4,7 @@
 @implementation QZBFriendRequestCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
 
   [self.acceptButton
       configButtonWithRoundedBorders];

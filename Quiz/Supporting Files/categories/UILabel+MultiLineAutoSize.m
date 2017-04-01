@@ -25,7 +25,7 @@
       break;
     }
   }
-  // set the font to the minimum size anyway
+
   self.font = font;
   [self setNeedsLayout];
 }

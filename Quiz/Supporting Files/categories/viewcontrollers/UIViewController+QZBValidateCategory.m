@@ -6,18 +6,6 @@
 #import "QZBUserNameTextField.h"
 #import <TSMessages/TSMessage.h>
 
-
-//typedef enum {
-//    password_error_message,
-//    username_short_error_message,
-//    username_long_error_message,
-//    username_wrong_char_message,
-//    email_error_message,
-//    user_alredy_exist,
-//    login_fail
-//} QZBLoginErrors;
-
-
 @implementation UIViewController (QZBValidateCategory)
 
 - (BOOL)validateTextField:(QZBRegistrationAndLoginTextFieldBase *)textField {
@@ -68,17 +56,12 @@
 #pragma mark - validation
 
 - (BOOL)validateEmail:(NSString *)candidate {
-  //    NSString *emailRegex =
-  //        @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-  //        //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
-  //    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-
   return [self validateEmailNormal:candidate] || candidate.length == 0;
 }
 
 - (BOOL)validateEmailNormal:(NSString *)candidate {
   NSString *emailRegex =
-      @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
+      @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
   NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
 
   return [emailTest evaluateWithObject:candidate];
@@ -89,11 +72,9 @@
 }
 
 - (BOOL)validateUsername:(NSString *)candidate {
-  NSString *nameRegex = @"[A-Z0-9a-z_]{2,20}";  //([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})
+  NSString *nameRegex = @"[A-Z0-9a-z_]{2,20}";
   NSPredicate *nameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", nameRegex];
   return [nameTest evaluateWithObject:candidate];
-
-  // return ([candidate length] <= 20 && [candidate length] >= 2);
 }
 
 - (NSString *)errorAsNSString:(QZBLoginErrors)errorType {

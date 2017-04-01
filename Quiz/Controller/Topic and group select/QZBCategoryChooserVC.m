@@ -41,24 +41,12 @@
   [self.mainTableView sendSubviewToBack:self.refreshControl];
   self.refreshControl.tintColor = [UIColor whiteColor];
 
-  //    UITableViewController *tableViewController = [[UITableViewController alloc] init];
-  //    tableViewController.tableView = self.mainTableView;
-  //
-  //    tableViewController.refreshControl = self.refreshControl;
-
   NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name"
                                                          ascending:YES];
 
   _categories = [NSArray arrayWithArray:[[QZBCategory MR_findAll] sortedArrayUsingDescriptors:@[sort]]];
 
-  // _categories = [QZBCategory MR_findAll];
-
   [self initStatusbarWithColor:[UIColor blackColor]];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,10 +113,6 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-  //    [[JSQSystemSoundPlayer sharedPlayer] playSoundWithFilename:@"switch"
-  //                                                 fileExtension:kJSQSystemSoundTypeWAV];
-
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
   self.choosedCategory = self.categories[indexPath.row];
   [self performSegueWithIdentifier:@"showTopicsSegue" sender:nil];
@@ -163,7 +147,6 @@
     if (statusCode == 401) {
       [[QZBCurrentUser sharedInstance] userLogOut];
 
-      // fix it
       [self performSegueWithIdentifier:@"logOutUnauthorized" sender:nil];
     }
   }];
@@ -171,7 +154,6 @@
 
 - (void)initWithUser:(id <QZBUserProtocol>)user {
   self.user = user;
-  //  [self initCategories];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

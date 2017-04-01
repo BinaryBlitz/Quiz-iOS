@@ -8,16 +8,11 @@
 #import <DFImageManager/DFImageManagerKit.h>
 
 NSString *const QZBNeedReloadRatingTableView = @"QZBNeedReloadRatingTableView";
-//#import <DFImageManager/DFImageManager.h>
-//#import <DFImageManager/DFImageRequestOptions.h>
-//#import <DFImageManager/DFURLImageFetcher.h>
-//#import <DFImageManager/DFImageRequest.h>
-//#import <DFImageManager/DFImageView.h>
 
 @interface QZBRatingTVC () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSArray *topRank;     // QZBUserInRating
-@property (strong, nonatomic) NSArray *playerRank;  // QZBUserInRating
+@property (strong, nonatomic) NSArray *topRank;
+@property (strong, nonatomic) NSArray *playerRank;
 
 @end
 
@@ -154,25 +149,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
           }
         });
       }];
-
-//      [[DFImageManager sharedManager]
-//       requestImageForRequest:request
-//       completion:^(UIImage *image, NSDictionary *info) {
-//         dispatch_async(dispatch_get_main_queue(), ^{
-//           UITableViewCell *cel =
-//           [tableView cellForRowAtIndexPath:indexPath];
-//           if (cel && [cel isKindOfClass:[QZBRatingTVCell class]]) {
-//             QZBRatingTVCell *c = (QZBRatingTVCell *)cel;
-//             c.userpic.image = image;
-//           }
-//         });
-//
-//       }];
     } else {
       [c.userpic setImage:[UIImage imageNamed:@"userpicStandart"]];
     }
-
-    //  [self setCell:cell user:user indexPath:indexPath tableView:tableView];
   }
 }
 
@@ -269,16 +248,5 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         startPreheatingImagesForRequests:[NSArray arrayWithArray:tmpArr]];
   }
 }
-
-/*
- #pragma mark - Navigation
-
- // In a storyboard-based application, you will often want to do a little preparation before
- navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

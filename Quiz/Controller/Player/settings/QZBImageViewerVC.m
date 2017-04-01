@@ -23,20 +23,8 @@
   [super viewWillAppear:animated];
 
   if ([self.user respondsToSelector:@selector(imageURLBig)]) {
-
-//    if(self.user.imageURLBig){
-//        [self.userPicImageView setImageWithURL:self.user.imageURLBig];
-//    } else {
-//        [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-//    }
     [self setImageWithUrl:self.user.imageURLBig];
   } else {
-//        if(self.user.imageURL){
-//            [self.userPicImageView setImageWithURL:self.user.imageURL];
-//        } else {
-//            [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-//        }
-
     [self setImageWithUrl:self.user.imageURL];
   }
 }
@@ -49,13 +37,6 @@
                                             timeoutInterval:60];
     __weak typeof(self) weakSelf = self;
     [self.userPicImageView setImageWithURLRequest:urlRequest placeholderImage:[UIImage imageNamed:@"userpicStandart"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-
-//        CGSize screenSize = [UIScreen mainScreen].bounds.size;
-//        CGSize imageSize = image.size;
-//        //CGRect r = CGRectMake(0, 0, screenSize.width, (imageSize.height/imageSize.width)*screenSize.width );
-//        
-//        weakSelf.userPicImageView.frame = CGRectMake(0, 0, 200, 300);
-//        weakSelf.userPicImageView.center = weakSelf.view.center;
       [weakSelf.userPicImageView setImage:image];
     }                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
     }];
@@ -67,15 +48,6 @@
 - (void)configureWithUser:(id <QZBUserProtocol>)user {
 
   self.user = user;
-
-//    if(self.user.imageURL){
-//        
-//            [self.userPicImageView setImageWithURL:self.user.imageURL
-//                                  placeholderImage:[UIImage imageNamed:@"userpicStandart"]];
-//            } else {
-//                [self.userPicImageView setImage:[UIImage imageNamed:@"userpicStandart"]];
-//            }
-
 
   if ([[QZBCurrentUser sharedInstance].user.userID isEqualToNumber:user.userID]) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
@@ -89,13 +61,12 @@
 #pragma  mark - action sheet
 
 - (void)showChoose {
-  // [self selectPhoto:nil];
   UIActionSheet *actSheet =
       [[UIActionSheet alloc] initWithTitle:@"Изменить аватар"
                                   delegate:self
                          cancelButtonTitle:@"Отменить"
                     destructiveButtonTitle:nil
-                         otherButtonTitles:@"Выбрать из галереии",
+                         otherButtonTitles:@"Выбрать из галереи",
                                            @"Сфотографировать", @"Удалить фотографию", nil];
 
   [actSheet showInView:self.view];
@@ -114,7 +85,6 @@
                         otherButtonTitles:nil] show];
     }
   } else if (buttonIndex == 1) {
-    //[self performSegueWithIdentifier:@"showCamera" sender:nil];
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
       [self takePhoto:nil];
     } else {
@@ -153,58 +123,13 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
   UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-  //self.userPicImageView.image = chosenImage;
-
   [self.userPicImageView loadNewPic:chosenImage];
-
   [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-
   [picker dismissViewControllerAnimated:YES completion:NULL];
 }
-
-
-//-(void)loadDeafaultPicture {
-//    UIImage *image = [UIImage imageNamed:@"userpicStandart"];
-//    [self loadNewPic:image];
-//    
-//}
-//
-//
-//-(void)loadNewPic:(UIImage *)image {
-//    if(image){
-//        
-//        UIImage *oldImg = [self.userPicImageView.image copy];
-//        [[QZBCurrentUser sharedInstance].user deleteImage];
-//        self.userPicImageView.image = image;
-//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-//        
-//        [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser sharedInstance].user.imageURL];
-//        //self.userPicImageView.image = nil;
-//        [[QZBServerManager sharedManager] PATCHPlayerWithNewAvatar:image onSuccess:^{
-//            
-//            [SVProgressHUD dismiss];
-//            
-//            [self.userPicImageView clearImageCacheForURL:[QZBCurrentUser
-//                                                          sharedInstance].user.imageURL];
-//            // self.userPicImageView.image = image;
-//            
-//            
-//            [[QZBCurrentUser sharedInstance].user updateUserFromServer];
-//            self.userPicImageView.image = image;
-//            
-//            
-//        } onFailure:^(NSError *error, NSInteger statusCode, QZBUserRegistrationProblem problem) {
-//            
-//            [SVProgressHUD showErrorWithStatus:@"Не удалось обновить картинку"];
-//            self.userPicImageView.image = oldImg;
-//        }];
-//    }
-//}
-
 
 @end
