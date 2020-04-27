@@ -1511,7 +1511,6 @@
 				D5BAD7CE4DAF7EEA3FDB26C7 /* Pods-Quiz.debug.xcconfig */,
 				0B026273A2432199D9845BCA /* Pods-Quiz.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1623,6 +1622,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1685,7 +1685,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 886de8c1d524dbaa9dfdbd457b8c8469ecafdfd4 fe43661af277625de578631f794d9557e38adacd6b02682d23b328918ca7fbf6";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 886de8c1d524dbaa9dfdbd457b8c8469ecafdfd4 fe43661af277625de578631f794d9557e38adacd6b02682d23b328918ca7fbf6\n";
 		};
 		CA39FDBB19AE220737ECD3E6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

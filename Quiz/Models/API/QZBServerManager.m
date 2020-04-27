@@ -42,7 +42,7 @@ static const int ddLogLevel = LOG_LEVEL_ERROR;
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
 
-NSString *const QZBServerBaseUrl = @"https://oneversus.one";
+NSString *const QZBServerBaseUrl = @"http://localhost:3000";
 NSString *const QZBPusherKey = @"3335176afe7e37cd28c2";
 NSString *const QZBNoInternetConnectionMessage = @"Проверьте интернет " @"соедин" @"е" @"н" @"и" @"е";
 NSString *const QZBiTunesIdentifier = @"1017347211";
