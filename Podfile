@@ -1,4 +1,4 @@
-platform :ios, '8.2'
+platform :ios, '10.3'
 
 target 'Quiz' do
   pod 'AFNetworking', '~> 2.5'

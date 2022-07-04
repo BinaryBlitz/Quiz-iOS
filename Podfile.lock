@@ -48,7 +48,7 @@ PODS:
   - DFImageManager/UI (0.8.0):
     - DFImageManager/Core
   - Fabric (1.10.2)
-  - FLAnimatedImage (1.0.12)
+  - FLAnimatedImage (1.0.16)
   - GPUImage (0.1.7)
   - HexColors (2.2.1)
   - JSBadgeView (1.4.1)
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   DBCamera: 7a4343a541e1264610f9f33176552b93170a843e
   DFImageManager: 37d75898009b05e49d13e36576677c76847b7d2a
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
@@ -141,6 +141,6 @@ SPEC CHECKSUMS:
   UAProgressView: 6796f5aa05037fb2940521636163b9db40a6c534
   VK-ios-sdk: 5bcf00a2014a7323f98db9328b603d4f96635caa
 
-PODFILE CHECKSUM: 1e11988bc60b9a181232360be04e67ad8fbecafe
+PODFILE CHECKSUM: 2985edc033de7341e4ae9dfae2c2eb2c46b0e853
 
 COCOAPODS: 1.11.3
